@@ -1,7 +1,6 @@
 # .prettierignore
 node_modules
-build
-dist
+.next
 coverage
 package-lock.json
 pnpm-lock.yaml
