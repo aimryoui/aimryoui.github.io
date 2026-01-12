@@ -1,54 +1,28 @@
 // import typescriptParser from "@typescript-eslint/parser"
-import { fixupPluginRules } from "@eslint/compat"
-import { FlatCompat } from "@eslint/eslintrc"
 import eslint from "@eslint/js"
 import importAlias from "@limegrass/eslint-plugin-import-alias"
 import betterTailwind from "eslint-plugin-better-tailwindcss"
 import { getDefaultCallees } from "eslint-plugin-better-tailwindcss/api/defaults"
-import importPlugin from "eslint-plugin-import"
+import { importX } from "eslint-plugin-import-x"
 import importNewlines from "eslint-plugin-import-newlines"
 import reactPlugin from "eslint-plugin-react"
 import reactCompiler from "eslint-plugin-react-compiler"
 import reactHooksPlugin from "eslint-plugin-react-hooks"
 import simpleImportPlugin from "eslint-plugin-simple-import-sort"
-import tailwind from "eslint-plugin-tailwindcss"
+// import tailwind from "eslint-plugin-tailwindcss"
 import globals from "globals"
 import path from "path"
 import tseslint from "typescript-eslint"
 import { fileURLToPath } from "url"
+import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: eslint.configs.recommended
-})
-
-/**
- * @param {string} name the plugin name
- * @param {string} alias the plugin alias
- * @returns {import("eslint").ESLint.Plugin}
- */
-function legacyPlugin(name, alias = name) {
-    const plugin = compat.plugins(name)[0]?.plugins?.[alias]
-
-    if (!plugin) {
-        throw new Error(
-            `Unable to resolve plugin ${name} and/or alias ${alias}`
-        )
-    }
-
-    return fixupPluginRules(plugin)
-}
 
 //! DO NOT CHANGE THE ORDER OF RULES
 
 export default tseslint.config(
     eslint.configs.recommended,
-
-    //? Put `not supported` flat-config plugins as `recommended` here.
-    //? Otherwise put them at the `//* Legacy Plugins` section below when you want to custom rules.
-    ...compat.extends("plugin:import/typescript"),
 
     //* Global Config
     {
@@ -67,16 +41,25 @@ export default tseslint.config(
     {
         //? Default ESLint rules here
         rules: {
-            "no-unused-vars": 0
+            "no-unused-vars": 0,
+            "no-restricted-syntax": [
+                "warn",
+                {
+                    selector:
+                        "CallExpression[callee.name='cn'] TemplateLiteral[expressions.length>0]",
+                    message:
+                        "Do not use template literal interpolation inside cn()."
+                }
+            ]
         }
     },
     //* TypeScript Plugin
     {
         files: ["**/*.{ts,tsx}"],
         extends: [
-            ...tseslint.configs.recommendedTypeChecked,
-            ...tseslint.configs.strictTypeChecked,
-            ...tseslint.configs.stylisticTypeChecked
+            tseslint.configs.recommendedTypeChecked,
+            tseslint.configs.strictTypeChecked,
+            tseslint.configs.stylisticTypeChecked
         ],
         plugins: {
             "@typescript-eslint": tseslint.plugin
@@ -175,7 +158,13 @@ export default tseslint.config(
             //? ("flex   h-fit") => ("flex h-fit")
             //? because the tailwind-eslint-plugin doesn't have that.
             "better-tailwind/multiline": 0,
-            "better-tailwind/sort-classes": 0,
+            // "better-tailwind/enforce-consistent-line-wrapping": [
+            //     1,
+            //     {
+            //         indent: "tab"
+            //     }
+            // ],
+            "better-tailwind/sort-classes": 1,
             "better-tailwind/no-duplicate-classes": 0,
             "better-tailwind/no-unnecessary-whitespace": [
                 1,
@@ -216,6 +205,10 @@ export default tseslint.config(
                 whitelist: [],
                 tags: ["tw"],
                 classRegex: "^(class(Name)?|tw)$"
+            },
+            "better-tailwindcss": {
+                // tailwindcss 4: the path to the entry file of the css based tailwind config (eg: `src/global.css`)
+                entryPoint: "src/global.css"
             }
         }
     },
@@ -224,27 +217,26 @@ export default tseslint.config(
         files: ["**/*.{ts,tsx}"],
         ignores: ["**/*.mdx"],
         settings: {
-            "import/resolver": {
-                node: true,
-                typescript: {
-                    alwaysTryTypes: true,
+            "import-x/resolver-next": [
+                createTypeScriptImportResolver({
+                    alwaysTryTypes: true, // Always try to resolve types under `<root>@types` directory even if it doesn't contain any source code, like `@types/unist`
                     project: "./tsconfig.json"
-                }
-            }
+                })
+            ]
         },
         plugins: {
-            import: importPlugin,
+            "import-x": importX,
             "simple-import-sort": simpleImportPlugin,
             "import-newlines": importNewlines,
             "@limegrass/import-alias": importAlias
         },
         rules: {
-            "import/first": 1,
-            "import/newline-after-import": 1,
-            "import/no-duplicates": [1, { "prefer-inline": true }],
-            "import/no-unresolved": 1,
-            "import/extensions": [1, "never"],
-            "import/consistent-type-specifier-style": [1, "prefer-inline"],
+            "import-x/first": 1,
+            "import-x/newline-after-import": 1,
+            "import-x/no-duplicates": [1, { "prefer-inline": true }],
+            "import-x/no-unresolved": 0,
+            "import-x/extensions": [1, "never", { css: "always" }],
+            "import-x/consistent-type-specifier-style": [1, "prefer-inline"],
 
             "import-newlines/enforce": [
                 1,

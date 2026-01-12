@@ -1,0 +1,80 @@
+{
+    //! General
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.fixAll.stylelint": "explicit",
+        "source.organizeImports": "never",
+        "source.addMissingImports": "explicit"
+    },
+    //! ESlint
+    "eslint.options": {
+        "overrideConfigFile": "./eslint.config.js"
+    },
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
+    ],
+    "eslint.validate": [
+        "javascript",
+        "typescript",
+        "javascriptreact",
+        "typescriptreact",
+        "html"
+    ],
+    "eslint.quiet": false,
+    //! Stylelint
+    "stylelint.packageManager": "pnpm",
+    "stylelint.validate": ["css", "scss", "less"],
+    //! TailwindCSS
+    "css.lint.unknownAtRules": "ignore",
+    "files.associations": {
+        "*.css": "css",
+        "*.md": "mdx"
+    },
+    "tailwindCSS.classAttributes": [
+        "class",
+        "className",
+        ".*Class(es)?",
+        "ngClass",
+        "tw",
+        "classVar"
+    ],
+    "tailwindCSS.experimental.classRegex": [
+        [
+            "(?:clsx|cn|cc|cx|twg|cva|classnames|classList.add)\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
+            "'([^']*)'"
+        ],
+        [
+            "(?:clsx|cn|cc|cx|twg|cva|classnames|classList.add)\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
+            "\"([^\"]*)\""
+        ],
+        [
+            "(?:clsx|cn|cc|cx|twg|cva|classnames|classList.add)\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
+            "`([^`]*)`"
+        ]
+    ],
+    /** @see https://github.com/tailwindlabs/tailwindcss-intellisense/issues/868#issuecomment-2016530820 */
+    "tailwindCSS.files.exclude": [
+        "**/.git/**",
+        "**/.next/**",
+        "**/node_modules/**",
+        "**/.hg/**",
+        "**/.svn/**",
+        "**/dist/**",
+        "**/public/pdfjs/**",
+        "**/src/components/layout/pdf/**"
+    ],
+    "tailwindCSS.includeLanguages": {
+        "javascript": "javascript",
+        "html": "HTML",
+        "mdx": "mdx",
+        "markdown": "markdown"
+    },
+    "typescript.tsdk": "node_modules\\typescript\\lib"
+}
