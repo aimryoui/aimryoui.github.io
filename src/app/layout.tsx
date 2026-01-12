@@ -110,9 +110,7 @@ export const metadata: Metadata = {
             "max-video-preview": -1,
             "max-image-preview": "standard",
             "max-snippet": -1
-        },
-        imageai: false,
-        ai: false
+        }
     },
     icons: {
         icon: "./icon.png",
