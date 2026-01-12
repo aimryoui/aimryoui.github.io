@@ -1,5 +1,5 @@
 //! Change this
-const baseUrl = process.env.PAGES_BASE_PATH
+const baseUrl = "https://hoangnhan2ka3.github.io/porfolio"
 
 export const siteConfig = {
     // Base links
