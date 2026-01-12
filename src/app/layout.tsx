@@ -68,7 +68,8 @@ export const metadata: Metadata = {
         revised: lastModified,
         "dcterms.modified": lastModified,
         bingbot:
-            "index, nofollow, noarchive, notranslate, nositelinkssearchbox, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+            "index, nofollow, noarchive, notranslate, max-video-preview:-1, max-image-preview:standard, max-snippet:-1",
+        robots: "noimageai, noai"
     },
     appLinks: {
         web: {
@@ -109,7 +110,9 @@ export const metadata: Metadata = {
             "max-video-preview": -1,
             "max-image-preview": "standard",
             "max-snippet": -1
-        }
+        },
+        imageai: false,
+        ai: false
     },
     icons: {
         icon: "./icon.png",
