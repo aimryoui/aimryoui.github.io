@@ -27,7 +27,7 @@ const description =
     "Designing with purpose and passion. Discover a collection of creative works and UI/UX projects that bring imagination to life."
 
 export const metadata: Metadata = {
-    metadataBase: new URL(siteConfig.url),
+    metadataBase: process.env.NEXT_PUBLIC_BASE_URL,
     title: title,
     description: description,
     generator: siteConfig.name,
