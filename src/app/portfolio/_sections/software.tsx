@@ -24,6 +24,10 @@ function SectionSoftware() {
 
                 <div className={cn("col-span-2 flex flex-col gap-2")}>
                     <Text>Most frequently used and experienced</Text>
+                    <Bold className={cn("sr-only")}>
+                        Figma, Adobe Photoshop, Adobe Illustrator, Adobe{" "}
+                        InDesign, Adobe After Effects
+                    </Bold>
                     <div className={cn("flex gap-3")}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -116,6 +120,9 @@ function SectionSoftware() {
 
                 <div className={cn("col-span-2 flex flex-col gap-2")}>
                     <Text>Less experienced</Text>
+                    <Bold className={cn("sr-only")}>
+                        Blender, Adobe Premiere Pro
+                    </Bold>
                     <div className={cn("flex gap-3")}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -164,6 +171,9 @@ function SectionSoftware() {
 
                 <div className={cn("col-span-2 flex flex-col gap-2")}>
                     <Text>Used but outdated</Text>
+                    <Bold className={cn("sr-only")}>
+                        Adobe Dreamweaver, Adobe XD, Adobe Dimension
+                    </Bold>
                     <div className={cn("flex gap-3")}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

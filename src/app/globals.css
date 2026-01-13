@@ -89,14 +89,22 @@
 
     --padding: calc(var(--spacing) * 48);
 
+    --custom-radius-xs: 0.125rem;
+    --custom-radius-sm: 0.25rem;
+    --custom-radius-md: 0.375rem;
+    --custom-radius-lg: 0.5rem;
+    --custom-radius-xl: 0.75rem;
     --custom-radius-2xl: 1rem;
-    --custom-radius-md: 0.5rem;
 }
 
 @supports (corner-shape: superellipse(1.5)) {
     :root {
+        --custom-radius-xs: 0.25rem;
+        --custom-radius-sm: 0.375rem;
+        --custom-radius-md: 0.5rem;
+        --custom-radius-lg: 0.625rem;
+        --custom-radius-xl: 1rem;
         --custom-radius-2xl: 1.5rem;
-        --custom-radius-md: 0.75rem;
     }
     [class*="rounded-"] {
         corner-shape: superellipse(1.5);

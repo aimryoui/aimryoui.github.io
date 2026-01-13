@@ -75,7 +75,7 @@ function H3({
     italic?: boolean
 }) {
     return (
-        <h1
+        <h3
             className={cn(
                 "text-4xl font-extrabold",
                 highlight ? "text-highlighted" : "text-muted-foreground",
@@ -86,7 +86,7 @@ function H3({
             {...props}
         >
             {children}
-        </h1>
+        </h3>
     )
 }
 

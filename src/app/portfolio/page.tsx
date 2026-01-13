@@ -1,13 +1,18 @@
 import React from "react"
 
+import SectionContact from "@/app/portfolio/_sections/contact"
+import SectionContent from "@/app/portfolio/_sections/content"
+import SectionEducation from "@/app/portfolio/_sections/education"
+import SectionExperiences from "@/app/portfolio/_sections/experiences"
+import SectionSoftware from "@/app/portfolio/_sections/software"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import SectionContact from "@/components/sections/contact"
-import SectionContent from "@/components/sections/content"
-import SectionEducation from "@/components/sections/education"
-import SectionExperiences from "@/components/sections/experiences"
-import SectionSoftware from "@/components/sections/software"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger
+} from "@/components/ui/tooltip"
 import { Bold, H1, H2, H3, Highlight, Text } from "@/components/ui/typography"
 import { VisuallyHidden } from "@/components/ui/visually-hidden"
 import { cn } from "@/lib/utils"
@@ -107,7 +112,7 @@ export default function Home() {
                             <H3 highlight>{item.value}</H3>
                             <div
                                 className={cn(
-                                    "bg-background border-pattern-fg absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                                    "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
                                 )}
                             >
                                 <span
@@ -129,27 +134,34 @@ export default function Home() {
                         "bg-highlighted/10 relative grid flex-1 place-items-center"
                     )}
                 >
-                    <a
-                        href="https://wikipedia.org/wiki/Vietnam"
-                        target="_blank"
-                        rel="noreferrer"
-                        className={cn(
-                            "grid h-8 w-12 place-items-center bg-[#DA251D]"
-                        )}
-                    >
-                        <VisuallyHidden asChild>
-                            <H3 highlight>Vietnam</H3>
-                        </VisuallyHidden>
-                        {/* https://css-shape.com/star/ */}
-                        <div
-                            className={cn(
-                                "aspect-square w-[1.2rem] bg-[#FFFF00] [clip-path:polygon(50%_0,79%_90%,2%_35%,98%_35%,21%_90%)]"
-                            )}
-                        />
-                    </a>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <a
+                                href="https://wikipedia.org/wiki/Vietnam"
+                                target="_blank"
+                                rel="noreferrer"
+                                className={cn(
+                                    "grid h-8 w-12 place-items-center bg-[#DA251D]"
+                                )}
+                            >
+                                <H3 highlight className={cn("sr-only")}>
+                                    Vietnam
+                                </H3>
+                                {/* https://css-shape.com/star/ */}
+                                <div
+                                    className={cn(
+                                        "aspect-square w-[1.2rem] bg-[#FFFF00] [clip-path:polygon(50%_0,79%_90%,2%_35%,98%_35%,21%_90%)]"
+                                    )}
+                                />
+                            </a>
+                        </TooltipTrigger>
+                        <TooltipContent translate="no" lang="vi-VN">
+                            Việt Nam
+                        </TooltipContent>
+                    </Tooltip>
                     <div
                         className={cn(
-                            "bg-background border-pattern-fg absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                            "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
                         )}
                     >
                         <span

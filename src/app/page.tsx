@@ -1,7 +1,7 @@
 import Link from "next/link"
 
 import { Divider } from "@/components/layout/divider"
-import { ElementLine, SectionLine } from "@/components/layout/line"
+import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { Button } from "@/components/ui/button"
 import { H1, H3, Highlight } from "@/components/ui/typography"
