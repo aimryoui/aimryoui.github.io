@@ -15,10 +15,10 @@ function ThemedIcon() {
             icon = <Sun className="size-6" />
             break
         case "dark":
-            icon = <Moon className="size-6" />
+            icon = <Moon className="size-5.5" />
             break
         default:
-            icon = <Monitor className="size-6" />
+            icon = <Monitor className="size-5" />
             break
     }
 

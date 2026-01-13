@@ -20,7 +20,7 @@
         ],
         "baseUrl": ".",
         "paths": {
-            "package.json": ["./package.json"],
+            "~/*": ["./*"],
             "@/*": ["./src/*", "./public/*"]
         }
     },

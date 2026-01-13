@@ -4,7 +4,6 @@ import "lenis/dist/lenis.css"
 import { type Metadata, type Viewport } from "next"
 import { Plus_Jakarta_Sans } from "next/font/google"
 import localFont from "next/font/local"
-import AppData from "package.json"
 
 import { MarginLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
@@ -12,6 +11,7 @@ import { siteConfig } from "@/config/site.config"
 import { cn } from "@/lib/utils"
 import LenisProvider from "@/providers/lenis-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
+import AppData from "~/package.json"
 
 const lastModified = new Date().toLocaleString("en-US", {
     year: "numeric",
