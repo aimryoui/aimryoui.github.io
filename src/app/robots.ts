@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         rules: [
             {
                 userAgent: "*",
-                disallow: ["/images/"]
+                disallow: ["/private/"]
             },
             {
                 userAgent: "Googlebot",
