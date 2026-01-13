@@ -12,13 +12,6 @@ import { cn } from "@/lib/utils"
 import LenisProvider from "@/providers/lenis-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
-// export const metadata: Metadata = {
-//     title: "Portfolio | Q1.2026 | Nguyễn Hoàng Nhân",
-//     description:
-//         "Designing with purpose and passion. Discover a collection of creative works and UI/UX projects that bring imagination to life.",
-//     robots: "noimageai"
-// }
-
 const lastModified = new Date().toLocaleString("en-US", {
     year: "numeric",
     month: "long",
