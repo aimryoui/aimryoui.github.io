@@ -2,7 +2,7 @@ import { type NextConfig } from "next"
 
 const nextConfig: NextConfig = {
     output: "export",
-    basePath: process.env.NEXT_PUBLIC_BASE_URL,
+    basePath: process.env.PAGES_BASE_PATH,
     compress: true,
     reactCompiler: true,
     poweredByHeader: false,
