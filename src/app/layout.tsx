@@ -106,10 +106,6 @@ export const metadata: Metadata = {
             "max-image-preview": "standard",
             "max-snippet": -1
         }
-    },
-    icons: {
-        icon: "/icon.png",
-        apple: "/apple-icon.png"
     }
 }
 
