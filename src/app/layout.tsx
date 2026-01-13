@@ -27,7 +27,9 @@ const APP_NAME = AppData.name
 const APP_DEFAULT_TITLE = "Portfolio | Q1.2026 | Nguyễn Hoàng Nhân"
 const APP_TITLE_TEMPLATE = "%s | Q1.2026 | Nguyễn Hoàng Nhân"
 const APP_DESCRIPTION = AppData.description
+
 const APP_BASE_URL = siteConfig.url
+const APP_FULL_URL = siteConfig.fullUrl
 
 export const metadata: Metadata = {
     metadataBase: new URL(APP_BASE_URL),
@@ -54,14 +56,17 @@ export const metadata: Metadata = {
         "hoangnhan"
     ],
     category:
-        "portfolio, project, artworks, designer, developer, artist, website",
+        "portfolio, project, artworks, designer, ui/ux, user interface, developer, artist, website",
     referrer: "origin-when-cross-origin",
+    alternates: {
+        canonical: APP_FULL_URL
+    },
     other: {
         language: "en",
         distribution: "global",
         rating: "general",
         "format-detection": "telephone=yes, address=no, email=yes",
-        "identifier-URL": APP_BASE_URL,
+        "identifier-URL": APP_FULL_URL,
         "reply-to": siteConfig.email.work,
         revised: lastModified,
         "dcterms.modified": lastModified,
@@ -71,7 +76,7 @@ export const metadata: Metadata = {
     },
     appLinks: {
         web: {
-            url: APP_BASE_URL,
+            url: APP_FULL_URL,
             should_fallback: true
         }
     },
@@ -86,14 +91,15 @@ export const metadata: Metadata = {
         title: APP_DEFAULT_TITLE,
         description: APP_DESCRIPTION,
         type: "website",
-        url: APP_BASE_URL,
+        url: APP_FULL_URL,
         siteName: siteConfig.domain,
         locale: "vi_VN"
     },
     twitter: {
         card: "summary_large_image",
         title: APP_DEFAULT_TITLE,
-        description: APP_DESCRIPTION
+        description: APP_DESCRIPTION,
+        site: APP_FULL_URL
     },
     robots: {
         index: true,

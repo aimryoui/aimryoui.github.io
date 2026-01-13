@@ -1,10 +1,11 @@
-//! Change this
 const APP_BASE_URL =
     process.env.NEXT_PUBLIC_BASE_URL ?? "https://localhost:3000"
+const APP_BASE_PATH = process.env.PAGES_BASE_PATH ?? ""
 
 export const siteConfig = {
     // Base links
     url: APP_BASE_URL,
+    fullUrl: APP_BASE_URL + APP_BASE_PATH,
     get domain() {
         return this.url.replace(/(.*)+:\/\//, "")
     },

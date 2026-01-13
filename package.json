@@ -1,14 +1,14 @@
 {
-    "name": "@hoangnhan2ka3/portfolio",
+    "name": "@hoangnhan2ka3.github.io/hoangnhan2ka3",
     "version": "0.1.0",
     "author": {
         "name": "Nguyen Hoang Nhan",
         "email": "workwith.hnhan@gmail.com",
-        "url": "https://behance.net/hoangnhan2ka3"
+        "url": "https://hoangnhan2ka3.github.io"
     },
-    "homepage": "https://hoangnhan2ka3.github.io/porfolio",
-    "website": "https://hoangnhan2ka3.github.io/porfolio",
-    "description": "Designing with purpose and passion. Discover a collection of creative works and UI/UX projects that bring imagination to life.",
+    "homepage": "https://hoangnhan2ka3.github.io",
+    "website": "https://hoangnhan2ka3.github.io",
+    "description": "My personal website using Next.js, but being deployed on GitHub Pages.",
     "engines": {
         "node": ">=20.9.0"
     },
