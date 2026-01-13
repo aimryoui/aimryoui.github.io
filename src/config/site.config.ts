@@ -1,13 +1,17 @@
 //! Change this
-const APP_BASE_URL =
-    process.env.NEXT_PUBLIC_BASE_URL ?? "https://localhost:3000"
+const baseUrl = "https://hoangnhan2ka3.github.io"
 
 export const siteConfig = {
     // Base links
-    url: APP_BASE_URL,
+    get url() {
+        return process.env.NODE_ENV === "production"
+            ? baseUrl
+            : this.localHostUrl
+    },
     get domain() {
         return this.url.replace(/(.*)+:\/\//, "")
     },
+    localHostUrl: "http://localhost:3000",
 
     // Personal information
     name: "Nguyễn Hoàng Nhân",
