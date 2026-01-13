@@ -1,4 +1,5 @@
 import "./globals.css"
+import "lenis/dist/lenis.css"
 
 import { type Metadata, type Viewport } from "next"
 import { Plus_Jakarta_Sans } from "next/font/google"
@@ -6,9 +7,10 @@ import localFont from "next/font/local"
 
 import { MarginLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
-import { ThemeProvider } from "@/components/theme-provider"
 import { siteConfig } from "@/config/site.config"
 import { cn } from "@/lib/utils"
+import LenisProvider from "@/providers/lenis-provider"
+import { ThemeProvider } from "@/providers/theme-provider"
 
 // export const metadata: Metadata = {
 //     title: "Portfolio | Q1.2026 | Nguyễn Hoàng Nhân",
@@ -165,10 +167,12 @@ export default function RootLayout({
                 `)}
             >
                 <ThemeProvider disableTransitionOnChange>
-                    <MarginLine />
-                    {children}
-                    <MarginLine />
-                    <ModeToggle />
+                    <LenisProvider>
+                        <MarginLine />
+                        {children}
+                        <MarginLine />
+                        <ModeToggle />
+                    </LenisProvider>
                 </ThemeProvider>
             </body>
         </html>
