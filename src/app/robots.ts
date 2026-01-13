@@ -1,5 +1,7 @@
 import { type MetadataRoute } from "next"
 
+import { siteConfig } from "@/config/site.config"
+
 export const dynamic = "force-static"
 
 export default function robots(): MetadataRoute.Robots {
@@ -27,6 +29,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ["/"]
             }
         ],
-        sitemap: "https://hoangnhan2ka3.github.io/porfolio/sitemap.xml"
+        sitemap: siteConfig.url + "/sitemap.xml"
     }
 }

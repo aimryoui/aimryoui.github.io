@@ -1,5 +1,5 @@
 //! Change this
-const baseUrl = "https://hoangnhan2ka3.github.io"
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!
 
 export const siteConfig = {
     // Base links
