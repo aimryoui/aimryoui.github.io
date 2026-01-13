@@ -7,7 +7,7 @@ function SectionTitle({ title, note }: { title: string; note?: string }) {
             {note && (
                 <span
                     className={cn(`
-                    l-6 absolute -top-11
+                    l-6 absolute -top-10.5
                     font-mono tracking-normal uppercase
                 `)}
                 >

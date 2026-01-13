@@ -22,7 +22,7 @@ export default function Home() {
             <div className={cn("bg-background relative px-6 pt-3.5 pb-5")}>
                 <span
                     className={cn(`
-                    l-6 absolute -top-11
+                    l-6 absolute -top-10.5
                     font-mono tracking-normal uppercase
                 `)}
                 >
