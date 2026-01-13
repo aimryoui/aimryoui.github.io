@@ -1,5 +1,5 @@
 //! Change this
-const baseUrl = "https://hoangnhan2ka3.github.io/porfolio"
+const baseUrl = "https://hoangnhan2ka3.github.io"
 
 export const siteConfig = {
     // Base links
