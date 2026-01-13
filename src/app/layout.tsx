@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils"
 import LenisProvider from "@/providers/lenis-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
+import AppData from "../../package.json"
+
 const lastModified = new Date().toLocaleString("en-US", {
     year: "numeric",
     month: "long",
@@ -22,17 +24,19 @@ const lastModified = new Date().toLocaleString("en-US", {
     timeZone: "Asia/Saigon"
 })
 
-const title = "Portfolio | Q1.2026 | Nguyễn Hoàng Nhân"
-const description =
-    "Designing with purpose and passion. Discover a collection of creative works and UI/UX projects that bring imagination to life."
+const APP_NAME = AppData.name
+const APP_DEFAULT_TITLE = "Portfolio | Q1.2026 | Nguyễn Hoàng Nhân"
+const APP_TITLE_TEMPLATE = "%s | Q1.2026 | Nguyễn Hoàng Nhân"
+const APP_DESCRIPTION = AppData.description
+const APP_BASE_URL = siteConfig.url
 
 export const metadata: Metadata = {
-    metadataBase: process.env.NEXT_PUBLIC_BASE_URL,
-    title: title,
-    description: description,
+    metadataBase: new URL(APP_BASE_URL),
+    applicationName: APP_NAME,
+    title: APP_DEFAULT_TITLE,
+    description: APP_DESCRIPTION,
     generator: siteConfig.name,
-    applicationName: siteConfig.domain,
-    authors: [{ name: siteConfig.name }, { url: siteConfig.url }],
+    authors: [{ name: siteConfig.name }, { url: APP_BASE_URL }],
     creator: siteConfig.name,
     publisher: siteConfig.name,
     keywords: [
@@ -58,7 +62,7 @@ export const metadata: Metadata = {
         distribution: "global",
         rating: "general",
         "format-detection": "telephone=yes, address=no, email=yes",
-        "identifier-URL": siteConfig.url,
+        "identifier-URL": APP_BASE_URL,
         "reply-to": siteConfig.email.work,
         revised: lastModified,
         "dcterms.modified": lastModified,
@@ -68,7 +72,7 @@ export const metadata: Metadata = {
     },
     appLinks: {
         web: {
-            url: siteConfig.url,
+            url: APP_BASE_URL,
             should_fallback: true
         }
     },
@@ -76,21 +80,21 @@ export const metadata: Metadata = {
         google: siteConfig.analytics.googleVerification,
         yandex: siteConfig.analytics.yandexVerification,
         other: {
-            me: [siteConfig.email.work, siteConfig.url]
+            me: [siteConfig.email.work, APP_BASE_URL]
         }
     },
     openGraph: {
-        title: title,
-        description: description,
+        title: APP_DEFAULT_TITLE,
+        description: APP_DESCRIPTION,
         type: "website",
-        url: siteConfig.url,
+        url: APP_BASE_URL,
         siteName: siteConfig.domain,
         locale: "vi_VN"
     },
     twitter: {
         card: "summary_large_image",
-        title: title,
-        description: description
+        title: APP_DEFAULT_TITLE,
+        description: APP_DESCRIPTION
     },
     robots: {
         index: true,

@@ -235,7 +235,11 @@ export default tseslint.config(
             "import-x/newline-after-import": 1,
             "import-x/no-duplicates": [1, { "prefer-inline": true }],
             "import-x/no-unresolved": 0,
-            "import-x/extensions": [1, "never", { css: "always" }],
+            "import-x/extensions": [
+                1,
+                "never",
+                { css: "always", json: "always" }
+            ],
             "import-x/consistent-type-specifier-style": [1, "prefer-inline"],
 
             "import-newlines/enforce": [
