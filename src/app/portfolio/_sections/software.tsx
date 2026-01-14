@@ -322,7 +322,10 @@ function SectionSoftware() {
                                             (tool, toolIdx) => (
                                                 <Tooltip key={toolIdx}>
                                                     <TooltipTrigger>
-                                                        <Link url={tool.url}>
+                                                        <Link
+                                                            openInNewTab
+                                                            url={tool.url}
+                                                        >
                                                             {tool.icon}
                                                         </Link>
                                                     </TooltipTrigger>
