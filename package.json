@@ -10,7 +10,7 @@
     "website": "https://hoangnhan2ka3.github.io",
     "description": "My personal website using Next.js, but being deployed on GitHub Pages.",
     "engines": {
-        "node": ">=20.9.0"
+        "node": ">=22.18.0"
     },
     "type": "module",
     "private": true,

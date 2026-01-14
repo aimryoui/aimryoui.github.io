@@ -1,214 +1,187 @@
+import { Slot } from "@radix-ui/react-slot"
+
 import { cn } from "@/lib/utils"
+
+interface TextProps {
+    highlight?: boolean
+    italic?: boolean
+    mono?: boolean
+    asChild?: boolean
+}
 
 function H1({
     className,
-    style,
-    children,
     highlight,
     italic,
+    mono,
+    asChild,
     ...props
-}: {
-    className?: string
-    style?: React.CSSProperties
-    children: React.ReactNode
-    highlight?: boolean
-    italic?: boolean
-}) {
+}: React.ComponentProps<"h1"> & TextProps) {
+    const Comp = asChild ? Slot : "h1"
     return (
-        <h1
+        <Comp
             className={cn(
                 "text-4xl font-extrabold",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
+                mono && "font-mono",
                 className
             )}
-            style={style}
             {...props}
-        >
-            {children}
-        </h1>
+        />
     )
 }
 
 function H2({
     className,
-    style,
-    children,
     highlight,
     italic,
+    mono,
+    asChild,
     ...props
-}: {
-    className?: string
-    style?: React.CSSProperties
-    children: React.ReactNode
-    highlight?: boolean
-    italic?: boolean
-}) {
+}: React.ComponentProps<"h2"> & TextProps) {
+    const Comp = asChild ? Slot : "h2"
     return (
-        <h2
+        <Comp
             className={cn(
                 "text-2xl",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
+                mono && "font-mono",
                 className
             )}
-            style={style}
             {...props}
-        >
-            {children}
-        </h2>
+        />
     )
 }
 
 function H3({
     className,
-    style,
-    children,
     highlight,
     italic,
+    mono,
+    asChild,
     ...props
-}: {
-    className?: string
-    style?: React.CSSProperties
-    children: React.ReactNode
-    highlight?: boolean
-    italic?: boolean
-}) {
+}: React.ComponentProps<"h3"> & TextProps) {
+    const Comp = asChild ? Slot : "h3"
     return (
-        <h3
+        <Comp
             className={cn(
                 "text-4xl font-extrabold",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
+                mono && "font-mono",
                 className
             )}
-            style={style}
             {...props}
-        >
-            {children}
-        </h3>
+        />
     )
 }
 
 function Bold({
     className,
-    style,
-    children,
     italic,
+    mono,
+    asChild,
     ...props
-}: {
-    className?: string
-    style?: React.CSSProperties
-    children: React.ReactNode
-    italic?: boolean
-}) {
+}: React.ComponentProps<"b"> & Omit<TextProps, "highlight">) {
+    const Comp = asChild ? Slot : "b"
     return (
-        <b
-            className={cn("text-foreground", italic && "italic", className)}
-            style={style}
+        <Comp
+            className={cn(
+                "text-foreground",
+                italic && "italic",
+                mono && "font-mono",
+                className
+            )}
             {...props}
-        >
-            {children}
-        </b>
+        />
     )
 }
 
 function Highlight({
     className,
-    style,
-    children,
     italic,
+    mono,
+    asChild,
     ...props
-}: {
-    className?: string
-    style?: React.CSSProperties
-    children: React.ReactNode
-    italic?: boolean
-}) {
+}: React.ComponentProps<"b"> & Omit<TextProps, "highlight">) {
+    const Comp = asChild ? Slot : "b"
     return (
-        <b
-            className={cn("text-highlighted", italic && "italic", className)}
-            style={style}
+        <Comp
+            className={cn(
+                "text-highlighted",
+                italic && "italic",
+                mono && "font-mono",
+                className
+            )}
             {...props}
-        >
-            {children}
-        </b>
+        />
     )
 }
 
 function Link({
     className,
-    style,
-    children,
-    url,
     openInNewTab,
+    highlight,
     italic,
+    mono,
+    asChild,
     ...props
-}: {
-    className?: string
-    style?: React.CSSProperties
-    children: React.ReactNode
-    url: string
-    openInNewTab?: boolean
-    italic?: boolean
-}) {
+}: React.ComponentProps<"a"> &
+    TextProps & {
+        openInNewTab?: boolean
+    }) {
+    const Comp = asChild ? Slot : "a"
     return (
-        <a
+        <Comp
             className={cn(
-                "text-foreground w-fit font-bold hover:underline",
+                "text-foreground w-fit cursor-pointer font-bold underline hover:decoration-current",
+                highlight && "text-highlighted",
                 italic && "italic",
+                mono && "font-mono",
                 className
             )}
-            href={url}
             {...(openInNewTab && { target: "_blank", rel: "noreferrer" })}
-            style={style}
             {...props}
-        >
-            {children}
-        </a>
+        />
     )
 }
 
 function Text({
     className,
-    style,
-    children,
     italic,
     mono,
+    asChild,
     ...props
-}: {
-    className?: string
-    style?: React.CSSProperties
-    children: React.ReactNode
-    italic?: boolean
-    mono?: boolean
-}) {
+}: React.ComponentProps<"p"> & Omit<TextProps, "highlight">) {
+    const Comp = asChild ? Slot : "p"
     return (
-        <p
+        <Comp
             className={cn(
                 "text-muted-foreground",
                 italic && "italic",
                 mono && "font-mono",
                 className
             )}
-            style={style}
             {...props}
-        >
-            {children}
-        </p>
+        />
     )
 }
 
 function At({
-    className
-}: {
-    className?: string
-    style?: React.CSSProperties
-}) {
+    className,
+    highlight,
+    italic,
+    mono
+}: React.ComponentProps<"span"> & TextProps) {
     return (
         <span
             className={cn(
                 "text-muted-foreground -mt-[0.125em] font-normal",
+                highlight && "text-highlighted",
+                italic && "italic",
+                mono && "font-mono",
                 className
             )}
         >

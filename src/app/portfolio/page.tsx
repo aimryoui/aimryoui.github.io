@@ -14,7 +14,7 @@ import {
     TooltipProvider,
     TooltipTrigger
 } from "@/components/ui/tooltip"
-import { Bold, H1, H3, Highlight, Text } from "@/components/ui/typography"
+import { Bold, H1, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
 export default function Home() {
@@ -95,8 +95,7 @@ export default function Home() {
                 {[
                     { value: "2003", label: "Year of birth" },
                     { value: "45+", label: "Projects" },
-                    { value: "4+", label: "Years as Designer" },
-                    { value: "HCMC", label: "Location" }
+                    { value: "4+", label: "Years as Designer" }
                 ].map((item) => (
                     <React.Fragment key={item.label}>
                         <div
@@ -132,10 +131,46 @@ export default function Home() {
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger>
-                                <a
+                                <Link
+                                    href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
+                                    openInNewTab
+                                    highlight
+                                    className={cn("text-4xl")}
+                                >
+                                    <H3 highlight>HCMC</H3>
+                                </Link>
+                            </TooltipTrigger>
+                            <TooltipContent>Hồ Chí Minh City</TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                    <div
+                        className={cn(
+                            "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                        )}
+                    >
+                        <span
+                            className={cn(
+                                "text-xxs font-extrabold tracking-tight uppercase"
+                            )}
+                        >
+                            Location
+                        </span>
+                    </div>
+                </div>
+                <ElementLine />
+                <Divider dir="vertical" />
+                <ElementLine />
+                <div
+                    className={cn(
+                        "bg-highlighted/10 relative grid flex-1 place-items-center"
+                    )}
+                >
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <Link
                                     href="https://wikipedia.org/wiki/Vietnam"
-                                    target="_blank"
-                                    rel="noreferrer"
+                                    openInNewTab
                                     className={cn(
                                         "grid h-8 w-12 place-items-center bg-[#DA251D]"
                                     )}
@@ -149,7 +184,7 @@ export default function Home() {
                                             "aspect-square w-[1.2rem] bg-[#FFFF00] [clip-path:polygon(50%_0,79%_90%,2%_35%,98%_35%,21%_90%)]"
                                         )}
                                     />
-                                </a>
+                                </Link>
                             </TooltipTrigger>
                             <TooltipContent translate="no" lang="vi-VN">
                                 Việt Nam

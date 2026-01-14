@@ -13,6 +13,7 @@ function TooltipProvider({
         <TooltipPrimitive.Provider
             data-slot="tooltip-provider"
             delayDuration={delayDuration}
+            skipDelayDuration={800}
             disableHoverableContent
             {...props}
         />
@@ -39,7 +40,7 @@ function TooltipTrigger({
 
 function TooltipContent({
     className,
-    sideOffset = 4,
+    sideOffset = 2,
     children,
     ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Content>) {
@@ -56,13 +57,11 @@ function TooltipContent({
                         data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2
                         data-[side=right]:slide-in-from-left-2
                         data-[side=top]:slide-in-from-bottom-2
-                        text-foreground
-                        z-50
-                        w-fit origin-(--radix-tooltip-content-transform-origin)
+                        text-foreground z-50 w-fit
+                        origin-(--radix-tooltip-content-transform-origin)
                         rounded-md
                         px-2 py-1 text-sm tracking-tight text-balance outline-[1.5px]
                         -outline-offset-[1.5px] data-[state=closed]:animate-out
-                        data-[state=instant-open]:animate-none
                     `,
                     className
                 )}

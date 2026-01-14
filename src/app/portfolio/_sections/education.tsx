@@ -31,7 +31,7 @@ function SectionEducation() {
                         Bachelor's Degree / Digital Art & Design{" "}
                         <At className="float-end" />
                     </Bold>
-                    <Link url="https://daihoc.fpt.edu.vn/hcm/" openInNewTab>
+                    <Link href="https://daihoc.fpt.edu.vn/hcm/" openInNewTab>
                         FPT University HCMC
                     </Link>
 

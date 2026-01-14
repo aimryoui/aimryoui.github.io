@@ -221,8 +221,9 @@ function SectionExperiences() {
                                             <At className="float-end" />
                                         </Bold>
                                         <Link
-                                            url={place.at.url}
+                                            href={place.at.url}
                                             openInNewTab
+                                            translate="no"
                                             className={cn(
                                                 "col-span-2",
                                                 place.at.duplicate &&

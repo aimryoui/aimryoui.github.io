@@ -306,7 +306,7 @@ function SectionContact() {
                                     )}
                                 >
                                     <Link
-                                        url={platform.links.url}
+                                        href={platform.links.url}
                                         openInNewTab
                                         className={
                                             platform.links.hidden
