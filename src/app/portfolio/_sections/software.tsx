@@ -324,7 +324,7 @@ function SectionSoftware() {
                                                     <TooltipTrigger>
                                                         <Link
                                                             openInNewTab
-                                                            url={tool.url}
+                                                            href={tool.url}
                                                         >
                                                             {tool.icon}
                                                         </Link>
