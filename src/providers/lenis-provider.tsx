@@ -8,9 +8,8 @@ const LenisProvider = ({ children }: PropsWithChildren) => {
         <ReactLenis
             options={{
                 duration: 0.5,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                wheelMultiplier: 0.75,
-                touchMultiplier: 0.75
+                wheelMultiplier: 0.85,
+                touchMultiplier: 0.85
             }}
             root
         >

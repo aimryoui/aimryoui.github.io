@@ -11,10 +11,10 @@ import { Space } from "@/components/layout/space"
 import {
     Tooltip,
     TooltipContent,
+    TooltipProvider,
     TooltipTrigger
 } from "@/components/ui/tooltip"
-import { Bold, H1, H2, H3, Highlight, Text } from "@/components/ui/typography"
-import { VisuallyHidden } from "@/components/ui/visually-hidden"
+import { Bold, H1, H3, Highlight, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
 export default function Home() {
@@ -43,7 +43,7 @@ export default function Home() {
             <Divider />
             <SectionLine />
             <div className={cn("bg-background relative px-6 pt-3.5 pb-4")}>
-                <H2>
+                <Text>
                     However, I came up from{" "}
                     {[
                         "event projects",
@@ -56,14 +56,9 @@ export default function Home() {
                             {idx < arr.length - 1 && ", "}
                         </React.Fragment>
                     ))}
-                    , <br />
-                    or event-type university course projects.
-                </H2>
-            </div>
-            <SectionLine />
-            <Divider />
-            <SectionLine />
-            <div className={cn("bg-background relative px-6 pt-3.5 pb-4")}>
+                    , or event-type university course projects.
+                </Text>
+                <br />
                 <Text>
                     Also, I love coding, I have some experience with{" "}
                     {[
@@ -134,31 +129,33 @@ export default function Home() {
                         "bg-highlighted/10 relative grid flex-1 place-items-center"
                     )}
                 >
-                    <Tooltip>
-                        <TooltipTrigger>
-                            <a
-                                href="https://wikipedia.org/wiki/Vietnam"
-                                target="_blank"
-                                rel="noreferrer"
-                                className={cn(
-                                    "grid h-8 w-12 place-items-center bg-[#DA251D]"
-                                )}
-                            >
-                                <H3 highlight className={cn("sr-only")}>
-                                    Vietnam
-                                </H3>
-                                {/* https://css-shape.com/star/ */}
-                                <div
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <a
+                                    href="https://wikipedia.org/wiki/Vietnam"
+                                    target="_blank"
+                                    rel="noreferrer"
                                     className={cn(
-                                        "aspect-square w-[1.2rem] bg-[#FFFF00] [clip-path:polygon(50%_0,79%_90%,2%_35%,98%_35%,21%_90%)]"
+                                        "grid h-8 w-12 place-items-center bg-[#DA251D]"
                                     )}
-                                />
-                            </a>
-                        </TooltipTrigger>
-                        <TooltipContent translate="no" lang="vi-VN">
-                            Việt Nam
-                        </TooltipContent>
-                    </Tooltip>
+                                >
+                                    <H3 highlight className={cn("sr-only")}>
+                                        Vietnam
+                                    </H3>
+                                    {/* https://css-shape.com/star/ */}
+                                    <div
+                                        className={cn(
+                                            "aspect-square w-[1.2rem] bg-[#FFFF00] [clip-path:polygon(50%_0,79%_90%,2%_35%,98%_35%,21%_90%)]"
+                                        )}
+                                    />
+                                </a>
+                            </TooltipTrigger>
+                            <TooltipContent translate="no" lang="vi-VN">
+                                Việt Nam
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                     <div
                         className={cn(
                             "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
@@ -186,10 +183,10 @@ export default function Home() {
             <SectionEducation />
             <SectionLine />
 
-            <SectionContact />
+            <SectionSoftware />
             <SectionLine />
 
-            <SectionSoftware />
+            <SectionContact />
 
             <SectionLine />
             <Space />

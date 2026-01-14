@@ -11,13 +11,8 @@ import reactHooksPlugin from "eslint-plugin-react-hooks"
 import simpleImportPlugin from "eslint-plugin-simple-import-sort"
 // import tailwind from "eslint-plugin-tailwindcss"
 import globals from "globals"
-import path from "path"
 import tseslint from "typescript-eslint"
-import { fileURLToPath } from "url"
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript"
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
 
 //! DO NOT CHANGE THE ORDER OF RULES
 
@@ -41,7 +36,7 @@ export default tseslint.config(
     {
         //? Default ESLint rules here
         rules: {
-            "no-unused-vars": 0,
+            "no-unused-vars": 1,
             "no-restricted-syntax": [
                 "warn",
                 {
@@ -234,7 +229,7 @@ export default tseslint.config(
             "import-x/first": 1,
             "import-x/newline-after-import": 1,
             "import-x/no-duplicates": [1, { "prefer-inline": true }],
-            "import-x/no-unresolved": 0,
+            "import-x/no-unresolved": 1,
             "import-x/extensions": [
                 1,
                 "never",
