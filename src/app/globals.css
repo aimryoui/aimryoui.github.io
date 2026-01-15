@@ -37,6 +37,8 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
 
+    --color-inverted: var(--inverted);
+
     --color-highlighted: var(--highlighted);
     --color-pattern-foreground: var(--pattern-foreground);
     --color-stroke-foreground: var(--stroke-foreground);
@@ -87,6 +89,8 @@
     --pattern-foreground: oklch(87.59% 0.0029 264.5);
     --stroke-foreground: oklch(87.59% 0.0029 264.5);
 
+    --inverted: oklch(0 0 1);
+
     --padding: calc(var(--spacing) * 48);
 
     --custom-radius-xs: 0.125rem;
@@ -106,7 +110,9 @@
         --custom-radius-xl: 1rem;
         --custom-radius-2xl: 1.5rem;
     }
-    [class*="rounded-"] {
+    [class*="rounded-"],
+    [class*="before:rounded-"]::before,
+    [class*="after:rounded-"]::after {
         corner-shape: superellipse(1.5);
     }
 }
@@ -143,6 +149,8 @@
     --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.551 0.027 264.364);
+
+    --inverted: oklch(100% 0 0);
 
     --highlighted: oklch(69.2% 0.1595 240.4);
     --pattern-foreground: #121416;

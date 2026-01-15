@@ -8,8 +8,8 @@ const INPUT_DIR = "private/images"
 const OUTPUT_BASE = "public/assets/images"
 const MANIFEST_PATH = "src/lib/image-manifest.json"
 const MAX_SIZE = 1602 // Resize ảnh gốc về tối đa 1602px cạnh lớn nhất, chia hết cho 3
-const GRID_ROWS = 3
-const GRID_COLS = 3
+export const GRID_ROWS = 3
+export const GRID_COLS = 3
 
 // Interface Manifest
 type ImageManifest = Record<string, { width: number; height: number }>
@@ -56,7 +56,7 @@ async function main() {
 
         // Check Cache logic
         const stat = fs.statSync(filePath)
-        const metaFile = path.join(outputFolder, `meta_${parsedPath.name}.json`)
+        const metaFile = path.join(outputFolder, `${parsedPath.name}_meta.json`)
         let isCached = false
 
         // Nếu file chưa sửa VÀ key vẫn tồn tại trong manifest cũ

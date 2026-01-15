@@ -7,6 +7,7 @@ import SectionExperiences from "@/app/portfolio/_sections/experiences"
 import SectionSoftware from "@/app/portfolio/_sections/software"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
+import { MediaFrame } from "@/components/layout/media-frame"
 import { Space } from "@/components/layout/space"
 import { Image } from "@/components/ui/image"
 import {
@@ -235,7 +236,16 @@ export default function Home() {
             <SectionLine showDecoration />
             <Space />
 
-            <Image src="hehe.png" alt="hehe" />
+            <SectionLine />
+            <div className={cn("relative w-full")}>
+                <MediaFrame>
+                    <Image
+                        src="hehe.png"
+                        alt="hehe"
+                        className={cn("rounded-2xl")}
+                    />
+                </MediaFrame>
+            </div>
         </main>
     )
 }
