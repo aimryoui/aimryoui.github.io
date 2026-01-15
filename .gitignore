@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ignore output images
+public/assets/images/
+
+# Ignore image manifest
+image-manifest.json

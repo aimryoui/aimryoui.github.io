@@ -8,6 +8,7 @@ import SectionSoftware from "@/app/portfolio/_sections/software"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
+import { Image } from "@/components/ui/image"
 import {
     Tooltip,
     TooltipContent,
@@ -233,6 +234,8 @@ export default function Home() {
             <Space />
             <SectionLine showDecoration />
             <Space />
+
+            <Image src="hehe.png" alt="hehe" />
         </main>
     )
 }

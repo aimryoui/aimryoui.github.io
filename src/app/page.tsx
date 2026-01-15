@@ -4,6 +4,7 @@ import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { Button } from "@/components/ui/button"
+import { Image } from "@/components/ui/image"
 import { H1, H3, Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
@@ -25,9 +26,16 @@ export default function Home() {
             <SectionLine />
             <div
                 className={cn(
-                    "bg-background grid w-full flex-1 place-items-center bg-[url(/images/hehe.webp)] bg-cover bg-center bg-no-repeat"
+                    "relative grid w-full flex-1 place-items-center overflow-hidden"
                 )}
             >
+                <Image
+                    src="hehe.png"
+                    alt="hehe"
+                    className={cn(
+                        "absolute inset-0 top-1/2 left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2"
+                    )}
+                />
                 <Button
                     asChild
                     variant="outline"
