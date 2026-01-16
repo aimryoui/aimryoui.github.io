@@ -35,10 +35,7 @@ function Image({
         // Represent <img> tag or background-image property
         <div
             className={cn(
-                asBackgroundImage
-                    ? "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                    : "relative",
-                "bg-background grid size-full place-items-center overflow-clip",
+                "bg-background relative grid size-full place-items-center overflow-clip",
                 "after:outline-inverted/10 after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:outline-[1.5px] after:-outline-offset-[1.5px]",
                 className
             )}
@@ -47,6 +44,7 @@ function Image({
             <div
                 className={cn(
                     "grid grid-cols-3 grid-rows-3",
+                    asBackgroundImage && "absolute",
                     objectFit === "fill" && "size-full",
                     objectFit === "contain" &&
                         "size-auto max-h-full max-w-full",
