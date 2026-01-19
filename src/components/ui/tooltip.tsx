@@ -57,11 +57,11 @@ function TooltipContent({
                         data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2
                         data-[side=right]:slide-in-from-left-2
                         data-[side=top]:slide-in-from-bottom-2
-                        text-foreground z-50 w-fit
+                        text-foreground -outline-offset z-50
+                        w-fit
                         origin-(--radix-tooltip-content-transform-origin)
-                        rounded-md
-                        px-2 py-1 text-sm tracking-tight text-balance outline-[1.5px]
-                        -outline-offset-[1.5px] data-[state=closed]:animate-out
+                        rounded-md px-2 py-1 text-sm tracking-tight text-balance
+                        outline data-[state=closed]:animate-out
                     `,
                     className
                 )}

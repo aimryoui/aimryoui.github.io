@@ -25,7 +25,7 @@ const lastModified = new Date().toLocaleString("en-US", {
 
 const APP_NAME = AppData.name
 const APP_DEFAULT_TITLE = "Portfolio | Q1.2026 | Nguyễn Hoàng Nhân"
-const APP_TITLE_TEMPLATE = "%s | Q1.2026 | Nguyễn Hoàng Nhân"
+// const APP_TITLE_TEMPLATE = "%s | Q1.2026 | Nguyễn Hoàng Nhân"
 const APP_DESCRIPTION = AppData.description
 
 const APP_BASE_URL = siteConfig.url
@@ -161,7 +161,7 @@ export default function RootLayout({
                 className={cn(`
                     text-muted-foreground bg-background flex
                     bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)]
-                    bg-size-[10px_10px] bg-fixed px-(--padding) -tracking-[.04em]
+                    bg-size-[10px_10px] bg-fixed px-(--body-padding) -tracking-[.04em]
                 `)}
             >
                 <ThemeProvider disableTransitionOnChange>

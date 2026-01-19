@@ -7,9 +7,7 @@ import SectionExperiences from "@/app/portfolio/_sections/experiences"
 import SectionSoftware from "@/app/portfolio/_sections/software"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
-import { MediaFrame } from "@/components/layout/media-frame"
 import { Space } from "@/components/layout/space"
-import { Image } from "@/components/ui/image"
 import {
     Tooltip,
     TooltipContent,
@@ -18,6 +16,8 @@ import {
 } from "@/components/ui/tooltip"
 import { Bold, H1, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
+
+import UIUX from "./_sections/_uiux/uiux"
 
 export default function Home() {
     return (
@@ -29,7 +29,7 @@ export default function Home() {
             <div className={cn("bg-background relative px-6 pt-3.5 pb-5")}>
                 <span
                     className={cn(`
-                    l-6 absolute -top-10.5
+                    absolute -top-10.5 left-6
                     font-mono tracking-normal uppercase
                 `)}
                 >
@@ -237,15 +237,8 @@ export default function Home() {
             <Space />
 
             <SectionLine />
-            <div className={cn("relative w-full")}>
-                <MediaFrame>
-                    <Image
-                        src="hehe.png"
-                        alt="hehe"
-                        className={cn("rounded-2xl")}
-                    />
-                </MediaFrame>
-            </div>
+
+            <UIUX />
         </main>
     )
 }

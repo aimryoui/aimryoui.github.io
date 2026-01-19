@@ -43,28 +43,34 @@
     --color-pattern-foreground: var(--pattern-foreground);
     --color-stroke-foreground: var(--stroke-foreground);
 
-    --spacing-px: 1.5px;
-    --default-border-width: 1.5px;
+    --spacing-px: var(--px);
+    --default-border-width: var(--px);
+    --default-outline-width: var(--px);
+    --outline-offset: var(--px);
 
     --font-weight-normal: 500;
 
-    --radius-2xl: var(--custom-radius-2xl);
+    --radius-xs: var(--custom-radius-xs);
+    --radius-sm: var(--custom-radius-sm);
     --radius-md: var(--custom-radius-md);
+    --radius-lg: var(--custom-radius-lg);
+    --radius-xl: var(--custom-radius-xl);
+    --radius-2xl: var(--custom-radius-2xl);
 }
 
 :root {
-    --background: oklch(94.29% 0.0029 264.5); /* NHN */
-    --foreground: oklch(35.16% 0.0187 264.3); /* NHN */
-    --card: oklch(94.29% 0.0029 264.5);
+    --background: oklch(0.9429 0.0029 264.5); /* NHN */
+    --foreground: oklch(0.3516 0.0187 264.3); /* NHN */
+    --card: oklch(0.9429 0.0029 264.5);
     --card-foreground: oklch(0.13 0.028 261.692);
-    --popover: oklch(94.29% 0.0029 264.5);
+    --popover: oklch(0.9429 0.0029 264.5);
     --popover-foreground: oklch(0.13 0.028 261.692);
     --primary: oklch(0.21 0.034 264.665);
     --primary-foreground: oklch(0.985 0.002 247.839);
     --secondary: oklch(0.967 0.003 264.542);
     --secondary-foreground: oklch(0.21 0.034 264.665);
     --muted: oklch(0.967 0.003 264.542);
-    --muted-foreground: oklch(60.91% 0.0162 264.4); /* NHN */
+    --muted-foreground: oklch(0.6091 0.0162 264.4); /* NHN */
     --accent: oklch(0.967 0.003 264.542);
     --accent-foreground: oklch(0.21 0.034 264.665);
     --destructive: oklch(0.577 0.245 27.325);
@@ -85,13 +91,11 @@
     --sidebar-border: oklch(0.928 0.006 264.531);
     --sidebar-ring: oklch(0.707 0.022 261.325);
 
-    --highlighted: oklch(69.2% 0.1595 240.4);
-    --pattern-foreground: oklch(87.59% 0.0029 264.5);
-    --stroke-foreground: oklch(87.59% 0.0029 264.5);
+    --highlighted: oklch(0.692 0.1595 240.4);
+    --pattern-foreground: oklch(0.8759 0.0029 264.5);
+    --stroke-foreground: oklch(0.8759 0.0029 264.5);
 
     --inverted: oklch(0 0 1);
-
-    --padding: calc(var(--spacing) * 48);
 
     --custom-radius-xs: 0.125rem;
     --custom-radius-sm: 0.25rem;
@@ -119,7 +123,7 @@
 
 [data-theme="dark"] {
     --background: oklch(0.13 0.028 261.692); /* NHN */
-    --foreground: oklch(85.45% 0.0115 269.5); /* NHN */
+    --foreground: oklch(0.8545 0.0115 269.5); /* NHN */
     --card: oklch(0.21 0.034 264.665);
     --card-foreground: oklch(0.985 0.002 247.839);
     --popover: oklch(0.21 0.034 264.665);
@@ -129,7 +133,7 @@
     --secondary: oklch(0.278 0.033 256.848);
     --secondary-foreground: oklch(0.985 0.002 247.839);
     --muted: oklch(0.278 0.033 256.848);
-    --muted-foreground: oklch(63.95% 0.0174 266.2); /* NHN */
+    --muted-foreground: oklch(0.6395 0.0174 266.2); /* NHN */
     --accent: oklch(0.278 0.033 256.848);
     --accent-foreground: oklch(0.985 0.002 247.839);
     --destructive: oklch(0.704 0.191 22.216);
@@ -150,11 +154,11 @@
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.551 0.027 264.364);
 
-    --inverted: oklch(100% 0 0);
+    --inverted: oklch(1 0 0);
 
-    --highlighted: oklch(69.2% 0.1595 240.4);
+    --highlighted: oklch(0.692 0.1595 240.4);
     --pattern-foreground: #121416;
-    --stroke-foreground: oklch(25.47% 0.0087 255.6);
+    --stroke-foreground: oklch(0.2547 0.0087 255.6);
 }
 
 @layer base {
@@ -167,6 +171,8 @@
 }
 
 @theme {
+    --breakpoint-*: initial;
+
     --font-sans: var(--font-plus-jakarta-sans);
     --font-mono: var(--font-sf-mono);
 
@@ -175,4 +181,28 @@
     --text-base--line-height: 1.3;
     --text-2xl--line-height: 1.3;
     --text-4xl--line-height: 1.3;
+}
+
+@custom-variant 2xl (@media (max-width: 96rem));
+@custom-variant xl (@media (max-width: 80rem));
+@custom-variant lg (@media (max-width: 64rem));
+@custom-variant md (@media (max-width: 48rem));
+@custom-variant sm (@media (max-width: 40rem));
+
+:root {
+    --px: 0.09375rem;
+    --body-padding: calc(var(--spacing) * 48);
+    font-size: 0.9373dvw;
+
+    @variant 2xl {
+        font-size: 16px;
+    }
+
+    @variant xl {
+        --body-padding: calc(var(--spacing) * 24);
+    }
+
+    @variant md {
+        --body-padding: calc(var(--spacing) * 8);
+    }
 }

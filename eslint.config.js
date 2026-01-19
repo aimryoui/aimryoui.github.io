@@ -12,6 +12,7 @@ import simpleImportPlugin from "eslint-plugin-simple-import-sort"
 // import tailwind from "eslint-plugin-tailwindcss"
 import globals from "globals"
 import tseslint from "typescript-eslint"
+import unusedImports from "eslint-plugin-unused-imports"
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript"
 
 //! DO NOT CHANGE THE ORDER OF RULES
@@ -36,7 +37,7 @@ export default tseslint.config(
     {
         //? Default ESLint rules here
         rules: {
-            "no-unused-vars": 1,
+            "no-unused-vars": 0,
             "no-restricted-syntax": [
                 "warn",
                 {
@@ -60,7 +61,7 @@ export default tseslint.config(
             "@typescript-eslint": tseslint.plugin
         },
         linterOptions: {
-            reportUnusedDisableDirectives: "warn"
+            reportUnusedDisableDirectives: true
         },
         languageOptions: {
             parser: tseslint.parser,
@@ -221,6 +222,7 @@ export default tseslint.config(
         },
         plugins: {
             "import-x": importX,
+            "unused-imports": unusedImports,
             "simple-import-sort": simpleImportPlugin,
             "import-newlines": importNewlines,
             "@limegrass/import-alias": importAlias
@@ -236,6 +238,17 @@ export default tseslint.config(
                 { css: "always", json: "always" }
             ],
             "import-x/consistent-type-specifier-style": [1, "prefer-inline"],
+
+            "unused-imports/no-unused-imports": 1,
+            "unused-imports/no-unused-vars": [
+                1,
+                {
+                    vars: "all",
+                    varsIgnorePattern: "^_",
+                    args: "after-used",
+                    argsIgnorePattern: "^_"
+                }
+            ],
 
             "import-newlines/enforce": [
                 1,

@@ -1,10 +1,9 @@
+import SectionTitle from "@/app/portfolio/_components/section-title"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { At, Bold, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
-
-import SectionTitle from "./section-title"
 
 function SectionEducation() {
     return (

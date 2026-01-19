@@ -10,7 +10,7 @@ function MediaFrame({
     return (
         <div
             className={cn(
-                "bg-stroke-foreground flex size-full items-center justify-center overflow-clip p-2 [overflow-clip-margin:content-box]",
+                "bg-stroke-foreground relative flex w-full items-center justify-center overflow-clip p-2 [overflow-clip-margin:content-box]",
                 className
             )}
         >

@@ -78,6 +78,28 @@ function H3({
     )
 }
 
+function H4({
+    className,
+    highlight,
+    italic,
+    mono,
+    asChild,
+    ...props
+}: React.ComponentProps<"h4"> & TextProps) {
+    const Comp = asChild ? Slot : "h4"
+    return (
+        <Comp
+            className={cn(
+                highlight ? "text-highlighted" : "text-muted-foreground",
+                italic && "italic",
+                mono && "font-mono",
+                className
+            )}
+            {...props}
+        />
+    )
+}
+
 function Bold({
     className,
     italic,
@@ -136,7 +158,7 @@ function Link({
     return (
         <Comp
             className={cn(
-                "text-foreground w-fit cursor-pointer font-bold underline hover:decoration-current",
+                "text-foreground w-fit cursor-pointer font-bold underline hover:decoration-current hover:decoration-solid",
                 highlight && "text-highlighted",
                 italic && "italic",
                 mono && "font-mono",
@@ -178,7 +200,7 @@ function At({
     return (
         <span
             className={cn(
-                "text-muted-foreground -mt-[0.125em] font-normal",
+                "text-muted-foreground inline-block -translate-y-[0.125em] font-normal",
                 highlight && "text-highlighted",
                 italic && "italic",
                 mono && "font-mono",
@@ -190,4 +212,4 @@ function At({
     )
 }
 
-export { At, Bold, H1, H2, H3, Highlight, Link, Text }
+export { At, Bold, H1, H2, H3, H4, Highlight, Link, Text }

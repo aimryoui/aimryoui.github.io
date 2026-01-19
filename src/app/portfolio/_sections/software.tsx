@@ -1,5 +1,6 @@
 import React from "react"
 
+import SectionTitle from "@/app/portfolio/_components/section-title"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
@@ -11,8 +12,6 @@ import {
 } from "@/components/ui/tooltip"
 import { Bold, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
-
-import SectionTitle from "./section-title"
 
 interface ToolProps {
     name: string

@@ -48,8 +48,8 @@ function SectionLine({
             <hr
                 className={cn(
                     `
-                    bg-background me(--padding)- absolute
-                    top-1/2 -ms-(--padding) h-px w-[calc(100%+var(--padding)*2)] -translate-y-1/2
+                    bg-background me(--body-padding)- absolute
+                    top-1/2 -ms-(--body-padding) h-px w-[calc(100%+var(--body-padding)*2)] -translate-y-1/2
                     bg-[linear-gradient(to_right,var(--stroke-foreground)_50%,transparent_0)]
                     bg-size-[16px_1px] bg-top bg-repeat-x
                 `,

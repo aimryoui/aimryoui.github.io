@@ -20,7 +20,7 @@ function Image({
     asBackgroundImage?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
 }) {
-    const metadata = imageManifest[src.replace(/\.[^/.]+$/, ".webp")]
+    const metadata = imageManifest[src.replace(/\.[^/.]+$/, "")]
 
     // Parse path
     const lastDotIndex = src.lastIndexOf(".")
