@@ -1,4 +1,4 @@
-import ProjectHeader from "@/app/portfolio/_components/project-title"
+import ProjectHeader from "@/app/portfolio/_components/project-header"
 import { Divider, ProjectSectionDivider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
@@ -24,6 +24,7 @@ function UIUX() {
                     subject: "SU25 Capstone Project",
                     place: "FPT University HCMC"
                 }}
+                tools={["figma", "photoshop", "illustrator", "afterEffects"]}
                 detail={{
                     description:
                         "One-for-all Community Messaging Application for Influencers, KOLs, KOCs, Creators.",

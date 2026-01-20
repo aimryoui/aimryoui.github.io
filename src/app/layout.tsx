@@ -9,7 +9,7 @@ import { MarginLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
-import LenisProvider from "@/providers/lenis-provider"
+// import LenisProvider from "@/providers/lenis-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 import AppData from "~/package.json"
 
@@ -165,12 +165,12 @@ export default function RootLayout({
                 `)}
             >
                 <ThemeProvider disableTransitionOnChange>
-                    <LenisProvider>
-                        <MarginLine />
-                        {children}
-                        <MarginLine />
-                        <ModeToggle />
-                    </LenisProvider>
+                    {/* <LenisProvider> */}
+                    <MarginLine />
+                    {children}
+                    <MarginLine />
+                    <ModeToggle />
+                    {/* </LenisProvider> */}
                 </ThemeProvider>
             </body>
         </html>

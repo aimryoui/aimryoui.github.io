@@ -27,13 +27,17 @@ function SectionContent() {
             <SectionLine />
             <Divider />
             <SectionLine />
-            <div className={cn("bg-background flex items-stretch")}>
-                <div className={cn("w-3/5")}>
+            <div
+                className={cn(
+                    "bg-background grid grid-cols-[3fr_var(--px)_calc(var(--spacing)*6)_var(--px)_2fr]"
+                )}
+            >
+                <div>
                     {sections.map((section, idx, arr) => (
                         <React.Fragment key={idx}>
                             <div
                                 className={cn(
-                                    "col-span-3 grid grid-cols-3 gap-6 gap-y-3 pt-3.5 pb-4"
+                                    "grid grid-cols-3 gap-6 gap-y-3 pt-3.5 pb-4"
                                 )}
                             >
                                 <Highlight className={cn("ps-6 font-normal")}>
@@ -56,7 +60,7 @@ function SectionContent() {
                 <ElementLine />
                 <Divider dir="vertical" />
                 <ElementLine />
-                <div className={cn("bg-highlighted/10 w-2/5 p-2")}>
+                <div className={cn("bg-highlighted/10 p-2")}>
                     <div
                         className={cn(
                             "bg-background border-highlighted grid size-full place-items-center rounded-2xl border bg-[radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-size-[.75rem_.75rem] bg-fixed bg-position-[0_0,.375rem_.375rem] px-14"

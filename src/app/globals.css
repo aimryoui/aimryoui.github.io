@@ -46,7 +46,7 @@
     --spacing-px: var(--px);
     --default-border-width: var(--px);
     --default-outline-width: var(--px);
-    --outline-offset: var(--px);
+    --outline-offset-px: var(--px);
 
     --font-weight-normal: 500;
 

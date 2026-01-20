@@ -51,13 +51,13 @@ function TooltipContent({
                 sideOffset={sideOffset}
                 className={cn(
                     `
-                        group bg-background outline-muted-foreground animate-in
-                        fade-in-0 zoom-in-95 data-[state=closed]:fade-out-0
-                        data-[state=closed]:zoom-out-95
-                        data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2
-                        data-[side=right]:slide-in-from-left-2
+                        group bg-background animate-in fade-in-0
+                        zoom-in-95 data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
+                        data-[side=bottom]:slide-in-from-top-2
+                        data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2
                         data-[side=top]:slide-in-from-bottom-2
-                        text-foreground -outline-offset z-50
+                        text-foreground
+                        -outline-offset-px outline-muted-foreground z-50
                         w-fit
                         origin-(--radix-tooltip-content-transform-origin)
                         rounded-md px-2 py-1 text-sm tracking-tight text-balance
@@ -77,9 +77,8 @@ function TooltipContent({
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 8"
-                        width="24"
-                        height="8"
                         fill="none"
+                        className={cn("h-2 w-6")}
                     >
                         <path
                             className={cn("fill-background")}

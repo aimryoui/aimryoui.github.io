@@ -94,43 +94,43 @@ export default function Home() {
             <Divider />
             <SectionLine />
             <div className={cn("bg-background flex h-24")}>
-                {[
-                    { value: "2003", label: "Year of birth" },
-                    { value: "45+", label: "Projects" },
-                    { value: "4+", label: "Years as Designer" }
-                ].map((item) => (
-                    <React.Fragment key={item.label}>
-                        <div
-                            className={cn(
-                                "bg-highlighted/10 relative grid flex-1 place-items-center"
-                            )}
-                        >
-                            <H3 highlight>{item.value}</H3>
+                <TooltipProvider>
+                    {[
+                        { value: "2003", label: "Year of birth" },
+                        { value: "45+", label: "Projects" },
+                        { value: "4+", label: "Years as Designer" }
+                    ].map((item) => (
+                        <React.Fragment key={item.label}>
                             <div
                                 className={cn(
-                                    "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                                    "bg-highlighted/10 relative grid flex-1 place-items-center"
                                 )}
                             >
-                                <span
+                                <H3 highlight>{item.value}</H3>
+                                <div
                                     className={cn(
-                                        "text-xxs font-extrabold tracking-tight uppercase"
+                                        "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
                                     )}
                                 >
-                                    {item.label}
-                                </span>
+                                    <span
+                                        className={cn(
+                                            "text-xxs font-extrabold tracking-tight uppercase"
+                                        )}
+                                    >
+                                        {item.label}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                        <ElementLine />
-                        <Divider dir="vertical" />
-                        <ElementLine />
-                    </React.Fragment>
-                ))}
-                <div
-                    className={cn(
-                        "bg-highlighted/10 relative grid flex-1 place-items-center"
-                    )}
-                >
-                    <TooltipProvider>
+                            <ElementLine />
+                            <Divider dir="vertical" />
+                            <ElementLine />
+                        </React.Fragment>
+                    ))}
+                    <div
+                        className={cn(
+                            "bg-highlighted/10 relative grid flex-1 place-items-center"
+                        )}
+                    >
                         <Tooltip>
                             <TooltipTrigger>
                                 <Link
@@ -144,30 +144,28 @@ export default function Home() {
                             </TooltipTrigger>
                             <TooltipContent>Hồ Chí Minh City</TooltipContent>
                         </Tooltip>
-                    </TooltipProvider>
-                    <div
-                        className={cn(
-                            "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
-                        )}
-                    >
-                        <span
+                        <div
                             className={cn(
-                                "text-xxs font-extrabold tracking-tight uppercase"
+                                "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
                             )}
                         >
-                            Location
-                        </span>
+                            <span
+                                className={cn(
+                                    "text-xxs font-extrabold tracking-tight uppercase"
+                                )}
+                            >
+                                Location
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <ElementLine />
-                <Divider dir="vertical" />
-                <ElementLine />
-                <div
-                    className={cn(
-                        "bg-highlighted/10 relative grid flex-1 place-items-center"
-                    )}
-                >
-                    <TooltipProvider>
+                    <ElementLine />
+                    <Divider dir="vertical" />
+                    <ElementLine />
+                    <div
+                        className={cn(
+                            "bg-highlighted/10 relative grid flex-1 place-items-center"
+                        )}
+                    >
                         <Tooltip>
                             <TooltipTrigger>
                                 <Link
@@ -188,25 +186,29 @@ export default function Home() {
                                     />
                                 </Link>
                             </TooltipTrigger>
-                            <TooltipContent translate="no" lang="vi-VN">
+                            <TooltipContent
+                                translate="no"
+                                lang="vi-VN"
+                                sideOffset={9}
+                            >
                                 Việt Nam
                             </TooltipContent>
                         </Tooltip>
-                    </TooltipProvider>
-                    <div
-                        className={cn(
-                            "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
-                        )}
-                    >
-                        <span
+                        <div
                             className={cn(
-                                "text-xxs font-extrabold tracking-tight uppercase"
+                                "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
                             )}
                         >
-                            Native Land
-                        </span>
+                            <span
+                                className={cn(
+                                    "text-xxs font-extrabold tracking-tight uppercase"
+                                )}
+                            >
+                                Native Land
+                            </span>
+                        </div>
                     </div>
-                </div>
+                </TooltipProvider>
             </div>
             <SectionLine />
             <Divider />
