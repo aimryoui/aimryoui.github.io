@@ -47,6 +47,9 @@
     --default-border-width: var(--px);
     --default-outline-width: var(--px);
     --outline-offset-px: var(--px);
+    --length-px: var(--px);
+    --translate-x-px: var(--px);
+    --translate-y-px: var(--px);
 
     --font-weight-normal: 500;
 
@@ -167,6 +170,9 @@
     }
     hr {
         @apply border-t-0 h-[unset];
+    }
+    svg {
+        @apply overflow-visible;
     }
 }
 

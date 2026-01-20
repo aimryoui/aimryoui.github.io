@@ -70,6 +70,7 @@ function SectionContent() {
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 600 600"
                             className={cn("w-full")}
+                            shapeRendering="optimizeSpeed"
                         >
                             <path
                                 className={cn(

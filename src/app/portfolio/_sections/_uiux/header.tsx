@@ -22,6 +22,7 @@ function UIUXHeader() {
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 600 600"
                             className={cn("h-75")}
+                            shapeRendering="optimizeSpeed"
                         >
                             <path
                                 className={cn(
@@ -69,6 +70,7 @@ function UIUXHeader() {
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 300 300"
                             className={cn("h-37.5")}
+                            shapeRendering="optimizeSpeed"
                         >
                             <path
                                 className={cn(
@@ -100,6 +102,7 @@ function UIUXHeader() {
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 600 600"
                             className={cn("h-75")}
+                            shapeRendering="optimizeSpeed"
                         >
                             <path
                                 className={cn(
