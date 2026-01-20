@@ -1,5 +1,5 @@
 import ProjectHeader from "@/app/portfolio/_components/project-title"
-import { Divider } from "@/components/layout/divider"
+import { Divider, ProjectSectionDivider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
 import { Space } from "@/components/layout/space"
@@ -39,6 +39,35 @@ function UIUX() {
                     placeholderPriority
                     src="uiux/siglo/siglo-1.jpg"
                     alt="Brading Presentation"
+                    className={cn("rounded-2xl")}
+                />
+            </MediaFrame>
+            <SectionLine />
+            <ProjectSectionDivider sectionName="Logo & Icon Guidelines" />
+            <SectionLine />
+            <MediaFrame className={cn("grid grid-cols-2 grid-rows-2")}>
+                <Image
+                    placeholderPriority
+                    src="uiux/siglo/siglo-2.jpg"
+                    alt="Grid System"
+                    className={cn("rounded-2xl")}
+                />
+                <Image
+                    placeholderPriority
+                    src="uiux/siglo/siglo-3.jpg"
+                    alt="Safe Zone"
+                    className={cn("rounded-2xl")}
+                />
+                <Image
+                    placeholderPriority
+                    src="uiux/siglo/siglo-4.jpg"
+                    alt="Logo Mark & Logo Type"
+                    className={cn("rounded-2xl")}
+                />
+                <Image
+                    placeholderPriority
+                    src="uiux/siglo/siglo-5.jpg"
+                    alt="App Icon Grid System"
                     className={cn("rounded-2xl")}
                 />
             </MediaFrame>
