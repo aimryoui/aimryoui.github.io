@@ -34,6 +34,7 @@ const sections: Section[] = [
                     TOOL_ICONS().figma,
                     TOOL_ICONS().photoshop,
                     TOOL_ICONS().illustrator,
+                    TOOL_ICONS().inDesign,
                     TOOL_ICONS().afterEffects
                 ]
             },
