@@ -65,6 +65,7 @@ function Image({
                     <img
                         src={`${basePath}/${fileName}_preview.webp`}
                         alt={alt}
+                        decoding="async"
                     />
                 </noscript>
 
@@ -78,6 +79,7 @@ function Image({
                             key={position}
                             src={`${basePath}/${fileName}_${position}.webp`}
                             alt=""
+                            decoding="async"
                             draggable={false}
                             loading="lazy"
                             role="presentation"
