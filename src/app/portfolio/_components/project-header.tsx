@@ -6,15 +6,7 @@ import {
     TooltipProvider,
     TooltipTrigger
 } from "@/components/ui/tooltip"
-import {
-    At,
-    Bold,
-    H3,
-    H4,
-    Highlight,
-    Link,
-    Text
-} from "@/components/ui/typography"
+import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { TOOL_ICONS, type ToolKey } from "@/configs/tools"
 import { cn } from "@/lib/utils"
 
@@ -60,7 +52,7 @@ function ProjectHeader({
                     )}
                 >
                     <H3>{projectName}.</H3>
-                    <H4 highlight>{category}</H4>
+                    <Highlight>{category}</Highlight>
                 </div>
                 <ElementLine />
                 <Divider dir="vertical" />

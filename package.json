@@ -15,8 +15,12 @@
     "type": "module",
     "private": true,
     "scripts": {
-        "dev": "tsx src/scripts/process-images.ts && next dev",
-        "build": "tsx src/scripts/process-images.ts && next build",
+        "dev:content": "velite --watch",
+        "build:content": "velite --clean",
+        "dev:next": "tsx src/scripts/process-images.ts && next dev",
+        "build:next": "tsx src/scripts/process-images.ts && next build",
+        "dev": "run-p dev:*",
+        "build": "run-s build:*",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "lint": "eslint",
@@ -30,7 +34,7 @@
         "clsx": "^2.1.1",
         "glob": "^13.0.0",
         "lenis": "^1.3.17",
-        "lucide-react": "^0.562.0",
+        "lucide-react": "^0.563.0",
         "next": "^16.1.4",
         "next-themes": "^0.4.6",
         "react": "^19.2.3",
@@ -58,7 +62,8 @@
         "eslint-plugin-simple-import-sort": "^12.1.1",
         "eslint-plugin-tailwindcss": "^3.18.2",
         "eslint-plugin-unused-imports": "^4.3.0",
-        "globals": "^17.0.0",
+        "globals": "^17.1.0",
+        "npm-run-all": "^4.1.5",
         "postcss": "^8.5.6",
         "postcss-replace": "^2.0.1",
         "prettier": "^3.8.1",
@@ -66,6 +71,7 @@
         "tsx": "^4.21.0",
         "tw-animate-css": "^1.4.0",
         "typescript": "^5.9.3",
-        "typescript-eslint": "^8.53.1"
+        "typescript-eslint": "^8.53.1",
+        "velite": "^0.3.1"
     }
 }

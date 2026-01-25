@@ -279,7 +279,7 @@ const sections: Section[] = [
 
 function SectionContact() {
     return (
-        <>
+        <section id="contact">
             <Space />
             <SectionLine />
             <SectionTitle title="Contact." />
@@ -339,7 +339,7 @@ function SectionContact() {
                         )}
                 </React.Fragment>
             ))}
-        </>
+        </section>
     )
 }
 

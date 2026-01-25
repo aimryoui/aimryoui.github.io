@@ -20,7 +20,8 @@ function Image({
     asBackgroundImage?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
 }) {
-    const metadata = imageManifest[src.replace(/\.[^/.]+$/, "")]
+    const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
+    const metadata = imageManifest[normalizedSrc.replace(/\.[^/.]+$/, "")]
 
     // Parse path
     const lastDotIndex = src.lastIndexOf(".")

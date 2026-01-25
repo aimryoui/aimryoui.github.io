@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 
 function SectionEducation() {
     return (
-        <>
+        <section id="education">
             <Space />
             <SectionLine />
             <SectionTitle title="Education." />
@@ -41,7 +41,7 @@ function SectionEducation() {
                     <Bold italic>Very Good</Bold>
                 </div>
             </div>
-        </>
+        </section>
     )
 }
 

@@ -21,6 +21,8 @@
 
 # production
 /build
+.velite
+public/static
 
 # misc
 .DS_Store

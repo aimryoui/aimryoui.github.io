@@ -61,7 +61,7 @@ const sections: Section[] = [
 
 function SectionSoftware() {
     return (
-        <>
+        <section id="software">
             <Space />
             <SectionLine />
             <SectionTitle title="Software." />
@@ -125,7 +125,7 @@ function SectionSoftware() {
                         )}
                 </React.Fragment>
             ))}
-        </>
+        </section>
     )
 }
 

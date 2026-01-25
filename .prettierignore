@@ -1,6 +1,8 @@
 # .prettierignore
 node_modules
 .next
+.velite
+public/static
 coverage
 package-lock.json
 pnpm-lock.yaml

@@ -14,7 +14,7 @@ import {
     TooltipProvider,
     TooltipTrigger
 } from "@/components/ui/tooltip"
-import { Bold, H1, H3, Highlight, Link, Text } from "@/components/ui/typography"
+import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
 import UIUX from "./_sections/_uiux/uiux"
@@ -106,7 +106,11 @@ export default function Home() {
                                     "bg-highlighted/10 relative grid flex-1 place-items-center"
                                 )}
                             >
-                                <H3 highlight>{item.value}</H3>
+                                <Highlight
+                                    className={cn("text-4xl font-extrabold")}
+                                >
+                                    {item.value}
+                                </Highlight>
                                 <div
                                     className={cn(
                                         "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
@@ -139,7 +143,13 @@ export default function Home() {
                                     highlight
                                     className={cn("text-4xl")}
                                 >
-                                    <H3 highlight>HCMC</H3>
+                                    <Highlight
+                                        className={cn(
+                                            "text-4xl font-extrabold"
+                                        )}
+                                    >
+                                        HCMC
+                                    </Highlight>
                                 </Link>
                             </TooltipTrigger>
                             <TooltipContent>Hồ Chí Minh City</TooltipContent>
@@ -175,9 +185,13 @@ export default function Home() {
                                         "grid h-8 w-12 place-items-center bg-[#DA251D]"
                                     )}
                                 >
-                                    <H3 highlight className={cn("sr-only")}>
+                                    <Highlight
+                                        className={cn(
+                                            "sr-only text-4xl font-extrabold"
+                                        )}
+                                    >
                                         Vietnam
-                                    </H3>
+                                    </Highlight>
                                     {/* https://css-shape.com/star/ */}
                                     <div
                                         className={cn(
@@ -236,9 +250,6 @@ export default function Home() {
             <SectionLine />
             <Space />
             <SectionLine showDecoration />
-            <Space />
-
-            <SectionLine />
 
             <UIUX />
         </main>

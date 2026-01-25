@@ -1,15 +1,18 @@
-import { H3, Highlight } from "@/components/ui/typography"
+import { H1, H2, H3, H4, Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
 function SectionTitle({
     order,
+    level = 2,
     title,
     note
 }: {
     order?: number
+    level?: 1 | 2 | 3 | 4 | 5 | 6
     title: string
     note?: string
 }) {
+    const Comp = level === 1 ? H1 : level === 2 ? H2 : level === 3 ? H3 : H4
     return (
         <div className={cn("bg-background relative px-6 pt-3.5 pb-5")}>
             {note && (
@@ -22,12 +25,12 @@ function SectionTitle({
                     {note}
                 </span>
             )}
-            <H3>
+            <Comp>
                 {order && (
                     <Highlight>{String(order).padStart(2, "0")}.</Highlight>
                 )}{" "}
                 {title}
-            </H3>
+            </Comp>
         </div>
     )
 }

@@ -20,7 +20,7 @@ const sections = [
 
 function SectionContent() {
     return (
-        <>
+        <section id="content">
             <Space />
             <SectionLine />
             <SectionTitle title="Content." note="Index" />
@@ -130,7 +130,7 @@ function SectionContent() {
                     </div>
                 </div>
             </div>
-        </>
+        </section>
     )
 }
 
