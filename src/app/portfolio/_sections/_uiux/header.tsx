@@ -6,7 +6,9 @@ function UIUXHeader() {
     return (
         <>
             <SectionTitle
+                id="uiux"
                 order={1}
+                level={2}
                 title="UI & UX."
                 note="MOBILE APPS / WEBSITES"
             />

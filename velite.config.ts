@@ -1,3 +1,4 @@
+import rehypeSlug from "rehype-slug"
 import { defineCollection, defineConfig, s } from "velite"
 
 import { TOOL_ICONS, type ToolKey } from "@/configs/tools"
@@ -6,7 +7,7 @@ const projects = defineCollection({
     name: "Project",
     pattern: "projects/**/*.mdx",
     schema: s.object({
-        // slug: s.slug("projects"), // Tự tạo slug từ tên file
+        // slug: s.slug("projects"),
         projectName: s.string(),
         category: s.string(),
 
@@ -31,6 +32,9 @@ const projects = defineCollection({
 })
 
 export default defineConfig({
-    root: "src/content", // Thư mục gốc chứa mdx
-    collections: { projects }
+    root: "src/content",
+    collections: { projects },
+    mdx: {
+        rehypePlugins: [rehypeSlug]
+    }
 })

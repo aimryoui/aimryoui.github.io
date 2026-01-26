@@ -279,10 +279,10 @@ const sections: Section[] = [
 
 function SectionContact() {
     return (
-        <section id="contact">
+        <section>
             <Space />
             <SectionLine />
-            <SectionTitle title="Contact." />
+            <SectionTitle id="contact" title="Contact." />
             <SectionLine />
             <Divider />
             <SectionLine />

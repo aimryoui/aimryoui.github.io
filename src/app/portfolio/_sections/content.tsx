@@ -20,10 +20,10 @@ const sections = [
 
 function SectionContent() {
     return (
-        <section id="content">
+        <section>
             <Space />
             <SectionLine />
-            <SectionTitle title="Content." note="Index" />
+            <SectionTitle id="content" title="Content." note="Index" />
             <SectionLine />
             <Divider />
             <SectionLine />

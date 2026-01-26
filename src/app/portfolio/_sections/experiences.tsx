@@ -183,10 +183,14 @@ const sections: Section[] = [
 
 function SectionExperiences() {
     return (
-        <section id="experiences">
+        <section>
             <Space />
             <SectionLine />
-            <SectionTitle title="Experiences." note="Information" />
+            <SectionTitle
+                id="experiences"
+                title="Experiences."
+                note="Information"
+            />
             <SectionLine />
             <Divider />
             <SectionLine />

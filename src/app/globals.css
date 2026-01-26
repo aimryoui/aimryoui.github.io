@@ -168,6 +168,14 @@
     * {
         @apply border-stroke-foreground outline-stroke-foreground decoration-[0.1em] underline-offset-[0.16em] decoration-current/40 decoration-dotted;
     }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply scroll-mt-[calc(var(--spacing)*3.5+var(--spacing)*20)];
+    }
     hr {
         @apply border-t-0 h-[unset];
     }

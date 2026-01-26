@@ -25,12 +25,18 @@
             "/*": ["./private/*"]
         }
     },
+    "mdx": {
+        "checkMdx": true,
+        "plugins": ["remark-frontmatter"]
+    },
     "include": [
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
+        "**/*.mdx",
         ".next/types/**/*.ts",
-        ".next/dev/types/**/*.ts"
+        ".next/dev/types/**/*.ts",
+        "types/**/*.d.ts"
     ],
     "exclude": ["node_modules"]
 }

@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils"
 
 function SectionEducation() {
     return (
-        <section id="education">
+        <section>
             <Space />
             <SectionLine />
-            <SectionTitle title="Education." />
+            <SectionTitle id="education" title="Education." />
             <SectionLine />
             <Divider />
             <SectionLine />

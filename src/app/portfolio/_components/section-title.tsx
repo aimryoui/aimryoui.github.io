@@ -2,11 +2,13 @@ import { H1, H2, H3, H4, Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
 function SectionTitle({
+    id,
     order,
-    level = 2,
+    level = 3,
     title,
     note
 }: {
+    id: string
     order?: number
     level?: 1 | 2 | 3 | 4 | 5 | 6
     title: string
@@ -25,7 +27,7 @@ function SectionTitle({
                     {note}
                 </span>
             )}
-            <Comp>
+            <Comp id={id}>
                 {order && (
                     <Highlight>{String(order).padStart(2, "0")}.</Highlight>
                 )}{" "}

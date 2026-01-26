@@ -1,6 +1,5 @@
-import React from "react"
-
 import ProjectHeader from "@/app/portfolio/_components/project-header"
+import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { MDXContent } from "@/components/mdx-content"
@@ -14,7 +13,7 @@ function UIUX() {
     )
 
     return (
-        <section id="uiux">
+        <section>
             <Space />
             <SectionLine />
             <UIUXHeader />
@@ -22,7 +21,7 @@ function UIUX() {
             <Space />
             <SectionLine />
             {sortedProjects.map((project, index) => (
-                <React.Fragment key={index}>
+                <article key={index}>
                     <ProjectHeader
                         projectName={project.projectName}
                         category={project.category}
@@ -32,11 +31,13 @@ function UIUX() {
                     />
 
                     <SectionLine />
+                    <Divider />
+                    <SectionLine />
 
                     <MDXContent code={project.content} />
 
                     {index < sortedProjects.length - 1 && <Space />}
-                </React.Fragment>
+                </article>
             ))}
         </section>
     )

@@ -1,12 +1,14 @@
 import "./globals.css"
-import "lenis/dist/lenis.css"
 
+// import "lenis/dist/lenis.css"
 import { type Metadata, type Viewport } from "next"
 import { Plus_Jakarta_Sans } from "next/font/google"
 import localFont from "next/font/local"
 
+import { Divider } from "@/components/layout/divider"
 import { MarginLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
+import { TableOfContents } from "@/components/table-of-contents"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 // import LenisProvider from "@/providers/lenis-provider"
@@ -155,17 +157,31 @@ export default function RootLayout({
         <html
             lang="en"
             suppressHydrationWarning
-            className={cn(plusJakartaSans.variable, sfMono.variable)}
+            data-scroll-behavior="smooth"
+            className={cn(
+                plusJakartaSans.variable,
+                sfMono.variable,
+                "scroll-smooth"
+            )}
         >
             <body
                 className={cn(`
                     text-muted-foreground bg-background flex
                     bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)]
-                    bg-size-[10px_10px] bg-fixed px-(--body-padding) -tracking-[.04em]
+                    bg-size-[10px_10px] bg-fixed px-6.5 -tracking-[.04em]
                 `)}
             >
                 <ThemeProvider disableTransitionOnChange>
                     {/* <LenisProvider> */}
+                    <MarginLine />
+                    <div className={cn("relative h-dvh w-72 md:hidden")}>
+                        <TableOfContents />
+                    </div>
+                    <MarginLine />
+                    <Divider
+                        dir="vertical"
+                        className={cn("sticky top-0 h-dvh w-6.5")}
+                    />
                     <MarginLine />
                     {children}
                     <MarginLine />

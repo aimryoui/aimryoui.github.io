@@ -49,6 +49,8 @@ function TooltipContent({
             <TooltipPrimitive.Content
                 data-slot="tooltip-content"
                 sideOffset={sideOffset}
+                collisionPadding={12}
+                arrowPadding={6}
                 className={cn(
                     `
                         group bg-background animate-in fade-in-0
@@ -58,8 +60,7 @@ function TooltipContent({
                         data-[side=top]:slide-in-from-bottom-2
                         text-foreground
                         -outline-offset-px outline-muted-foreground z-50
-                        w-fit
-                        origin-(--radix-tooltip-content-transform-origin)
+                        w-fit origin-(--radix-tooltip-content-transform-origin)
                         rounded-md px-2 py-1 text-sm tracking-tight text-balance
                         outline data-[state=closed]:animate-out
                     `,
@@ -71,25 +72,27 @@ function TooltipContent({
                 <TooltipPrimitive.Arrow
                     asChild
                     className={cn(
-                        "mx-1.5 -translate-y-px group-[:is([data-side=left],[data-side=right])]:scale-x-55"
+                        "group-[:is([data-side=left],[data-side=right])]:hidden"
                     )}
+                    style={{
+                        translate: "0 calc(var(--px) * -2)"
+                    }}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 8"
+                        viewBox="0 0 24 10"
                         fill="none"
-                        className={cn("h-2 w-6")}
+                        className={cn("h-2.5 w-6")}
                     >
                         <path
                             className={cn("fill-background")}
-                            d="M9.66 5.744 7.847 3.8C6.797 2.676 6.273 2.114 5.65 1.71a6 6 0 0 0-1.796-.78C3.134.75 2.366.75.828.75H0V0h24v.75h-.828c-1.538 0-2.306 0-3.026.18a6 6 0 0 0-1.796.781c-.623.403-1.148.965-2.196 2.089l-1.815 1.944c-.813.87-1.22 1.307-1.695 1.468a2 2 0 0 1-1.288 0c-.476-.161-.882-.597-1.695-1.468Z"
+                            d="M9.66 7.244 7.847 5.3C6.797 4.176 6.273 3.614 5.65 3.21a6 6 0 0 0-1.796-.78C3.134 2.25 2.537 2.25 1 2.25V0h22v2.25c-1.537 0-2.134 0-2.854.18a6 6 0 0 0-1.796.781c-.623.403-1.148.965-2.196 2.089l-1.815 1.944c-.813.87-1.22 1.307-1.695 1.468a2 2 0 0 1-1.288 0c-.476-.161-.882-.597-1.695-1.468Z"
                         />
                         <path
-                            className={cn(
-                                "stroke-muted-foreground stroke-(length:--px)"
-                            )}
+                            className={cn("stroke-muted-foreground")}
+                            strokeWidth="1.3"
                             vectorEffect="non-scaling-stroke"
-                            d="M0 .75h.828c1.538 0 2.306 0 3.026.18a6 6 0 0 1 1.796.781c.623.403 1.147.965 2.196 2.089l1.64 1.756c.873.936 1.31 1.405 1.821 1.578a2.15 2.15 0 0 0 1.386 0c.51-.173.948-.642 1.822-1.578L16.154 3.8c1.049-1.124 1.573-1.686 2.196-2.089a6 6 0 0 1 1.796-.78C20.866.75 21.634.75 23.172.75H24"
+                            d="M0 2.25h.828c1.538 0 2.306 0 3.026.18a6 6 0 0 1 1.796.781c.623.403 1.147.965 2.196 2.089l1.64 1.756c.873.936 1.31 1.405 1.821 1.578a2.15 2.15 0 0 0 1.386 0c.51-.173.948-.642 1.822-1.578L16.154 5.3c1.049-1.124 1.573-1.686 2.196-2.089a6 6 0 0 1 1.796-.78c.72-.181 1.488-.181 3.026-.181H24"
                         />
                     </svg>
                 </TooltipPrimitive.Arrow>

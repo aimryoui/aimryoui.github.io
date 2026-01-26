@@ -21,7 +21,7 @@ import UIUX from "./_sections/_uiux/uiux"
 
 export default function Home() {
     return (
-        <main className={cn("w-full")}>
+        <main className={cn("flex-1")}>
             <Space />
             <SectionLine showDecoration />
             <Space />
@@ -35,7 +35,7 @@ export default function Home() {
                 >
                     About
                 </span>
-                <H1>
+                <H1 id="about">
                     Hello there! I'm <Bold>Hoang Nhan</Bold>, <br />a{" "}
                     <Bold>Creative Designer</Bold> majoring in{" "}
                     <Highlight>UI & UX Design</Highlight>.

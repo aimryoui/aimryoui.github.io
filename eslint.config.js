@@ -27,6 +27,7 @@ export default tseslint.config(
             "**/node_modules/",
             "**/.git/",
             "**/.next/",
+            "**/.velite/",
             "**/out/",
             "**/dist/",
             "public/old/",

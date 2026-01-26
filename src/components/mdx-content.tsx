@@ -14,6 +14,14 @@ const sharedComponents = {
     SectionLine
 }
 
+declare global {
+    /**
+     * @see {@link https://github.com/mdx-js/mdx-analyzer#mdxprovidedcomponents}
+     * alternative way.
+     */
+    type MDXProvidedComponents = typeof sharedComponents
+}
+
 const useMDXComponent = (code: string) => {
     const fn = new Function(code)
     return fn({ ...runtime }).default

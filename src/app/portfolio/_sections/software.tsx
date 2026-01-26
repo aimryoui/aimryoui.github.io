@@ -61,10 +61,10 @@ const sections: Section[] = [
 
 function SectionSoftware() {
     return (
-        <section id="software">
+        <section>
             <Space />
             <SectionLine />
-            <SectionTitle title="Software." />
+            <SectionTitle id="software" title="Software." />
             <SectionLine />
             <Divider />
             <SectionLine />

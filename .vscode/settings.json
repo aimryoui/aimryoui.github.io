@@ -30,12 +30,16 @@
     //! Stylelint
     "stylelint.packageManager": "pnpm",
     "stylelint.validate": ["css", "scss", "less"],
+    //! Frontmatter Schema
+    "yaml.schemas": {
+        ".vscode/mdx-schema.json": ["**/*.yml", "**/*.mdx", "**/*.md"]
+    },
+    "yaml.customTags": ["!mdx scalar", "!js/const scalar"],
+    "yaml.validate": true,
+    "yaml.hover": true,
+    "yaml.completion": true,
     //! TailwindCSS
     "css.lint.unknownAtRules": "ignore",
-    "files.associations": {
-        "*.css": "css",
-        "*.md": "mdx"
-    },
     "tailwindCSS.classAttributes": [
         "class",
         "className",

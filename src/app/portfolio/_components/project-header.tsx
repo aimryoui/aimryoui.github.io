@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/tooltip"
 import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { TOOL_ICONS, type ToolKey } from "@/configs/tools"
+import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
 
 function ProjectHeader({
@@ -31,6 +32,7 @@ function ProjectHeader({
         abbreviation: string
     }
 }) {
+    const headerId = slugify(projectName)
     return (
         <div className={cn("bg-background relative")}>
             <div
@@ -51,7 +53,7 @@ function ProjectHeader({
                         "flex flex-1 flex-col gap-2 px-6 pt-3.5 pb-5"
                     )}
                 >
-                    <H3>{projectName}.</H3>
+                    <H3 id={headerId}>{projectName}.</H3>
                     <Highlight>{category}</Highlight>
                 </div>
                 <ElementLine />
@@ -79,6 +81,14 @@ function ProjectHeader({
                             flex gap-2
                         `)}
                     >
+                        <Text className="sr-only">
+                            {tools.map((key, index) => {
+                                const tool = TOOL_ICONS({ size: "sm" })[key]
+                                return index === tools.length - 1
+                                    ? tool.label
+                                    : `${tool.label}, `
+                            })}
+                        </Text>
                         <TooltipProvider>
                             {tools.map((key) => {
                                 const tool = TOOL_ICONS({ size: "sm" })[key]
