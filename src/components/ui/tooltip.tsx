@@ -53,14 +53,13 @@ function TooltipContent({
                 arrowPadding={6}
                 className={cn(
                     `
-                        group bg-background animate-in fade-in-0
-                        zoom-in-95 data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
-                        data-[side=bottom]:slide-in-from-top-2
-                        data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2
-                        data-[side=top]:slide-in-from-bottom-2
-                        text-foreground
-                        -outline-offset-px outline-muted-foreground z-50
-                        w-fit origin-(--radix-tooltip-content-transform-origin)
+                        group bg-background animate-in fade-in-0 zoom-in-95 data-[state=closed]:fade-out-0
+                        data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2
+                        data-[side=right]:slide-in-from-left-2
+                        data-[side=top]:slide-in-from-bottom-2 text-foreground
+                        -outline-offset-px outline-muted-foreground
+                        pointer-events-none z-50 w-fit
+                        origin-(--radix-tooltip-content-transform-origin) cursor-default
                         rounded-md px-2 py-1 text-sm tracking-tight text-balance
                         outline data-[state=closed]:animate-out
                     `,
