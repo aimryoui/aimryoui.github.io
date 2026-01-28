@@ -10,7 +10,7 @@ function SectionEducation() {
         <section>
             <Space />
             <SectionLine />
-            <SectionTitle id="education" title="Education." />
+            <SectionTitle id="education" title="Education" />
             <SectionLine />
             <Divider />
             <SectionLine />

@@ -1,9 +1,9 @@
 import React from "react"
 
 import SectionContact from "@/app/portfolio/_sections/contact"
-import SectionContent from "@/app/portfolio/_sections/content"
 import SectionEducation from "@/app/portfolio/_sections/education"
 import SectionExperiences from "@/app/portfolio/_sections/experiences"
+import SectionOutlines from "@/app/portfolio/_sections/outlines"
 import SectionSoftware from "@/app/portfolio/_sections/software"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
@@ -17,9 +17,9 @@ import {
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
-import UIUX from "./_sections/_uiux/uiux"
+import SectionProjects from "./_sections/projects"
 
-export default function Home() {
+export default function Portfolio() {
     return (
         <main className={cn("flex-1")}>
             <Space />
@@ -52,10 +52,10 @@ export default function Home() {
                         "short films",
                         "social posts",
                         "publications"
-                    ].map((item, idx, arr) => (
+                    ].map((item, index, arr) => (
                         <React.Fragment key={item}>
                             <Bold>{item}</Bold>
-                            {idx < arr.length - 1 && ", "}
+                            {index < arr.length - 1 && ", "}
                         </React.Fragment>
                     ))}
                     , or event-type university course projects.
@@ -73,10 +73,10 @@ export default function Home() {
                         "Tailwind CSS",
                         "shadcn/ui",
                         "Tauri"
-                    ].map((item, idx, arr) => (
+                    ].map((item, index, arr) => (
                         <React.Fragment key={item}>
                             <Bold>{item}</Bold>
-                            {idx < arr.length - 1 && ", "}
+                            {index < arr.length - 1 && ", "}
                         </React.Fragment>
                     ))}
                     , etc. <br />
@@ -245,13 +245,11 @@ export default function Home() {
             <Space />
             <SectionLine showDecoration />
 
-            <SectionContent />
+            <SectionOutlines />
 
             <SectionLine />
-            <Space />
-            <SectionLine showDecoration />
 
-            <UIUX />
+            <SectionProjects />
         </main>
     )
 }

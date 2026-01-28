@@ -31,7 +31,7 @@ function SectionTitle({
                 {order && (
                     <Highlight>{String(order).padStart(2, "0")}.</Highlight>
                 )}{" "}
-                {title}
+                {title}.
             </Comp>
         </div>
     )

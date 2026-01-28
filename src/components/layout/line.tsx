@@ -59,7 +59,7 @@ function SectionLine({
                     bg-size-[16px_1px] bg-top bg-repeat-x
                 `,
                     fit
-                        ? "left-1/2 w-[calc(100%+var(--spacing)*6*2)] -translate-x-1/2"
+                        ? "left-1/2 w-full -translate-x-1/2"
                         : "-right-6.5 w-dvw",
                     className
                 )}

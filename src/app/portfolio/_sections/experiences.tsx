@@ -188,13 +188,13 @@ function SectionExperiences() {
             <SectionLine />
             <SectionTitle
                 id="experiences"
-                title="Experiences."
+                title="Experiences"
                 note="Information"
             />
             <SectionLine />
             <Divider />
             <SectionLine />
-            {sections.map((section, idx, arr) => (
+            {sections.map((section, index, arr) => (
                 <React.Fragment key={section.section}>
                     <div
                         className={cn(
@@ -210,8 +210,8 @@ function SectionExperiences() {
                             {section.section}
                         </Highlight>
 
-                        {section.places.map((place, placeIdx) => (
-                            <React.Fragment key={placeIdx}>
+                        {section.places.map((place, placeindex) => (
+                            <React.Fragment key={placeindex}>
                                 {place.at ? (
                                     <>
                                         <Text mono>
@@ -247,8 +247,8 @@ function SectionExperiences() {
                             </React.Fragment>
                         ))}
                     </div>
-                    {idx < arr.length - 1 &&
-                        arr[idx + 1].section !== section.section && (
+                    {index < arr.length - 1 &&
+                        arr[index + 1].section !== section.section && (
                             <SectionLine />
                         )}
                 </React.Fragment>

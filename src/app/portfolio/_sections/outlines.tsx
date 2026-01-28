@@ -5,25 +5,17 @@ import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { Bold, Highlight } from "@/components/ui/typography"
+import { PROJECT_CATEGORIES } from "@/configs/project-categories"
 import { cn } from "@/lib/utils"
 
-const sections = [
-    "UI & UX",
-    "Events & Short Films",
-    "Branding",
-    "Weddings",
-    "2D & 3D Animations",
-    "Photography",
-    "Other Course Projects",
-    "Others"
-]
+const sections = Object.values(PROJECT_CATEGORIES)
 
-function SectionContent() {
+function SectionOutlines() {
     return (
         <section>
             <Space />
             <SectionLine />
-            <SectionTitle id="content" title="Content." note="Index" />
+            <SectionTitle id="outlines" title="Outlines" note="Index" />
             <SectionLine />
             <Divider />
             <SectionLine />
@@ -33,21 +25,21 @@ function SectionContent() {
                 )}
             >
                 <div>
-                    {sections.map((section, idx, arr) => (
-                        <React.Fragment key={idx}>
+                    {sections.map((section, index, arr) => (
+                        <React.Fragment key={index}>
                             <div
                                 className={cn(
                                     "grid grid-cols-3 gap-6 gap-y-3 pt-3.5 pb-4"
                                 )}
                             >
                                 <Highlight className={cn("ps-6 font-normal")}>
-                                    {String(idx + 1).padStart(2, "0")}
+                                    {String(index + 1).padStart(2, "0")}
                                 </Highlight>
                                 <Bold className={cn("col-span-2 pe-6")}>
-                                    {section}
+                                    {section.title}
                                 </Bold>
                             </div>
-                            {idx < arr.length - 1 && (
+                            {index < arr.length - 1 && (
                                 <SectionLine
                                     className={cn(
                                         "me-0 w-[calc(100%+var(--body-padding))]"
@@ -134,4 +126,4 @@ function SectionContent() {
     )
 }
 
-export default SectionContent
+export default SectionOutlines

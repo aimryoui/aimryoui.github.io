@@ -1,3 +1,5 @@
+import React from "react"
+
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import {
@@ -8,6 +10,7 @@ import {
 } from "@/components/ui/tooltip"
 import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { TOOL_ICONS, type ToolKey } from "@/configs/tools"
+import { formatOrdinal } from "@/helpers/format-ordinal"
 import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
 
@@ -29,7 +32,7 @@ function ProjectHeader({
     tools: ToolKey[]
     detail: {
         description: string
-        abbreviation: string
+        abbreviation?: string
     }
 }) {
     const headerId = slugify(projectName)
@@ -53,8 +56,10 @@ function ProjectHeader({
                         "flex flex-1 flex-col gap-2 px-6 pt-3.5 pb-5"
                     )}
                 >
-                    <H3 id={headerId}>{projectName}.</H3>
-                    <Highlight>{category}</Highlight>
+                    <H3 id={headerId}>{formatOrdinal(projectName + ".")}</H3>
+                    <Highlight className={cn("font-normal")}>
+                        {category}
+                    </Highlight>
                 </div>
                 <ElementLine />
                 <Divider dir="vertical" />
@@ -64,11 +69,14 @@ function ProjectHeader({
                         "flex flex-1 flex-col justify-between px-6 pt-3.5 pb-5"
                     )}
                 >
-                    {information.newest && (
-                        <Highlight className={cn("font-normal")}>
-                            Newest
-                        </Highlight>
-                    )}
+                    <Highlight
+                        className={cn(
+                            "font-normal",
+                            !information.newest && "text-transparent"
+                        )}
+                    >
+                        {information.newest ? "Newest" : "Older"}
+                    </Highlight>
                     <Text>{information.duration}</Text>
                     <Text>
                         {information.subject} <At /> {information.place}
@@ -83,10 +91,11 @@ function ProjectHeader({
                     >
                         <Text className="sr-only">
                             {tools.map((key, index) => {
-                                const tool = TOOL_ICONS({ size: "sm" })[key]
-                                return index === tools.length - 1
-                                    ? tool.label
-                                    : `${tool.label}, `
+                                const tool = TOOL_ICONS()[key]
+                                return (
+                                    tool.label +
+                                    (index === tools.length - 1 ? "." : ", ")
+                                )
                             })}
                         </Text>
                         <TooltipProvider>
@@ -113,7 +122,7 @@ function ProjectHeader({
             <SectionLine />
             <div className={cn("flex flex-col gap-2 px-6 pt-3.5 pb-5")}>
                 <Bold>{detail.description}</Bold>
-                <Text>{detail.abbreviation}</Text>
+                {detail.abbreviation && <Text>{detail.abbreviation}</Text>}
             </div>
         </div>
     )

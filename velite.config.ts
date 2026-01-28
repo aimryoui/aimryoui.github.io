@@ -7,7 +7,7 @@ const projects = defineCollection({
     name: "Project",
     pattern: "projects/**/*.mdx",
     schema: s.object({
-        // slug: s.slug("projects"),
+        slug: s.path(),
         projectName: s.string(),
         category: s.string(),
 
@@ -24,7 +24,7 @@ const projects = defineCollection({
 
         detail: s.object({
             description: s.string(),
-            abbreviation: s.string()
+            abbreviation: s.string().optional()
         }),
 
         content: s.mdx()

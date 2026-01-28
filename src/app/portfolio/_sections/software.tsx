@@ -64,11 +64,11 @@ function SectionSoftware() {
         <section>
             <Space />
             <SectionLine />
-            <SectionTitle id="software" title="Software." />
+            <SectionTitle id="software" title="Software" />
             <SectionLine />
             <Divider />
             <SectionLine />
-            {sections.map((section, idx, arr) => (
+            {sections.map((section, index, arr) => (
                 <React.Fragment key={section.section}>
                     <div
                         className={cn(
@@ -79,48 +79,54 @@ function SectionSoftware() {
                             {section.section}
                         </Highlight>
 
-                        {section.frequencies.map((frequency, frequencyIdx) => (
-                            <div
-                                key={frequencyIdx}
-                                className={cn("col-span-2 flex flex-col gap-2")}
-                            >
-                                <Text>{frequency.title}</Text>
-                                <Bold className={cn("sr-only")}>
-                                    {frequency.tools.map((tool, toolIdx) => (
-                                        <React.Fragment key={toolIdx}>
-                                            {tool.label}
-                                            {toolIdx <
-                                                frequency.tools.length - 1 &&
-                                                ", "}
-                                        </React.Fragment>
-                                    ))}
-                                </Bold>
-                                <div className={cn("flex gap-3")}>
-                                    <TooltipProvider>
+                        {section.frequencies.map(
+                            (frequency, frequencyindex) => (
+                                <div
+                                    key={frequencyindex}
+                                    className={cn(
+                                        "col-span-2 flex flex-col gap-2"
+                                    )}
+                                >
+                                    <Text>{frequency.title}</Text>
+                                    <Bold className={cn("sr-only")}>
                                         {frequency.tools.map(
-                                            (tool, toolIdx) => (
-                                                <Tooltip key={toolIdx}>
-                                                    <TooltipTrigger>
-                                                        <Link
-                                                            openInNewTab
-                                                            href={tool.url}
-                                                        >
-                                                            {tool.icon}
-                                                        </Link>
-                                                    </TooltipTrigger>
-                                                    <TooltipContent>
-                                                        {tool.label}
-                                                    </TooltipContent>
-                                                </Tooltip>
+                                            (tool, toolindex) => (
+                                                <React.Fragment key={toolindex}>
+                                                    {tool.label}
+                                                    {toolindex <
+                                                        frequency.tools.length -
+                                                            1 && ", "}
+                                                </React.Fragment>
                                             )
                                         )}
-                                    </TooltipProvider>
+                                    </Bold>
+                                    <div className={cn("flex gap-3")}>
+                                        <TooltipProvider>
+                                            {frequency.tools.map(
+                                                (tool, toolindex) => (
+                                                    <Tooltip key={toolindex}>
+                                                        <TooltipTrigger>
+                                                            <Link
+                                                                openInNewTab
+                                                                href={tool.url}
+                                                            >
+                                                                {tool.icon}
+                                                            </Link>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+                                                            {tool.label}
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                )
+                                            )}
+                                        </TooltipProvider>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            )
+                        )}
                     </div>
-                    {idx < arr.length - 1 &&
-                        arr[idx + 1].section !== section.section && (
+                    {index < arr.length - 1 &&
+                        arr[index + 1].section !== section.section && (
                             <SectionLine />
                         )}
                 </React.Fragment>

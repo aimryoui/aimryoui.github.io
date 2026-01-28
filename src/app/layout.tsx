@@ -10,9 +10,12 @@ import { MarginLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
 import { TableOfContents } from "@/components/table-of-contents"
 import { siteConfig } from "@/configs/site.config"
+import { groupProjectsByCategory } from "@/lib/project-sort"
+import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
 // import LenisProvider from "@/providers/lenis-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
+import { projects } from "~/.velite"
 import AppData from "~/package.json"
 
 const lastModified = new Date().toLocaleString("en-US", {
@@ -142,6 +145,12 @@ const plusJakartaSans = Plus_Jakarta_Sans({
     variable: "--font-plus-jakarta-sans"
 })
 
+const sfProDisplay = localFont({
+    src: "../../public/fonts/SF-Pro-Display-Semibold.woff2",
+    display: "swap",
+    variable: "--font-sf-pro-display"
+})
+
 const sfMono = localFont({
     src: "../../public/fonts/SFMono.woff2",
     display: "swap",
@@ -153,6 +162,30 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode
 }>) {
+    const projectGroups = groupProjectsByCategory(projects)
+    const projectItems = projectGroups.flatMap((group) => [
+        {
+            id: group.id,
+            label: group.title,
+            depth: 2 as const
+        },
+        ...group.projects.map((p) => ({
+            id: slugify(p.projectName),
+            label: p.projectName,
+            depth: 3 as const
+        }))
+    ])
+
+    const tocItems = [
+        { id: "about", label: "About", depth: 1 as const },
+        { id: "experiences", label: "Experiences", depth: 3 as const },
+        { id: "education", label: "Education", depth: 3 as const },
+        { id: "software", label: "Software", depth: 3 as const },
+        { id: "contact", label: "Contact", depth: 3 as const },
+        { id: "outlines", label: "Outlines", depth: 2 as const },
+        ...projectItems
+    ]
+
     return (
         <html
             lang="en"
@@ -160,6 +193,7 @@ export default function RootLayout({
             data-scroll-behavior="smooth"
             className={cn(
                 plusJakartaSans.variable,
+                sfProDisplay.variable,
                 sfMono.variable,
                 "scroll-smooth"
             )}
@@ -174,9 +208,7 @@ export default function RootLayout({
                 <ThemeProvider disableTransitionOnChange>
                     {/* <LenisProvider> */}
                     <MarginLine />
-                    <div className={cn("relative h-dvh w-72 md:hidden")}>
-                        <TableOfContents />
-                    </div>
+                    <TableOfContents items={tocItems} />
                     <MarginLine />
                     <Divider
                         dir="vertical"

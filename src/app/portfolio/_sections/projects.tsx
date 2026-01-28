@@ -1,0 +1,69 @@
+import React from "react"
+
+import ProjectHeader from "@/app/portfolio/_components/project-header"
+import SectionTitle from "@/app/portfolio/_components/section-title"
+import { Divider } from "@/components/layout/divider"
+import { SectionLine } from "@/components/layout/line"
+import { Space } from "@/components/layout/space"
+import { MDXContent } from "@/components/mdx-content"
+import { groupProjectsByCategory } from "@/lib/project-sort"
+import { cn } from "@/lib/utils"
+import { projects } from "~/.velite"
+
+function SectionProjects() {
+    const projectGroups = groupProjectsByCategory(projects)
+
+    return projectGroups.map((group, index) => (
+        <section key={group.id}>
+            <Space />
+            <SectionLine showDecoration />
+            <Space />
+            <SectionLine />
+            <SectionTitle
+                id={group.id}
+                order={index + 1}
+                level={2}
+                title={group.title}
+                note={group.note}
+            />
+            <SectionLine />
+            <div className={cn("bg-background")}>
+                <div className={cn("bg-highlighted/10 p-2")}>
+                    <div
+                        className={cn(
+                            "bg-background border-highlighted flex size-full items-center justify-evenly rounded-2xl border bg-[radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-size-[.75rem_.75rem] bg-fixed bg-position-[0_0,.375rem_.375rem] py-[5%]"
+                        )}
+                    >
+                        {group.icons}
+                    </div>
+                </div>
+            </div>
+            <SectionLine />
+            <Space />
+            {group.projects.map((project, index) => (
+                <React.Fragment key={index}>
+                    <SectionLine />
+                    <article>
+                        <ProjectHeader
+                            projectName={project.projectName}
+                            category={project.category}
+                            information={project.information}
+                            tools={project.tools}
+                            detail={project.detail}
+                        />
+
+                        <SectionLine />
+                        <Divider />
+                        <SectionLine />
+
+                        <MDXContent code={project.content} />
+
+                        {index < group.projects.length - 1 && <Space />}
+                    </article>
+                </React.Fragment>
+            ))}
+        </section>
+    ))
+}
+
+export default SectionProjects

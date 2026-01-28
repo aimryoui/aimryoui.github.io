@@ -282,19 +282,19 @@ function SectionContact() {
         <section>
             <Space />
             <SectionLine />
-            <SectionTitle id="contact" title="Contact." />
+            <SectionTitle id="contact" title="Contact" />
             <SectionLine />
             <Divider />
             <SectionLine />
-            {sections.map((section, idx, arr) => (
+            {sections.map((section, index, arr) => (
                 <React.Fragment key={section.section}>
                     <div
                         className={cn(
                             "bg-background relative grid grid-cols-5 gap-6 gap-y-3 pt-3.5 pb-4"
                         )}
                     >
-                        {section.platforms.map((platform, platformIdx) => (
-                            <React.Fragment key={platformIdx}>
+                        {section.platforms.map((platform, platformindex) => (
+                            <React.Fragment key={platformindex}>
                                 <Highlight className={cn("ps-6")}>
                                     {platform.icon}
                                 </Highlight>
@@ -333,8 +333,8 @@ function SectionContact() {
                             </React.Fragment>
                         ))}
                     </div>
-                    {idx < arr.length - 1 &&
-                        arr[idx + 1].section !== section.section && (
+                    {index < arr.length - 1 &&
+                        arr[index + 1].section !== section.section && (
                             <SectionLine />
                         )}
                 </React.Fragment>

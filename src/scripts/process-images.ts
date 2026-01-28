@@ -44,7 +44,7 @@ async function main() {
 
         // --- THAY ĐỔI Ở ĐÂY ---
         // Tạo key mới: Nối thư mục + tên file (đã bỏ extension cuối)
-        // Ví dụ: "uiux/siglo/siglo-5.jpg" -> "uiux/siglo/siglo-5"
+        // Ví dụ: "uiux/siglo/5.jpg" -> "uiux/siglo/5"
         // Ví dụ: "uiux/demo.png.jpg" -> "uiux/demo.png"
         const manifestKey = path
             .join(parsedPath.dir, parsedPath.name)

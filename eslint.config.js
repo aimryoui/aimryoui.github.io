@@ -84,6 +84,7 @@ export default tseslint.config(
             "@typescript-eslint/unbound-method": 0,
             "@typescript-eslint/no-unused-expressions": 0,
             // "@typescript-eslint/no-unnecessary-template-expression": 1,
+            "@typescript-eslint/consistent-type-definitions": 1,
             "@typescript-eslint/consistent-type-imports": [
                 1,
                 {
