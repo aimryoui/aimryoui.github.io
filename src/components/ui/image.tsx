@@ -37,7 +37,7 @@ function Image({
         <div
             className={cn(
                 "bg-background relative grid size-full place-items-center overflow-clip",
-                "after:outline-inverted/10 after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:outline-[1.5px] after:-outline-offset-[1.5px]",
+                "after:outline-inverted/5 after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:outline-[1.5px] after:-outline-offset-[1.5px]",
                 className
             )}
         >

@@ -60,7 +60,7 @@ function TooltipContent({
                         -outline-offset-px outline-muted-foreground
                         pointer-events-none z-50 w-fit
                         origin-(--radix-tooltip-content-transform-origin) cursor-default
-                        rounded-md px-2 py-1 text-sm tracking-tight text-balance
+                        rounded-lg px-2 py-1 text-sm tracking-tight text-balance
                         outline data-[state=closed]:animate-out
                     `,
                     className
@@ -71,7 +71,7 @@ function TooltipContent({
                 <TooltipPrimitive.Arrow
                     asChild
                     className={cn(
-                        "group-[:is([data-side=left],[data-side=right])]:hidden"
+                        "group-[:is([data-side=left],[data-side=right])]:hidden!"
                     )}
                     style={{
                         translate: "0 calc(var(--px) * -2)"

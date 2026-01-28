@@ -14,7 +14,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
             data-slot="input-group"
             role="group"
             className={cn(
-                "group/input-group border-input relative flex w-full items-center rounded-xl border transition-[color,outline] dark:bg-input/30 dark:hover:bg-input/60 hover:bg-input/30",
+                "group/input-group border-input relative flex w-full items-center rounded-xl border transition-none duration-250 dark:bg-input/30 dark:hover:bg-input/60 hover:bg-input/30",
                 "h-9 min-w-0 has-[>textarea]:h-auto",
 
                 // Variants based on alignment.
@@ -24,7 +24,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
                 "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-end]]:[&>input]:pt-3",
 
                 // Focus state.
-                "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:outline-ring/50 has-[[data-slot=input-group-control]:focus-visible]:outline-[3px]",
+                "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:outline-highlighted/30 has-[[data-slot=input-group-control]:focus-visible]:outline-4 has-[[data-slot=input-group-control]:focus-visible]:transition-[color,outline-color,outline-width] has-[[data-slot=input-group-control]:focus-visible]:ease-out dark:has-[[data-slot=input-group-control]:focus-visible]:hover:bg-input/30 outline-40 outline-transparent has-[[data-slot=input-group-control]:focus-visible]:hover:bg-transparent",
 
                 // Error state.
                 "has-[[data-slot][aria-invalid=true]]:ring-destructive/20 has-[[data-slot][aria-invalid=true]]:border-destructive dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40",
@@ -37,14 +37,13 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 const inputGroupAddonVariants = cva(
-    "text-muted-foreground flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium select-none group-data-[disabled=true]/input-group:opacity-50 [&>svg:not([class*='size-'])]:size-4",
+    "text-muted-foreground flex h-auto cursor-text items-center justify-center gap-2 text-sm font-medium select-none group-data-[disabled=true]/input-group:opacity-50 [&>svg:not([class*='size-'])]:size-4",
     {
         variants: {
             align: {
                 "inline-start":
                     "order-first pl-3 has-[>button]:ml-[-0.45rem] has-[>kbd]:ml-[-0.3rem]",
-                "inline-end":
-                    "order-last pr-3 has-[>button]:mr-[-0.45rem] has-[>kbd]:mr-[-0.3rem]",
+                "inline-end": "order-last has-[>kbd]:mr-[0.45rem]",
                 "block-start":
                     "order-first w-full justify-start px-3 pt-3 group-has-[>input]/input-group:pt-2.5 [.border-b]:pb-3",
                 "block-end":

@@ -31,7 +31,7 @@ function SectionProjects() {
                 <div className={cn("bg-highlighted/10 p-2")}>
                     <div
                         className={cn(
-                            "bg-background border-highlighted flex size-full items-center justify-evenly rounded-2xl border bg-[radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-size-[.75rem_.75rem] bg-fixed bg-position-[0_0,.375rem_.375rem] py-[5%]"
+                            "bg-background border-highlighted flex aspect-3/1 size-full items-center justify-evenly rounded-2xl border bg-[radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-size-[.75rem_.75rem] bg-fixed bg-position-[0_0,.375rem_.375rem]"
                         )}
                     >
                         {group.icons}
@@ -58,7 +58,15 @@ function SectionProjects() {
 
                         <MDXContent code={project.content} />
 
-                        {index < group.projects.length - 1 && <Space />}
+                        {index < group.projects.length - 1 ? (
+                            <Space />
+                        ) : (
+                            <>
+                                <SectionLine />
+                                <Divider />
+                                <SectionLine />
+                            </>
+                        )}
                     </article>
                 </React.Fragment>
             ))}
