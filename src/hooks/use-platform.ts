@@ -1,15 +1,17 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 
 export function usePlatform() {
-    const [platform, setPlatform] = useState<string | null>(null)
-
-    useEffect(() => {
-        const currentPlatform =
-            document.documentElement.getAttribute("data-platform")
-        setPlatform(currentPlatform ?? "mac")
-    }, [])
-
-    return platform
+    return useSyncExternalStore(
+        () => () => {
+            // Empty
+        },
+        () => {
+            return document.documentElement.getAttribute("data-platform")
+        },
+        () => {
+            return null
+        }
+    )
 }

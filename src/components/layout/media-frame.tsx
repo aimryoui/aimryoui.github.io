@@ -1,7 +1,7 @@
 import { SectionLine } from "@/components/layout/line"
 import { cn } from "@/lib/utils"
 
-function ProjectSectionDivider({
+function ProjectSectionName({
     className,
     sectionName,
     as
@@ -40,7 +40,7 @@ function MediaFrame({
             {sectionName ? (
                 <>
                     <SectionLine />
-                    <ProjectSectionDivider sectionName={sectionName} />
+                    <ProjectSectionName sectionName={sectionName} />
                     <SectionLine />
                 </>
             ) : (
@@ -53,11 +53,11 @@ function MediaFrame({
                             "sticky top-16.5 z-10 flex h-0 items-end justify-center"
                         )}
                     >
-                        <ProjectSectionDivider
+                        <ProjectSectionName
                             as="div"
                             sectionName={sectionName}
                             className={cn(
-                                "border-stroke-foreground border bg-transparent text-transparent shadow-sm"
+                                "outline-stroke-foreground -outline-offset-px bg-transparent text-transparent shadow-sm outline"
                             )}
                         />
                     </div>
