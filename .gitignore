@@ -21,7 +21,6 @@
 
 # production
 /out
-/private
 .velite
 public/static
 
