@@ -38,12 +38,9 @@ jobs:
       - name: Checkout Private Assets
         uses: actions/checkout@v4
         with:
-          repository: hoangnhan2ka3/portfolio-assets # Thay tên user/repo của bạn
+          repository: hoangnhan2ka3/portfolio-assets
           token: ${{ secrets.ASSETS_PAT }}
           path: private
-          sparse-checkout: |
-            projects
-          # Only download projects folder
 
       - name: Install Node.js
         uses: actions/setup-node@v4

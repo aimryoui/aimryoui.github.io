@@ -20,7 +20,7 @@
 # /out/
 
 # production
-/build
+/out
 /private
 .velite
 public/static
@@ -45,7 +45,7 @@ yarn-error.log*
 next-env.d.ts
 
 # Ignore output images
-public/assets/images/
+public/assets/
 
 # Ignore image manifest
 image-manifest.json
