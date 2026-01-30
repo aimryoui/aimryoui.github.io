@@ -38,7 +38,7 @@ jobs:
       - name: Checkout Private Assets
         uses: actions/checkout@v4
         with:
-          repository: your-username/my-portfolio-assets # Thay tên user/repo của bạn
+          repository: hoangnhan2ka3/portfolio-assets # Thay tên user/repo của bạn
           token: ${{ secrets.ASSETS_PAT }}
           path: private
           sparse-checkout: |
