@@ -12,7 +12,7 @@
     },
     //! ESlint
     "eslint.options": {
-        "overrideConfigFile": "./eslint.config.js"
+        "overrideConfigFile": "./eslint.config.ts"
     },
     "eslint.workingDirectories": [
         {

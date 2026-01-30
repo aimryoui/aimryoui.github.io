@@ -1,23 +1,22 @@
-// import typescriptParser from "@typescript-eslint/parser"
 import eslint from "@eslint/js"
 import importAlias from "@limegrass/eslint-plugin-import-alias"
+import { defineConfig } from "eslint/config"
+import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript"
 import betterTailwind from "eslint-plugin-better-tailwindcss"
 import { getDefaultCallees } from "eslint-plugin-better-tailwindcss/api/defaults"
 import { importX } from "eslint-plugin-import-x"
-import importNewlines from "eslint-plugin-import-newlines"
 import reactPlugin from "eslint-plugin-react"
 import reactCompiler from "eslint-plugin-react-compiler"
 import reactHooksPlugin from "eslint-plugin-react-hooks"
 import simpleImportPlugin from "eslint-plugin-simple-import-sort"
+import unusedImports from "eslint-plugin-unused-imports"
 // import tailwind from "eslint-plugin-tailwindcss"
 import globals from "globals"
 import tseslint from "typescript-eslint"
-import unusedImports from "eslint-plugin-unused-imports"
-import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript"
 
 //! DO NOT CHANGE THE ORDER OF RULES
 
-export default tseslint.config(
+export default defineConfig(
     eslint.configs.recommended,
 
     //* Global Config
@@ -111,12 +110,13 @@ export default tseslint.config(
     {
         plugins: {
             react: reactPlugin,
+            //@ts-expect-error - https://github.com/un-ts/eslint-plugin-import-x/issues/421
             "react-hooks": reactHooksPlugin,
             "react-compiler": reactCompiler
         },
         rules: {
             ...reactPlugin.configs["jsx-runtime"].rules,
-            ...reactHooksPlugin.configs.recommended.rules,
+            ...reactHooksPlugin.configs.flat["recommended-latest"].rules,
             "react/no-unknown-property": [
                 1,
                 {
@@ -226,7 +226,6 @@ export default tseslint.config(
             "import-x": importX,
             "unused-imports": unusedImports,
             "simple-import-sort": simpleImportPlugin,
-            "import-newlines": importNewlines,
             "@limegrass/import-alias": importAlias
         },
         rules: {
@@ -250,11 +249,6 @@ export default tseslint.config(
                     args: "after-used",
                     argsIgnorePattern: "^_"
                 }
-            ],
-
-            "import-newlines/enforce": [
-                1,
-                { items: 40, "max-len": 80, semi: false }
             ],
 
             "simple-import-sort/imports": 1,

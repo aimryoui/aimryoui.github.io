@@ -1,12 +1,8 @@
-/**
- * @type {import('postcss-load-config').Config}
- */
-
 const config = {
     plugins: {
         "@tailwindcss/postcss": {},
         "postcss-replace": {
-            pattern: /(--(tw|os)-)/gi,
+            pattern: /(--tw-)/gi,
             data: {
                 "--tw-": "--nhn-"
             }
