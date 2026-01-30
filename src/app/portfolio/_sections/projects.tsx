@@ -3,6 +3,7 @@ import React from "react"
 import ProjectHeader from "@/app/portfolio/_components/project-header"
 import SectionTitle from "@/app/portfolio/_components/section-title"
 import { Divider } from "@/components/layout/divider"
+import { ExpandableWrapper } from "@/components/layout/expandable-wrapper"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { MDXContent } from "@/components/mdx-content"
@@ -10,7 +11,7 @@ import { groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import { projects } from "~/.velite"
 
-function SectionProjects() {
+function Projects() {
     const projectGroups = groupProjectsByCategory(projects)
 
     return projectGroups.map((group, index) => (
@@ -54,12 +55,15 @@ function SectionProjects() {
 
                         <SectionLine />
                         <Divider />
-                        <SectionLine />
 
-                        <MDXContent code={project.content} />
-
+                        <ExpandableWrapper projectName={project.projectName}>
+                            <MDXContent code={project.content} />
+                        </ExpandableWrapper>
                         {index < group.projects.length - 1 ? (
-                            <Space />
+                            <>
+                                <SectionLine />
+                                <Space />
+                            </>
                         ) : (
                             <>
                                 <SectionLine />
@@ -74,4 +78,4 @@ function SectionProjects() {
     ))
 }
 
-export default SectionProjects
+export default Projects

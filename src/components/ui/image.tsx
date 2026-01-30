@@ -37,14 +37,14 @@ function Image({
         <div
             className={cn(
                 "bg-background relative grid size-full place-items-center overflow-clip",
-                "after:outline-inverted/5 after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:outline-[1.5px] after:-outline-offset-[1.5px]",
+                "after:outline-inverted/5 after:-outline-offset-px after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:outline",
                 className
             )}
         >
             {/* Represent image from `src` attribute or url() function */}
             <div
                 className={cn(
-                    "grid grid-cols-3 grid-rows-3",
+                    "grid grid-cols-3 grid-rows-3 select-none",
                     asBackgroundImage && "absolute",
                     objectFit === "fill" && "size-full",
                     objectFit === "contain" &&

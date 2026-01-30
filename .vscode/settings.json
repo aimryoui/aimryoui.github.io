@@ -32,7 +32,11 @@
     "stylelint.validate": ["css", "scss", "less"],
     //! Frontmatter Schema
     "yaml.schemas": {
-        ".vscode/mdx-schema.json": ["**/*.yml", "**/*.mdx", "**/*.md"]
+        ".vscode/mdx-schema.json": [
+            "src/content/*.yml",
+            "src/content/*.mdx",
+            "src/content/*.md"
+        ]
     },
     "yaml.customTags": ["!mdx scalar", "!js/const scalar"],
     "yaml.validate": true,

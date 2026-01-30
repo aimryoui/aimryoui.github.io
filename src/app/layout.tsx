@@ -1,4 +1,4 @@
-import "./globals.css"
+import "@/app/globals.css"
 
 // import "lenis/dist/lenis.css"
 import { type Metadata, type Viewport } from "next"
@@ -164,11 +164,13 @@ export default function RootLayout({
 }>) {
     const projectGroups = groupProjectsByCategory(projects)
     const projectItems = projectGroups.flatMap((group) => [
+        // Project Headers
         {
             id: group.id,
             label: group.title,
             depth: 2 as const
         },
+        // Projects
         ...group.projects.map((p) => ({
             id: slugify(p.projectName),
             label: p.projectName,
@@ -198,6 +200,19 @@ export default function RootLayout({
                 "scroll-smooth"
             )}
         >
+            <head>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            document.documentElement.setAttribute("data-platform",
+                                window.navigator.platform.includes("Mac")
+                                ? "mac"
+                                : "win"
+                            )
+                        `
+                    }}
+                />
+            </head>
             <body
                 className={cn(`
                     text-muted-foreground bg-background flex

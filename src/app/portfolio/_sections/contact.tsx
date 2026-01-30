@@ -277,7 +277,7 @@ const sections: Section[] = [
     }
 ]
 
-function SectionContact() {
+function Contact() {
     return (
         <section>
             <Space />
@@ -343,4 +343,4 @@ function SectionContact() {
     )
 }
 
-export default SectionContact
+export default Contact

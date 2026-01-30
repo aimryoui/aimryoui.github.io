@@ -3,21 +3,26 @@
 import Link from "next/link"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 
+import { SectionLine } from "@/components/layout/line"
+import { Button } from "@/components/ui/button"
+import {
+    InputGroup,
+    InputGroupAddon,
+    InputGroupInput
+} from "@/components/ui/input-group"
+import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger
 } from "@/components/ui/tooltip"
+import { Highlight, Text } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
+import { useHotkeys } from "@/hooks/use-hotkeys"
+import { usePlatform } from "@/hooks/use-platform"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
-
-import { SectionLine } from "./layout/line"
-import { Button } from "./ui/button"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group"
-import { Kbd } from "./ui/kbd"
-import { Highlight, Text } from "./ui/typography"
 
 interface TocItem {
     id: string
@@ -38,6 +43,8 @@ function removeAccents(str: string): string {
 }
 
 export function TableOfContents({ items }: TableOfContentsProps) {
+    const platform = usePlatform()
+
     const [query, setQuery] = useState("")
     const [debouncedQuery, setDebouncedQuery] = useState("")
 
@@ -56,18 +63,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
         }
     }, [query])
 
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-                e.preventDefault()
-                inputRef.current?.focus()
-            }
-        }
-        window.addEventListener("keydown", handleKeyDown)
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown)
-        }
-    }, [])
+    useHotkeys([["mod + K", () => inputRef.current?.focus()]])
 
     const filteredItems = useMemo(() => {
         if (!debouncedQuery.trim()) return items
@@ -128,14 +124,15 @@ export function TableOfContents({ items }: TableOfContentsProps) {
     if (!items.length) return null
 
     return (
-        <aside className={cn("relative h-dvh w-72 md:hidden")}>
-            <nav className="bg-background fixed top-0 z-50 flex h-full w-72 flex-col">
+        <aside className={cn("relative h-dvh w-80 lg:hidden")}>
+            <nav className="bg-background fixed top-0 z-50 flex h-full w-[inherit] flex-col">
                 <div className={cn("px-6 pt-5 pb-2")}>
                     <InputGroup>
                         <InputGroupInput
                             ref={inputRef}
                             id="search"
                             type="search"
+                            name="search"
                             placeholder="Search for sections..."
                             autoComplete="off"
                             value={query}
@@ -210,7 +207,12 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                     </Tooltip>
                                 </TooltipProvider>
                             ) : (
-                                <Kbd>⌘K</Kbd>
+                                <KbdGroup>
+                                    <Kbd>
+                                        {platform === "mac" ? "⌘" : "Ctrl"}
+                                    </Kbd>
+                                    <Kbd>K</Kbd>
+                                </KbdGroup>
                             )}
                         </InputGroupAddon>
                     </InputGroup>
@@ -222,7 +224,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                         <Highlight
                             onClick={() => {
                                 setQuery("")
-                                inputRef.current?.focus() // Xóa xong vẫn giữ focus để nhập tiếp
+                                inputRef.current?.focus()
                             }}
                             className={cn(
                                 "cursor-pointer decoration-solid hover:underline"
@@ -249,7 +251,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                 <li
                                     className={cn(
                                         item.depth === 3
-                                            ? "border-muted-foreground/20 border-s-1 ps-3"
+                                            ? "border-muted-foreground/20 border-s-1"
                                             : "mb-2",
                                         "mx-6 box-content h-fit list-inside",
                                         item.depth === 3 &&
@@ -284,37 +286,13 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                                 : "hover:text-foreground transition-colors duration-100",
                                             "relative inline-block w-full",
                                             item.depth === 3
-                                                ? "py-1"
+                                                ? "py-1 ps-3"
                                                 : "font-bold"
                                         )}
                                     >
                                         {item.depth === 1
                                             ? "About"
-                                            : formatOrdinal(
-                                                  item.label
-                                                      .replace(/^\d+\.\s*/, "")
-                                                      .replace(
-                                                          /\.$/,
-                                                          (match) => {
-                                                              const text =
-                                                                  item.label
-                                                                      .replace(
-                                                                          /^\d+\.\s*/,
-                                                                          ""
-                                                                      )
-                                                                      .slice(
-                                                                          0,
-                                                                          -1
-                                                                      )
-                                                                      .toLowerCase()
-                                                              return /^(mr|ms|mrs|dr|jr)$/.test(
-                                                                  text
-                                                              )
-                                                                  ? match
-                                                                  : ""
-                                                          }
-                                                      )
-                                              )}
+                                            : formatOrdinal(item.label)}
                                         {activeId === item.id && (
                                             <div
                                                 className={cn(

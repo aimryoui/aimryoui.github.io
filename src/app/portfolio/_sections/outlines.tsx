@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 
 const sections = Object.values(PROJECT_CATEGORIES)
 
-function SectionOutlines() {
+function Outlines() {
     return (
         <section>
             <Space />
@@ -126,4 +126,4 @@ function SectionOutlines() {
     )
 }
 
-export default SectionOutlines
+export default Outlines

@@ -1,10 +1,12 @@
 import React from "react"
 
-import SectionContact from "@/app/portfolio/_sections/contact"
-import SectionEducation from "@/app/portfolio/_sections/education"
-import SectionExperiences from "@/app/portfolio/_sections/experiences"
-import SectionOutlines from "@/app/portfolio/_sections/outlines"
-import SectionSoftware from "@/app/portfolio/_sections/software"
+import Contact from "@/app/portfolio/_sections/contact"
+import Education from "@/app/portfolio/_sections/education"
+import Experiences from "@/app/portfolio/_sections/experiences"
+import NoAI from "@/app/portfolio/_sections/no-ai"
+import Outlines from "@/app/portfolio/_sections/outlines"
+import Projects from "@/app/portfolio/_sections/projects"
+import Software from "@/app/portfolio/_sections/software"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
@@ -16,8 +18,6 @@ import {
 } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
-
-import SectionProjects from "./_sections/projects"
 
 export default function Portfolio() {
     return (
@@ -230,26 +230,32 @@ export default function Portfolio() {
             <Space />
             <SectionLine showDecoration />
 
-            <SectionExperiences />
+            <Experiences />
             <SectionLine />
 
-            <SectionEducation />
+            <Education />
             <SectionLine />
 
-            <SectionSoftware />
+            <Software />
             <SectionLine />
 
-            <SectionContact />
+            <Contact />
 
             <SectionLine />
             <Space />
             <SectionLine showDecoration />
 
-            <SectionOutlines />
+            <Outlines />
+
+            <SectionLine />
+            <Space />
+            <SectionLine />
+
+            <NoAI />
 
             <SectionLine />
 
-            <SectionProjects />
+            <Projects />
         </main>
     )
 }

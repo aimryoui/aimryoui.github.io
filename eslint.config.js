@@ -264,13 +264,7 @@ export default tseslint.config(
                 1,
                 {
                     isAllowBaseUrlResolvedImport: false,
-                    aliasConfigPath: "./tsconfig.json",
-                    relativeImportOverrides: [
-                        {
-                            path: ".",
-                            depth: 0
-                        }
-                    ]
+                    aliasConfigPath: "./tsconfig.json"
                 }
             ]
         }

@@ -1,6 +1,5 @@
 import * as runtime from "react/jsx-runtime"
 
-import { ProjectSectionDivider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
 import { Image } from "@/components/ui/image"
@@ -10,7 +9,6 @@ const sharedComponents = {
     cn,
     Image,
     MediaFrame,
-    ProjectSectionDivider,
     SectionLine
 }
 

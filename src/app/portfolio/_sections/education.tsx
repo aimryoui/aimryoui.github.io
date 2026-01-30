@@ -5,7 +5,7 @@ import { Space } from "@/components/layout/space"
 import { At, Bold, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
-function SectionEducation() {
+function Education() {
     return (
         <section>
             <Space />
@@ -45,4 +45,4 @@ function SectionEducation() {
     )
 }
 
-export default SectionEducation
+export default Education

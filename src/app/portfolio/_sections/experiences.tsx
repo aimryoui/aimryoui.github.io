@@ -181,7 +181,7 @@ const sections: Section[] = [
     }
 ]
 
-function SectionExperiences() {
+function Experiences() {
     return (
         <section>
             <Space />
@@ -274,4 +274,4 @@ function SectionExperiences() {
     )
 }
 
-export default SectionExperiences
+export default Experiences

@@ -4,6 +4,9 @@
 @custom-variant light (&:where([data-theme=light], [data-theme=light] *));
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
+@custom-variant mac (&:where([data-platform=mac], [data-platform=mac] *));
+@custom-variant win (&:where([data-platform=win], [data-platform=win] *));
+
 @theme inline {
     --color-background: var(--background);
     --color-foreground: var(--foreground);

@@ -14,16 +14,4 @@ function Divider({
     )
 }
 
-function ProjectSectionDivider({ sectionName }: { sectionName: string }) {
-    return (
-        <h5
-            className={cn(
-                "bg-background w-full p-3 text-center font-mono uppercase"
-            )}
-        >
-            {sectionName}
-        </h5>
-    )
-}
-
-export { Divider, ProjectSectionDivider }
+export { Divider }

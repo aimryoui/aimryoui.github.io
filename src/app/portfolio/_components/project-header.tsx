@@ -56,7 +56,11 @@ function ProjectHeader({
                         "flex flex-1 flex-col gap-2 px-6 pt-3.5 pb-5"
                     )}
                 >
-                    <H3 id={headerId}>{formatOrdinal(projectName + ".")}</H3>
+                    <H3 id={headerId}>
+                        {formatOrdinal(
+                            projectName + (projectName.endsWith(".") ? "" : ".")
+                        )}
+                    </H3>
                     <Highlight className={cn("font-normal")}>
                         {category}
                     </Highlight>

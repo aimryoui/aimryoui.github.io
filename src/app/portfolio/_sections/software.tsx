@@ -59,7 +59,7 @@ const sections: Section[] = [
     }
 ]
 
-function SectionSoftware() {
+function Software() {
     return (
         <section>
             <Space />
@@ -135,4 +135,4 @@ function SectionSoftware() {
     )
 }
 
-export default SectionSoftware
+export default Software

@@ -3,7 +3,6 @@ import { glob } from "glob"
 import path from "path"
 import sharp from "sharp"
 
-// CẤU HÌNH
 const INPUT_DIR = "private/images"
 const OUTPUT_BASE = "public/assets/images"
 const MANIFEST_PATH = "src/lib/image-manifest.json"
@@ -11,7 +10,6 @@ const MAX_SIZE = 1602
 export const GRID_ROWS = 3
 export const GRID_COLS = 3
 
-// Interface Manifest
 type ImageManifest = Record<string, { width: number; height: number }>
 interface ImageMeta {
     mtime: number
@@ -20,7 +18,6 @@ interface ImageMeta {
 async function main() {
     const files = await glob(`${INPUT_DIR}/**/*.{png,jpg,jpeg,webp}`)
 
-    // 1. Load manifest cũ
     let oldManifest: ImageManifest = {}
     if (fs.existsSync(MANIFEST_PATH)) {
         try {
@@ -42,10 +39,6 @@ async function main() {
             .replace(/\\/g, "/")
         const parsedPath = path.parse(relativePath)
 
-        // --- THAY ĐỔI Ở ĐÂY ---
-        // Tạo key mới: Nối thư mục + tên file (đã bỏ extension cuối)
-        // Ví dụ: "uiux/siglo/5.jpg" -> "uiux/siglo/5"
-        // Ví dụ: "uiux/demo.png.jpg" -> "uiux/demo.png"
         const manifestKey = path
             .join(parsedPath.dir, parsedPath.name)
             .replace(/\\/g, "/")
@@ -73,23 +66,31 @@ async function main() {
                     isCached = true
                 }
             } catch {
-                /* file lỗi */
+                /* Empty */
             }
         }
 
-        // NẾU ĐÃ CACHE:
         if (isCached) {
-            // Dùng manifestKey để copy dữ liệu
             newManifest[manifestKey] = oldManifest[manifestKey]
-            // console.log(`Skipping (Cached): ${manifestKey}`)
             continue
         }
 
         console.log(`Processing: ${relativePath}...`)
 
         const originalImage = sharp(filePath)
+        const originalMetadata = await originalImage.metadata()
 
-        const resizedBuffer = await originalImage
+        const croppedImage =
+            originalMetadata.width && originalMetadata.height
+                ? originalImage.extract({
+                      left: 1,
+                      top: 1,
+                      width: originalMetadata.width - 2,
+                      height: originalMetadata.height - 2
+                  })
+                : originalImage
+
+        const resizedBuffer = await croppedImage
             .resize({
                 width: MAX_SIZE,
                 height: MAX_SIZE,
@@ -103,13 +104,11 @@ async function main() {
 
         if (!metadata.width || !metadata.height) continue
 
-        // Lưu vào manifest với key mới (không ext)
         newManifest[manifestKey] = {
             width: metadata.width,
             height: metadata.height
         }
 
-        // ... (Phần tạo Preview và Grid giữ nguyên không đổi) ...
         await image
             .clone()
             .resize({

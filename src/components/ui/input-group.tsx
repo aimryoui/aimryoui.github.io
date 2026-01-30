@@ -43,7 +43,7 @@ const inputGroupAddonVariants = cva(
             align: {
                 "inline-start":
                     "order-first pl-3 has-[>button]:ml-[-0.45rem] has-[>kbd]:ml-[-0.3rem]",
-                "inline-end": "order-last has-[>kbd]:mr-[0.45rem]",
+                "inline-end": "order-last has-[>kbd]:mr-2",
                 "block-start":
                     "order-first w-full justify-start px-3 pt-3 group-has-[>input]/input-group:pt-2.5 [.border-b]:pb-3",
                 "block-end":
@@ -135,7 +135,7 @@ function InputGroupInput({
         <Input
             data-slot="input-group-control"
             className={cn(
-                "flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:outline-none dark:bg-transparent",
+                "flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:outline-none dark:bg-transparent!",
                 className
             )}
             {...props}
