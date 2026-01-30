@@ -19,7 +19,7 @@ permissions:
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -33,6 +33,17 @@ jobs:
         with:
           version: 10
           run_install: false
+
+      # 2. Checkout original assets into folder /private
+      - name: Checkout Private Assets
+        uses: actions/checkout@v4
+        with:
+          repository: your-username/my-portfolio-assets # Thay tên user/repo của bạn
+          token: ${{ secrets.ASSETS_PAT }}
+          path: private
+          sparse-checkout: |
+            projects
+          # Only download projects folder
 
       - name: Install Node.js
         uses: actions/setup-node@v4
