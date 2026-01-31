@@ -224,6 +224,10 @@
     scrollbar-width: --value("auto", "thin", "none");
 }
 
+@utility bg-clip-* {
+    background-clip: --value([*]);
+}
+
 :root {
     --px: 0.09375rem;
     font-size: 0.9373dvw;
