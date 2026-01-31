@@ -50,7 +50,7 @@ function TooltipContent({
                 data-slot="tooltip-content"
                 sideOffset={sideOffset}
                 collisionPadding={12}
-                arrowPadding={6}
+                arrowPadding={7}
                 className={cn(
                     `
                         group bg-background animate-in fade-in-0 zoom-in-95 data-[state=closed]:fade-out-0

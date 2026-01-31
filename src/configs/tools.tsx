@@ -8,8 +8,10 @@ import {
     AdobePremierePro,
     AdobeXD,
     Blender,
-    Figma
-} from "@/components/icons/app-icons"
+    Bootstrap,
+    Figma,
+    VSCode
+} from "@/components/icons/tool-icons"
 import { cn } from "@/lib/utils"
 
 const TOOL_ICONS = ({ size = "md" }: { size?: "md" | "sm" } = {}) => ({
@@ -90,6 +92,16 @@ const TOOL_ICONS = ({ size = "md" }: { size?: "md" | "sm" } = {}) => ({
         icon: <Blender className={cn(size === "sm" ? "size-6" : "size-8")} />,
         label: "Blender",
         url: "https://www.blender.org/"
+    },
+    vsCode: {
+        icon: <VSCode className={cn(size === "sm" ? "size-6" : "size-8")} />,
+        label: "VS Code",
+        url: "https://code.visualstudio.com"
+    },
+    bootstrap: {
+        icon: <Bootstrap className={cn(size === "sm" ? "h-6" : "h-8")} />,
+        label: "Bootstrap",
+        url: "https://getbootstrap.com"
     }
 })
 

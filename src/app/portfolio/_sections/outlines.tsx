@@ -29,7 +29,7 @@ function Outlines() {
                         <React.Fragment key={index}>
                             <div
                                 className={cn(
-                                    "grid grid-cols-3 gap-6 gap-y-3 pt-3.5 pb-4"
+                                    "grid grid-cols-3 gap-6 gap-y-3 pt-3.25 pb-3.75"
                                 )}
                             >
                                 <Highlight className={cn("ps-6 font-normal")}>
@@ -39,13 +39,7 @@ function Outlines() {
                                     {section.title}
                                 </Bold>
                             </div>
-                            {index < arr.length - 1 && (
-                                <SectionLine
-                                    className={cn(
-                                        "me-0 w-[calc(100%+var(--body-padding))]"
-                                    )}
-                                />
-                            )}
+                            {index < arr.length - 1 && <SectionLine />}
                         </React.Fragment>
                     ))}
                 </div>

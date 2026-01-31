@@ -44,7 +44,7 @@ export default function Portfolio() {
             <SectionLine />
             <Divider />
             <SectionLine />
-            <div className={cn("bg-background relative px-6 pt-3.5 pb-4")}>
+            <div className={cn("bg-background relative px-6 pt-3.25 pb-3.75")}>
                 <Text>
                     However, I came up from{" "}
                     {[
@@ -248,7 +248,7 @@ export default function Portfolio() {
             <Outlines />
 
             <SectionLine />
-            <Space />
+            <Divider />
             <SectionLine />
 
             <NoAI />

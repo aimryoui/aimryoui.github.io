@@ -51,8 +51,10 @@
     --default-outline-width: var(--px);
     --outline-offset-px: var(--px);
     --length-px: var(--px);
-    --translate-x-px: var(--px);
-    --translate-y-px: var(--px);
+    --translate-px: var(--px);
+
+    --spacing-inherit: inherit;
+    --radius-inherit: inherit;
 
     --font-weight-normal: 500;
 
@@ -202,6 +204,10 @@
     --text-base--line-height: 1.3;
     --text-2xl--line-height: 1.3;
     --text-4xl--line-height: 1.3;
+
+    --border-width-1: var(--px);
+    --border-width-2: 0.125rem;
+    --border-width-3: 0.1875rem;
 }
 
 @custom-variant 2xl (@media (max-width: 96rem));
@@ -212,18 +218,9 @@
 
 :root {
     --px: 0.09375rem;
-    --body-padding: calc(var(--spacing) * 48);
     font-size: 0.9373dvw;
 
     @variant 2xl {
         font-size: 16px;
-    }
-
-    @variant xl {
-        --body-padding: calc(var(--spacing) * 24);
-    }
-
-    @variant md {
-        --body-padding: calc(var(--spacing) * 8);
     }
 }

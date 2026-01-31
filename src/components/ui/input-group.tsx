@@ -8,9 +8,16 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
+function InputGroup({
+    className,
+    as,
+    ...props
+}: React.ComponentProps<"div"> & {
+    as?: React.ElementType
+}) {
+    const Comp = as ?? ("div" as React.ElementType)
     return (
-        <div
+        <Comp
             data-slot="input-group"
             role="group"
             className={cn(

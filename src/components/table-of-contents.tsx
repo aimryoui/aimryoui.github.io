@@ -125,9 +125,9 @@ export function TableOfContents({ items }: TableOfContentsProps) {
 
     return (
         <aside className={cn("relative h-dvh w-80 lg:hidden")}>
-            <nav className="bg-background fixed top-0 z-50 flex h-full w-[inherit] flex-col">
+            <nav className="bg-background w-inherit fixed top-0 z-50 flex h-full flex-col">
                 <div className={cn("px-6 pt-5 pb-2")}>
-                    <InputGroup>
+                    <InputGroup as="search">
                         <InputGroupInput
                             ref={inputRef}
                             id="search"
@@ -217,7 +217,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                         </InputGroupAddon>
                     </InputGroup>
                 </div>
-                <SectionLine fit parentClassName={cn("mt-4")} />
+                <SectionLine fit containerClassName={cn("mt-4")} />
                 {filteredItems.length === 0 ? (
                     <Text className={cn("px-6 py-4 text-sm")}>
                         No results found.{" "}
@@ -243,7 +243,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                 {item.depth === 2 && (
                                     <SectionLine
                                         fit
-                                        parentClassName={cn(
+                                        containerClassName={cn(
                                             "my-4 first:hidden"
                                         )}
                                     />
@@ -251,12 +251,12 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                 <li
                                     className={cn(
                                         item.depth === 3
-                                            ? "border-muted-foreground/20 border-s-1"
+                                            ? "border-muted-foreground/20 border-s-[.0625rem]"
                                             : "mb-2",
                                         "mx-6 box-content h-fit list-inside",
                                         item.depth === 3 &&
                                             activeId === item.id &&
-                                            "border-highlighted"
+                                            "border-highlighted -translate-x-0.5 border-s-3"
                                     )}
                                 >
                                     <Link

@@ -210,6 +210,80 @@ function Blender({ className }: React.ComponentProps<"svg">) {
     )
 }
 
+function VSCode({ className }: React.ComponentProps<"svg">) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 60 60"
+            className={className}
+        >
+            <defs>
+                <linearGradient
+                    id="v"
+                    x1="30"
+                    y1="0"
+                    x2="30"
+                    y2="60"
+                    gradientUnits="userSpaceOnUse"
+                >
+                    <stop stopColor="#fff" />
+                    <stop offset="1" stopColor="#fff" stopOpacity="0" />
+                </linearGradient>
+            </defs>
+            <path
+                fill="#0065A9"
+                d="M57.88 6.48 45.52.53a3.74 3.74 0 0 0-4.27.72L.78 38.15a2.5 2.5 0 0 0 0 3.7l3.3 3a2.5 2.5 0 0 0 3.2.14L56.02 8.02c1.63-1.24 3.98-.07 3.98 1.98V9.86a3.75 3.75 0 0 0-2.12-3.38z"
+            />
+            <path
+                fill="#007ACC"
+                d="m57.88 53.53-12.36 5.95a3.74 3.74 0 0 1-4.27-.73L.78 21.85a2.5 2.5 0 0 1 0-3.7l3.3-3a2.5 2.5 0 0 1 3.2-.14l48.74 36.97c1.63 1.24 3.98.07 3.98-1.98v.14a3.75 3.75 0 0 1-2.12 3.38z"
+            />
+            <path
+                fill="#1F9CF0"
+                d="M45.52 59.48a3.74 3.74 0 0 1-4.27-.73c1.39 1.39 3.75.4 3.75-1.55V2.8c0-1.95-2.36-2.93-3.75-1.55a3.74 3.74 0 0 1 4.27-.72l12.36 5.94A3.75 3.75 0 0 1 60 9.85v40.3a3.75 3.75 0 0 1-2.12 3.38l-12.36 5.95z"
+            />
+            <path
+                fill="url(#v)"
+                opacity="0.25"
+                style={{ mixBlendMode: "overlay" }}
+                d="M42.51 59.6a3.73 3.73 0 0 0 2.98-.12l12.35-5.94a3.75 3.75 0 0 0 2.12-3.38V9.85a3.75 3.75 0 0 0-2.12-3.38L45.49.53a3.74 3.74 0 0 0-4.26.72L17.58 22.83 7.28 15a2.5 2.5 0 0 0-3.2.14L.78 18.15a2.5 2.5 0 0 0 0 3.7l8.94 8.15-8.94 8.15a2.5 2.5 0 0 0 0 3.7l3.3 3a2.5 2.5 0 0 0 3.2.14l10.3-7.82 23.65 21.58c.37.37.8.65 1.29.84zm2.46-43.2L27.03 30l17.94 13.62V16.4z"
+            />
+        </svg>
+    )
+}
+
+function Bootstrap({ className }: React.ComponentProps<"svg">) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 76 60"
+            className={className}
+        >
+            <defs>
+                <linearGradient
+                    id="b"
+                    x1="0"
+                    y1="0"
+                    x2="76"
+                    y2="60"
+                    gradientUnits="userSpaceOnUse"
+                >
+                    <stop stopColor="#8F13FE" />
+                    <stop offset="1" stopColor="#6A10F3" />
+                </linearGradient>
+            </defs>
+            <path
+                d="M15.64 0C11.35 0 8.17 3.76 8.31 7.84c.14 3.92-.04 9-.14 13.14-1.28 4.15-3.45 6.78-6.99 7.12v3.81c3.54.34 5.71 2.97 6.99 7.12.14 4.14-.04 9.22-.14 13.14-.14 4.08 3.04 7.84 7.34 7.84h44.04c4.3 0 7.48-3.76 7.34-7.84-.14-3.92.04-9-.14-13.14 1.28-4.15 3.45-6.78 6.99-7.12v-3.81c-3.54-.34-5.71-2.97-6.99-7.12-.14-4.14.04-9.22.14-13.14.14-4.08-3.04-7.84-7.34-7.84H15.64z"
+                fill="url(#b)"
+            />
+            <path
+                d="M51.06 36.93c0 5.62-4.19 9.03-11.14 9.03H28.08c-.67 0-1.27-.54-1.27-1.28V15.32c0-.68.54-1.28 1.28-1.28h11.77c5.8 0 9.6 3.14 9.6 7.96 0 3.38-2.56 6.41-5.82 6.95v.18c4.44.48 7.43 3.56 7.43 7.81zM31.88 18.09v9.53h6.75c3.67 0 5.75-1.64 5.75-4.6s-2.08-4.93-5.75-4.93h-6.75zm0 23.82h7c4.57 0 7-1.84 7-5.29s-2.43-5.22-7.23-5.22h-6.77v10.51z"
+                fill="white"
+            />
+        </svg>
+    )
+}
+
 export {
     AdobeAfterEffects,
     AdobeDimension,
@@ -220,5 +294,7 @@ export {
     AdobePremierePro,
     AdobeXD,
     Blender,
-    Figma
+    Bootstrap,
+    Figma,
+    VSCode
 }

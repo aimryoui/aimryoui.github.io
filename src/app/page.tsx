@@ -5,6 +5,7 @@ import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
 import { Space } from "@/components/layout/space"
 import { Button } from "@/components/ui/button"
+import { Image } from "@/components/ui/image"
 import { H1, Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
@@ -23,15 +24,17 @@ export default function Home() {
             </div>
             <SectionLine />
             <Divider />
-            <SectionLine />
-            <MediaFrame className={cn("h-full flex-1")}>
-                {/* <Image
+            <MediaFrame
+                containerClassName={cn("h-full flex-1")}
+                className={cn("h-full")}
+            >
+                <Image
                     placeholderPriority
                     asBackgroundImage
                     src="hehe.jpg"
                     alt="hehe"
                     className={cn("rounded-2xl")}
-                /> */}
+                />
                 <Button
                     asChild
                     variant="outline"

@@ -72,7 +72,7 @@ function Software() {
                 <React.Fragment key={section.section}>
                     <div
                         className={cn(
-                            "bg-background relative grid grid-cols-5 gap-6 gap-y-3 pt-3.5 pb-4 [&>*:first-child]:ps-6 [&>*:last-child]:pe-6"
+                            "bg-background relative grid grid-cols-5 gap-6 gap-y-3 pt-3.25 pb-3.75 [&>*:first-child]:ps-6 [&>*:last-child]:pe-6"
                         )}
                     >
                         <Highlight className={cn("font-normal")}>

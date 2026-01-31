@@ -5,7 +5,6 @@ import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { Bold, Highlight, Link, Text } from "@/components/ui/typography"
-import { VisuallyHidden } from "@/components/ui/visually-hidden"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 
@@ -286,59 +285,67 @@ function Contact() {
             <SectionLine />
             <Divider />
             <SectionLine />
-            {sections.map((section, index, arr) => (
-                <React.Fragment key={section.section}>
-                    <div
-                        className={cn(
-                            "bg-background relative grid grid-cols-5 gap-6 gap-y-3 pt-3.5 pb-4"
-                        )}
-                    >
-                        {section.platforms.map((platform, platformindex) => (
-                            <React.Fragment key={platformindex}>
-                                <Highlight className={cn("ps-6")}>
-                                    {platform.icon}
-                                </Highlight>
-                                <Text>{platform.title}</Text>
-                                <div
-                                    className={cn(
-                                        "col-span-3 grid grid-cols-2 gap-6 gap-y-3 pe-6"
-                                    )}
-                                >
-                                    <Link
-                                        href={platform.links.url}
-                                        openInNewTab
-                                        className={
-                                            platform.links.hidden
-                                                ? cn("text-transparent")
-                                                : undefined
-                                        }
-                                    >
-                                        {platform.links.text}
-                                    </Link>
-
-                                    {platform.prefer ? (
-                                        <Highlight
-                                            className={cn("font-normal")}
-                                        >
-                                            Prefer
+            <address>
+                {sections.map((section, index, arr) => (
+                    <React.Fragment key={section.section}>
+                        <div
+                            className={cn(
+                                "bg-background relative grid grid-cols-5 gap-6 gap-y-3 pt-3.25 pb-3.75"
+                            )}
+                        >
+                            {section.platforms.map(
+                                (platform, platformindex) => (
+                                    <React.Fragment key={platformindex}>
+                                        <Highlight className={cn("ps-6")}>
+                                            {platform.icon}
                                         </Highlight>
-                                    ) : (
-                                        <VisuallyHidden asChild>
-                                            <Bold className={cn("font-normal")}>
-                                                Optional
-                                            </Bold>
-                                        </VisuallyHidden>
-                                    )}
-                                </div>
-                            </React.Fragment>
-                        ))}
-                    </div>
-                    {index < arr.length - 1 &&
-                        arr[index + 1].section !== section.section && (
-                            <SectionLine />
-                        )}
-                </React.Fragment>
-            ))}
+                                        <Text>{platform.title}</Text>
+                                        <div
+                                            className={cn(
+                                                "col-span-3 grid grid-cols-2 gap-6 gap-y-3 pe-6"
+                                            )}
+                                        >
+                                            <Link
+                                                href={platform.links.url}
+                                                openInNewTab
+                                                className={
+                                                    platform.links.hidden
+                                                        ? cn("text-transparent")
+                                                        : undefined
+                                                }
+                                            >
+                                                {platform.links.text}
+                                            </Link>
+
+                                            {platform.prefer ? (
+                                                <Highlight
+                                                    className={cn(
+                                                        "font-normal"
+                                                    )}
+                                                >
+                                                    Prefer
+                                                </Highlight>
+                                            ) : (
+                                                <Bold
+                                                    className={cn(
+                                                        "sr-only font-normal"
+                                                    )}
+                                                >
+                                                    Optional
+                                                </Bold>
+                                            )}
+                                        </div>
+                                    </React.Fragment>
+                                )
+                            )}
+                        </div>
+                        {index < arr.length - 1 &&
+                            arr[index + 1].section !== section.section && (
+                                <SectionLine />
+                            )}
+                    </React.Fragment>
+                ))}
+            </address>
         </section>
     )
 }

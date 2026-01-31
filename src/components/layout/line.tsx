@@ -32,12 +32,12 @@ function Plus({ position }: { position?: "left" | "right" }) {
 }
 
 function SectionLine({
-    parentClassName,
+    containerClassName,
     className,
     showDecoration = false,
     fit = false
 }: {
-    parentClassName?: string
+    containerClassName?: string
     className?: string
     showDecoration?: boolean
     fit?: boolean
@@ -46,21 +46,16 @@ function SectionLine({
         <div
             className={cn(
                 "relative flex h-px w-full items-center justify-between",
-                parentClassName
+                containerClassName
             )}
         >
             {showDecoration && <Plus position="left" />}
             <hr
                 className={cn(
                     `
-                    bg-background absolute top-1/2
-                    h-px -translate-y-1/2
-                    bg-[linear-gradient(to_right,var(--stroke-foreground)_50%,transparent_0)]
-                    bg-size-[16px_1px] bg-top bg-repeat-x
+                    bg-background border-stroke-foreground absolute top-1/2 -translate-y-1/2 border-b border-dashed
                 `,
-                    fit
-                        ? "left-1/2 w-full -translate-x-1/2"
-                        : "-right-6.5 w-dvw",
+                    fit ? "left-1/2 w-full -translate-x-1/2" : "right-0 w-dvw",
                     className
                 )}
             />

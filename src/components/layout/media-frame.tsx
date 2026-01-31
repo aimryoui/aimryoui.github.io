@@ -28,15 +28,17 @@ function ProjectSectionName({
 
 function MediaFrame({
     sectionName,
+    containerClassName,
     className,
     children
 }: {
     sectionName?: string
+    containerClassName?: string
     className?: string
     children: React.ReactNode
 }) {
     return (
-        <div className={cn("bg-background")}>
+        <div className={cn("bg-background w-full", containerClassName)}>
             {sectionName ? (
                 <>
                     <SectionLine />
@@ -46,7 +48,7 @@ function MediaFrame({
             ) : (
                 <SectionLine />
             )}
-            <div className={cn("overflow-clip")}>
+            <div className={cn("size-inherit overflow-clip")}>
                 {sectionName && (
                     <div
                         className={cn(
