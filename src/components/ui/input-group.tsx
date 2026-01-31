@@ -31,7 +31,7 @@ function InputGroup({
                 "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-end]]:[&>input]:pt-3",
 
                 // Focus state.
-                "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:outline-highlighted/30 has-[[data-slot=input-group-control]:focus-visible]:outline-4 has-[[data-slot=input-group-control]:focus-visible]:transition-[color,outline-color,outline-width] has-[[data-slot=input-group-control]:focus-visible]:ease-out dark:has-[[data-slot=input-group-control]:focus-visible]:hover:bg-input/30 outline-40 outline-transparent has-[[data-slot=input-group-control]:focus-visible]:hover:bg-transparent",
+                "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:outline-highlighted/30 has-[[data-slot=input-group-control]:focus-visible]:outline-4 has-[[data-slot=input-group-control]:focus-visible]:transition-[color,outline-color,outline-width] has-[[data-slot=input-group-control]:focus-visible]:ease-out dark:has-[[data-slot=input-group-control]:focus-visible]:hover:bg-input/30 outline-40 outline-transparent will-change-[outline,border] has-[[data-slot=input-group-control]:focus-visible]:hover:bg-transparent",
 
                 // Error state.
                 "has-[[data-slot][aria-invalid=true]]:ring-destructive/20 has-[[data-slot][aria-invalid=true]]:border-destructive dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40",

@@ -196,7 +196,9 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                     initial="hidden"
                     animate="visible"
                     ref={scrollContainerRef}
-                    className="group scrollbar-thin flex-1 overflow-y-scroll overscroll-contain scroll-auto py-4 text-sm"
+                    className={cn(
+                        "group scrollbar-thin flex-1 overflow-y-scroll overscroll-contain scroll-auto py-4 text-sm will-change-[opacity]"
+                    )}
                 >
                     {filteredItems.map((item) => (
                         <React.Fragment key={item.id}>
@@ -214,7 +216,9 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                         }
                                     }}
                                     fit
-                                    containerClassName={cn("my-4 first:hidden")}
+                                    containerClassName={cn(
+                                        "my-4 will-change-[opacity] first:hidden"
+                                    )}
                                 />
                             )}
                             <motion.li
@@ -236,7 +240,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                     item.depth === 3
                                         ? "border-muted-foreground/20 border-s-[.0625rem]"
                                         : "mb-2",
-                                    "mx-6 box-content h-fit list-inside",
+                                    "mx-6 box-content h-fit list-inside will-change-[translate,opacity,border,margin]",
                                     item.depth === 3 &&
                                         activeId === item.id &&
                                         "border-highlighted -translate-x-0.5 border-s-3"
@@ -269,7 +273,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                         activeId === item.id
                                             ? "text-highlighted"
                                             : "hover:text-foreground hover:transition-none transition-[color] duration-50",
-                                        "relative inline-block w-full",
+                                        "relative inline-block w-full will-change-[color]",
                                         item.depth === 3
                                             ? "py-1 ps-3"
                                             : "font-bold"

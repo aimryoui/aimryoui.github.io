@@ -106,7 +106,7 @@ export function ExpandableWrapper({
                         <SectionLine />
                         <div
                             className={cn(
-                                "sticky bottom-0 z-20 grid w-full place-items-center"
+                                "sticky bottom-0 z-20 grid w-full place-items-center transition-[translate,opacity] delay-100 duration-250 ease-out will-change-[translate,opacity] starting:translate-y-12 starting:opacity-0"
                             )}
                         >
                             <Button
