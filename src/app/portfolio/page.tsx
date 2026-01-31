@@ -242,16 +242,19 @@ export default function Portfolio() {
             <Contact />
 
             <SectionLine />
-            <Space />
-            <SectionLine showDecoration />
-
-            <Outlines />
-
-            <SectionLine />
             <Divider />
             <SectionLine />
 
             <NoAI />
+
+            <SectionLine />
+            <Divider />
+
+            <SectionLine />
+            <Space />
+            <SectionLine showDecoration />
+
+            <Outlines />
 
             <SectionLine />
 

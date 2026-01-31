@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 
 function NoAI() {
     return (
-        <div className={cn("z-50 h-[200dvh]")}>
+        <div className={cn("z-50 h-[250dvh]")}>
             <div className={cn("h-inherit bg-red-500 py-20")}>
                 <div
                     className={cn(

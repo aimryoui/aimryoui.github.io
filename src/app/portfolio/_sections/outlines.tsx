@@ -5,10 +5,10 @@ import { PROJECT_CATEGORIES } from "@/app/portfolio/_configs/project-categories"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { Bold, Highlight } from "@/components/ui/typography"
+import { Highlight, Link } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
-const sections = Object.values(PROJECT_CATEGORIES)
+const sections = Object.entries(PROJECT_CATEGORIES)
 
 function Outlines() {
     return (
@@ -25,8 +25,8 @@ function Outlines() {
                 )}
             >
                 <div>
-                    {sections.map((section, index, arr) => (
-                        <React.Fragment key={index}>
+                    {sections.map(([key, section], index, arr) => (
+                        <React.Fragment key={key}>
                             <div
                                 className={cn(
                                     "grid grid-cols-3 gap-6 gap-y-3 pt-3.25 pb-3.75"
@@ -35,9 +35,30 @@ function Outlines() {
                                 <Highlight className={cn("ps-6 font-normal")}>
                                     {String(index + 1).padStart(2, "0")}
                                 </Highlight>
-                                <Bold className={cn("col-span-2 pe-6")}>
+                                <Link
+                                    href={`#${key}`}
+                                    className={cn(
+                                        "group col-span-2 flex items-center gap-2 pe-6"
+                                    )}
+                                >
                                     {section.title}
-                                </Bold>
+                                    <div
+                                        className={cn(
+                                            "bg-highlighted/10 text-highlighted hidden size-5 translate-y-0.5 place-items-center rounded-full dark:bg-highlighted/20 group-hover:grid"
+                                        )}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            className={cn("size-3")}
+                                        >
+                                            <path
+                                                fill="currentColor"
+                                                d="M12.002 1c.741 0 1.263.521 1.263 1.286v14.389l-.093 2.502 3.058-3.418 2.63-2.595c.22-.22.545-.37.892-.37.695 0 1.217.532 1.217 1.24 0 .335-.128.636-.394.914l-7.635 7.646c-.255.255-.59.406-.938.406s-.684-.15-.939-.405L3.43 14.947c-.266-.278-.394-.579-.394-.915 0-.707.51-1.24 1.205-1.24.36 0 .672.151.904.371l2.63 2.595 3.058 3.406-.093-2.49V2.285c0-.764.51-1.285 1.263-1.285Z"
+                                            />
+                                        </svg>
+                                    </div>
+                                </Link>
                             </div>
                             {index < arr.length - 1 && <SectionLine />}
                         </React.Fragment>
