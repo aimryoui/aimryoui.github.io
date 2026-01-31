@@ -33,10 +33,11 @@ function SectionLine({
     containerClassName,
     className,
     showDecoration = false,
-    fit = false
-}: {
+    fit = false,
+    ref,
+    ...props
+}: React.ComponentProps<"div"> & {
     containerClassName?: string
-    className?: string
     showDecoration?: boolean
     fit?: boolean
 }) {
@@ -46,6 +47,8 @@ function SectionLine({
                 "relative flex h-px w-full items-center justify-between",
                 containerClassName
             )}
+            {...props}
+            ref={ref}
         >
             {showDecoration && <Plus position="left" />}
             <hr

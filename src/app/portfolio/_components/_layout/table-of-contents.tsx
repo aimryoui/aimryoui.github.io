@@ -1,5 +1,6 @@
 "use client"
 
+import { motion, stagger } from "motion/react"
 import Link from "next/link"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 
@@ -112,13 +113,15 @@ export function TableOfContents({ items }: TableOfContentsProps) {
     const allIds = useMemo(() => items.map((item) => item.id), [items])
     const activeId = useScrollSpy(allIds)
 
+    const isFirstRenderRef = useRef(true)
+
     useEffect(() => {
         if (activeId && scrollContainerRef.current) {
+            // Logic Target Locking (giữ nguyên)
             if (clickedTargetRef.current) {
                 if (activeId !== clickedTargetRef.current) {
                     return
                 }
-
                 clickedTargetRef.current = null
             }
 
@@ -127,15 +130,28 @@ export function TableOfContents({ items }: TableOfContentsProps) {
             )
 
             if (activeElement) {
-                activeElement.scrollIntoView({
-                    block: "center",
-                    behavior: "smooth"
-                })
+                // 2. Logic kiểm tra lần đầu
+                if (isFirstRenderRef.current) {
+                    // Nếu là lần đầu: Tắt cờ và cuộn "tức thời" (auto)
+                    isFirstRenderRef.current = false
+                    activeElement.scrollIntoView({
+                        block: "center",
+                        behavior: "auto" // Thay vì smooth, dùng auto để không có animation
+                    })
+                } else {
+                    // Nếu không phải lần đầu: Cuộn mượt (smooth)
+                    activeElement.scrollIntoView({
+                        block: "center",
+                        behavior: "smooth"
+                    })
+                }
             }
         }
     }, [activeId])
 
     if (!items.length) return null
+
+    const MotionSectionLine = motion.create(SectionLine)
 
     return (
         <nav className="bg-background w-inherit fixed top-0 flex h-[calc(100%-(var(--spacing)*20))] flex-col">
@@ -161,20 +177,61 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                     </Highlight>
                 </Text>
             ) : (
-                <ul
+                <motion.ul
+                    variants={{
+                        hidden: {
+                            opacity: 0
+                        },
+                        visible: {
+                            opacity: 1,
+                            transition: {
+                                duration: 1,
+                                delayChildren: stagger(0.025, {
+                                    startDelay: -0.1,
+                                    ease: "easeOut"
+                                })
+                            }
+                        }
+                    }}
+                    initial="hidden"
+                    animate="visible"
                     ref={scrollContainerRef}
-                    className="group flex-1 overflow-y-scroll overscroll-contain py-4 text-sm"
-                    style={{ scrollbarWidth: "thin" }}
+                    className="group scrollbar-thin flex-1 overflow-y-scroll overscroll-contain scroll-auto py-4 text-sm"
                 >
                     {filteredItems.map((item) => (
                         <React.Fragment key={item.id}>
                             {item.depth === 2 && (
-                                <SectionLine
+                                <MotionSectionLine
+                                    variants={{
+                                        hidden: {
+                                            opacity: 0
+                                        },
+                                        visible: {
+                                            opacity: 1,
+                                            transition: {
+                                                duration: 0.25
+                                            }
+                                        }
+                                    }}
                                     fit
                                     containerClassName={cn("my-4 first:hidden")}
                                 />
                             )}
-                            <li
+                            <motion.li
+                                variants={{
+                                    hidden: {
+                                        x: "10px",
+                                        opacity: 0
+                                    },
+                                    visible: {
+                                        x: 0,
+                                        opacity: 1,
+                                        transition: {
+                                            duration: 0.3,
+                                            bounce: 0
+                                        }
+                                    }
+                                }}
                                 className={cn(
                                     item.depth === 3
                                         ? "border-muted-foreground/20 border-s-[.0625rem]"
@@ -240,10 +297,10 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                         </div>
                                     )}
                                 </Link>
-                            </li>
+                            </motion.li>
                         </React.Fragment>
                     ))}
-                </ul>
+                </motion.ul>
             )}
         </nav>
     )

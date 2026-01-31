@@ -219,6 +219,11 @@
 @custom-variant md (@media (max-width: 48rem));
 @custom-variant sm (@media (max-width: 40rem));
 
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scrollbar-width */
+@utility scrollbar-* {
+    scrollbar-width: --value("auto", "thin", "none");
+}
+
 :root {
     --px: 0.09375rem;
     font-size: 0.9373dvw;
