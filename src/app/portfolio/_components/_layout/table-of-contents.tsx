@@ -32,6 +32,7 @@ function removeAccents(str: string): string {
 export function TableOfContents({ items }: TableOfContentsProps) {
     const [query, setQuery] = useState("")
     const [debouncedQuery, setDebouncedQuery] = useState("")
+    const [hasIntroRun, setHasIntroRun] = useState(false)
 
     const inputRef = useRef<HTMLInputElement>(null)
     const scrollContainerRef = useRef<HTMLUListElement>(null)
@@ -193,8 +194,11 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                             }
                         }
                     }}
-                    initial="hidden"
+                    initial={hasIntroRun ? "visible" : "hidden"}
                     animate="visible"
+                    onAnimationComplete={() => {
+                        setHasIntroRun(true)
+                    }}
                     ref={scrollContainerRef}
                     className={cn(
                         "group scrollbar-thin flex-1 overflow-y-scroll overscroll-contain scroll-auto py-4 text-sm will-change-[opacity]"
