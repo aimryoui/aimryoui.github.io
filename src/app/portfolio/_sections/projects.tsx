@@ -65,11 +65,7 @@ function Projects() {
                                 <Space />
                             </>
                         ) : (
-                            <>
-                                <SectionLine />
-                                <Divider />
-                                <SectionLine />
-                            </>
+                            <SectionLine />
                         )}
                     </article>
                 </React.Fragment>

@@ -2,7 +2,8 @@ import { cn } from "@/lib/utils"
 
 function Divider({
     dir = "horizontal",
-    className
+    className,
+    ...props
 }: React.ComponentProps<"div"> & { dir?: "vertical" | "horizontal" }) {
     return (
         <div
@@ -10,6 +11,7 @@ function Divider({
                 dir === "horizontal" ? "h-6 w-full" : "h-full w-6",
                 className
             )}
+            {...props}
         />
     )
 }

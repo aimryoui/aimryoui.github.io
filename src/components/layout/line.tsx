@@ -1,13 +1,11 @@
 import { cn } from "@/lib/utils"
 
-// https://stackoverflow.com/a/18064496
 function MarginLine() {
     return (
         <hr
             className={cn(`
-                sticky top-0 h-dvh w-px
-                bg-[linear-gradient(to_bottom,var(--stroke-foreground)_50%,transparent_0)]
-                bg-size-[1px_16px] bg-left bg-repeat-y
+                border-stroke-foreground sticky top-0
+                h-dvh border-r border-dashed
             `)}
         />
     )
@@ -74,14 +72,11 @@ function ElementLine({
             className={cn(
                 dir === "vertical"
                     ? `
-                w-px
-                bg-[linear-gradient(to_bottom,var(--stroke-foreground)_50%,transparent_0)]
-                bg-size-[1px_16px] bg-left bg-repeat-y
+                border-stroke-foreground border-r border-dashed
             `
                     : `
-                h-px w-full
-                bg-[linear-gradient(to_right,var(--stroke-foreground)_50%,transparent_0)]
-                bg-size-[16px_1px] bg-top bg-repeat-x
+                border-stroke-foreground
+                w-full border-b border-dashed
             `
             )}
         />

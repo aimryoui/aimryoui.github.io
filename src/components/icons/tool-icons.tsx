@@ -1,9 +1,10 @@
-function Figma({ className }: React.ComponentProps<"svg">) {
+function Figma({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <path
                 fill="#242938"
@@ -33,12 +34,13 @@ function Figma({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobePhotoshop({ className }: React.ComponentProps<"svg">) {
+function AdobePhotoshop({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <path
                 fill="#001E36"
@@ -52,12 +54,16 @@ function AdobePhotoshop({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobeIllustrator({ className }: React.ComponentProps<"svg">) {
+function AdobeIllustrator({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <path
                 fill="#300"
@@ -71,12 +77,13 @@ function AdobeIllustrator({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobeIndesign({ className }: React.ComponentProps<"svg">) {
+function AdobeIndesign({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <path
                 fill="#49021F"
@@ -90,12 +97,16 @@ function AdobeIndesign({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobeAfterEffects({ className }: React.ComponentProps<"svg">) {
+function AdobeAfterEffects({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <path
                 fill="#00005B"
@@ -109,12 +120,16 @@ function AdobeAfterEffects({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobePremierePro({ className }: React.ComponentProps<"svg">) {
+function AdobePremierePro({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <path
                 fill="#00005B"
@@ -128,12 +143,16 @@ function AdobePremierePro({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobeDreamweaver({ className }: React.ComponentProps<"svg">) {
+function AdobeDreamweaver({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <path
                 fill="#470137"
@@ -147,12 +166,13 @@ function AdobeDreamweaver({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobeXD({ className }: React.ComponentProps<"svg">) {
+function AdobeXD({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <path
                 fill="#470137"
@@ -166,12 +186,13 @@ function AdobeXD({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobeDimension({ className }: React.ComponentProps<"svg">) {
+function AdobeDimension({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <path
                 fill="#013301"
@@ -185,12 +206,13 @@ function AdobeDimension({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function Blender({ className }: React.ComponentProps<"svg">) {
+function Blender({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <path
                 fill="#235785"
@@ -210,12 +232,13 @@ function Blender({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function VSCode({ className }: React.ComponentProps<"svg">) {
+function VSCode({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
             className={className}
+            {...props}
         >
             <defs>
                 <linearGradient
@@ -252,12 +275,13 @@ function VSCode({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function Bootstrap({ className }: React.ComponentProps<"svg">) {
+function Bootstrap({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 76 60"
             className={className}
+            {...props}
         >
             <defs>
                 <linearGradient

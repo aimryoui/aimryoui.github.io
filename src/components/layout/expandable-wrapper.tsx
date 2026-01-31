@@ -54,14 +54,18 @@ export function ExpandableWrapper({
 
     return (
         <>
-            <div className={cn("relative", className)}>
+            <div
+                className={cn(
+                    "relative",
+                    !isExpanded && "[clip-path:inset(0_-50vw_0_-50vw)]",
+                    className
+                )}
+            >
                 <div
                     ref={contentRef}
                     className={cn(
                         "w-full",
-                        !isExpanded
-                            ? "max-h-700 [clip-path:inset(0_-100vw_0_-100vw)]"
-                            : "max-h-none"
+                        !isExpanded ? "max-h-700" : "max-h-none"
                     )}
                 >
                     {children}
@@ -70,7 +74,7 @@ export function ExpandableWrapper({
                 {!isExpanded && isOverflowing && (
                     <div
                         className={cn(
-                            "from-background absolute bottom-0 left-0 z-10 flex h-120 w-full flex-col items-center justify-end bg-linear-to-t from-10% to-transparent pb-5.5"
+                            "from-background absolute -bottom-6 z-10 flex h-120 w-full flex-col items-center justify-end bg-linear-to-t from-15% to-transparent pb-11.5"
                         )}
                     >
                         <Button
