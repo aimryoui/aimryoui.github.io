@@ -1,5 +1,6 @@
 import React from "react"
 
+import { TOOL_ICONS, type ToolKey } from "@/app/portfolio/_configs/tools"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import {
@@ -9,18 +10,19 @@ import {
     TooltipTrigger
 } from "@/components/ui/tooltip"
 import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
-import { TOOL_ICONS, type ToolKey } from "@/configs/tools"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
 
 function ProjectHeader({
+    type,
     projectName,
     category,
     information,
     tools,
     detail
 }: {
+    type: string
     projectName: string
     category: string
     information: {
@@ -49,16 +51,17 @@ function ProjectHeader({
                         font-mono tracking-normal uppercase
                     `)}
                 >
-                    Project
+                    {type}
                 </span>
                 <div
                     className={cn(
-                        "flex flex-1 flex-col gap-2 px-6 pt-3.5 pb-5"
+                        "flex flex-1 flex-col gap-2 px-6 pt-3.25 pb-3.75"
                     )}
                 >
                     <H3 id={headerId}>
                         {formatOrdinal(
-                            projectName + (projectName.endsWith(".") ? "" : ".")
+                            projectName +
+                                (/[.!?]$/.test(projectName) ? "" : ".")
                         )}
                     </H3>
                     <Highlight className={cn("font-normal")}>
@@ -70,7 +73,7 @@ function ProjectHeader({
                 <ElementLine />
                 <div
                     className={cn(
-                        "flex flex-1 flex-col justify-between px-6 pt-3.5 pb-5"
+                        "flex flex-1 flex-col justify-between px-6 pt-3.25 pb-3.75"
                     )}
                 >
                     <Highlight
@@ -124,9 +127,11 @@ function ProjectHeader({
                 )}
             </div>
             <SectionLine />
-            <div className={cn("flex flex-col gap-2 px-6 pt-3.5 pb-5")}>
-                <Bold>{detail.description}</Bold>
-                {detail.abbreviation && <Text>{detail.abbreviation}</Text>}
+            <div className={cn("flex flex-col gap-2 px-6 pt-3.25 pb-3.75")}>
+                <Bold>{formatOrdinal(detail.description)}</Bold>
+                {detail.abbreviation && (
+                    <Text>{formatOrdinal(detail.abbreviation)}</Text>
+                )}
             </div>
         </div>
     )

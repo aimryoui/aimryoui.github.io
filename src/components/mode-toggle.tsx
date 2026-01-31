@@ -25,7 +25,7 @@ function ThemedIcon() {
     return icon
 }
 
-export function ModeToggle() {
+export function ModeToggle({ className }: React.ComponentProps<"button">) {
     const [mounted, setMounted] = useState(false)
     const { theme, setTheme } = useTheme()
 
@@ -51,7 +51,7 @@ export function ModeToggle() {
                           : "light"
                 )
             }}
-            className={cn("fixed right-6 bottom-6 z-50")}
+            className={cn(className)}
         >
             <ThemedIcon />
             <span className="sr-only">Toggle theme</span>

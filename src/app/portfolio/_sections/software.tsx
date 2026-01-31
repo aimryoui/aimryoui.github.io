@@ -1,6 +1,7 @@
 import React from "react"
 
 import SectionTitle from "@/app/portfolio/_components/section-title"
+import { TOOL_ICONS, type ToolProps } from "@/app/portfolio/_configs/tools"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
@@ -11,7 +12,6 @@ import {
     TooltipTrigger
 } from "@/components/ui/tooltip"
 import { Bold, Highlight, Link, Text } from "@/components/ui/typography"
-import { TOOL_ICONS, type ToolProps } from "@/configs/tools"
 import { cn } from "@/lib/utils"
 
 interface SectionProps {

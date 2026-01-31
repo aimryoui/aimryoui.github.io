@@ -5,9 +5,10 @@ import {
     OtherCourseProjects,
     Others,
     Photography,
+    ShortFilms,
     UIUX,
     Weddings
-} from "@/components/icons/category-icons"
+} from "@/app/portfolio/_components/icons/category-icons"
 
 export interface CategoryConfig {
     title: string
@@ -22,9 +23,14 @@ export const PROJECT_CATEGORIES: Record<string, CategoryConfig> = {
         icons: <UIUX />
     },
     events: {
-        title: "Events & Short Films",
+        title: "Events",
         note: "Posters / Social Media / Publications",
         icons: <Events />
+    },
+    "short-films": {
+        title: "Short Films",
+        note: "Movies / Cinema / Films",
+        icons: <ShortFilms />
     },
     branding: {
         title: "Branding",
@@ -46,7 +52,7 @@ export const PROJECT_CATEGORIES: Record<string, CategoryConfig> = {
         note: "Invitations / Posters / Publications",
         icons: <Weddings />
     },
-    otherCourseProjects: {
+    "other-course-projects": {
         title: "Other Course Projects",
         note: "Typography / Infographics / Illustrations",
         icons: <OtherCourseProjects />

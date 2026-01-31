@@ -8,7 +8,7 @@ function ProjectSectionName({
 }: {
     className?: string
     sectionName: string
-    as?: "div"
+    as?: React.ElementType
 }) {
     const Comp = as ?? "h5"
     return (

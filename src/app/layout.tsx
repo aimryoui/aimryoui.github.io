@@ -6,7 +6,6 @@ import { Plus_Jakarta_Sans } from "next/font/google"
 import localFont from "next/font/local"
 
 import { MarginLine } from "@/components/layout/line"
-import { ModeToggle } from "@/components/mode-toggle"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 // import LenisProvider from "@/providers/lenis-provider"
@@ -166,8 +165,7 @@ export default function RootLayout({
             className={cn(
                 plusJakartaSans.variable,
                 sfProDisplay.variable,
-                sfMono.variable,
-                "scroll-smooth"
+                sfMono.variable
             )}
         >
             <head>
@@ -185,7 +183,7 @@ export default function RootLayout({
             </head>
             <body
                 className={cn(`
-                    text-muted-foreground bg-background flex
+                    text-muted-foreground bg-background relative flex
                     bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)]
                     bg-size-[10px_10px] bg-fixed px-6.5 -tracking-[.04em]
                 `)}
@@ -195,7 +193,6 @@ export default function RootLayout({
                     <MarginLine />
                     {children}
                     <MarginLine />
-                    <ModeToggle />
                     {/* </LenisProvider> */}
                 </ThemeProvider>
             </body>

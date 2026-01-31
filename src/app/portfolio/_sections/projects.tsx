@@ -1,12 +1,12 @@
 import React from "react"
 
+import { ExpandableWrapper } from "@/app/portfolio/_components/_layout/expandable-wrapper"
+import { MDXContent } from "@/app/portfolio/_components/mdx-content"
 import ProjectHeader from "@/app/portfolio/_components/project-header"
 import SectionTitle from "@/app/portfolio/_components/section-title"
 import { Divider } from "@/components/layout/divider"
-import { ExpandableWrapper } from "@/components/layout/expandable-wrapper"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { MDXContent } from "@/components/mdx-content"
 import { groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import { projects } from "~/.velite"
@@ -46,6 +46,7 @@ function Projects() {
                     <SectionLine />
                     <article>
                         <ProjectHeader
+                            type={project.type}
                             projectName={project.projectName}
                             category={project.category}
                             information={project.information}

@@ -1,13 +1,10 @@
 import { type Metadata } from "next"
 
+import Sidebar from "@/app/portfolio/_components/_layout/sidebar"
 import { Divider } from "@/components/layout/divider"
 import { MarginLine } from "@/components/layout/line"
-import { TableOfContents } from "@/components/table-of-contents"
 import { siteConfig } from "@/configs/site.config"
-import { groupProjectsByCategory } from "@/lib/project-sort"
-import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
-import { projects } from "~/.velite"
 
 const APP_PATH_TITLE = "Portfolio | Q1.2026 | Nguyễn Hoàng Nhân"
 // const APP_TITLE_TEMPLATE = "%s | Q1.2026 | Nguyễn Hoàng Nhân"
@@ -43,35 +40,9 @@ export default function PortfolioLayout({
 }: Readonly<{
     children: React.ReactNode
 }>) {
-    const projectGroups = groupProjectsByCategory(projects)
-    const projectItems = projectGroups.flatMap((group) => [
-        // Project Headers
-        {
-            id: group.id,
-            label: group.title,
-            depth: 2 as const
-        },
-        // Projects
-        ...group.projects.map((p) => ({
-            id: slugify(p.projectName),
-            label: p.projectName,
-            depth: 3 as const
-        }))
-    ])
-
-    const tocItems = [
-        { id: "about", label: "About", depth: 1 as const },
-        { id: "experiences", label: "Experiences", depth: 3 as const },
-        { id: "education", label: "Education", depth: 3 as const },
-        { id: "software", label: "Software", depth: 3 as const },
-        { id: "contact", label: "Contact", depth: 3 as const },
-        { id: "outlines", label: "Outlines", depth: 2 as const },
-        ...projectItems
-    ]
-
     return (
         <>
-            <TableOfContents items={tocItems} />
+            <Sidebar />
             <MarginLine />
             <Divider
                 dir="vertical"

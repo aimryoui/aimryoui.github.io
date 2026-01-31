@@ -15,7 +15,7 @@ function InputGroup({
 }: React.ComponentProps<"div"> & {
     as?: React.ElementType
 }) {
-    const Comp = as ?? ("div" as React.ElementType)
+    const Comp = as ?? "div"
     return (
         <Comp
             data-slot="input-group"
