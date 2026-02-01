@@ -2,13 +2,15 @@ import { SectionLine } from "@/components/layout/line"
 import { cn } from "@/lib/utils"
 
 function ProjectSectionName({
+    as,
+    lowercase = false,
     className,
-    sectionName,
-    as
+    sectionName
 }: {
+    as?: React.ElementType
+    lowercase?: boolean
     className?: string
     sectionName: string
-    as?: React.ElementType
 }) {
     const Comp = as ?? "h5"
     return (
@@ -16,7 +18,8 @@ function ProjectSectionName({
             <Comp
                 aria-hidden={as === "div"}
                 className={cn(
-                    "bg-background rounded-full px-3.5 py-1.5 font-mono uppercase",
+                    "bg-background rounded-full px-3.5 py-1.5 font-mono",
+                    !lowercase && "uppercase",
                     className
                 )}
             >
@@ -28,11 +31,13 @@ function ProjectSectionName({
 
 function MediaFrame({
     sectionName,
+    lowercase,
     containerClassName,
     className,
     children
 }: {
     sectionName?: string
+    lowercase?: boolean
     containerClassName?: string
     className?: string
     children: React.ReactNode
@@ -42,13 +47,20 @@ function MediaFrame({
             {sectionName ? (
                 <>
                     <SectionLine />
-                    <ProjectSectionName sectionName={sectionName} />
+                    <ProjectSectionName
+                        sectionName={sectionName}
+                        lowercase={lowercase}
+                    />
                     <SectionLine />
                 </>
             ) : (
                 <SectionLine />
             )}
-            <div className={cn("size-inherit overflow-clip")}>
+            <div
+                className={cn(
+                    "size-inherit grid place-items-center overflow-clip"
+                )}
+            >
                 {sectionName && (
                     <div
                         className={cn(
@@ -58,6 +70,7 @@ function MediaFrame({
                         <ProjectSectionName
                             as="div"
                             sectionName={sectionName}
+                            lowercase={lowercase}
                             className={cn(
                                 "outline-stroke-foreground -outline-offset-px bg-transparent text-transparent shadow-sm outline"
                             )}

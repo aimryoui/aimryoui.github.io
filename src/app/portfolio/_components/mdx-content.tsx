@@ -3,10 +3,8 @@ import * as runtime from "react/jsx-runtime"
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
 import { Image } from "@/components/ui/image"
-import { cn } from "@/lib/utils"
 
 const sharedComponents = {
-    cn,
     Image,
     MediaFrame,
     SectionLine

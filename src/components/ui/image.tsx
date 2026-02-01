@@ -27,7 +27,7 @@ function Image({
     const lastDotIndex = src.lastIndexOf(".")
     const pathWithoutExt = src.substring(0, lastDotIndex)
     const fileName = src.substring(src.lastIndexOf("/") + 1, lastDotIndex)
-    const basePath = `/assets/images/${pathWithoutExt}`
+    const basePath = `/assets/images${pathWithoutExt}`
 
     const ROWS = GRID_ROWS
     const COLS = GRID_COLS
@@ -44,7 +44,7 @@ function Image({
             {/* Represent image from `src` attribute or url() function */}
             <div
                 className={cn(
-                    "grid grid-cols-3 grid-rows-3 select-none",
+                    "max-h-inherit max-w-inherit grid grid-cols-3 grid-rows-3 select-none",
                     asBackgroundImage && "absolute",
                     objectFit === "fill" && "size-full",
                     objectFit === "contain" &&

@@ -1110,7 +1110,7 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 450 450"
-                className={cn("h-112.5")}
+                className={cn("h-56.25")}
                 shapeRendering="optimizeSpeed"
             >
                 <path

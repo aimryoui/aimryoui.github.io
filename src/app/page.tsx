@@ -33,7 +33,7 @@ export default function Home() {
                     <Image
                         placeholderPriority
                         asBackgroundImage
-                        src="hehe.jpg"
+                        src="/hehe.jpg"
                         alt="hehe"
                         className={cn("rounded-2xl")}
                     />

@@ -58,7 +58,7 @@ function Projects() {
                         <Divider />
 
                         <ExpandableWrapper projectName={project.projectName}>
-                            <MDXContent code={project.content} />
+                            <MDXContent code={project.code} />
                         </ExpandableWrapper>
                         {index < group.projects.length - 1 ? (
                             <>

@@ -17,19 +17,21 @@ const projects = defineCollection({
             newest: s.boolean().default(false),
             duration: s.string(),
             subject: s.string(),
-            place: s.string()
+            place: s.string().optional()
         }),
 
         tools: s.array(
             s.enum(Object.keys(TOOL_ICONS()) as [ToolKey, ...ToolKey[]])
         ),
 
-        detail: s.object({
-            description: s.string(),
-            abbreviation: s.string().optional()
-        }),
+        detail: s
+            .object({
+                description: s.string(),
+                abbreviation: s.string().optional()
+            })
+            .optional(),
 
-        content: s.mdx()
+        code: s.mdx()
     })
 })
 

@@ -1,6 +1,4 @@
-import React from "react"
-
-import { TOOL_ICONS, type ToolKey } from "@/app/portfolio/_configs/tools"
+import { TOOL_ICONS } from "@/app/portfolio/_configs/tools"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import {
@@ -13,6 +11,7 @@ import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
+import { type projects } from "~/.velite"
 
 function ProjectHeader({
     type,
@@ -21,22 +20,7 @@ function ProjectHeader({
     information,
     tools,
     detail
-}: {
-    type: string
-    projectName: string
-    category: string
-    information: {
-        newest?: boolean
-        duration: string
-        subject: string
-        place: string
-    }
-    tools: ToolKey[]
-    detail: {
-        description: string
-        abbreviation?: string
-    }
-}) {
+}: Omit<(typeof projects)[number], "slug" | "code">) {
     const headerId = slugify(projectName)
     return (
         <div className={cn("bg-background relative")}>
@@ -61,7 +45,10 @@ function ProjectHeader({
                     <H3 id={headerId}>
                         {formatOrdinal(
                             projectName +
-                                (/[.!?]$/.test(projectName) ? "" : ".")
+                                (/[.!?]$/.test(projectName) ||
+                                /\.(jpg|png|mp4|mp3)$/.test(projectName)
+                                    ? ""
+                                    : ".")
                         )}
                     </H3>
                     <Highlight className={cn("font-normal")}>
@@ -86,7 +73,12 @@ function ProjectHeader({
                     </Highlight>
                     <Text>{information.duration}</Text>
                     <Text>
-                        {information.subject} <At /> {information.place}
+                        {information.subject}{" "}
+                        {information.place && (
+                            <>
+                                <At /> {information.place}
+                            </>
+                        )}
                     </Text>
                 </div>
                 {tools.length > 0 && (
@@ -126,13 +118,21 @@ function ProjectHeader({
                     </div>
                 )}
             </div>
-            <SectionLine />
-            <div className={cn("flex flex-col gap-2 px-6 pt-3.25 pb-3.75")}>
-                <Bold>{formatOrdinal(detail.description)}</Bold>
-                {detail.abbreviation && (
-                    <Text>{formatOrdinal(detail.abbreviation)}</Text>
-                )}
-            </div>
+            {detail && (
+                <>
+                    <SectionLine />
+                    <div
+                        className={cn(
+                            "flex flex-col gap-2 px-6 pt-3.25 pb-3.75"
+                        )}
+                    >
+                        <Bold>{formatOrdinal(detail.description)}</Bold>
+                        {detail.abbreviation && (
+                            <Text>{formatOrdinal(detail.abbreviation)}</Text>
+                        )}
+                    </div>
+                </>
+            )}
         </div>
     )
 }

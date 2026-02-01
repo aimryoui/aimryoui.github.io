@@ -6,9 +6,8 @@ export function slugify(str: string): string {
         .trim()
         .normalize("NFD") // Tách tổ hợp (VD: 'á' -> 'a' + '´')
         .replace(/[\u0300-\u036f]/g, "") // Xóa các ký tự dấu (diacritics)
-        .replace(/đ/g, "d") // Xử lý chữ đ riêng biệt (vì normalize không tách đ)
-        .replace(/Đ/g, "d")
-        .replace(/\s+/g, "-") // Thay khoảng trắng bằng dấu gạch ngang
+        .replace(/[đĐ]/g, "d") // Gộp đ và Đ vào 1 dòng
+        .replace(/[\s_.]+/g, "-") // Thay khoảng trắng bằng dấu gạch ngang
         .replace(/[^\w-]+/g, "") // Xóa tất cả ký tự không phải chữ, số, gạch ngang
         .replace(/--+/g, "-") // Thay thế nhiều dấu gạch ngang liên tiếp thành 1
         .replace(/^-+/, "") // Xóa gạch ngang ở đầu
