@@ -184,7 +184,6 @@ export default function RootLayout({
             <body
                 className={cn(
                     "text-muted-foreground bg-background relative flex",
-                    // "bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px] bg-fixed",
                     "px-6.5 -tracking-[.04em]"
                 )}
             >
