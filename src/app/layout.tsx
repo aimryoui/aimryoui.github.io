@@ -194,6 +194,7 @@ export default function RootLayout({
                     {children}
                     <MarginLine />
                     {/* </LenisProvider> */}
+                    <div className="fixed inset-0 -z-10 h-full w-full bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px]" />
                 </ThemeProvider>
             </body>
         </html>
