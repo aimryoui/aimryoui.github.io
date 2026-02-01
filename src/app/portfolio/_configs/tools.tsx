@@ -11,7 +11,7 @@ import {
     Bootstrap,
     Figma,
     VSCode
-} from "@/app/portfolio/_components/icons/tool-icons"
+} from "@/app/portfolio/_components/_icons/tool-icons"
 import { cn } from "@/lib/utils"
 
 const TOOL_ICONS = ({ size = "md" }: { size?: "md" | "sm" } = {}) => ({

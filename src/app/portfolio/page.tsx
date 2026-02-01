@@ -3,6 +3,7 @@ import React from "react"
 import Contact from "@/app/portfolio/_sections/contact"
 import Education from "@/app/portfolio/_sections/education"
 import Experiences from "@/app/portfolio/_sections/experiences"
+import Footer from "@/app/portfolio/_sections/footer"
 import NoAI from "@/app/portfolio/_sections/no-ai"
 import Outlines from "@/app/portfolio/_sections/outlines"
 import Projects from "@/app/portfolio/_sections/projects"
@@ -259,6 +260,10 @@ export default function Portfolio() {
             <SectionLine />
 
             <Projects />
+
+            <SectionLine />
+
+            <Footer />
         </main>
     )
 }

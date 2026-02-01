@@ -25,14 +25,13 @@ function removeAccents(str: string): string {
     return str
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
-        .replace(/đ/g, "d")
-        .replace(/Đ/g, "D")
+        .replace(/[đĐ]/g, "d")
 }
 
 export function TableOfContents({ items }: TableOfContentsProps) {
     const [query, setQuery] = useState("")
     const [debouncedQuery, setDebouncedQuery] = useState("")
-    const [hasIntroRun, setHasIntroRun] = useState(false)
+    const [hasPageMounted, setHasPageMounted] = useState(false)
 
     const inputRef = useRef<HTMLInputElement>(null)
     const scrollContainerRef = useRef<HTMLUListElement>(null)
@@ -118,7 +117,6 @@ export function TableOfContents({ items }: TableOfContentsProps) {
 
     useEffect(() => {
         if (activeId && scrollContainerRef.current) {
-            // Logic Target Locking (giữ nguyên)
             if (clickedTargetRef.current) {
                 if (activeId !== clickedTargetRef.current) {
                     return
@@ -131,16 +129,13 @@ export function TableOfContents({ items }: TableOfContentsProps) {
             )
 
             if (activeElement) {
-                // 2. Logic kiểm tra lần đầu
                 if (isFirstRenderRef.current) {
-                    // Nếu là lần đầu: Tắt cờ và cuộn "tức thời" (auto)
                     isFirstRenderRef.current = false
                     activeElement.scrollIntoView({
                         block: "center",
-                        behavior: "auto" // Thay vì smooth, dùng auto để không có animation
+                        behavior: "auto"
                     })
                 } else {
-                    // Nếu không phải lần đầu: Cuộn mượt (smooth)
                     activeElement.scrollIntoView({
                         block: "center",
                         behavior: "smooth"
@@ -194,10 +189,10 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                             }
                         }
                     }}
-                    initial={hasIntroRun ? "visible" : "hidden"}
+                    initial={hasPageMounted ? "visible" : "hidden"}
                     animate="visible"
                     onAnimationComplete={() => {
-                        setHasIntroRun(true)
+                        setHasPageMounted(true)
                     }}
                     ref={scrollContainerRef}
                     className={cn(
@@ -241,6 +236,8 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                     }
                                 }}
                                 className={cn(
+                                    item.label.toLowerCase() === "footer" &&
+                                        "hidden",
                                     item.depth === 3
                                         ? "border-muted-foreground/20 border-s-[.0625rem]"
                                         : "mb-2",

@@ -1,20 +1,27 @@
 import { SectionLine } from "@/components/layout/line"
 import { cn } from "@/lib/utils"
 
-function ProjectSectionName({
+export function SectionName({
     as,
     lowercase = false,
+    containerClassName,
     className,
     sectionName
 }: {
     as?: React.ElementType
     lowercase?: boolean
+    containerClassName?: string
     className?: string
     sectionName: string
 }) {
     const Comp = as ?? "h5"
     return (
-        <div className={cn("sticky top-3.5 z-10 grid h-13 place-items-center")}>
+        <div
+            className={cn(
+                "sticky top-3.5 z-10 grid h-13 place-items-center",
+                containerClassName
+            )}
+        >
             <Comp
                 aria-hidden={as === "div"}
                 className={cn(
@@ -47,7 +54,7 @@ function MediaFrame({
             {sectionName ? (
                 <>
                     <SectionLine />
-                    <ProjectSectionName
+                    <SectionName
                         sectionName={sectionName}
                         lowercase={lowercase}
                     />
@@ -67,7 +74,7 @@ function MediaFrame({
                             "sticky top-16.5 z-10 flex h-0 items-end justify-center"
                         )}
                     >
-                        <ProjectSectionName
+                        <SectionName
                             as="div"
                             sectionName={sectionName}
                             lowercase={lowercase}

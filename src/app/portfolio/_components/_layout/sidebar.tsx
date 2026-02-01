@@ -31,6 +31,7 @@ function Sidebar() {
         { id: "contact", label: "Contact", depth: 3 as const },
         { id: "outlines", label: "Outlines", depth: 2 as const },
         ...projectItems
+        // { id: "footer", label: "Footer", depth: 3 as const }
     ]
 
     return (
