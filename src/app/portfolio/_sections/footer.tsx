@@ -60,9 +60,9 @@ function Footer() {
                 )}
             >
                 {[
-                    { qrSrc: "static/qr/email.webp", label: "Email" },
-                    { qrSrc: "static/qr/zalo.webp", label: "Zalo" },
-                    { qrSrc: "static/qr/facebook.webp", label: "Facebook" }
+                    { qrSrc: "/static/qr/email.webp", label: "Email" },
+                    { qrSrc: "/static/qr/zalo.webp", label: "Zalo" },
+                    { qrSrc: "/static/qr/facebook.webp", label: "Facebook" }
                 ].map((item, index, arr) => (
                     <React.Fragment key={item.label}>
                         <div
