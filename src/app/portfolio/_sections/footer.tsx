@@ -60,9 +60,9 @@ function Footer() {
                 )}
             >
                 {[
-                    { qrSrc: "/static/qr/email.webp", label: "Email" },
-                    { qrSrc: "/static/qr/zalo.webp", label: "Zalo" },
-                    { qrSrc: "/static/qr/facebook.webp", label: "Facebook" }
+                    { qrSrc: "/qr/email.webp", label: "Email" },
+                    { qrSrc: "/qr/zalo.webp", label: "Zalo" },
+                    { qrSrc: "/qr/facebook.webp", label: "Facebook" }
                 ].map((item, index, arr) => (
                     <React.Fragment key={item.label}>
                         <div
@@ -73,6 +73,7 @@ function Footer() {
                             <img
                                 src={item.qrSrc}
                                 alt={item.label}
+                                decoding="async"
                                 className={cn("w-full")}
                             />
                             <div

@@ -22,6 +22,7 @@
 # production
 /out
 .velite
+public/static
 
 # misc
 .DS_Store
