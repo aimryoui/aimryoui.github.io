@@ -244,7 +244,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                                     "mx-6 box-content h-fit list-inside will-change-[translate,opacity,border,margin]",
                                     item.depth === 3 &&
                                         activeId === item.id &&
-                                        "border-highlighted -translate-x-0.5 border-s-3"
+                                        "border-highlighted"
                                 )}
                             >
                                 <Link
