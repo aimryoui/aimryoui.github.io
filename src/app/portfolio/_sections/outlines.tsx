@@ -60,7 +60,9 @@ function Outlines() {
                                     </div>
                                 </Link>
                             </div>
-                            {index < arr.length - 1 && <SectionLine />}
+                            {index < arr.length - 1 && (
+                                <SectionLine className={cn("right-0")} />
+                            )}
                         </React.Fragment>
                     ))}
                 </div>

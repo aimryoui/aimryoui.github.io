@@ -57,7 +57,9 @@ function SectionLine({
                     `
                     bg-background border-stroke-foreground absolute top-1/2 -translate-y-1/2 border-b border-dashed
                 `,
-                    fit ? "left-1/2 w-full -translate-x-1/2" : "right-0 w-dvw",
+                    fit
+                        ? "left-1/2 w-full -translate-x-1/2"
+                        : "right-6.5 w-dvw",
                     className
                 )}
             />
