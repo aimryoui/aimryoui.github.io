@@ -1,25 +1,34 @@
 import { type NextConfig } from "next"
+import {
+    PHASE_DEVELOPMENT_SERVER,
+    PHASE_PRODUCTION_BUILD
+} from "next/constants"
 
-const isDev = process.argv.includes("dev")
-const isBuild = process.argv.includes("build")
-if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
-    process.env.VELITE_STARTED = "1"
-    void import("velite").then((m) => m.build({ watch: isDev, clean: !isDev }))
-}
+const nextConfig = (phase: string): NextConfig => {
+    const isDev = phase === PHASE_DEVELOPMENT_SERVER
+    const isBuild = phase === PHASE_PRODUCTION_BUILD
 
-const nextConfig: NextConfig = {
-    output: "export",
-    compress: true,
-    reactCompiler: true,
-    poweredByHeader: false,
-    typedRoutes: true,
-    devIndicators: {
-        position: "bottom-right"
-    },
-    experimental: {
-        optimizePackageImports: ["lenis"]
-    },
-    images: { unoptimized: true }
+    if (!process.env.VELITE_STARTED && (isDev || isBuild)) {
+        process.env.VELITE_STARTED = "1"
+        void import("velite").then((m) =>
+            m.build({ watch: isDev, clean: !isDev })
+        )
+    }
+
+    return {
+        output: "export",
+        compress: true,
+        reactCompiler: true,
+        poweredByHeader: false,
+        typedRoutes: true,
+        devIndicators: {
+            position: "bottom-right"
+        },
+        experimental: {
+            optimizePackageImports: ["lenis"]
+        },
+        images: { unoptimized: true }
+    }
 }
 
 export default nextConfig
