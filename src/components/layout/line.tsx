@@ -59,7 +59,7 @@ function SectionLine({
                 `,
                     fit
                         ? "left-1/2 w-full -translate-x-1/2"
-                        : "right-6.5 w-dvw",
+                        : "-right-6.5 w-dvw",
                     className
                 )}
             />
