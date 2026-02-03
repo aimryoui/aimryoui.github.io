@@ -56,7 +56,6 @@ async function main() {
         const metaFile = path.join(outputFolder, `${parsedPath.name}_meta.json`)
 
         let isCached = false
-        // Check cache dùng manifestKey mới
         if (fs.existsSync(metaFile)) {
             try {
                 const meta = JSON.parse(
@@ -80,23 +79,49 @@ async function main() {
         const originalImage = sharp(filePath)
         const originalMetadata = await originalImage.metadata()
 
-        const croppedImage =
-            originalMetadata.width && originalMetadata.height
-                ? originalImage.extract({
-                      left: 1,
-                      top: 1,
-                      width: originalMetadata.width - 2,
-                      height: originalMetadata.height - 2
-                  })
-                : originalImage
+        if (!originalMetadata.width || !originalMetadata.height) continue
 
-        const resizedBuffer = await croppedImage
-            .resize({
+        const croppedWidth = originalMetadata.width - 2
+        const croppedHeight = originalMetadata.height - 2
+
+        const croppedImage = originalImage.extract({
+            left: 1,
+            top: 1,
+            width: croppedWidth,
+            height: croppedHeight
+        })
+
+        const isPanorama =
+            croppedWidth > croppedHeight * 4 || croppedHeight > croppedWidth * 4
+
+        let resizeOptions: sharp.ResizeOptions = {
+            fit: "inside",
+            withoutEnlargement: true
+        }
+
+        if (isPanorama) {
+            if (croppedWidth > croppedHeight) {
+                resizeOptions = {
+                    height: MAX_SIZE,
+                    withoutEnlargement: true
+                }
+            } else {
+                resizeOptions = {
+                    width: MAX_SIZE,
+                    withoutEnlargement: true
+                }
+            }
+        } else {
+            resizeOptions = {
                 width: MAX_SIZE,
                 height: MAX_SIZE,
                 fit: "inside",
                 withoutEnlargement: true
-            })
+            }
+        }
+
+        const resizedBuffer = await croppedImage
+            .resize(resizeOptions)
             .toBuffer()
 
         const image = sharp(resizedBuffer)

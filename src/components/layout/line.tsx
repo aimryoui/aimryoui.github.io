@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils"
 
-function MarginLine() {
+function MarginLine({ className }: React.ComponentProps<"hr">) {
     return (
         <hr
-            className={cn(`
-                border-stroke-foreground sticky top-0
-                h-dvh border-r border-dashed
-            `)}
+            className={cn(
+                "border-stroke-foreground sticky top-0 h-dvh border-r border-dashed",
+                className
+            )}
         />
     )
 }

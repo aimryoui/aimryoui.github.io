@@ -13,11 +13,13 @@ function Image({
     className,
     placeholderPriority = false,
     asBackgroundImage = false,
+    noBorder = false,
     objectFit = "cover"
 }: React.ComponentProps<"img"> & {
     src: string
     placeholderPriority?: boolean
     asBackgroundImage?: boolean
+    noBorder?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
 }) {
     const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
@@ -36,8 +38,9 @@ function Image({
         // Represent <img> tag or background-image property
         <div
             className={cn(
-                "bg-background relative grid size-full place-items-center overflow-clip",
-                "after:outline-inverted/8 after:-outline-offset-px after:rounded-inherit after:pointer-events-none after:absolute after:inset-0 after:outline",
+                "relative grid size-full place-items-center overflow-clip",
+                !noBorder &&
+                    "after:outline-inverted/8 after:-outline-offset-px after:rounded-inherit after:pointer-events-none after:absolute after:inset-0 after:outline",
                 className
             )}
         >

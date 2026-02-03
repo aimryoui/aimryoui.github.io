@@ -43,12 +43,12 @@ export default function PortfolioLayout({
     return (
         <>
             <Sidebar />
-            <MarginLine />
+            <MarginLine className={cn("lg:hidden")} />
             <Divider
                 dir="vertical"
-                className={cn("sticky top-0 h-dvh w-6.5")}
+                className={cn("sticky top-0 h-dvh w-6.5 lg:hidden")}
             />
-            <MarginLine />
+            <MarginLine className={cn("lg:hidden")} />
             {children}
         </>
     )
