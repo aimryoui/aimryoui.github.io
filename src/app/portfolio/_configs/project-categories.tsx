@@ -8,7 +8,7 @@ import {
     ShortFilms,
     UIUX,
     Weddings
-} from "@/app/portfolio/_components/_icons/category-icons"
+} from "@/portfolio/_components/_icons/category-icons"
 
 export interface CategoryConfig {
     title: string

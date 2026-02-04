@@ -1,9 +1,9 @@
-import { TableOfContents } from "@/app/portfolio/_components/_layout/table-of-contents"
 import { SectionLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
 import { groupProjectsByCategory } from "@/lib/project-sort"
 import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
+import { TableOfContents } from "@/portfolio/_components/_layout/table-of-contents"
 import { projects } from "~/.velite"
 
 function Sidebar() {
@@ -37,7 +37,7 @@ function Sidebar() {
     return (
         <aside
             className={cn(
-                "sticky top-0 z-50 flex h-dvh w-78 flex-col justify-end lg:hidden"
+                "sticky top-0 z-10 flex h-dvh w-78 flex-col justify-end lg:hidden"
             )}
         >
             <TableOfContents items={tocItems} />

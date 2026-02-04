@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import {
     AdobeAfterEffects,
     AdobeDimension,
@@ -11,8 +12,7 @@ import {
     Bootstrap,
     Figma,
     VSCode
-} from "@/app/portfolio/_components/_icons/tool-icons"
-import { cn } from "@/lib/utils"
+} from "@/portfolio/_components/_icons/tool-icons"
 
 const TOOL_ICONS = ({ size = "md" }: { size?: "md" | "sm" } = {}) => ({
     figma: {

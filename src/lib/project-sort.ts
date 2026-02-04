@@ -1,4 +1,4 @@
-import { PROJECT_CATEGORIES } from "@/app/portfolio/_configs/project-categories"
+import { PROJECT_CATEGORIES } from "@/portfolio/_configs/project-categories"
 import { type Project } from "~/.velite"
 
 const MONTHS: Record<string, number> = {

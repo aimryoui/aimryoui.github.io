@@ -1,7 +1,7 @@
 import rehypeSlug from "rehype-slug"
 import { defineCollection, defineConfig, s } from "velite"
 
-import { TOOL_ICONS, type ToolKey } from "@/app/portfolio/_configs/tools"
+import { TOOL_ICONS, type ToolKey } from "@/portfolio/_configs/tools"
 
 const projects = defineCollection({
     name: "Project",

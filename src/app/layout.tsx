@@ -1,4 +1,4 @@
-import "@/app/globals.css"
+import "@/globals.css"
 
 // import "lenis/dist/lenis.css"
 import { type Metadata, type Viewport } from "next"

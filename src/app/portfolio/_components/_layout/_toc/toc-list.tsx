@@ -3,9 +3,9 @@
 import { motion, stagger } from "motion/react"
 import { memo, useCallback, useEffect, useMemo, useRef } from "react"
 
-import { TocItemRow } from "@/app/portfolio/_components/_layout/_toc/toc-item-row"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
+import { TocItemRow } from "@/portfolio/_components/_layout/_toc/toc-item-row"
 
 interface TocItem {
     id: string

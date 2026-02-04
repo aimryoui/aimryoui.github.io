@@ -2,11 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
-import { TocList } from "@/app/portfolio/_components/_layout/_toc/toc-list"
-import { TocSearch } from "@/app/portfolio/_components/_layout/_toc/toc-search"
 import { SectionLine } from "@/components/layout/line"
 import { Highlight, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
+import { TocList } from "@/portfolio/_components/_layout/_toc/toc-list"
+import { TocSearch } from "@/portfolio/_components/_layout/_toc/toc-search"
 
 interface TocItem {
     id: string

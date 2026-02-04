@@ -1,12 +1,12 @@
 import React from "react"
 
-import SectionTitle from "@/app/portfolio/_components/section-title"
-import { PROJECT_CATEGORIES } from "@/app/portfolio/_configs/project-categories"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { Highlight, Link } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
+import SectionTitle from "@/portfolio/_components/section-title"
+import { PROJECT_CATEGORIES } from "@/portfolio/_configs/project-categories"
 
 const sections = Object.entries(PROJECT_CATEGORIES)
 

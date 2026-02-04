@@ -2,9 +2,9 @@ const config = {
     plugins: {
         "@tailwindcss/postcss": {},
         "postcss-replace": {
-            pattern: /(--tw-)/gi,
+            pattern: /(--(tw|toolwind)-)/gi,
             data: {
-                "--tw-": "--nhn-"
+                replaceAll: "--nhn-"
             }
         }
     }

@@ -1,4 +1,3 @@
-import { TOOL_ICONS } from "@/app/portfolio/_configs/tools"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import {
@@ -11,6 +10,7 @@ import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
+import { TOOL_ICONS } from "@/portfolio/_configs/tools"
 import { type projects } from "~/.velite"
 
 function ProjectHeader({
@@ -42,7 +42,7 @@ function ProjectHeader({
                         "flex flex-1 flex-col gap-2 px-6 pt-3.25 pb-3.75"
                     )}
                 >
-                    <H3 id={headerId}>
+                    <H3 id={headerId} className={cn("text-pretty")}>
                         {formatOrdinal(
                             projectName +
                                 (/[.!?]$/.test(projectName) ||
@@ -126,9 +126,13 @@ function ProjectHeader({
                             "flex flex-col gap-2 px-6 pt-3.25 pb-3.75"
                         )}
                     >
-                        <Bold>{formatOrdinal(detail.description)}</Bold>
+                        <Bold className={cn("text-pretty")}>
+                            {formatOrdinal(detail.description)}
+                        </Bold>
                         {detail.abbreviation && (
-                            <Text>{formatOrdinal(detail.abbreviation)}</Text>
+                            <Text className={cn("text-pretty")}>
+                                {formatOrdinal(detail.abbreviation)}
+                            </Text>
                         )}
                     </div>
                 </>
