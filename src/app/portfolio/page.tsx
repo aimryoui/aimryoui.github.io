@@ -6,6 +6,7 @@ import { Space } from "@/components/layout/space"
 import { tooltipHandle, TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
+import { AnchorPolyfill } from "@/portfolio/_providers/anchor-polyfill"
 import Contact from "@/portfolio/_sections/contact"
 import Education from "@/portfolio/_sections/education"
 import Experiences from "@/portfolio/_sections/experiences"
@@ -18,6 +19,7 @@ import Software from "@/portfolio/_sections/software"
 export default function Portfolio() {
     return (
         <>
+            <AnchorPolyfill />
             <main className={cn("flex-1")}>
                 <Space />
                 <SectionLine showDecoration />
