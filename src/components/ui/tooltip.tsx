@@ -110,8 +110,9 @@ function TooltipContent({
                     `
                     h-(--positioner-height)
                     w-(--positioner-width) max-w-(--available-width)
-                    transition-[top,left,right,bottom,transform] duration-400
-                    ease-[cubic-bezier(0.22,1,0.36,1)]
+                    transition-[top,left,right,bottom,transform]
+                    duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]
+                    will-change-[top,left,right,bottom,transform]
                     data-instant:transition-none
                     `
                 )}
