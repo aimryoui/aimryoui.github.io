@@ -3,12 +3,7 @@ import React from "react"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger
-} from "@/components/ui/tooltip"
+import { tooltipHandle, TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import Contact from "@/portfolio/_sections/contact"
@@ -101,139 +96,136 @@ export default function Portfolio() {
                 <Divider />
                 <SectionLine />
                 <div className={cn("bg-background flex h-24")}>
-                    <TooltipProvider>
-                        {[
-                            { value: "2003", label: "Year of birth" },
-                            { value: "45+", label: "Projects" },
-                            { value: "4+", label: "Years as Designer" }
-                        ].map((item) => (
-                            <React.Fragment key={item.label}>
+                    {[
+                        { value: "2003", label: "Year of birth" },
+                        { value: "45+", label: "Projects" },
+                        { value: "4+", label: "Years as Designer" }
+                    ].map((item) => (
+                        <React.Fragment key={item.label}>
+                            <div
+                                className={cn(
+                                    "bg-highlighted/10 relative grid flex-1 place-items-center"
+                                )}
+                            >
+                                <Highlight
+                                    className={cn("text-4xl font-extrabold")}
+                                >
+                                    {item.value}
+                                </Highlight>
                                 <div
                                     className={cn(
-                                        "bg-highlighted/10 relative grid flex-1 place-items-center"
+                                        "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
                                     )}
+                                >
+                                    <span
+                                        className={cn(
+                                            "text-xxs font-extrabold tracking-tight uppercase"
+                                        )}
+                                    >
+                                        {item.label}
+                                    </span>
+                                </div>
+                            </div>
+                            <ElementLine />
+                            <Divider dir="vertical" />
+                            <ElementLine />
+                        </React.Fragment>
+                    ))}
+                    <div
+                        className={cn(
+                            "bg-highlighted/10 relative grid flex-1 place-items-center"
+                        )}
+                    >
+                        <TooltipTrigger
+                            handle={tooltipHandle}
+                            payload="Hồ Chí Minh City"
+                            render={
+                                <Link
+                                    href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
+                                    openInNewTab
+                                    highlight
+                                    className={cn("text-4xl")}
                                 >
                                     <Highlight
                                         className={cn(
                                             "text-4xl font-extrabold"
                                         )}
                                     >
-                                        {item.value}
+                                        HCMC
                                     </Highlight>
+                                </Link>
+                            }
+                        />
+                        <div
+                            className={cn(
+                                "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                            )}
+                        >
+                            <span
+                                className={cn(
+                                    "text-xxs font-extrabold tracking-tight uppercase"
+                                )}
+                            >
+                                Location
+                            </span>
+                        </div>
+                    </div>
+                    <ElementLine />
+                    <Divider dir="vertical" />
+                    <ElementLine />
+                    <div
+                        className={cn(
+                            "bg-highlighted/10 relative grid flex-1 place-items-center"
+                        )}
+                    >
+                        <TooltipTrigger
+                            handle={tooltipHandle}
+                            payload={{ content: "Việt Nam", sideOffset: 19 }}
+                            render={
+                                <Link
+                                    href="https://wikipedia.org/wiki/Vietnam"
+                                    openInNewTab
+                                    className={cn(
+                                        "grid h-8 w-12 place-items-center bg-[#DA251D]"
+                                    )}
+                                >
+                                    <Highlight
+                                        className={cn(
+                                            "sr-only text-4xl font-extrabold"
+                                        )}
+                                    >
+                                        Vietnam
+                                    </Highlight>
+                                    {/* https://css-shape.com/star/ */}
                                     <div
                                         className={cn(
-                                            "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                                            "aspect-square w-[1.2rem] bg-[#FFFF00] [clip-path:polygon(50%_0,79%_90%,2%_35%,98%_35%,21%_90%)]"
                                         )}
-                                    >
-                                        <span
-                                            className={cn(
-                                                "text-xxs font-extrabold tracking-tight uppercase"
-                                            )}
-                                        >
-                                            {item.label}
-                                        </span>
-                                    </div>
-                                </div>
-                                <ElementLine />
-                                <Divider dir="vertical" />
-                                <ElementLine />
-                            </React.Fragment>
-                        ))}
+                                    />
+                                </Link>
+                            }
+                        />
+                        {/* <TooltipContent
+                                translate="no"
+                                lang="vi-VN"
+                                sideOffset={19}
+                            >
+                                Việt Nam
+                            </TooltipContent> */}
                         <div
                             className={cn(
-                                "bg-highlighted/10 relative grid flex-1 place-items-center"
+                                "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
                             )}
                         >
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <Link
-                                        href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
-                                        openInNewTab
-                                        highlight
-                                        className={cn("text-4xl")}
-                                    >
-                                        <Highlight
-                                            className={cn(
-                                                "text-4xl font-extrabold"
-                                            )}
-                                        >
-                                            HCMC
-                                        </Highlight>
-                                    </Link>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    Hồ Chí Minh City
-                                </TooltipContent>
-                            </Tooltip>
-                            <div
+                            <span
                                 className={cn(
-                                    "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                                    "text-xxs font-extrabold tracking-tight uppercase"
                                 )}
                             >
-                                <span
-                                    className={cn(
-                                        "text-xxs font-extrabold tracking-tight uppercase"
-                                    )}
-                                >
-                                    Location
-                                </span>
-                            </div>
+                                Native Land
+                            </span>
                         </div>
-                        <ElementLine />
-                        <Divider dir="vertical" />
-                        <ElementLine />
-                        <div
-                            className={cn(
-                                "bg-highlighted/10 relative grid flex-1 place-items-center"
-                            )}
-                        >
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <Link
-                                        href="https://wikipedia.org/wiki/Vietnam"
-                                        openInNewTab
-                                        className={cn(
-                                            "grid h-8 w-12 place-items-center bg-[#DA251D]"
-                                        )}
-                                    >
-                                        <Highlight
-                                            className={cn(
-                                                "sr-only text-4xl font-extrabold"
-                                            )}
-                                        >
-                                            Vietnam
-                                        </Highlight>
-                                        {/* https://css-shape.com/star/ */}
-                                        <div
-                                            className={cn(
-                                                "aspect-square w-[1.2rem] bg-[#FFFF00] [clip-path:polygon(50%_0,79%_90%,2%_35%,98%_35%,21%_90%)]"
-                                            )}
-                                        />
-                                    </Link>
-                                </TooltipTrigger>
-                                <TooltipContent
-                                    translate="no"
-                                    lang="vi-VN"
-                                    sideOffset={9}
-                                >
-                                    Việt Nam
-                                </TooltipContent>
-                            </Tooltip>
-                            <div
-                                className={cn(
-                                    "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
-                                )}
-                            >
-                                <span
-                                    className={cn(
-                                        "text-xxs font-extrabold tracking-tight uppercase"
-                                    )}
-                                >
-                                    Native Land
-                                </span>
-                            </div>
-                        </div>
-                    </TooltipProvider>
+                    </div>
                 </div>
                 <SectionLine />
                 <Divider />

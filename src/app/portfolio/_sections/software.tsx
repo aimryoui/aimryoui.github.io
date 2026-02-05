@@ -3,12 +3,7 @@ import React from "react"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger
-} from "@/components/ui/tooltip"
+import { tooltipHandle, TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
@@ -24,6 +19,8 @@ interface Section {
     frequencies: SectionProps[]
 }
 
+const icon = TOOL_ICONS()
+
 const sections: Section[] = [
     {
         section: "Main",
@@ -31,16 +28,16 @@ const sections: Section[] = [
             {
                 title: "Most frequently used and experienced",
                 tools: [
-                    TOOL_ICONS().figma,
-                    TOOL_ICONS().photoshop,
-                    TOOL_ICONS().illustrator,
-                    TOOL_ICONS().inDesign,
-                    TOOL_ICONS().afterEffects
+                    icon.figma,
+                    icon.photoshop,
+                    icon.illustrator,
+                    icon.inDesign,
+                    icon.afterEffects
                 ]
             },
             {
                 title: "Less experienced",
-                tools: [TOOL_ICONS().blender, TOOL_ICONS().premierePro]
+                tools: [icon.blender, icon.premierePro]
             }
         ]
     },
@@ -49,11 +46,7 @@ const sections: Section[] = [
         frequencies: [
             {
                 title: "Used but outdated",
-                tools: [
-                    TOOL_ICONS().dreamweaver,
-                    TOOL_ICONS().xd,
-                    TOOL_ICONS().dimension
-                ]
+                tools: [icon.dreamweaver, icon.xd, icon.dimension]
             }
         ]
     }
@@ -101,25 +94,24 @@ function Software() {
                                         )}
                                     </Bold>
                                     <div className={cn("flex gap-3")}>
-                                        <TooltipProvider>
-                                            {frequency.tools.map(
-                                                (tool, toolindex) => (
-                                                    <Tooltip key={toolindex}>
-                                                        <TooltipTrigger>
+                                        {frequency.tools.map(
+                                            (tool, toolindex) => (
+                                                <React.Fragment key={toolindex}>
+                                                    <TooltipTrigger
+                                                        handle={tooltipHandle}
+                                                        payload={tool.label}
+                                                        render={
                                                             <Link
                                                                 openInNewTab
                                                                 href={tool.url}
                                                             >
                                                                 {tool.icon}
                                                             </Link>
-                                                        </TooltipTrigger>
-                                                        <TooltipContent>
-                                                            {tool.label}
-                                                        </TooltipContent>
-                                                    </Tooltip>
-                                                )
-                                            )}
-                                        </TooltipProvider>
+                                                        }
+                                                    />
+                                                </React.Fragment>
+                                            )
+                                        )}
                                     </div>
                                 </div>
                             )

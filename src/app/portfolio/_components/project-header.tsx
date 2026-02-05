@@ -1,11 +1,8 @@
+"use client"
+
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger
-} from "@/components/ui/tooltip"
+import { tooltipHandle, TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { slugify } from "@/lib/slugify"
@@ -97,24 +94,22 @@ function ProjectHeader({
                                 )
                             })}
                         </Text>
-                        <TooltipProvider>
-                            {tools.map((key) => {
-                                const tool = TOOL_ICONS({ size: "sm" })[key]
+                        {tools.map((key) => {
+                            const tool = TOOL_ICONS({ size: "sm" })[key]
 
-                                return (
-                                    <Tooltip key={key}>
-                                        <TooltipTrigger>
-                                            <Link openInNewTab href={tool.url}>
-                                                {tool.icon}
-                                            </Link>
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            {tool.label}
-                                        </TooltipContent>
-                                    </Tooltip>
-                                )
-                            })}
-                        </TooltipProvider>
+                            return (
+                                <TooltipTrigger
+                                    key={key}
+                                    handle={tooltipHandle}
+                                    payload={tool.label}
+                                    render={
+                                        <Link openInNewTab href={tool.url}>
+                                            {tool.icon}
+                                        </Link>
+                                    }
+                                />
+                            )
+                        })}
                     </div>
                 )}
             </div>

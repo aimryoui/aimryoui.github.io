@@ -9,12 +9,7 @@ import {
     InputGroupInput
 } from "@/components/ui/input-group"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger
-} from "@/components/ui/tooltip"
+import { tooltipHandle, TooltipTrigger } from "@/components/ui/tooltip"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { usePlatform } from "@/hooks/use-platform"
 import { cn } from "@/lib/utils"
@@ -79,37 +74,38 @@ export const TocSearch = forwardRef<HTMLInputElement, TocSearchProps>(
                     </InputGroupAddon>
                     <InputGroupAddon align="inline-end">
                         {value ? (
-                            <TooltipProvider
-                                delayDuration={500}
-                                skipDelayDuration={0}
-                            >
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            className="hover:bg-transparent"
-                                            onClick={onClear}
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 24 24"
-                                                className="size-4 cursor-pointer"
-                                            >
-                                                <path
-                                                    fill="currentColor"
-                                                    d="M12 23C5.94 23 1 18.06 1 12 1 5.928 5.94 1 12 1c6.072 0 11 4.928 11 11 0 6.06-4.928 11-11 11Zm-3.624-6.47a.895.895 0 0 0 .648-.26L12 13.274l2.987 2.998a.854.854 0 0 0 .636.258.895.895 0 0 0 .906-.895.824.824 0 0 0-.27-.636l-2.986-2.987 2.998-2.998a.834.834 0 0 0 .27-.637.884.884 0 0 0-.896-.884.816.816 0 0 0-.615.259L12 10.76 8.991 7.762a.855.855 0 0 0-.615-.248.868.868 0 0 0-.884.884c0 .237.086.453.259.626l2.987 2.987-2.987 2.998a.847.847 0 0 0-.259.625c0 .496.388.895.884.895Z"
-                                                />
-                                            </svg>
-                                        </Button>
-                                    </TooltipTrigger>
-                                    <TooltipContent side="right" sideOffset={6}>
+                            <TooltipTrigger
+                                delay={500}
+                                handle={tooltipHandle}
+                                payload={{
+                                    content: (
                                         <div className="flex items-center gap-1">
                                             Clear search <Kbd>Esc</Kbd>
                                         </div>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
+                                    ),
+                                    side: "right",
+                                    sideOffset: 6
+                                }}
+                                render={
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="hover:bg-transparent"
+                                        onClick={onClear}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 24 24"
+                                            className="size-4 cursor-pointer"
+                                        >
+                                            <path
+                                                fill="currentColor"
+                                                d="M12 23C5.94 23 1 18.06 1 12 1 5.928 5.94 1 12 1c6.072 0 11 4.928 11 11 0 6.06-4.928 11-11 11Zm-3.624-6.47a.895.895 0 0 0 .648-.26L12 13.274l2.987 2.998a.854.854 0 0 0 .636.258.895.895 0 0 0 .906-.895.824.824 0 0 0-.27-.636l-2.986-2.987 2.998-2.998a.834.834 0 0 0 .27-.637.884.884 0 0 0-.896-.884.816.816 0 0 0-.615.259L12 10.76 8.991 7.762a.855.855 0 0 0-.615-.248.868.868 0 0 0-.884.884c0 .237.086.453.259.626l2.987 2.987-2.987 2.998a.847.847 0 0 0-.259.625c0 .496.388.895.884.895Z"
+                                            />
+                                        </svg>
+                                    </Button>
+                                }
+                            />
                         ) : (
                             <KbdGroup>
                                 <Kbd>{platform === "mac" ? "⌘" : "Ctrl"}</Kbd>

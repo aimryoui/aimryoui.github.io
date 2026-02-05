@@ -6,6 +6,7 @@ import { Plus_Jakarta_Sans } from "next/font/google"
 import localFont from "next/font/local"
 
 import { MarginLine } from "@/components/layout/line"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 // import LenisProvider from "@/providers/lenis-provider"
@@ -184,16 +185,20 @@ export default function RootLayout({
             <body
                 className={cn(
                     "text-muted-foreground bg-background relative flex",
-                    "px-6.5 -tracking-[.04em]"
+                    "px-6.5 -tracking-[.04em]",
+                    // Fix tooltip viewport transition overflow bug
+                    "overflow-x-hidden"
                 )}
             >
                 <ThemeProvider disableTransitionOnChange>
                     {/* <LenisProvider> */}
-                    <MarginLine />
-                    {children}
-                    <MarginLine />
+                    <TooltipProvider>
+                        <MarginLine />
+                        {children}
+                        <MarginLine />
+                        <div className="fixed inset-0 -z-10 h-full w-full bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px]" />
+                    </TooltipProvider>
                     {/* </LenisProvider> */}
-                    <div className="fixed inset-0 -z-10 h-full w-full bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px]" />
                 </ThemeProvider>
             </body>
         </html>
