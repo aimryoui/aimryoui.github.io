@@ -53,7 +53,7 @@ export default function Home() {
                 <SectionLine showDecoration />
                 <Space />
             </main>
-            <ModeToggle className={cn("fixed right-6 bottom-6 z-50")} />
+            <ModeToggle className={cn("fixed right-6 bottom-6 z-10")} />
         </>
     )
 }

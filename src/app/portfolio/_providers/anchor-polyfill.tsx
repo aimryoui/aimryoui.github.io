@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 
-export function AnchorPolyfill() {
+function AnchorPolyfill() {
     useEffect(() => {
         const supportsAnchorPos = "anchorName" in document.documentElement.style
 
@@ -15,3 +15,5 @@ export function AnchorPolyfill() {
 
     return null
 }
+
+export { AnchorPolyfill }

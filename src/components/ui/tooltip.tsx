@@ -108,7 +108,7 @@ function TooltipContent({
                 arrowPadding={7}
                 className={cn(
                     `
-                    h-(--positioner-height)
+                    z-50 h-(--positioner-height)
                     w-(--positioner-width) max-w-(--available-width)
                     transition-[top,left,right,bottom,transform]
                     duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]
@@ -123,7 +123,7 @@ function TooltipContent({
                         `
                         group bg-background -outline-offset-px
                         outline-muted-foreground text-foreground relative
-                        z-50 h-(--popup-height,auto) w-(--popup-width,auto)
+                        h-(--popup-height,auto) w-(--popup-width,auto)
                         max-w-125 origin-(--transform-origin) rounded-lg
                         text-sm tracking-tight text-balance outline
                         transition-[width,height,opacity,scale] duration-400
