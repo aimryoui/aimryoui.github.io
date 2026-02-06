@@ -5,11 +5,9 @@ import React from "react"
 
 import { cn } from "@/lib/utils"
 
-interface TooltipOptions {
+type TooltipOptions = {
     content: React.ReactNode
-    side?: TooltipPrimitive.Positioner.Props["side"]
-    sideOffset?: number
-}
+} & Pick<TooltipPrimitive.Positioner.Props, "side" | "sideOffset">
 
 type TooltipPayload = React.ReactNode | TooltipOptions
 
@@ -30,24 +28,13 @@ function TooltipProvider({
             {children}
             <Tooltip handle={tooltipHandle}>
                 {({ payload }) => {
-                    let content: React.ReactNode
-                    let options: Partial<TooltipOptions> = {}
-
-                    if (
+                    const { content, ...options } =
                         typeof payload === "object" &&
                         payload !== null &&
                         "content" in payload &&
                         !React.isValidElement(payload)
-                    ) {
-                        const p = payload as {
-                            content: React.ReactNode
-                            sideOffset?: number
-                        }
-                        content = p.content
-                        options = p
-                    } else {
-                        content = payload as React.ReactNode
-                    }
+                            ? payload
+                            : { content: payload }
 
                     return (
                         <TooltipContent
@@ -95,7 +82,7 @@ function TooltipContent({
 }: TooltipPrimitive.Popup.Props &
     Pick<
         TooltipPrimitive.Positioner.Props,
-        "align" | "alignOffset" | "side" | "sideOffset"
+        "align" | "alignOffset" | "side" | "sideOffset" | "collisionAvoidance"
     >) {
     return (
         <TooltipPrimitive.Portal>
