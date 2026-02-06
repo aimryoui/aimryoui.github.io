@@ -100,7 +100,6 @@ function ProjectHeader({
                             return (
                                 <TooltipTrigger
                                     key={key}
-                                    handle={tooltipHandle}
                                     payload={tool.label}
                                     render={
                                         <Link openInNewTab href={tool.url}>

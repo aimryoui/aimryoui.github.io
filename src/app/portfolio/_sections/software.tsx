@@ -3,7 +3,7 @@ import React from "react"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { tooltipHandle, TooltipTrigger } from "@/components/ui/tooltip"
+import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
@@ -98,7 +98,6 @@ function Software() {
                                             (tool, toolindex) => (
                                                 <React.Fragment key={toolindex}>
                                                     <TooltipTrigger
-                                                        handle={tooltipHandle}
                                                         payload={tool.label}
                                                         render={
                                                             <Link

@@ -76,7 +76,6 @@ export const TocSearch = forwardRef<HTMLInputElement, TocSearchProps>(
                         {value ? (
                             <TooltipTrigger
                                 delay={500}
-                                handle={tooltipHandle}
                                 payload={{
                                     content: (
                                         <div className="flex items-center gap-1">

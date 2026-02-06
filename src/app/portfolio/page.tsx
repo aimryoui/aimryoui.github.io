@@ -139,7 +139,6 @@ export default function Portfolio() {
                         )}
                     >
                         <TooltipTrigger
-                            handle={tooltipHandle}
                             payload="Hồ Chí Minh City"
                             render={
                                 <Link
@@ -181,7 +180,6 @@ export default function Portfolio() {
                         )}
                     >
                         <TooltipTrigger
-                            handle={tooltipHandle}
                             payload={{ content: "Việt Nam", sideOffset: 19 }}
                             render={
                                 <Link

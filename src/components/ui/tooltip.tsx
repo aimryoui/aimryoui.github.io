@@ -60,12 +60,11 @@ function Tooltip<Payload>({ ...props }: TooltipPrimitive.Root.Props<Payload>) {
     )
 }
 
-function TooltipTrigger<Payload>({
-    ...props
-}: TooltipPrimitive.Trigger.Props<Payload>) {
+function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
     return (
-        <TooltipPrimitive.Trigger<Payload>
+        <TooltipPrimitive.Trigger
             data-slot="tooltip-trigger"
+            handle={tooltipHandle}
             {...props}
         />
     )
