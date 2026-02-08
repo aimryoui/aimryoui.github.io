@@ -1,8 +1,9 @@
 "use client"
 
-import { motion } from "motion/react"
-import Link from "next/link"
 import React, { memo } from "react"
+import Link from "next/link"
+
+import { motion } from "motion/react"
 
 import { SectionLine } from "@/components/layout/line"
 import { formatOrdinal } from "@/helpers/format-ordinal"
@@ -73,7 +74,7 @@ export const TocItemRow = memo(
                         className={cn(
                             isActive
                                 ? "text-highlighted"
-                                : "hover:text-foreground hover:transition-none transition-[color] duration-50",
+                                : "hover:text-foreground transition-[color] duration-50 hover:transition-none",
                             "relative inline-block w-full will-change-[color]",
                             item.depth === 3 ? "py-1 ps-3" : "font-bold"
                         )}
@@ -82,7 +83,7 @@ export const TocItemRow = memo(
                         {isActive && (
                             <div
                                 className={cn(
-                                    "bg-highlighted/10 text-highlighted absolute top-1/2 right-0 hidden size-5 -translate-y-1/2 place-items-center rounded-full dark:bg-highlighted/20 group-hover:grid"
+                                    "bg-highlighted/10 text-highlighted dark:bg-highlighted/20 absolute top-1/2 right-0 hidden size-5 -translate-y-1/2 place-items-center rounded-full group-hover:grid"
                                 )}
                             >
                                 <svg

@@ -11,6 +11,7 @@ import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 // import LenisProvider from "@/providers/lenis-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
+
 import AppData from "~/package.json"
 
 const lastModified = new Date().toLocaleString("en-US", {

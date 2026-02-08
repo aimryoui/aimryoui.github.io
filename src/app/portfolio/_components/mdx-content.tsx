@@ -14,8 +14,8 @@ const sharedComponents = {
 
 declare global {
     /**
-     * @see {@link https://github.com/mdx-js/mdx-analyzer#mdxprovidedcomponents}
-     * alternative way.
+     * @see {@link https://github.com/mdx-js/mdx-analyzer#mdxprovidedcomponents} -
+     * the alternative way.
      */
     type MDXProvidedComponents = typeof sharedComponents
 }

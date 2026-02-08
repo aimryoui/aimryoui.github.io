@@ -1,7 +1,8 @@
 "use client"
 
-import { motion, stagger } from "motion/react"
 import { memo, useCallback, useEffect, useMemo, useRef } from "react"
+
+import { motion, stagger } from "motion/react"
 
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"

@@ -1,6 +1,7 @@
 import fs from "fs"
-import { glob } from "glob"
 import path from "path"
+
+import { glob } from "glob"
 import sharp from "sharp"
 
 const INPUT_DIR = "private/images"

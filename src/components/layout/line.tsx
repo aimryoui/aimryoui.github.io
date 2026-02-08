@@ -15,13 +15,7 @@ function Plus({ position }: { position?: "left" | "right" }) {
     return (
         <div
             className={cn(
-                `
-                before:bg-highlighted before:absolute
-                before:top-1/2 before:left-1/2 before:h-6 before:w-1 before:-translate-x-1/2 before:-translate-y-1/2
-                after:bg-highlighted after:absolute
-                after:top-1/2 after:left-1/2 after:h-1 after:w-6 after:-translate-x-1/2 after:-translate-y-1/2
-                relative z-1 size-1
-            `,
+                "before:bg-highlighted after:bg-highlighted relative z-1 size-1 before:absolute before:top-1/2 before:left-1/2 before:h-6 before:w-1 before:-translate-x-1/2 before:-translate-y-1/2 after:absolute after:top-1/2 after:left-1/2 after:h-1 after:w-6 after:-translate-x-1/2 after:-translate-y-1/2",
                 position === "left" && "-ml-[.171875rem]",
                 position === "right" && "-mr-[.171875rem]"
             )}
@@ -54,9 +48,7 @@ function SectionLine({
             {showDecoration && <Plus position="left" />}
             <hr
                 className={cn(
-                    `
-                    bg-background border-stroke-foreground absolute top-1/2 -translate-y-1/2 border-b border-dashed
-                `,
+                    "bg-background border-stroke-foreground absolute top-1/2 -translate-y-1/2 border-b border-dashed",
                     fit
                         ? "left-1/2 w-full -translate-x-1/2"
                         : "-right-6.5 w-dvw",
@@ -77,13 +69,8 @@ function ElementLine({
         <hr
             className={cn(
                 dir === "vertical"
-                    ? `
-                border-stroke-foreground border-r border-dashed
-            `
-                    : `
-                border-stroke-foreground
-                w-full border-b border-dashed
-            `
+                    ? "border-stroke-foreground border-r border-dashed"
+                    : "border-stroke-foreground w-full border-b border-dashed"
             )}
         />
     )

@@ -178,7 +178,7 @@
 
 @layer base {
     * {
-        @apply border-stroke-foreground outline-stroke-foreground decoration-[0.1em] underline-offset-[0.16em] decoration-current/40 decoration-dotted;
+        @apply border-stroke-foreground outline-stroke-foreground decoration-current/40 decoration-dotted decoration-[0.1em] underline-offset-[0.16em];
     }
     address {
         @apply not-italic;
@@ -192,7 +192,7 @@
         @apply scroll-mt-[calc(var(--spacing)*3.25+var(--px)+var(--spacing)*20)];
     }
     hr {
-        @apply border-t-0 h-[unset];
+        @apply h-[unset] border-t-0;
     }
     svg {
         @apply overflow-visible;

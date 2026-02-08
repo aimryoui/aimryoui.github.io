@@ -1,7 +1,8 @@
 "use client"
 
-import { ReactLenis } from "lenis/react"
 import { type PropsWithChildren } from "react"
+
+import { ReactLenis } from "lenis/react"
 
 const LenisProvider = ({ children }: PropsWithChildren) => {
     return (

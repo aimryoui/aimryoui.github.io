@@ -1,4 +1,5 @@
 import { PROJECT_CATEGORIES } from "@/portfolio/_configs/project-categories"
+
 import { type Project } from "~/.velite"
 
 const MONTHS: Record<string, number> = {
@@ -33,6 +34,7 @@ const getDurationDates = (duration: string) => {
 
 /**
  * Function to sort Projects by the following logic:
+ *
  * 1. Most recent Start Date first.
  * 2. If Start Date is the same, longer Duration first.
  * 3. If both are the same, alphabetical order by project name.

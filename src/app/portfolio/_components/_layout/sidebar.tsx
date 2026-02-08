@@ -4,6 +4,7 @@ import { groupProjectsByCategory } from "@/lib/project-sort"
 import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
 import { TableOfContents } from "@/portfolio/_components/_layout/table-of-contents"
+
 import { projects } from "~/.velite"
 
 function Sidebar() {

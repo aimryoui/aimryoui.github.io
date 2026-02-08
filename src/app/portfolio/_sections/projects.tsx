@@ -9,6 +9,7 @@ import { ExpandableWrapper } from "@/portfolio/_components/_layout/expandable-wr
 import { MDXContent } from "@/portfolio/_components/mdx-content"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import SectionTitle from "@/portfolio/_components/section-title"
+
 import { projects } from "~/.velite"
 
 function Projects() {

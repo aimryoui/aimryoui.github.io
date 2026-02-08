@@ -29,6 +29,7 @@ const config: Config = {
         "<BUILTIN_MODULES>",
         ".css$",
         "^react$",
+        "^next(?!-)",
         "",
         "<THIRD_PARTY_MODULES>",
         "",
