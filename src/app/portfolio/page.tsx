@@ -27,15 +27,14 @@ export default function Portfolio() {
                 <SectionLine />
                 <div className={cn("bg-background relative px-6 pt-3.5 pb-5")}>
                     <span
-                        className={cn(`
-                    absolute -top-10.5 left-6
-                    font-mono tracking-normal uppercase
-                `)}
+                        className={cn(
+                            "absolute -top-10.5 left-6 font-mono tracking-normal uppercase"
+                        )}
                     >
                         About
                     </span>
                     <H1 id="about">
-                        Hello there! I'm <Bold>Hoang Nhan</Bold>, <br />a{" "}
+                        Hello there! I&#39;m <Bold>Hoang Nhan</Bold>, <br />a{" "}
                         <Bold>Creative Designer</Bold> majoring in{" "}
                         <Highlight>UI & UX Design</Highlight>.
                     </H1>

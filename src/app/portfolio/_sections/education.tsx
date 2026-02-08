@@ -27,7 +27,7 @@ function Education() {
                     className={cn("col-span-3 grid grid-cols-2 gap-6 gap-y-3")}
                 >
                     <Bold>
-                        Bachelor's Degree / Digital Art & Design{" "}
+                        Bachelor&#39;s Degree / Digital Art & Design{" "}
                         <At className="float-end" />
                     </Bold>
                     <Link href="https://daihoc.fpt.edu.vn/hcm/" openInNewTab>

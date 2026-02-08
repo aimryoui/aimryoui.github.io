@@ -7,9 +7,10 @@ export interface UseMediaQueryOptions {
 type MediaQueryCallback = (event: { matches: boolean; media: string }) => void
 
 /**
- * Older versions of Safari (shipped withCatalina and before) do not support addEventListener on matchMedia
+ * Older versions of Safari (shipped withCatalina and before) do not support
+ * addEventListener on matchMedia
  * https://stackoverflow.com/questions/56466261/matchmedia-addlistener-marked-as-deprecated-addeventlistener-equivalent
- * */
+ */
 function attachMediaListener(
     query: MediaQueryList,
     callback: MediaQueryCallback
@@ -19,8 +20,7 @@ function attachMediaListener(
         return () => {
             query.removeEventListener("change", callback)
         }
-        // eslint-disable-next-line unused-imports/no-unused-vars
-    } catch (e) {
+    } catch (_e) {
         // eslint-disable-next-line @typescript-eslint/no-deprecated
         query.addListener(callback)
         return () => {
@@ -58,8 +58,7 @@ export function useMediaQuery(
             return attachMediaListener(mediaQuery, (event) => {
                 setMatches(event.matches)
             })
-            // eslint-disable-next-line unused-imports/no-unused-vars
-        } catch (e) {
+        } catch (_e) {
             // Safari iframe compatibility issue
             return undefined
         }

@@ -8,6 +8,7 @@ import { formatOrdinal } from "@/helpers/format-ordinal"
 import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
 import { TOOL_ICONS } from "@/portfolio/_configs/tools"
+
 import { type projects } from "~/.velite"
 
 function ProjectHeader({
@@ -27,10 +28,9 @@ function ProjectHeader({
                 )}
             >
                 <span
-                    className={cn(`
-                        absolute -top-10.5 left-6
-                        font-mono tracking-normal uppercase
-                    `)}
+                    className={cn(
+                        "absolute -top-10.5 left-6 font-mono tracking-normal uppercase"
+                    )}
                 >
                     {type}
                 </span>
@@ -80,10 +80,9 @@ function ProjectHeader({
                 </div>
                 {tools.length > 0 && (
                     <div
-                        className={cn(`
-                            absolute -top-10.5 right-4.5
-                            flex gap-2
-                        `)}
+                        className={cn(
+                            "absolute -top-10.5 right-4.5 flex gap-2"
+                        )}
                     >
                         <Text className="sr-only">
                             {tools.map((key, index) => {

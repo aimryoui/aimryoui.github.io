@@ -1,7 +1,8 @@
 "use client"
 
+import type * as React from "react"
+
 import { cva, type VariantProps } from "class-variance-authority"
-import * as React from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -21,7 +22,7 @@ function InputGroup({
             data-slot="input-group"
             role="group"
             className={cn(
-                "group/input-group border-input relative flex w-full items-center rounded-xl border transition-none duration-250 dark:bg-input/30 dark:hover:bg-input/60 hover:bg-input/30",
+                "group/input-group border-input dark:bg-input/30 dark:hover:bg-input/60 hover:bg-input/30 relative flex w-full items-center rounded-xl border transition-none duration-250",
                 "h-9 min-w-0 has-[>textarea]:h-auto",
 
                 // Variants based on alignment.
@@ -31,7 +32,7 @@ function InputGroup({
                 "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-end]]:[&>input]:pt-3",
 
                 // Focus state.
-                "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:outline-highlighted/30 has-[[data-slot=input-group-control]:focus-visible]:outline-4 has-[[data-slot=input-group-control]:focus-visible]:transition-[color,outline-color,outline-width] has-[[data-slot=input-group-control]:focus-visible]:ease-out dark:has-[[data-slot=input-group-control]:focus-visible]:hover:bg-input/30 outline-40 outline-transparent will-change-[outline,border] has-[[data-slot=input-group-control]:focus-visible]:hover:bg-transparent",
+                "has-[[data-slot=input-group-control]:focus-visible]:border-ring has-[[data-slot=input-group-control]:focus-visible]:outline-highlighted/30 dark:has-[[data-slot=input-group-control]:focus-visible]:hover:bg-input/30 outline-40 outline-transparent will-change-[outline,border] has-[[data-slot=input-group-control]:focus-visible]:outline-4 has-[[data-slot=input-group-control]:focus-visible]:transition-[color,outline-color,outline-width] has-[[data-slot=input-group-control]:focus-visible]:ease-out has-[[data-slot=input-group-control]:focus-visible]:hover:bg-transparent",
 
                 // Error state.
                 "has-[[data-slot][aria-invalid=true]]:ring-destructive/20 has-[[data-slot][aria-invalid=true]]:border-destructive dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40",

@@ -1,5 +1,5 @@
 onlyBuiltDependencies:
-  - '@toolwind/anchors'
+  - "@toolwind/anchors"
   - esbuild
   - msw
   - sharp

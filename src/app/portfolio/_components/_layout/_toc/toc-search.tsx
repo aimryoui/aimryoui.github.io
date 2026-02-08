@@ -9,7 +9,7 @@ import {
     InputGroupInput
 } from "@/components/ui/input-group"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
-import { tooltipHandle, TooltipTrigger } from "@/components/ui/tooltip"
+import { TooltipTrigger } from "@/components/ui/tooltip"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { usePlatform } from "@/hooks/use-platform"
 import { cn } from "@/lib/utils"

@@ -47,7 +47,7 @@ const sections: Section[] = [
         ]
     },
     {
-        section: `Clubs and \nCategory Projects`,
+        section: "Clubs and \nCategory Projects",
         places: [
             {
                 startDate: "12.2024",

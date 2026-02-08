@@ -1,87 +1,22 @@
 {
-    //! General
-    "css.validate": false,
-    "less.validate": false,
-    "scss.validate": false,
-    "editor.formatOnPaste": false,
+    //* General
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
         "source.fixAll.stylelint": "explicit",
         "source.organizeImports": "never",
         "source.addMissingImports": "explicit"
     },
-    //! ESlint
-    "eslint.options": {
-        "overrideConfigFile": "./eslint.config.ts"
+    "editor.quickSuggestions": {
+        "strings": "on"
     },
-    "eslint.workingDirectories": [
-        {
-            "mode": "auto"
-        }
-    ],
-    "eslint.validate": [
-        "javascript",
-        "typescript",
-        "javascriptreact",
-        "typescriptreact",
-        "html"
-    ],
-    "eslint.quiet": false,
-    //! Stylelint
-    "stylelint.packageManager": "pnpm",
-    "stylelint.validate": ["css", "scss", "less"],
-    //! Frontmatter Schema
-    "yaml.schemas": {
-        ".vscode/mdx-schema.json": [
-            "src/content/*.yml",
-            "src/content/*.mdx",
-            "src/content/*.md"
-        ]
+    //* Tailwind CSS
+    "files.associations": {
+        "*.css": "tailwindcss"
     },
-    "yaml.customTags": ["!mdx scalar", "!js/const scalar"],
-    "yaml.validate": true,
-    "yaml.hover": true,
-    "yaml.completion": true,
-    //! TailwindCSS
-    "css.lint.unknownAtRules": "ignore",
-    "tailwindCSS.classAttributes": [
-        "class",
-        "className",
-        ".*Class(es)?",
-        "ngClass",
-        "tw",
-        "classVar"
-    ],
-    "tailwindCSS.experimental.classRegex": [
-        [
-            "(?:clsx|cn|cc|cx|twg|cva|classnames|classList.add)\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
-            "'([^']*)'"
-        ],
-        [
-            "(?:clsx|cn|cc|cx|twg|cva|classnames|classList.add)\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
-            "\"([^\"]*)\""
-        ],
-        [
-            "(?:clsx|cn|cc|cx|twg|cva|classnames|classList.add)\\(([^)(]*(?:\\([^)(]*(?:\\([^)(]*(?:\\([^)(]*\\)[^)(]*)*\\)[^)(]*)*\\)[^)(]*)*)\\)",
-            "`([^`]*)`"
-        ]
-    ],
-    /** @see https://github.com/tailwindlabs/tailwindcss-intellisense/issues/868#issuecomment-2016530820 */
-    "tailwindCSS.files.exclude": [
-        "**/.git/**",
-        "**/.next/**",
-        "**/node_modules/**",
-        "**/.hg/**",
-        "**/.svn/**",
-        "**/dist/**",
-        "**/public/pdfjs/**",
-        "**/src/components/layout/pdf/**"
-    ],
-    "tailwindCSS.includeLanguages": {
-        "javascript": "javascript",
-        "html": "HTML",
-        "mdx": "mdx",
-        "markdown": "markdown"
-    },
+    "tailwindCSS.experimental.configFile": "src/app/globals.css",
+    "tailwindCSS.classFunctions": ["cva", "clsx", "cn", "twMerge"],
+    "tailwindCSS.emmetCompletions": true,
+    "tailwindCSS.classAttributes": ["class", "className", "tw"],
+    //* TypeScript Version
     "typescript.tsdk": "node_modules\\typescript\\lib"
 }
