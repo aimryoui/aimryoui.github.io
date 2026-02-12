@@ -82,8 +82,10 @@ export default {
                 78: "19.5rem",
                 120: "30rem",
                 125: "31.25rem",
+                200: "50rem",
                 375: "93.75rem",
                 700: "175rem",
+                auto: "auto",
                 inherit: "inherit"
             },
             transitionDuration: {
