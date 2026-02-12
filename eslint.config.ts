@@ -1,3 +1,4 @@
+import css from "@eslint/css"
 import eslint from "@eslint/js"
 import importAlias from "@limegrass/eslint-plugin-import-alias"
 import stylistic from "@stylistic/eslint-plugin"
@@ -193,6 +194,22 @@ export default defineConfig(
                     aliasConfigPath: "./tsconfig.json"
                 }
             ]
+        }
+    },
+    //* CSS
+    {
+        files: ["**/*.css"],
+        plugins: {
+            css
+        },
+        language: "css/css",
+        languageOptions: {
+            tolerant: true
+        },
+        rules: {
+            "css/no-duplicate-imports": 2,
+            "css/require-baseline": 1,
+            "css/use-layers": 1
         }
     },
     eslintConfigPrettier,
