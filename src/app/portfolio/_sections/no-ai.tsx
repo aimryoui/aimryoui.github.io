@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 
 function NoAIPlaceholder() {
     return (
-        <div className={cn("anchor/no-ai-placeholder h-[250dvh] min-h-375")} />
+        <div className={cn("h-[250dvh] min-h-375 anchor/no-ai-placeholder")} />
     )
 }
 
@@ -10,7 +10,7 @@ function NoAIOverlay() {
     return (
         <div
             className={cn(
-                "anchored/no-ai-placeholder top-anchor-top-0 h-anchor-height-0 inset-x-0 z-50 bg-red-500",
+                "inset-x-0 z-50 bg-alert anchored/no-ai-placeholder top-anchor-top-0 h-anchor-height-0",
                 "px-[calc(var(--spacing)*6.5*2+var(--spacing)*78+var(--px)*3+var(--spacing)*6)] md:px-[calc(var(--spacing)*6.5+var(--px)*2+var(--spacing)*6)]"
             )}
         >

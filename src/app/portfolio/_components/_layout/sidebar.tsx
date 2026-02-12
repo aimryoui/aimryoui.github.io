@@ -1,7 +1,7 @@
 import { SectionLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
+import { slugify } from "@/helpers/slugify"
 import { groupProjectsByCategory } from "@/lib/project-sort"
-import { slugify } from "@/lib/slugify"
 import { cn } from "@/lib/utils"
 import { TableOfContents } from "@/portfolio/_components/_layout/table-of-contents"
 
@@ -43,7 +43,7 @@ function Sidebar() {
         >
             <TableOfContents items={tocItems} />
             <SectionLine fit />
-            <div className={cn("bg-background w-full px-6 py-5.5")}>
+            <div className={cn("w-full bg-background px-6 py-5.5")}>
                 <ModeToggle />
             </div>
         </aside>

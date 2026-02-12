@@ -23,9 +23,9 @@ export function SectionName({
             )}
         >
             <Comp
-                aria-hidden={as === "div"}
+                aria-hidden={as !== "h5"}
                 className={cn(
-                    "bg-background rounded-full px-3.5 py-1.5 font-mono",
+                    "rounded-full bg-background px-3.5 py-1.5 font-mono",
                     !lowercase && "uppercase",
                     className
                 )}
@@ -50,7 +50,7 @@ function MediaFrame({
     children: React.ReactNode
 }) {
     return (
-        <div className={cn("bg-background w-full", containerClassName)}>
+        <div className={cn("w-full bg-background", containerClassName)}>
             {sectionName ? (
                 <>
                     <SectionLine />
@@ -65,7 +65,7 @@ function MediaFrame({
             )}
             <div
                 className={cn(
-                    "size-inherit grid place-items-center overflow-clip"
+                    "grid size-inherit place-items-center overflow-clip"
                 )}
             >
                 {sectionName && (
@@ -79,14 +79,14 @@ function MediaFrame({
                             sectionName={sectionName}
                             lowercase={lowercase}
                             className={cn(
-                                "outline-stroke-foreground -outline-offset-px bg-transparent text-transparent shadow-sm outline"
+                                "bg-transparent text-transparent shadow-sm -outline-offset-px outline-stroke outline"
                             )}
                         />
                     </div>
                 )}
                 <div
                     className={cn(
-                        "bg-stroke-foreground relative grid w-full items-start justify-items-center gap-2 overflow-clip p-2 [overflow-clip-margin:content-box] md:grid-cols-1",
+                        "relative grid w-full items-start justify-items-center gap-2 overflow-clip bg-stroke p-2 [overflow-clip-margin:content-box] md:grid-cols-1",
                         className
                     )}
                 >

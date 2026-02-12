@@ -1,8 +1,8 @@
-import { clsx, type ClassValue } from "clsx"
-import { extendTailwindMerge } from "tailwind-merge"
+import { extendTailwindMerge, validators } from "tailwind-merge"
+import { twg, type ClassValue } from "twg"
 
-type AdditionalClassGroupIDs = "scrollbar-width" | "bg-clip"
-type AdditionalThemeGroupIDs = ""
+type AdditionalClassGroupIDs = "scrollbar-width"
+type AdditionalThemeGroupIDs = "transitionBehavior"
 
 const twMerge = extendTailwindMerge<
     AdditionalClassGroupIDs,
@@ -10,24 +10,31 @@ const twMerge = extendTailwindMerge<
 >({
     extend: {
         classGroups: {
-            /** @see https://github.com/dcastil/tailwind-merge/blob/main/src/lib/default-config.ts */
+            /** @see https://github.com/dcastil/tailwind-merge/blob/v2.6.1/src/lib/default-config.ts */
+            "font-size": ["text-xxs"],
             "outline-offset": ["outline-offset-px"],
             "scrollbar-width": [
                 "scrollbar-auto",
                 "scrollbar-thin",
                 "scrollbar-none"
             ],
-            "bg-clip": ["bg-clip-*"]
+            transition: ["transition-normal", "transition-discrete"],
+            ease: ["spring"],
+            /** @see {@link https://github.com/dcastil/tailwind-merge/blob/v2.6.1/docs/api-reference.md#validators} */
+            "bg-clip": [{ "bg-clip": [validators.isArbitraryValue] }],
+            "bg-position": [{ "bg-position": [validators.isArbitraryValue] }],
+            "bg-size": [{ "bg-size": [validators.isArbitraryValue] }],
+            duration: [{ duration: [validators.isNumber] }]
         },
         theme: {
-            /** @see https://github.com/dcastil/tailwind-merge/blob/main/docs/configuration.md#theme */
-            text: ["xxs"],
+            /** @see https://github.com/dcastil/tailwind-merge/blob/v2.6.1/docs/configuration.md#theme */
             spacing: ["inherit"],
-            radius: ["inherit"]
+            borderRadius: ["inherit"],
+            transitionBehavior: ["normal", "discrete"]
         }
     }
 })
 
 export function cn(...inputs: ClassValue[]) {
-    return twMerge(clsx(inputs))
+    return twMerge(twg(inputs))
 }

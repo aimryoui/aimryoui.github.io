@@ -158,7 +158,10 @@ function Link({
     return (
         <Comp
             className={cn(
-                "text-foreground w-fit cursor-pointer font-bold underline hover:decoration-current hover:decoration-solid",
+                "w-fit cursor-pointer font-bold text-foreground underline",
+                {
+                    hover: "decoration-current decoration-solid"
+                },
                 highlight && "text-highlighted",
                 italic && "italic",
                 mono && "font-mono",
@@ -200,7 +203,7 @@ function At({
     return (
         <span
             className={cn(
-                "text-muted-foreground inline-block -translate-y-[0.125em] font-normal",
+                "inline-block -translate-y-[0.125em] font-normal text-muted-foreground",
                 highlight && "text-highlighted",
                 italic && "italic",
                 mono && "font-mono",

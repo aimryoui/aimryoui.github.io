@@ -37,7 +37,7 @@ export const TocSearch = forwardRef<HTMLInputElement, TocSearchProps>(
         ])
 
         return (
-            <div className={cn("px-6 pt-5.5 pb-1.5", className)}>
+            <div className={cn("px-6 pb-1.5 pt-5.5", className)}>
                 <InputGroup as="search">
                     <InputGroupInput
                         ref={ref}

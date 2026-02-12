@@ -24,9 +24,6 @@ const nextConfig = (phase: string): NextConfig => {
         devIndicators: {
             position: "bottom-right"
         },
-        experimental: {
-            optimizePackageImports: ["lenis"]
-        },
         images: { unoptimized: true }
     }
 }

@@ -94,20 +94,34 @@ function TooltipContent({
                 collisionPadding={12}
                 arrowPadding={7}
                 className={cn(
-                    "z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom,transform] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[top,left,right,bottom,transform] data-instant:transition-none"
+                    "z-50 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] duration-400 data-instant:transition-none",
+                    "transition-[top,left,right,bottom,transform] ease-spring will-change-[top,left,right,bottom,transform]"
                 )}
             >
                 <TooltipPrimitive.Popup
                     data-slot="tooltip-content"
                     className={cn(
-                        "group bg-background -outline-offset-px outline-muted-foreground text-foreground relative h-(--popup-height,auto) w-(--popup-width,auto) max-w-125 origin-(--transform-origin) rounded-lg text-sm tracking-tight text-balance outline transition-[width,height,opacity,scale] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] data-ending-style:scale-90 data-ending-style:opacity-0 data-instant:transition-none data-starting-style:scale-90 data-starting-style:opacity-0",
+                        "group relative h-[--popup-height,auto] w-[--popup-width,auto] max-w-125 origin-[--transform-origin] text-balance rounded-lg bg-background text-sm tracking-tight text-foreground -outline-offset-px outline-muted-foreground transition-[width,height,opacity,transform] duration-400 ease-spring will-change-[width,height,opacity,transform] outline",
+                        {
+                            "data-ending-style": "scale-90 opacity-0",
+                            "data-instant": "transition-none",
+                            "data-starting-style": "scale-90 opacity-0"
+                        },
                         className
                     )}
                     {...props}
                 >
                     <TooltipPrimitive.Arrow
                         className={cn(
-                            "will-channge-[left] transition-[left] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] data-instant:transition-none data-[side=bottom]:top-0 data-[side=bottom]:-translate-y-full data-[side=bottom]:rotate-180 data-[side=left]:hidden data-[side=right]:hidden data-[side=top]:bottom-0 data-[side=top]:translate-y-full"
+                            "transition-[left] duration-400 ease-spring will-change-[left]",
+                            {
+                                "data-instant": "transition-none",
+                                "data-[side=bottom]":
+                                    "top-0 -translate-y-full rotate-180",
+                                "data-[side=left]": "hidden",
+                                "data-[side=right]": "hidden",
+                                "data-[side=top]": "bottom-0 translate-y-full"
+                            }
                         )}
                     >
                         <svg
@@ -130,27 +144,26 @@ function TooltipContent({
                     </TooltipPrimitive.Arrow>
                     <TooltipPrimitive.Viewport
                         className={cn(
-                            "[--viewport-inline-padding:0.5rem]",
-                            "relative size-full overflow-clip px-(--viewport-inline-padding) py-1 will-change-[width,translate,opacity]",
-
-                            "[&_:is([data-current],[data-previous])]:w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))]",
-                            "[&_:is([data-current],[data-previous])]:translate-x-0",
-                            "[&_:is([data-current],[data-previous])]:opacity-100",
-                            "[&_:is([data-current],[data-previous])]:transition-[translate,opacity]",
-                            "[&_:is([data-current],[data-previous])]:duration-500",
-                            "[&_:is([data-current],[data-previous])]:ease-[cubic-bezier(0.22,1,0.36,1)]",
-
-                            "data-[activation-direction~='left']:[&_[data-current][data-starting-style]]:-translate-x-1/2",
-                            "data-[activation-direction~='left']:[&_[data-current][data-starting-style]]:opacity-0",
-                            "data-[activation-direction~='left']:[&_[data-previous][data-ending-style]]:translate-x-1/2",
-                            "data-[activation-direction~='left']:[&_[data-previous][data-ending-style]]:opacity-0",
-
-                            "data-[activation-direction~='right']:[&_[data-current][data-starting-style]]:translate-x-1/2",
-                            "data-[activation-direction~='right']:[&_[data-current][data-starting-style]]:opacity-0",
-                            "data-[activation-direction~='right']:[&_[data-previous][data-ending-style]]:-translate-x-1/2",
-                            "data-[activation-direction~='right']:[&_[data-previous][data-ending-style]]:opacity-0",
-
-                            "[[data-instant]_&_:is([data-current],[data-previous])]:transition-none"
+                            "[--viewport-inline-padding:calc(var(--spacing)*2)]",
+                            "relative size-full overflow-clip px-[--viewport-inline-padding] py-1 will-change-[width,transform,opacity]",
+                            {
+                                "[&_:is([data-current],[data-previous])]":
+                                    "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-[transform,opacity] duration-500 ease-spring",
+                                "[&_[data-current][data-starting-style]]": {
+                                    "data-[activation-direction~='left']":
+                                        "-translate-x-1/2 opacity-0",
+                                    "data-[activation-direction~='right']":
+                                        "translate-x-1/2 opacity-0"
+                                },
+                                "[&_[data-previous][data-ending-style]]": {
+                                    "data-[activation-direction~='left']":
+                                        "translate-x-1/2 opacity-0",
+                                    "data-[activation-direction~='right']":
+                                        "-translate-x-1/2 opacity-0"
+                                },
+                                "[[data-instant]_&_:is([data-current],[data-previous])]":
+                                    "transition-none"
+                            }
                         )}
                     >
                         {children}

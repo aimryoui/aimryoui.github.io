@@ -21,7 +21,7 @@ function Outlines() {
             <SectionLine />
             <div
                 className={cn(
-                    "bg-background grid grid-cols-[3fr_var(--px)_calc(var(--spacing)*6)_var(--px)_2fr]"
+                    "grid grid-cols-[3fr_var(--px)_calc(var(--spacing)*6)_var(--px)_2fr] bg-background"
                 )}
             >
                 <div>
@@ -29,7 +29,7 @@ function Outlines() {
                         <React.Fragment key={key}>
                             <div
                                 className={cn(
-                                    "grid grid-cols-3 gap-6 gap-y-3 pt-3.25 pb-3.75"
+                                    "grid grid-cols-3 gap-6 gap-y-3 pb-3.75 pt-3.25"
                                 )}
                             >
                                 <Highlight className={cn("ps-6 font-normal")}>
@@ -44,7 +44,7 @@ function Outlines() {
                                     {section.title}
                                     <div
                                         className={cn(
-                                            "bg-highlighted/10 text-highlighted dark:bg-highlighted/20 hidden size-5 translate-y-0.5 place-items-center rounded-full group-hover:grid"
+                                            "hidden size-5 translate-y-[.0625rem] place-items-center rounded-full bg-highlighted/10 text-highlighted group-hover:grid dark:bg-highlighted/20"
                                         )}
                                     >
                                         <svg
@@ -72,8 +72,8 @@ function Outlines() {
                 <div className={cn("bg-highlighted/10 p-2")}>
                     <div
                         className={cn(
-                            "bg-background border-highlighted grid size-full place-items-center rounded-2xl border px-14",
-                            "bg-[radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-size-[.75rem_.75rem] bg-position-[0_0,.375rem_.375rem]"
+                            "grid size-full place-items-center rounded-2xl border border-highlighted bg-background px-14",
+                            "bg-[radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-position-[0_0,.375rem_.375rem] bg-size-[.75rem_.75rem]"
                         )}
                     >
                         <svg

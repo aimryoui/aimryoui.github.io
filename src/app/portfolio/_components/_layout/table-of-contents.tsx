@@ -105,7 +105,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
     if (!items.length) return null
 
     return (
-        <nav className="bg-background w-inherit fixed top-0 flex h-[calc(100%-(var(--spacing)*20))] flex-col">
+        <nav className="fixed top-0 flex h-[calc(100%-(var(--spacing)*20))] w-inherit flex-col bg-background">
             <TocSearch
                 ref={inputRef}
                 value={query}

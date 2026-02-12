@@ -94,7 +94,7 @@ export const TocList = memo(
                 }}
                 ref={scrollContainerRef}
                 className={cn(
-                    "group scrollbar-thin flex-1 overflow-y-scroll overscroll-contain scroll-auto py-4 text-sm will-change-[opacity]"
+                    "group flex-1 overflow-y-scroll overscroll-contain scroll-auto py-4 text-sm will-change-[opacity] scrollbar-thin"
                 )}
             >
                 {filteredItems.map((item) => (

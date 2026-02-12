@@ -198,11 +198,12 @@ function Experiences() {
                 <React.Fragment key={section.section}>
                     <div
                         className={cn(
-                            "bg-background relative grid grid-cols-5 gap-6 gap-y-3 pt-3.25 pb-3.75 [&>*:first-child]:ps-6 [&>*:last-child]:pe-6"
+                            "relative grid grid-cols-5 gap-6 gap-y-3 bg-background pb-3.75 pt-3.25",
+                            "[&>*:first-child]:ps-6 [&>*:last-child]:pe-6"
                         )}
                     >
                         <Highlight
-                            className={cn("font-normal whitespace-pre-line")}
+                            className={cn("whitespace-pre-line font-normal")}
                             style={{
                                 gridRow: `span ${section.places.length.toString()} / span ${section.places.length.toString()}`
                             }}
@@ -256,7 +257,11 @@ function Experiences() {
             <SectionLine />
             <div
                 className={cn(
-                    "bg-background relative grid grid-cols-5 gap-6 pt-3.25 pb-3.75 [&>*:first-child]:row-span-full [&>*:first-child]:ps-6 [&>*:last-child]:pe-6"
+                    "relative grid grid-cols-5 gap-6 bg-background pb-3.75 pt-3.25",
+                    {
+                        "[&>*:first-child]": "row-span-full ps-6",
+                        "[&>*:last-child]": "pe-6"
+                    }
                 )}
             >
                 <Highlight

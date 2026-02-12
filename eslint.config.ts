@@ -8,6 +8,7 @@ import react from "eslint-plugin-react"
 import reactCompiler from "eslint-plugin-react-compiler"
 import reactHooks from "eslint-plugin-react-hooks"
 import simpleImport from "eslint-plugin-simple-import-sort"
+import tailwind from "eslint-plugin-tailwindcss"
 import { defineConfig } from "eslint/config"
 import globals from "globals"
 import tseslint from "typescript-eslint"
@@ -131,6 +132,34 @@ export default defineConfig(
         settings: {
             react: {
                 version: "detect"
+            }
+        }
+    },
+    //* Tailwind CSS
+    {
+        files: ["**/*.{ts,tsx}"],
+        plugins: {
+            tailwindcss: tailwind
+        },
+        rules: {
+            "tailwindcss/no-custom-classname": 1
+        },
+        settings: {
+            tailwindcss: {
+                callees: ["cn", "twg"],
+                config: "tailwind.config.ts",
+                cssFiles: [
+                    "**/*.css",
+                    "!**/node_modules",
+                    "!**/.*",
+                    "!**/dist",
+                    "!**/build"
+                ],
+                cssFilesRefreshRate: 5_000,
+                removeDuplicates: false,
+                skipClassAttribute: false,
+                tags: [],
+                classRegex: "^(class(Name)?|tw)$"
             }
         }
     },

@@ -5,7 +5,7 @@ import { ElementLine, SectionLine } from "@/components/layout/line"
 import { tooltipHandle, TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
-import { slugify } from "@/lib/slugify"
+import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 import { TOOL_ICONS } from "@/portfolio/_configs/tools"
 
@@ -21,7 +21,7 @@ function ProjectHeader({
 }: Omit<(typeof projects)[number], "slug" | "code">) {
     const headerId = slugify(projectName)
     return (
-        <div className={cn("bg-background relative")}>
+        <div className={cn("relative bg-background")}>
             <div
                 className={cn(
                     "grid grid-cols-[3fr_var(--px)_calc(var(--spacing)*6)_var(--px)_2fr]"
@@ -29,14 +29,14 @@ function ProjectHeader({
             >
                 <span
                     className={cn(
-                        "absolute -top-10.5 left-6 font-mono tracking-normal uppercase"
+                        "absolute -top-10.5 left-6 font-mono uppercase tracking-normal"
                     )}
                 >
                     {type}
                 </span>
                 <div
                     className={cn(
-                        "flex flex-1 flex-col gap-2 px-6 pt-3.25 pb-3.75"
+                        "flex flex-1 flex-col gap-2 px-6 pb-3.75 pt-3.25"
                     )}
                 >
                     <H3 id={headerId} className={cn("text-pretty")}>
@@ -57,7 +57,7 @@ function ProjectHeader({
                 <ElementLine />
                 <div
                     className={cn(
-                        "flex flex-1 flex-col justify-between px-6 pt-3.25 pb-3.75"
+                        "flex flex-1 flex-col justify-between px-6 pb-3.75 pt-3.25"
                     )}
                 >
                     <Highlight
@@ -116,7 +116,7 @@ function ProjectHeader({
                     <SectionLine />
                     <div
                         className={cn(
-                            "flex flex-col gap-2 px-6 pt-3.25 pb-3.75"
+                            "flex flex-col gap-2 px-6 pb-3.75 pt-3.25"
                         )}
                     >
                         <Bold className={cn("text-pretty")}>

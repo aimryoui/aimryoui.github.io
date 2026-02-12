@@ -16,11 +16,11 @@ function SectionTitle({
 }) {
     const Comp = level === 1 ? H1 : level === 2 ? H2 : level === 3 ? H3 : H4
     return (
-        <div className={cn("bg-background relative px-6 pt-3.5 pb-5")}>
+        <div className={cn("relative bg-background px-6 pb-5 pt-3.5")}>
             {note && (
                 <span
                     className={cn(
-                        "absolute -top-10.5 left-6 font-mono tracking-normal uppercase"
+                        "absolute -top-10.5 left-6 font-mono uppercase tracking-normal"
                     )}
                 >
                     {note}

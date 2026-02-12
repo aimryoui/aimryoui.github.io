@@ -21,12 +21,12 @@ function Footer() {
             <SectionLine showDecoration />
             <Space />
             <SectionLine />
-            <div className={cn("bg-background relative")}>
+            <div className={cn("relative bg-background")}>
                 <div className={cn("bg-highlighted/10 p-2")}>
                     <div
                         className={cn(
-                            "bg-background border-highlighted flex aspect-3/1 size-full items-center justify-evenly rounded-2xl border",
-                            "bg-[radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke-foreground)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-size-[.75rem_.75rem] bg-position-[0_0,.375rem_.375rem]"
+                            "flex aspect-3 size-full items-center justify-evenly rounded-2xl border border-highlighted bg-background",
+                            "bg-[radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-position-[0_0,.375rem_.375rem] bg-size-[.75rem_.75rem]"
                         )}
                     >
                         <div
@@ -57,7 +57,7 @@ function Footer() {
             <SectionLine />
             <div
                 className={cn(
-                    "bg-background grid w-full grid-cols-[1fr_var(--px)_1fr_var(--px)_1fr_var(--px)_1fr_var(--px)_1fr]"
+                    "grid w-full grid-cols-[1fr_var(--px)_1fr_var(--px)_1fr_var(--px)_1fr_var(--px)_1fr] bg-background"
                 )}
             >
                 {[
@@ -68,7 +68,7 @@ function Footer() {
                     <React.Fragment key={item.label}>
                         <div
                             className={cn(
-                                "bg-highlighted/10 relative grid aspect-square w-full place-items-center p-6"
+                                "relative grid aspect-square w-full place-items-center bg-highlighted/10 p-6"
                             )}
                         >
                             <img
@@ -79,12 +79,12 @@ function Footer() {
                             />
                             <div
                                 className={cn(
-                                    "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                                    "absolute -bottom-5.75 flex rounded-md border border-stroke bg-background px-1 py-0.5"
                                 )}
                             >
                                 <span
                                     className={cn(
-                                        "text-xxs font-extrabold tracking-tight uppercase"
+                                        "text-xxs font-extrabold uppercase tracking-tight"
                                     )}
                                 >
                                     {item.label}

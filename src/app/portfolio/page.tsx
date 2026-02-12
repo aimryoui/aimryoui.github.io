@@ -25,10 +25,10 @@ export default function Portfolio() {
                 <SectionLine showDecoration />
                 <Space />
                 <SectionLine />
-                <div className={cn("bg-background relative px-6 pt-3.5 pb-5")}>
+                <div className={cn("relative bg-background px-6 pb-5 pt-3.5")}>
                     <span
                         className={cn(
-                            "absolute -top-10.5 left-6 font-mono tracking-normal uppercase"
+                            "absolute -top-10.5 left-6 font-mono uppercase tracking-normal"
                         )}
                     >
                         About
@@ -44,7 +44,7 @@ export default function Portfolio() {
                 <SectionLine />
                 <div
                     className={cn(
-                        "bg-background relative px-6 pt-3.25 pb-3.75"
+                        "relative bg-background px-6 pb-3.75 pt-3.25"
                     )}
                 >
                     <Text>
@@ -96,7 +96,7 @@ export default function Portfolio() {
                 <SectionLine />
                 <Divider />
                 <SectionLine />
-                <div className={cn("bg-background flex h-24")}>
+                <div className={cn("flex h-24 bg-background")}>
                     {[
                         { value: "2003", label: "Year of birth" },
                         { value: "45+", label: "Projects" },
@@ -105,7 +105,7 @@ export default function Portfolio() {
                         <React.Fragment key={item.label}>
                             <div
                                 className={cn(
-                                    "bg-highlighted/10 relative grid flex-1 place-items-center"
+                                    "relative grid flex-1 place-items-center bg-highlighted/10"
                                 )}
                             >
                                 <Highlight
@@ -115,12 +115,12 @@ export default function Portfolio() {
                                 </Highlight>
                                 <div
                                     className={cn(
-                                        "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                                        "absolute -bottom-5.75 flex rounded-md border border-stroke bg-background px-1 py-0.5"
                                     )}
                                 >
                                     <span
                                         className={cn(
-                                            "text-xxs font-extrabold tracking-tight uppercase"
+                                            "text-xxs font-extrabold uppercase tracking-tight"
                                         )}
                                     >
                                         {item.label}
@@ -134,7 +134,7 @@ export default function Portfolio() {
                     ))}
                     <div
                         className={cn(
-                            "bg-highlighted/10 relative grid flex-1 place-items-center"
+                            "relative grid flex-1 place-items-center bg-highlighted/10"
                         )}
                     >
                         <TooltipTrigger
@@ -158,12 +158,12 @@ export default function Portfolio() {
                         />
                         <div
                             className={cn(
-                                "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                                "absolute -bottom-5.75 flex rounded-md border border-stroke bg-background px-1 py-0.5"
                             )}
                         >
                             <span
                                 className={cn(
-                                    "text-xxs font-extrabold tracking-tight uppercase"
+                                    "text-xxs font-extrabold uppercase tracking-tight"
                                 )}
                             >
                                 Location
@@ -175,7 +175,7 @@ export default function Portfolio() {
                     <ElementLine />
                     <div
                         className={cn(
-                            "bg-highlighted/10 relative grid flex-1 place-items-center"
+                            "relative grid flex-1 place-items-center bg-highlighted/10"
                         )}
                     >
                         <TooltipTrigger
@@ -213,12 +213,12 @@ export default function Portfolio() {
                             </TooltipContent> */}
                         <div
                             className={cn(
-                                "bg-background border-stroke-foreground absolute -bottom-5.75 flex rounded-md border px-1 py-0.5"
+                                "absolute -bottom-5.75 flex rounded-md border border-stroke bg-background px-1 py-0.5"
                             )}
                         >
                             <span
                                 className={cn(
-                                    "text-xxs font-extrabold tracking-tight uppercase"
+                                    "text-xxs font-extrabold uppercase tracking-tight"
                                 )}
                             >
                                 Native Land

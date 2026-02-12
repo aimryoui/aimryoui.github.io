@@ -1,4 +1,4 @@
-export const formatOrdinal = (text: string) => {
+const formatOrdinal = (text: string) => {
     if (!text) return ""
 
     return text.split(/(?<=\d)(st|nd|rd|th)/g).map((part, index) => {
@@ -8,3 +8,5 @@ export const formatOrdinal = (text: string) => {
         return part
     })
 }
+
+export { formatOrdinal }

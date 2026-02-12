@@ -56,12 +56,12 @@ export const TocItemRow = memo(
                     className={cn(
                         item.label.toLowerCase() === "footer" && "hidden",
                         item.depth === 3
-                            ? "border-muted-foreground/20 border-s-[.0625rem]"
+                            ? "border-s-[.0625rem] border-muted-foreground/20"
                             : "mb-2",
                         "mx-6 box-content h-fit list-inside will-change-[translate,opacity,border,margin]",
                         item.depth === 3 &&
                             isActive &&
-                            "border-highlighted -translate-x-0.5 border-s-3"
+                            "!-translate-x-0.5 border-s-3 border-highlighted"
                     )}
                 >
                     <Link
@@ -74,7 +74,12 @@ export const TocItemRow = memo(
                         className={cn(
                             isActive
                                 ? "text-highlighted"
-                                : "hover:text-foreground transition-[color] duration-50 hover:transition-none",
+                                : [
+                                      "transition-[color] duration-50",
+                                      {
+                                          hover: "text-foreground transition-none"
+                                      }
+                                  ],
                             "relative inline-block w-full will-change-[color]",
                             item.depth === 3 ? "py-1 ps-3" : "font-bold"
                         )}
@@ -83,7 +88,7 @@ export const TocItemRow = memo(
                         {isActive && (
                             <div
                                 className={cn(
-                                    "bg-highlighted/10 text-highlighted dark:bg-highlighted/20 absolute top-1/2 right-0 hidden size-5 -translate-y-1/2 place-items-center rounded-full group-hover:grid"
+                                    "absolute right-0 top-1/2 hidden size-5 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted group-hover:grid dark:bg-highlighted/20"
                                 )}
                             >
                                 <svg

@@ -13,10 +13,10 @@
     "files.associations": {
         "*.css": "tailwindcss"
     },
-    "tailwindCSS.experimental.configFile": "src/app/globals.css",
-    "tailwindCSS.classFunctions": ["cva", "clsx", "cn", "twMerge"],
+    "tailwindCSS.experimental.configFile": "tailwind.config.ts",
+    "tailwindCSS.classFunctions": ["cva", "cn", "twg", "twMerge"],
     "tailwindCSS.emmetCompletions": true,
-    "tailwindCSS.classAttributes": ["class", "className", "tw"],
+    "tailwindCSS.classAttributes": ["className", "tw"],
     //* TypeScript Version
     "typescript.tsdk": "node_modules\\typescript\\lib"
 }

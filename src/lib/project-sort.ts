@@ -81,12 +81,12 @@ function groupProjectsByCategory(allProjects: Project[]): ProjectGroup[] {
     return Object.keys(PROJECT_CATEGORIES)
         .filter((cat) => groups[cat] && groups[cat].length > 0)
         .map((cat) => {
-            const config = PROJECT_CATEGORIES[cat] // Lấy config từ file mới
+            const config = PROJECT_CATEGORIES[cat]
             return {
                 id: cat,
-                title: config.title, // 🆕 Lấy từ object config
-                note: config.note, // 🆕 Lấy note
-                icons: config.icons, // 🆕 Lấy icons
+                title: config.title,
+                note: config.note,
+                icons: config.icons,
                 projects: groups[cat]!
             }
         })

@@ -18,7 +18,7 @@ export default function Home() {
                 <SectionLine showDecoration />
                 <div
                     className={cn(
-                        "bg-background flex w-full flex-col items-center justify-center gap-2 p-6"
+                        "flex w-full flex-col items-center justify-center gap-2 bg-background p-6"
                     )}
                 >
                     <H1>Nguyễn Hoàng Nhân</H1>
@@ -42,7 +42,7 @@ export default function Home() {
                         variant="outline"
                         className={cn(
                             "light:bg-white dark:text-white",
-                            "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                            "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                         )}
                     >
                         <Link href="/portfolio">Portfolio</Link>
@@ -53,7 +53,7 @@ export default function Home() {
                 <SectionLine showDecoration />
                 <Space />
             </main>
-            <ModeToggle className={cn("fixed right-6 bottom-6 z-10")} />
+            <ModeToggle className={cn("fixed bottom-6 right-6 z-10")} />
         </>
     )
 }

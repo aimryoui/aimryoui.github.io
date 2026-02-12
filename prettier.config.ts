@@ -27,7 +27,7 @@ const config: Config = {
     tailwindFunctions: ["cn", "cva", "twMerge"],
     importOrder: [
         "<BUILTIN_MODULES>",
-        ".css$",
+        "\\.css$",
         "^react$",
         "^next(?!-)",
         "",

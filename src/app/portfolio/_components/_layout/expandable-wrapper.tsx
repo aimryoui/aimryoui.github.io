@@ -74,7 +74,7 @@ export function ExpandableWrapper({
                 {!isExpanded && isOverflowing && (
                     <div
                         className={cn(
-                            "from-background absolute -bottom-6 z-10 flex h-120 w-full flex-col items-center justify-end bg-linear-to-t from-15% to-transparent pb-11.5"
+                            "absolute -bottom-6 z-10 flex h-120 w-full flex-col items-center justify-end bg-gradient-to-t from-background from-15% to-transparent pb-11.5"
                         )}
                     >
                         <Button
@@ -106,7 +106,10 @@ export function ExpandableWrapper({
                         <SectionLine />
                         <div
                             className={cn(
-                                "sticky bottom-0 z-20 grid w-full place-items-center transition-[translate,opacity] delay-100 duration-250 ease-out will-change-[translate,opacity] starting:translate-y-12 starting:opacity-0"
+                                "sticky bottom-0 z-20 grid w-full place-items-center transition-[translate,opacity] delay-100 duration-250 ease-out will-change-[translate,opacity]",
+                                {
+                                    starting: "translate-y-12 opacity-0"
+                                }
                             )}
                         >
                             <Button
