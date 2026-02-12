@@ -1,5 +1,6 @@
-import rehypeSlug from "rehype-slug"
-import { defineCollection, defineConfig, s } from "velite"
+import { type Route } from "next"
+
+import { defineCollection, defineConfig, s, type Schema } from "velite"
 
 import { TOOL_ICONS, type ToolKey } from "@/portfolio/_configs/tools"
 
@@ -8,6 +9,7 @@ const projects = defineCollection({
     pattern: "projects/**/*.mdx",
     schema: s.object({
         slug: s.path(),
+        link: s.string() as Schema<Route<"/projects/${string}">>,
 
         type: s.string(),
         projectName: s.string(),
@@ -37,8 +39,5 @@ const projects = defineCollection({
 
 export default defineConfig({
     root: "src/content",
-    collections: { projects },
-    mdx: {
-        rehypePlugins: [rehypeSlug]
-    }
+    collections: { projects }
 })
