@@ -26,8 +26,7 @@
         }
     },
     "mdx": {
-        "checkMdx": true,
-        "plugins": ["remark-frontmatter"]
+        "checkMdx": true
     },
     "include": [
         "next-env.d.ts",
