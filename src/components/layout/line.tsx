@@ -42,7 +42,7 @@ function SectionLine({
     return (
         <div
             className={cn(
-                "relative h-px w-full",
+                "relative z-10 h-0 w-full",
                 showDecoration && "flex items-center justify-between",
                 containerClassName
             )}

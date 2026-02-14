@@ -24,8 +24,8 @@ const nextConfig = (phase: string): NextConfig => {
         devIndicators: {
             position: "bottom-right"
         },
-        experimental: {
-            turbopackIgnoreIssue: [
+        turbopack: {
+            ignoreIssue: [
                 /** @see {@link https://github.com/vercel/next.js/issues/87898} */
                 { path: "tailwind.config.ts", title: /^Module not found/i }
             ]

@@ -38,7 +38,7 @@ function Sidebar() {
     return (
         <aside
             className={cn(
-                "sticky top-0 z-10 flex h-dvh w-78 flex-col justify-end lg:hidden"
+                "sticky top-0 z-20 flex h-dvh w-78 flex-col justify-end lg:hidden"
             )}
         >
             <TableOfContents items={tocItems} />

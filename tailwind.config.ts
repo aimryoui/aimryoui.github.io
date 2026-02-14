@@ -1,10 +1,10 @@
 /* eslint-disable @limegrass/import-alias/import-alias */
 import anchorsPlugin from "@toolwind/anchors"
 import { type Config } from "tailwindcss"
-import animatePlugin from "tailwindcss-animate"
 import plugin from "tailwindcss/plugin"
 import { transformer } from "twg/transform"
 
+import animate from "./src/lib/tailwindcss-plugins/utilities/animate"
 import backgroundClip from "./src/lib/tailwindcss-plugins/utilities/background-clip"
 import backgroundPosition from "./src/lib/tailwindcss-plugins/utilities/background-position"
 import backgroundSize from "./src/lib/tailwindcss-plugins/utilities/background-size"
@@ -12,6 +12,7 @@ import cornerShape from "./src/lib/tailwindcss-plugins/utilities/corner-shape"
 import fieldSizing from "./src/lib/tailwindcss-plugins/utilities/field-sizing"
 import outline from "./src/lib/tailwindcss-plugins/utilities/outline"
 import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
+import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
 
 const colorMix = (variable: string) => {
@@ -65,6 +66,7 @@ export default {
             spacing: {
                 px: "var(--px)",
                 0.75: "0.1875rem",
+                2.25: ".5625rem",
                 3.25: "0.8125rem",
                 3.75: "0.9375rem",
                 4.5: "1.125rem",
@@ -90,8 +92,8 @@ export default {
             },
             transitionDuration: {
                 50: "50ms",
-                250: "250ms",
-                400: "400ms"
+                250: ".25s",
+                400: ".4s"
             },
             transitionTimingFunction: {
                 spring: "cubic-bezier(0.22, 1, 0.36, 1)"
@@ -129,10 +131,10 @@ export default {
             transparent: "transparent",
             current:
                 "color-mix(in oklab, currentColor calc(<alpha-value> * 100%), transparent)",
-            black: "color-mix(in oklab, oklch(0 0 0) calc(<alpha-value> * 100%), transparent)",
-            white: "color-mix(in oklab, oklch(1 0 0) calc(<alpha-value> * 100%), transparent)",
+            white: colorMix("--white"),
+            black: colorMix("--black"),
             inverted: colorMix("--inverted"),
-            alert: "color-mix(in oklab, oklch(63.7% 0.237 25.331) calc(<alpha-value> * 100%), transparent)",
+            alert: colorMix("--alert"),
 
             background: colorMix("--background"),
             foreground: colorMix("--foreground"),
@@ -183,9 +185,9 @@ export default {
         }
     },
     plugins: [
-        animatePlugin,
         anchorsPlugin,
 
+        animate,
         backgroundClip,
         backgroundPosition,
         backgroundSize,
@@ -193,6 +195,7 @@ export default {
         fieldSizing,
         outline,
         scrollbar,
+        transition,
         transitionBehavior,
 
         plugin(function ({ addBase, addVariant }) {

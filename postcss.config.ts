@@ -14,15 +14,18 @@ const optimizeAndReplacePlugin = (): Plugin => {
     return {
         postcssPlugin: "optimize-and-replace",
         Declaration(decl: Declaration) {
+            // A. Đổi tên Prop
             if (REPLACE_PATTERN.test(decl.prop)) {
                 decl.prop = decl.prop.replace(REPLACE_PATTERN, REPLACE_WITH)
             }
+            // B. Đổi tên Value
             if (REPLACE_PATTERN.test(decl.value)) {
                 decl.value = decl.value.replace(REPLACE_PATTERN, REPLACE_WITH)
             }
+
             if (decl.value.includes("color-mix(in oklab")) {
                 const noOpacityRegex =
-                    /color-mix\(in oklab, (var\(--[^)]+\)) calc\(var\(--nhn-[\w-]+-opacity, ?1\) \* 100%\), transparent\)/g
+                    /color-mix\(in oklab, (var\(--[^)]+\)|currentColor) calc\((?:var\(--nhn-[\w-]+-opacity, ?1\)|1) \* 100%\), transparent\)/g
 
                 if (noOpacityRegex.test(decl.value)) {
                     decl.value = decl.value.replace(noOpacityRegex, "$1")

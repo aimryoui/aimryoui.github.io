@@ -24,8 +24,8 @@ function InputGroup({
             className={cn(
                 "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-xl border border-input outline-transparent transition-none will-change-[outline,border] outline-40 has-[>textarea]:h-auto",
                 {
-                    dark: "bg-input/30 hover:bg-input/60",
-                    hover: "bg-input/30",
+                    dark: "bg-input/30 hover:bg-element-hover",
+                    hover: "bg-element-hover",
 
                     // Variants based on alignment.
                     "[&>input]:has-[>[data-align=inline-start]]": "pl-2",

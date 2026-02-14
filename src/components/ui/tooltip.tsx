@@ -148,7 +148,7 @@ function TooltipContent({
                             "relative size-full overflow-clip px-[--viewport-inline-padding] py-1 will-change-[width,transform,opacity]",
                             {
                                 "[&_:is([data-current],[data-previous])]":
-                                    "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-[transform,opacity] duration-500 ease-spring",
+                                    "duration-[.5s,.4s] w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-[transform,opacity] ease-spring",
                                 "[&_[data-current][data-starting-style]]": {
                                     "data-[activation-direction~='left']":
                                         "-translate-x-1/2 opacity-0",

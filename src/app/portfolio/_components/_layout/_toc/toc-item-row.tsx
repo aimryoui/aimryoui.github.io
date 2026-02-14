@@ -40,7 +40,7 @@ export const TocItemRow = memo(
                         }}
                         fit
                         containerClassName={cn(
-                            "my-4 will-change-[opacity] first:hidden"
+                            "my-3 h-px will-change-[opacity] first:hidden"
                         )}
                     />
                 )}
@@ -55,13 +55,13 @@ export const TocItemRow = memo(
                     }}
                     className={cn(
                         item.label.toLowerCase() === "footer" && "hidden",
-                        item.depth === 3
-                            ? "border-s-[.0625rem] border-muted-foreground/20"
-                            : "mb-2",
-                        "mx-6 box-content h-fit list-inside will-change-[translate,opacity,border,margin]",
                         item.depth === 3 &&
-                            isActive &&
-                            "!-translate-x-0.5 border-s-3 border-highlighted"
+                            "border-s-[.0625rem] border-muted-foreground/20",
+                        "relative mx-6 box-content h-fit list-inside will-change-[opacity,border,margin]",
+                        item.depth === 3 &&
+                            isActive && {
+                                before: "absolute inset-y-0 -left-[.0625rem] w-[.1875rem] bg-highlighted"
+                            }
                     )}
                 >
                     <Link
@@ -77,18 +77,20 @@ export const TocItemRow = memo(
                                 : [
                                       "transition-[color] duration-50",
                                       {
-                                          hover: "text-foreground transition-none"
+                                          hover: "text-foreground transition-none",
+                                          "focus-visible": "text-foreground"
                                       }
                                   ],
-                            "relative inline-block w-full will-change-[color]",
-                            item.depth === 3 ? "py-1 ps-3" : "font-bold"
+                            "group/link relative inline-block w-full py-0.5 leading-6 will-change-[color]",
+                            item.depth === 3 ? "ps-3" : "font-bold"
                         )}
                     >
                         {item.depth === 1 ? "About" : formatOrdinal(item.label)}
                         {isActive && (
                             <div
                                 className={cn(
-                                    "absolute right-0 top-1/2 hidden size-5 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted group-hover:grid dark:bg-highlighted/20"
+                                    "absolute right-0 top-1/2 hidden size-5 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                    "group-hover:grid group-focus-visible/link:hidden dark:bg-highlighted/20"
                                 )}
                             >
                                 <svg
