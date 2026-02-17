@@ -25,7 +25,7 @@ async function main() {
                 fs.readFileSync(MANIFEST_PATH, "utf-8")
             ) as ImageManifest
         } catch {
-            /* empty */
+            /* Empty */
         }
     }
 
@@ -81,19 +81,23 @@ async function main() {
 
         if (!originalMetadata.width || !originalMetadata.height) continue
 
-        // 1. Cắt viền 1px (như logic gốc)
-        const croppedWidth = originalMetadata.width - 2
-        const croppedHeight = originalMetadata.height - 2
+        let baseBuffer: Buffer
 
-        const croppedImage = originalImage.extract({
-            left: 1,
-            top: 1,
-            width: croppedWidth,
-            height: croppedHeight
-        })
+        if (parsedPath.ext.toLowerCase() === ".png") {
+            baseBuffer = await originalImage.toBuffer()
+        } else {
+            const croppedWidth = originalMetadata.width - 2
+            const croppedHeight = originalMetadata.height - 2
 
-        // 2. Chuyển thẳng sang Buffer để Sharp xử lý tiếp (BỎ QUA RESIZE)
-        const baseBuffer = await croppedImage.toBuffer()
+            baseBuffer = await originalImage
+                .extract({
+                    left: 1,
+                    top: 1,
+                    width: croppedWidth,
+                    height: croppedHeight
+                })
+                .toBuffer()
+        }
 
         const image = sharp(baseBuffer)
         const metadata = await image.metadata()
@@ -105,7 +109,6 @@ async function main() {
             height: metadata.height
         }
 
-        // 3. Vẫn tạo file preview siêu nhẹ làm placeholder
         await image
             .clone()
             .resize({
@@ -117,7 +120,6 @@ async function main() {
             .webp({ quality: 20, smartSubsample: true })
             .toFile(path.join(outputFolder, `${parsedPath.name}_preview.webp`))
 
-        // 4. Cắt Grid trực tiếp từ kích thước gốc đã crop
         const colWidth = Math.ceil(metadata.width / GRID_COLS)
         const rowHeight = Math.ceil(metadata.height / GRID_ROWS)
         const promises = []
