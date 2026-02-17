@@ -9,6 +9,7 @@ import backgroundClip from "./src/lib/tailwindcss-plugins/utilities/background-c
 import backgroundPosition from "./src/lib/tailwindcss-plugins/utilities/background-position"
 import backgroundSize from "./src/lib/tailwindcss-plugins/utilities/background-size"
 import cornerShape from "./src/lib/tailwindcss-plugins/utilities/corner-shape"
+import displayGridLanes from "./src/lib/tailwindcss-plugins/utilities/display-grid-lanes"
 import fieldSizing from "./src/lib/tailwindcss-plugins/utilities/field-sizing"
 import outline from "./src/lib/tailwindcss-plugins/utilities/outline"
 import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
@@ -26,11 +27,9 @@ export default {
             "./src/components/**/*.{ts,tsx}",
             "./src/content/**/*.mdx"
         ],
-        transform: {
-            DEFAULT: transformer({
-                callee: "cn"
-            })
-        }
+        transform: transformer({
+            callee: "cn"
+        })
     },
     future: {
         hoverOnlyWhenSupported: true
@@ -125,6 +124,9 @@ export default {
                 instant: "instant",
                 "starting-style": "starting-style",
                 "ending-style": "ending-style"
+            },
+            opacity: {
+                8: ".08"
             }
         },
         colors: {
@@ -133,6 +135,7 @@ export default {
                 "color-mix(in oklab, currentColor calc(<alpha-value> * 100%), transparent)",
             white: colorMix("--white"),
             black: colorMix("--black"),
+            base: colorMix("--base"),
             inverted: colorMix("--inverted"),
             alert: colorMix("--alert"),
 
@@ -192,6 +195,7 @@ export default {
         backgroundPosition,
         backgroundSize,
         cornerShape,
+        displayGridLanes,
         fieldSizing,
         outline,
         scrollbar,

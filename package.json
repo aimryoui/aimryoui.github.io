@@ -33,13 +33,13 @@
         "glob": "^13.0.3",
         "lucide-react": "^0.564.0",
         "motion": "^12.34.0",
-        "next": "16.2.0-canary.45",
+        "next": "16.2.0-canary.46",
         "next-themes": "^0.4.6",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
         "sharp": "^0.34.5",
         "tailwind-merge": "^2.6.1",
-        "twg": "^7.0.1"
+        "twg": "^7.1.1"
     },
     "devDependencies": {
         "@eslint/css": "^0.14.1",

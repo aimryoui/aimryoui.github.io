@@ -7,21 +7,25 @@ const imageManifest = imageManifestRaw as Record<
     { width: number; height: number }
 >
 
-function Image({
-    src,
-    alt,
-    className,
-    placeholderPriority = false,
-    asBackgroundImage = false,
-    noBorder = false,
-    objectFit = "cover"
-}: React.ComponentProps<"img"> & {
+interface ImageProps extends React.ComponentProps<"img"> {
     src: string
     placeholderPriority?: boolean
     asBackgroundImage?: boolean
+    imageRow?: "justified" | "proportional"
     noBorder?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
-}) {
+}
+
+function Image({
+    className,
+    src,
+    alt,
+    placeholderPriority = false,
+    asBackgroundImage = false,
+    imageRow,
+    noBorder = false,
+    objectFit = "cover"
+}: ImageProps) {
     const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
     const metadata = imageManifest[normalizedSrc.replace(/\.[^/.]+$/, "")]
 
@@ -38,12 +42,18 @@ function Image({
         // Represent <img> tag or background-image property
         <div
             className={cn(
-                "relative grid size-full place-items-center overflow-clip",
+                "relative grid w-full place-items-center overflow-clip",
+                asBackgroundImage ? "h-full" : "h-fit",
                 !noBorder && {
-                    after: "pointer-events-none absolute inset-0 rounded-inherit -outline-offset-px outline-inverted/[.08] outline"
+                    after: "pointer-events-none absolute inset-0 rounded-inherit -outline-offset-px outline-base/8 outline"
                 },
                 className
             )}
+            style={{
+                flex: imageRow
+                    ? `${imageRow === "justified" ? `calc(${metadata.width.toString()}/${metadata.height.toString()})` : metadata.width.toString()} 1 0%`
+                    : undefined
+            }}
         >
             {/* Represent image from `src` attribute or url() function */}
             <div

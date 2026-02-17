@@ -95,13 +95,13 @@ function TooltipContent({
                 arrowPadding={7}
                 className={cn(
                     "z-50 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] duration-400 data-instant:transition-none",
-                    "transition-[top,left,right,bottom,transform] ease-spring will-change-[top,left,right,bottom,transform]"
+                    "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-spring"
                 )}
             >
                 <TooltipPrimitive.Popup
                     data-slot="tooltip-content"
                     className={cn(
-                        "group relative h-[--popup-height,auto] w-[--popup-width,auto] max-w-125 origin-[--transform-origin] text-balance rounded-lg bg-background text-sm tracking-tight text-foreground -outline-offset-px outline-muted-foreground transition-[width,height,opacity,transform] duration-400 ease-spring will-change-[width,height,opacity,transform] outline",
+                        "group relative h-[--popup-height,auto] w-[--popup-width,auto] max-w-125 origin-[--transform-origin] text-balance rounded-lg bg-background text-sm tracking-tight text-foreground -outline-offset-px outline-muted-foreground will-change-[width,height,opacity,transform] outline transition-[width,height,opacity,transform] ease-spring duration-400",
                         {
                             "data-ending-style": "scale-90 opacity-0",
                             "data-instant": "transition-none",
@@ -113,7 +113,7 @@ function TooltipContent({
                 >
                     <TooltipPrimitive.Arrow
                         className={cn(
-                            "transition-[left] duration-400 ease-spring will-change-[left]",
+                            "will-change-[left] transition-[left] ease-spring duration-400",
                             {
                                 "data-instant": "transition-none",
                                 "data-[side=bottom]":
@@ -148,7 +148,7 @@ function TooltipContent({
                             "relative size-full overflow-clip px-[--viewport-inline-padding] py-1 will-change-[width,transform,opacity]",
                             {
                                 "[&_:is([data-current],[data-previous])]":
-                                    "duration-[.5s,.4s] w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-[transform,opacity] ease-spring",
+                                    "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-[transform,opacity] ease-spring duration-[.5s,.4s]",
                                 "[&_[data-current][data-starting-style]]": {
                                     "data-[activation-direction~='left']":
                                         "-translate-x-1/2 opacity-0",

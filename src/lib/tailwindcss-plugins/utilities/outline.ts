@@ -6,7 +6,7 @@ export default plugin(
             "@property --tw-outline-style": {
                 syntax: "'*'",
                 inherits: "false",
-                "initial-value": "solid"
+                initialValue: "solid"
             }
         })
         matchUtilities(

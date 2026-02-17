@@ -7,7 +7,6 @@ import sharp from "sharp"
 const INPUT_DIR = "private/images"
 const OUTPUT_BASE = "public/assets/images"
 const MANIFEST_PATH = "src/lib/image-manifest.json"
-const MAX_SIZE = 1602
 export const GRID_ROWS = 3
 export const GRID_COLS = 3
 
@@ -82,6 +81,7 @@ async function main() {
 
         if (!originalMetadata.width || !originalMetadata.height) continue
 
+        // 1. Cắt viền 1px (như logic gốc)
         const croppedWidth = originalMetadata.width - 2
         const croppedHeight = originalMetadata.height - 2
 
@@ -92,40 +92,10 @@ async function main() {
             height: croppedHeight
         })
 
-        const isPanorama =
-            croppedWidth > croppedHeight * 4 || croppedHeight > croppedWidth * 4
+        // 2. Chuyển thẳng sang Buffer để Sharp xử lý tiếp (BỎ QUA RESIZE)
+        const baseBuffer = await croppedImage.toBuffer()
 
-        let resizeOptions: sharp.ResizeOptions = {
-            fit: "inside",
-            withoutEnlargement: true
-        }
-
-        if (isPanorama) {
-            if (croppedWidth > croppedHeight) {
-                resizeOptions = {
-                    height: MAX_SIZE,
-                    withoutEnlargement: true
-                }
-            } else {
-                resizeOptions = {
-                    width: MAX_SIZE,
-                    withoutEnlargement: true
-                }
-            }
-        } else {
-            resizeOptions = {
-                width: MAX_SIZE,
-                height: MAX_SIZE,
-                fit: "inside",
-                withoutEnlargement: true
-            }
-        }
-
-        const resizedBuffer = await croppedImage
-            .resize(resizeOptions)
-            .toBuffer()
-
-        const image = sharp(resizedBuffer)
+        const image = sharp(baseBuffer)
         const metadata = await image.metadata()
 
         if (!metadata.width || !metadata.height) continue
@@ -135,6 +105,7 @@ async function main() {
             height: metadata.height
         }
 
+        // 3. Vẫn tạo file preview siêu nhẹ làm placeholder
         await image
             .clone()
             .resize({
@@ -146,9 +117,11 @@ async function main() {
             .webp({ quality: 20, smartSubsample: true })
             .toFile(path.join(outputFolder, `${parsedPath.name}_preview.webp`))
 
+        // 4. Cắt Grid trực tiếp từ kích thước gốc đã crop
         const colWidth = Math.ceil(metadata.width / GRID_COLS)
         const rowHeight = Math.ceil(metadata.height / GRID_ROWS)
         const promises = []
+
         for (let r = 0; r < GRID_ROWS; r++) {
             for (let c = 0; c < GRID_COLS; c++) {
                 const left = c * colWidth
@@ -161,12 +134,14 @@ async function main() {
                     top + rowHeight > metadata.height
                         ? metadata.height - top
                         : rowHeight
+
                 if (w <= 0 || h <= 0) continue
+
                 promises.push(
                     image
                         .clone()
                         .extract({ left, top, width: w, height: h })
-                        .webp({ quality: 90 })
+                        .webp({ quality: 95 })
                         .toFile(
                             path.join(
                                 outputFolder,
@@ -183,6 +158,7 @@ async function main() {
 
     if (!fs.existsSync(path.dirname(MANIFEST_PATH)))
         fs.mkdirSync(path.dirname(MANIFEST_PATH), { recursive: true })
+
     fs.writeFileSync(MANIFEST_PATH, JSON.stringify(newManifest, null, 2))
     console.log(`✅ Clean Manifest generated at ${MANIFEST_PATH}`)
 }

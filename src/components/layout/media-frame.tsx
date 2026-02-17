@@ -18,7 +18,7 @@ export function SectionName({
     return (
         <div
             className={cn(
-                "sticky top-3.5 z-10 grid h-13 place-items-center",
+                "sticky top-3.5 z-30 grid h-13 place-items-center",
                 containerClassName
             )}
         >
@@ -71,7 +71,7 @@ function MediaFrame({
                 {sectionName && (
                     <div
                         className={cn(
-                            "sticky top-16.5 z-10 flex h-0 items-end justify-center"
+                            "sticky top-16.5 z-30 flex h-0 items-end justify-center"
                         )}
                     >
                         <SectionName
