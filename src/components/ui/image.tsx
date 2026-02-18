@@ -11,6 +11,30 @@ const imageManifest = imageManifestRaw as Record<
     { width: number; height: number; mapping: number[] }
 >
 
+let sharedObserver: IntersectionObserver | null = null
+const callbacks = new Map<Element, () => void>()
+
+function getObserver() {
+    if (typeof window === "undefined") return null
+
+    sharedObserver ??= new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const callback = callbacks.get(entry.target)
+                    if (callback) {
+                        callback()
+                        sharedObserver?.unobserve(entry.target)
+                        callbacks.delete(entry.target)
+                    }
+                }
+            })
+        },
+        { rootMargin: "50% 0px 50% 0px" }
+    )
+    return sharedObserver
+}
+
 interface ImageProps extends React.ComponentProps<"div"> {
     src: string
     alt?: string
@@ -40,24 +64,20 @@ function Image({
     useEffect(() => {
         if (isVisible) return
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    setIsVisible(true)
-                    observer.disconnect()
-                }
-            },
-            {
-                rootMargin: "50% 0px 50% 0px"
-            }
-        )
+        const element = containerRef.current
+        if (!element) return
 
-        if (containerRef.current) {
-            observer.observe(containerRef.current)
-        }
+        const observer = getObserver()
+        if (!observer) return
+
+        callbacks.set(element, () => {
+            setIsVisible(true)
+        })
+        observer.observe(element)
 
         return () => {
-            observer.disconnect()
+            observer.unobserve(element)
+            callbacks.delete(element)
         }
     }, [isVisible])
 
@@ -90,7 +110,7 @@ function Image({
                 "relative grid w-full place-items-center overflow-clip",
                 asBackgroundImage ? "h-full" : "h-fit",
                 !noBorder && {
-                    after: "z-2 pointer-events-none absolute inset-0 rounded-inherit -outline-offset-px outline-base/8 outline"
+                    after: "pointer-events-none absolute inset-0 z-2 rounded-inherit -outline-offset-px outline-base/8 outline"
                 },
                 limitHeight && "h-200",
                 className
@@ -98,6 +118,9 @@ function Image({
             style={{
                 flex: imageRow
                     ? `${imageRow === "justified" ? `calc(${exactW.toString()}/${exactH.toString()})` : exactW.toString()} 1 0%`
+                    : undefined,
+                maxWidth: imageRow
+                    ? `${(exactW / 16).toString()}rem`
                     : undefined
             }}
             {...props}

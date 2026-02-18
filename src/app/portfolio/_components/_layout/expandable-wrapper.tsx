@@ -91,7 +91,7 @@ export function ExpandableWrapper({
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
-                                className={cn("size-3")}
+                                className="size-3"
                             >
                                 <path
                                     fill="currentColor"
@@ -123,7 +123,7 @@ export function ExpandableWrapper({
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
-                                    className={cn("size-3")}
+                                    className="size-3"
                                 >
                                     <path
                                         fill="currentColor"
