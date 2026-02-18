@@ -1,6 +1,10 @@
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+
+import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
 import imageManifestRaw from "@/lib/image-manifest.json"
 import { cn } from "@/lib/utils"
-import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/scripts/process-images"
 
 const imageManifest = imageManifestRaw as Record<
     string,
@@ -27,8 +31,36 @@ function Image({
     imageRow,
     limitHeight = false,
     noBorder = false,
-    objectFit = "cover"
+    objectFit = "cover",
+    ...props
 }: ImageProps) {
+    const [isVisible, setIsVisible] = useState(placeholderPriority)
+    const containerRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        if (isVisible) return
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setIsVisible(true)
+                    observer.disconnect()
+                }
+            },
+            {
+                rootMargin: "50% 0px 50% 0px"
+            }
+        )
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current)
+        }
+
+        return () => {
+            observer.disconnect()
+        }
+    }, [isVisible])
+
     const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
     const metadata = imageManifest[normalizedSrc.replace(/\.[^/.]+$/, "")]
 
@@ -53,6 +85,7 @@ function Image({
 
     return (
         <div
+            ref={containerRef}
             className={cn(
                 "relative grid w-full place-items-center overflow-clip",
                 asBackgroundImage ? "h-full" : "h-fit",
@@ -67,6 +100,7 @@ function Image({
                     ? `${imageRow === "justified" ? `calc(${exactW.toString()}/${exactH.toString()})` : exactW.toString()} 1 0%`
                     : undefined
             }}
+            {...props}
         >
             {/* SEO & Preview Layer */}
             <img
@@ -113,7 +147,9 @@ function Image({
                             key={index}
                             className="size-full bg-no-repeat"
                             style={{
-                                backgroundImage: `url('${basePath}/${fileName}_scrambled.webp')`,
+                                backgroundImage: isVisible
+                                    ? `url('${basePath}/${fileName}_scrambled.webp')`
+                                    : undefined,
                                 backgroundSize: `${bgSizeX.toString()}% ${bgSizeY.toString()}%`,
                                 backgroundPosition: `${xPercent.toString()}% ${yPercent.toString()}%`
                             }}

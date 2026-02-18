@@ -4,13 +4,12 @@ import path from "path"
 import { glob } from "glob"
 import sharp from "sharp"
 
+// eslint-disable-next-line @limegrass/import-alias/import-alias
+import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "../configs/image.config"
+
 const INPUT_DIR = "private/images"
 const OUTPUT_BASE = "public/assets/images"
 const MANIFEST_PATH = "src/lib/image-manifest.json"
-
-export const GRID_ROWS = 3
-export const GRID_COLS = 3
-export const EDGE_PAD = 4
 
 const isCI = process.env.CI === "true"
 
