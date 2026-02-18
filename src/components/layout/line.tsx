@@ -7,6 +7,7 @@ function MarginLine({ className }: React.ComponentProps<"hr">) {
                 "sticky top-0 h-dvh border-r border-dashed border-stroke",
                 className
             )}
+            role="separator"
         />
     )
 }
@@ -46,6 +47,7 @@ function SectionLine({
                 showDecoration && "flex items-center justify-between",
                 containerClassName
             )}
+            role="separator"
             {...props}
             ref={ref}
         >
@@ -76,6 +78,7 @@ function ElementLine({
                     ? "border-r border-dashed border-stroke"
                     : "w-full border-b border-dashed border-stroke"
             )}
+            role="separator"
         />
     )
 }

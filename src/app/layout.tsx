@@ -198,7 +198,7 @@ export default function RootLayout({
                         <div
                             className={cn(
                                 "fixed inset-0 -z-10 h-full w-full",
-                                "bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px]"
+                                "bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]"
                             )}
                         />
                     </TooltipProvider>

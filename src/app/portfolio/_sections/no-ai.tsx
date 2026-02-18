@@ -13,6 +13,7 @@ function NoAIOverlay() {
                 "inset-x-0 z-50 bg-alert anchored/no-ai-placeholder top-anchor-top-0 h-anchor-height-0",
                 "px-[calc(var(--spacing)*6.5*2+var(--spacing)*78+var(--px)*3+var(--spacing)*6)] md:px-[calc(var(--spacing)*6.5+var(--px)*2+var(--spacing)*6)]"
             )}
+            role="alert"
         >
             <div
                 className={cn(

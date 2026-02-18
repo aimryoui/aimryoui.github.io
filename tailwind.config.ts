@@ -16,6 +16,8 @@ import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
 
+export const BASE_FONT_SIZE = 16
+
 const colorMix = (variable: string) => {
     return `color-mix(in oklab, var(${variable}) calc(<alpha-value> * 100%), transparent)`
 }
@@ -87,7 +89,8 @@ export default {
                 375: "93.75rem",
                 700: "175rem",
                 auto: "auto",
-                inherit: "inherit"
+                inherit: "inherit",
+                unset: "unset"
             },
             transitionDuration: {
                 50: "50ms",
@@ -118,6 +121,7 @@ export default {
             },
             zIndex: {
                 1: "1",
+                2: "2",
                 infinity: "2147483647"
             },
             data: {
@@ -205,7 +209,7 @@ export default {
         plugin(function ({ addBase, addVariant }) {
             addBase({
                 ":root": {
-                    "--spacing": "0.25rem"
+                    "--spacing": `${(4 / BASE_FONT_SIZE).toString()}rem` // 0.25rem ~ 4px
                 }
             })
             addVariant("light", [

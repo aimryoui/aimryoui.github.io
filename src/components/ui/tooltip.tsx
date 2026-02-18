@@ -109,6 +109,7 @@ function TooltipContent({
                         },
                         className
                     )}
+                    role="tooltip"
                     {...props}
                 >
                     <TooltipPrimitive.Arrow

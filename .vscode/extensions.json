@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "bradlc.vscode-tailwindcss",
+        "cipchk.cssrem",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "unifiedjs.vscode-mdx",

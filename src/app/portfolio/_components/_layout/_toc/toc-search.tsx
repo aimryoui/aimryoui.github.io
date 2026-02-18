@@ -43,6 +43,7 @@ export const TocSearch = forwardRef<HTMLInputElement, TocSearchProps>(
                         ref={ref}
                         id="toc-search"
                         type="search"
+                        role="searchbox"
                         placeholder="Search for sections..."
                         autoComplete="off"
                         value={value}
@@ -117,5 +118,4 @@ export const TocSearch = forwardRef<HTMLInputElement, TocSearchProps>(
         )
     }
 )
-
 TocSearch.displayName = "TocSearch"

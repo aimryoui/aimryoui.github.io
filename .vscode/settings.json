@@ -18,6 +18,27 @@
     "tailwindCSS.classFunctions": ["cva", "cn", "twg", "twMerge"],
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.classAttributes": ["className", "tw"],
+    // CSS REM
+    "cssrem.languages": [
+        "html",
+        "vue",
+        "css",
+        "tailwindcss",
+        "postcss",
+        "less",
+        "scss",
+        "sass",
+        "stylus",
+        "tpl",
+        "wxss",
+        "twig",
+        "javascriptreact",
+        "typescriptreact",
+        "javascript",
+        "typescript"
+    ],
+    "cssrem.vw": true,
+    "cssrem.vwDesign": 1707.33,
     //* TypeScript Version
     "typescript.tsdk": "node_modules\\typescript\\lib"
 }
