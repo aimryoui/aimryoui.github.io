@@ -57,7 +57,8 @@ export function ExpandableWrapper({
             <div
                 className={cn(
                     "relative",
-                    !isExpanded && "[clip-path:inset(0_-50vw_0_-50vw)]",
+                    !isExpanded &&
+                        "[clip-path:inset(calc((var(--px)/2)*-1)_-50vw_0_-50vw)]",
                     className
                 )}
             >
