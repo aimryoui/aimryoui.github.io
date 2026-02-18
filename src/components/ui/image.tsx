@@ -107,7 +107,7 @@ function Image({
         <div
             ref={containerRef}
             className={cn(
-                "relative grid w-full place-items-center overflow-clip",
+                "relative grid w-full place-items-center overflow-hidden",
                 asBackgroundImage ? "h-full" : "h-fit",
                 !noBorder && {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit -outline-offset-px outline-base/8 outline"
