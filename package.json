@@ -12,7 +12,7 @@
     "engines": {
         "node": ">=22.18.0"
     },
-    "packageManager": "pnpm@10.29.3+sha512.498e1fb4cca5aa06c1dcf2611e6fafc50972ffe7189998c409e90de74566444298ffe43e6cd2acdc775ba1aa7cc5e092a8b7054c811ba8c5770f84693d33d2dc",
+    "packageManager": "pnpm@10.30.0+sha512.2b5753de015d480eeb88f5b5b61e0051f05b4301808a82ec8b840c9d2adf7748eb352c83f5c1593ca703ff1017295bc3fdd3119abb9686efc96b9fcb18200937",
     "type": "module",
     "private": true,
     "scripts": {
@@ -31,26 +31,24 @@
         "@radix-ui/react-visually-hidden": "^1.2.4",
         "class-variance-authority": "^0.7.1",
         "glob": "^13.0.5",
-        "lucide-react": "^0.574.0",
-        "motion": "^12.34.1",
-        "next": "16.2.0-canary.50",
+        "lucide-react": "^0.575.0",
+        "motion": "^12.34.2",
+        "next": "16.2.0-canary.51",
         "next-themes": "^0.4.6",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
-        "sharp": "^0.34.5",
         "tailwind-merge": "^2.6.1",
-        "twg": "^7.1.1"
+        "twg": "^7.1.2"
     },
     "devDependencies": {
         "@eslint/css": "^0.14.1",
         "@eslint/js": "^9.39.2",
         "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
         "@limegrass/eslint-plugin-import-alias": "^1.6.0",
-        "@stylistic/eslint-plugin": "^5.8.0",
-        "@tailwindcss/postcss": "^4.1.18",
+        "@stylistic/eslint-plugin": "^5.9.0",
         "@toolwind/anchors": "^1.0.10",
         "@types/eslint-plugin-tailwindcss": "^3.17.0",
-        "@types/node": "^25.2.3",
+        "@types/node": "^25.3.0",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
         "autoprefixer": "^10.4.24",
@@ -71,9 +69,9 @@
         "prettier": "^3.8.1",
         "prettier-plugin-jsdoc": "^1.8.0",
         "prettier-plugin-tailwindcss": "^0.7.2",
+        "sharp": "^0.34.5",
         "tailwindcss": "^3.4.19",
         "tailwindcss-animate": "^1.0.7",
-        "tsx": "^4.21.0",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.56.0",
         "velite": "^0.3.1"
