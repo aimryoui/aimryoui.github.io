@@ -16,27 +16,8 @@
  * - Responsive auto-fill/auto-fit with minmax()
  * - Both waterfall (columns) and brick (rows) layouts
  *
- * Features that do not work:
- *
- * - Fr units with grid-template-rows
- *
- * Usage:
- *
- * 1. Initialize the polyfill after DOM load and only if native support is missing:
- *
- * Document.addEventListener("DOMContentLoaded", () => { if
- * (!GridLanesPolyfill.supportsGridLanes()) { GridLanesPolyfill.init({ force:
- * true }); } }); 2. In your CSS, you MUST include the following custom property
- * on any element using `display: grid-lanes`:
- *
- * --grid-lanes-polyfill: 1;
- *
- * This is required because browsers strip unknown properties and values
- * (including `display: grid-lanes`) during CSS parsing. The polyfill uses this
- * custom property as a hook to detect and process affected elements.
- *
  * @license MIT
- * @version 1.2.0
+ * @version 1.3.0 (Optimized - No CSS Parsing)
  * @author Simon Willison
  * @author ninjamar
  * @author hoangnhan2ka3
@@ -90,6 +71,7 @@ interface ItemStyles {
 interface ItemRecord {
     element: HTMLElement
     styles: ItemStyles
+    cachedCrossSize: number
 }
 
 interface InitResult {
@@ -100,14 +82,9 @@ interface InitResult {
     destroy?: () => void
 }
 
-// const POLYFILL_NAME = "GridLanesPolyfill"
 const POLYFILL_ATTR = "data-grid-lanes-polyfilled"
-const DEFAULT_TOLERANCE = 16 // ~1em in pixels
+const DEFAULT_TOLERANCE = 16
 
-// Store parsed CSS rules for grid-lanes containers
-const parsedGridLanesRules = new Map<HTMLElement, Record<string, string>>()
-
-/** Check if the browser natively supports display: grid-lanes */
 function supportsGridLanes(): boolean {
     if (typeof CSS === "undefined" || typeof CSS.supports !== "function") {
         return false
@@ -115,7 +92,6 @@ function supportsGridLanes(): boolean {
     return CSS.supports("display", "grid-lanes")
 }
 
-/** Recursively resolve CSS var() functions Helps JS read variables */
 function resolveCSSVariables(
     value: string,
     computed: CSSStyleDeclaration
@@ -144,7 +120,6 @@ function resolveCSSVariables(
     return result
 }
 
-/** Parse a CSS length value to pixels */
 function parseLengthToPixels(
     value: string | undefined | null,
     containerSize: number,
@@ -175,29 +150,24 @@ function parseLengthToPixels(
     return null
 }
 
-/** Parse minmax() function */
 function parseMinMax(value: string): MinMax | null {
     const match = /minmax\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/.exec(value)
     if (!match || match.length < 3) return null
     return {
         min: match[1].trim(),
-
         max: match[2].trim()
     }
 }
 
-/** Parse repeat() function */
 function parseRepeat(value: string): Repeat | null {
     const match = /repeat\(\s*([^,]+)\s*,\s*(.+)\s*\)/.exec(value)
     if (!match || match.length < 3) return null
     return {
         count: match[1].trim(),
-
         pattern: match[2].trim()
     }
 }
 
-/** Tokenize a grid template string */
 function tokenizeTemplate(template: string): string[] {
     const tokens: string[] = []
     let current = ""
@@ -227,7 +197,6 @@ function tokenizeTemplate(template: string): string[] {
     return tokens
 }
 
-/** Calculate lane sizes from grid-template-columns/rows */
 function calculateLaneSizes(
     template: string,
     containerSize: number,
@@ -244,18 +213,15 @@ function calculateLaneSizes(
     let totalFr = 0
     let fixedSpace = 0
 
-    // Parse the template
     const tokens = tokenizeTemplate(template)
 
     for (const token of tokens) {
-        // Handle repeat()
         const repeatInfo = parseRepeat(token)
         if (repeatInfo) {
             const { count, pattern } = repeatInfo
             const patternTokens = tokenizeTemplate(pattern)
 
             if (count === "auto-fill" || count === "auto-fit") {
-                // Calculate how many repetitions fit
                 let minSize = 0
 
                 for (const pt of patternTokens) {
@@ -271,7 +237,7 @@ function calculateLaneSizes(
                             minmax.min === "max-content" ||
                             minmax.min === "min-content"
                         ) {
-                            minSize += 100 // Fallback estimate
+                            minSize += 100
                         } else if (minVal !== null) {
                             minSize += minVal
                         }
@@ -285,12 +251,11 @@ function calculateLaneSizes(
                         if (size !== null) {
                             minSize += size
                         } else if (pt.endsWith("fr")) {
-                            minSize += 100 // Minimum fallback for fr units
+                            minSize += 100
                         }
                     }
                 }
 
-                // Calculate repetitions
                 const patternCount = patternTokens.length
                 const gapCount = patternCount - 1
                 const minPatternSize = minSize + gapCount * gap
@@ -300,7 +265,6 @@ function calculateLaneSizes(
                     Math.floor((availableSpace + gap) / (minPatternSize + gap))
                 )
 
-                // Expand pattern
                 for (let i = 0; i < reps; i++) {
                     for (const pt of patternTokens) {
                         const minmax = parseMinMax(pt)
@@ -348,7 +312,6 @@ function calculateLaneSizes(
                     }
                 }
             } else {
-                // Fixed repeat count
                 const reps = parseInt(count, 10)
                 for (let i = 0; i < reps; i++) {
                     for (const pt of patternTokens) {
@@ -401,7 +364,6 @@ function calculateLaneSizes(
             continue
         }
 
-        // Handle minmax()
         const minmax = parseMinMax(token)
         if (minmax) {
             const minVal = parseLengthToPixels(
@@ -427,7 +389,6 @@ function calculateLaneSizes(
             continue
         }
 
-        // Handle fr units
         if (token.endsWith("fr")) {
             const fr = parseFloat(token)
             lanes.push({ min: 0, max: { fr }, size: 0 })
@@ -435,7 +396,6 @@ function calculateLaneSizes(
             continue
         }
 
-        // Handle fixed sizes
         const size = parseLengthToPixels(
             token,
             containerSize,
@@ -448,7 +408,6 @@ function calculateLaneSizes(
         }
     }
 
-    // Calculate final sizes
     const totalGaps = Math.max(0, lanes.length - 1) * gap
     const flexSpace = Math.max(0, availableSpace - fixedSpace - totalGaps)
     const frUnit = totalFr > 0 ? flexSpace / totalFr : 0
@@ -466,7 +425,6 @@ function calculateLaneSizes(
     return lanes.map((l) => l.size)
 }
 
-/** Get computed styles for grid-lanes properties */
 function getGridLanesStyles(element: HTMLElement): ParsedStyles {
     const computed = window.getComputedStyle(element)
 
@@ -478,34 +436,23 @@ function getGridLanesStyles(element: HTMLElement): ParsedStyles {
     )
     const rootFontSize = Number.isNaN(parsedRootFs) ? 16 : parsedRootFs
 
-    // Get parsed CSS rules for this element (from raw CSS parsing)
-    const parsedRules = parsedGridLanesRules.get(element) ?? {}
-
-    // Resolve variables for gap
-    const gapRaw = parsedRules.gap || computed.gap || "0px"
+    const gapRaw = computed.gap || "0px"
     const gap = resolveCSSVariables(gapRaw, computed)
 
-    const columnGapRaw = parsedRules["column-gap"] || computed.columnGap || gap
+    const columnGapRaw = computed.columnGap || gap
     let columnGap = resolveCSSVariables(columnGapRaw, computed)
 
-    const rowGapRaw = parsedRules["row-gap"] || computed.rowGap || gap
+    const rowGapRaw = computed.rowGap || gap
     let rowGap = resolveCSSVariables(rowGapRaw, computed)
 
-    // Handle combined gap values like "24px 16px"
     if (gap.includes(" ")) {
         const parts = gap.split(/\s+/)
-        const rg = parts[0]
-        const cg = parts[1]
-        if (rg && !parsedRules["row-gap"])
-            rowGap = resolveCSSVariables(rg, computed)
-        if (cg && !parsedRules["column-gap"])
-            columnGap = resolveCSSVariables(cg, computed)
+        if (parts[0]) rowGap = resolveCSSVariables(parts[0], computed)
+        if (parts[1]) columnGap = resolveCSSVariables(parts[1], computed)
     }
 
-    // Parse flow-tolerance with CSS Variable Resolution
     let tolerance = DEFAULT_TOLERANCE
     const toleranceValueRaw =
-        parsedRules["--flow-tolerance"] ||
         computed.getPropertyValue("--flow-tolerance").trim() ||
         computed.getPropertyValue("flow-tolerance").trim()
 
@@ -521,13 +468,12 @@ function getGridLanesStyles(element: HTMLElement): ParsedStyles {
         if (parsed !== null) tolerance = parsed
     }
 
-    // Get grid template and resolve possible tailwind variables
     const gridTemplateColumns = resolveCSSVariables(
-        parsedRules["grid-template-columns"] || computed.gridTemplateColumns,
+        computed.gridTemplateColumns,
         computed
     )
     const gridTemplateRows = resolveCSSVariables(
-        parsedRules["grid-template-rows"] || computed.gridTemplateRows,
+        computed.gridTemplateRows,
         computed
     )
 
@@ -554,7 +500,6 @@ function getGridLanesStyles(element: HTMLElement): ParsedStyles {
     }
 }
 
-/** Get item placement properties */
 function getItemStyles(element: HTMLElement): ItemStyles {
     const computed = window.getComputedStyle(element)
     const gridColumn = computed.gridColumn || computed.gridColumnStart
@@ -567,7 +512,6 @@ function getItemStyles(element: HTMLElement): ItemStyles {
     let rowStart: number | null = null
     let rowEnd: number | null = null
 
-    // Parse grid-column
     if (gridColumn && gridColumn !== "auto") {
         const spanMatch = /span\s+(\d+)/.exec(gridColumn)
         if (spanMatch?.[1]) {
@@ -587,7 +531,6 @@ function getItemStyles(element: HTMLElement): ItemStyles {
         }
     }
 
-    // Parse grid-row
     if (gridRow && gridRow !== "auto") {
         const spanMatch = /span\s+(\d+)/.exec(gridRow)
         if (spanMatch?.[1]) {
@@ -617,7 +560,6 @@ function getItemStyles(element: HTMLElement): ItemStyles {
     }
 }
 
-/** Main Grid Lanes layout class */
 class GridLanesLayout {
     container: HTMLElement
     options: GridLanesOptions
@@ -626,6 +568,11 @@ class GridLanesLayout {
     laneHeights: number[] = []
     resizeObserver: ResizeObserver | null = null
     mutationObserver: MutationObserver | null = null
+    intersectionObserver: IntersectionObserver | null = null
+
+    isVisible = true
+    layoutTimeout: ReturnType<typeof setTimeout> | null = null
+    layoutAF: number | null = null
 
     constructor(container: HTMLElement, options: GridLanesOptions = {}) {
         this.container = container
@@ -634,28 +581,39 @@ class GridLanesLayout {
     }
 
     init() {
-        // Mark as polyfilled
-        this.container.setAttribute(POLYFILL_ATTR, "true")
-
-        // Set up container styles
         this.container.style.position = "relative"
         this.container.style.display = "block"
 
-        // Initial layout
         this.layout()
-
-        // Set up observers
         this.setupObservers()
     }
 
     setupObservers() {
-        let layoutTimeout: NodeJS.Timeout | null = null
         const debouncedLayout = () => {
-            if (layoutTimeout) clearTimeout(layoutTimeout)
-            layoutTimeout = setTimeout(() => {
-                this.layout()
-            }, 16)
+            if (!this.isVisible) return
+
+            if (this.layoutTimeout) clearTimeout(this.layoutTimeout)
+            if (this.layoutAF) cancelAnimationFrame(this.layoutAF)
+
+            this.layoutTimeout = setTimeout(() => {
+                this.layoutAF = requestAnimationFrame(() => {
+                    this.layout()
+                })
+            }, 100)
         }
+
+        this.intersectionObserver = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    this.isVisible = entry.isIntersecting
+                    if (this.isVisible) {
+                        debouncedLayout()
+                    }
+                }
+            },
+            { rootMargin: "500px" }
+        )
+        this.intersectionObserver.observe(this.container)
 
         this.resizeObserver = new ResizeObserver((entries) => {
             for (const entry of entries) {
@@ -670,19 +628,12 @@ class GridLanesLayout {
         })
         this.resizeObserver.observe(this.container)
 
-        for (const child of Array.from(this.container.children)) {
-            if (child.nodeType === Node.ELEMENT_NODE) {
-                this.resizeObserver.observe(child)
-            }
-        }
-
         this.mutationObserver = new MutationObserver((mutations) => {
             let shouldRelayout = false
             for (const mutation of mutations) {
                 if (mutation.type === "childList") {
                     for (const node of Array.from(mutation.addedNodes)) {
                         if (node.nodeType === Node.ELEMENT_NODE) {
-                            this.resizeObserver?.observe(node as Element)
                             this.observeImages(node as HTMLElement)
                         }
                     }
@@ -716,14 +667,14 @@ class GridLanesLayout {
                 img.addEventListener(
                     "load",
                     () => {
-                        this.layout()
+                        if (this.isVisible) this.layout()
                     },
                     { once: true }
                 )
                 img.addEventListener(
                     "error",
                     () => {
-                        this.layout()
+                        if (this.isVisible) this.layout()
                     },
                     { once: true }
                 )
@@ -777,181 +728,168 @@ class GridLanesLayout {
         const explicitItems: ItemRecord[] = []
         const autoItems: ItemRecord[] = []
 
+        const gap = this.isVertical ? styles.columnGap : styles.rowGap
+        const crossGap = this.isVertical ? styles.rowGap : styles.columnGap
+        const tolerance = styles.tolerance
+
         for (const item of items) {
             const itemStyles = getItemStyles(item)
+            const record: ItemRecord = {
+                element: item,
+                styles: itemStyles,
+                cachedCrossSize: 0
+            }
+
             if (this.isVertical && itemStyles.columnStart !== null) {
-                explicitItems.push({ element: item, styles: itemStyles })
+                explicitItems.push(record)
             } else if (!this.isVertical && itemStyles.rowStart !== null) {
-                explicitItems.push({ element: item, styles: itemStyles })
+                explicitItems.push(record)
             } else {
-                autoItems.push({ element: item, styles: itemStyles })
+                autoItems.push(record)
             }
         }
 
-        for (const { element, styles: itemStyles } of explicitItems) {
-            this.placeExplicitItem(element, itemStyles, styles)
+        for (const record of [...explicitItems, ...autoItems]) {
+            const span = this.isVertical
+                ? record.styles.columnSpan
+                : record.styles.rowSpan
+
+            let size = 0
+            if (this.lanes.length > 0) {
+                const laneSize = this.lanes[0] ?? 0
+                size = span * laneSize + Math.max(0, span - 1) * gap
+            }
+
+            record.element.style.position = ""
+            if (this.isVertical) {
+                record.element.style.width = size.toString() + "px"
+                record.element.style.height = ""
+                record.cachedCrossSize = record.element.offsetHeight
+            } else {
+                record.element.style.height = size.toString() + "px"
+                record.element.style.width = ""
+                record.cachedCrossSize = record.element.offsetWidth
+            }
         }
 
-        for (const { element, styles: itemStyles } of autoItems) {
-            this.placeAutoItem(element, itemStyles, styles)
+        const writes: (() => void)[] = []
+
+        for (const record of explicitItems) {
+            const { element, styles: itemStyles, cachedCrossSize } = record
+
+            let laneIndex: number
+            let span: number
+
+            if (this.isVertical) {
+                laneIndex = itemStyles.columnStart ?? 0
+                if (laneIndex < 0) laneIndex = this.lanes.length + laneIndex + 1
+                laneIndex = Math.max(
+                    0,
+                    Math.min(laneIndex - 1, this.lanes.length - 1)
+                )
+                span = itemStyles.columnSpan
+            } else {
+                laneIndex = itemStyles.rowStart ?? 0
+                if (laneIndex < 0) laneIndex = this.lanes.length + laneIndex + 1
+                laneIndex = Math.max(
+                    0,
+                    Math.min(laneIndex - 1, this.lanes.length - 1)
+                )
+                span = itemStyles.rowSpan
+            }
+
+            let position = 0
+            for (let i = 0; i < laneIndex; i++)
+                position += (this.lanes[i] ?? 0) + gap
+
+            const endLane = Math.min(laneIndex + span, this.lanes.length)
+
+            let maxHeight = 0
+            for (let i = laneIndex; i < endLane; i++) {
+                maxHeight = Math.max(maxHeight, this.laneHeights[i] ?? 0)
+            }
+
+            const t = maxHeight > 0 ? maxHeight + crossGap : 0
+            const l = position
+
+            writes.push(() => {
+                element.style.position = "absolute"
+                if (this.isVertical) {
+                    element.style.left = l.toString() + "px"
+                    element.style.top = t.toString() + "px"
+                } else {
+                    element.style.top = l.toString() + "px"
+                    element.style.left = t.toString() + "px"
+                }
+            })
+
+            const newHeight =
+                maxHeight + (maxHeight > 0 ? crossGap : 0) + cachedCrossSize
+            for (let i = laneIndex; i < endLane; i++) {
+                this.laneHeights[i] = newHeight
+            }
+        }
+
+        for (const record of autoItems) {
+            const { element, styles: itemStyles, cachedCrossSize } = record
+            const span = this.isVertical
+                ? itemStyles.columnSpan
+                : itemStyles.rowSpan
+
+            let bestLane = 0
+            let bestHeight = Infinity
+
+            for (let i = 0; i <= this.lanes.length - span; i++) {
+                let maxHeight = 0
+                for (let j = i; j < i + span; j++) {
+                    maxHeight = Math.max(maxHeight, this.laneHeights[j] ?? 0)
+                }
+
+                if (bestHeight - maxHeight > tolerance) {
+                    bestHeight = maxHeight
+                    bestLane = i
+                } else if (
+                    Math.abs(maxHeight - bestHeight) <= tolerance &&
+                    i < bestLane
+                ) {
+                    bestHeight = maxHeight
+                    bestLane = i
+                }
+            }
+
+            let position = 0
+            for (let i = 0; i < bestLane; i++)
+                position += (this.lanes[i] ?? 0) + gap
+
+            const endLane = Math.min(bestLane + span, this.lanes.length)
+
+            const t = bestHeight > 0 ? bestHeight + crossGap : 0
+            const l = position
+
+            writes.push(() => {
+                element.style.position = "absolute"
+                if (this.isVertical) {
+                    element.style.left = l.toString() + "px"
+                    element.style.top = t.toString() + "px"
+                } else {
+                    element.style.top = l.toString() + "px"
+                    element.style.left = t.toString() + "px"
+                }
+            })
+
+            const newHeight =
+                bestHeight + (bestHeight > 0 ? crossGap : 0) + cachedCrossSize
+            for (let i = bestLane; i < endLane; i++) {
+                this.laneHeights[i] = newHeight
+            }
+        }
+
+        for (const write of writes) {
+            write()
         }
 
         const containerHeight = Math.max(...this.laneHeights, 0)
         this.container.style.minHeight = containerHeight.toString() + "px"
-    }
-
-    placeExplicitItem(
-        element: HTMLElement,
-        itemStyles: ItemStyles,
-        containerStyles: ParsedStyles
-    ) {
-        const gap = this.isVertical
-            ? containerStyles.columnGap
-            : containerStyles.rowGap
-        const crossGap = this.isVertical
-            ? containerStyles.rowGap
-            : containerStyles.columnGap
-
-        let laneIndex: number
-        let span: number
-
-        if (this.isVertical) {
-            laneIndex = itemStyles.columnStart ?? 0
-            if (laneIndex < 0) {
-                laneIndex = this.lanes.length + laneIndex + 1
-            }
-            laneIndex = Math.max(
-                0,
-                Math.min(laneIndex - 1, this.lanes.length - 1)
-            )
-            span = itemStyles.columnSpan
-        } else {
-            laneIndex = itemStyles.rowStart ?? 0
-            if (laneIndex < 0) {
-                laneIndex = this.lanes.length + laneIndex + 1
-            }
-            laneIndex = Math.max(
-                0,
-                Math.min(laneIndex - 1, this.lanes.length - 1)
-            )
-            span = itemStyles.rowSpan
-        }
-
-        let position = 0
-        for (let i = 0; i < laneIndex; i++) {
-            position += (this.lanes[i] ?? 0) + gap
-        }
-
-        let size = 0
-        const endLane = Math.min(laneIndex + span, this.lanes.length)
-        for (let i = laneIndex; i < endLane; i++) {
-            size += this.lanes[i] ?? 0
-            if (i < endLane - 1) size += gap
-        }
-
-        let maxHeight = 0
-        for (let i = laneIndex; i < endLane; i++) {
-            maxHeight = Math.max(maxHeight, this.laneHeights[i] ?? 0)
-        }
-
-        element.style.position = "absolute"
-
-        if (this.isVertical) {
-            element.style.left = position.toString() + "px"
-            element.style.top =
-                (maxHeight > 0 ? maxHeight + crossGap : 0).toString() + "px"
-            element.style.width = size.toString() + "px"
-            element.style.height = ""
-        } else {
-            element.style.top = position.toString() + "px"
-            element.style.left =
-                (maxHeight > 0 ? maxHeight + crossGap : 0).toString() + "px"
-            element.style.height = size.toString() + "px"
-            element.style.width = ""
-        }
-
-        const itemRect = element.getBoundingClientRect()
-        const itemSize = this.isVertical ? itemRect.height : itemRect.width
-        const newHeight = maxHeight + (maxHeight > 0 ? crossGap : 0) + itemSize
-
-        for (let i = laneIndex; i < endLane; i++) {
-            this.laneHeights[i] = newHeight
-        }
-    }
-
-    placeAutoItem(
-        element: HTMLElement,
-        itemStyles: ItemStyles,
-        containerStyles: ParsedStyles
-    ) {
-        const gap = this.isVertical
-            ? containerStyles.columnGap
-            : containerStyles.rowGap
-        const crossGap = this.isVertical
-            ? containerStyles.rowGap
-            : containerStyles.columnGap
-        const tolerance = containerStyles.tolerance
-        const span = this.isVertical
-            ? itemStyles.columnSpan
-            : itemStyles.rowSpan
-
-        let bestLane = 0
-        let bestHeight = Infinity
-
-        for (let i = 0; i <= this.lanes.length - span; i++) {
-            let maxHeight = 0
-            for (let j = i; j < i + span; j++) {
-                maxHeight = Math.max(maxHeight, this.laneHeights[j] ?? 0)
-            }
-
-            if (bestHeight - maxHeight > tolerance) {
-                bestHeight = maxHeight
-                bestLane = i
-            } else if (
-                Math.abs(maxHeight - bestHeight) <= tolerance &&
-                i < bestLane
-            ) {
-                bestHeight = maxHeight
-                bestLane = i
-            }
-        }
-
-        let position = 0
-        for (let i = 0; i < bestLane; i++) {
-            position += (this.lanes[i] ?? 0) + gap
-        }
-
-        let size = 0
-        const endLane = Math.min(bestLane + span, this.lanes.length)
-        for (let i = bestLane; i < endLane; i++) {
-            size += this.lanes[i] ?? 0
-            if (i < endLane - 1) size += gap
-        }
-
-        element.style.position = "absolute"
-
-        if (this.isVertical) {
-            element.style.left = position.toString() + "px"
-            element.style.top =
-                (bestHeight > 0 ? bestHeight + crossGap : 0).toString() + "px"
-            element.style.width = size.toString() + "px"
-            element.style.height = ""
-        } else {
-            element.style.top = position.toString() + "px"
-            element.style.left =
-                (bestHeight > 0 ? bestHeight + crossGap : 0).toString() + "px"
-            element.style.height = size.toString() + "px"
-            element.style.width = ""
-        }
-
-        const itemRect = element.getBoundingClientRect()
-        const itemSize = this.isVertical ? itemRect.height : itemRect.width
-        const newHeight =
-            bestHeight + (bestHeight > 0 ? crossGap : 0) + itemSize
-
-        for (let i = bestLane; i < endLane; i++) {
-            this.laneHeights[i] = newHeight
-        }
     }
 
     destroy() {
@@ -961,8 +899,12 @@ class GridLanesLayout {
         if (this.mutationObserver) {
             this.mutationObserver.disconnect()
         }
+        if (this.intersectionObserver) {
+            this.intersectionObserver.disconnect()
+        }
+        if (this.layoutTimeout) clearTimeout(this.layoutTimeout)
+        if (this.layoutAF) cancelAnimationFrame(this.layoutAF)
 
-        this.container.removeAttribute(POLYFILL_ATTR)
         this.container.style.position = ""
         this.container.style.display = ""
         this.container.style.minHeight = ""
@@ -984,167 +926,57 @@ class GridLanesLayout {
     }
 }
 
-function parseCSSProperties(cssBlock: string): Record<string, string> {
-    const props: Record<string, string> = {}
-    const propRegex = /([\w-]+)\s*:\s*([^;]+);?/g
-    let match: RegExpExecArray | null
-    while ((match = propRegex.exec(cssBlock)) !== null) {
-        if (match[1] && match[2]) {
-            props[match[1].trim()] = match[2].trim()
-        }
-    }
-    return props
-}
-
-function processStyleSheets(): Set<HTMLElement> {
-    const containers = new Set<HTMLElement>()
-    const gridLanesSelectors = new Set<string>()
-
-    const allElements = document.querySelectorAll<HTMLElement>(
-        '[style*="grid-lanes"]'
-    )
-    for (const el of Array.from(allElements)) {
-        const styleAttr = el.getAttribute("style") ?? ""
-        if (/display\s*:\s*grid-lanes/i.test(styleAttr)) {
-            containers.add(el)
-            const props = parseCSSProperties(styleAttr)
-            if (!parsedGridLanesRules.has(el)) {
-                parsedGridLanesRules.set(el, props)
-            }
-        }
-    }
-
-    const parseCSSRule = (rule: CSSRule) => {
-        if (
-            rule.cssText &&
-            (/display\s*:\s*grid-lanes/i.test(rule.cssText) ||
-                /--grid-lanes-polyfill:\s*1/i.test(rule.cssText))
-        ) {
-            const styleRule = rule as CSSStyleRule
-            if (
-                styleRule.selectorText &&
-                !gridLanesSelectors.has(styleRule.selectorText)
-            ) {
-                gridLanesSelectors.add(styleRule.selectorText)
-                const props = parseCSSProperties(rule.cssText)
-                try {
-                    const elements = document.querySelectorAll<HTMLElement>(
-                        styleRule.selectorText
-                    )
-                    for (const el of Array.from(elements)) {
-                        containers.add(el)
-                        if (!parsedGridLanesRules.has(el)) {
-                            parsedGridLanesRules.set(el, props)
-                        }
-                    }
-                } catch {
-                    // Invalid selector
-                }
-            }
-        }
-    }
-
-    const handleRules = (node: Document | CSSStyleSheet | CSSImportRule) => {
-        if ("styleSheet" in node && node.styleSheet) {
-            handleRules(node.styleSheet)
-            return
-        }
-
-        if ("cssRules" in node) {
-            try {
-                const sheet = node
-                const rules = sheet.cssRules
-                for (const rule of Array.from(rules)) {
-                    if (rule instanceof CSSImportRule) {
-                        handleRules(rule)
-                    } else {
-                        parseCSSRule(rule)
-                    }
-                }
-            } catch {
-                // Ignore DOMException (SecurityError) for cross-origin styles
-            }
-        } else if ("styleSheets" in node) {
-            const doc = node
-            for (const sheet of Array.from(doc.styleSheets)) {
-                handleRules(sheet)
-            }
-        }
-    }
-
-    handleRules(document)
-    return containers
-}
-
 function init(options: GridLanesOptions = {}): InitResult {
     if (supportsGridLanes() && !options.force) {
-        return { supported: true, instances: [] }
+        return { supported: true, instances: new Map() }
     }
 
     const instances = new Map<HTMLElement, GridLanesLayout>()
 
-    const containers = processStyleSheets()
-    for (const container of Array.from(containers)) {
-        if (!container.hasAttribute(POLYFILL_ATTR)) {
-            instances.set(container, new GridLanesLayout(container, options))
+    const initElements = () => {
+        const elements = document.querySelectorAll<HTMLElement>(
+            `[${POLYFILL_ATTR}="true"]`
+        )
+        for (const el of Array.from(elements)) {
+            if (!instances.has(el)) {
+                instances.set(el, new GridLanesLayout(el, options))
+            }
         }
     }
 
+    initElements()
+
     const observer = new MutationObserver((mutations) => {
+        let shouldInit = false
         for (const mutation of mutations) {
             if (mutation.type === "childList") {
                 for (const node of Array.from(mutation.addedNodes)) {
                     if (node.nodeType === Node.ELEMENT_NODE) {
                         const el = node as HTMLElement
-                        const style = window.getComputedStyle(el)
                         if (
-                            el.style.display === "grid-lanes" ||
-                            style.getPropertyValue("display") === "grid-lanes"
+                            el.getAttribute(POLYFILL_ATTR) === "true" ||
+                            el.querySelector(`[${POLYFILL_ATTR}="true"]`)
                         ) {
-                            if (!instances.has(el)) {
-                                instances.set(
-                                    el,
-                                    new GridLanesLayout(el, options)
-                                )
-                            }
-                        }
-
-                        const descendants =
-                            el.querySelectorAll<HTMLElement>("*")
-                        for (const desc of Array.from(descendants)) {
-                            const descStyle = window.getComputedStyle(desc)
-                            if (
-                                desc.style.display === "grid-lanes" ||
-                                descStyle.getPropertyValue("display") ===
-                                    "grid-lanes"
-                            ) {
-                                if (!instances.has(desc)) {
-                                    instances.set(
-                                        desc,
-                                        new GridLanesLayout(desc, options)
-                                    )
-                                }
-                            }
+                            shouldInit = true
                         }
                     }
                 }
+            } else if (
+                mutation.type === "attributes" &&
+                mutation.attributeName === POLYFILL_ATTR
+            ) {
+                shouldInit = true
             }
         }
 
-        const newContainers = processStyleSheets()
-        for (const container of Array.from(newContainers)) {
-            if (!instances.has(container)) {
-                instances.set(
-                    container,
-                    new GridLanesLayout(container, options)
-                )
-            }
-        }
+        if (shouldInit) initElements()
     })
 
     observer.observe(document.documentElement, {
         childList: true,
-        subtree: true
+        subtree: true,
+        attributes: true,
+        attributeFilter: [POLYFILL_ATTR]
     })
 
     return {
@@ -1181,7 +1013,7 @@ const GridLanesPolyfill = {
     init,
     apply,
     GridLanesLayout,
-    version: "1.2.0"
+    version: "1.3.0"
 }
 
 export type { GridLanesOptions, InitResult }

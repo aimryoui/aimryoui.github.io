@@ -3,11 +3,10 @@ import React from "react"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { tooltipHandle, TooltipTrigger } from "@/components/ui/tooltip"
+import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import { AnchorPolyfill } from "@/portfolio/_providers/anchor-polyfill"
-import { GridLanesPolyfill } from "@/portfolio/_providers/grid-lanes-polyfill"
 import Contact from "@/portfolio/_sections/contact"
 import Education from "@/portfolio/_sections/education"
 import Experiences from "@/portfolio/_sections/experiences"
@@ -21,7 +20,6 @@ export default function Portfolio() {
     return (
         <>
             <AnchorPolyfill />
-            <GridLanesPolyfill />
             <main className={cn("flex-1")}>
                 <Space />
                 <SectionLine showDecoration />

@@ -1,7 +1,3 @@
-"use client"
-
-import { useEffect, useRef, useState } from "react"
-
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
 import imageManifestRaw from "@/lib/image-manifest.json"
 import { cn } from "@/lib/utils"
@@ -10,30 +6,6 @@ const imageManifest = imageManifestRaw as Record<
     string,
     { width: number; height: number; mapping: number[] }
 >
-
-let sharedObserver: IntersectionObserver | null = null
-const callbacks = new Map<Element, () => void>()
-
-function getObserver() {
-    if (typeof window === "undefined") return null
-
-    sharedObserver ??= new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const callback = callbacks.get(entry.target)
-                    if (callback) {
-                        callback()
-                        sharedObserver?.unobserve(entry.target)
-                        callbacks.delete(entry.target)
-                    }
-                }
-            })
-        },
-        { rootMargin: "50% 0px 50% 0px" }
-    )
-    return sharedObserver
-}
 
 interface ImageProps extends React.ComponentProps<"div"> {
     src: string
@@ -58,29 +30,6 @@ function Image({
     objectFit = "cover",
     ...props
 }: ImageProps) {
-    const [isVisible, setIsVisible] = useState(placeholderPriority)
-    const containerRef = useRef<HTMLDivElement>(null)
-
-    useEffect(() => {
-        if (isVisible) return
-
-        const element = containerRef.current
-        if (!element) return
-
-        const observer = getObserver()
-        if (!observer) return
-
-        callbacks.set(element, () => {
-            setIsVisible(true)
-        })
-        observer.observe(element)
-
-        return () => {
-            observer.unobserve(element)
-            callbacks.delete(element)
-        }
-    }, [isVisible])
-
     const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
     const metadata = imageManifest[normalizedSrc.replace(/\.[^/.]+$/, "")]
 
@@ -94,18 +43,24 @@ function Image({
 
     const exactW = metadata.width
     const exactH = metadata.height
-    const tileW = exactW / COLS
-    const tileH = exactH / ROWS
 
-    const spriteW = COLS * (tileW + 2 * EDGE_PAD)
-    const spriteH = ROWS * (tileH + 2 * EDGE_PAD)
+    const spriteW = exactW + COLS * 2 * EDGE_PAD
+    const spriteH = exactH + ROWS * 2 * EDGE_PAD
 
-    const bgSizeX = (spriteW / tileW) * 100
-    const bgSizeY = (spriteH / tileH) * 100
+    const imgWidthPercent = (spriteW / exactW) * 100
+    const imgHeightPercent = (spriteH / exactH) * 100
+
+    const padX = (EDGE_PAD / spriteW) * 100
+    const padY = (EDGE_PAD / spriteH) * 100
+
+    const colPct = 100 / COLS
+    const rowPct = 100 / ROWS
+
+    const targetColPct = (exactW / spriteW / COLS) * 100
+    const targetRowPct = (exactH / spriteH / ROWS) * 100
 
     return (
         <div
-            ref={containerRef}
             className={cn(
                 "relative grid w-full place-items-center overflow-hidden",
                 asBackgroundImage ? "h-full" : "h-fit",
@@ -137,7 +92,7 @@ function Image({
             {/* Represent image from `src` attribute or url() function */}
             <div
                 className={cn(
-                    "z-1 grid max-h-inherit max-w-inherit select-none grid-cols-3 grid-rows-3",
+                    "z-1 max-h-inherit max-w-inherit",
                     asBackgroundImage && "absolute",
                     objectFit === "fill" && "size-full",
                     objectFit === "contain" &&
@@ -151,31 +106,38 @@ function Image({
                 aria-hidden={true}
             >
                 {Array.from({ length: ROWS * COLS }).map((_, index) => {
+                    const targetC = index % COLS
+                    const targetR = Math.floor(index / COLS)
+
                     const scrambledIndex = metadata.mapping[index]
+                    const sourceC = scrambledIndex % COLS
+                    const sourceR = Math.floor(scrambledIndex / COLS)
 
-                    const c = scrambledIndex % COLS
-                    const r = Math.floor(scrambledIndex / COLS)
+                    const insetLeft = sourceC * colPct + padX
+                    const insetTop = sourceR * rowPct + padY
+                    const insetRight = 100 - (sourceC + 1) * colPct + padX
+                    const insetBottom = 100 - (sourceR + 1) * rowPct + padY
 
-                    const xPercent =
-                        ((c * (tileW + 2 * EDGE_PAD) + EDGE_PAD) /
-                            (spriteW - tileW)) *
-                        100
-                    const yPercent =
-                        ((r * (tileH + 2 * EDGE_PAD) + EDGE_PAD) /
-                            (spriteH - tileH)) *
-                        100
+                    const translateX =
+                        targetC * targetColPct - sourceC * colPct - padX
+                    const translateY =
+                        targetR * targetRowPct - sourceR * rowPct - padY
 
                     return (
-                        <div
+                        <img
                             key={index}
-                            className="size-full bg-no-repeat"
+                            src={`${basePath}/${fileName}_scrambled.webp`}
+                            alt=""
+                            className="absolute max-w-none"
                             style={{
-                                backgroundImage: isVisible
-                                    ? `url('${basePath}/${fileName}_scrambled.webp')`
-                                    : undefined,
-                                backgroundSize: `${bgSizeX.toString()}% ${bgSizeY.toString()}%`,
-                                backgroundPosition: `${xPercent.toString()}% ${yPercent.toString()}%`
+                                width: `${imgWidthPercent.toString()}%`,
+                                height: `${imgHeightPercent.toString()}%`,
+                                clipPath: `inset(${insetTop.toString()}% ${insetRight.toString()}% ${insetBottom.toString()}% ${insetLeft.toString()}%)`,
+                                transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
                             }}
+                            decoding="async"
+                            loading="lazy"
+                            draggable={false}
                         />
                     )
                 })}
