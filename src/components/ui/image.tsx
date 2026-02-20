@@ -73,9 +73,6 @@ function Image({
             style={{
                 flex: imageRow
                     ? `${imageRow === "justified" ? `calc(${exactW.toString()}/${exactH.toString()})` : exactW.toString()} 1 0%`
-                    : undefined,
-                maxWidth: imageRow
-                    ? `${(exactW / 16).toString()}rem`
                     : undefined
             }}
             {...props}
