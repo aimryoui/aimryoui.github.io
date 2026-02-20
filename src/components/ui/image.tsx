@@ -59,6 +59,18 @@ function Image({
     const targetColPct = (exactW / spriteW / COLS) * 100
     const targetRowPct = (exactH / spriteH / ROWS) * 100
 
+    const cssVars: Record<string, string> = {
+        "--w": `${imgWidthPercent.toString()}%`,
+        "--h": `${imgHeightPercent.toString()}%`
+    }
+
+    for (let i = 0; i < COLS; i++) {
+        cssVars[`--x${i.toString()}`] = `${(i * colPct + padX).toString()}%`
+    }
+    for (let i = 0; i < ROWS; i++) {
+        cssVars[`--y${i.toString()}`] = `${(i * rowPct + padY).toString()}%`
+    }
+
     return (
         <div
             className={cn(
@@ -75,8 +87,7 @@ function Image({
                     flex: imageRow
                         ? `${imageRow === "justified" ? `calc(${exactW.toString()}/${exactH.toString()})` : exactW.toString()} 1 0%`
                         : undefined,
-                    "--w": `${imgWidthPercent.toString()}%`,
-                    "--h": `${imgHeightPercent.toString()}%`
+                    ...cssVars
                 } as React.CSSProperties
             }
             {...props}
@@ -114,11 +125,6 @@ function Image({
                     const sourceC = scrambledIndex % COLS
                     const sourceR = Math.floor(scrambledIndex / COLS)
 
-                    const insetLeft = sourceC * colPct + padX
-                    const insetTop = sourceR * rowPct + padY
-                    const insetRight = 100 - (sourceC + 1) * colPct + padX
-                    const insetBottom = 100 - (sourceR + 1) * rowPct + padY
-
                     const translateX =
                         targetC * targetColPct - sourceC * colPct - padX
                     const translateY =
@@ -131,7 +137,7 @@ function Image({
                             alt=""
                             className="absolute h-[--h] w-[--w] max-w-none"
                             style={{
-                                clipPath: `inset(${insetTop.toString()}% ${insetRight.toString()}% ${insetBottom.toString()}% ${insetLeft.toString()}%)`,
+                                clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(COLS - 1 - sourceC).toString()}) var(--y${(ROWS - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
                                 transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
                             }}
                             decoding="async"
