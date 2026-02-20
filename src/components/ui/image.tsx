@@ -70,11 +70,15 @@ function Image({
                 limitHeight && "h-200",
                 className
             )}
-            style={{
-                flex: imageRow
-                    ? `${imageRow === "justified" ? `calc(${exactW.toString()}/${exactH.toString()})` : exactW.toString()} 1 0%`
-                    : undefined
-            }}
+            style={
+                {
+                    flex: imageRow
+                        ? `${imageRow === "justified" ? `calc(${exactW.toString()}/${exactH.toString()})` : exactW.toString()} 1 0%`
+                        : undefined,
+                    "--w": `${imgWidthPercent.toString()}%`,
+                    "--h": `${imgHeightPercent.toString()}%`
+                } as React.CSSProperties
+            }
             {...props}
         >
             {/* SEO & Preview Layer */}
@@ -125,10 +129,8 @@ function Image({
                             key={index}
                             src={`${basePath}/${fileName}_scrambled.webp`}
                             alt=""
-                            className="absolute max-w-none"
+                            className="absolute h-[--h] w-[--w] max-w-none"
                             style={{
-                                width: `${imgWidthPercent.toString()}%`,
-                                height: `${imgHeightPercent.toString()}%`,
                                 clipPath: `inset(${insetTop.toString()}% ${insetRight.toString()}% ${insetBottom.toString()}% ${insetLeft.toString()}%)`,
                                 transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
                             }}
