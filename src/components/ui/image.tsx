@@ -10,7 +10,6 @@ const imageManifest = imageManifestRaw as Record<
 interface ImageProps extends React.ComponentProps<"div"> {
     src: string
     alt?: string
-    placeholderPriority?: boolean
     asBackgroundImage?: boolean
     imageRow?: "justified" | "proportional"
     limitHeight?: boolean
@@ -22,7 +21,6 @@ function Image({
     className,
     src,
     alt,
-    placeholderPriority = false,
     asBackgroundImage = false,
     imageRow,
     limitHeight = false,
@@ -97,7 +95,7 @@ function Image({
                 src={`${basePath}/${fileName}_preview.webp`}
                 alt={alt}
                 className={cn("absolute size-full object-cover")}
-                loading={placeholderPriority ? "eager" : "lazy"}
+                loading="eager"
                 decoding="async"
             />
 
