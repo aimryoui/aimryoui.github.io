@@ -31,6 +31,7 @@ export default function Home() {
                     className={cn("h-full")}
                 >
                     <Image
+                        placeholderPriority
                         asBackgroundImage
                         src="/hehe.jpg"
                         alt="hehe"

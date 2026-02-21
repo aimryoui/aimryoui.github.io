@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "@/lib/utils"
 
 function UIUX({ className }: React.ComponentProps<"svg">) {

@@ -1,7 +1,5 @@
 "use client"
 
-import type * as React from "react"
-
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { Button } from "@/components/ui/button"
@@ -22,7 +20,7 @@ function InputGroup({
             data-slot="input-group"
             role="group"
             className={cn(
-                "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-xl border border-input outline-transparent transition-none will-change-[outline,border] outline-40 has-[>textarea]:h-auto",
+                "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-xl border border-input outline-transparent will-change-[outline,border] outline-40 transition-none has-[>textarea]:h-auto",
                 {
                     dark: "bg-input/30 hover:bg-element-hover",
                     hover: "bg-element-hover",
@@ -35,7 +33,7 @@ function InputGroup({
 
                     // Focus state.
                     "has-[[data-slot=input-group-control]:focus-visible]":
-                        "border-ring outline-highlighted/30 transition-[outline-color,outline-width] duration-250 ease-out outline-4 hover:bg-transparent",
+                        "border-ring outline-highlighted/30 outline-4 transition-[outline-color,outline-width] ease-out duration-250 hover:bg-transparent",
 
                     // Error state.
                     "has-[[data-slot][aria-invalid=true]]":

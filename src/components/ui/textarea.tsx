@@ -1,4 +1,4 @@
-import type * as React from "react"
+"use client"
 
 import { cn } from "@/lib/utils"
 
@@ -7,7 +7,7 @@ function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
         <textarea
             data-slot="textarea"
             className={cn(
-                "flex min-h-16 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm transition-[color,box-shadow] field-sizing-content outline-none dark:bg-input/30",
+                "flex min-h-16 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-sm field-sizing-content outline-none transition-[color,box-shadow] dark:bg-input/30",
                 {
                     placeholder: "text-muted-foreground",
                     "focus-visible": "border-ring ring-[3px] ring-ring/50",

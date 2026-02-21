@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import { isValidElement } from "react"
 
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip"
 
@@ -33,7 +33,7 @@ function TooltipProvider({
                         typeof payload === "object" &&
                         payload !== null &&
                         "content" in payload &&
-                        !React.isValidElement(payload)
+                        !isValidElement(payload)
                             ? payload
                             : { content: payload }
 

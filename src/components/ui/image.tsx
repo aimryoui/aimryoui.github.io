@@ -1,3 +1,5 @@
+"use client"
+
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
 import imageManifestRaw from "@/lib/image-manifest.json"
 import { cn } from "@/lib/utils"
@@ -10,6 +12,7 @@ const imageManifest = imageManifestRaw as Record<
 interface ImageProps extends React.ComponentProps<"div"> {
     src: string
     alt?: string
+    placeholderPriority?: boolean
     asBackgroundImage?: boolean
     imageRow?: "justified" | "proportional"
     limitHeight?: boolean
@@ -21,6 +24,7 @@ function Image({
     className,
     src,
     alt,
+    placeholderPriority = false,
     asBackgroundImage = false,
     imageRow,
     limitHeight = false,
@@ -95,7 +99,7 @@ function Image({
                 src={`${basePath}/${fileName}_preview.webp`}
                 alt={alt}
                 className={cn("absolute size-full object-cover")}
-                loading="eager"
+                loading={placeholderPriority ? "eager" : "lazy"}
                 decoding="async"
             />
 

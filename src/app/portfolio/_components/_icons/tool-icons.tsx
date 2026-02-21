@@ -1,3 +1,5 @@
+"use client"
+
 function Figma({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg

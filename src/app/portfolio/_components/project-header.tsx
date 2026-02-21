@@ -1,8 +1,6 @@
-"use client"
-
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
-import { tooltipHandle, TooltipTrigger } from "@/components/ui/tooltip"
+import { TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { slugify } from "@/helpers/slugify"
