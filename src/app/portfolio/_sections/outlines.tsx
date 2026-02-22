@@ -44,7 +44,8 @@ function Outlines() {
                                     {section.title}
                                     <div
                                         className={cn(
-                                            "hidden size-5 translate-y-[.0625rem] place-items-center rounded-full bg-highlighted/10 text-highlighted group-hover:grid dark:bg-highlighted/20"
+                                            "hidden size-5 translate-y-[.0625rem] place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                            "group-hover:grid dark:bg-highlighted/20"
                                         )}
                                     >
                                         <svg

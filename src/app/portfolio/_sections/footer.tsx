@@ -79,7 +79,7 @@ function Footer() {
                             />
                             <div
                                 className={cn(
-                                    "absolute -bottom-5.75 flex rounded-md border border-stroke bg-background px-1 py-0.5"
+                                    "-bottom-5.25 absolute flex rounded-md border border-stroke bg-background px-1 py-0.5"
                                 )}
                             >
                                 <span

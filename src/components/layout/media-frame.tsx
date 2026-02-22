@@ -86,7 +86,7 @@ function MediaFrame({
                 )}
                 <div
                     className={cn(
-                        "relative grid w-full items-start justify-items-center gap-2 overflow-clip bg-stroke p-2 [overflow-clip-margin:content-box] md:grid-cols-1",
+                        "relative grid w-full items-start justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
                         className
                     )}
                 >

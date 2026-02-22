@@ -20,10 +20,10 @@ function InputGroup({
             data-slot="input-group"
             role="group"
             className={cn(
-                "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-xl border border-input outline-transparent will-change-[outline,border] outline-40 transition-none has-[>textarea]:h-auto",
+                "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-xl border border-input will-change-[outline,border] has-[>textarea]:h-auto",
                 {
-                    dark: "bg-input/30 hover:bg-element-hover",
                     hover: "bg-element-hover",
+                    dark: "bg-input/30",
 
                     // Variants based on alignment.
                     "[&>input]:has-[>[data-align=inline-start]]": "pl-2",
@@ -32,16 +32,17 @@ function InputGroup({
                     "has-[>[data-align=block-end]]": "h-auto flex-col pt-3",
 
                     // Focus state.
-                    "has-[[data-slot=input-group-control]:focus-visible]":
-                        "border-ring outline-highlighted/30 outline-4 transition-[outline-color,outline-width] ease-out duration-250 hover:bg-transparent",
+                    "has-[[data-slot=input-group-control]:focus-visible]": [
+                        "animate-focus border-ring outline-solid",
+                        {
+                            hover: "bg-transparent dark:bg-input/30"
+                        }
+                    ],
 
                     // Error state.
                     "has-[[data-slot][aria-invalid=true]]":
                         "border-destructive ring-destructive/20"
                 },
-
-                // Focus state.
-                "dark:has-[[data-slot=input-group-control]:focus-visible]:hover:bg-input/30",
 
                 // Error state.
                 "dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40",
@@ -154,7 +155,11 @@ function InputGroupInput({
             data-slot="input-group-control"
             className={cn(
                 "flex-1 rounded-none border-0 bg-transparent shadow-none",
-                "focus-visible:outline-none dark:!bg-transparent",
+                {
+                    hover: "bg-transparent",
+                    "focus-visible": "animate-none outline-none",
+                    dark: "bg-transparent hover:bg-transparent"
+                },
                 className
             )}
             {...props}

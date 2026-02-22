@@ -6,24 +6,20 @@ import { Monitor, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
 import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
 import { cn } from "@/lib/utils"
 
 function ThemedIcon() {
     const { theme } = useTheme()
-    let icon
+
     switch (theme) {
         case "light":
-            icon = <Sun className="size-6" />
-            break
+            return <Sun className="size-6" />
         case "dark":
-            icon = <Moon className="size-5.5" />
-            break
+            return <Moon className="size-5.5" />
         default:
-            icon = <Monitor className="size-5" />
-            break
+            return <Monitor className="size-5" />
     }
-
-    return icon
 }
 
 export function ModeToggle({ className }: React.ComponentProps<"button">) {
@@ -35,14 +31,11 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
         setMounted(true)
     }, [])
 
-    if (!mounted) {
-        return null
-    }
-
     return (
         <Button
             variant="outline"
             size="icon"
+            disabled={!mounted}
             onClick={() => {
                 setTheme(
                     theme === "light"
@@ -52,9 +45,9 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
                           : "light"
                 )
             }}
-            className={cn(className)}
+            className={cn("disabled:opacity-100", className)}
         >
-            <ThemedIcon />
+            {!mounted ? <Spinner /> : <ThemedIcon />}
             <span className="sr-only">Toggle theme</span>
         </Button>
     )

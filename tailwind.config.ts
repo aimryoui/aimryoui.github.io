@@ -73,7 +73,7 @@ export default {
                 3.75: "0.9375rem",
                 4.5: "1.125rem",
                 5.5: "1.375rem",
-                5.75: "1.4375rem",
+                5.25: "1.3125rem",
                 6.5: "1.75rem",
                 10.5: "2.625rem",
                 11.5: "2.875rem",
@@ -132,7 +132,31 @@ export default {
             },
             opacity: {
                 8: ".08"
-            }
+            },
+            animation: {
+                spinner: "spinner",
+                focus: ".2s ease-out focus forwards"
+            },
+            keyframes: ({ theme }) => ({
+                spinner: {
+                    "0%": {
+                        opacity: "1"
+                    },
+                    "100%": {
+                        opacity: ".15"
+                    }
+                },
+                focus: {
+                    "0%": {
+                        outlineWidth: theme("outlineWidth.40") as string,
+                        outlineColor: "transparent"
+                    },
+                    "100%": {
+                        outlineWidth: theme("outlineWidth.4") as string,
+                        outlineColor: theme("colors.highlighted/0.3") as string
+                    }
+                }
+            })
         },
         colors: {
             transparent: "transparent",
