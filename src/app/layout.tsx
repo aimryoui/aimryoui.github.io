@@ -3,6 +3,7 @@ import "@/globals.css"
 import { type Metadata, type Viewport } from "next"
 import { Plus_Jakarta_Sans } from "next/font/google"
 import localFont from "next/font/local"
+import Script from "next/script"
 
 import { MarginLine } from "@/components/layout/line"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -140,12 +141,6 @@ const plusJakartaSans = Plus_Jakarta_Sans({
     variable: "--font-plus-jakarta-sans"
 })
 
-const sfProDisplay = localFont({
-    src: "../../public/fonts/SF-Pro-Display-Semibold.woff2",
-    display: "swap",
-    variable: "--font-sf-pro-display"
-})
-
 const sfMono = localFont({
     src: "../../public/fonts/SFMono.woff2",
     display: "swap",
@@ -165,23 +160,20 @@ export default function RootLayout({
             data-scroll-behavior="smooth"
             className={cn(
                 plusJakartaSans.variable,
-                sfProDisplay.variable,
                 sfMono.variable,
                 "antialiased"
             )}
         >
             <head>
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            document.documentElement.setAttribute("data-platform",
-                                window.navigator.platform.includes("Mac")
-                                ? "mac"
-                                : "win"
-                            )
-                        `
-                    }}
-                />
+                <Script id="platform-detection" strategy="beforeInteractive">
+                    {`
+                        document.documentElement.setAttribute("data-platform",
+                            window.navigator.platform.includes("Mac")
+                            ? "mac"
+                            : "win"
+                        )
+                    `}
+                </Script>
             </head>
             <body
                 className={cn(

@@ -3,7 +3,8 @@
 import React, { memo } from "react"
 import Link from "next/link"
 
-import { motion } from "motion/react"
+import { type useReducedMotion } from "motion/react"
+import * as m from "motion/react-m"
 
 import { SectionLine } from "@/components/layout/line"
 import { formatOrdinal } from "@/helpers/format-ordinal"
@@ -15,44 +16,54 @@ interface TocItem {
     depth: 1 | 2 | 3
 }
 
-const MotionSectionLine = motion.create(SectionLine)
+const MotionSectionLine = m.create(SectionLine)
 
 export const TocItemRow = memo(
     ({
         item,
         isActive,
+        prefersReducedMotion,
         onClick
     }: {
         item: TocItem
         isActive: boolean
+        prefersReducedMotion: ReturnType<typeof useReducedMotion>
         onClick: (id: string) => void
     }) => {
         return (
             <React.Fragment>
                 {item.depth === 2 && (
                     <MotionSectionLine
-                        variants={{
-                            hidden: { opacity: 0 },
-                            visible: {
-                                opacity: 1,
-                                transition: { duration: 0.3 }
-                            }
-                        }}
+                        variants={
+                            prefersReducedMotion
+                                ? undefined
+                                : {
+                                      hidden: { opacity: 0 },
+                                      visible: {
+                                          opacity: 1,
+                                          transition: { duration: 0.3 }
+                                      }
+                                  }
+                        }
                         fit
                         containerClassName={cn(
                             "my-3 h-px will-change-[opacity] first:hidden"
                         )}
                     />
                 )}
-                <motion.li
-                    variants={{
-                        hidden: { x: "10px", opacity: 0 },
-                        visible: {
-                            x: 0,
-                            opacity: 1,
-                            transition: { duration: 0.3, bounce: 0 }
-                        }
-                    }}
+                <m.li
+                    variants={
+                        prefersReducedMotion
+                            ? undefined
+                            : {
+                                  hidden: { x: "10px", opacity: 0 },
+                                  visible: {
+                                      x: 0,
+                                      opacity: 1,
+                                      transition: { duration: 0.3, bounce: 0 }
+                                  }
+                              }
+                    }
                     className={cn(
                         item.label.toLowerCase() === "footer" && "hidden",
                         item.depth === 3 &&
@@ -106,7 +117,7 @@ export const TocItemRow = memo(
                             </div>
                         )}
                     </Link>
-                </motion.li>
+                </m.li>
             </React.Fragment>
         )
     }

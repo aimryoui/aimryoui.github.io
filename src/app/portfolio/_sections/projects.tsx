@@ -45,7 +45,7 @@ function Projects() {
                 <SectionLine />
                 <Space />
                 {group.projects.map((project, index) => (
-                    <React.Fragment key={index}>
+                    <React.Fragment key={project.slug}>
                         <SectionLine />
                         <article>
                             <ProjectHeader

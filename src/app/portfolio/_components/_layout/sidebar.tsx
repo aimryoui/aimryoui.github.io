@@ -51,7 +51,7 @@ function Sidebar() {
             <TableOfContents items={tocItems} />
             <SectionLine fit />
             <div className={cn("flex w-full gap-2 bg-background px-6 py-5.5")}>
-                <Link href="/" className="group flex gap-2">
+                <Link href="/" className="group flex flex-1 gap-2">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 48 48"
@@ -93,7 +93,7 @@ function Sidebar() {
                         </p>
                     </div>
                 </Link>
-                <ModeToggle className="ms-auto" />
+                <ModeToggle />
                 <Button size="icon" variant="outline">
                     <Ellipsis className="size-5.5" />
                 </Button>

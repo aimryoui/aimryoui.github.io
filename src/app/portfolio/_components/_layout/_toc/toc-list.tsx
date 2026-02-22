@@ -2,7 +2,13 @@
 
 import { memo, useCallback, useEffect, useMemo, useRef } from "react"
 
-import { motion, stagger } from "motion/react"
+import {
+    domAnimation,
+    LazyMotion,
+    stagger,
+    useReducedMotion
+} from "motion/react"
+import * as m from "motion/react-m"
 
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
@@ -28,6 +34,8 @@ export const TocList = memo(
         hasPageMounted,
         setHasPageMounted
     }: TocListProps) => {
+        const prefersReducedMotion = useReducedMotion()
+
         const scrollContainerRef = useRef<HTMLUListElement>(null)
         const clickedTargetRef = useRef<string | null>(null)
         const isFirstRenderRef = useRef(true)
@@ -73,39 +81,52 @@ export const TocList = memo(
         }, [activeId])
 
         return (
-            <motion.ul
-                variants={{
-                    hidden: { opacity: 0 },
-                    visible: {
-                        opacity: 1,
-                        transition: {
-                            duration: 1,
-                            delayChildren: stagger(0.025, {
-                                startDelay: -0.1,
-                                ease: "easeOut"
-                            })
-                        }
+            <LazyMotion features={domAnimation} strict>
+                <m.ul
+                    variants={
+                        prefersReducedMotion
+                            ? undefined
+                            : {
+                                  hidden: { opacity: 0 },
+                                  visible: {
+                                      opacity: 1,
+                                      transition: {
+                                          duration: 1,
+                                          delayChildren: stagger(0.025, {
+                                              startDelay: -0.1,
+                                              ease: "easeOut"
+                                          })
+                                      }
+                                  }
+                              }
                     }
-                }}
-                initial={hasPageMounted ? "visible" : "hidden"}
-                animate="visible"
-                onAnimationComplete={() => {
-                    setHasPageMounted(true)
-                }}
-                ref={scrollContainerRef}
-                className={cn(
-                    "group flex-1 overflow-y-scroll overscroll-contain scroll-auto py-3.25 text-sm will-change-[opacity] scrollbar-thin"
-                )}
-            >
-                {filteredItems.map((item) => (
-                    <TocItemRow
-                        key={item.id}
-                        item={item}
-                        isActive={activeId === item.id}
-                        onClick={handleItemClick}
-                    />
-                ))}
-            </motion.ul>
+                    initial={
+                        prefersReducedMotion
+                            ? undefined
+                            : hasPageMounted
+                              ? "visible"
+                              : "hidden"
+                    }
+                    animate={prefersReducedMotion ? undefined : "visible"}
+                    onAnimationComplete={() => {
+                        if (!prefersReducedMotion) setHasPageMounted(true)
+                    }}
+                    ref={scrollContainerRef}
+                    className={cn(
+                        "group flex-1 overflow-y-scroll overscroll-contain scroll-auto py-3.25 text-sm will-change-[opacity] scrollbar-thin"
+                    )}
+                >
+                    {filteredItems.map((item) => (
+                        <TocItemRow
+                            key={item.id}
+                            item={item}
+                            isActive={activeId === item.id}
+                            prefersReducedMotion={prefersReducedMotion}
+                            onClick={handleItemClick}
+                        />
+                    ))}
+                </m.ul>
+            </LazyMotion>
         )
     }
 )

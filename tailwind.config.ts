@@ -52,8 +52,7 @@ export default {
                 "ui-sans-serif",
                 "system-ui"
             ],
-            mono: ["var(--font-sf-mono)", "ui-monospace"],
-            icon: ["var(--font-sf-pro-display)"]
+            mono: ["var(--font-sf-mono)", "ui-monospace"]
         },
         extend: {
             fontSize: {

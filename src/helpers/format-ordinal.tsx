@@ -3,7 +3,7 @@ const formatOrdinal = (text: string) => {
 
     return text.split(/(?<=\d)(st|nd|rd|th)/g).map((part, index) => {
         if (index % 2 === 1) {
-            return <sup key={index}>{part}</sup>
+            return <sup key={`${part}-${index.toString()}`}>{part}</sup>
         }
         return part
     })

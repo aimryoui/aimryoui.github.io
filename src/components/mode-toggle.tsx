@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useSyncExternalStore } from "react"
 
 import { Monitor, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
@@ -23,13 +23,15 @@ function ThemedIcon() {
 }
 
 export function ModeToggle({ className }: React.ComponentProps<"button">) {
-    const [mounted, setMounted] = useState(false)
     const { theme, setTheme } = useTheme()
 
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setMounted(true)
-    }, [])
+    const mounted = useSyncExternalStore(
+        () => () => {
+            // Empty
+        },
+        () => true,
+        () => false
+    )
 
     return (
         <Button
@@ -46,6 +48,7 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
                 )
             }}
             className={cn("disabled:opacity-100", className)}
+            suppressHydrationWarning
         >
             {!mounted ? <Spinner /> : <ThemedIcon />}
             <span className="sr-only">Toggle theme</span>
