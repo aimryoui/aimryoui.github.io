@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
+import { domAnimation, LazyMotion } from "motion/react"
+
 import { SectionLine } from "@/components/layout/line"
 import { Highlight, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
@@ -105,36 +107,38 @@ export function TableOfContents({ items }: TableOfContentsProps) {
     if (items.length === 0) return null
 
     return (
-        <nav className="fixed top-0 flex h-[calc(100%-(var(--spacing)*20))] w-inherit flex-col bg-background">
-            <TocSearch
-                ref={inputRef}
-                value={query}
-                onChange={setQuery}
-                onClear={handleClearSearch}
-            />
-
-            <SectionLine fit containerClassName={cn("mt-4")} />
-
-            {filteredItems.length === 0 ? (
-                <Text className={cn("px-6 py-4 text-sm")}>
-                    No results found.{" "}
-                    <Highlight
-                        onClick={handleClearSearch}
-                        className={cn(
-                            "cursor-pointer decoration-solid hover:underline"
-                        )}
-                    >
-                        Clear search
-                    </Highlight>
-                </Text>
-            ) : (
-                <TocList
-                    items={items}
-                    filteredItems={filteredItems}
-                    hasPageMounted={hasPageMounted}
-                    setHasPageMounted={setHasPageMounted}
+        <LazyMotion features={domAnimation} strict>
+            <nav className="fixed top-0 flex h-[calc(100%-(var(--spacing)*20))] w-inherit flex-col bg-background">
+                <TocSearch
+                    ref={inputRef}
+                    value={query}
+                    onChange={setQuery}
+                    onClear={handleClearSearch}
                 />
-            )}
-        </nav>
+
+                <SectionLine fit containerClassName={cn("mt-4")} />
+
+                {filteredItems.length === 0 ? (
+                    <Text className={cn("px-6 py-4 text-sm")}>
+                        No results found.{" "}
+                        <Highlight
+                            onClick={handleClearSearch}
+                            className={cn(
+                                "cursor-pointer decoration-solid hover:underline"
+                            )}
+                        >
+                            Clear search
+                        </Highlight>
+                    </Text>
+                ) : (
+                    <TocList
+                        items={items}
+                        filteredItems={filteredItems}
+                        hasPageMounted={hasPageMounted}
+                        setHasPageMounted={setHasPageMounted}
+                    />
+                )}
+            </nav>
+        </LazyMotion>
     )
 }

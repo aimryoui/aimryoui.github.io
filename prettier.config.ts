@@ -39,7 +39,7 @@ const config: Config = {
         "",
         "^[./]"
     ],
-    importOrderTypeScriptVersion: "5.9.3",
+    importOrderTypeScriptVersion: "6.0.0-beta",
     overrides: [
         {
             files: ["*.yml", "*.yaml"],

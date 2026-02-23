@@ -11,8 +11,11 @@
     "editor.quickSuggestions": {
         "strings": "on"
     },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
     //* Oxc
     "oxc.configPath": ".oxlintrc.json",
+    "oxc.fmt.configPath": ".oxfmtrc.json",
     "oxc.requireConfig": true,
     "oxc.tsConfigPath": "tsconfig.json",
     "oxc.typeAware": true,
@@ -47,5 +50,6 @@
     "cssrem.vw": true,
     "cssrem.vwDesign": 1707.33,
     //* TypeScript Version
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "oxc.enable.oxfmt": true
 }

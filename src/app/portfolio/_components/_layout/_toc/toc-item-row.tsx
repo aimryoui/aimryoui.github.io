@@ -3,7 +3,7 @@
 import React, { memo } from "react"
 import Link from "next/link"
 
-import { type useReducedMotion } from "motion/react"
+import { type useReducedMotion, type Variants } from "motion/react"
 import * as m from "motion/react-m"
 
 import { SectionLine } from "@/components/layout/line"
@@ -17,6 +17,27 @@ interface TocItem {
 }
 
 const MotionSectionLine = m.create(SectionLine)
+
+const liVariants: Variants = {
+    hidden: { opacity: 0, x: -10 },
+    visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+            type: "spring",
+            damping: 20,
+            stiffness: 100
+        }
+    }
+}
+
+const lineVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: { duration: 0.3 }
+    }
+}
 
 export const TocItemRow = memo(
     ({
@@ -35,15 +56,7 @@ export const TocItemRow = memo(
                 {item.depth === 2 && (
                     <MotionSectionLine
                         variants={
-                            prefersReducedMotion
-                                ? undefined
-                                : {
-                                      hidden: { opacity: 0 },
-                                      visible: {
-                                          opacity: 1,
-                                          transition: { duration: 0.3 }
-                                      }
-                                  }
+                            prefersReducedMotion ? undefined : lineVariants
                         }
                         fit
                         containerClassName={cn(
@@ -52,18 +65,7 @@ export const TocItemRow = memo(
                     />
                 )}
                 <m.li
-                    variants={
-                        prefersReducedMotion
-                            ? undefined
-                            : {
-                                  hidden: { x: "10px", opacity: 0 },
-                                  visible: {
-                                      x: 0,
-                                      opacity: 1,
-                                      transition: { duration: 0.3, bounce: 0 }
-                                  }
-                              }
-                    }
+                    variants={prefersReducedMotion ? undefined : liVariants}
                     className={cn(
                         item.label.toLowerCase() === "footer" && "hidden",
                         item.depth === 3 &&
