@@ -19,15 +19,11 @@ interface TocItem {
 const MotionSectionLine = m.create(SectionLine)
 
 const liVariants: Variants = {
-    hidden: { opacity: 0, x: -10 },
+    hidden: { x: 10, opacity: 0 },
     visible: {
-        opacity: 1,
         x: 0,
-        transition: {
-            type: "spring",
-            damping: 20,
-            stiffness: 100
-        }
+        opacity: 1,
+        transition: { duration: 0.3, bounce: 0 }
     }
 }
 
