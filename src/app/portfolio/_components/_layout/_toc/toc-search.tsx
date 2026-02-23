@@ -79,9 +79,12 @@ export const TocSearch = forwardRef<HTMLInputElement, TocSearchProps>(
                                 delay={500}
                                 payload={{
                                     content: (
-                                        <div className="flex items-center gap-1">
-                                            Clear search <Kbd>Esc</Kbd>
-                                        </div>
+                                        <span className="flex items-center gap-1">
+                                            Clear search{" "}
+                                            <Kbd className="rounded-md border border-muted-foreground/20">
+                                                Esc
+                                            </Kbd>
+                                        </span>
                                     ),
                                     side: "right",
                                     sideOffset: 6

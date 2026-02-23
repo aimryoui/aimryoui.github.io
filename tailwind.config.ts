@@ -1,4 +1,4 @@
-/* eslint-disable @limegrass/import-alias/import-alias */
+// oxlint-disable @limegrass/import-alias/import-alias
 import anchorsPlugin from "@toolwind/anchors"
 import { type Config } from "tailwindcss"
 import plugin from "tailwindcss/plugin"
@@ -66,10 +66,11 @@ export default {
             },
             spacing: {
                 px: "var(--px)",
-                0.75: "0.1875rem",
+                0.75: ".1875rem",
+                1.25: ".3125rem",
                 2.25: ".5625rem",
-                3.25: "0.8125rem",
-                3.75: "0.9375rem",
+                3.25: ".8125rem",
+                3.75: ".9375rem",
                 4.5: "1.125rem",
                 5.5: "1.375rem",
                 5.25: "1.3125rem",
@@ -112,9 +113,9 @@ export default {
             borderWidth: {
                 DEFAULT: "var(--px)",
                 0: "0",
-                2: "0.125rem",
-                3: "0.1875rem",
-                6: "0.375rem"
+                2: ".125rem",
+                3: ".1875rem",
+                6: ".375rem"
             },
             aspectRatio: {
                 3: "3"

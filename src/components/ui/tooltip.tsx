@@ -147,6 +147,7 @@ function TooltipContent({
                         className={cn(
                             "[--viewport-inline-padding:calc(var(--spacing)*2)]",
                             "relative size-full overflow-clip px-[--viewport-inline-padding] py-1 will-change-[width,transform,opacity]",
+                            "has-[kbd]:pr-1",
                             {
                                 "[&_:is([data-current],[data-previous])]":
                                     "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-[transform,opacity] ease-spring duration-[.5s,.4s]",
