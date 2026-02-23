@@ -21,10 +21,10 @@ function attachMediaListener(
             query.removeEventListener("change", callback)
         }
     } catch (_e) {
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
+        // oxlint-disable-next-line typescript/no-deprecated
         query.addListener(callback)
         return () => {
-            // eslint-disable-next-line @typescript-eslint/no-deprecated
+            // oxlint-disable-next-line typescript/no-deprecated
             query.removeListener(callback)
         }
     }
@@ -42,12 +42,14 @@ function getInitialValue(query: string, initialValue?: boolean) {
     return false
 }
 
+const defaultOptions: UseMediaQueryOptions = {
+    getInitialValueInEffect: true
+}
+
 export function useMediaQuery(
     query: string,
     initialValue?: boolean,
-    { getInitialValueInEffect }: UseMediaQueryOptions = {
-        getInitialValueInEffect: true
-    }
+    { getInitialValueInEffect }: UseMediaQueryOptions = defaultOptions
 ): boolean {
     const [matches, setMatches] = useState(
         getInitialValueInEffect ? initialValue : getInitialValue(query)
@@ -60,7 +62,6 @@ export function useMediaQuery(
             })
         } catch (_e) {
             // Safari iframe compatibility issue
-            return undefined
         }
     }, [query])
 

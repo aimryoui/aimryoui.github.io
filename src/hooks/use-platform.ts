@@ -8,7 +8,7 @@ export function usePlatform() {
             // Empty
         },
         () => {
-            return document.documentElement.getAttribute("data-platform")
+            return document.documentElement.dataset.platform
         },
         () => {
             return null

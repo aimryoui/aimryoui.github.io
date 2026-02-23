@@ -30,7 +30,7 @@ export function useScrollSpy(ids: string[], offsetPercent = 40) {
                     document.documentElement.scrollHeight - 10
 
                 if (isBottom && ids.length > 0) {
-                    setActiveId(ids[ids.length - 1])
+                    setActiveId(ids.at(-1)!)
                     isScrollPending.current = false
                     return
                 }

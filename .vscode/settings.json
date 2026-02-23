@@ -3,6 +3,7 @@
     "git.followTagsWhenSync": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
+        "source.fixAll.oxc": "always",
         "source.fixAll.stylelint": "explicit",
         "source.organizeImports": "never",
         "source.addMissingImports": "explicit"
@@ -10,6 +11,12 @@
     "editor.quickSuggestions": {
         "strings": "on"
     },
+    //* Oxc
+    "oxc.configPath": ".oxlintrc.json",
+    "oxc.requireConfig": true,
+    "oxc.tsConfigPath": "tsconfig.json",
+    "oxc.typeAware": true,
+    "oxc.fixKind": "safe_fix_or_suggestion",
     //* Tailwind CSS
     "files.associations": {
         "*.css": "tailwindcss"

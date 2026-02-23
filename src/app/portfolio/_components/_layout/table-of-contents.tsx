@@ -21,8 +21,8 @@ interface TableOfContentsProps {
 function removeAccents(str: string): string {
     return str
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[đĐ]/g, "d")
+        .replaceAll(/[\u0300-\u036F]/g, "")
+        .replaceAll(/[đĐ]/g, "d")
 }
 
 export function TableOfContents({ items }: TableOfContentsProps) {
@@ -102,7 +102,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
         return result
     }, [debouncedQuery, items])
 
-    if (!items.length) return null
+    if (items.length === 0) return null
 
     return (
         <nav className="fixed top-0 flex h-[calc(100%-(var(--spacing)*20))] w-inherit flex-col bg-background">

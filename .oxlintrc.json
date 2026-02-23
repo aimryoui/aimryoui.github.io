@@ -1,0 +1,161 @@
+{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "categories": {
+        "correctness": "warn",
+        "perf": "warn",
+        "pedantic": "error"
+    },
+    "env": {
+        "builtin": true,
+        "browser": true,
+        "node": true
+    },
+    "globals": {
+        "AudioWorkletGlobalScope": "readonly",
+        "AudioWorkletProcessor": "readonly",
+        "currentFrame": "readonly",
+        "currentTime": "readonly",
+        "registerProcessor": "readonly",
+        "sampleRate": "readonly",
+        "WorkletGlobalScope": "readonly"
+    },
+    "ignorePatterns": [
+        "**/node_modules/",
+        "**/.git/",
+        ".next/**",
+        ".velite/**",
+        "out/**",
+        "build/**",
+        "next-env.d.ts",
+        "pnpm-lock.yaml"
+    ],
+    "plugins": [
+        "nextjs",
+        "typescript",
+        "react",
+        "unicorn",
+        "import",
+        "jsx-a11y"
+    ],
+    "jsPlugins": [
+        "@stylistic/eslint-plugin",
+        "eslint-plugin-react-compiler",
+        "eslint-plugin-tailwindcss",
+        "eslint-plugin-simple-import-sort",
+        "@limegrass/eslint-plugin-import-alias",
+        "@eslint/css"
+    ],
+    "rules": {
+        //* Built-in
+        "no-unused-vars": [
+            "warn",
+            {
+                "args": "all",
+                "argsIgnorePattern": "^_",
+                "caughtErrorsIgnorePattern": "^_",
+                "destructuredArrayIgnorePattern": "^_",
+                "varsIgnorePattern": "^_"
+            }
+        ],
+        "no-unused-expressions": "warn",
+        "max-depth": "off",
+        "max-lines": "off",
+        "max-lines-per-function": "off",
+        "prefer-query-selector": "off",
+        "prefer-tag-over-role": "off",
+        "no-inline-comments": "off",
+        "unbound-method": "off",
+
+        //* Stylistic
+        "@stylistic/quotes": [
+            "warn",
+            "double",
+            {
+                "avoidEscape": true,
+                "allowTemplateLiterals": "avoidEscape"
+            }
+        ]
+    },
+    "overrides": [
+        {
+            "files": ["**/*.{ts,tsx}"],
+            "rules": {
+                //* TypeScript
+                "typescript/consistent-type-imports": [
+                    "warn",
+                    {
+                        "prefer": "type-imports",
+                        "fixStyle": "inline-type-imports"
+                    }
+                ],
+                "typescript/strict-boolean-expressions": "off",
+
+                //* React
+                "react/no-unknown-property": [
+                    "warn",
+                    {
+                        "ignore": [
+                            "tw",
+                            "vaul-drawer-wrapper",
+                            "cmdk-input-wrapper"
+                        ]
+                    }
+                ],
+                "react/no-array-index-key": "off",
+
+                //* React Compiler
+                "react-compiler/react-compiler": "warn",
+
+                //* Tailwind CSS
+                "tailwindcss/no-custom-classname": "warn",
+
+                //* Import
+                "import/no-duplicates": [
+                    "warn",
+                    {
+                        "preferInline": true
+                    }
+                ],
+                "import/consistent-type-specifier-style": [
+                    "warn",
+                    "prefer-inline"
+                ],
+                "import/max-dependencies": "off",
+                "simple-import-sort/exports": "warn",
+                "@limegrass/import-alias/import-alias": [
+                    "warn",
+                    {
+                        "isAllowBaseUrlResolvedImport": false,
+                        "aliasConfigPath": "./tsconfig.json"
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["**/*.css"],
+            "rules": {
+                "@eslint/css/no-duplicate-imports": "error",
+                "@eslint/css/use-baseline": "warn",
+                "@eslint/css/use-layers": "warn"
+            }
+        }
+    ],
+    "settings": {
+        "tailwindcss": {
+            "callees": ["cn", "twg"],
+            "config": "tailwind.config.ts",
+            "cssFiles": [
+                "**/*.css",
+                "!**/node_modules",
+                "!**/.*",
+                "!**/dist",
+                "!**/build"
+            ],
+            "cssFilesRefreshRate": 5000,
+            "removeDuplicates": false,
+            "skipClassAttribute": false,
+            "tags": [],
+            "classRegex": "^(class(Name)?|tw)$"
+        }
+    }
+}

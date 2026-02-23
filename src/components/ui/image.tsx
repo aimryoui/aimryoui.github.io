@@ -36,8 +36,8 @@ function Image({
     const metadata = imageManifest[normalizedSrc.replace(/\.[^/.]+$/, "")]
 
     const lastDotIndex = src.lastIndexOf(".")
-    const pathWithoutExt = src.substring(0, lastDotIndex)
-    const fileName = src.substring(src.lastIndexOf("/") + 1, lastDotIndex)
+    const pathWithoutExt = src.slice(0, lastDotIndex)
+    const fileName = src.slice(src.lastIndexOf("/") + 1, lastDotIndex)
     const basePath = `/assets/images${pathWithoutExt}`
 
     const ROWS = GRID_ROWS

@@ -17,7 +17,8 @@ function ThemedIcon() {
             return <Sun className="size-6" />
         case "dark":
             return <Moon className="size-5.5" />
-        default:
+        case "system":
+        case undefined:
             return <Monitor className="size-5" />
     }
 }
@@ -50,7 +51,7 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
             className={cn("disabled:opacity-100", className)}
             suppressHydrationWarning
         >
-            {!mounted ? <Spinner /> : <ThemedIcon />}
+            {mounted ? <ThemedIcon /> : <Spinner />}
             <span className="sr-only">Toggle theme</span>
         </Button>
     )

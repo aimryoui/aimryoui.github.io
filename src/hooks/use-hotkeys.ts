@@ -59,9 +59,9 @@ function parseHotkey(hotkey: string): Hotkey {
         plus: keys.includes("[plus]")
     }
 
-    const reservedKeys = ["alt", "ctrl", "meta", "shift", "mod"]
+    const reservedKeys = new Set(["alt", "ctrl", "meta", "shift", "mod"])
 
-    const freeKey = keys.find((key) => !reservedKeys.includes(key))
+    const freeKey = keys.find((key) => !reservedKeys.has(key))
 
     return {
         ...modifiers,

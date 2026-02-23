@@ -66,7 +66,7 @@ export function ExpandableWrapper({
                     ref={contentRef}
                     className={cn(
                         "w-full",
-                        !isExpanded ? "max-h-700" : "max-h-none"
+                        isExpanded ? "max-h-none" : "max-h-700"
                     )}
                 >
                     {children}

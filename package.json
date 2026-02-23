@@ -20,8 +20,8 @@
         "build": "tsx src/scripts/process-images.ts && next build",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "lint": "eslint",
-        "lint:fix": "eslint --fix",
+        "lint": "oxlint && eslint",
+        "lint:fix": "oxlint --fix --fix-suggestions && eslint --fix",
         "shadcn:add": "pnpm dlx shadcn@2.3.0 add"
     },
     "dependencies": {
@@ -33,7 +33,7 @@
         "glob": "^13.0.6",
         "lucide-react": "^0.575.0",
         "motion": "^12.34.3",
-        "next": "16.2.0-canary.57",
+        "next": "16.2.0-canary.58",
         "next-themes": "^0.4.6",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
@@ -57,6 +57,7 @@
         "eslint-config-prettier": "^10.1.8",
         "eslint-import-resolver-typescript": "^4.4.4",
         "eslint-plugin-import-x": "^4.16.1",
+        "eslint-plugin-oxlint": "^1.49.0",
         "eslint-plugin-react": "^7.37.5",
         "eslint-plugin-react-compiler": "19.1.0-rc.2",
         "eslint-plugin-react-hooks": "^7.0.1",
@@ -64,6 +65,8 @@
         "eslint-plugin-tailwindcss": "^3.18.2",
         "globals": "^17.3.0",
         "jiti": "^2.6.1",
+        "oxlint": "^1.49.0",
+        "oxlint-tsgolint": "^0.14.2",
         "postcss": "^8.5.6",
         "postcss-load-config": "^6.0.1",
         "prettier": "^3.8.1",
@@ -73,7 +76,7 @@
         "tailwindcss": "^3.4.19",
         "tailwindcss-animate": "^1.0.7",
         "tsx": "^4.21.0",
-        "typescript": "^5.9.3",
+        "typescript": "6.0.0-beta",
         "typescript-eslint": "^8.56.0",
         "velite": "^0.3.1"
     }

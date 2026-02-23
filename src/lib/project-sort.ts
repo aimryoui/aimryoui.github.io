@@ -21,7 +21,7 @@ const parseDate = (str: string) => {
     if (!str) return new Date(0)
     const [monthStr, yearStr] = str.trim().split(" ")
     const month = MONTHS[monthStr] ?? 0
-    const year = parseInt(yearStr) || 0
+    const year = parseInt(yearStr, 10) || 0
     return new Date(year, month, 1)
 }
 
