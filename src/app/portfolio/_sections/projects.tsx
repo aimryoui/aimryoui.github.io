@@ -59,6 +59,7 @@ function Projects() {
 
                             <SectionLine />
                             <Divider />
+                            <SectionLine />
 
                             <ExpandableWrapper
                                 projectName={project.projectName}
