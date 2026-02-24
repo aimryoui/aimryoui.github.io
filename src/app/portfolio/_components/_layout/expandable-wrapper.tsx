@@ -62,10 +62,7 @@ export function ExpandableWrapper({
             >
                 <div
                     ref={contentRef}
-                    className={cn(
-                        "w-full",
-                        isExpanded ? "max-h-none" : "max-h-700"
-                    )}
+                    className={cn("w-full", !isExpanded && "max-h-700")}
                 >
                     {children}
                 </div>
@@ -105,7 +102,7 @@ export function ExpandableWrapper({
                         <SectionLine />
                         <div
                             className={cn(
-                                "sticky bottom-0 z-40 grid w-full place-items-center delay-100 will-change-[translate,opacity] transition-[translate,opacity] ease-out duration-250",
+                                "sticky bottom-0 z-40 grid w-full place-items-center delay-100 will-change-[transform,opacity] transition-[transform,opacity] ease-out duration-250",
                                 {
                                     starting: "translate-y-12 opacity-0"
                                 }
