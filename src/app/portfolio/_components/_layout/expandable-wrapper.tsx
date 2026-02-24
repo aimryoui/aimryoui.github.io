@@ -20,7 +20,7 @@ export function ExpandableWrapper({
     projectName
 }: ExpandableWrapperProps) {
     const [isExpanded, setIsExpanded] = useState(false)
-    const [isOverflowing, setIsOverflowing] = useState(false)
+    const [isOverflowing, setIsOverflowing] = useState(true)
     const contentRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
@@ -28,8 +28,8 @@ export function ExpandableWrapper({
             const el = contentRef.current
             if (!el) return
 
-            if (el.scrollHeight > el.clientHeight) {
-                setIsOverflowing(true)
+            if (el.scrollHeight <= el.clientHeight) {
+                setIsOverflowing(false)
             }
         }
 
