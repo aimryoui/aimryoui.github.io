@@ -1,4 +1,4 @@
-import React, { Suspense } from "react"
+import React from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
@@ -20,7 +20,7 @@ export default function Portfolio() {
     return (
         <>
             <AnchorPolyfill />
-            <main className={cn("overflow-anchor-none flex-1")}>
+            <main className={cn("flex-1")}>
                 <Space />
                 <SectionLine showDecoration />
                 <Space />

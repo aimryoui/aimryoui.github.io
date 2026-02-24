@@ -184,15 +184,15 @@ export default function RootLayout({
             >
                 <ThemeProvider disableTransitionOnChange>
                     <TooltipProvider>
-                        <MarginLine />
-                        {children}
-                        <MarginLine />
                         <div
                             className={cn(
                                 "fixed inset-0 -z-10 h-full w-full",
                                 "bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]"
                             )}
                         />
+                        <MarginLine />
+                        <MarginLine className="order-last" />
+                        {children}
                     </TooltipProvider>
                 </ThemeProvider>
             </body>

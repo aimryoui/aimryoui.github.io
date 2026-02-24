@@ -1,3 +1,5 @@
+import { createElement, useMemo } from "react"
+
 import * as runtime from "react/jsx-runtime"
 
 import { SectionLine } from "@/components/layout/line"
@@ -35,7 +37,9 @@ const getMDXComponent = (code: string) => {
 }
 
 export const MDXContent = ({ code, components }: MDXProps) => {
-    const Component = getMDXComponent(code)
+    const Component = useMemo(() => getMDXComponent(code), [code])
 
-    return <Component components={{ ...sharedComponents, ...components }} />
+    return createElement(Component, {
+        components: { ...sharedComponents, ...components }
+    })
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -52,13 +52,20 @@ export function ExpandableWrapper({
         })
     }
 
+    const mounted = useSyncExternalStore(
+        () => () => {},
+        () => true,
+        () => false
+    )
+
     return (
         <>
             <div
                 className={cn(
                     "relative",
-                    !isExpanded &&
-                        "[clip-path:inset(calc((var(--px)/2)*-1)_-50vw_0_-50vw)]",
+                    !isExpanded && mounted
+                        ? "[clip-path:inset(calc((var(--px)/2)*-1)_-50vw_0_-50vw)]"
+                        : "overflow-y-clip",
                     className
                 )}
             >
