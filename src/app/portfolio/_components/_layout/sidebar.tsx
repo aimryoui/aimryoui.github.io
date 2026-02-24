@@ -1,13 +1,13 @@
 import Link from "next/link"
 
-import { Ellipsis } from "lucide-react"
-
 import { SectionLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
 import { Button } from "@/components/ui/button"
+import { TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import { slugify } from "@/helpers/slugify"
+import { Ellipsis } from "@/lib/icons"
 import { groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import { TableOfContents } from "@/portfolio/_components/_layout/table-of-contents"
@@ -94,9 +94,17 @@ function Sidebar() {
                     </div>
                 </Link>
                 <ModeToggle />
-                <Button size="icon" variant="outline">
-                    <Ellipsis className="size-5.5" />
-                </Button>
+                <TooltipTrigger
+                    delay={500}
+                    payload={{
+                        content: <span>More settings</span>
+                    }}
+                    render={
+                        <Button size="icon" variant="outline">
+                            <Ellipsis />
+                        </Button>
+                    }
+                />
             </div>
         </aside>
     )
