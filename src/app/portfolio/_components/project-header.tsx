@@ -9,6 +9,9 @@ import { TOOL_ICONS } from "@/portfolio/_configs/tools"
 
 import { type projects } from "~/.velite"
 
+const ICON = TOOL_ICONS()
+const ICON_SM = TOOL_ICONS({ size: "sm" })
+
 function ProjectHeader({
     type,
     projectName,
@@ -18,11 +21,12 @@ function ProjectHeader({
     detail
 }: Omit<(typeof projects)[number], "slug" | "code">) {
     const headerId = slugify(projectName)
+
     return (
         <div className={cn("relative bg-background")}>
             <div
                 className={cn(
-                    "grid grid-cols-[3fr_var(--px)_calc(var(--spacing)*6)_var(--px)_2fr]"
+                    "grid grid-cols-[minmax(0,3fr)_var(--px)_calc(var(--spacing)*6)_var(--px)_minmax(0,2fr)]"
                 )}
             >
                 <span
@@ -84,7 +88,7 @@ function ProjectHeader({
                     >
                         <Text className="sr-only">
                             {tools.map((key, index) => {
-                                const tool = TOOL_ICONS()[key]
+                                const tool = ICON[key]
                                 return (
                                     tool.label +
                                     (index === tools.length - 1 ? "." : ", ")
@@ -92,7 +96,7 @@ function ProjectHeader({
                             })}
                         </Text>
                         {tools.map((key) => {
-                            const tool = TOOL_ICONS({ size: "sm" })[key]
+                            const tool = ICON_SM[key]
 
                             return (
                                 <TooltipTrigger

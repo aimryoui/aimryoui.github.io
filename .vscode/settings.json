@@ -14,12 +14,16 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     //* Oxc
+    "oxc.enable.oxlint": true,
     "oxc.configPath": ".oxlintrc.json",
+    "oxc.enable.oxfmt": false,
     "oxc.fmt.configPath": ".oxfmtrc.json",
     "oxc.requireConfig": true,
+    "oxc.disableNestedConfig": true,
     "oxc.tsConfigPath": "tsconfig.json",
     "oxc.typeAware": true,
     "oxc.fixKind": "safe_fix_or_suggestion",
+    "oxc.trace.server": "verbose",
     //* Tailwind CSS
     "files.associations": {
         "*.css": "tailwindcss"
@@ -50,6 +54,5 @@
     "cssrem.vw": true,
     "cssrem.vwDesign": 1707.33,
     //* TypeScript Version
-    "typescript.tsdk": "node_modules\\typescript\\lib",
-    "oxc.enable.oxfmt": true
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

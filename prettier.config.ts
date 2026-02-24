@@ -24,7 +24,7 @@ const config: Config = {
         "prettier-plugin-tailwindcss"
     ],
     tailwindAttributes: ["tw"],
-    tailwindFunctions: ["cn", "cva", "twMerge"],
+    tailwindFunctions: ["cn", "cva", "twg", "twMerge"],
     importOrder: [
         "<BUILTIN_MODULES>",
         "\\.css$",

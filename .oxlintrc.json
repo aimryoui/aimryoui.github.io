@@ -10,15 +10,6 @@
         "browser": true,
         "node": true
     },
-    "globals": {
-        "AudioWorkletGlobalScope": "readonly",
-        "AudioWorkletProcessor": "readonly",
-        "currentFrame": "readonly",
-        "currentTime": "readonly",
-        "registerProcessor": "readonly",
-        "sampleRate": "readonly",
-        "WorkletGlobalScope": "readonly"
-    },
     "ignorePatterns": [
         "**/node_modules/",
         "**/.git/",
@@ -89,6 +80,7 @@
                     }
                 ],
                 "typescript/strict-boolean-expressions": "off",
+                "typescript/no-explicit-any": "error",
 
                 //* React
                 "react/no-unknown-property": [
@@ -142,7 +134,7 @@
     ],
     "settings": {
         "tailwindcss": {
-            "callees": ["cn", "twg"],
+            "callees": ["cn", "twg", "twMerge"],
             "config": "tailwind.config.ts",
             "cssFiles": [
                 "**/*.css",

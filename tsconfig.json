@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "target": "ES2017",
-        "lib": ["dom", "dom.iterable", "esnext"],
+        "target": "es2017",
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
@@ -37,5 +37,5 @@
         ".next/dev/types/**/*.ts",
         "src/types/**/*.d.ts"
     ],
-    "exclude": ["node_modules", "out"]
+    "exclude": ["node_modules", "out", ".next", ".velite", ".vscode", ".git"]
 }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
@@ -20,7 +20,7 @@ export default function Portfolio() {
     return (
         <>
             <AnchorPolyfill />
-            <main className={cn("flex-1")}>
+            <main className={cn("overflow-anchor-none flex-1")}>
                 <Space />
                 <SectionLine showDecoration />
                 <Space />
@@ -115,7 +115,7 @@ export default function Portfolio() {
                                 </Highlight>
                                 <div
                                     className={cn(
-                                        "-bottom-5.25 absolute flex rounded-md border border-stroke bg-background px-1 py-0.5"
+                                        "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
                                     )}
                                 >
                                     <span
@@ -158,7 +158,7 @@ export default function Portfolio() {
                         />
                         <div
                             className={cn(
-                                "-bottom-5.25 absolute flex rounded-md border border-stroke bg-background px-1 py-0.5"
+                                "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
                             )}
                         >
                             <span
@@ -213,7 +213,7 @@ export default function Portfolio() {
                             </TooltipContent> */}
                         <div
                             className={cn(
-                                "-bottom-5.25 absolute flex rounded-md border border-stroke bg-background px-1 py-0.5"
+                                "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
                             )}
                         >
                             <span
@@ -260,7 +260,11 @@ export default function Portfolio() {
 
                 <SectionLine />
 
-                <Projects />
+                <Suspense
+                    fallback={<div className="h-dvh w-full bg-background" />}
+                >
+                    <Projects />
+                </Suspense>
 
                 <SectionLine />
 

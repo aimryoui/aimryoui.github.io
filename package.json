@@ -20,8 +20,9 @@
         "build": "tsx src/scripts/process-images.ts && next build",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "lint": "oxlint && eslint",
-        "lint:fix": "oxlint --fix --fix-suggestions && eslint --fix",
+        "lint": "oxlint --type-aware --threads 4 && eslint",
+        "lint:debug": "cross-env OXC_LOG=debug oxlint --type-aware --threads 4",
+        "lint:fix": "oxlint --type-aware --fix --fix-suggestions --threads 4 && eslint --fix",
         "shadcn:add": "pnpm dlx shadcn@2.3.0 add"
     },
     "dependencies": {
@@ -53,6 +54,7 @@
         "@types/react-dom": "^19.2.3",
         "autoprefixer": "^10.4.24",
         "babel-plugin-react-compiler": "^1.0.0",
+        "cross-env": "^10.1.0",
         "eslint": "^9.39.3",
         "eslint-config-prettier": "^10.1.8",
         "eslint-import-resolver-typescript": "^4.4.4",

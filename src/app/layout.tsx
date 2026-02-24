@@ -157,12 +157,12 @@ export default function RootLayout({
             lang="en"
             dir="ltr"
             suppressHydrationWarning
-            data-scroll-behavior="smooth"
             className={cn(
                 plusJakartaSans.variable,
                 sfMono.variable,
                 "antialiased"
             )}
+            data-scroll-behavior="smooth"
         >
             <head>
                 <Script id="platform-detection" strategy="beforeInteractive">

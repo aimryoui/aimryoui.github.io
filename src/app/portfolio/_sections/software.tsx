@@ -19,7 +19,7 @@ interface Section {
     frequencies: SectionProps[]
 }
 
-const icon = TOOL_ICONS()
+const ICON = TOOL_ICONS()
 
 const sections: Section[] = [
     {
@@ -28,16 +28,16 @@ const sections: Section[] = [
             {
                 title: "Most frequently used and experienced",
                 tools: [
-                    icon.figma,
-                    icon.photoshop,
-                    icon.illustrator,
-                    icon.inDesign,
-                    icon.afterEffects
+                    ICON.figma,
+                    ICON.photoshop,
+                    ICON.illustrator,
+                    ICON.inDesign,
+                    ICON.afterEffects
                 ]
             },
             {
                 title: "Less experienced",
-                tools: [icon.blender, icon.premierePro]
+                tools: [ICON.blender, ICON.premierePro]
             }
         ]
     },
@@ -46,7 +46,7 @@ const sections: Section[] = [
         frequencies: [
             {
                 title: "Used but outdated",
-                tools: [icon.dreamweaver, icon.xd, icon.dimension]
+                tools: [ICON.dreamweaver, ICON.xd, ICON.dimension]
             }
         ]
     }

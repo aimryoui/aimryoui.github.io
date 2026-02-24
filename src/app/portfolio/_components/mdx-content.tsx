@@ -1,3 +1,5 @@
+import { createElement, useMemo } from "react"
+
 import * as runtime from "react/jsx-runtime"
 
 import { SectionLine } from "@/components/layout/line"
@@ -13,24 +15,31 @@ const sharedComponents = {
 }
 
 declare global {
-    /**
-     * @see {@link https://github.com/mdx-js/mdx-analyzer#mdxprovidedcomponents} -
-     * the alternative way.
-     */
     type MDXProvidedComponents = typeof sharedComponents
-}
-
-const useMDXComponent = (code: string) => {
-    const fn = new Function(code)
-    return fn({ ...runtime }).default
 }
 
 interface MDXProps {
     code: string
-    components?: Record<string, React.ComponentType>
+    components?: Record<string, React.ElementType>
+}
+
+interface MDXModule {
+    default: React.ComponentType<{
+        components: MDXProvidedComponents & Record<string, React.ElementType>
+    }>
+}
+
+type MDXFactory = (r: typeof runtime) => MDXModule
+
+const getMDXComponent = (code: string) => {
+    const fn = Reflect.construct(Function, [code]) as MDXFactory
+    return fn({ ...runtime }).default
 }
 
 export const MDXContent = ({ code, components }: MDXProps) => {
-    const Component = useMDXComponent(code)
-    return <Component components={{ ...sharedComponents, ...components }} />
+    const Component = useMemo(() => getMDXComponent(code), [code])
+
+    return createElement(Component, {
+        components: { ...sharedComponents, ...components }
+    })
 }

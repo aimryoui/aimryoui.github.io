@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 
-function MarginLine({ className }: React.ComponentProps<"hr">) {
+function MarginLine({ className, ...props }: React.ComponentProps<"hr">) {
     return (
         <hr
             className={cn(
@@ -8,6 +8,7 @@ function MarginLine({ className }: React.ComponentProps<"hr">) {
                 className
             )}
             role="separator"
+            {...props}
         />
     )
 }

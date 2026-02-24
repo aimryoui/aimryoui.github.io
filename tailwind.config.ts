@@ -13,6 +13,7 @@ import cornerShape from "./src/lib/tailwindcss-plugins/utilities/corner-shape"
 import displayGridLanes from "./src/lib/tailwindcss-plugins/utilities/display-grid-lanes"
 import fieldSizing from "./src/lib/tailwindcss-plugins/utilities/field-sizing"
 import outline from "./src/lib/tailwindcss-plugins/utilities/outline"
+import overflowAnchor from "./src/lib/tailwindcss-plugins/utilities/overflow-anchor"
 import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
@@ -228,6 +229,7 @@ export default {
         displayGridLanes,
         fieldSizing,
         outline,
+        overflowAnchor,
         scrollbar,
         transition,
         transitionBehavior,
