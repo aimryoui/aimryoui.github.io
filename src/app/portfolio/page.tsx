@@ -260,11 +260,11 @@ export default function Portfolio() {
 
                 <SectionLine />
 
-                <Suspense
+                {/* <Suspense
                     fallback={<div className="h-dvh w-full bg-background" />}
-                >
-                    <Projects />
-                </Suspense>
+                > */}
+                <Projects />
+                {/* </Suspense> */}
 
                 <SectionLine />
 
