@@ -28,7 +28,7 @@ export default function Portfolio() {
                 <div className={cn("relative bg-background px-6 pb-5 pt-3.5")}>
                     <span
                         className={cn(
-                            "absolute -top-10.5 left-6 font-mono uppercase tracking-normal"
+                            "absolute -top-10 left-6 font-mono uppercase tracking-normal"
                         )}
                     >
                         About

@@ -31,7 +31,7 @@ function ProjectHeader({
             >
                 <span
                     className={cn(
-                        "absolute -top-10.5 left-6 font-mono uppercase tracking-normal"
+                        "absolute -top-10 left-6 font-mono uppercase tracking-normal"
                     )}
                 >
                     {type}
@@ -82,9 +82,7 @@ function ProjectHeader({
                 </div>
                 {tools.length > 0 && (
                     <div
-                        className={cn(
-                            "absolute -top-10.5 right-4.5 flex gap-2"
-                        )}
+                        className={cn("absolute -top-10 right-4.5 flex gap-2")}
                     >
                         <Text className="sr-only">
                             {tools.map((key, index) => {

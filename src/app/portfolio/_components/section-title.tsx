@@ -20,7 +20,7 @@ function SectionTitle({
             {note && (
                 <span
                     className={cn(
-                        "absolute -top-10.5 left-6 font-mono uppercase tracking-normal"
+                        "absolute -top-10 left-6 font-mono uppercase tracking-normal"
                     )}
                 >
                     {note}
