@@ -1,4 +1,4 @@
-import React from "react"
+import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -287,7 +287,7 @@ function Contact() {
             <SectionLine />
             <address>
                 {sections.map((section, index, arr) => (
-                    <React.Fragment key={section.section}>
+                    <Fragment key={section.section}>
                         <div
                             className={cn(
                                 "relative grid grid-cols-5 gap-6 gap-y-3 bg-background pb-3.75 pt-3.25"
@@ -295,7 +295,7 @@ function Contact() {
                         >
                             {section.platforms.map(
                                 (platform, platformindex) => (
-                                    <React.Fragment key={platformindex}>
+                                    <Fragment key={platformindex}>
                                         <Highlight className={cn("ps-6")}>
                                             {platform.icon}
                                         </Highlight>
@@ -335,7 +335,7 @@ function Contact() {
                                                 </Bold>
                                             )}
                                         </div>
-                                    </React.Fragment>
+                                    </Fragment>
                                 )
                             )}
                         </div>
@@ -343,7 +343,7 @@ function Contact() {
                             arr[index + 1].section !== section.section && (
                                 <SectionLine />
                             )}
-                    </React.Fragment>
+                    </Fragment>
                 ))}
             </address>
         </section>

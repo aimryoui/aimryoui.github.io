@@ -1,4 +1,4 @@
-import React from "react"
+import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
@@ -50,10 +50,7 @@ function Footer() {
                 </div>
             </div>
             <SectionLine />
-            <SectionName
-                sectionName="Adopt Me"
-                containerClassName="bg-background z-0"
-            />
+            <SectionName sectionName="Adopt Me" className="z-0 bg-background" />
             <SectionLine />
             <div
                 className={cn(
@@ -65,7 +62,7 @@ function Footer() {
                     { qrSrc: "/qr/zalo.webp", label: "Zalo" },
                     { qrSrc: "/qr/facebook.webp", label: "Facebook" }
                 ].map((item, index, arr) => (
-                    <React.Fragment key={item.label}>
+                    <Fragment key={item.label}>
                         <div
                             className={cn(
                                 "relative grid aspect-square w-full place-items-center bg-highlighted/10 p-6"
@@ -102,7 +99,7 @@ function Footer() {
                                 <ElementLine />
                             </>
                         )}
-                    </React.Fragment>
+                    </Fragment>
                 ))}
             </div>
             <SectionLine />

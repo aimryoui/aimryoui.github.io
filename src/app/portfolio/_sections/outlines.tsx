@@ -1,4 +1,4 @@
-import React from "react"
+import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
@@ -26,7 +26,7 @@ function Outlines() {
             >
                 <div>
                     {sections.map(([key, section], index, arr) => (
-                        <React.Fragment key={key}>
+                        <Fragment key={key}>
                             <div
                                 className={cn(
                                     "grid grid-cols-3 gap-6 gap-y-3 pb-3.75 pt-3.25"
@@ -64,7 +64,7 @@ function Outlines() {
                             {index < arr.length - 1 && (
                                 <SectionLine className={cn("right-0")} />
                             )}
-                        </React.Fragment>
+                        </Fragment>
                     ))}
                 </div>
                 <ElementLine />

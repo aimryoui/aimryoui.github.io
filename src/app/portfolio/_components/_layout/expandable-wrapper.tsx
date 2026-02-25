@@ -56,7 +56,7 @@ export function ExpandableWrapper({
         <>
             <div
                 className={cn(
-                    "relative overflow-y-clip [clip-path:inset(0_-50vw)]",
+                    "clip-inset-[0_-50vw] relative overflow-y-clip",
                     className
                 )}
             >

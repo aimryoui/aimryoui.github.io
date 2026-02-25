@@ -1,15 +1,18 @@
 import { cn } from "@/lib/utils"
 
-function MarginLine({ className, ...props }: React.ComponentProps<"hr">) {
+function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
     return (
-        <hr
-            className={cn(
-                "sticky top-0 h-dvh border-r border-dashed border-stroke",
-                className
-            )}
+        <div
+            className={cn("sticky top-0 h-dvh w-px", className)}
             role="separator"
             {...props}
-        />
+        >
+            <hr
+                className={cn(
+                    "fixed top-0 h-full border-r border-dashed border-stroke"
+                )}
+            />
+        </div>
     )
 }
 
@@ -25,19 +28,18 @@ function Plus({ position }: { position?: "left" | "right" }) {
                 position === "left" && "-ml-[.171875rem]",
                 position === "right" && "-mr-[.171875rem]"
             )}
+            role="presentation"
         />
     )
 }
 
 function SectionLine({
-    containerClassName,
     className,
     showDecoration = false,
     fit = false,
     ref,
     ...props
 }: React.ComponentProps<"div"> & {
-    containerClassName?: string
     showDecoration?: boolean
     fit?: boolean
 }) {
@@ -46,7 +48,7 @@ function SectionLine({
             className={cn(
                 "relative z-10 h-0 w-full",
                 showDecoration && "flex items-center justify-between",
-                containerClassName
+                className
             )}
             role="separator"
             {...props}
@@ -58,8 +60,7 @@ function SectionLine({
                     "absolute top-1/2 -translate-y-1/2 border-b border-dashed border-stroke bg-background",
                     fit
                         ? "left-1/2 w-full -translate-x-1/2"
-                        : "-right-6.5 w-dvw",
-                    className
+                        : "-right-6.5 w-dvw"
                 )}
             />
             {showDecoration && <Plus position="right" />}

@@ -1,12 +1,13 @@
 "use client"
 
-import { memo, useCallback, useEffect, useMemo, useRef } from "react"
+import { Fragment, useCallback, useEffect, useRef } from "react"
 
 import { stagger, useReducedMotion } from "motion/react"
 import * as m from "motion/react-m"
 
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
+import { TocDivider } from "@/portfolio/_components/_layout/_toc/toc-divider"
 import {
     TocItemRow,
     type TocItemProps
@@ -33,96 +34,100 @@ const ulVariants = {
     }
 }
 
-export const TocList = memo(
-    ({
-        items,
-        filteredItems,
-        hasPageMounted,
-        setHasPageMounted
-    }: TocListProps) => {
-        const prefersReducedMotion = useReducedMotion()
+function TocList({
+    items,
+    filteredItems,
+    hasPageMounted,
+    setHasPageMounted
+}: TocListProps) {
+    const prefersReducedMotion = useReducedMotion()
 
-        const scrollContainerRef = useRef<HTMLUListElement>(null)
-        const clickedTargetRef = useRef<string | null>(null)
-        const isFirstRenderRef = useRef(true)
+    const scrollContainerRef = useRef<HTMLUListElement>(null)
+    const clickedTargetRef = useRef<string | null>(null)
+    const isFirstRenderRef = useRef(true)
 
-        const allIds = useMemo(() => items.map((item) => item.id), [items])
-        const activeId = useScrollSpy(allIds)
+    const allIds = items.map((item) => item.id)
+    const activeId = useScrollSpy(allIds)
 
-        const handleItemClick = useCallback((targetId: string) => {
-            clickedTargetRef.current = targetId
-            const el = document.getElementById(targetId)
-            if (el) {
-                el.scrollIntoView({ behavior: "smooth", block: "start" })
+    const handleItemClick = useCallback((targetId: string) => {
+        clickedTargetRef.current = targetId
+        const el = document.getElementById(targetId)
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
+        window.history.pushState(null, "", `#${targetId}`)
+    }, [])
+
+    useEffect(() => {
+        if (activeId && scrollContainerRef.current) {
+            if (clickedTargetRef.current) {
+                if (activeId !== clickedTargetRef.current) return
+                clickedTargetRef.current = null
             }
-            window.history.pushState(null, "", `#${targetId}`)
-        }, [])
 
-        useEffect(() => {
-            if (activeId && scrollContainerRef.current) {
-                if (clickedTargetRef.current) {
-                    if (activeId !== clickedTargetRef.current) return
-                    clickedTargetRef.current = null
-                }
+            const activeElement = scrollContainerRef.current.querySelector(
+                `[data-toc-id="${activeId}"]`
+            )
 
-                const activeElement = scrollContainerRef.current.querySelector(
-                    `[data-toc-id="${activeId}"]`
-                )
-
-                if (activeElement) {
-                    if (isFirstRenderRef.current) {
-                        isFirstRenderRef.current = false
-                        activeElement.scrollIntoView({
-                            block: "center",
-                            behavior: "auto"
-                        })
-                    } else {
-                        activeElement.scrollIntoView({
-                            block: "center",
-                            behavior: "smooth"
-                        })
-                    }
+            if (activeElement) {
+                if (isFirstRenderRef.current) {
+                    isFirstRenderRef.current = false
+                    activeElement.scrollIntoView({
+                        block: "center",
+                        behavior: "auto"
+                    })
+                } else {
+                    activeElement.scrollIntoView({
+                        block: "center",
+                        behavior: "smooth"
+                    })
                 }
             }
-        }, [activeId])
+        }
+    }, [activeId])
 
-        return (
-            <m.ul
-                variants={prefersReducedMotion ? undefined : ulVariants}
-                initial={
-                    prefersReducedMotion
-                        ? undefined
-                        : hasPageMounted
-                          ? "visible"
-                          : "hidden"
-                }
-                animate={prefersReducedMotion ? undefined : "visible"}
-                onAnimationComplete={() => {
-                    if (!prefersReducedMotion) setHasPageMounted(true)
-                }}
-                ref={scrollContainerRef}
-                className={cn(
-                    "group flex-1 overflow-y-scroll overscroll-contain scroll-auto py-3.25 text-sm will-change-[opacity] scrollbar-thin"
-                )}
-            >
-                {filteredItems.map((item) => {
-                    if (item.hidden) return null
+    return (
+        <m.ul
+            variants={prefersReducedMotion ? undefined : ulVariants}
+            initial={
+                prefersReducedMotion
+                    ? undefined
+                    : hasPageMounted
+                      ? "visible"
+                      : "hidden"
+            }
+            animate={prefersReducedMotion ? undefined : "visible"}
+            onAnimationComplete={() => {
+                if (!prefersReducedMotion) setHasPageMounted(true)
+            }}
+            ref={scrollContainerRef}
+            className={cn(
+                "group flex-1 overflow-y-scroll overscroll-contain scroll-auto py-3.25 text-sm will-change-[opacity] scrollbar-thin"
+            )}
+        >
+            {filteredItems.map((item) => {
+                if (item.hidden) return null
 
-                    return (
+                return (
+                    <Fragment key={item.id}>
+                        {item.depth === 2 && (
+                            <TocDivider
+                                prefersReducedMotion={prefersReducedMotion}
+                            />
+                        )}
+
                         <TocItemRow
-                            key={item.id}
                             item={item}
                             isActive={activeId === item.id}
                             prefersReducedMotion={prefersReducedMotion}
                             onClick={handleItemClick}
                         />
-                    )
-                })}
-            </m.ul>
-        )
-    }
-)
-
-TocList.displayName = "TocList"
+                    </Fragment>
+                )
+            })}
+        </m.ul>
+    )
+}
 
 export type { TocListProps }
+export { TocList }

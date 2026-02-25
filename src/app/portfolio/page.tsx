@@ -1,4 +1,4 @@
-import React from "react"
+import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
@@ -55,10 +55,10 @@ export default function Portfolio() {
                             "social posts",
                             "publications"
                         ].map((item, index, arr) => (
-                            <React.Fragment key={item}>
+                            <Fragment key={item}>
                                 <Bold>{item}</Bold>
                                 {index < arr.length - 1 && ", "}
-                            </React.Fragment>
+                            </Fragment>
                         ))}
                         , or event-type university course projects.
                     </Text>
@@ -76,10 +76,10 @@ export default function Portfolio() {
                             "shadcn/ui",
                             "Tauri"
                         ].map((item, index, arr) => (
-                            <React.Fragment key={item}>
+                            <Fragment key={item}>
                                 <Bold>{item}</Bold>
                                 {index < arr.length - 1 && ", "}
-                            </React.Fragment>
+                            </Fragment>
                         ))}
                         , etc. <br />
                         So with UI & UX Design, I can understand{" "}
@@ -102,7 +102,7 @@ export default function Portfolio() {
                         { value: "45+", label: "Projects" },
                         { value: "4+", label: "Years as Designer" }
                     ].map((item) => (
-                        <React.Fragment key={item.label}>
+                        <Fragment key={item.label}>
                             <div
                                 className={cn(
                                     "relative grid flex-1 place-items-center bg-highlighted/10"
@@ -130,7 +130,7 @@ export default function Portfolio() {
                             <ElementLine />
                             <Divider dir="vertical" />
                             <ElementLine />
-                        </React.Fragment>
+                        </Fragment>
                     ))}
                     <div
                         className={cn(

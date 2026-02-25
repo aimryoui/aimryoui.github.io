@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import { domAnimation, LazyMotion } from "motion/react"
 
@@ -46,7 +46,7 @@ export function TableOfContents({ items }: TocProps) {
         inputRef.current?.focus()
     }, [])
 
-    const filteredItems = useMemo(() => {
+    const filteredItems = (() => {
         if (!debouncedQuery.trim()) return items
 
         const normalizedQuery = removeAccents(
@@ -99,22 +99,20 @@ export function TableOfContents({ items }: TocProps) {
         flushGroup()
 
         return result
-    }, [debouncedQuery, items])
+    })()
 
     if (items.length === 0) return null
 
     return (
         <LazyMotion features={domAnimation} strict>
-            <nav className="fixed top-0 flex h-[calc(100%-(var(--spacing)*20))] w-inherit flex-col bg-background">
-                <TocSearch
-                    ref={inputRef}
-                    value={query}
-                    onChange={setQuery}
-                    onClear={handleClearSearch}
-                />
-
-                <SectionLine fit containerClassName={cn("mt-4")} />
-
+            <TocSearch
+                ref={inputRef}
+                value={query}
+                onChange={setQuery}
+                onClear={handleClearSearch}
+            />
+            <SectionLine fit />
+            <nav className="flex w-inherit flex-1 flex-col overflow-y-scroll bg-background">
                 {filteredItems.length === 0 ? (
                     <Text className={cn("px-6 py-4 text-sm")}>
                         No results found.{" "}

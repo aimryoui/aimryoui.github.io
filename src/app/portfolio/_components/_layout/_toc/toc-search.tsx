@@ -37,7 +37,7 @@ export const TocSearch = forwardRef<HTMLInputElement, TocSearchProps>(
         ])
 
         return (
-            <div className={cn("px-6 pb-1.5 pt-5.5", className)}>
+            <header className={cn("bg-background px-6 py-5.5", className)}>
                 <InputGroup as="search">
                     <InputGroupInput
                         ref={ref}
@@ -135,7 +135,7 @@ export const TocSearch = forwardRef<HTMLInputElement, TocSearchProps>(
                         )}
                     </InputGroupAddon>
                 </InputGroup>
-            </div>
+            </header>
         )
     }
 )

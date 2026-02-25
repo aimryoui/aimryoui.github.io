@@ -1,4 +1,4 @@
-import React from "react"
+import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -26,7 +26,7 @@ interface Section {
 
 const sections: Section[] = [
     {
-        section: "Company",
+        section: "Contract",
         places: [
             {
                 startDate: "12.2025",
@@ -199,7 +199,7 @@ function Experiences() {
             <Divider />
             <SectionLine />
             {sections.map((section, index, arr) => (
-                <React.Fragment key={section.section}>
+                <Fragment key={section.section}>
                     <div
                         className={cn(
                             "relative grid grid-cols-5 gap-6 gap-y-3 bg-background pb-3.75 pt-3.25",
@@ -216,7 +216,7 @@ function Experiences() {
                         </Highlight>
 
                         {section.places.map((place, placeindex) => (
-                            <React.Fragment key={placeindex}>
+                            <Fragment key={placeindex}>
                                 {place.at ? (
                                     <>
                                         <Text mono>
@@ -250,14 +250,14 @@ function Experiences() {
                                         </Bold>
                                     </>
                                 )}
-                            </React.Fragment>
+                            </Fragment>
                         ))}
                     </div>
                     {index < arr.length - 1 &&
                         arr[index + 1].section !== section.section && (
                             <SectionLine />
                         )}
-                </React.Fragment>
+                </Fragment>
             ))}
             <SectionLine />
             <div

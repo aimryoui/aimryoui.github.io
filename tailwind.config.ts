@@ -8,6 +8,7 @@ import animate from "./src/lib/tailwindcss-plugins/utilities/animate"
 import backgroundClip from "./src/lib/tailwindcss-plugins/utilities/background-clip"
 import backgroundPosition from "./src/lib/tailwindcss-plugins/utilities/background-position"
 import backgroundSize from "./src/lib/tailwindcss-plugins/utilities/background-size"
+import clipPath from "./src/lib/tailwindcss-plugins/utilities/clip-path"
 import contentVisibility from "./src/lib/tailwindcss-plugins/utilities/content-visibility"
 import cornerShape from "./src/lib/tailwindcss-plugins/utilities/corner-shape"
 import displayGridLanes from "./src/lib/tailwindcss-plugins/utilities/display-grid-lanes"
@@ -223,6 +224,7 @@ export default {
         backgroundClip,
         backgroundPosition,
         backgroundSize,
+        clipPath,
         contentVisibility,
         cornerShape,
         displayGridLanes,

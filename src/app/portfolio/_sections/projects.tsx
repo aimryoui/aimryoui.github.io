@@ -1,4 +1,4 @@
-import React from "react"
+import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -16,7 +16,7 @@ function Projects() {
     const projectGroups = groupProjectsByCategory(projects)
 
     return projectGroups.map((group, index) => (
-        <React.Fragment key={group.id}>
+        <Fragment key={group.id}>
             <section>
                 <Space />
                 <SectionLine showDecoration />
@@ -44,7 +44,7 @@ function Projects() {
                 <SectionLine />
                 <Space />
                 {group.projects.map((project, index) => (
-                    <React.Fragment key={project.slug}>
+                    <Fragment key={project.slug}>
                         <SectionLine />
                         <article>
                             <ProjectHeader
@@ -72,11 +72,11 @@ function Projects() {
                                 </>
                             )}
                         </article>
-                    </React.Fragment>
+                    </Fragment>
                 ))}
             </section>
             {index < projectGroups.length - 1 && <SectionLine />}
-        </React.Fragment>
+        </Fragment>
     ))
 }
 

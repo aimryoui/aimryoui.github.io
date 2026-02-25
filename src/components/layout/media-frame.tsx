@@ -4,13 +4,11 @@ import { cn } from "@/lib/utils"
 export function SectionName({
     as,
     lowercase = false,
-    containerClassName,
     className,
     sectionName
 }: {
     as?: React.ElementType
     lowercase?: boolean
-    containerClassName?: string
     className?: string
     sectionName: string
 }) {
@@ -19,15 +17,14 @@ export function SectionName({
         <div
             className={cn(
                 "sticky top-3.5 z-30 grid h-13 place-items-center",
-                containerClassName
+                className
             )}
         >
             <Comp
                 aria-hidden={as !== "h5"}
                 className={cn(
                     "rounded-full bg-background px-3.5 py-1.5 font-mono",
-                    !lowercase && "uppercase",
-                    className
+                    !lowercase && "uppercase"
                 )}
             >
                 {sectionName}
@@ -39,18 +36,18 @@ export function SectionName({
 function MediaFrame({
     sectionName,
     lowercase,
-    containerClassName,
+    flex,
     className,
     children
 }: {
     sectionName?: string
     lowercase?: boolean
-    containerClassName?: string
+    flex?: boolean
     className?: string
     children: React.ReactNode
 }) {
     return (
-        <div className={cn("w-full bg-background", containerClassName)}>
+        <div className={cn("w-full bg-background", flex && "h-full flex-1")}>
             {sectionName ? (
                 <>
                     <SectionLine />

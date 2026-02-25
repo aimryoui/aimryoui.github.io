@@ -26,10 +26,7 @@ export default function Home() {
                 </div>
                 <SectionLine />
                 <Divider />
-                <MediaFrame
-                    containerClassName={cn("h-full flex-1")}
-                    className={cn("h-full")}
-                >
+                <MediaFrame flex className={cn("h-full")}>
                     <Image
                         placeholderPriority
                         asBackgroundImage

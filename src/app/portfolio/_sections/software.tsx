@@ -1,4 +1,4 @@
-import React from "react"
+import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -62,7 +62,7 @@ function Software() {
             <Divider />
             <SectionLine />
             {sections.map((section, index, arr) => (
-                <React.Fragment key={section.section}>
+                <Fragment key={section.section}>
                     <div
                         className={cn(
                             "relative grid grid-cols-5 gap-6 gap-y-3 bg-background pb-3.75 pt-3.25",
@@ -85,19 +85,19 @@ function Software() {
                                     <Bold className={cn("sr-only")}>
                                         {frequency.tools.map(
                                             (tool, toolindex) => (
-                                                <React.Fragment key={toolindex}>
+                                                <Fragment key={toolindex}>
                                                     {tool.label}
                                                     {toolindex <
                                                         frequency.tools.length -
                                                             1 && ", "}
-                                                </React.Fragment>
+                                                </Fragment>
                                             )
                                         )}
                                     </Bold>
                                     <div className={cn("flex gap-3")}>
                                         {frequency.tools.map(
                                             (tool, toolindex) => (
-                                                <React.Fragment key={toolindex}>
+                                                <Fragment key={toolindex}>
                                                     <TooltipTrigger
                                                         payload={tool.label}
                                                         render={
@@ -112,7 +112,7 @@ function Software() {
                                                             </Link>
                                                         }
                                                     />
-                                                </React.Fragment>
+                                                </Fragment>
                                             )
                                         )}
                                     </div>
@@ -124,7 +124,7 @@ function Software() {
                         arr[index + 1].section !== section.section && (
                             <SectionLine />
                         )}
-                </React.Fragment>
+                </Fragment>
             ))}
         </section>
     )

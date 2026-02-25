@@ -80,19 +80,17 @@ function Image({
                 "relative grid w-full place-items-center overflow-hidden",
                 asBackgroundImage ? "h-full" : "h-fit",
                 !noBorder && {
-                    after: "pointer-events-none absolute inset-0 z-2 rounded-inherit -outline-offset-px outline-base/8 outline"
+                    after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-base/15 mix-blend-difference"
                 },
                 limitHeight && "h-200",
                 className
             )}
-            style={
-                {
-                    flex: imageRow
-                        ? `${imageRow === "justified" ? `calc(${exactW.toString()}/${exactH.toString()})` : exactW.toString()} 1 0%`
-                        : undefined,
-                    ...cssVars
-                } as React.CSSProperties
-            }
+            style={{
+                flex: imageRow
+                    ? `${imageRow === "justified" ? `calc(${exactW.toString()}/${exactH.toString()})` : exactW.toString()} 1 0%`
+                    : undefined,
+                ...cssVars
+            }}
             {...props}
         >
             {/* SEO & Preview Layer */}
@@ -117,7 +115,6 @@ function Image({
                 style={{
                     aspectRatio: `${exactW.toString()}/${exactH.toString()}`
                 }}
-                role="img"
                 aria-hidden={true}
             >
                 {Array.from({ length: ROWS * COLS }).map((_, index) => {
