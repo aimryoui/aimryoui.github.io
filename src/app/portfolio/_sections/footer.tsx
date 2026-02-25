@@ -52,7 +52,7 @@ function Footer() {
             <SectionLine />
             <SectionName
                 sectionName="Adopt Me"
-                containerClassName="bg-background"
+                containerClassName="bg-background z-0"
             />
             <SectionLine />
             <div
