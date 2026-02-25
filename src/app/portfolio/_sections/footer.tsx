@@ -77,7 +77,6 @@ function Footer() {
                                 className={cn("w-full")}
                                 decoding="async"
                                 loading="lazy"
-                                draggable={false}
                             />
                             <div
                                 className={cn(

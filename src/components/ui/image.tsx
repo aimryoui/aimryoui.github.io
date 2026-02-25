@@ -146,8 +146,6 @@ function Image({
                             decoding="async"
                             loading="lazy"
                             draggable={false}
-                            role="presentation"
-                            aria-hidden="true"
                         />
                     )
                 })}
