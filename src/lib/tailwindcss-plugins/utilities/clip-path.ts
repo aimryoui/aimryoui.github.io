@@ -1,6 +1,6 @@
 import plugin from "tailwindcss/plugin"
 
-const basicShapes = [
+const BASIC_SHAPES = [
     "inset",
     "circle",
     "ellipse",
@@ -9,7 +9,7 @@ const basicShapes = [
     "rect",
     "shape",
     "xywh"
-]
+] as const
 
 export default plugin(
     function ({ matchUtilities, theme }) {
@@ -19,10 +19,10 @@ export default plugin(
                     clipPath: value
                 })
             },
-            { values: theme("clipPath") }
+            { values: theme("clipPath"), type: ["url", "any"] }
         )
         // <basic-shape>
-        basicShapes.forEach((shape) => {
+        BASIC_SHAPES.forEach((shape) => {
             matchUtilities(
                 {
                     [`clip-${shape}`]: (value: string) => ({

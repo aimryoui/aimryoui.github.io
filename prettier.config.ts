@@ -23,7 +23,7 @@ const config: Config = {
         "@ianvs/prettier-plugin-sort-imports",
         "prettier-plugin-tailwindcss"
     ],
-    tailwindAttributes: ["tw"],
+    tailwindAttributes: ["containerClassName", "tw"],
     tailwindFunctions: ["cn", "cva", "twg", "twMerge"],
     importOrder: [
         "<BUILTIN_MODULES>",

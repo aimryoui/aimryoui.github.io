@@ -14,11 +14,18 @@ export default plugin(
 
         addUtilities(staticUtilities)
 
-        matchUtilities({
-            "transition-behavior": (value: string) => ({
-                transitionBehavior: value
-            })
-        })
+        matchUtilities(
+            {
+                "transition-behavior": (value: string) => ({
+                    transitionBehavior: value
+                })
+            },
+            {
+                values: {},
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transition-behavior#formal_syntax} */
+                type: ["any"]
+            }
+        )
     },
     {
         theme: {

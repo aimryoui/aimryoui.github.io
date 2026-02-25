@@ -50,7 +50,10 @@ function Footer() {
                 </div>
             </div>
             <SectionLine />
-            <SectionName sectionName="Adopt Me" className="z-0 bg-background" />
+            <SectionName
+                sectionName="Adopt Me"
+                containerClassName="static z-1 bg-background"
+            />
             <SectionLine />
             <div
                 className={cn(

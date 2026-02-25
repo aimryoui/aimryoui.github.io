@@ -8,7 +8,7 @@ export default plugin(
                     backgroundClip: value
                 })
             },
-            { values: theme("backgroundClip") }
+            { values: theme("backgroundClip"), type: ["any"] }
         )
     },
     {

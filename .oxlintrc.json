@@ -147,7 +147,7 @@
             "removeDuplicates": false,
             "skipClassAttribute": false,
             "tags": [],
-            "classRegex": "^(class(Name)?|tw)$"
+            "classRegex": "^(class(Name)?|containerClassName|tw)$"
         }
     }
 }

@@ -40,7 +40,9 @@ export default plugin(
                     }
                 },
                 {
-                    values: theme("cornerShape")
+                    values: theme("cornerShape"),
+                    /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/corner-shape#formal_syntax} */
+                    type: ["any"]
                 }
             )
         })
@@ -63,6 +65,8 @@ export default plugin(
                 },
                 {
                     values: theme("cornerSuperellipse"),
+                    /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/corner-shape#formal_syntax} */
+                    type: ["any"],
                     supportsNegativeValues: true
                 }
             )

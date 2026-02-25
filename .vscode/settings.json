@@ -31,7 +31,7 @@
     "tailwindCSS.experimental.configFile": "tailwind.config.ts",
     "tailwindCSS.classFunctions": ["cva", "cn", "twg", "twMerge"],
     "tailwindCSS.emmetCompletions": true,
-    "tailwindCSS.classAttributes": ["className", "tw"],
+    "tailwindCSS.classAttributes": ["className", "containerClassName", "tw"],
     // CSS REM
     "cssrem.languages": [
         "html",

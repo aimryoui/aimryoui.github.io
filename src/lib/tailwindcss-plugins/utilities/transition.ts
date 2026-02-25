@@ -32,7 +32,11 @@ export default plugin(
                         "var(--tw-duration, var(--default-transition-duration))"
                 })
             },
-            { values: theme("transitionProperty") }
+            {
+                values: theme("transitionProperty"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transition-property#formal_syntax} */
+                type: ["any"]
+            }
         )
         matchUtilities(
             {
@@ -41,7 +45,12 @@ export default plugin(
                     transitionTimingFunction: value
                 })
             },
-            { values: theme("transitionTimingFunction") }
+            {
+                values: theme("transitionTimingFunction"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transition-timing-function#formal_syntax} */
+                // type: ["easing-function"]
+                type: ["any"]
+            }
         )
         matchUtilities(
             {
@@ -50,7 +59,12 @@ export default plugin(
                     transitionDuration: value
                 })
             },
-            { values: theme("transitionDuration") }
+            {
+                values: theme("transitionDuration"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/transition-duration#formal_syntax} */
+                // type: ["time"]
+                type: ["any"]
+            }
         )
     },
     {

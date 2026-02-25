@@ -39,7 +39,11 @@ export default plugin(
                 "fade-in": (value: string) => ({ "--tw-enter-opacity": value }),
                 "fade-out": (value: string) => ({ "--tw-exit-opacity": value })
             },
-            { values: theme("animationOpacity") }
+            {
+                values: theme("animationOpacity"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/opacity#formal_syntax} */
+                type: ["percentage", "number"]
+            }
         )
 
         matchUtilities(
@@ -47,7 +51,11 @@ export default plugin(
                 "zoom-in": (value: string) => ({ "--tw-enter-scale": value }),
                 "zoom-out": (value: string) => ({ "--tw-exit-scale": value })
             },
-            { values: theme("animationScale") }
+            {
+                values: theme("animationScale"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/transform-function/scale#formal_syntax} */
+                type: ["percentage", "number"]
+            }
         )
 
         matchUtilities(
@@ -55,7 +63,11 @@ export default plugin(
                 "spin-in": (value: string) => ({ "--tw-enter-rotate": value }),
                 "spin-out": (value: string) => ({ "--tw-exit-rotate": value })
             },
-            { values: theme("animationRotate") }
+            {
+                values: theme("animationRotate")
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/transform-function/rotate#formal_syntax} */
+                // type: ["angle", "zero"]
+            }
         )
 
         matchUtilities(
@@ -63,7 +75,11 @@ export default plugin(
                 "blur-in": (value: string) => ({ "--tw-enter-blur": value }),
                 "blur-out": (value: string) => ({ "--tw-exit-blur": value })
             },
-            { values: theme("animationBlur") }
+            {
+                values: theme("animationBlur"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/filter-function/blur#parameters} */
+                type: ["length", "percentage", "number"]
+            }
         )
 
         matchUtilities(
@@ -93,7 +109,11 @@ export default plugin(
                     "--tw-exit-translate-x": value
                 })
             },
-            { values: theme("animationTranslate") }
+            {
+                values: theme("animationTranslate"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/transform-function/translate#formal_syntax} */
+                type: ["length", "percentage"]
+            }
         )
 
         matchUtilities(
@@ -102,7 +122,12 @@ export default plugin(
                     animationDuration: value
                 })
             },
-            { values: filterDefault(theme("animationDuration")) }
+            {
+                values: filterDefault(theme("animationDuration")),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-duration#formal_syntax} */
+                // type: ["time"]
+                type: ["any"]
+            }
         )
 
         matchUtilities(
@@ -111,7 +136,12 @@ export default plugin(
                     animationDelay: value
                 })
             },
-            { values: theme("animationDelay") }
+            {
+                values: theme("animationDelay"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-delay#formal_syntax} */
+                // type: ["time"]
+                type: ["any"]
+            }
         )
 
         matchUtilities(
@@ -120,27 +150,51 @@ export default plugin(
                     animationTimingFunction: value
                 })
             },
-            { values: filterDefault(theme("animationTimingFunction")) }
+            {
+                values: filterDefault(theme("animationTimingFunction")),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-timing-function#formal_syntax} */
+                // type: ["easing-function"]
+                type: ["any"]
+            }
         )
 
         matchUtilities(
             { animation: (value: string) => ({ animationPlayState: value }) },
-            { values: theme("animationPlayState") }
+            {
+                values: theme("animationPlayState"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-play-state#formal_syntax} */
+                // type: ["single-animation-play-state"]
+                type: ["lookup"]
+            }
         )
 
         matchUtilities(
             { "fill-mode": (value: string) => ({ animationFillMode: value }) },
-            { values: theme("animationFillMode") }
+            {
+                values: theme("animationFillMode"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-fill-mode#formal_syntax} */
+                // type: ["single-animation-fill-mode"]
+                type: ["lookup"]
+            }
         )
 
         matchUtilities(
             { direction: (value: string) => ({ animationDirection: value }) },
-            { values: theme("animationDirection") }
+            {
+                values: theme("animationDirection"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-direction#formal_syntax} */
+                // type: ["animation-direction"]
+                type: ["lookup"]
+            }
         )
 
         matchUtilities(
             { repeat: (value: string) => ({ animationIterationCount: value }) },
-            { values: theme("animationRepeat") }
+            {
+                values: theme("animationRepeat"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-iteration-count#formal_syntax} */
+                type: ["number"]
+            }
         )
     },
     {
@@ -215,6 +269,7 @@ export default plugin(
                 animationRepeat: {
                     0: "0",
                     1: "1",
+                    2: "2",
                     infinite: "infinite"
                 },
                 keyframes: {

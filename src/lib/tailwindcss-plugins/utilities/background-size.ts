@@ -7,6 +7,10 @@ export default plugin(function ({ matchUtilities, theme }) {
                 backgroundSize: value
             })
         },
-        { values: theme("backgroundSize") }
+        {
+            values: theme("backgroundSize"),
+            /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/background-size#formal_syntax} */
+            type: ["length", "percentage", "any"]
+        }
     )
 })

@@ -8,7 +8,11 @@ export default plugin(
                     overflowAnchor: value
                 })
             },
-            { values: theme("overflowAnchor") }
+            {
+                values: theme("overflowAnchor"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/overflow-anchor#formal_syntax} */
+                type: ["lookup"]
+            }
         )
     },
     {

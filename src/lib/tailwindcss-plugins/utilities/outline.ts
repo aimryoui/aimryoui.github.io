@@ -16,7 +16,11 @@ export default plugin(
                     outlineStyle: value
                 })
             },
-            { values: theme("outlineStyle") }
+            {
+                values: theme("outlineStyle"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/outline-style#formal_syntax} */
+                type: ["lookup"]
+            }
         )
         matchUtilities(
             {
@@ -25,7 +29,11 @@ export default plugin(
                     outlineWidth: value
                 })
             },
-            { values: theme("outlineWidth") }
+            {
+                values: theme("outlineWidth"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/outline-width#formal_syntax} */
+                type: ["length"]
+            }
         )
         addUtilities({
             ".outline-hidden": {
@@ -53,8 +61,14 @@ export default plugin(
                 double: "double",
                 none: "none"
             },
-            /** @see {@link https://tailwindcss.com/docs/outline-width} */
+            /**
+             * @see {@link https://tailwindcss.com/docs/outline-width}
+             * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/outline-width#formal_syntax}
+             */
             outlineWidth: {
+                thin: "thin",
+                medium: "medium",
+                thick: "thick",
                 DEFAULT: "var(--px)",
                 0: "0",
                 1: "var(--px)",

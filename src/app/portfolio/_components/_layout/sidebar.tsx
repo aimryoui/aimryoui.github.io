@@ -46,7 +46,7 @@ function Sidebar() {
     return (
         <aside
             className={cn(
-                "fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-78 flex-col justify-end lg:hidden"
+                "fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-78 flex-col justify-end bg-background lg:hidden"
             )}
         >
             <TableOfContents items={tocItems} />

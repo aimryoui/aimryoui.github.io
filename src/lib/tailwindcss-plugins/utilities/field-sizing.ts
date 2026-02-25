@@ -4,11 +4,15 @@ export default plugin(
     function ({ matchUtilities, theme }) {
         matchUtilities(
             {
-                "field-sizing": (value: string) => ({
+                field: (value: string) => ({
                     fieldSizing: value
                 })
             },
-            { values: theme("fieldSizing") }
+            {
+                values: theme("fieldSizing"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/field-sizing#formal_syntax} */
+                type: ["lookup"]
+            }
         )
     },
     {

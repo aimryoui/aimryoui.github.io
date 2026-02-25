@@ -8,7 +8,11 @@ export default plugin(
                     contentVisibility: value
                 })
             },
-            { values: theme("contentVisibility") }
+            {
+                values: theme("contentVisibility"),
+                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/content-visibility#formal_syntax} */
+                type: ["lookup"]
+            }
         )
     },
     {

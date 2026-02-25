@@ -112,7 +112,7 @@ export function TableOfContents({ items }: TocProps) {
                 onClear={handleClearSearch}
             />
             <SectionLine fit />
-            <nav className="flex w-inherit flex-1 flex-col overflow-y-scroll bg-background">
+            <nav className="flex flex-1 flex-col overflow-auto">
                 {filteredItems.length === 0 ? (
                     <Text className={cn("px-6 py-4 text-sm")}>
                         No results found.{" "}
