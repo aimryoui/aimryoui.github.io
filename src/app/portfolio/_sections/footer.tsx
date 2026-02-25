@@ -74,8 +74,10 @@ function Footer() {
                             <img
                                 src={item.qrSrc}
                                 alt={item.label}
-                                decoding="async"
                                 className={cn("w-full")}
+                                decoding="async"
+                                loading="lazy"
+                                draggable={false}
                             />
                             <div
                                 className={cn(

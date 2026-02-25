@@ -1,3 +1,4 @@
+// oxlint-disable nextjs/no-img-element
 "use client"
 
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
@@ -145,6 +146,8 @@ function Image({
                             decoding="async"
                             loading="lazy"
                             draggable={false}
+                            role="presentation"
+                            aria-hidden="true"
                         />
                     )
                 })}
