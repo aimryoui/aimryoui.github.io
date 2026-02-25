@@ -10,13 +10,12 @@ import { SectionLine } from "@/components/layout/line"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { cn } from "@/lib/utils"
 
-interface TocItem {
+interface TocItemProps {
     id: string
     label: string
     depth: 1 | 2 | 3
+    hidden?: boolean
 }
-
-const MotionSectionLine = m.create(SectionLine)
 
 const liVariants: Variants = {
     hidden: { x: 10, opacity: 0 },
@@ -42,7 +41,7 @@ export const TocItemRow = memo(
         prefersReducedMotion,
         onClick
     }: {
-        item: TocItem
+        item: TocItemProps
         isActive: boolean
         prefersReducedMotion: ReturnType<typeof useReducedMotion>
         onClick: (id: string) => void
@@ -50,15 +49,16 @@ export const TocItemRow = memo(
         return (
             <React.Fragment>
                 {item.depth === 2 && (
-                    <MotionSectionLine
+                    <m.li
                         variants={
                             prefersReducedMotion ? undefined : lineVariants
                         }
-                        fit
-                        containerClassName={cn(
+                        className={cn(
                             "my-3 h-px will-change-[opacity] first:hidden"
                         )}
-                    />
+                    >
+                        <SectionLine fit />
+                    </m.li>
                 )}
                 <m.li
                     variants={prefersReducedMotion ? undefined : liVariants}
@@ -66,7 +66,7 @@ export const TocItemRow = memo(
                         item.label.toLowerCase() === "footer" && "hidden",
                         item.depth === 3 &&
                             "border-s-[.0625rem] border-muted-foreground/20",
-                        "relative mx-6 box-content h-fit list-inside will-change-[opacity,border,margin]",
+                        "relative mx-6 box-content h-fit list-inside will-change-[transform,opacity]",
                         item.depth === 3 &&
                             isActive && {
                                 before: "absolute inset-y-0 -left-[.0625rem] w-[.1875rem] bg-highlighted"
@@ -120,5 +120,6 @@ export const TocItemRow = memo(
         )
     }
 )
-
 TocItemRow.displayName = "TocItemRow"
+
+export type { TocItemProps }

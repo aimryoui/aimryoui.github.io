@@ -37,9 +37,13 @@ function Sidebar() {
         { id: "education", label: "Education", depth: 3 as const },
         { id: "software", label: "Software", depth: 3 as const },
         { id: "contact", label: "Contact", depth: 3 as const },
+
+        { id: "alert", label: "Alert", depth: 2 as const, hidden: true },
+
         { id: "outlines", label: "Outlines", depth: 2 as const },
-        ...projectItems
-        // { id: "footer", label: "Footer", depth: 3 as const }
+        ...projectItems,
+
+        { id: "footer", label: "Footer", depth: 2 as const, hidden: true }
     ]
 
     return (
@@ -102,6 +106,7 @@ function Sidebar() {
                     render={
                         <Button size="icon" variant="outline">
                             <Ellipsis />
+                            <span className="sr-only">More settings</span>
                         </Button>
                     }
                 />

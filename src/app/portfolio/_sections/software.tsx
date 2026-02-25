@@ -106,6 +106,9 @@ function Software() {
                                                                 href={tool.url}
                                                             >
                                                                 {tool.icon}
+                                                                <span className="sr-only">
+                                                                    {tool.label}
+                                                                </span>
                                                             </Link>
                                                         }
                                                     />

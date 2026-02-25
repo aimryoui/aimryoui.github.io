@@ -2,7 +2,10 @@ import { cn } from "@/lib/utils"
 
 function NoAIPlaceholder() {
     return (
-        <div className={cn("h-[250dvh] min-h-375 anchor/no-ai-placeholder")} />
+        <div
+            id="alert"
+            className={cn("h-[250dvh] min-h-375 anchor/no-ai-placeholder")}
+        />
     )
 }
 

@@ -25,7 +25,6 @@ function Projects() {
                 <SectionTitle
                     id={group.id}
                     order={index + 1}
-                    level={2}
                     title={group.title}
                     note={group.note}
                 />

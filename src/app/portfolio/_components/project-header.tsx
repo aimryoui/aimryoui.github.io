@@ -9,8 +9,7 @@ import { TOOL_ICONS } from "@/portfolio/_configs/tools"
 
 import { type projects } from "~/.velite"
 
-const ICON = TOOL_ICONS()
-const ICON_SM = TOOL_ICONS({ size: "sm" })
+const ICON = TOOL_ICONS({ size: "sm" })
 
 function ProjectHeader({
     type,
@@ -84,17 +83,8 @@ function ProjectHeader({
                     <div
                         className={cn("absolute -top-10 right-4.5 flex gap-2")}
                     >
-                        <Text className="sr-only">
-                            {tools.map((key, index) => {
-                                const tool = ICON[key]
-                                return (
-                                    tool.label +
-                                    (index === tools.length - 1 ? "." : ", ")
-                                )
-                            })}
-                        </Text>
                         {tools.map((key) => {
-                            const tool = ICON_SM[key]
+                            const tool = ICON[key]
 
                             return (
                                 <TooltipTrigger
@@ -103,6 +93,9 @@ function ProjectHeader({
                                     render={
                                         <Link openInNewTab href={tool.url}>
                                             {tool.icon}
+                                            <span className="sr-only">
+                                                {tool.label}
+                                            </span>
                                         </Link>
                                     }
                                 />

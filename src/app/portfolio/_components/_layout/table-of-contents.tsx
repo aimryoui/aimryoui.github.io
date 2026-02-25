@@ -7,17 +7,12 @@ import { domAnimation, LazyMotion } from "motion/react"
 import { SectionLine } from "@/components/layout/line"
 import { Highlight, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
+import { type TocItemProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
 import { TocList } from "@/portfolio/_components/_layout/_toc/toc-list"
 import { TocSearch } from "@/portfolio/_components/_layout/_toc/toc-search"
 
-interface TocItem {
-    id: string
-    label: string
-    depth: 1 | 2 | 3
-}
-
-interface TableOfContentsProps {
-    items: TocItem[]
+interface TocProps {
+    items: TocItemProps[]
 }
 
 function removeAccents(str: string): string {
@@ -27,7 +22,7 @@ function removeAccents(str: string): string {
         .replaceAll(/[đĐ]/g, "d")
 }
 
-export function TableOfContents({ items }: TableOfContentsProps) {
+export function TableOfContents({ items }: TocProps) {
     const [query, setQuery] = useState("")
     const [debouncedQuery, setDebouncedQuery] = useState("")
     const [hasPageMounted, setHasPageMounted] = useState(false)
@@ -58,9 +53,9 @@ export function TableOfContents({ items }: TableOfContentsProps) {
             debouncedQuery.toLowerCase().trim()
         )
 
-        const result: TocItem[] = []
-        let currentCategory: TocItem | null = null
-        let currentChildren: TocItem[] = []
+        const result: TocItemProps[] = []
+        let currentCategory: TocItemProps | null = null
+        let currentChildren: TocItemProps[] = []
 
         const flushGroup = () => {
             if (currentCategory) {
@@ -83,6 +78,8 @@ export function TableOfContents({ items }: TableOfContentsProps) {
         }
 
         for (const item of items) {
+            if (item.hidden) continue
+
             if (item.depth === 1 || item.depth === 2) {
                 flushGroup()
                 currentCategory = item

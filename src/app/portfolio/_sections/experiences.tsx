@@ -14,6 +14,7 @@ interface SectionProps {
     at?: {
         text: string
         url: string
+        ariaLabel?: string
         duplicate?: boolean
     }
 }
@@ -41,7 +42,8 @@ const sections: Section[] = [
                 role: "Design Internship",
                 at: {
                     text: "Amazing Tech Co.",
-                    url: "https://amazingtech.vn"
+                    url: "https://amazingtech.vn",
+                    ariaLabel: "Go to the Amazing Tech Company website"
                 }
             }
         ]
@@ -120,7 +122,8 @@ const sections: Section[] = [
                 role: "Freelance Designer",
                 at: {
                     text: "Tọa Độ Cồng Chiêng",
-                    url: "https://www.facebook.com/toadocongchieng"
+                    url: "https://www.facebook.com/toadocongchieng",
+                    ariaLabel: "Go to the Tọa Độ Cồng Chiêng project fanpage"
                 }
             },
             {
@@ -129,7 +132,8 @@ const sections: Section[] = [
                 role: "Visual Designer",
                 at: {
                     text: "Xoay Vật Chuyển Dòng",
-                    url: "https://www.facebook.com/xoayvatchuyendong.project"
+                    url: "https://www.facebook.com/xoayvatchuyendong.project",
+                    ariaLabel: "Go to the Xoay Vật Chuyển Dòng project fanpage"
                 }
             },
             {
@@ -226,6 +230,7 @@ function Experiences() {
                                         </Bold>
                                         <Link
                                             href={place.at.url}
+                                            aria-label={place.at.ariaLabel}
                                             openInNewTab
                                             translate="no"
                                             className={cn(

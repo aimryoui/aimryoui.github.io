@@ -7,17 +7,14 @@ import * as m from "motion/react-m"
 
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
-import { TocItemRow } from "@/portfolio/_components/_layout/_toc/toc-item-row"
-
-interface TocItem {
-    id: string
-    label: string
-    depth: 1 | 2 | 3
-}
+import {
+    TocItemRow,
+    type TocItemProps
+} from "@/portfolio/_components/_layout/_toc/toc-item-row"
 
 interface TocListProps {
-    items: TocItem[]
-    filteredItems: TocItem[]
+    items: TocItemProps[]
+    filteredItems: TocItemProps[]
     hasPageMounted: boolean
     setHasPageMounted: (value: boolean) => void
 }
@@ -108,18 +105,24 @@ export const TocList = memo(
                     "group flex-1 overflow-y-scroll overscroll-contain scroll-auto py-3.25 text-sm will-change-[opacity] scrollbar-thin"
                 )}
             >
-                {filteredItems.map((item) => (
-                    <TocItemRow
-                        key={item.id}
-                        item={item}
-                        isActive={activeId === item.id}
-                        prefersReducedMotion={prefersReducedMotion}
-                        onClick={handleItemClick}
-                    />
-                ))}
+                {filteredItems.map((item) => {
+                    if (item.hidden) return null
+
+                    return (
+                        <TocItemRow
+                            key={item.id}
+                            item={item}
+                            isActive={activeId === item.id}
+                            prefersReducedMotion={prefersReducedMotion}
+                            onClick={handleItemClick}
+                        />
+                    )
+                })}
             </m.ul>
         )
     }
 )
 
 TocList.displayName = "TocList"
+
+export type { TocListProps }
