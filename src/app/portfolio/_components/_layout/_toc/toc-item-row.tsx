@@ -87,7 +87,7 @@ const TocItemRow = memo(
                                           "bg-muted-foreground/15 transition-[background-color,color] duration-100 dark:bg-muted-foreground/20",
                                           {
                                               "group-hover/link":
-                                                  "bg-muted-foreground/40 text-base-color transition-none"
+                                                  "text-default bg-muted-foreground/40 transition-none"
                                           }
                                       ]
                             )}
@@ -119,8 +119,8 @@ const TocItemRow = memo(
                 {item.depth === 2 && item.id !== "outlines" && (
                     <div
                         className={cn(
-                            "grid size-5 place-items-center rounded-full bg-base-color/5",
-                            "dark:bg-base-color/10"
+                            "bg-default/5 grid size-5 place-items-center rounded-full",
+                            "dark:bg-default/10"
                         )}
                     >
                         <ChevronDown className="size-4" />

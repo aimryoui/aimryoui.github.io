@@ -61,7 +61,8 @@ function NoAIOverlay() {
         >
             <div
                 className={cn(
-                    "sticky top-0 flex h-dvh flex-col justify-center gap-8 tracking-normal text-white"
+                    "text-default sticky top-0 flex h-dvh flex-col justify-center gap-8 tracking-normal",
+                    isActive && "text-white"
                 )}
             >
                 <hgroup className={cn("flex flex-col gap-2")}>
@@ -75,7 +76,7 @@ function NoAIOverlay() {
                         禁止用于 AI 训练.
                     </i>
                 </hgroup>
-                <hr className={cn("border-t border-white opacity-40")} />
+                <hr className={cn("border-t border-current opacity-40")} />
                 <div className={cn("flex flex-col gap-4")}>
                     <p>
                         All text, images and videos on this site are created by
@@ -104,7 +105,7 @@ function NoAIOverlay() {
                         版权所有。
                     </i>
                 </div>
-                <hr className={cn("border-t border-white opacity-40")} />
+                <hr className={cn("border-t border-current opacity-40")} />
                 <div className={cn("flex flex-col gap-4")}>
                     <p>
                         Continuing to scroll/slide down and/or passing this

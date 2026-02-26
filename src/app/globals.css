@@ -15,7 +15,7 @@
     :root {
         --white: oklch(1 0 0);
         --black: oklch(0 0 0);
-        --base-color: light-dark(var(--black), var(--white));
+        --default: light-dark(var(--black), var(--white));
         --inverted: light-dark(var(--white), var(--black));
         --background: light-dark(
             oklch(0.9429 0.0029 264.5),
