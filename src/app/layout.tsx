@@ -177,7 +177,7 @@ export default function RootLayout({
             </head>
             <body
                 className={cn(
-                    "relative flex bg-background px-6 -tracking-[.03em] text-muted-foreground",
+                    "relative flex bg-background px-6 -tracking-[.03em] text-muted-foreground overflow-anchor-none",
                     // Fix tooltip viewport transition overflow bug
                     "overflow-x-hidden"
                 )}
