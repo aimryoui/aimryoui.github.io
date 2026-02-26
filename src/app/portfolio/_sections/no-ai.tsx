@@ -25,13 +25,13 @@ function NoAIOverlay() {
             >
                 <hgroup className={cn("flex flex-col gap-2")}>
                     <h3 className={cn("text-4xl font-extrabold capitalize")}>
-                        <strong>No AI training allowed</strong>
+                        <strong>No AI training allowed.</strong>
                     </h3>
                     <i translate="no" className={cn("text-sm opacity-80")}>
-                        Không được phép huấn luyện AI
+                        Không được phép huấn luyện AI.
                     </i>
                     <i translate="no" className={cn("text-sm opacity-80")}>
-                        禁止用于 AI 训练
+                        禁止用于 AI 训练.
                     </i>
                 </hgroup>
                 <hr className={cn("border-t border-white opacity-40")} />

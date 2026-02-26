@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 import { AnchorPolyfill } from "@/portfolio/_providers/anchor-polyfill"
 import Contact from "@/portfolio/_sections/contact"
 import Education from "@/portfolio/_sections/education"
-import Experiences from "@/portfolio/_sections/experiences"
+import Experience from "@/portfolio/_sections/experience"
 import Footer from "@/portfolio/_sections/footer"
 import { NoAIOverlay, NoAIPlaceholder } from "@/portfolio/_sections/no-ai"
 import Outlines from "@/portfolio/_sections/outlines"
@@ -232,7 +232,7 @@ export default function Portfolio() {
                 <Space />
                 <SectionLine showDecoration />
 
-                <Experiences />
+                <Experience />
                 <SectionLine />
 
                 <Education />

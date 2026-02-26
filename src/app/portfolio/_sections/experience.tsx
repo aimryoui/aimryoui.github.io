@@ -185,14 +185,14 @@ const sections: Section[] = [
     }
 ]
 
-function Experiences() {
+function Experience() {
     return (
         <section>
             <Space />
             <SectionLine />
             <SectionTitle
-                id="experiences"
-                title="Experiences"
+                id="experience"
+                title="Experience"
                 note="Information"
             />
             <SectionLine />
@@ -284,4 +284,4 @@ function Experiences() {
     )
 }
 
-export default Experiences
+export default Experience

@@ -160,7 +160,7 @@ export default function RootLayout({
             className={cn(
                 plusJakartaSans.variable,
                 sfMono.variable,
-                "antialiased scrollbar-colored scrollbar-thumb-base/40 scrollbar-track-pattern"
+                "antialiased scrollbar-colored scrollbar-thumb-base-color/40 scrollbar-track-pattern"
             )}
             data-scroll-behavior="smooth"
         >

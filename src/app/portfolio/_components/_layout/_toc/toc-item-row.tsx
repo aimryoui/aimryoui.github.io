@@ -12,7 +12,8 @@ import { cn } from "@/lib/utils"
 interface TocItemProps {
     id: string
     label: string
-    depth: 1 | 2 | 3
+    depth: number
+    icon?: React.ReactNode
     hidden?: boolean
 }
 
@@ -43,10 +44,12 @@ const TocItemRow = memo(
                 className={cn(
                     item.label.toLowerCase() === "footer" && "hidden",
                     item.depth === 3 &&
+                        !item.icon &&
                         "border-s-[.0625rem] border-muted-foreground/20",
                     "relative mx-6 box-content h-fit list-inside will-change-[transform,opacity]",
                     item.depth === 3 &&
-                        isActive && {
+                        isActive &&
+                        !item.icon && {
                             before: "absolute inset-y-0 -left-[.0625rem] w-[.1875rem] bg-highlighted"
                         }
                 )}
@@ -62,17 +65,36 @@ const TocItemRow = memo(
                         isActive
                             ? "text-highlighted"
                             : [
-                                  "transition-[color] duration-50",
+                                  "transition-[color] duration-100",
                                   {
                                       hover: "text-foreground transition-none",
                                       "focus-visible": "text-foreground"
                                   }
                               ],
-                        "group/link relative inline-block w-full py-0.5 leading-6 will-change-[color]",
-                        item.depth === 3 ? "ps-3" : "font-bold"
+                        "group/link relative w-full leading-6 will-change-[color]",
+                        item.depth === 3 && !item.icon ? "ps-3" : "font-bold",
+                        item.icon ? "flex gap-3 py-1.5" : "inline-block py-0.5"
                     )}
                 >
-                    {item.depth === 1 ? "About" : formatOrdinal(item.label)}
+                    {item.icon && (
+                        <div
+                            className={cn(
+                                "grid size-6 place-items-center rounded-md text-highlighted will-change-[background-color,color] dark:text-base-color",
+                                isActive
+                                    ? "bg-highlighted light:text-white dark:bg-highlighted/70"
+                                    : [
+                                          "bg-highlighted/10 transition-[background-color,color] duration-100 dark:bg-stroke",
+                                          {
+                                              "group-hover/link":
+                                                  "bg-highlighted/20 transition-none dark:bg-muted-foreground/40"
+                                          }
+                                      ]
+                            )}
+                        >
+                            {item.icon}
+                        </div>
+                    )}
+                    {formatOrdinal(item.label)}
                     {isActive && (
                         <div
                             className={cn(

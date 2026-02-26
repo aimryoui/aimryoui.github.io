@@ -1,19 +1,21 @@
 import { SectionLine } from "@/components/layout/line"
 import { cn } from "@/lib/utils"
 
+interface SectionNameProps extends React.ComponentProps<"div"> {
+    as?: React.ElementType
+    sectionName: string
+    lowercase?: boolean
+    containerClassName?: string
+}
+
 export function SectionName({
     as = "h4",
     lowercase = false,
+    sectionName,
     className,
     containerClassName,
-    sectionName
-}: {
-    as?: React.ElementType
-    lowercase?: boolean
-    className?: string
-    containerClassName?: string
-    sectionName: string
-}) {
+    ...props
+}: SectionNameProps) {
     const Comp = as
     const ContainerComp = as === "h4" ? "figcaption" : "div"
     return (
@@ -22,6 +24,7 @@ export function SectionName({
                 "sticky top-3.5 z-30 grid h-13 place-items-center",
                 containerClassName
             )}
+            {...props}
         >
             <Comp
                 aria-hidden={as === "h4" ? undefined : "true"}

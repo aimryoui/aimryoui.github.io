@@ -110,7 +110,7 @@ function TocList({
 
                 return (
                     <Fragment key={item.id}>
-                        {item.depth === 2 && (
+                        {(item.depth === 2 || item.depth === 4) && (
                             <TocDivider
                                 prefersReducedMotion={prefersReducedMotion}
                             />

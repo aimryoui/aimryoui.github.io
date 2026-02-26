@@ -51,6 +51,7 @@ function Footer() {
             </div>
             <SectionLine />
             <SectionName
+                id="adopt-me"
                 sectionName="Adopt Me"
                 containerClassName="static z-1 bg-background"
             />

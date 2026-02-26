@@ -10,6 +10,14 @@ import { slugify } from "@/helpers/slugify"
 import { Ellipsis } from "@/lib/icons"
 import { groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
+import {
+    AboutIcon,
+    AdoptMeIcon,
+    ContactIcon,
+    EducationIcon,
+    ExperienceIcon,
+    SoftwareIcon
+} from "@/portfolio/_components/_icons/toc-icons"
 import { TableOfContents } from "@/portfolio/_components/_layout/table-of-contents"
 
 import { projects } from "~/.velite"
@@ -21,26 +29,52 @@ function Sidebar() {
         {
             id: group.id,
             label: group.title,
-            depth: 2 as const
+            depth: 2
         },
         // Projects
         ...group.projects.map((p) => ({
             id: slugify(p.projectName),
             label: p.projectName,
-            depth: 3 as const
+            depth: 3
         }))
     ])
 
     const tocItems = [
-        { id: "about", label: "About", depth: 1 as const },
-        { id: "experiences", label: "Experiences", depth: 3 as const },
-        { id: "education", label: "Education", depth: 3 as const },
-        { id: "software", label: "Software", depth: 3 as const },
-        { id: "contact", label: "Contact", depth: 3 as const },
-        { id: "alert", label: "Alert", depth: 2 as const, hidden: true }, // Hidden
-        { id: "outlines", label: "Outlines", depth: 2 as const },
+        { id: "about", label: "About", depth: 1, icon: <AboutIcon /> },
+        {
+            id: "experience",
+            label: "Experience",
+            depth: 3,
+            icon: <ExperienceIcon />
+        },
+        {
+            id: "education",
+            label: "Education",
+            depth: 3,
+            icon: <EducationIcon />
+        },
+        {
+            id: "software",
+            label: "Software",
+            depth: 3,
+            icon: <SoftwareIcon />
+        },
+        {
+            id: "contact",
+            label: "Contact",
+            depth: 3,
+            icon: <ContactIcon />
+        },
+        { id: "alert", label: "Alert", depth: 2, hidden: true }, // Hidden
+        { id: "outlines", label: "Outlines", depth: 2 },
         ...projectItems,
-        { id: "footer", label: "Footer", depth: 2 as const, hidden: true } // Hidden
+        { id: "footer", label: "Footer", depth: 2, hidden: true }, // Hidden
+        {
+            id: "adopt-me",
+            label: "Adopt me",
+            depth: 4,
+            icon: <AdoptMeIcon />
+        }
     ]
 
     return (

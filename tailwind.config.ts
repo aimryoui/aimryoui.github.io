@@ -165,7 +165,7 @@ export default {
                 "color-mix(in oklab, currentColor calc(<alpha-value> * 100%), transparent)",
             white: colorMix("--white"),
             black: colorMix("--black"),
-            base: colorMix("--base"),
+            "base-color": colorMix("--base-color"),
             inverted: colorMix("--inverted"),
             alert: colorMix("--alert"),
 
