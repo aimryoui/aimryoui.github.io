@@ -80,7 +80,7 @@ function Image({
                 "relative grid w-full place-items-center overflow-hidden",
                 asBackgroundImage ? "h-full" : "h-fit",
                 !noBorder && {
-                    after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-base-color/15 mix-blend-difference"
+                    after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-white/15 mix-blend-difference"
                 },
                 limitHeight && "h-200",
                 className
