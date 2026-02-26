@@ -1,4 +1,4 @@
-import { Fragment, Suspense } from "react"
+import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
@@ -260,9 +260,11 @@ export default function Portfolio() {
 
                 <SectionLine />
 
-                <Suspense>
-                    <Projects />
-                </Suspense>
+                {/* <Suspense
+                    fallback={<div className="h-dvh w-full bg-background" />}
+                > */}
+                <Projects />
+                {/* </Suspense> */}
 
                 <SectionLine />
 

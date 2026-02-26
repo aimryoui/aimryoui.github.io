@@ -177,7 +177,7 @@ export default function RootLayout({
             </head>
             <body
                 className={cn(
-                    "relative flex bg-background px-6 -tracking-[.03em] text-muted-foreground overflow-anchor-none",
+                    "relative flex bg-background px-6 -tracking-[.03em] text-muted-foreground",
                     // Fix tooltip viewport transition overflow bug
                     "overflow-x-hidden"
                 )}
@@ -191,8 +191,8 @@ export default function RootLayout({
                             )}
                         />
                         <MarginLine />
+                        <MarginLine className="order-last" />
                         {children}
-                        <MarginLine />
                     </TooltipProvider>
                 </ThemeProvider>
             </body>
