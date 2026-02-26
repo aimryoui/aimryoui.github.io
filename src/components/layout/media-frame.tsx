@@ -24,7 +24,7 @@ export function SectionName({
             )}
         >
             <Comp
-                aria-hidden={as !== "h4" ? "true" : undefined}
+                aria-hidden={as === "h4" ? undefined : "true"}
                 className={cn(
                     "rounded-full bg-background px-3.5 py-1.5 font-mono",
                     !lowercase && "uppercase",
