@@ -31,17 +31,15 @@ const TocItemRow = memo(
     ({
         item,
         isActive,
-        prefersReducedMotion,
         onClick
     }: {
         item: TocItemProps
         isActive: boolean
-        prefersReducedMotion: ReturnType<typeof useReducedMotion>
         onClick: (id: string) => void
     }) => {
         return (
             <m.li
-                variants={prefersReducedMotion ? undefined : liVariants}
+                variants={liVariants}
                 className={cn(
                     item.label.toLowerCase() === "footer" && "hidden",
                     item.depth === 3 &&
@@ -87,7 +85,7 @@ const TocItemRow = memo(
                                           "bg-muted-foreground/15 transition-[background-color,color] duration-100 dark:bg-muted-foreground/20",
                                           {
                                               "group-hover/link":
-                                                  "text-default bg-muted-foreground/40 transition-none"
+                                                  "text-default bg-muted-foreground/30 transition-none dark:bg-muted-foreground/40"
                                           }
                                       ]
                             )}
@@ -120,7 +118,7 @@ const TocItemRow = memo(
                     <div
                         className={cn(
                             "bg-default/5 grid size-5 place-items-center rounded-full",
-                            "dark:bg-default/10"
+                            "dark:bg-default/10 group-has-[input:not(:placeholder-shown)]/sidebar:hidden"
                         )}
                     >
                         <ChevronDown className="size-4" />

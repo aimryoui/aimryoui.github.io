@@ -13,20 +13,14 @@ const lineVariants: Variants = {
     }
 }
 
-const TocDivider = memo(
-    ({
-        prefersReducedMotion
-    }: {
-        prefersReducedMotion: ReturnType<typeof useReducedMotion>
-    }) => (
-        <m.li
-            variants={prefersReducedMotion ? undefined : lineVariants}
-            className="my-3 h-px will-change-[opacity] first:hidden"
-        >
-            <SectionLine fit />
-        </m.li>
-    )
-)
+const TocDivider = memo(() => (
+    <m.li
+        variants={lineVariants}
+        className="my-3 h-px will-change-[opacity] first:hidden"
+    >
+        <SectionLine fit />
+    </m.li>
+))
 TocDivider.displayName = "TocDivider"
 
 export { TocDivider }

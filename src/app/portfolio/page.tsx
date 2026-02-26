@@ -20,6 +20,7 @@ export default function Portfolio() {
     return (
         <>
             <AnchorPolyfill />
+            <NoAIOverlay />
             <main className={cn("flex-1")}>
                 <Space />
                 <SectionLine showDecoration />
@@ -268,7 +269,6 @@ export default function Portfolio() {
 
                 <Footer />
             </main>
-            <NoAIOverlay />
         </>
     )
 }

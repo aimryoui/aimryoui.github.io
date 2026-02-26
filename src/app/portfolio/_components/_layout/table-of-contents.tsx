@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 
-import { domAnimation, LazyMotion } from "motion/react"
-
 import { SectionLine } from "@/components/layout/line"
 import { Highlight, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
@@ -20,6 +18,58 @@ function removeAccents(str: string): string {
         .normalize("NFD")
         .replaceAll(/[\u0300-\u036F]/g, "")
         .replaceAll(/[đĐ]/g, "d")
+}
+
+function getFilteredItems(items: TocItemProps[], query: string) {
+    if (!query.trim()) return items
+
+    const normalizedQuery = removeAccents(query.toLowerCase().trim())
+    const result: TocItemProps[] = []
+    let currentCategory: TocItemProps | null = null
+    let currentChildren: TocItemProps[] = []
+
+    const flushGroup = () => {
+        if (currentCategory) {
+            const isCategoryMatch = removeAccents(
+                currentCategory.label.toLowerCase()
+            ).includes(normalizedQuery)
+            const matchingChildren = currentChildren.filter((child) =>
+                removeAccents(child.label.toLowerCase()).includes(
+                    normalizedQuery
+                )
+            )
+
+            if (isCategoryMatch || matchingChildren.length > 0) {
+                result.push(currentCategory)
+                result.push(...matchingChildren)
+            }
+        }
+        currentCategory = null
+        currentChildren = []
+    }
+
+    for (const item of items) {
+        if (item.hidden) continue
+
+        if (item.depth === 1 || item.depth === 2) {
+            flushGroup()
+            currentCategory = item
+        } else if (currentCategory) {
+            currentChildren.push(item)
+        } else {
+            flushGroup()
+            if (
+                removeAccents(item.label.toLowerCase()).includes(
+                    normalizedQuery
+                )
+            ) {
+                result.push(item)
+            }
+        }
+    }
+    flushGroup()
+
+    return result
 }
 
 export function TableOfContents({ items }: TocProps) {
@@ -46,65 +96,12 @@ export function TableOfContents({ items }: TocProps) {
         inputRef.current?.focus()
     }, [])
 
-    const filteredItems = (() => {
-        if (!debouncedQuery.trim()) return items
-
-        const normalizedQuery = removeAccents(
-            debouncedQuery.toLowerCase().trim()
-        )
-
-        const result: TocItemProps[] = []
-        let currentCategory: TocItemProps | null = null
-        let currentChildren: TocItemProps[] = []
-
-        const flushGroup = () => {
-            if (currentCategory) {
-                const isCategoryMatch = removeAccents(
-                    currentCategory.label.toLowerCase()
-                ).includes(normalizedQuery)
-                const matchingChildren = currentChildren.filter((child) =>
-                    removeAccents(child.label.toLowerCase()).includes(
-                        normalizedQuery
-                    )
-                )
-
-                if (isCategoryMatch || matchingChildren.length > 0) {
-                    result.push(currentCategory)
-                    result.push(...matchingChildren)
-                }
-            }
-            currentCategory = null
-            currentChildren = []
-        }
-
-        for (const item of items) {
-            if (item.hidden) continue
-
-            if (item.depth === 1 || item.depth === 2) {
-                flushGroup()
-                currentCategory = item
-            } else if (currentCategory) {
-                currentChildren.push(item)
-            } else {
-                flushGroup()
-                if (
-                    removeAccents(item.label.toLowerCase()).includes(
-                        normalizedQuery
-                    )
-                ) {
-                    result.push(item)
-                }
-            }
-        }
-        flushGroup()
-
-        return result
-    })()
+    const filteredItems = getFilteredItems(items, debouncedQuery)
 
     if (items.length === 0) return null
 
     return (
-        <LazyMotion features={domAnimation} strict>
+        <>
             <TocSearch
                 ref={inputRef}
                 value={query}
@@ -134,6 +131,6 @@ export function TableOfContents({ items }: TocProps) {
                     />
                 )}
             </nav>
-        </LazyMotion>
+        </>
     )
 }

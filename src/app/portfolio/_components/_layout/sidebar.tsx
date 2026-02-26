@@ -1,5 +1,7 @@
 import Link from "next/link"
 
+import { domAnimation, LazyMotion, MotionConfig } from "motion/react"
+
 import { SectionLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
 import { Button } from "@/components/ui/button"
@@ -40,7 +42,7 @@ function Sidebar() {
     ])
 
     const tocItems = [
-        { id: "about", label: "About", depth: 1, icon: <AboutIcon /> },
+        { id: "about", label: "About", depth: 3, icon: <AboutIcon /> },
         {
             id: "experience",
             label: "Experience",
@@ -80,10 +82,15 @@ function Sidebar() {
     return (
         <aside
             className={cn(
-                "fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-78 flex-col justify-end bg-background lg:hidden"
+                "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-78 flex-col justify-end bg-background lg:hidden"
             )}
         >
-            <TableOfContents items={tocItems} />
+            <LazyMotion features={domAnimation} strict>
+                {/* https://motion.dev/docs/react-accessibility */}
+                <MotionConfig reducedMotion="user">
+                    <TableOfContents items={tocItems} />
+                </MotionConfig>
+            </LazyMotion>
             <SectionLine fit />
             <menu className={cn("flex w-full gap-2 bg-background px-6 py-5.5")}>
                 <li className="me-auto">

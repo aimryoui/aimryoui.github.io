@@ -40,8 +40,6 @@ function TocList({
     hasPageMounted,
     setHasPageMounted
 }: TocListProps) {
-    const prefersReducedMotion = useReducedMotion()
-
     const scrollContainerRef = useRef<HTMLUListElement>(null)
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
@@ -88,17 +86,11 @@ function TocList({
 
     return (
         <m.ul
-            variants={prefersReducedMotion ? undefined : ulVariants}
-            initial={
-                prefersReducedMotion
-                    ? undefined
-                    : hasPageMounted
-                      ? "visible"
-                      : "hidden"
-            }
-            animate={prefersReducedMotion ? undefined : "visible"}
+            variants={ulVariants}
+            initial={hasPageMounted ? false : "hidden"}
+            animate={"visible"}
             onAnimationComplete={() => {
-                if (!prefersReducedMotion) setHasPageMounted(true)
+                if (!hasPageMounted) setHasPageMounted(true)
             }}
             ref={scrollContainerRef}
             className={cn(
@@ -111,15 +103,12 @@ function TocList({
                 return (
                     <Fragment key={item.id}>
                         {(item.depth === 2 || item.depth === 4) && (
-                            <TocDivider
-                                prefersReducedMotion={prefersReducedMotion}
-                            />
+                            <TocDivider />
                         )}
 
                         <TocItemRow
                             item={item}
                             isActive={activeId === item.id}
-                            prefersReducedMotion={prefersReducedMotion}
                             onClick={handleItemClick}
                         />
                     </Fragment>
