@@ -191,8 +191,8 @@ export default function RootLayout({
                             )}
                         />
                         <MarginLine />
-                        <MarginLine className="order-last" />
                         {children}
+                        <MarginLine />
                     </TooltipProvider>
                 </ThemeProvider>
             </body>
