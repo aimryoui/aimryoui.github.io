@@ -2,7 +2,7 @@
 
 import { Fragment, useCallback, useEffect, useRef } from "react"
 
-import { stagger, useReducedMotion } from "motion/react"
+import { stagger } from "motion/react"
 import * as m from "motion/react-m"
 
 import { useScrollSpy } from "@/hooks/use-scroll-spy"

@@ -4,7 +4,7 @@ import { memo } from "react"
 import Link from "next/link"
 
 import { ChevronDown } from "lucide-react"
-import { type useReducedMotion, type Variants } from "motion/react"
+import { type Variants } from "motion/react"
 import * as m from "motion/react-m"
 
 import { formatOrdinal } from "@/helpers/format-ordinal"

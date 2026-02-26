@@ -1,6 +1,6 @@
 import { memo } from "react"
 
-import { type useReducedMotion, type Variants } from "motion/react"
+import { type Variants } from "motion/react"
 import * as m from "motion/react-m"
 
 import { SectionLine } from "@/components/layout/line"
