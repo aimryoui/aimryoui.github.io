@@ -14,11 +14,11 @@ const optimizeAndReplacePlugin = (): Plugin => {
     return {
         postcssPlugin: "optimize-and-replace",
         Declaration(decl: Declaration) {
-            // A. Đổi tên Prop
+            // Property
             if (REPLACE_PATTERN.test(decl.prop)) {
                 decl.prop = decl.prop.replace(REPLACE_PATTERN, REPLACE_WITH)
             }
-            // B. Đổi tên Value
+            // Value
             if (REPLACE_PATTERN.test(decl.value)) {
                 decl.value = decl.value.replace(REPLACE_PATTERN, REPLACE_WITH)
             }
