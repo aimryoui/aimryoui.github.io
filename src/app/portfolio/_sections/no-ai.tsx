@@ -1,3 +1,7 @@
+"use client"
+
+import { useEffect, useRef, useState } from "react"
+
 import { cn } from "@/lib/utils"
 
 function NoAIPlaceholder() {
@@ -10,10 +14,47 @@ function NoAIPlaceholder() {
 }
 
 function NoAIOverlay() {
+    const [isActive, setIsActive] = useState(false)
+    const isScrollPending = useRef(false)
+
+    useEffect(() => {
+        const el = document.getElementById("alert")
+        if (!el) return
+
+        const handleScroll = () => {
+            if (isScrollPending.current) return
+            isScrollPending.current = true
+
+            requestAnimationFrame(() => {
+                const rect = el.getBoundingClientRect()
+                const innerHeight = window.innerHeight
+
+                const activePoint = innerHeight * 0.4
+
+                const isCurrentlyActive =
+                    rect.top <= activePoint && rect.bottom > activePoint
+
+                setIsActive(isCurrentlyActive)
+                isScrollPending.current = false
+            })
+        }
+
+        handleScroll()
+
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        window.addEventListener("resize", handleScroll, { passive: true })
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+            window.removeEventListener("resize", handleScroll)
+        }
+    }, [])
+
     return (
         <div
             className={cn(
-                "inset-x-0 z-50 bg-alert anchored/no-ai-placeholder top-anchor-top-0 h-anchor-height-0",
+                "inset-x-0 z-50 border-y border-dashed border-stroke anchored/no-ai-placeholder top-anchor-top-0 h-anchor-height-0 transition-[background-color] duration-500",
+                isActive ? "bg-alert" : "bg-background",
                 "px-[calc(var(--spacing)*6.5*2+var(--spacing)*78+var(--px)*3+var(--spacing)*6)] md:px-[calc(var(--spacing)*6.5+var(--px)*2+var(--spacing)*6)]"
             )}
             role="alert"
@@ -61,6 +102,20 @@ function NoAIOverlay() {
                         生成目的。
                         <br />
                         版权所有。
+                    </i>
+                </div>
+                <hr className={cn("border-t border-white opacity-40")} />
+                <div className={cn("flex flex-col gap-4")}>
+                    <p>
+                        Continuing to scroll/slide down and/or passing this
+                        alert signifies your agreement to the terms above.
+                    </p>
+                    <i translate="no" className={cn("text-sm opacity-80")}>
+                        Tiếp tục lăn/lướt xuống và/hoặc vượt qua cảnh báo này
+                        đồng nghĩa với bạn đồng ý với với các điều trên.
+                    </i>
+                    <i translate="no" className={cn("text-sm opacity-80")}>
+                        继续向下滚动/滑动，和/或略过此提示，即表示您同意上述条款。
                     </i>
                 </div>
             </div>

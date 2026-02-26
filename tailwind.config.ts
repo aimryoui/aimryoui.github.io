@@ -124,7 +124,7 @@ export default {
             zIndex: {
                 1: "1",
                 2: "2",
-                infinity: "2147483647"
+                infinite: "2147483647"
             },
             data: {
                 instant: "instant",

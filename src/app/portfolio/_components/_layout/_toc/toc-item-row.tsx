@@ -3,6 +3,7 @@
 import { memo } from "react"
 import Link from "next/link"
 
+import { ChevronDown } from "lucide-react"
 import { type useReducedMotion, type Variants } from "motion/react"
 import * as m from "motion/react-m"
 
@@ -46,7 +47,7 @@ const TocItemRow = memo(
                     item.depth === 3 &&
                         !item.icon &&
                         "border-s-[.0625rem] border-muted-foreground/20",
-                    "relative mx-6 box-content h-fit list-inside will-change-[transform,opacity]",
+                    "relative mx-6 box-content flex h-fit list-inside items-center gap-4 will-change-[transform,opacity]",
                     item.depth === 3 &&
                         isActive &&
                         !item.icon && {
@@ -71,22 +72,22 @@ const TocItemRow = memo(
                                       "focus-visible": "text-foreground"
                                   }
                               ],
-                        "group/link relative w-full leading-6 will-change-[color]",
+                        "group/link relative flex-1 leading-6 will-change-[color]",
                         item.depth === 3 && !item.icon ? "ps-3" : "font-bold",
-                        item.icon ? "flex gap-3 py-1.5" : "inline-block py-0.5"
+                        item.icon ? "flex gap-2 py-1" : "inline-block py-0.5"
                     )}
                 >
                     {item.icon && (
                         <div
                             className={cn(
-                                "grid size-6 place-items-center rounded-md text-highlighted will-change-[background-color,color] dark:text-base-color",
+                                "grid size-6 place-items-center rounded-md will-change-[background-color,color]",
                                 isActive
-                                    ? "bg-highlighted light:text-white dark:bg-highlighted/70"
+                                    ? "bg-highlighted text-white dark:bg-highlighted/70"
                                     : [
-                                          "bg-highlighted/10 transition-[background-color,color] duration-100 dark:bg-stroke",
+                                          "bg-muted-foreground/15 transition-[background-color,color] duration-100 dark:bg-muted-foreground/20",
                                           {
                                               "group-hover/link":
-                                                  "bg-highlighted/20 transition-none dark:bg-muted-foreground/40"
+                                                  "bg-muted-foreground/40 text-base-color transition-none"
                                           }
                                       ]
                             )}
@@ -115,6 +116,16 @@ const TocItemRow = memo(
                         </div>
                     )}
                 </Link>
+                {item.depth === 2 && item.id !== "outlines" && (
+                    <div
+                        className={cn(
+                            "grid size-5 place-items-center rounded-full bg-base-color/5",
+                            "dark:bg-base-color/10"
+                        )}
+                    >
+                        <ChevronDown className="size-4" />
+                    </div>
+                )}
             </m.li>
         )
     }

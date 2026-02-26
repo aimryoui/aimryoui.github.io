@@ -71,7 +71,7 @@ function Sidebar() {
         { id: "footer", label: "Footer", depth: 2, hidden: true }, // Hidden
         {
             id: "adopt-me",
-            label: "Adopt me",
+            label: "Adopt Me",
             depth: 4,
             icon: <AdoptMeIcon />
         }

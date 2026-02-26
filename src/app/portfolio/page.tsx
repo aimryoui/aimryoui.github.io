@@ -245,11 +245,9 @@ export default function Portfolio() {
 
                 <SectionLine />
                 <Divider />
-                <SectionLine />
 
                 <NoAIPlaceholder />
 
-                <SectionLine />
                 <Divider />
 
                 <SectionLine />
