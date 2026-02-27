@@ -5,7 +5,7 @@ import Link from "next/link"
 
 import { ChevronDown } from "lucide-react"
 import { type Variants } from "motion/react"
-import * as m from "motion/react-m"
+import m from "motion/react-m"
 
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { cn } from "@/lib/utils"
@@ -49,7 +49,7 @@ const TocItemRow = memo(
                     item.depth === 3 &&
                         isActive &&
                         !item.icon && {
-                            before: "absolute inset-y-0 -left-[.0625rem] w-[.1875rem] bg-highlighted"
+                            before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-highlighted"
                         }
                 )}
             >
@@ -131,5 +131,5 @@ const TocItemRow = memo(
 )
 TocItemRow.displayName = "TocItemRow"
 
-export type { TocItemProps }
 export { TocItemRow }
+export type { TocItemProps }

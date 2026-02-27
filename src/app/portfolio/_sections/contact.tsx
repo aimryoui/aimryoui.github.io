@@ -107,7 +107,7 @@ const sections: Section[] = [
                 ),
                 links: {
                     text: siteConfig.email.work,
-                    url: "mailto:" + siteConfig.email.work
+                    url: `mailto:${siteConfig.email.work}`
                 },
                 prefer: true
             }
@@ -131,7 +131,7 @@ const sections: Section[] = [
                     </svg>
                 ),
                 links: {
-                    text: "fb.me/" + siteConfig.username,
+                    text: `fb.me/${siteConfig.username}`,
                     url: siteConfig.link.facebook
                 },
                 prefer: true
@@ -153,7 +153,7 @@ const sections: Section[] = [
                     </svg>
                 ),
                 links: {
-                    text: "linkedin.com/in/" + siteConfig.username,
+                    text: `linkedin.com/in/${siteConfig.username}`,
                     url: siteConfig.link.linkedIn
                 }
             },
@@ -174,7 +174,7 @@ const sections: Section[] = [
                     </svg>
                 ),
                 links: {
-                    text: "github.com/" + siteConfig.username,
+                    text: `github.com/${siteConfig.username}`,
                     url: siteConfig.link.github
                 }
             }
@@ -200,7 +200,7 @@ const sections: Section[] = [
                     </svg>
                 ),
                 links: {
-                    text: "t.me/" + siteConfig.username,
+                    text: `t.me/${siteConfig.username}`,
                     url: siteConfig.link.telegram
                 }
             },
@@ -249,7 +249,7 @@ const sections: Section[] = [
                     </svg>
                 ),
                 links: {
-                    text: "be.net/" + siteConfig.username,
+                    text: `be.net/${siteConfig.username}`,
                     url: siteConfig.link.behance
                 }
             },
@@ -268,7 +268,7 @@ const sections: Section[] = [
                     </svg>
                 ),
                 links: {
-                    text: "dribbble.com/" + siteConfig.username,
+                    text: `dribbble.com/${siteConfig.username}`,
                     url: siteConfig.link.dribbble
                 }
             }

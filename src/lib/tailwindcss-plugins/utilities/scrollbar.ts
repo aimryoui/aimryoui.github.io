@@ -11,7 +11,7 @@ const toColorValue = (
 const SCROLLBAR_PARTS = ["thumb", "track", "corner"] as const
 
 export default plugin(
-    function ({ addUtilities, matchUtilities, theme }) {
+    ({ addUtilities, matchUtilities, theme }) => {
         addUtilities({
             ".scrollbar-colored": {
                 scrollbarColor:

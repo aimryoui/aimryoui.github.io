@@ -3,14 +3,14 @@
 import { Fragment, useCallback, useEffect, useRef } from "react"
 
 import { stagger } from "motion/react"
-import * as m from "motion/react-m"
+import m from "motion/react-m"
 
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
 import { TocDivider } from "@/portfolio/_components/_layout/_toc/toc-divider"
 import {
-    TocItemRow,
-    type TocItemProps
+    type TocItemProps,
+    TocItemRow
 } from "@/portfolio/_components/_layout/_toc/toc-item-row"
 
 interface TocListProps {

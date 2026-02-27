@@ -1,7 +1,7 @@
 import { memo } from "react"
 
 import { type Variants } from "motion/react"
-import * as m from "motion/react-m"
+import m from "motion/react-m"
 
 import { SectionLine } from "@/components/layout/line"
 

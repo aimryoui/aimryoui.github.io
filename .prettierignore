@@ -1,21 +1,7 @@
 # .prettierignore
-node_modules
-.next
-.velite
-public/static
-coverage
-package-lock.json
-pnpm-lock.yaml
-yarn.lock
-.git
+*
 
-# Media
-*.png
-*.jpg
-*.jpeg
-*.webp
-*.gif
-*.ico
-*.svg
-*.mp4
-*.mp3
+!*/
+!*/**/
+
+!**/*.mdx

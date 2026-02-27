@@ -29,6 +29,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ["/"]
             }
         ],
-        sitemap: siteConfig.url + "/sitemap.xml"
+        sitemap: `${siteConfig.url}/sitemap.xml`
     }
 }

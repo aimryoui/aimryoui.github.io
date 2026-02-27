@@ -160,7 +160,7 @@ export default function RootLayout({
             className={cn(
                 plusJakartaSans.variable,
                 sfMono.variable,
-                "scrollbar-thumb-default/40 antialiased scrollbar-colored scrollbar-track-pattern"
+                "antialiased scrollbar-colored scrollbar-thumb-default/40 scrollbar-track-pattern"
             )}
             data-scroll-behavior="smooth"
         >
@@ -186,7 +186,7 @@ export default function RootLayout({
                     <TooltipProvider>
                         <div
                             className={cn(
-                                "fixed inset-0 -z-50 h-full w-full",
+                                "fixed inset-0 -z-50 size-full",
                                 "bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]"
                             )}
                         />

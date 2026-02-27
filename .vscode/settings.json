@@ -1,34 +1,33 @@
 {
     //* General
+    "files.eol": "\n",
     "git.followTagsWhenSync": true,
+    "prettier.useEditorConfig": false,
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit",
-        "source.fixAll.oxc": "always",
-        "source.fixAll.stylelint": "explicit",
         "source.organizeImports": "never",
-        "source.addMissingImports": "explicit"
+        "source.addMissingImports": "explicit",
+        "source.removeUnusedImports": "never",
+        "source.fixAll.eslint": "explicit",
+        "source.fixAll.stylelint": "explicit",
+        //* Biome
+        "source.action.noDuplicateClasses.biome": "explicit",
+        "source.organizeImports.biome": "explicit",
+        "source.fixAll.biome": "explicit"
     },
     "editor.quickSuggestions": {
         "strings": "on"
     },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "biomejs.biome",
+    "[mdx]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
     "editor.formatOnSave": true,
-    //* Oxc
-    "oxc.enable.oxlint": true,
-    "oxc.configPath": ".oxlintrc.json",
-    "oxc.enable.oxfmt": false,
-    "oxc.fmt.configPath": ".oxfmtrc.json",
-    "oxc.requireConfig": true,
-    "oxc.disableNestedConfig": true,
-    "oxc.tsConfigPath": "tsconfig.json",
-    "oxc.typeAware": true,
-    "oxc.fixKind": "safe_fix_or_suggestion",
-    "oxc.trace.server": "verbose",
     //* Tailwind CSS
     "files.associations": {
         "*.css": "tailwindcss"
     },
     "tailwindCSS.experimental.configFile": "tailwind.config.ts",
+    "tailwindCSS.lint.suggestCanonicalClasses": "warning",
     "tailwindCSS.classFunctions": ["cva", "cn", "twg", "twMerge"],
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.classAttributes": ["className", "containerClassName", "tw"],

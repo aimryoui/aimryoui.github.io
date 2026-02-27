@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export interface UseMediaQueryOptions {
+interface UseMediaQueryOptions {
     getInitialValueInEffect: boolean
 }
 
@@ -21,10 +21,8 @@ function attachMediaListener(
             query.removeEventListener("change", callback)
         }
     } catch (_e) {
-        // oxlint-disable-next-line typescript/no-deprecated
         query.addListener(callback)
         return () => {
-            // oxlint-disable-next-line typescript/no-deprecated
             query.removeListener(callback)
         }
     }

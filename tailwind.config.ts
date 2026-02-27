@@ -1,4 +1,4 @@
-// oxlint-disable @limegrass/import-alias/import-alias
+/* eslint-disable @limegrass/import-alias/import-alias */
 import anchorsPlugin from "@toolwind/anchors"
 import { type Config } from "tailwindcss"
 import plugin from "tailwindcss/plugin"
@@ -235,7 +235,7 @@ export default {
         transition,
         transitionBehavior,
 
-        plugin(function ({ addBase, addVariant }) {
+        plugin(({ addBase, addVariant }) => {
             addBase({
                 ":root": {
                     "--spacing": `${(4 / BASE_FONT_SIZE).toString()}rem` // 0.25rem ~ 4px
