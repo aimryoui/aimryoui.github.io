@@ -1,11 +1,6 @@
 import plugin from "tailwindcss/plugin"
 
-export default plugin(function ({
-    addBase,
-    addUtilities,
-    matchUtilities,
-    theme
-}) {
+export default plugin(({ addBase, addUtilities, matchUtilities, theme }) => {
     addBase({
         "@property --default-flow-tolerance": {
             /**

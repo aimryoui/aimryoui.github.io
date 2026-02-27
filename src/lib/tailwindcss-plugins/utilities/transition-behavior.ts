@@ -1,7 +1,7 @@
 import plugin from "tailwindcss/plugin"
 
 export default plugin(
-    function ({ addUtilities, matchUtilities, theme }) {
+    ({ addUtilities, matchUtilities, theme }) => {
         const behaviorValues = theme("transitionBehavior") ?? {}
 
         const staticUtilities = Object.entries(behaviorValues).map(

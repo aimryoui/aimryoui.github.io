@@ -1,6 +1,6 @@
 import { createElement, useMemo } from "react"
 
-import * as runtime from "react/jsx-runtime"
+import jsx from "react/jsx-runtime"
 
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
@@ -29,11 +29,11 @@ interface MDXModule {
     }>
 }
 
-type MDXFactory = (r: typeof runtime) => MDXModule
+type MDXFactory = (r: typeof jsx) => MDXModule
 
 const getMDXComponent = (code: string) => {
     const fn = Reflect.construct(Function, [code]) as MDXFactory
-    return fn({ ...runtime }).default
+    return fn({ ...jsx }).default
 }
 
 export const MDXContent = ({ code, components }: MDXProps) => {

@@ -1,6 +1,6 @@
 import { type Route } from "next"
 
-import { defineCollection, defineConfig, s, type Schema } from "velite"
+import { defineCollection, defineConfig, type Schema, s } from "velite"
 
 import { TOOL_ICONS, type ToolKey } from "@/portfolio/_configs/tools"
 

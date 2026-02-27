@@ -11,6 +11,9 @@ import { type projects } from "~/.velite"
 
 const ICON = TOOL_ICONS({ size: "sm" })
 
+const TRAILING_REGEX = /[.!?]$/
+const MEDIA_REGEX = /\.(jpg|png|mp4|mp3)$/
+
 function ProjectHeader({
     type,
     projectName,
@@ -43,8 +46,8 @@ function ProjectHeader({
                     <H3 id={headerId} className={cn("text-pretty")}>
                         {formatOrdinal(
                             projectName +
-                                (/[.!?]$/.test(projectName) ||
-                                /\.(jpg|png|mp4|mp3)$/.test(projectName)
+                                (TRAILING_REGEX.test(projectName) ||
+                                MEDIA_REGEX.test(projectName)
                                     ? ""
                                     : ".")
                         )}

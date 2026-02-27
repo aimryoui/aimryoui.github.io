@@ -1,4 +1,4 @@
-// oxlint-disable nextjs/no-img-element
+/** biome-ignore-all lint/performance/noImgElement: Custom Image component */
 "use client"
 
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
@@ -9,6 +9,8 @@ const imageManifest = imageManifestRaw as Record<
     string,
     { width: number; height: number; mapping: number[] }
 >
+
+const FILE_EXTENSION_REGEX = /\.[^/.]+$/
 
 interface ImageProps extends React.ComponentProps<"div"> {
     src: string
@@ -34,21 +36,22 @@ function Image({
     ...props
 }: ImageProps) {
     const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
-    const metadata = imageManifest[normalizedSrc.replace(/\.[^/.]+$/, "")]
+    const metadata =
+        imageManifest[normalizedSrc.replace(FILE_EXTENSION_REGEX, "")]
 
     const lastDotIndex = src.lastIndexOf(".")
     const pathWithoutExt = src.slice(0, lastDotIndex)
     const fileName = src.slice(src.lastIndexOf("/") + 1, lastDotIndex)
     const basePath = `/assets/images${pathWithoutExt}`
 
-    const ROWS = GRID_ROWS
-    const COLS = GRID_COLS
+    const Rows = GRID_ROWS
+    const Cols = GRID_COLS
 
     const exactW = metadata.width
     const exactH = metadata.height
 
-    const spriteW = exactW + COLS * 2 * EDGE_PAD
-    const spriteH = exactH + ROWS * 2 * EDGE_PAD
+    const spriteW = exactW + Cols * 2 * EDGE_PAD
+    const spriteH = exactH + Rows * 2 * EDGE_PAD
 
     const imgWidthPercent = (spriteW / exactW) * 100
     const imgHeightPercent = (spriteH / exactH) * 100
@@ -56,21 +59,21 @@ function Image({
     const padX = (EDGE_PAD / spriteW) * 100
     const padY = (EDGE_PAD / spriteH) * 100
 
-    const colPct = 100 / COLS
-    const rowPct = 100 / ROWS
+    const colPct = 100 / Cols
+    const rowPct = 100 / Rows
 
-    const targetColPct = (exactW / spriteW / COLS) * 100
-    const targetRowPct = (exactH / spriteH / ROWS) * 100
+    const targetColPct = (exactW / spriteW / Cols) * 100
+    const targetRowPct = (exactH / spriteH / Rows) * 100
 
     const cssVars: Record<string, string> = {
         "--w": `${imgWidthPercent.toString()}%`,
         "--h": `${imgHeightPercent.toString()}%`
     }
 
-    for (let i = 0; i < COLS; i++) {
+    for (let i = 0; i < Cols; i++) {
         cssVars[`--x${i.toString()}`] = `${(i * colPct + padX).toString()}%`
     }
-    for (let i = 0; i < ROWS; i++) {
+    for (let i = 0; i < Rows; i++) {
         cssVars[`--y${i.toString()}`] = `${(i * rowPct + padY).toString()}%`
     }
 
@@ -117,13 +120,13 @@ function Image({
                 }}
                 aria-hidden={true}
             >
-                {Array.from({ length: ROWS * COLS }).map((_, index) => {
-                    const targetC = index % COLS
-                    const targetR = Math.floor(index / COLS)
+                {Array.from({ length: Rows * Cols }).map((_, index) => {
+                    const targetC = index % Cols
+                    const targetR = Math.floor(index / Cols)
 
                     const scrambledIndex = metadata.mapping[index]
-                    const sourceC = scrambledIndex % COLS
-                    const sourceR = Math.floor(scrambledIndex / COLS)
+                    const sourceC = scrambledIndex % Cols
+                    const sourceR = Math.floor(scrambledIndex / Cols)
 
                     const translateX =
                         targetC * targetColPct - sourceC * colPct - padX
@@ -137,7 +140,7 @@ function Image({
                             alt=""
                             className="absolute h-[--h] w-[--w] max-w-none"
                             style={{
-                                clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(COLS - 1 - sourceC).toString()}) var(--y${(ROWS - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
+                                clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(Cols - 1 - sourceC).toString()}) var(--y${(Rows - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
                                 transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
                             }}
                             decoding="async"

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/performance/useTopLevelRegex: Local configs */
 const APP_BASE_URL =
     process.env.NEXT_PUBLIC_BASE_URL ?? "https://localhost:3000"
 const APP_BASE_PATH = process.env.PAGES_BASE_PATH ?? ""
@@ -53,7 +54,7 @@ export const siteConfig = {
             )
         },
         get fullWithoutSpace() {
-            return "+84" + this.phone.replace(/^0?/, "")
+            return `+84${this.phone.replace(/^0?/, "")}`
         }
     },
 

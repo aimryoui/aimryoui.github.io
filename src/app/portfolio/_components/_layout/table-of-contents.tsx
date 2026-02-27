@@ -78,10 +78,10 @@ export function TableOfContents({ items }: TocProps) {
     const [hasPageMounted, setHasPageMounted] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const SEARCH_DELAY = 500
+    const SearchDelay = 500
 
     useEffect(() => {
-        const delay = query.length === 0 ? 0 : SEARCH_DELAY
+        const delay = query.length === 0 ? 0 : SearchDelay
         const timer = setTimeout(() => {
             setDebouncedQuery(query)
         }, delay)

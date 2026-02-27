@@ -27,7 +27,7 @@ const CORNER_DEFINITIONS = [
 ] as const
 
 export default plugin(
-    function ({ addUtilities, matchUtilities, theme }) {
+    ({ addUtilities, matchUtilities, theme }) => {
         CORNER_DEFINITIONS.forEach(([prefix, properties]) => {
             matchUtilities(
                 {
@@ -109,11 +109,11 @@ export default plugin(
             /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/superellipse} */
             cornerSuperellipse: {
                 DEFAULT: "1.5",
-                "0": "0",
-                "1": "1",
-                "2": "2",
-                "3": "3",
-                "4": "4",
+                0: "0",
+                1: "1",
+                2: "2",
+                3: "3",
+                4: "4",
                 infinity: "infinity"
             }
         }

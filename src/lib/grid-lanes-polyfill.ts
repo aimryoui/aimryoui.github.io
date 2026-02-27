@@ -129,7 +129,7 @@ function parseLengthToPixels(
     if (!value || value === "auto" || value === "none") return null
 
     const num = parseFloat(value)
-    if (isNaN(num)) return null
+    if (Number.isNaN(num)) return null
 
     if (value.endsWith("px")) return num
     if (value.endsWith("rem")) return num * rootFontSize
@@ -145,13 +145,15 @@ function parseLengthToPixels(
         return (num / 100) * Math.max(window.innerWidth, window.innerHeight)
     if (value.endsWith("fr")) return null
 
-    if (!isNaN(num) && value === String(num)) return num
+    if (!Number.isNaN(num) && value === String(num)) return num
 
     return null
 }
 
+const MIN_MAX_REGEX = /minmax\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/
+
 function parseMinMax(value: string): MinMax | null {
-    const match = /minmax\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/.exec(value)
+    const match = MIN_MAX_REGEX.exec(value)
     if (!match || match.length < 3) return null
     return {
         min: match[1].trim(),
@@ -159,8 +161,10 @@ function parseMinMax(value: string): MinMax | null {
     }
 }
 
+const REPEAT_REGEX = /repeat\(\s*([^,]+)\s*,\s*(.+)\s*\)/
+
 function parseRepeat(value: string): Repeat | null {
-    const match = /repeat\(\s*([^,]+)\s*,\s*(.+)\s*\)/.exec(value)
+    const match = REPEAT_REGEX.exec(value)
     if (!match || match.length < 3) return null
     return {
         count: match[1].trim(),
@@ -446,6 +450,7 @@ function getGridLanesStyles(element: HTMLElement): ParsedStyles {
     let rowGap = resolveCSSVariables(rowGapRaw, computed)
 
     if (gap.includes(" ")) {
+        // biome-ignore lint/performance/useTopLevelRegex: Simple
         const parts = gap.split(/\s+/)
         if (parts[0]) rowGap = resolveCSSVariables(parts[0], computed)
         if (parts[1]) columnGap = resolveCSSVariables(parts[1], computed)
@@ -500,6 +505,8 @@ function getGridLanesStyles(element: HTMLElement): ParsedStyles {
     }
 }
 
+const SPAN_REGEX = /span\s+(\d+)/
+
 function getItemStyles(element: HTMLElement): ItemStyles {
     const computed = window.getComputedStyle(element)
     const gridColumn = computed.gridColumn || computed.gridColumnStart
@@ -513,38 +520,38 @@ function getItemStyles(element: HTMLElement): ItemStyles {
     let rowEnd: number | null = null
 
     if (gridColumn && gridColumn !== "auto") {
-        const spanMatch = /span\s+(\d+)/.exec(gridColumn)
+        const spanMatch = SPAN_REGEX.exec(gridColumn)
         if (spanMatch?.[1]) {
             columnSpan = parseInt(spanMatch[1], 10)
         } else if (gridColumn.includes("/")) {
             const parts = gridColumn.split("/").map((s) => s.trim())
             columnStart = parseInt(parts[0] ?? "", 10)
             columnEnd = parseInt(parts[1] ?? "", 10)
-            if (!isNaN(columnStart) && !isNaN(columnEnd)) {
+            if (!Number.isNaN(columnStart) && !Number.isNaN(columnEnd)) {
                 columnSpan = Math.abs(columnEnd - columnStart)
             }
         } else {
             const num = parseInt(gridColumn, 10)
-            if (!isNaN(num)) {
+            if (!Number.isNaN(num)) {
                 columnStart = num
             }
         }
     }
 
     if (gridRow && gridRow !== "auto") {
-        const spanMatch = /span\s+(\d+)/.exec(gridRow)
+        const spanMatch = SPAN_REGEX.exec(gridRow)
         if (spanMatch?.[1]) {
             rowSpan = parseInt(spanMatch[1], 10)
         } else if (gridRow.includes("/")) {
             const parts = gridRow.split("/").map((s) => s.trim())
             rowStart = parseInt(parts[0] ?? "", 10)
             rowEnd = parseInt(parts[1] ?? "", 10)
-            if (!isNaN(rowStart) && !isNaN(rowEnd)) {
+            if (!Number.isNaN(rowStart) && !Number.isNaN(rowEnd)) {
                 rowSpan = Math.abs(rowEnd - rowStart)
             }
         } else {
             const num = parseInt(gridRow, 10)
-            if (!isNaN(num)) {
+            if (!Number.isNaN(num)) {
                 rowStart = num
             }
         }
@@ -762,11 +769,11 @@ class GridLanesLayout {
 
             record.element.style.position = ""
             if (this.isVertical) {
-                record.element.style.width = size.toString() + "px"
+                record.element.style.width = `${size.toString()}px`
                 record.element.style.height = ""
                 record.cachedCrossSize = record.element.offsetHeight
             } else {
-                record.element.style.height = size.toString() + "px"
+                record.element.style.height = `${size.toString()}px`
                 record.element.style.width = ""
                 record.cachedCrossSize = record.element.offsetWidth
             }
@@ -815,11 +822,11 @@ class GridLanesLayout {
             writes.push(() => {
                 element.style.position = "absolute"
                 if (this.isVertical) {
-                    element.style.left = l.toString() + "px"
-                    element.style.top = t.toString() + "px"
+                    element.style.left = `${l.toString()}px`
+                    element.style.top = `${t.toString()}px`
                 } else {
-                    element.style.top = l.toString() + "px"
-                    element.style.left = t.toString() + "px"
+                    element.style.top = `${l.toString()}px`
+                    element.style.left = `${t.toString()}px`
                 }
             })
 
@@ -869,11 +876,11 @@ class GridLanesLayout {
             writes.push(() => {
                 element.style.position = "absolute"
                 if (this.isVertical) {
-                    element.style.left = l.toString() + "px"
-                    element.style.top = t.toString() + "px"
+                    element.style.left = `${l.toString()}px`
+                    element.style.top = `${t.toString()}px`
                 } else {
-                    element.style.top = l.toString() + "px"
-                    element.style.left = t.toString() + "px"
+                    element.style.top = `${l.toString()}px`
+                    element.style.left = `${t.toString()}px`
                 }
             })
 
@@ -889,7 +896,7 @@ class GridLanesLayout {
         }
 
         const containerHeight = Math.max(...this.laneHeights, 0)
-        this.container.style.minHeight = containerHeight.toString() + "px"
+        this.container.style.minHeight = `${containerHeight.toString()}px`
     }
 
     destroy() {

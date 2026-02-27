@@ -1,7 +1,7 @@
 import plugin from "tailwindcss/plugin"
 
 export default plugin(
-    function ({ matchUtilities, theme }) {
+    ({ matchUtilities, theme }) => {
         matchUtilities(
             {
                 field: (value: string) => ({

@@ -1,7 +1,7 @@
 import plugin from "tailwindcss/plugin"
 
 export default plugin(
-    function ({ matchUtilities }) {
+    ({ matchUtilities }) => {
         matchUtilities({
             "bg-position": (value: string) => ({
                 backgroundPosition: value

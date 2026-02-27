@@ -1,7 +1,7 @@
 import plugin from "tailwindcss/plugin"
 
 export default plugin(
-    function ({ addBase, matchUtilities, theme }) {
+    ({ addBase, matchUtilities, theme }) => {
         addBase({
             ":root": {
                 "--default-transition-timing-function": theme(

@@ -8,7 +8,7 @@ function filterDefault(theme: PluginAPI["theme"]) {
 }
 
 export default plugin(
-    function ({ addUtilities, matchUtilities, theme }) {
+    ({ addUtilities, matchUtilities, theme }) => {
         addUtilities({
             "@keyframes enter": theme("keyframes.enter"),
             "@keyframes exit": theme("keyframes.exit"),

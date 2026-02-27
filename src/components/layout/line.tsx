@@ -2,11 +2,7 @@ import { cn } from "@/lib/utils"
 
 function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
     return (
-        <div
-            className={cn("sticky top-0 h-dvh w-px", className)}
-            role="separator"
-            {...props}
-        >
+        <div className={cn("sticky top-0 h-dvh w-px", className)} {...props}>
             <hr
                 className={cn(
                     "fixed top-0 h-full border-r border-dashed border-stroke"
@@ -50,7 +46,6 @@ function SectionLine({
                 showDecoration && "flex items-center justify-between",
                 className
             )}
-            role="separator"
             {...props}
             ref={ref}
         >
@@ -80,7 +75,6 @@ function ElementLine({
                     ? "border-r border-dashed border-stroke"
                     : "w-full border-b border-dashed border-stroke"
             )}
-            role="separator"
         />
     )
 }

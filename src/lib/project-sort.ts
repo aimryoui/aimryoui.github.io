@@ -25,8 +25,10 @@ const parseDate = (str: string) => {
     return new Date(year, month, 1)
 }
 
+const DASHES_REGEX = /[-–—]/g
+
 const getDurationDates = (duration: string) => {
-    const parts = duration.split(/\s*[-–—]\s*/)
+    const parts = duration.split(DASHES_REGEX)
     const start = parseDate(parts[0])
     const end = parts.length > 1 ? parseDate(parts[1]) : start
     return { start, end }
@@ -87,7 +89,7 @@ function groupProjectsByCategory(allProjects: Project[]): ProjectGroup[] {
                 title: config.title,
                 note: config.note,
                 icons: config.icons,
-                projects: groups[cat]!
+                projects: groups[cat] ?? []
             }
         })
 }

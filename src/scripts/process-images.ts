@@ -1,10 +1,10 @@
-import fs from "fs"
-import path from "path"
+import fs from "node:fs"
+import path from "node:path"
 
 import { glob } from "glob"
 import sharp from "sharp"
 
-// oxlint-disable-next-line @limegrass/import-alias/import-alias
+// eslint-disable-next-line @limegrass/import-alias/import-alias
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "../configs/image.config.ts"
 
 const INPUT_DIR = "private/images"
@@ -64,7 +64,7 @@ async function processImage(
     }
 
     if (isCached) {
-        newManifest[manifestKey] = oldManifest[manifestKey]!
+        newManifest[manifestKey] = oldManifest[manifestKey]
         return
     }
 
@@ -108,7 +108,7 @@ async function processImage(
     for (let i = mapping.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1))
         const temp = mapping[i]
-        mapping[i] = mapping[j]!
+        mapping[i] = mapping[j]
         mapping[j] = temp
     }
 

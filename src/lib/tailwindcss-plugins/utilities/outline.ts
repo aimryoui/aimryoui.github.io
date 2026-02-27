@@ -1,7 +1,7 @@
 import plugin from "tailwindcss/plugin"
 
 export default plugin(
-    function ({ addBase, addUtilities, matchUtilities, theme }) {
+    ({ addBase, addUtilities, matchUtilities, theme }) => {
         addBase({
             "@property --tw-outline-style": {
                 syntax: "'*'",

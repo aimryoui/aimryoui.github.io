@@ -21,8 +21,10 @@ function attachMediaListener(
             query.removeEventListener("change", callback)
         }
     } catch (_e) {
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
         query.addListener(callback)
         return () => {
+            // eslint-disable-next-line @typescript-eslint/no-deprecated
             query.removeListener(callback)
         }
     }

@@ -203,11 +203,11 @@ export default {
             input: colorMix("--input"),
             ring: colorMix("--ring"),
             chart: {
-                "1": colorMix("--chart-1"),
-                "2": colorMix("--chart-2"),
-                "3": colorMix("--chart-3"),
-                "4": colorMix("--chart-4"),
-                "5": colorMix("--chart-5")
+                1: colorMix("--chart-1"),
+                2: colorMix("--chart-2"),
+                3: colorMix("--chart-3"),
+                4: colorMix("--chart-4"),
+                5: colorMix("--chart-5")
             },
 
             highlighted: colorMix("--highlighted"),

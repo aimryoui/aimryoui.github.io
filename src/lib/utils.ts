@@ -1,5 +1,5 @@
 import { extendTailwindMerge, validators } from "tailwind-merge"
-import { twg, type ClassValue } from "twg"
+import { type ClassValue, twg } from "twg"
 
 type AdditionalClassGroupIDs = "scrollbar-width"
 type AdditionalThemeGroupIDs = "transitionBehavior"

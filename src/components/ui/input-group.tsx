@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/a11y/useSemanticElements: shadcn/ui */
 "use client"
 
 import { cva, type VariantProps } from "class-variance-authority"
@@ -90,6 +91,16 @@ function InputGroupAddon({
                     return
                 }
                 e.currentTarget.parentElement?.querySelector("input")?.focus()
+            }}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    if ((e.target as HTMLElement).closest("button")) {
+                        return
+                    }
+                    e.currentTarget.parentElement
+                        ?.querySelector("input")
+                        ?.focus()
+                }
             }}
             {...props}
         />

@@ -12,7 +12,7 @@ const BASIC_SHAPES = [
 ] as const
 
 export default plugin(
-    function ({ matchUtilities, theme }) {
+    ({ matchUtilities, theme }) => {
         matchUtilities(
             {
                 clip: (value: string) => ({
