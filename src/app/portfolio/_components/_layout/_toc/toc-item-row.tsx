@@ -5,7 +5,8 @@ import Link from "next/link"
 
 import { ChevronDown } from "lucide-react"
 import { type Variants } from "motion/react"
-import m from "motion/react-m"
+// biome-ignore lint/performance/noNamespaceImport: https://motion.dev/docs/react-reduce-bundle-size
+import * as m from "motion/react-m"
 
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { cn } from "@/lib/utils"

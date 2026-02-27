@@ -3,7 +3,8 @@
 import { Fragment, useCallback, useEffect, useRef } from "react"
 
 import { stagger } from "motion/react"
-import m from "motion/react-m"
+// biome-ignore lint/performance/noNamespaceImport: https://motion.dev/docs/react-reduce-bundle-size
+import * as m from "motion/react-m"
 
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
