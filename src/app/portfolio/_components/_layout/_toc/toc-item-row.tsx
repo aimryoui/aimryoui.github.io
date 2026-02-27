@@ -63,13 +63,12 @@ const TocItemRow = memo(
                     className={cn(
                         isActive
                             ? "text-highlighted"
-                            : [
-                                  "transition-[color] duration-100",
-                                  {
-                                      hover: "text-foreground transition-none",
-                                      "focus-visible": "text-foreground"
-                                  }
-                              ],
+                            : {
+                                  "group-hover":
+                                      "transition-[color] duration-100",
+                                  hover: "text-foreground !transition-none",
+                                  "focus-visible": "text-foreground"
+                              },
                         "group/link relative flex-1 leading-6 will-change-[color]",
                         item.depth === 3 && !item.icon ? "ps-3" : "font-bold",
                         item.icon ? "flex gap-2 py-1" : "inline-block py-0.5"
@@ -82,10 +81,12 @@ const TocItemRow = memo(
                                 isActive
                                     ? "bg-highlighted text-white dark:bg-highlighted/70"
                                     : [
-                                          "bg-muted-foreground/15 transition-[background-color,color] duration-100 dark:bg-muted-foreground/20",
+                                          "bg-muted-foreground/15 dark:bg-muted-foreground/20",
                                           {
+                                              "group-hover":
+                                                  "transition-[background-color,color] duration-100",
                                               "group-hover/link":
-                                                  "text-default bg-muted-foreground/30 transition-none dark:bg-muted-foreground/40"
+                                                  "bg-muted-foreground/30 text-default !transition-none dark:bg-muted-foreground/40"
                                           }
                                       ]
                             )}
@@ -117,8 +118,8 @@ const TocItemRow = memo(
                 {item.depth === 2 && item.id !== "outlines" && (
                     <div
                         className={cn(
-                            "bg-default/5 grid size-5 place-items-center rounded-full",
-                            "dark:bg-default/10 group-has-[input:not(:placeholder-shown)]/sidebar:hidden"
+                            "grid size-5 place-items-center rounded-full bg-default/5",
+                            "group-has-[input:not(:placeholder-shown)]/sidebar:hidden dark:bg-default/10"
                         )}
                     >
                         <ChevronDown className="size-4" />

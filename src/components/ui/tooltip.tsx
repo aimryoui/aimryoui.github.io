@@ -101,7 +101,7 @@ function TooltipContent({
                 <TooltipPrimitive.Popup
                     data-slot="tooltip-content"
                     className={cn(
-                        "group relative h-[--popup-height,auto] w-[--popup-width,auto] max-w-125 origin-[--transform-origin] text-balance rounded-lg bg-background text-sm tracking-tight text-foreground -outline-offset-px outline-muted-foreground will-change-[width,height,opacity,transform] outline transition-[width,height,opacity,transform] ease-spring duration-400",
+                        "relative h-[--popup-height,auto] w-[--popup-width,auto] max-w-125 origin-[--transform-origin] text-balance rounded-lg bg-background text-sm tracking-tight text-foreground -outline-offset-px outline-muted-foreground will-change-[width,height,opacity,transform] outline transition-[width,height,opacity,transform] ease-spring duration-400",
                         {
                             "data-ending-style": "scale-90 opacity-0",
                             "data-instant": "transition-none",
