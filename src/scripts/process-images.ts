@@ -1,6 +1,7 @@
 import crypto from "node:crypto"
 import fs from "node:fs"
 import path from "node:path"
+import readline from "node:readline"
 
 import chokidar from "chokidar"
 import { glob } from "glob"
@@ -24,19 +25,15 @@ const BATCH_SIZE = isCI ? 2 : 10
 
 type ImageManifest = Record<
     string,
-    { width: number; height: number; mapping: number[]; blurDataURL: string }
->
-
-interface ImageMeta {
-    hash: string
-    version: string
-    manifestData: {
+    {
+        hash: string
+        version: string
         width: number
         height: number
         mapping: number[]
         blurDataURL: string
     }
-}
+>
 
 const chunkArray = <T>(arr: T[], size: number): T[][] =>
     Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
@@ -48,8 +45,19 @@ function getFileHash(filePath: string) {
     return crypto.createHash("md5").update(fileBuffer).digest("hex")
 }
 
+// Hàm vẽ Progress Bar xịn xò
+function getProgressBar(current: number, total: number, width = 30) {
+    const percent = total === 0 ? 100 : Math.round((current / total) * 100)
+    const filledWidth =
+        total === 0 ? width : Math.round((current / total) * width)
+    const filled = "█".repeat(filledWidth)
+    const empty = "░".repeat(width - filledWidth)
+    return `[${filled}${empty}] ${percent.toString()}% (${current.toString()}/${total.toString()})`
+}
+
 async function processImage(
     filePath: string,
+    oldManifest: ImageManifest,
     newManifest: ImageManifest
 ): Promise<boolean> {
     const relativePath = path
@@ -64,19 +72,17 @@ async function processImage(
     if (!fs.existsSync(outputFolder))
         fs.mkdirSync(outputFolder, { recursive: true })
 
-    const metaFile = path.join(outputFolder, `${parsedPath.name}_meta.json`)
     const currentHash = getFileHash(filePath)
 
-    if (fs.existsSync(metaFile)) {
-        try {
-            const meta = JSON.parse(
-                fs.readFileSync(metaFile, "utf-8")
-            ) as ImageMeta
-            if (meta.hash === currentHash && meta.version === SCRIPT_VERSION) {
-                newManifest[manifestKey] = meta.manifestData
-                return false
-            }
-        } catch {}
+    if (Object.hasOwn(oldManifest, manifestKey)) {
+        const cachedData = oldManifest[manifestKey]
+        if (
+            cachedData.hash === currentHash &&
+            cachedData.version === SCRIPT_VERSION
+        ) {
+            newManifest[manifestKey] = cachedData
+            return false
+        }
     }
 
     const originalImage = sharp(filePath)
@@ -130,14 +136,14 @@ async function processImage(
         mapping[j] = temp
     }
 
-    const manifestData = {
+    newManifest[manifestKey] = {
+        hash: currentHash,
+        version: SCRIPT_VERSION,
         width: exactW,
         height: exactH,
         mapping: mapping,
         blurDataURL: blurDataURL
     }
-
-    newManifest[manifestKey] = manifestData
 
     await image
         .clone()
@@ -203,34 +209,95 @@ async function processImage(
         .webp({ quality: 95 })
         .toFile(path.join(outputFolder, `${parsedPath.name}_scrambled.webp`))
 
-    fs.writeFileSync(
-        metaFile,
-        JSON.stringify({
-            hash: currentHash,
-            version: SCRIPT_VERSION,
-            manifestData
-        })
-    )
-
     return true
 }
 
-async function buildImages() {
+async function buildImages(showProgress = false) {
     const startTime = performance.now()
     const files = await glob(`${INPUT_DIR}/**/*.{png,jpg,jpeg,webp}`)
 
+    let oldManifest: ImageManifest = {}
+    if (fs.existsSync(MANIFEST_PATH)) {
+        try {
+            oldManifest = JSON.parse(
+                fs.readFileSync(MANIFEST_PATH, "utf-8")
+            ) as ImageManifest
+        } catch {
+            /* Empty */
+        }
+    }
+
     const newManifest: ImageManifest = {}
     let actuallyProcessed = 0
+    let processedCount = 0
 
     const fileChunks = chunkArray(files, BATCH_SIZE)
+
+    if (showProgress && files.length > 0 && process.stdout.isTTY) {
+        console.log(`${PREFIX} building...`)
+        process.stdout.write(
+            `${PREFIX} processing: ${getProgressBar(0, files.length)}`
+        )
+    }
 
     await fileChunks.reduce(async (promise, chunk) => {
         await promise
         const results = await Promise.all(
-            chunk.map((filePath) => processImage(filePath, newManifest))
+            chunk.map((filePath) =>
+                processImage(filePath, oldManifest, newManifest)
+            )
         )
+        processedCount += chunk.length
         actuallyProcessed += results.filter(Boolean).length
+
+        if (showProgress && process.stdout.isTTY) {
+            readline.clearLine(process.stdout, 0)
+            readline.cursorTo(process.stdout, 0)
+            process.stdout.write(
+                `${PREFIX} processing: ${getProgressBar(processedCount, files.length)}`
+            )
+        }
     }, Promise.resolve())
+
+    if (showProgress && files.length > 0 && process.stdout.isTTY) {
+        console.log()
+    }
+
+    // Garbage Collection: Quét dựa trên thư mục Hợp Lệ trong Manifest mới
+    const validOutputFolders = new Set(
+        Object.keys(newManifest).map((key) =>
+            path.join(OUTPUT_BASE, key).replaceAll("\\", "/")
+        )
+    )
+
+    // Dùng _preview.webp làm mốc đánh dấu thư mục ảnh (vì không còn dùng _meta.json nữa)
+    const existingPreviewFiles = await glob(`${OUTPUT_BASE}/**/*_preview.webp`)
+    for (const previewPath of existingPreviewFiles) {
+        const folderPath = path.dirname(previewPath).replaceAll("\\", "/")
+        if (!validOutputFolders.has(folderPath)) {
+            // Trảm thư mục nếu nó không có tên trong Manifest mới
+            fs.rmSync(folderPath, { recursive: true, force: true })
+        }
+    }
+
+    // Dọn dẹp các thư mục cha bị rỗng sau khi xóa thư mục con
+    const removeEmptyDirs = (dir: string) => {
+        if (!fs.existsSync(dir)) return
+        const items = fs.readdirSync(dir)
+        for (const item of items) {
+            const fullPath = path.join(dir, item)
+            if (fs.statSync(fullPath).isDirectory()) {
+                removeEmptyDirs(fullPath)
+            }
+        }
+        if (
+            fs.readdirSync(dir).length === 0 &&
+            path.resolve(dir) !== path.resolve(OUTPUT_BASE)
+        ) {
+            fs.rmdirSync(dir)
+        }
+    }
+    removeEmptyDirs(OUTPUT_BASE)
 
     if (!fs.existsSync(path.dirname(MANIFEST_PATH)))
         fs.mkdirSync(path.dirname(MANIFEST_PATH), { recursive: true })
@@ -253,8 +320,12 @@ const IGNORE_REGEX = /(^|[/\\])\../
 
 export async function build({ watch = false, skipInitial = false } = {}) {
     if (!skipInitial) {
-        console.log(`${PREFIX} building...`)
-        await buildImages()
+        if (!watch) {
+            await buildImages(true)
+        } else {
+            console.log(`${PREFIX} building...`)
+            await buildImages(false)
+        }
     }
 
     if (watch) {
@@ -269,7 +340,7 @@ export async function build({ watch = false, skipInitial = false } = {}) {
             clearTimeout(debounceTimer)
             debounceTimer = setTimeout(() => {
                 console.log(`${PREFIX} building...`)
-                void buildImages()
+                void buildImages(false)
             }, 300)
         }
 
@@ -293,4 +364,4 @@ export async function build({ watch = false, skipInitial = false } = {}) {
     }
 })()
 
-export type { ImageManifest, ImageMeta }
+export type { ImageManifest }
