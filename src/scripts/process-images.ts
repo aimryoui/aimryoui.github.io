@@ -221,9 +221,7 @@ async function buildImages(showProgress = false) {
             oldManifest = JSON.parse(
                 fs.readFileSync(MANIFEST_PATH, "utf-8")
             ) as ImageManifest
-        } catch {
-            /* Empty */
-        }
+        } catch {}
     }
 
     const newManifest: ImageManifest = {}
