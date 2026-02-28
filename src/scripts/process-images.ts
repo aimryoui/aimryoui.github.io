@@ -1,6 +1,8 @@
+import crypto from "node:crypto"
 import fs from "node:fs"
 import path from "node:path"
 
+import chokidar from "chokidar"
 import { glob } from "glob"
 import sharp from "sharp"
 
@@ -11,19 +13,29 @@ const INPUT_DIR = "private/images"
 const OUTPUT_BASE = "public/assets/images"
 const MANIFEST_PATH = "src/lib/image-manifest.json"
 
-const isCI = process.env.CI === "true"
+const SCRIPT_VERSION = "1"
 
+const BRAND_COLOR = "\x1B[38;2;0;166;244m"
+const RESET = "\x1B[0m"
+const PREFIX = `${BRAND_COLOR}[IMAGES]${RESET}`
+
+const isCI = process.env.CI === "true"
 const BATCH_SIZE = isCI ? 2 : 10
-console.log(
-    `🚀 Running with Concurrency: ${BATCH_SIZE.toString()} images per batch`
-)
 
 type ImageManifest = Record<
     string,
-    { width: number; height: number; mapping: number[] }
+    { width: number; height: number; mapping: number[]; blurDataURL: string }
 >
+
 interface ImageMeta {
-    mtime: number
+    hash: string
+    version: string
+    manifestData: {
+        width: number
+        height: number
+        mapping: number[]
+        blurDataURL: string
+    }
 }
 
 const chunkArray = <T>(arr: T[], size: number): T[][] =>
@@ -31,11 +43,15 @@ const chunkArray = <T>(arr: T[], size: number): T[][] =>
         arr.slice(i * size, i * size + size)
     )
 
+function getFileHash(filePath: string) {
+    const fileBuffer = fs.readFileSync(filePath)
+    return crypto.createHash("md5").update(fileBuffer).digest("hex")
+}
+
 async function processImage(
     filePath: string,
-    oldManifest: ImageManifest,
     newManifest: ImageManifest
-) {
+): Promise<boolean> {
     const relativePath = path
         .relative(INPUT_DIR, filePath)
         .replaceAll("\\", "/")
@@ -48,32 +64,27 @@ async function processImage(
     if (!fs.existsSync(outputFolder))
         fs.mkdirSync(outputFolder, { recursive: true })
 
-    const stat = fs.statSync(filePath)
     const metaFile = path.join(outputFolder, `${parsedPath.name}_meta.json`)
+    const currentHash = getFileHash(filePath)
 
-    let isCached = false
     if (fs.existsSync(metaFile)) {
         try {
             const meta = JSON.parse(
                 fs.readFileSync(metaFile, "utf-8")
             ) as ImageMeta
-            if (meta.mtime === stat.mtimeMs) isCached = true
+            if (meta.hash === currentHash && meta.version === SCRIPT_VERSION) {
+                newManifest[manifestKey] = meta.manifestData
+                return false
+            }
         } catch {
             /* Empty */
         }
     }
 
-    if (isCached) {
-        newManifest[manifestKey] = oldManifest[manifestKey]
-        return
-    }
-
-    console.log(`Processing: ${relativePath}...`)
-
     const originalImage = sharp(filePath)
     const originalMetadata = await originalImage.metadata()
 
-    if (!originalMetadata.width || !originalMetadata.height) return
+    if (!originalMetadata.width || !originalMetadata.height) return false
 
     const isPng = parsedPath.ext.toLowerCase() === ".png"
     const borderCrop = isPng ? 0 : 1
@@ -90,7 +101,7 @@ async function processImage(
     const exactW = baseW - remW
     const exactH = baseH - remH
 
-    if (exactW <= 0 || exactH <= 0) return
+    if (exactW <= 0 || exactH <= 0) return false
 
     const baseBuffer = await originalImage
         .extract({
@@ -102,6 +113,15 @@ async function processImage(
         .toBuffer()
 
     const image = sharp(baseBuffer)
+
+    const blurBuffer = await image
+        .clone()
+        .resize({ width: 10 })
+        .webp({ quality: 20 })
+        .toBuffer()
+
+    const blurDataURL = `data:image/webp;base64,${blurBuffer.toString("base64")}`
+
     const totalTiles = GRID_ROWS * GRID_COLS
 
     const mapping = Array.from({ length: totalTiles }, (_, i) => i)
@@ -112,11 +132,14 @@ async function processImage(
         mapping[j] = temp
     }
 
-    newManifest[manifestKey] = {
+    const manifestData = {
         width: exactW,
         height: exactH,
-        mapping: mapping
+        mapping: mapping,
+        blurDataURL: blurDataURL
     }
+
+    newManifest[manifestKey] = manifestData
 
     await image
         .clone()
@@ -182,47 +205,94 @@ async function processImage(
         .webp({ quality: 95 })
         .toFile(path.join(outputFolder, `${parsedPath.name}_scrambled.webp`))
 
-    fs.writeFileSync(metaFile, JSON.stringify({ mtime: stat.mtimeMs }))
+    fs.writeFileSync(
+        metaFile,
+        JSON.stringify({
+            hash: currentHash,
+            version: SCRIPT_VERSION,
+            manifestData
+        })
+    )
+
+    return true
 }
 
-async function main() {
+async function buildImages() {
+    const startTime = performance.now()
     const files = await glob(`${INPUT_DIR}/**/*.{png,jpg,jpeg,webp}`)
 
-    let oldManifest: ImageManifest = {}
-    if (fs.existsSync(MANIFEST_PATH)) {
-        try {
-            oldManifest = JSON.parse(
-                fs.readFileSync(MANIFEST_PATH, "utf-8")
-            ) as ImageManifest
-        } catch {
-            /* Empty */
-        }
-    }
-
     const newManifest: ImageManifest = {}
-    console.log(`Found ${files.length.toString()} images. Processing...`)
+    let actuallyProcessed = 0
 
     const fileChunks = chunkArray(files, BATCH_SIZE)
-    let processedCount = 0
 
     await fileChunks.reduce(async (promise, chunk) => {
         await promise
-        await Promise.all(
-            chunk.map((filePath) =>
-                processImage(filePath, oldManifest, newManifest)
-            )
+        const results = await Promise.all(
+            chunk.map((filePath) => processImage(filePath, newManifest))
         )
-        processedCount += chunk.length
-        console.log(
-            `Progress: ${processedCount.toString()}/${files.length.toString()} images`
-        )
+        actuallyProcessed += results.filter(Boolean).length
     }, Promise.resolve())
 
     if (!fs.existsSync(path.dirname(MANIFEST_PATH)))
         fs.mkdirSync(path.dirname(MANIFEST_PATH), { recursive: true })
 
     fs.writeFileSync(MANIFEST_PATH, JSON.stringify(newManifest, null, 2))
-    console.log(`✅ Clean Manifest generated at ${MANIFEST_PATH}`)
+
+    const endTime = performance.now()
+    const timeTook = (endTime - startTime).toFixed(2)
+
+    if (actuallyProcessed > 0) {
+        console.log(
+            `${PREFIX} build finished in ${timeTook}ms. Processed ${actuallyProcessed.toString()} images.`
+        )
+    } else {
+        console.log(`${PREFIX} build finished in ${timeTook}ms. All cached.`)
+    }
 }
 
-await main()
+const IGNORE_REGEX = /(^|[/\\])\../
+
+export async function build({ watch = false, skipInitial = false } = {}) {
+    if (!skipInitial) {
+        console.log(`${PREFIX} building...`)
+        await buildImages()
+    }
+
+    if (watch) {
+        console.log(`${PREFIX} watching for changes in '${INPUT_DIR}'`)
+        const watcher = chokidar.watch(INPUT_DIR, {
+            ignored: IGNORE_REGEX,
+            ignoreInitial: true
+        })
+
+        let debounceTimer: NodeJS.Timeout
+        const handleChange = () => {
+            clearTimeout(debounceTimer)
+            debounceTimer = setTimeout(() => {
+                console.log(`${PREFIX} building...`)
+                void buildImages()
+            }, 300)
+        }
+
+        watcher.on("add", handleChange)
+        watcher.on("change", handleChange)
+        watcher.on("unlink", handleChange)
+    }
+}
+
+;(async () => {
+    const isMain = process.argv[1]
+        ?.replace(/\\/g, "/")
+        .endsWith("process-images.ts")
+    if (isMain) {
+        const isWatch =
+            process.argv.includes("--watch") || process.argv.includes("-w")
+        const skipInitial =
+            process.argv.includes("--skip-initial") ||
+            process.argv.includes("--skipInitial")
+        await build({ watch: isWatch, skipInitial })
+    }
+})()
+
+export type { ImageManifest, ImageMeta }

@@ -1,14 +1,14 @@
 /** biome-ignore-all lint/performance/noImgElement: Custom Image component */
 "use client"
 
+import NextImage from "next/image"
+
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
 import imageManifestRaw from "@/lib/image-manifest.json"
 import { cn } from "@/lib/utils"
+import { type ImageManifest } from "@/scripts/process-images"
 
-const imageManifest = imageManifestRaw as Record<
-    string,
-    { width: number; height: number; mapping: number[] }
->
+const imageManifest = imageManifestRaw as ImageManifest
 
 const FILE_EXTENSION_REGEX = /\.[^/.]+$/
 
@@ -97,12 +97,16 @@ function Image({
             {...props}
         >
             {/* SEO & Preview Layer */}
-            <img
+            <NextImage
                 src={`${basePath}/${fileName}_preview.webp`}
-                alt={alt}
+                alt={alt ?? ""}
+                width={exactW}
+                height={exactH}
                 className={cn("absolute size-full object-cover")}
+                fetchPriority="high"
                 loading={placeholderPriority ? "eager" : "lazy"}
-                decoding="async"
+                placeholder="blur"
+                blurDataURL={metadata.blurDataURL}
             />
 
             {/* Represent image from `src` attribute or url() function */}

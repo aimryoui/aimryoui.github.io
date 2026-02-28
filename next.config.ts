@@ -15,6 +15,9 @@ const nextConfig = (phase: string): NextConfig => {
         void import("velite").then((m) =>
             m.build({ watch: isDev, clean: !isDev })
         )
+        void import("./src/scripts/process-images.ts").then((m) =>
+            m.build({ watch: isDev, skipInitial: true })
+        )
     }
 
     return {
