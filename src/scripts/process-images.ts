@@ -45,7 +45,6 @@ function getFileHash(filePath: string) {
     return crypto.createHash("md5").update(fileBuffer).digest("hex")
 }
 
-// Hàm vẽ Progress Bar xịn xò
 function getProgressBar(current: number, total: number, width = 30) {
     const percent = total === 0 ? 100 : Math.round((current / total) * 100)
     const filledWidth =
@@ -233,11 +232,17 @@ async function buildImages(showProgress = false) {
 
     const fileChunks = chunkArray(files, BATCH_SIZE)
 
-    if (showProgress && files.length > 0 && process.stdout.isTTY) {
+    if (showProgress && files.length > 0) {
         console.log(`${PREFIX} building...`)
-        process.stdout.write(
-            `${PREFIX} processing: ${getProgressBar(0, files.length)}`
-        )
+        if (process.stdout.isTTY) {
+            process.stdout.write(
+                `${PREFIX} processing: ${getProgressBar(0, files.length)}`
+            )
+        } else {
+            console.log(
+                `${PREFIX} processing: ${getProgressBar(0, files.length)}`
+            )
+        }
     }
 
     await fileChunks.reduce(async (promise, chunk) => {
@@ -250,12 +255,18 @@ async function buildImages(showProgress = false) {
         processedCount += chunk.length
         actuallyProcessed += results.filter(Boolean).length
 
-        if (showProgress && process.stdout.isTTY) {
-            readline.clearLine(process.stdout, 0)
-            readline.cursorTo(process.stdout, 0)
-            process.stdout.write(
-                `${PREFIX} processing: ${getProgressBar(processedCount, files.length)}`
-            )
+        if (showProgress) {
+            if (process.stdout.isTTY) {
+                readline.clearLine(process.stdout, 0)
+                readline.cursorTo(process.stdout, 0)
+                process.stdout.write(
+                    `${PREFIX} processing: ${getProgressBar(processedCount, files.length)}`
+                )
+            } else {
+                console.log(
+                    `${PREFIX} processing: ${getProgressBar(processedCount, files.length)}`
+                )
+            }
         }
     }, Promise.resolve())
 
@@ -263,24 +274,20 @@ async function buildImages(showProgress = false) {
         console.log()
     }
 
-    // Garbage Collection: Quét dựa trên thư mục Hợp Lệ trong Manifest mới
     const validOutputFolders = new Set(
         Object.keys(newManifest).map((key) =>
             path.join(OUTPUT_BASE, key).replaceAll("\\", "/")
         )
     )
 
-    // Dùng _preview.webp làm mốc đánh dấu thư mục ảnh (vì không còn dùng _meta.json nữa)
     const existingPreviewFiles = await glob(`${OUTPUT_BASE}/**/*_preview.webp`)
     for (const previewPath of existingPreviewFiles) {
         const folderPath = path.dirname(previewPath).replaceAll("\\", "/")
         if (!validOutputFolders.has(folderPath)) {
-            // Trảm thư mục nếu nó không có tên trong Manifest mới
             fs.rmSync(folderPath, { recursive: true, force: true })
         }
     }
 
-    // Dọn dẹp các thư mục cha bị rỗng sau khi xóa thư mục con
     const removeEmptyDirs = (dir: string) => {
         if (!fs.existsSync(dir)) return
         const items = fs.readdirSync(dir)
