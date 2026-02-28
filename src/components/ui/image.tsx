@@ -105,8 +105,12 @@ function Image({
                 className={cn("absolute size-full object-cover")}
                 fetchPriority="high"
                 loading={placeholderPriority ? "eager" : "lazy"}
-                placeholder="blur"
-                blurDataURL={metadata.blurDataURL}
+                style={{
+                    background: `url("${metadata.blurDataURL}") center / cover no-repeat`
+                }}
+                onLoad={(e) => {
+                    e.currentTarget.style.background = ""
+                }}
             />
 
             {/* Represent image from `src` attribute or url() function */}

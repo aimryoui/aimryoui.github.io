@@ -20,7 +20,7 @@ const BRAND_COLOR = "\x1B[38;2;0;166;244m"
 const RESET = "\x1B[0m"
 const PREFIX = `${BRAND_COLOR}[IMAGES]${RESET}`
 
-const isCI = process.env.CI === "true"
+// const isCI = process.env.CI === "true"
 const BATCH_SIZE = 10
 
 type ImageManifest = Record<
