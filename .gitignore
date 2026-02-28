@@ -47,8 +47,8 @@ yarn-error.log*
 next-env.d.ts
 eslint-typegen.d.ts
 
-# Ignore output images
+# output images
 public/assets/
 
-# Ignore image manifest
+# image manifest
 image-manifest.json

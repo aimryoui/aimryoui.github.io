@@ -3,32 +3,7 @@
     "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
     "files": { "ignoreUnknown": false },
     "formatter": {
-        "enabled": true,
-        "formatWithErrors": false,
-        "indentStyle": "space",
-        "indentWidth": 4,
-        "lineEnding": "lf",
-        "lineWidth": 80,
-        "attributePosition": "auto",
-        "bracketSameLine": false,
-        "bracketSpacing": true,
-        "expand": "auto",
-        "trailingNewline": true,
-        "useEditorconfig": false,
-        "includes": [
-            "**",
-            "!**/node_modules",
-            "!**/.next",
-            "!**/.velite",
-            "!**/out/",
-            "!public/static",
-            "!**/coverage",
-            "!**/package-lock.json",
-            "!**/pnpm-lock.yaml",
-            "!**/yarn.lock",
-            "!**/.git",
-            "!**/*.{png,jpg,jpeg,webp,webm,gif,ico,svg,mp4,mp3}"
-        ]
+        "enabled": false
     },
     "linter": {
         "enabled": true,
@@ -58,25 +33,6 @@
             "!next-env.d.ts",
             "!pnpm-lock.yaml"
         ]
-    },
-    "javascript": {
-        "formatter": {
-            "jsxQuoteStyle": "double",
-            "quoteProperties": "asNeeded",
-            "trailingCommas": "none",
-            "semicolons": "asNeeded",
-            "arrowParentheses": "always",
-            "bracketSameLine": false,
-            "quoteStyle": "double",
-            "attributePosition": "auto",
-            "bracketSpacing": true
-        }
-    },
-    "html": {
-        "formatter": {
-            "indentScriptAndStyle": true,
-            "selfCloseVoidElements": "always"
-        }
     },
     "css": {
         "parser": {
@@ -161,8 +117,7 @@
                     }
                 }
             }
-        },
-        { "includes": ["*.yml", "*.yaml"], "formatter": { "indentWidth": 2 } }
+        }
     ],
     "assist": {
         "enabled": true,

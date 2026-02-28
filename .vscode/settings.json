@@ -17,7 +17,7 @@
     "editor.quickSuggestions": {
         "strings": "on"
     },
-    "editor.defaultFormatter": "biomejs.biome",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[mdx]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
@@ -34,17 +34,8 @@
     // CSS REM
     "cssrem.languages": [
         "html",
-        "vue",
         "css",
-        "tailwindcss",
-        "postcss",
-        "less",
-        "scss",
-        "sass",
-        "stylus",
-        "tpl",
-        "wxss",
-        "twig",
+        "tailwindcss", // Add Tailwind CSS
         "javascriptreact",
         "typescriptreact",
         "javascript",

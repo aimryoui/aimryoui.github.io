@@ -45,7 +45,9 @@ export default defineConfig(
         rules: {
             /** Biome hasn't implemented this yet. */
             "@typescript-eslint/no-unnecessary-type-conversion": 1,
-            /** Turn off rules that Biome already handles.
+            /**
+             * Turn off rules that Biome already handles.
+             *
              * @see {@link https://biomejs.dev/linter/rules-sources/#typescript-eslint}
              */
             "@typescript-eslint/adjacent-overload-signatures": 0,
@@ -82,7 +84,9 @@ export default defineConfig(
     {
         files: ["**/*.{ts,tsx}"],
         rules: {
-            /** Turn off rules that Biome already handles.
+            /**
+             * Turn off rules that Biome already handles.
+             *
              * @see {@link https://biomejs.dev/linter/rules-sources/#nexteslint-plugin-next}
              */
             "@next/next/google-font-display": 0,
@@ -111,7 +115,9 @@ export default defineConfig(
         rules: {
             "react/no-deprecated": 2,
             // "react/prop-types": 2,
-            /** Turn off rules that Biome already handles.
+            /**
+             * Turn off rules that Biome already handles.
+             *
              * @see {@link https://biomejs.dev/linter/rules-sources/#eslint-plugin-react}
              */
             "react/button-has-type": 0,
@@ -128,7 +134,9 @@ export default defineConfig(
             "react/no-danger": 0,
             "react/no-danger-with-children": 0,
             "react/void-dom-elements-no-children": 0,
-            /** Turn off rules that Biome already handles.
+            /**
+             * Turn off rules that Biome already handles.
+             *
              * @see {@link https://biomejs.dev/linter/rules-sources/#eslint-plugin-react-hooks}
              */
             "react-hooks/exhaustive-deps": 0,
@@ -147,11 +155,10 @@ export default defineConfig(
             tailwindcss: tailwind
         },
         rules: {
-            "tailwindcss/classnames-order": 1,
-            "tailwindcss/enforces-shorthand": 1,
+            "tailwindcss/enforces-shorthand": 1, // mx-5 my-5 should become m-5
             "tailwindcss/no-custom-classname": 1,
-            "tailwindcss/no-contradicting-classname": 1,
-            "tailwindcss/no-unnecessary-arbitrary-value": 1
+            "tailwindcss/no-contradicting-classname": 1, // avoid p-2 p-3
+            "tailwindcss/no-unnecessary-arbitrary-value": 1 // replacing m-[1.25rem] with m-5
         },
         settings: {
             tailwindcss: {
@@ -180,7 +187,7 @@ export default defineConfig(
             "@limegrass/import-alias": importAlias
         },
         rules: {
-            /** Biome hasn't supported sorting named exports WITHOUT `from` yet. */
+            /** Biome hasn't supported sorting named exports (not re-export) yet. */
             "simple-import-sort/exports": 1,
 
             /** Biome hasn't implemented this yet. */
@@ -200,15 +207,12 @@ export default defineConfig(
             "@stylistic": stylistic
         },
         rules: {
+            /** Biome hasn't implemented this yet. */
             "@stylistic/quotes": [
                 1,
                 "double",
                 { avoidEscape: true, allowTemplateLiterals: "avoidEscape" }
-            ],
-            /** Biome doesn't not unquote props as numbers.
-             * @see {@link https://biomejs.dev/formatter/differences-with-prettier/#prettier-doesnt-unquote-some-object-properties-that-are-valid-javascript-identifiers}
-             */
-            "@stylistic/quote-props": [1, "as-needed"]
+            ]
         }
     }
 )

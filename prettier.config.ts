@@ -1,4 +1,5 @@
 import { type Config as PrettierConfig } from "prettier"
+import { type PluginOptions as TailwindConfig } from "prettier-plugin-tailwindcss"
 
 type StrictConfig = {
     [K in keyof PrettierConfig as string extends K
@@ -6,12 +7,7 @@ type StrictConfig = {
         : K]: PrettierConfig[K]
 }
 
-interface PluginOptions {
-    tailwindAttributes?: string[]
-    tailwindFunctions?: string[]
-}
-
-type Config = StrictConfig & PluginOptions
+type Config = StrictConfig & TailwindConfig
 
 const config = {
     printWidth: 80,
@@ -30,7 +26,19 @@ const config = {
     proseWrap: "preserve",
     endOfLine: "lf",
     embeddedLanguageFormatting: "auto",
-    singleAttributePerLine: false
+    singleAttributePerLine: false,
+    plugins: ["prettier-plugin-tailwindcss"],
+    tailwindAttributes: ["containerClassName", "tw"],
+    tailwindFunctions: ["cn", "cva", "twg", "twMerge"],
+    tailwindPreserveDuplicates: true,
+    overrides: [
+        {
+            files: ["*.yml", "*.yaml"],
+            options: {
+                tabWidth: 2
+            }
+        }
+    ]
 } satisfies Config
 
 export default config
