@@ -76,9 +76,7 @@ async function processImage(
                 newManifest[manifestKey] = meta.manifestData
                 return false
             }
-        } catch {
-            /* Empty */
-        }
+        } catch {}
     }
 
     const originalImage = sharp(filePath)
