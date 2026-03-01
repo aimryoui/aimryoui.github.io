@@ -1,0 +1,53 @@
+{
+    "$schema": "./node_modules/oxfmt/configuration_schema.json",
+    "ignorePatterns": [
+        "node_modules",
+        ".next",
+        ".velite",
+        "public/static",
+        "coverage",
+        "package-lock.json",
+        "pnpm-lock.yaml",
+        "yarn.lock",
+        ".git",
+        "*.png",
+        "*.jpg",
+        "*.jpeg",
+        "*.webp",
+        "*.gif",
+        "*.ico",
+        "*.svg",
+        "*.mp4",
+        "*.mp3"
+    ],
+    "printWidth": 80,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": false,
+    "singleQuote": false,
+    "quoteProps": "as-needed",
+    "jsxSingleQuote": false,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "bracketSameLine": false,
+    "arrowParens": "always",
+    "requirePragma": false,
+    "insertPragma": false,
+    "proseWrap": "preserve",
+    "endOfLine": "lf",
+    "embeddedLanguageFormatting": "auto",
+    "singleAttributePerLine": false,
+    "sortTailwindcss": {
+        "functions": ["cn", "cva", "twg", "twMerge"],
+        "attributes": ["containerClassName", "tw"]
+    },
+    "sortPackageJson": false,
+    "overrides": [
+        {
+            "files": ["*.yml", "*.yaml"],
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}

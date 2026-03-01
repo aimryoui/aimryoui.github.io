@@ -17,11 +17,19 @@
     "editor.quickSuggestions": {
         "strings": "on"
     },
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "[mdx]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
+    "editor.defaultFormatter": "oxc.oxc-vscode",
     "editor.formatOnSave": true,
+    //* Oxc
+    "oxc.enable.oxlint": false,
+    "oxc.configPath": ".oxlintrc.json",
+    "oxc.enable.oxfmt": true,
+    "oxc.fmt.configPath": ".oxfmtrc.json",
+    "oxc.requireConfig": true,
+    "oxc.disableNestedConfig": true,
+    "oxc.tsConfigPath": "tsconfig.json",
+    "oxc.typeAware": true,
+    "oxc.fixKind": "safe_fix_or_suggestion",
+    "oxc.trace.server": "verbose",
     //* Tailwind CSS
     "files.associations": {
         "*.css": "tailwindcss"

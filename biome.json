@@ -123,7 +123,6 @@
         "enabled": true,
         "actions": {
             "source": {
-                "noDuplicateClasses": "on",
                 "useSortedProperties": "on",
                 "organizeImports": {
                     "level": "on",
