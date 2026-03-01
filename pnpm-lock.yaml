@@ -42,8 +42,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1
       twg:
-        specifier: ^7.1.2
-        version: 7.1.2
+        specifier: ^7.1.4
+        version: 7.1.4
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.4.4
@@ -3161,8 +3161,8 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  twg@7.1.2:
-    resolution: {integrity: sha512-9Tfp9Qz3lugHrbDRCObYlI2kwgJT7pJxeEwcas5Eh3FW+k3b+UFbvpXuISyVofh9122wKuVh5Be6RGEmHKdJ+Q==}
+  twg@7.1.4:
+    resolution: {integrity: sha512-qacsKBOiUHpRcxQ3qRy+gXSCmcK3HFjTE3xrsIUXh5pipu6kwQe8yZo48JnAdnvWumO5+tTNmrkEDlPfzoNFiA==}
     engines: {node: '>=6'}
 
   type-check@0.4.0:
@@ -6629,7 +6629,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  twg@7.1.2:
+  twg@7.1.4:
     dependencies:
       acorn: 8.16.0
 

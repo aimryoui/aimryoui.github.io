@@ -38,7 +38,7 @@
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
         "tailwind-merge": "^2.6.1",
-        "twg": "^7.1.2"
+        "twg": "^7.1.4"
     },
     "devDependencies": {
         "@biomejs/biome": "^2.4.4",

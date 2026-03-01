@@ -21,7 +21,8 @@ export function SectionName({
     return (
         <ContainerComp
             className={cn(
-                "sticky top-3.5 z-30 grid h-13 place-items-center",
+                as === "h4" && "sticky top-3.5 z-30",
+                "grid h-13 place-items-center",
                 containerClassName
             )}
             {...props}
