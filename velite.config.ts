@@ -41,5 +41,8 @@ const projects = defineCollection({
 
 export default defineConfig({
     root: "src/content",
+    output: {
+        clean: true
+    },
     collections: { projects }
 })
