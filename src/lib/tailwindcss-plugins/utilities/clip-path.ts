@@ -12,7 +12,7 @@ const BASIC_SHAPES = [
 ] as const
 
 export default plugin(
-    ({ matchUtilities, theme }) => {
+    ({ addUtilities, matchUtilities, theme }) => {
         matchUtilities(
             {
                 clip: (value: string) => ({
@@ -21,6 +21,17 @@ export default plugin(
             },
             { values: theme("clipPath"), type: ["url", "any"] }
         )
+        addUtilities({
+            ".clip-star": {
+                clipPath: /* css */ `polygon(
+                    50% 0,
+                    calc(50% * (1 + sin(0.4turn))) calc(50% * (1 - cos(0.4turn))),
+                    calc(50% * (1 - sin(0.2turn))) calc(50% * (1 - cos(0.2turn))),
+                    calc(50% * (1 + sin(0.2turn))) calc(50% * (1 - cos(0.2turn))),
+                    calc(50% * (1 - sin(0.4turn))) calc(50% * (1 - cos(0.4turn)))
+                )`
+            }
+        })
         // <basic-shape>
         BASIC_SHAPES.forEach((shape) => {
             matchUtilities(

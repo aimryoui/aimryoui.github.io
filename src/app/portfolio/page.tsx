@@ -186,7 +186,7 @@ export default function Portfolio() {
                                     href="https://wikipedia.org/wiki/Vietnam"
                                     openInNewTab
                                     className={cn(
-                                        "grid h-8 w-12 place-items-center bg-[#DA251D]"
+                                        "grid aspect-3/2 w-[--w] place-items-center bg-[#da251d] [--w:calc(var(--spacing)*12)]"
                                     )}
                                 >
                                     <Highlight
@@ -199,7 +199,7 @@ export default function Portfolio() {
                                     {/* https://css-shape.com/star/ */}
                                     <div
                                         className={cn(
-                                            "aspect-square w-[1.2rem] bg-[#FFFF00] [clip-path:polygon(50%_0,79%_90%,2%_35%,98%_35%,21%_90%)]"
+                                            "aspect-square w-[calc(var(--w)/5*2)] bg-[#ffff00] clip-star"
                                         )}
                                     />
                                 </Link>

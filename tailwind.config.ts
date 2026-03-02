@@ -119,6 +119,7 @@ export default {
                 6: ".375rem"
             },
             aspectRatio: {
+                "3/2": "3/2",
                 3: "3"
             },
             zIndex: {
