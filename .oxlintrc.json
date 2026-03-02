@@ -51,6 +51,7 @@
         "@stylistic/quotes": [
             "warn",
             "double",
+            // const backtick = `backtick` -> "backtick"
             {
                 "avoidEscape": true,
                 "allowTemplateLiterals": "avoidEscape"
