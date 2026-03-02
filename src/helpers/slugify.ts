@@ -1,4 +1,8 @@
-/** biome-ignore-all lint/performance/useTopLevelRegex: Complexity */
+/**
+ * Slugify a string
+ * @param {string} str Input string
+ * @returns {string} Slugified string
+ */
 export function slugify(str: string): string {
     if (!str) return ""
 

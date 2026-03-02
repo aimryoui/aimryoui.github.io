@@ -3,8 +3,11 @@
 import { useEffect, useRef, useState } from "react"
 
 /**
- * @param ids - List of IDs to be tracked
- * @param offsetPercent - Active point from top of viewport by % (Default: 40%)
+ * Hook to track the ID of the element that is currently in the viewport
+ * @param {string[]} ids - List of IDs to be tracked
+ * @param {string} offsetPercent - Active point from top of viewport by % (Default: 40%)
+ *
+ * @returns {string} The ID of the element that is currently in the viewport
  */
 export function useScrollSpy(ids: string[], offsetPercent = 40) {
     const [activeId, setActiveId] = useState<string>("")

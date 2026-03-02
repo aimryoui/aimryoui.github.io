@@ -41,7 +41,6 @@
         "functions": ["cn", "cva", "twg", "twMerge"],
         "attributes": ["containerClassName", "tw"]
     },
-    "sortPackageJson": false,
     "overrides": [
         {
             "files": ["*.yml", "*.yaml"],

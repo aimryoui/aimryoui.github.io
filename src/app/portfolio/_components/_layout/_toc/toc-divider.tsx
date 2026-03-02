@@ -1,7 +1,6 @@
 import { memo } from "react"
 
 import { type Variants } from "motion/react"
-// biome-ignore lint/performance/noNamespaceImport: https://motion.dev/docs/react-reduce-bundle-size
 import * as m from "motion/react-m"
 
 import { SectionLine } from "@/components/layout/line"

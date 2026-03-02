@@ -1,4 +1,4 @@
-/* eslint-disable @limegrass/import-alias/import-alias */
+// oxlint-disable @limegrass/import-alias/import-alias
 import anchorsPlugin from "@toolwind/anchors"
 import { type Config } from "tailwindcss"
 import plugin from "tailwindcss/plugin"

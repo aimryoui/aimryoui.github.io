@@ -8,12 +8,12 @@
     "linter": {
         "enabled": true,
         "domains": {
-            "react": "recommended",
+            "react": "none",
             "types": "recommended"
         },
         "rules": {
-            "recommended": true,
-            "performance": "on",
+            "recommended": false,
+            "correctness": "off",
             "style": {
                 "useImportType": {
                     "level": "warn",
@@ -49,42 +49,6 @@
                             "level": "on",
                             "fix": "safe"
                         }
-                    },
-                    "performance": { "useSolidForComponent": "off" },
-                    "complexity": {
-                        "useLiteralKeys": {
-                            "level": "on",
-                            "fix": "safe"
-                        }
-                    },
-                    "suspicious": {
-                        "noArrayIndexKey": "off",
-                        "noGlobalIsNan": {
-                            "level": "on",
-                            "fix": "safe"
-                        },
-                        "useAwait": "on"
-                    },
-                    "a11y": { "noSvgWithoutTitle": "off" },
-                    "style": {
-                        "useConsistentArrayType": {
-                            "level": "on",
-                            "fix": "safe"
-                        },
-                        "useTemplate": {
-                            "level": "on",
-                            "fix": "safe"
-                        },
-                        "noInferrableTypes": "on",
-                        "noNamespace": "on",
-                        "noNonNullAssertion": {
-                            "level": "on",
-                            "fix": "safe"
-                        },
-                        "noCommonJs": "on",
-                        "useThrowOnlyError": "on",
-                        "useAsConstAssertion": "on",
-                        "useForOf": "on"
                     }
                 }
             }

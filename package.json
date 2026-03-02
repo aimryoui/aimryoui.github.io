@@ -1,28 +1,69 @@
 {
+    "$schema": "https://json.schemastore.org/package.json",
     "name": "@hoangnhan2ka3.github.io/hoangnhan2ka3",
+    "displayName": "Personal Website | Nguyễn Hoàng Nhân",
     "version": "0.1.0",
+    "private": true,
+    "description": "My personal website using Next.js, but being deployed on GitHub Pages.",
+    "categories": [
+        "portfolio",
+        "resume",
+        "website"
+    ],
+    "keywords": [
+        "Hoang Nhan",
+        "Hoàng Nhân",
+        "Hoàng Nhân designer",
+        "Nguyễn Hoàng Nhân",
+        "Nguyễn Hoàng Nhân designer",
+        "artist",
+        "artworks",
+        "designer",
+        "developer",
+        "hoangnhan",
+        "nhn",
+        "portfolio",
+        "website"
+    ],
+    "homepage": "https://hoangnhan2ka3.github.io",
+    "bugs": {
+        "url": "https://github.com/hoangnhan2ka3/hoangnhan2ka3.github.io/issues",
+        "email": "workwith.hnhan@gmail.com"
+    },
     "author": {
         "name": "Nguyen Hoang Nhan",
         "email": "workwith.hnhan@gmail.com",
         "url": "https://hoangnhan2ka3.github.io"
     },
-    "homepage": "https://hoangnhan2ka3.github.io",
-    "website": "https://hoangnhan2ka3.github.io",
-    "description": "My personal website using Next.js, but being deployed on GitHub Pages.",
-    "engines": {
-        "node": ">=22.18.0"
+    "maintainers": [
+        {
+            "name": "Nguyen Hoang Nhan",
+            "email": "workwith.hnhan@gmail.com"
+        }
+    ],
+    "contributors": [
+        {
+            "name": "Nguyen Hoang Nhan",
+            "email": "workwith.hnhan@gmail.com"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hoangnhan2ka3/hoangnhan2ka3.github.io.git"
     },
-    "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
+    "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/hoangnhan2ka3"
+    },
     "type": "module",
-    "private": true,
     "scripts": {
         "dev": "tsx src/scripts/process-images.ts && next dev",
         "build": "tsx src/scripts/process-images.ts && next build",
         "start": "pnpx serve@latest out",
         "format": "oxfmt --threads 8",
         "format:check": "oxfmt --check --threads 8",
-        "lint": "biome lint && eslint",
-        "lint:fix": "biome lint --write && eslint --fix",
+        "lint": "oxlint --threads 8 && biome lint && eslint",
+        "lint:fix": "oxlint --fix --threads 8 && biome lint --write && eslint --fix",
         "check": "biome check --write",
         "shadcn:add": "pnpm dlx shadcn@2.3.0 add"
     },
@@ -33,7 +74,7 @@
         "class-variance-authority": "^0.7.1",
         "lucide-react": "^0.575.0",
         "motion": "^12.34.3",
-        "next": "16.2.0-canary.69",
+        "next": "16.2.0-canary.70",
         "next-themes": "^0.4.6",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
@@ -56,7 +97,7 @@
         "chokidar": "^5.0.0",
         "cross-env": "^10.1.0",
         "eslint": "^9.39.3",
-        "eslint-config-next": "16.2.0-canary.69",
+        "eslint-config-next": "16.2.0-canary.70",
         "eslint-config-prettier": "^10.1.8",
         "eslint-import-resolver-typescript": "^4.4.4",
         "eslint-plugin-better-tailwindcss": "^4.3.1",
@@ -71,6 +112,7 @@
         "globals": "^17.4.0",
         "jiti": "^2.6.1",
         "oxfmt": "^0.35.0",
+        "oxlint": "^1.50.0",
         "postcss": "^8.5.6",
         "postcss-load-config": "^6.0.1",
         "sharp": "^0.34.5",
@@ -80,5 +122,9 @@
         "typescript": "6.0.0-beta",
         "typescript-eslint": "^8.56.1",
         "velite": "^0.3.1"
-    }
+    },
+    "engines": {
+        "node": ">=22.18.0"
+    },
+    "packageManager": "pnpm@10.30.3"
 }

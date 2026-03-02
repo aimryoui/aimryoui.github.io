@@ -40,6 +40,10 @@ const getDurationDates = (duration: string) => {
  * 1. Most recent Start Date first.
  * 2. If Start Date is the same, longer Duration first.
  * 3. If both are the same, alphabetical order by project name.
+ *
+ * @param {Project[]} projects Projects to be sorted
+ *
+ * @returns {Project[]} Sorted Projects
  */
 function sortProjects(projects: Project[]): Project[] {
     return [...projects].sort((a, b) => {

@@ -1,4 +1,3 @@
-// biome-ignore lint/performance/noNamespaceImport: https://velite.js.org/guide/using-mdx#rendering-mdx-content
 import * as runtime from "react/jsx-runtime"
 
 import { SectionLine } from "@/components/layout/line"
@@ -38,6 +37,6 @@ interface MDXProps {
 export const MDXContent = ({ code, components }: MDXProps) => {
     const Component = useMDXComponent(code)
 
-    // eslint-disable-next-line react-hooks/static-components
+    // oxlint-disable-next-line react-compiler/static-components
     return <Component components={{ ...sharedComponents, ...components }} />
 }

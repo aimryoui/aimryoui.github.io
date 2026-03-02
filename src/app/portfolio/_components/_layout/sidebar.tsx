@@ -20,26 +20,32 @@ import {
     ExperienceIcon,
     SoftwareIcon
 } from "@/portfolio/_components/_icons/toc-icons"
+import { type TocItemProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
 import { TableOfContents } from "@/portfolio/_components/_layout/table-of-contents"
 
 import { projects } from "~/.velite"
 
 function Sidebar() {
     const projectGroups = groupProjectsByCategory(projects)
-    const projectItems = projectGroups.flatMap((group) => [
-        // Project Headers
-        {
-            id: group.id,
-            label: group.title,
-            depth: 2
-        },
-        // Projects
-        ...group.projects.map((p) => ({
-            id: slugify(p.projectName),
-            label: p.projectName,
-            depth: 3
-        }))
-    ])
+    const projectItems = projectGroups.flatMap((group) => {
+        const items: TocItemProps[] = [
+            {
+                id: group.id,
+                label: group.title,
+                depth: 2
+            }
+        ]
+
+        for (const project of group.projects) {
+            items.push({
+                id: slugify(project.projectName),
+                label: project.projectName,
+                depth: 3
+            })
+        }
+
+        return items
+    })
 
     const tocItems = [
         { id: "about", label: "About", depth: 3, icon: <AboutIcon /> },

@@ -7,7 +7,7 @@ import chokidar from "chokidar"
 import { glob } from "glob"
 import sharp from "sharp"
 
-// eslint-disable-next-line @limegrass/import-alias/import-alias
+// oxlint-disable-next-line @limegrass/import-alias/import-alias
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "../configs/image.config.ts"
 
 const INPUT_DIR = "private/images"
@@ -325,11 +325,11 @@ const IGNORE_REGEX = /(^|[/\\])\../
 
 export async function build({ watch = false, skipInitial = false } = {}) {
     if (!skipInitial) {
-        if (!watch) {
-            await buildImages(true)
-        } else {
+        if (watch) {
             console.log(`${PREFIX} building...`)
             await buildImages(false)
+        } else {
+            await buildImages(true)
         }
     }
 
@@ -355,7 +355,7 @@ export async function build({ watch = false, skipInitial = false } = {}) {
     }
 }
 
-;(async () => {
+void (async () => {
     const isMain = process.argv[1]
         ?.replace(/\\/g, "/")
         .endsWith("process-images.ts")

@@ -450,7 +450,6 @@ function getGridLanesStyles(element: HTMLElement): ParsedStyles {
     let rowGap = resolveCSSVariables(rowGapRaw, computed)
 
     if (gap.includes(" ")) {
-        // biome-ignore lint/performance/useTopLevelRegex: Simple
         const parts = gap.split(/\s+/)
         if (parts[0]) rowGap = resolveCSSVariables(parts[0], computed)
         if (parts[1]) columnGap = resolveCSSVariables(parts[1], computed)

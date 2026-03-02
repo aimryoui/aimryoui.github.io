@@ -52,7 +52,7 @@ export default plugin(
 
                 unset: "unset"
             },
-            /** @track {@link https://github.com/tailwindlabs/tailwindcss-intellisense/discussions/1455} */
+            /** @see {@link https://github.com/tailwindlabs/tailwindcss-intellisense/discussions/1455} */
             clipPathBasicShapes: {
                 "[]": ""
             }

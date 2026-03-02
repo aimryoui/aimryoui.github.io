@@ -43,8 +43,7 @@ function SectionLine({
         <div
             className={cn(
                 "relative z-10 h-0 w-full",
-                showDecoration && "flex items-center justify-between",
-                className
+                showDecoration && "flex items-center justify-between"
             )}
             {...props}
             ref={ref}
@@ -55,7 +54,8 @@ function SectionLine({
                     "absolute top-1/2 -translate-y-1/2 border-b border-dashed border-stroke bg-background",
                     fit
                         ? "left-1/2 w-full -translate-x-1/2"
-                        : "-right-6.5 w-dvw"
+                        : "-right-6.5 w-dvw",
+                    className
                 )}
             />
             {showDecoration && <Plus position="right" />}

@@ -41,21 +41,7 @@ export const metadata: Metadata = {
     authors: [{ name: siteConfig.name }, { url: APP_BASE_URL }],
     creator: siteConfig.name,
     publisher: siteConfig.name,
-    keywords: [
-        "website",
-        "portfolio",
-        "artworks",
-        "Hoang Nhan",
-        "Hoàng Nhân",
-        "Hoàng Nhân designer",
-        "Nguyễn Hoàng Nhân",
-        "Nguyễn Hoàng Nhân designer",
-        "developer",
-        "designer",
-        "artist",
-        "nhn",
-        "hoangnhan"
-    ],
+    keywords: AppData.keywords,
     category:
         "portfolio, project, artworks, designer, ui/ux, user interface, developer, artist, website",
     referrer: "origin-when-cross-origin",

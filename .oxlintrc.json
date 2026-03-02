@@ -1,0 +1,138 @@
+{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "categories": {
+        "correctness": "warn",
+        "perf": "warn",
+        "pedantic": "error"
+    },
+    "env": {
+        "builtin": true,
+        "browser": true,
+        "node": true
+    },
+    "ignorePatterns": [
+        "**/node_modules/",
+        "**/.git/",
+        ".next/**",
+        ".velite/**",
+        "out/**",
+        "build/**",
+        "next-env.d.ts",
+        "pnpm-lock.yaml"
+    ],
+    "plugins": ["eslint", "nextjs", "react", "jsx-a11y", "oxc", "jsdoc"],
+    "jsPlugins": [
+        "@stylistic/eslint-plugin",
+        { "name": "react-compiler", "specifier": "eslint-plugin-react-hooks" },
+        "eslint-plugin-tailwindcss",
+        "eslint-plugin-simple-import-sort",
+        "@limegrass/eslint-plugin-import-alias",
+        "@eslint/css"
+    ],
+    "rules": {
+        //* Built-in
+        "no-unused-vars": [
+            "warn",
+            {
+                "args": "all",
+                "argsIgnorePattern": "^_",
+                "caughtErrorsIgnorePattern": "^_",
+                "destructuredArrayIgnorePattern": "^_",
+                "varsIgnorePattern": "^_"
+            }
+        ],
+        "max-depth": "off",
+        "max-lines": "off",
+        "max-lines-per-function": "off",
+        "no-inline-comments": "off",
+        "prefer-tag-over-role": "off",
+
+        //* Stylistic
+        "@stylistic/quotes": [
+            "warn",
+            "double",
+            {
+                "avoidEscape": true,
+                "allowTemplateLiterals": "avoidEscape"
+            }
+        ]
+    },
+    "overrides": [
+        {
+            "files": ["**/*.{ts,tsx}"],
+            "rules": {
+                //* React
+                "react/no-unknown-property": [
+                    "warn",
+                    {
+                        "ignore": [
+                            "tw",
+                            "vaul-drawer-wrapper",
+                            "cmdk-input-wrapper"
+                        ]
+                    }
+                ],
+                "react/no-array-index-key": "off",
+
+                //* React Compiler
+                "react-compiler/config": "error",
+                "react-compiler/error-boundaries": "error",
+                "react-compiler/component-hook-factories": "error",
+                "react-compiler/gating": "error",
+                "react-compiler/globals": "error",
+                "react-compiler/immutability": "error",
+                "react-compiler/preserve-manual-memoization": "error",
+                "react-compiler/purity": "error",
+                "react-compiler/refs": "error",
+                "react-compiler/set-state-in-effect": "error",
+                "react-compiler/set-state-in-render": "error",
+                "react-compiler/static-components": "error",
+                "react-compiler/unsupported-syntax": "warn",
+                "react-compiler/use-memo": "error",
+                "react-compiler/incompatible-library": "warn",
+
+                //* Tailwind CSS
+                "tailwindcss/enforces-shorthand": "warn", // mx-5 my-5 should become m-5
+                "tailwindcss/no-custom-classname": "warn",
+                "tailwindcss/no-contradicting-classname": "warn", // avoid p-2 p-3
+                "tailwindcss/no-unnecessary-arbitrary-value": "warn", // replacing m-[1.25rem] with m-5
+
+                //* Import
+                "simple-import-sort/exports": "warn",
+                "@limegrass/import-alias/import-alias": [
+                    "warn",
+                    {
+                        "isAllowBaseUrlResolvedImport": false,
+                        "aliasConfigPath": "./tsconfig.json"
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["**/*.css"],
+            "rules": {
+                "@eslint/css/no-duplicate-imports": "error",
+                "@eslint/css/use-baseline": "warn",
+                "@eslint/css/use-layers": "warn"
+            }
+        }
+    ],
+    "settings": {
+        "tailwindcss": {
+            "callees": ["cn", "twg", "twMerge"],
+            "config": "tailwind.config.ts",
+            "cssFiles": [
+                "**/*.css",
+                "!**/node_modules",
+                "!**/.*",
+                "!**/dist",
+                "!**/build"
+            ],
+            "cssFilesRefreshRate": 5000,
+            "removeDuplicates": false,
+            "skipClassAttribute": false,
+            "tags": [],
+            "classRegex": "^(class(Name)?|containerClassName|tw)$"
+        }
+    }
+}
