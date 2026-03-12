@@ -20,9 +20,23 @@
         "next-env.d.ts",
         "pnpm-lock.yaml"
     ],
-    "plugins": ["eslint", "nextjs", "react", "jsx-a11y", "oxc", "jsdoc"],
+    "options": {
+        "reportUnusedDisableDirectives": "warn",
+        "typeAware": true,
+        "typeCheck": true
+    },
+    "plugins": [
+        "eslint",
+        "typescript",
+        "nextjs",
+        "react",
+        "jsx-a11y",
+        "oxc",
+        "jsdoc"
+    ],
     "jsPlugins": [
         "@stylistic/eslint-plugin",
+        { "name": "react-eslint", "specifier": "eslint-plugin-react" },
         { "name": "react-compiler", "specifier": "eslint-plugin-react-hooks" },
         "eslint-plugin-tailwindcss",
         "eslint-plugin-simple-import-sort",
@@ -47,6 +61,73 @@
         "no-inline-comments": "off",
         "prefer-tag-over-role": "off",
 
+        //* TypeScript
+        // recommended
+        "typescript/ban-ts-comment": "warn",
+        "typescript/no-empty-object-type": "warn",
+        "typescript/no-explicit-any": "warn",
+        "typescript/no-misused-promises": "warn",
+        "typescript/no-namespace": "warn",
+        "typescript/no-require-imports": "warn",
+        "typescript/no-unnecessary-type-assertion": "warn",
+        "typescript/no-unnecessary-type-constraint": "warn",
+        "typescript/no-unsafe-argument": "warn",
+        "typescript/no-unsafe-assignment": "warn",
+        "typescript/no-unsafe-call": "warn",
+        "typescript/no-unsafe-enum-comparison": "warn",
+        "typescript/no-unsafe-function-type": "warn",
+        "typescript/no-unsafe-member-access": "warn",
+        "typescript/no-unsafe-return": "warn",
+        "typescript/no-unused-expressions": "warn",
+        "typescript/only-throw-error": "warn",
+        "typescript/prefer-promise-reject-errors": "warn",
+        "typescript/require-await": "warn",
+        "typescript/restrict-plus-operands": "warn",
+        // strict
+        "typescript/no-confusing-void-expression": "warn",
+        "typescript/no-deprecated": "warn",
+        "typescript/no-dynamic-delete": "warn",
+        "typescript/no-extraneous-class": "warn",
+        "typescript/no-mixed-enums": "warn",
+        "typescript/no-non-null-asserted-nullish-coalescing": "warn",
+        "typescript/no-non-null-assertion": "warn",
+        "typescript/no-unnecessary-boolean-literal-compare": "warn",
+        "typescript/no-unnecessary-condition": "warn",
+        "typescript/no-unnecessary-template-expression": "warn",
+        "typescript/no-unnecessary-type-arguments": "warn",
+        "typescript/no-unnecessary-type-conversion": "warn",
+        "typescript/no-unnecessary-type-parameters": "warn",
+        "typescript/no-useless-constructor": "warn",
+        "typescript/no-useless-default-assignment": "warn",
+        "typescript/prefer-literal-enum-member": "warn",
+        "typescript/prefer-reduce-type-parameter": "warn",
+        "typescript/prefer-return-this-type": "warn",
+        "typescript/return-await": "warn",
+        "typescript/unified-signatures": "warn",
+        "typescript/use-unknown-in-catch-callback-variable": "warn",
+        // stylistic
+        "typescript/adjacent-overload-signatures": "warn",
+        "typescript/array-type": "warn",
+        "typescript/ban-tslint-comment": "warn",
+        "typescript/class-literal-property-style": "warn",
+        "typescript/consistent-generic-constructors": "warn",
+        "typescript/consistent-indexed-object-style": "warn",
+        "typescript/consistent-type-assertions": "warn",
+        "typescript/consistent-type-definitions": "warn",
+        "typescript/dot-notation": "warn",
+        "typescript/no-confusing-non-null-assertion": "warn",
+        "typescript/no-empty-function": "warn",
+        "typescript/no-inferrable-types": "warn",
+        "typescript/no-invalid-void-type": "warn",
+        "typescript/non-nullable-type-assertion-style": "warn",
+        "typescript/prefer-find": "warn",
+        "typescript/prefer-for-of": "warn",
+        "typescript/prefer-function-type": "warn",
+        "typescript/prefer-includes": "warn",
+        "typescript/prefer-nullish-coalescing": "warn",
+        "typescript/prefer-optional-chain": "warn",
+        "typescript/prefer-regexp-exec": "warn",
+
         //* Stylistic
         "@stylistic/quotes": [
             "warn",
@@ -62,6 +143,16 @@
         {
             "files": ["**/*.{ts,tsx}"],
             "rules": {
+                "no-empty-function": "off",
+
+                //* TypeScript
+                "typescript/strict-boolean-expressions": "off",
+                "typescript/unbound-method": "off",
+                // "typescript/consistent-type-imports": [
+                //     "warn",
+                //     { "fixStyle": "inline-type-imports" }
+                // ],
+
                 //* React
                 "react/no-unknown-property": [
                     "warn",
@@ -74,6 +165,7 @@
                     }
                 ],
                 "react/no-array-index-key": "off",
+                "react-eslint/no-deprecated": "error",
 
                 //* React Compiler
                 "react-compiler/config": "error",
@@ -119,6 +211,9 @@
         }
     ],
     "settings": {
+        "react": {
+            "version": "19.2.4"
+        },
         "tailwindcss": {
             "callees": ["cn", "twg", "twMerge"],
             "config": "tailwind.config.ts",

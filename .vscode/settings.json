@@ -2,13 +2,10 @@
     //* General
     "files.eol": "\n",
     "git.followTagsWhenSync": true,
-    "prettier.useEditorConfig": false,
     "editor.codeActionsOnSave": {
         "source.organizeImports": "never",
         "source.addMissingImports": "explicit",
         "source.removeUnusedImports": "never",
-        "source.fixAll.eslint": "explicit",
-        "source.fixAll.stylelint": "explicit",
         //* Oxc
         "source.fixAll.oxc": "explicit",
         //* Biome
@@ -30,7 +27,7 @@
     "oxc.requireConfig": true,
     "oxc.disableNestedConfig": true,
     "oxc.tsConfigPath": "tsconfig.json",
-    // "oxc.typeAware": true,
+    "oxc.typeAware": true,
     "oxc.fixKind": "safe_fix_or_suggestion",
     "oxc.trace.server": "off",
     //* Tailwind CSS
@@ -53,7 +50,5 @@
         "typescript"
     ],
     "cssrem.vw": true,
-    "cssrem.vwDesign": 1707.33,
-    //* TypeScript Version
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+    "cssrem.vwDesign": 1707.33
 }
