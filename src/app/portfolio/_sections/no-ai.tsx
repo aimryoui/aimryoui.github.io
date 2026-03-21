@@ -113,7 +113,7 @@ function NoAIOverlay() {
                     </p>
                     <i translate="no" className={cn("text-sm opacity-80")}>
                         Tiếp tục lăn/lướt xuống và/hoặc vượt qua cảnh báo này
-                        đồng nghĩa với bạn đồng ý với với các điều trên.
+                        đồng nghĩa bạn đã đồng ý với với các điều trên.
                     </i>
                     <i translate="no" className={cn("text-sm opacity-80")}>
                         继续向下滚动/滑动，和/或略过此提示，即表示您同意上述条款。
