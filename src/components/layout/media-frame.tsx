@@ -45,12 +45,14 @@ function MediaFrame({
     sectionName,
     lowercase,
     flex,
+    continuous,
     className,
     children
 }: {
     sectionName?: string
     lowercase?: boolean
     flex?: boolean
+    continuous?: boolean
     className?: string
     children: React.ReactNode
 }) {
@@ -69,7 +71,7 @@ function MediaFrame({
                         <SectionLine />
                     </>
                 ) : (
-                    <SectionLine />
+                    !continuous && <SectionLine />
                 )}
                 <div
                     className={cn(

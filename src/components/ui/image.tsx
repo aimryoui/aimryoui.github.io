@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/performance/noImgElement: Custom Image component */
 "use client"
 
 import NextImage from "next/image"
@@ -20,6 +19,7 @@ interface ImageProps extends React.ComponentProps<"div"> {
     imageRow?: "justified" | "proportional"
     limitHeight?: boolean
     noBorder?: boolean
+    pngBorder?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
 }
 
@@ -32,6 +32,7 @@ function Image({
     imageRow,
     limitHeight = false,
     noBorder = false,
+    pngBorder = false,
     objectFit = "cover",
     ...props
 }: ImageProps) {
@@ -80,7 +81,8 @@ function Image({
     return (
         <div
             className={cn(
-                "relative grid w-full place-items-center overflow-hidden",
+                "relative grid w-full place-items-center",
+                !pngBorder && "overflow-hidden",
                 asBackgroundImage ? "h-full" : "h-fit",
                 !noBorder && {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-white/15 mix-blend-difference"
@@ -102,7 +104,11 @@ function Image({
                 alt={alt ?? ""}
                 width={exactW}
                 height={exactH}
-                className={cn("absolute size-full object-cover")}
+                className={cn(
+                    "absolute size-full object-cover",
+                    pngBorder &&
+                        "drop-shadow-[0_0_2px_color-mix(in_oklab,var(--white)_calc(0.50*100%),transparent)]"
+                )}
                 fetchPriority="high"
                 loading={placeholderPriority ? "eager" : "lazy"}
                 style={{
