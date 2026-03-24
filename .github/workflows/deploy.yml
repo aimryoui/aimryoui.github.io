@@ -52,6 +52,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      # 3. Install FFmpeg
+      - name: Install FFmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v3
+        with:
+          architecture: ""
+          github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
+
       - name: Setup Pages
         id: setup_pages
         uses: actions/configure-pages@v5
