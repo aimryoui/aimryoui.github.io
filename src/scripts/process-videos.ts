@@ -11,6 +11,8 @@ const INPUT_DIR = "private/media"
 const OUTPUT_BASE = "public/assets/media"
 const MANIFEST_PATH = "src/lib/video-manifest.json"
 
+const SCRIPT_VERSION = "1"
+
 const BRAND_COLOR = "\x1B[38;2;249;115;22m"
 const RESET = "\x1B[0m"
 const PREFIX = `${BRAND_COLOR}[VIDEOS]${RESET}`
@@ -19,7 +21,7 @@ const SHORT_VIDEO_THRESHOLD = 30 * 1024 * 1024
 
 type VideoManifest = Record<
     string,
-    { hash: string; type: "short" | "long"; duration: number }
+    { hash: string; version: string; type: "short" | "long"; duration: number }
 >
 
 function getFileHash(filePath: string) {
@@ -54,6 +56,21 @@ function getOriginalFps(filePath: string): number {
     }
 }
 
+function getVideoDuration(filePath: string): number {
+    try {
+        const output = execSync(
+            `ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${filePath}"`
+        )
+            .toString()
+            .trim()
+
+        const duration = parseFloat(output)
+        return isNaN(duration) ? 0 : parseFloat(duration.toFixed(2))
+    } catch {
+        return 0
+    }
+}
+
 function processVideo(
     filePath: string,
     oldManifest: VideoManifest,
@@ -70,12 +87,15 @@ function processVideo(
 
     const currentHash = getFileHash(filePath)
 
-    if (
-        Object.hasOwn(oldManifest, manifestKey) &&
-        oldManifest[manifestKey].hash === currentHash
-    ) {
-        newManifest[manifestKey] = oldManifest[manifestKey]
-        return false // Cache hit
+    if (Object.hasOwn(oldManifest, manifestKey)) {
+        const cachedData = oldManifest[manifestKey]
+        if (
+            cachedData.hash === currentHash &&
+            cachedData.version === SCRIPT_VERSION
+        ) {
+            newManifest[manifestKey] = cachedData
+            return false // Cache hit
+        }
     }
 
     if (!fs.existsSync(outputFolder)) {
@@ -105,6 +125,8 @@ function processVideo(
     const fpsFilter = `-vf "fps=${targetFps}"`
     const keyframeInterval = targetFps * 2
 
+    const duration = getVideoDuration(absoluteInputPath)
+
     const ffmpegCmd = `ffmpeg -y -i "${absoluteInputPath}" -c:v libx264 -preset veryslow -crf 28 ${fpsFilter} -g ${keyframeInterval} -sc_threshold 0 -c:a aac -hls_time ${hlsTime} -hls_playlist_type vod -hls_segment_type fmp4 -hls_fmp4_init_filename "${initFilename}" -hls_segment_filename "${segmentPattern}" "${m3u8Filename}"`
 
     try {
@@ -112,8 +134,9 @@ function processVideo(
 
         newManifest[manifestKey] = {
             hash: currentHash,
+            version: SCRIPT_VERSION,
             type: isShort ? "short" : "long",
-            duration: 0
+            duration: duration
         }
     } catch (error) {
         console.error(
