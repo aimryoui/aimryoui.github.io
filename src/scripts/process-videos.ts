@@ -169,6 +169,10 @@ async function buildVideos(showProgress = false) {
                 process.stdout.write(
                     `${PREFIX} processing: ${getProgressBar(processedCount, files.length)}`
                 )
+            } else {
+                console.log(
+                    `${PREFIX} processing: ${getProgressBar(processedCount, files.length)}`
+                )
             }
         }
     }
