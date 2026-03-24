@@ -43,7 +43,7 @@ function Image({
     const lastDotIndex = src.lastIndexOf(".")
     const pathWithoutExt = src.slice(0, lastDotIndex)
     const fileName = src.slice(src.lastIndexOf("/") + 1, lastDotIndex)
-    const basePath = `/assets/images${pathWithoutExt}`
+    const basePath = `/assets/media${pathWithoutExt}`
 
     const Rows = GRID_ROWS
     const Cols = GRID_COLS

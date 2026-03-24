@@ -10,8 +10,8 @@ import sharp from "sharp"
 // oxlint-disable-next-line @limegrass/import-alias/import-alias
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "../configs/image.config.ts"
 
-const INPUT_DIR = "private/images"
-const OUTPUT_BASE = "public/assets/images"
+const INPUT_DIR = "private/media"
+const OUTPUT_BASE = "public/assets/media"
 const MANIFEST_PATH = "src/lib/image-manifest.json"
 
 const SCRIPT_VERSION = "1"
@@ -20,8 +20,9 @@ const BRAND_COLOR = "\x1B[38;2;0;166;244m"
 const RESET = "\x1B[0m"
 const PREFIX = `${BRAND_COLOR}[IMAGES]${RESET}`
 
-// const isCI = process.env.CI === "true"
 const BATCH_SIZE = 10
+
+const IGNORE_REGEX = /(^|[/\\])\..|.*-poster\.(png|jpg|jpeg|webp)$/i
 
 type ImageManifest = Record<
     string,
@@ -213,7 +214,9 @@ async function processImage(
 
 async function buildImages(showProgress = false) {
     const startTime = performance.now()
-    const files = await glob(`${INPUT_DIR}/**/*.{png,jpg,jpeg,webp}`)
+    const allFiles = await glob(`${INPUT_DIR}/**/*.{png,jpg,jpeg,webp}`)
+
+    const files = allFiles.filter((file) => !IGNORE_REGEX.test(file))
 
     let oldManifest: ImageManifest = {}
     if (fs.existsSync(MANIFEST_PATH)) {
@@ -321,9 +324,7 @@ async function buildImages(showProgress = false) {
     }
 }
 
-const IGNORE_REGEX = /(^|[/\\])\../
-
-export async function build({ watch = false, skipInitial = false } = {}) {
+async function build({ watch = false, skipInitial = false } = {}) {
     if (!skipInitial) {
         if (watch) {
             console.log(`${PREFIX} building...`)
@@ -370,3 +371,4 @@ void (async () => {
 })()
 
 export type { ImageManifest }
+export { build }

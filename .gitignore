@@ -50,5 +50,6 @@ eslint-typegen.d.ts
 # output images
 public/assets/
 
-# image manifest
+# media manifest
 image-manifest.json
+video-manifest.json

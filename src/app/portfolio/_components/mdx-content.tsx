@@ -4,9 +4,11 @@ import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
 import { Image } from "@/components/ui/image"
 import { Masonry } from "@/components/ui/masonry"
+import { Video } from "@/components/ui/video"
 
 const sharedComponents = {
     Image,
+    Video,
     Masonry,
     MediaFrame,
     SectionLine
