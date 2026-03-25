@@ -8,6 +8,7 @@
         "source.removeUnusedImports": "never",
         //* Oxc
         "source.fixAll.oxc": "explicit",
+        "source.format.oxc": "explicit",
         //* Biome
         "source.action.noDuplicateClasses.biome": "explicit",
         "source.organizeImports.biome": "explicit",

@@ -17,6 +17,8 @@ const projects = defineCollection({
         projectName: s.string(),
         category: s.string(),
 
+        forceExpand: s.boolean().default(false),
+
         information: s.object({
             newest: s.boolean().default(false),
             duration: s.string(),

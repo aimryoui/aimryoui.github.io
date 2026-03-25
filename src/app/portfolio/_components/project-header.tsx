@@ -21,7 +21,7 @@ function ProjectHeader({
     information,
     tools,
     detail
-}: Omit<(typeof projects)[number], "slug" | "code">) {
+}: Omit<(typeof projects)[number], "forceExpand" | "slug" | "code">) {
     const headerId = slugify(projectName)
 
     return (

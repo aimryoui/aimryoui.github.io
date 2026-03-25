@@ -12,18 +12,22 @@ interface ExpandableWrapperProps {
     children: React.ReactNode
     className?: string
     projectName?: string
+    forceExpand: boolean
 }
 
 export function ExpandableWrapper({
     children,
     className,
-    projectName
+    projectName,
+    forceExpand
 }: ExpandableWrapperProps) {
-    const [isExpanded, setIsExpanded] = useState(false)
+    const [isExpanded, setIsExpanded] = useState(forceExpand)
     const [isOverflowing, setIsOverflowing] = useState(true)
     const contentRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
+        if (forceExpand) return
+
         const checkOverflow = () => {
             const el = contentRef.current
             if (!el) return
@@ -37,7 +41,7 @@ export function ExpandableWrapper({
         return () => {
             clearTimeout(timer)
         }
-    }, [])
+    }, [forceExpand])
 
     const handleShowLess = () => {
         setIsExpanded(false)

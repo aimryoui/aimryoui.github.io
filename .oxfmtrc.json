@@ -18,6 +18,7 @@
     "endOfLine": "lf",
     "embeddedLanguageFormatting": "auto",
     "singleAttributePerLine": false,
+    "jsdoc": {},
     "sortTailwindcss": {
         "functions": ["cn", "cva", "twg", "twMerge"],
         "attributes": ["containerClassName", "tw"]
