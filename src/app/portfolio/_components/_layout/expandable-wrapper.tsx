@@ -101,7 +101,7 @@ export function ExpandableWrapper({
                         </Button>
                     </div>
                 )}
-                {isExpanded && isOverflowing && (
+                {isExpanded && isOverflowing && !forceExpand && (
                     <>
                         <SectionLine />
                         <div
@@ -135,7 +135,7 @@ export function ExpandableWrapper({
                     </>
                 )}
             </div>
-            {!isExpanded && (
+            {(!isExpanded || forceExpand) && (
                 <>
                     <SectionLine />
                     <Divider />

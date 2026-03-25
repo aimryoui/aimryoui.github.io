@@ -43,7 +43,10 @@ function ProjectHeader({
                         "flex flex-1 flex-col gap-2 px-6 pb-3.75 pt-3.25"
                     )}
                 >
-                    <H3 id={headerId} className={cn("text-pretty")}>
+                    <H3
+                        id={headerId}
+                        className={cn("text-pretty text-foreground")}
+                    >
                         {formatOrdinal(
                             projectName +
                                 (TRAILING_REGEX.test(projectName) ||
