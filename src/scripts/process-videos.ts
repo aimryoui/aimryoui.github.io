@@ -21,7 +21,13 @@ const SHORT_VIDEO_THRESHOLD = 30 * 1024 * 1024
 
 type VideoManifest = Record<
     string,
-    { hash: string; version: string; type: "short" | "long"; duration: number }
+    {
+        hash: string
+        posterHash: string
+        version: string
+        type: "short" | "long"
+        duration: number
+    }
 >
 
 function getFileHash(filePath: string) {
@@ -85,65 +91,93 @@ function processVideo(
         .replaceAll("\\", "/")
     const outputFolder = path.join(OUTPUT_BASE, parsedPath.dir, parsedPath.name)
 
-    const currentHash = getFileHash(filePath)
+    const absoluteInputPath = path.resolve(filePath)
+    const posterSrc = path.join(
+        INPUT_DIR,
+        parsedPath.dir,
+        `${parsedPath.name}-poster.webp`
+    )
+
+    if (!fs.existsSync(posterSrc)) {
+        console.warn(
+            `\n${PREFIX} Warning: Video doesn't have a poster or the format is invalid. Required: ${posterSrc}`
+        )
+        return false
+    }
+
+    const currentVideoHash = getFileHash(filePath)
+    const currentPosterHash = getFileHash(posterSrc)
+
+    let requiresVideoProcessing = true
+    let requiresPosterProcessing = true
 
     if (Object.hasOwn(oldManifest, manifestKey)) {
         const cachedData = oldManifest[manifestKey]
-        if (
-            cachedData.hash === currentHash &&
-            cachedData.version === SCRIPT_VERSION
-        ) {
-            newManifest[manifestKey] = cachedData
-            return false // Cache hit
+        if (cachedData.version === SCRIPT_VERSION) {
+            if (cachedData.hash === currentVideoHash) {
+                requiresVideoProcessing = false
+            }
+            if (cachedData.posterHash === currentPosterHash) {
+                requiresPosterProcessing = false
+            }
         }
+    }
+
+    if (!requiresVideoProcessing && !requiresPosterProcessing) {
+        newManifest[manifestKey] = oldManifest[manifestKey]
+        return false
     }
 
     if (!fs.existsSync(outputFolder)) {
         fs.mkdirSync(outputFolder, { recursive: true })
     }
 
-    const posterSrc = path.join(
-        INPUT_DIR,
-        parsedPath.dir,
-        `${parsedPath.name}-poster.webp`
-    )
-    if (fs.existsSync(posterSrc)) {
+    if (requiresPosterProcessing) {
         fs.copyFileSync(posterSrc, path.join(outputFolder, "poster.webp"))
     }
 
-    const stats = fs.statSync(filePath)
-    const isShort = stats.size <= SHORT_VIDEO_THRESHOLD
+    let type: "short" | "long" = "long"
+    let duration = 0
 
-    const absoluteInputPath = path.resolve(filePath)
-    const m3u8Filename = "index.m3u8"
-    const segmentPattern = "chunk_%03d.m4s"
-    const initFilename = "init.mp4"
-    const hlsTime = isShort ? 9999 : 6
+    if (requiresVideoProcessing) {
+        const stats = fs.statSync(filePath)
+        const isShort = stats.size <= SHORT_VIDEO_THRESHOLD
 
-    const originalFps = getOriginalFps(absoluteInputPath)
-    const targetFps = originalFps < 24 ? 24 : Math.round(originalFps)
-    const fpsFilter = `-vf "fps=${targetFps}"`
-    const keyframeInterval = targetFps * 2
+        const m3u8Filename = "index.m3u8"
+        const segmentPattern = "chunk_%03d.m4s"
+        const initFilename = "init.mp4"
+        const hlsTime = isShort ? 9999 : 6
 
-    const duration = getVideoDuration(absoluteInputPath)
+        const originalFps = getOriginalFps(absoluteInputPath)
+        const targetFps = originalFps < 24 ? 24 : Math.round(originalFps)
+        const fpsFilter = `-vf "fps=${targetFps}"`
+        const keyframeInterval = targetFps * 2
 
-    const ffmpegCmd = `ffmpeg -y -i "${absoluteInputPath}" -c:v libx264 -preset veryslow -crf 28 ${fpsFilter} -g ${keyframeInterval} -sc_threshold 0 -c:a aac -hls_time ${hlsTime} -hls_playlist_type vod -hls_segment_type fmp4 -hls_fmp4_init_filename "${initFilename}" -hls_segment_filename "${segmentPattern}" "${m3u8Filename}"`
+        duration = getVideoDuration(absoluteInputPath)
 
-    try {
-        execSync(ffmpegCmd, { cwd: outputFolder, stdio: "ignore" })
+        const ffmpegCmd = `ffmpeg -y -i "${absoluteInputPath}" -c:v libx264 -preset veryslow -crf 28 ${fpsFilter} -g ${keyframeInterval} -sc_threshold 0 -c:a aac -hls_time ${hlsTime} -hls_playlist_type vod -hls_segment_type fmp4 -hls_fmp4_init_filename "${initFilename}" -hls_segment_filename "${segmentPattern}" "${m3u8Filename}"`
 
-        newManifest[manifestKey] = {
-            hash: currentHash,
-            version: SCRIPT_VERSION,
-            type: isShort ? "short" : "long",
-            duration: duration
+        try {
+            execSync(ffmpegCmd, { cwd: outputFolder, stdio: "ignore" })
+            type = isShort ? "short" : "long"
+        } catch (error) {
+            console.error(
+                `\n${PREFIX} Error processing HLS for ${filePath}:`,
+                error
+            )
+            return false
         }
-    } catch (error) {
-        console.error(
-            `\n${PREFIX} Error processing HLS for ${filePath}:`,
-            error
-        )
-        return false
+    } else {
+        type = oldManifest[manifestKey].type
+        duration = oldManifest[manifestKey].duration
+    }
+
+    newManifest[manifestKey] = {
+        hash: currentVideoHash,
+        posterHash: currentPosterHash,
+        version: SCRIPT_VERSION,
+        type,
+        duration
     }
 
     return true

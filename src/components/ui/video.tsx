@@ -26,7 +26,7 @@ export function Video({
     controls,
     loop = true,
     playsInline = true,
-    ...restProps
+    ...props
 }: VideoProps) {
     const videoRef = useRef<HTMLVideoElement>(null)
     const [shouldLoad, setShouldLoad] = useState(false)
@@ -159,16 +159,12 @@ export function Video({
                 poster={posterPath ?? defaultPoster}
                 className="block h-auto w-full object-cover"
                 controls={controls}
-                controlsList="nodownload"
                 disablePictureInPicture
                 playsInline={playsInline}
                 loop={loop}
                 muted={shouldMute}
                 preload="none"
-                onContextMenu={(e) => {
-                    e.preventDefault()
-                }}
-                {...restProps}
+                {...props}
             />
         </div>
     )
