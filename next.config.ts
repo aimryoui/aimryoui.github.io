@@ -30,6 +30,9 @@ const nextConfig = (phase: string): NextConfig => {
         devIndicators: {
             position: "bottom-right"
         },
+        typescript: {
+            ignoreBuildErrors: true
+        },
         images: { unoptimized: true }
     }
 }

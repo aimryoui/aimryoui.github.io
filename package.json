@@ -64,6 +64,7 @@
         "format:check": "oxfmt --check --threads 8",
         "lint": "oxlint --threads 8 && biome lint",
         "lint:fix": "oxlint --fix --threads 8 && biome lint --write",
+        "check": "tsc --noEmit",
         "shadcn:add": "pnpm dlx shadcn@2.3.0 add"
     },
     "dependencies": {

@@ -55,6 +55,17 @@ function getProgressBar(current: number, total: number, width = 30) {
     return `[${filled}${empty}] ${percent.toString()}% (${current.toString()}/${total.toString()})`
 }
 
+function cleanImageOutputFolder(folder: string, allowedFiles: string[]) {
+    if (!fs.existsSync(folder)) return
+    const allowed = new Set(allowedFiles)
+    const filesInDir = fs.readdirSync(folder)
+    for (const file of filesInDir) {
+        if (!allowed.has(file)) {
+            fs.rmSync(path.join(folder, file), { recursive: true, force: true })
+        }
+    }
+}
+
 async function processImage(
     filePath: string,
     oldManifest: ImageManifest,
@@ -69,6 +80,15 @@ async function processImage(
         .replaceAll("\\", "/")
     const outputFolder = path.join(OUTPUT_BASE, parsedPath.dir, parsedPath.name)
 
+    const previewOutput = path.join(
+        outputFolder,
+        `${parsedPath.name}_preview.webp`
+    )
+    const scrambledOutput = path.join(
+        outputFolder,
+        `${parsedPath.name}_scrambled.webp`
+    )
+
     if (!fs.existsSync(outputFolder))
         fs.mkdirSync(outputFolder, { recursive: true })
 
@@ -78,9 +98,15 @@ async function processImage(
         const cachedData = oldManifest[manifestKey]
         if (
             cachedData.hash === currentHash &&
-            cachedData.version === SCRIPT_VERSION
+            cachedData.version === SCRIPT_VERSION &&
+            fs.existsSync(previewOutput) &&
+            fs.existsSync(scrambledOutput)
         ) {
             newManifest[manifestKey] = cachedData
+            cleanImageOutputFolder(outputFolder, [
+                `${parsedPath.name}_preview.webp`,
+                `${parsedPath.name}_scrambled.webp`
+            ])
             return false
         }
     }
@@ -154,7 +180,7 @@ async function processImage(
             withoutEnlargement: true
         })
         .webp({ quality: 20, smartSubsample: true })
-        .toFile(path.join(outputFolder, `${parsedPath.name}_preview.webp`))
+        .toFile(previewOutput)
 
     const tileW = exactW / GRID_COLS
     const tileH = exactH / GRID_ROWS
@@ -207,7 +233,12 @@ async function processImage(
     })
         .composite(composites as sharp.OverlayOptions[])
         .webp({ quality: 95 })
-        .toFile(path.join(outputFolder, `${parsedPath.name}_scrambled.webp`))
+        .toFile(scrambledOutput)
+
+    cleanImageOutputFolder(outputFolder, [
+        `${parsedPath.name}_preview.webp`,
+        `${parsedPath.name}_scrambled.webp`
+    ])
 
     return true
 }

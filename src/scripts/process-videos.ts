@@ -77,6 +77,17 @@ function getVideoDuration(filePath: string): number {
     }
 }
 
+function cleanVideoOutputFolder(folder: string) {
+    if (!fs.existsSync(folder)) return
+    const allowed = new Set(["poster.webp", "index.txt", "init.mp4"])
+    const filesInDir = fs.readdirSync(folder)
+    for (const file of filesInDir) {
+        if (!allowed.has(file) && !/^chunk_\d+\.bin$/.test(file)) {
+            fs.rmSync(path.join(folder, file), { recursive: true, force: true })
+        }
+    }
+}
+
 function processVideo(
     filePath: string,
     oldManifest: VideoManifest,
@@ -108,16 +119,27 @@ function processVideo(
     const currentVideoHash = getFileHash(filePath)
     const currentPosterHash = getFileHash(posterSrc)
 
+    const posterOutput = path.join(outputFolder, "poster.webp")
+    const indexOutput = path.join(outputFolder, "index.txt")
+    const initOutput = path.join(outputFolder, "init.mp4")
+
     let requiresVideoProcessing = true
     let requiresPosterProcessing = true
 
     if (Object.hasOwn(oldManifest, manifestKey)) {
         const cachedData = oldManifest[manifestKey]
         if (cachedData.version === SCRIPT_VERSION) {
-            if (cachedData.hash === currentVideoHash) {
+            if (
+                cachedData.hash === currentVideoHash &&
+                fs.existsSync(indexOutput) &&
+                fs.existsSync(initOutput)
+            ) {
                 requiresVideoProcessing = false
             }
-            if (cachedData.posterHash === currentPosterHash) {
+            if (
+                cachedData.posterHash === currentPosterHash &&
+                fs.existsSync(posterOutput)
+            ) {
                 requiresPosterProcessing = false
             }
         }
@@ -125,6 +147,7 @@ function processVideo(
 
     if (!requiresVideoProcessing && !requiresPosterProcessing) {
         newManifest[manifestKey] = oldManifest[manifestKey]
+        cleanVideoOutputFolder(outputFolder)
         return false
     }
 
@@ -133,7 +156,7 @@ function processVideo(
     }
 
     if (requiresPosterProcessing) {
-        fs.copyFileSync(posterSrc, path.join(outputFolder, "poster.webp"))
+        fs.copyFileSync(posterSrc, posterOutput)
     }
 
     let type: "short" | "long" = "long"
@@ -180,6 +203,7 @@ function processVideo(
         duration
     }
 
+    cleanVideoOutputFolder(outputFolder)
     return true
 }
 
@@ -237,6 +261,38 @@ async function buildVideos(showProgress = false) {
     if (showProgress && files.length > 0 && process.stdout.isTTY) {
         console.log()
     }
+
+    const validOutputFolders = new Set(
+        Object.keys(newManifest).map((key) =>
+            path.join(OUTPUT_BASE, key).replaceAll("\\", "/")
+        )
+    )
+
+    const existingVideoFiles = await glob(`${OUTPUT_BASE}/**/index.txt`)
+    for (const videoFile of existingVideoFiles) {
+        const folderPath = path.dirname(videoFile).replaceAll("\\", "/")
+        if (!validOutputFolders.has(folderPath)) {
+            fs.rmSync(folderPath, { recursive: true, force: true })
+        }
+    }
+
+    const removeEmptyDirs = (dir: string) => {
+        if (!fs.existsSync(dir)) return
+        const items = fs.readdirSync(dir)
+        for (const item of items) {
+            const fullPath = path.join(dir, item)
+            if (fs.statSync(fullPath).isDirectory()) {
+                removeEmptyDirs(fullPath)
+            }
+        }
+        if (
+            fs.readdirSync(dir).length === 0 &&
+            path.resolve(dir) !== path.resolve(OUTPUT_BASE)
+        ) {
+            fs.rmdirSync(dir)
+        }
+    }
+    removeEmptyDirs(OUTPUT_BASE)
 
     if (!fs.existsSync(path.dirname(MANIFEST_PATH))) {
         fs.mkdirSync(path.dirname(MANIFEST_PATH), { recursive: true })
