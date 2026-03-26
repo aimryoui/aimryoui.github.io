@@ -11,7 +11,7 @@ const INPUT_DIR = "private/media"
 const OUTPUT_BASE = "public/assets/media"
 const MANIFEST_PATH = "src/lib/video-manifest.json"
 
-const SCRIPT_VERSION = "1"
+const SCRIPT_VERSION = "2"
 
 const BRAND_COLOR = "\x1B[38;2;249;115;22m"
 const RESET = "\x1B[0m"
@@ -143,8 +143,8 @@ function processVideo(
         const stats = fs.statSync(filePath)
         const isShort = stats.size <= SHORT_VIDEO_THRESHOLD
 
-        const m3u8Filename = "index.m3u8"
-        const segmentPattern = "chunk_%03d.m4s"
+        const m3u8Filename = "index.txt"
+        const segmentPattern = "chunk_%03d.bin"
         const initFilename = "init.mp4"
         const hlsTime = isShort ? 9999 : 6
 
@@ -155,7 +155,7 @@ function processVideo(
 
         duration = getVideoDuration(absoluteInputPath)
 
-        const ffmpegCmd = `ffmpeg -y -i "${absoluteInputPath}" -c:v libx264 -preset veryslow -crf 28 ${fpsFilter} -g ${keyframeInterval} -sc_threshold 0 -c:a aac -hls_time ${hlsTime} -hls_playlist_type vod -hls_segment_type fmp4 -hls_fmp4_init_filename "${initFilename}" -hls_segment_filename "${segmentPattern}" "${m3u8Filename}"`
+        const ffmpegCmd = `ffmpeg -y -i "${absoluteInputPath}" -c:v libx264 -preset veryslow -crf 28 ${fpsFilter} -g ${keyframeInterval} -sc_threshold 0 -c:a aac -hls_time ${hlsTime} -hls_playlist_type vod -hls_segment_type fmp4 -hls_fmp4_init_filename "${initFilename}" -hls_segment_filename "${segmentPattern}" -f hls "${m3u8Filename}"`
 
         try {
             execSync(ffmpegCmd, { cwd: outputFolder, stdio: "ignore" })

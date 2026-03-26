@@ -54,7 +54,7 @@
                             ":BLANK_LINE:",
                             ":NODE:",
                             ":BLANK_LINE:",
-                            "react",
+                            ["react", "react-dom"],
                             ["next", "next/**", "!next-*"],
                             ":BLANK_LINE:",
                             ":PACKAGE:",

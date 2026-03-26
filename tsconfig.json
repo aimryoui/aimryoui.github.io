@@ -3,6 +3,7 @@
         "target": "es2017",
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "allowJs": true,
+        "checkJs": true,
         "skipLibCheck": true,
         "strict": true,
         "allowImportingTsExtensions": true,
@@ -14,6 +15,11 @@
         "isolatedModules": true,
         "jsx": "react-jsx",
         "incremental": true,
+        "allowUnreachableCode": false,
+        "noUncheckedSideEffectImports": true,
+        "noFallthroughCasesInSwitch": true,
+        // "noUncheckedIndexedAccess": true,
+        "noPropertyAccessFromIndexSignature": true,
         "plugins": [
             {
                 "name": "next"

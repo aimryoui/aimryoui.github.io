@@ -1,10 +1,33 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 
 import Hls from "hls.js"
 
 import { cn } from "@/lib/utils"
+
+let sharedStyleSheet: CSSStyleSheet | null = null
+
+function getSharedStyleSheet() {
+    if (typeof window === "undefined" || !("CSSStyleSheet" in window)) {
+        return null
+    }
+
+    if (!sharedStyleSheet) {
+        sharedStyleSheet = new CSSStyleSheet()
+        sharedStyleSheet.replaceSync(/*css*/ `
+            video {
+                display: block;
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                border-radius: inherit;
+            }
+        `)
+    }
+    return sharedStyleSheet
+}
 
 interface VideoProps extends React.ComponentProps<"video"> {
     src: string
@@ -28,7 +51,9 @@ export function Video({
     playsInline = true,
     ...props
 }: VideoProps) {
+    const hostRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
+    const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null)
     const [shouldLoad, setShouldLoad] = useState(false)
 
     const shouldAutoPlay = autoPlay ?? autoplay ?? true
@@ -41,8 +66,22 @@ export function Video({
     const defaultPoster = `${basePath}/poster.webp`
 
     useEffect(() => {
-        const video = videoRef.current
-        if (!video) return
+        const hostEl = hostRef.current
+        if (!hostEl || hostEl.shadowRoot) return
+
+        const root = hostEl.attachShadow({ mode: "closed" })
+
+        const sheet = getSharedStyleSheet()
+        if (sheet) {
+            root.adoptedStyleSheets = [sheet]
+        }
+
+        setShadowRoot(root)
+    }, [])
+
+    useEffect(() => {
+        const hostEl = hostRef.current
+        if (!hostEl) return
 
         const lazyObserver = new IntersectionObserver(
             ([entry]) => {
@@ -54,7 +93,7 @@ export function Video({
             { rootMargin: "100% 0px" }
         )
 
-        lazyObserver.observe(video)
+        lazyObserver.observe(hostEl)
 
         return () => {
             lazyObserver.disconnect()
@@ -66,15 +105,14 @@ export function Video({
         if (!shouldLoad || !video) return
 
         let hls: Hls | null = null
-
-        const m3u8Url = `${basePath}/index.m3u8`
+        const playlistUrl = `${basePath}/index.txt`
 
         if (Hls.isSupported()) {
             hls = new Hls({ maxMaxBufferLength: 30 })
-            hls.loadSource(m3u8Url)
+            hls.loadSource(playlistUrl)
             hls.attachMedia(video)
         } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-            video.src = m3u8Url
+            video.src = playlistUrl
         }
 
         return () => {
@@ -84,21 +122,24 @@ export function Video({
 
     useEffect(() => {
         const video = videoRef.current
-        if (!video) return
+        const hostEl = hostRef.current
+        if (!video || !hostEl) return
 
         let isIntersecting = false
 
         const tryPlay = () => {
             if (video.paused && !document.hidden && shouldAutoPlay) {
-                const playPromise = video.play()
-
-                playPromise.catch((error: unknown) => {
-                    if (
-                        error instanceof Error &&
-                        error.name === "NotAllowedError"
-                    ) {
-                        video.muted = true
-                        video.play().catch(() => {})
+                video.play().catch((error: unknown) => {
+                    if (error instanceof Error) {
+                        if (error.name === "NotAllowedError") {
+                            video.muted = true
+                            video.play().catch(() => {})
+                        } else if (error.name !== "AbortError") {
+                            console.warn(
+                                "Video play interrupted:",
+                                error.message
+                            )
+                        }
                     }
                 })
             }
@@ -116,7 +157,7 @@ export function Video({
             { threshold: 0.5 }
         )
 
-        observer.observe(video)
+        observer.observe(hostEl)
 
         const handleVisibilityChange = () => {
             if (document.hidden) {
@@ -141,10 +182,11 @@ export function Video({
             )
             video.removeEventListener("loadeddata", handleDataLoaded)
         }
-    }, [shouldAutoPlay])
+    }, [shouldAutoPlay, shadowRoot])
 
     return (
         <div
+            ref={hostRef}
             className={cn(
                 "relative w-full overflow-hidden",
                 {
@@ -153,19 +195,22 @@ export function Video({
                 className
             )}
         >
-            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-            <video
-                ref={videoRef}
-                poster={posterPath ?? defaultPoster}
-                className="block h-auto w-full object-cover"
-                controls={controls}
-                disablePictureInPicture
-                playsInline={playsInline}
-                loop={loop}
-                muted={shouldMute}
-                preload="none"
-                {...props}
-            />
+            {shadowRoot &&
+                createPortal(
+                    // oxlint-disable-next-line jsx_a11y/media-has-caption
+                    <video
+                        ref={videoRef}
+                        poster={posterPath ?? defaultPoster}
+                        controls={controls}
+                        disablePictureInPicture
+                        playsInline={playsInline}
+                        loop={loop}
+                        muted={shouldMute}
+                        preload="none"
+                        {...props}
+                    />,
+                    shadowRoot
+                )}
         </div>
     )
 }
