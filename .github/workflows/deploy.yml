@@ -56,7 +56,6 @@ jobs:
       - name: Install FFmpeg
         uses: FedericoCarboni/setup-ffmpeg@v3
         with:
-          ffmpeg-version: "8"
           architecture: ""
           github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
 
