@@ -6,6 +6,7 @@ import readline from "node:readline"
 
 import chokidar from "chokidar"
 import { glob } from "glob"
+import sharp from "sharp"
 
 const INPUT_DIR = "private/media"
 const OUTPUT_BASE = "public/assets/media"
@@ -27,6 +28,9 @@ type VideoManifest = Record<
         version: string
         type: "short" | "long"
         duration: number
+        width: number
+        height: number
+        blurDataURL: string
     }
 >
 
@@ -88,7 +92,7 @@ function cleanVideoOutputFolder(folder: string) {
     }
 }
 
-function processVideo(
+async function processVideo(
     filePath: string,
     oldManifest: VideoManifest,
     newManifest: VideoManifest
@@ -138,7 +142,9 @@ function processVideo(
             }
             if (
                 cachedData.posterHash === currentPosterHash &&
-                fs.existsSync(posterOutput)
+                fs.existsSync(posterOutput) &&
+                cachedData.width &&
+                cachedData.blurDataURL
             ) {
                 requiresPosterProcessing = false
             }
@@ -155,8 +161,28 @@ function processVideo(
         fs.mkdirSync(outputFolder, { recursive: true })
     }
 
+    let width = 0
+    let height = 0
+    let blurDataURL = ""
+
     if (requiresPosterProcessing) {
+        const image = sharp(posterSrc)
+        const imgMetadata = await image.metadata()
+        width = imgMetadata.width
+        height = imgMetadata.height
+
+        const blurBuffer = await image
+            .clone()
+            .resize({ width: 10 })
+            .webp({ quality: 20 })
+            .toBuffer()
+
+        blurDataURL = `data:image/webp;base64,${blurBuffer.toString("base64")}`
         fs.copyFileSync(posterSrc, posterOutput)
+    } else {
+        width = oldManifest[manifestKey].width
+        height = oldManifest[manifestKey].height
+        blurDataURL = oldManifest[manifestKey].blurDataURL
     }
 
     let type: "short" | "long" = "long"
@@ -200,7 +226,10 @@ function processVideo(
         posterHash: currentPosterHash,
         version: SCRIPT_VERSION,
         type,
-        duration
+        duration,
+        width,
+        height,
+        blurDataURL
     }
 
     cleanVideoOutputFolder(outputFolder)
@@ -237,26 +266,32 @@ async function buildVideos(showProgress = false) {
         }
     }
 
-    for (const file of files) {
-        const didProcess = processVideo(file, oldManifest, newManifest)
-        if (didProcess) actuallyProcessed++
+    await Promise.all(
+        files.map(async (file) => {
+            const didProcess = await processVideo(
+                file,
+                oldManifest,
+                newManifest
+            )
+            if (didProcess) actuallyProcessed++
 
-        processedCount++
+            processedCount++
 
-        if (showProgress) {
-            if (process.stdout.isTTY) {
-                readline.clearLine(process.stdout, 0)
-                readline.cursorTo(process.stdout, 0)
-                process.stdout.write(
-                    `${PREFIX} processing: ${getProgressBar(processedCount, files.length)}`
-                )
-            } else {
-                console.log(
-                    `${PREFIX} processing: ${getProgressBar(processedCount, files.length)}`
-                )
+            if (showProgress) {
+                if (process.stdout.isTTY) {
+                    readline.clearLine(process.stdout, 0)
+                    readline.cursorTo(process.stdout, 0)
+                    process.stdout.write(
+                        `${PREFIX} processing: ${getProgressBar(processedCount, files.length)}`
+                    )
+                } else {
+                    console.log(
+                        `${PREFIX} processing: ${getProgressBar(processedCount, files.length)}`
+                    )
+                }
             }
-        }
-    }
+        })
+    )
 
     if (showProgress && files.length > 0 && process.stdout.isTTY) {
         console.log()
@@ -325,10 +360,17 @@ async function build({ watch = false, skipInitial = false } = {}) {
 
     if (watch) {
         console.log(`${PREFIX} watching for changes in '${INPUT_DIR}'`)
-        const watcher = chokidar.watch(`${INPUT_DIR}/**/*.{mp4,mov,webm}`, {
-            ignored: IGNORE_REGEX,
-            ignoreInitial: true
-        })
+
+        const watcher = chokidar.watch(
+            [
+                `${INPUT_DIR}/**/*.{mp4,mov,webm}`,
+                `${INPUT_DIR}/**/*-poster.webp`
+            ],
+            {
+                ignored: IGNORE_REGEX,
+                ignoreInitial: true
+            }
+        )
 
         let debounceTimer: NodeJS.Timeout
         const handleChange = () => {
@@ -359,4 +401,5 @@ void (async () => {
     }
 })()
 
+export type { VideoManifest }
 export { build }

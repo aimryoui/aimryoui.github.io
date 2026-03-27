@@ -18,6 +18,7 @@ import overflowAnchor from "./src/lib/tailwindcss-plugins/utilities/overflow-anc
 import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
+import slotted from "./src/lib/tailwindcss-plugins/variants/slotted"
 
 export const BASE_FONT_SIZE = 16
 
@@ -233,6 +234,7 @@ export default {
         outline,
         overflowAnchor,
         scrollbar,
+        slotted,
         transition,
         transitionBehavior,
 

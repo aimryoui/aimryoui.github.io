@@ -2,10 +2,14 @@
 
 import { useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
+import NextImage from "next/image"
 
 import Hls from "hls.js"
 
+import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 import { cn } from "@/lib/utils"
+import videoManifestRaw from "@/lib/video-manifest.json"
+import { type VideoManifest } from "@/scripts/process-videos"
 
 let sharedStyleSheet: CSSStyleSheet | null = null
 
@@ -14,32 +18,35 @@ function getSharedStyleSheet() {
         return null
     }
 
+    // #adopted-style-sheet
     if (!sharedStyleSheet) {
         sharedStyleSheet = new CSSStyleSheet()
         sharedStyleSheet.replaceSync(/*css*/ `
             video {
                 display: block;
                 width: 100%;
-                height: auto;
+                height: 100%;
                 object-fit: cover;
-                border-radius: inherit;
+                border-radius: inherit
             }
         `)
     }
     return sharedStyleSheet
 }
 
+const videoManifest = videoManifestRaw as VideoManifest
+
 interface VideoProps extends React.ComponentProps<"video"> {
     src: string
+    alt: string
     posterPath?: string
     autoplay?: boolean
     mute?: boolean
 }
 
-// TODO: Add global muted state
-
 export function Video({
     src,
+    alt,
     posterPath,
     className,
     autoPlay,
@@ -65,7 +72,10 @@ export function Video({
     const basePath = `/assets/media/${pathWithoutExt}`
     const defaultPoster = `${basePath}/poster.webp`
 
-    useEffect(() => {
+    const metadata = videoManifest[pathWithoutExt]
+
+    // #shadow-root (closed) with #adopted-style-sheets
+    useIsomorphicLayoutEffect(() => {
         const hostEl = hostRef.current
         if (!hostEl || hostEl.shadowRoot) return
 
@@ -79,6 +89,7 @@ export function Video({
         setShadowRoot(root)
     }, [])
 
+    // Lazy load
     useEffect(() => {
         const hostEl = hostRef.current
         if (!hostEl) return
@@ -100,6 +111,7 @@ export function Video({
         }
     }, [])
 
+    // HLS
     useEffect(() => {
         const video = videoRef.current
         if (!shouldLoad || !video) return
@@ -120,6 +132,7 @@ export function Video({
         }
     }, [basePath, shouldLoad])
 
+    // Auto-play
     useEffect(() => {
         const video = videoRef.current
         const hostEl = hostRef.current
@@ -167,12 +180,7 @@ export function Video({
             }
         }
 
-        const handleDataLoaded = () => {
-            if (isIntersecting) tryPlay()
-        }
-
         document.addEventListener("visibilitychange", handleVisibilityChange)
-        video.addEventListener("loadeddata", handleDataLoaded)
 
         return () => {
             observer.disconnect()
@@ -180,9 +188,11 @@ export function Video({
                 "visibilitychange",
                 handleVisibilityChange
             )
-            video.removeEventListener("loadeddata", handleDataLoaded)
         }
     }, [shouldAutoPlay, shadowRoot])
+
+    const exactW = metadata.width
+    const exactH = metadata.height
 
     return (
         <div
@@ -194,6 +204,9 @@ export function Video({
                 },
                 className
             )}
+            style={{
+                aspectRatio: `${exactW.toString()}/${exactH.toString()}`
+            }}
         >
             {shadowRoot &&
                 createPortal(
@@ -211,6 +224,25 @@ export function Video({
                     />,
                     shadowRoot
                 )}
+            {/* Placeholder thumbnail */}
+            <NextImage
+                src={posterPath ?? defaultPoster}
+                alt={alt}
+                width={exactW}
+                height={exactH}
+                className={cn("size-full object-cover")}
+                fetchPriority="high"
+                loading="lazy"
+                style={{
+                    background: `url("${metadata.blurDataURL}") center / cover no-repeat`
+                }}
+                onLoad={(e) => {
+                    e.currentTarget.style.background = ""
+                }}
+            />
+            <noscript>
+                <img src={posterPath ?? defaultPoster} alt={alt} />
+            </noscript>
         </div>
     )
 }

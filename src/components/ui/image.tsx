@@ -13,7 +13,7 @@ const FILE_EXTENSION_REGEX = /\.[^/.]+$/
 
 interface ImageProps extends React.ComponentProps<"div"> {
     src: string
-    alt?: string
+    alt: string
     placeholderPriority?: boolean
     asBackgroundImage?: boolean
     imageRow?: "justified" | "proportional"
@@ -101,7 +101,7 @@ function Image({
             {/* SEO & Preview Layer */}
             <NextImage
                 src={`${basePath}/${fileName}_preview.webp`}
-                alt={alt ?? ""}
+                alt={alt}
                 width={exactW}
                 height={exactH}
                 className={cn(
@@ -166,11 +166,7 @@ function Image({
             </div>
 
             <noscript>
-                <img
-                    src={`${basePath}/${fileName}_preview.webp`}
-                    alt={alt}
-                    decoding="async"
-                />
+                <img src={`${basePath}/${fileName}_preview.webp`} alt={alt} />
             </noscript>
         </div>
     )
