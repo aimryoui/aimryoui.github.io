@@ -224,7 +224,7 @@ export function Video({
                     />,
                     shadowRoot
                 )}
-            {/* Placeholder thumbnail */}
+            {/* Placeholder thumbnail, useful when reloading right at the position of video tag */}
             <NextImage
                 src={posterPath ?? defaultPoster}
                 alt={alt}

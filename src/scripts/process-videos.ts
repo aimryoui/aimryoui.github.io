@@ -12,7 +12,7 @@ const INPUT_DIR = "private/media"
 const OUTPUT_BASE = "public/assets/media"
 const MANIFEST_PATH = "src/lib/video-manifest.json"
 
-const SCRIPT_VERSION = "2"
+const SCRIPT_VERSION = "1"
 
 const BRAND_COLOR = "\x1B[38;2;249;115;22m"
 const RESET = "\x1B[0m"
@@ -167,18 +167,31 @@ async function processVideo(
 
     if (requiresPosterProcessing) {
         const image = sharp(posterSrc)
-        const imgMetadata = await image.metadata()
-        width = imgMetadata.width
-        height = imgMetadata.height
 
-        const blurBuffer = await image
+        const resizedBuffer = await image
+            .clone()
+            .resize({
+                width: 1600,
+                height: 1600,
+                fit: "inside",
+                withoutEnlargement: true
+            })
+            .webp({ quality: 80 })
+            .toBuffer()
+
+        const resizedMetadata = await sharp(resizedBuffer).metadata()
+        width = resizedMetadata.width
+        height = resizedMetadata.height
+
+        const blurBuffer = await sharp(resizedBuffer)
             .clone()
             .resize({ width: 10 })
             .webp({ quality: 20 })
             .toBuffer()
 
         blurDataURL = `data:image/webp;base64,${blurBuffer.toString("base64")}`
-        fs.copyFileSync(posterSrc, posterOutput)
+
+        fs.writeFileSync(posterOutput, resizedBuffer)
     } else {
         width = oldManifest[manifestKey].width
         height = oldManifest[manifestKey].height
