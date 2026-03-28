@@ -59,7 +59,10 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
                                   : "light"
                         )
                     }}
-                    className={cn("disabled:opacity-100", className)}
+                    className={cn(
+                        "disabled:cursor-progress disabled:opacity-100",
+                        className
+                    )}
                     suppressHydrationWarning
                 >
                     {mounted ? <ThemedIcon /> : <Spinner />}

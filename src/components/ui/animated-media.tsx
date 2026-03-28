@@ -71,6 +71,10 @@ export function AnimatedMedia({
 
     const metadata = videoManifest[pathWithoutExt]
 
+    if (!metadata) {
+        console.error(`[Video]: No metadata for "${src}" in manifest.`)
+    }
+
     // #shadow-root (closed) with #adopted-style-sheets
     useIsomorphicLayoutEffect(() => {
         const hostEl = hostRef.current
@@ -188,8 +192,8 @@ export function AnimatedMedia({
         }
     }, [shouldAutoPlay, shadowRoot])
 
-    const exactW = metadata?.width ?? 1920
-    const exactH = metadata?.height ?? 1080
+    const exactW = metadata.width
+    const exactH = metadata.height
 
     return (
         <div
@@ -197,7 +201,7 @@ export function AnimatedMedia({
             className={cn(
                 "relative w-full overflow-hidden",
                 {
-                    after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-white/15 mix-blend-difference"
+                    after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },
                 className
             )}

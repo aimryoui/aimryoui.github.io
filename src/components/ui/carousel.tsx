@@ -9,6 +9,7 @@ import {
     useCallback,
     useContext,
     useEffect,
+    useMemo,
     useState
 } from "react"
 
@@ -38,8 +39,6 @@ type CarouselContextProps = {
     api: ReturnType<typeof useEmblaCarousel>[1]
     scrollPrev: () => void
     scrollNext: () => void
-    canScrollPrev: boolean
-    canScrollNext: boolean
 } & CarouselProps
 
 const CarouselContext = createContext<CarouselContextProps | null>(null)
@@ -54,6 +53,49 @@ function useCarousel() {
     return context
 }
 
+const CarouselIndicator = forwardRef<
+    HTMLDivElement,
+    HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+    const { api } = useCarousel()
+    const [current, setCurrent] = useState(0)
+    const [count, setCount] = useState(0)
+
+    useEffect(() => {
+        if (!api) return
+
+        const updateCarouselState = () => {
+            setCount(api.scrollSnapList().length)
+            setCurrent(api.selectedScrollSnap() + 1)
+        }
+
+        updateCarouselState()
+        api.on("reInit", updateCarouselState)
+        api.on("select", updateCarouselState)
+
+        return () => {
+            api.off("reInit", updateCarouselState)
+            api.off("select", updateCarouselState)
+        }
+    }, [api])
+
+    if (count === 0) return null
+
+    return (
+        <div
+            ref={ref}
+            className={cn(
+                "grid h-9 select-none place-items-center rounded-lg border border-default/15 bg-background px-4 font-mono text-sm",
+                className
+            )}
+            {...props}
+        >
+            {current} / {count}
+        </div>
+    )
+})
+CarouselIndicator.displayName = "CarouselIndicator"
+
 const Carousel = forwardRef<
     HTMLDivElement,
     HTMLAttributes<HTMLDivElement> & CarouselProps
@@ -63,39 +105,28 @@ const Carousel = forwardRef<
             orientation = "horizontal",
             opts,
             setApi,
-            plugins = [
-                WheelGesturesPlugin({
-                    wheelDraggingClass: "dragging"
-                })
-            ],
+            plugins,
             className,
             children,
             ...props
         },
         ref
     ) => {
+        const [defaultPlugins] = useState(() => [
+            WheelGesturesPlugin({
+                wheelDraggingClass: "dragging"
+            })
+        ])
+
         const [carouselRef, api] = useEmblaCarousel(
             {
                 ...opts,
-                containScroll: opts?.containScroll ?? false,
+                containScroll: false,
+                skipSnaps: true,
                 axis: orientation === "horizontal" ? "x" : "y"
             },
-            plugins
+            plugins ?? defaultPlugins
         )
-        const [canScrollPrev, setCanScrollPrev] = useState(false)
-        const [canScrollNext, setCanScrollNext] = useState(false)
-
-        const [current, setCurrent] = useState(0)
-        const [count, setCount] = useState(0)
-
-        const onSelect = useCallback((api: CarouselApi) => {
-            if (!api) {
-                return
-            }
-
-            setCanScrollPrev(api.canScrollPrev())
-            setCanScrollNext(api.canScrollNext())
-        }, [])
 
         const scrollPrev = useCallback(() => {
             api?.scrollPrev()
@@ -126,57 +157,29 @@ const Carousel = forwardRef<
             setApi(api)
         }, [api, setApi])
 
-        useEffect(() => {
-            if (!api) {
-                return
-            }
-
-            onSelect(api)
-            api.on("reInit", onSelect)
-            api.on("select", onSelect)
-
-            return () => {
-                api.off("reInit", onSelect)
-                api.off("select", onSelect)
-            }
-        }, [api, onSelect])
-
-        useEffect(() => {
-            if (!api) {
-                return
-            }
-
-            const updateCarouselState = () => {
-                setCount(api.scrollSnapList().length)
-                setCurrent(api.selectedScrollSnap() + 1)
-            }
-
-            updateCarouselState()
-            api.on("reInit", updateCarouselState)
-            api.on("select", updateCarouselState)
-
-            return () => {
-                api.off("reInit", updateCarouselState)
-                api.off("select", updateCarouselState)
-            }
-        }, [api])
+        const contextValue = useMemo(
+            () => ({
+                carouselRef,
+                api,
+                setApi,
+                opts,
+                orientation,
+                scrollPrev,
+                scrollNext
+            }),
+            [
+                carouselRef,
+                api,
+                setApi,
+                opts,
+                orientation,
+                scrollPrev,
+                scrollNext
+            ]
+        )
 
         return (
-            <CarouselContext.Provider
-                value={{
-                    carouselRef,
-                    api: api,
-                    setApi,
-                    opts,
-                    orientation:
-                        orientation ||
-                        (opts?.axis === "y" ? "vertical" : "horizontal"),
-                    scrollPrev,
-                    scrollNext,
-                    canScrollPrev,
-                    canScrollNext
-                }}
-            >
+            <CarouselContext.Provider value={contextValue}>
                 <div
                     ref={ref}
                     onKeyDownCapture={handleKeyDown}
@@ -194,13 +197,7 @@ const Carousel = forwardRef<
                             "flex w-full items-center justify-between gap-2"
                         )}
                     >
-                        <div
-                            className={cn(
-                                "grid h-9 select-none place-items-center rounded-lg border border-default/15 bg-background px-4 font-mono text-sm"
-                            )}
-                        >
-                            {current} / {count}
-                        </div>
+                        <CarouselIndicator />
                         <div className={cn("flex gap-2")}>
                             <CarouselPrevious />
                             <CarouselNext />
@@ -260,7 +257,23 @@ const CarouselPrevious = forwardRef<
     HTMLButtonElement,
     ComponentProps<typeof Button>
 >(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-    const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+    const { orientation, scrollPrev, api } = useCarousel()
+
+    const [canScrollPrev, setCanScrollPrev] = useState(false)
+
+    useEffect(() => {
+        if (!api) return
+        const updateState = () => {
+            setCanScrollPrev(api.canScrollPrev())
+        }
+        updateState()
+        api.on("reInit", updateState)
+        api.on("select", updateState)
+        return () => {
+            api.off("reInit", updateState)
+            api.off("select", updateState)
+        }
+    }, [api])
 
     return (
         <Button
@@ -296,7 +309,23 @@ const CarouselNext = forwardRef<
     HTMLButtonElement,
     ComponentProps<typeof Button>
 >(({ className, variant = "outline", size = "icon", ...props }, ref) => {
-    const { orientation, scrollNext, canScrollNext } = useCarousel()
+    const { orientation, scrollNext, api } = useCarousel()
+
+    const [canScrollNext, setCanScrollNext] = useState(false)
+
+    useEffect(() => {
+        if (!api) return
+        const updateState = () => {
+            setCanScrollNext(api.canScrollNext())
+        }
+        updateState()
+        api.on("reInit", updateState)
+        api.on("select", updateState)
+        return () => {
+            api.off("reInit", updateState)
+            api.off("select", updateState)
+        }
+    }, [api])
 
     return (
         <Button
@@ -354,10 +383,11 @@ interface CarouselImageProps {
     className?: string
 }
 
-const CarouselImage = forwardRef<
-    HTMLDivElement,
-    HTMLAttributes<HTMLDivElement> & CarouselImageProps & CarouselProps
->(({ srcPattern, alt, className }, ref) => {
+const CarouselImage = ({
+    srcPattern,
+    alt,
+    className
+}: HTMLAttributes<HTMLDivElement> & CarouselImageProps & CarouselProps) => {
     const match = /\{(\d+)(?:-(\d+))?\}/.exec(srcPattern)
 
     let generatedImages = [srcPattern]
@@ -376,12 +406,11 @@ const CarouselImage = forwardRef<
     }
 
     return generatedImages.map((src) => (
-        <CarouselItem ref={ref} key={src}>
+        <CarouselItem key={src}>
             <Image src={src} alt={alt} className={className} />
         </CarouselItem>
     ))
-})
-CarouselImage.displayName = "CarouselImage"
+}
 
 export {
     Carousel,

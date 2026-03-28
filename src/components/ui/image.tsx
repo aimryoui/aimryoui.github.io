@@ -89,7 +89,7 @@ function Image({
                 !pngBorder && "overflow-hidden",
                 asBackgroundImage ? "h-full" : "h-fit",
                 !noBorder && {
-                    after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-white/15 mix-blend-difference"
+                    after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },
                 limitHeight && "h-200",
                 className
@@ -109,15 +109,16 @@ function Image({
                 width={exactW}
                 height={exactH}
                 className={cn(
-                    "absolute size-full object-cover",
+                    "absolute size-full select-none object-cover",
                     pngBorder &&
                         "drop-shadow-[0_0_2px_color-mix(in_oklab,var(--white)_calc(0.50*100%),transparent)]"
                 )}
-                fetchPriority="high"
-                loading={placeholderPriority ? "eager" : "lazy"}
                 style={{
                     background: `url("${metadata.blurDataURL}") center / cover no-repeat`
                 }}
+                draggable={false}
+                fetchPriority="high"
+                loading={placeholderPriority ? "eager" : "lazy"}
                 onLoad={(e) => {
                     e.currentTarget.style.background = ""
                 }}
