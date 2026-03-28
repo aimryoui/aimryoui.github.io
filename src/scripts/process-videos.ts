@@ -205,6 +205,8 @@ async function processVideo(
         const stats = fs.statSync(filePath)
         const isShort = stats.size <= SHORT_VIDEO_THRESHOLD
 
+        const isGif = parsedPath.ext.toLowerCase() === ".gif"
+
         const m3u8Filename = "index.txt"
         const segmentPattern = "chunk_%03d.bin"
         const initFilename = "init.mp4"
@@ -215,9 +217,12 @@ async function processVideo(
         const fpsFilter = `-vf "fps=${targetFps}"`
         const keyframeInterval = targetFps * 2
 
+        const audioFilter = isGif ? "-an" : "-c:a aac"
+        const pixelFormat = isGif ? "-pix_fmt yuv420p" : ""
+
         duration = getVideoDuration(absoluteInputPath)
 
-        const ffmpegCmd = `ffmpeg -y -i "${absoluteInputPath}" -c:v libx264 -preset veryslow -crf 28 ${fpsFilter} -g ${keyframeInterval} -sc_threshold 0 -c:a aac -hls_time ${hlsTime} -hls_playlist_type vod -hls_segment_type fmp4 -hls_fmp4_init_filename "${initFilename}" -hls_segment_filename "${segmentPattern}" -f hls "${m3u8Filename}"`
+        const ffmpegCmd = `ffmpeg -y -i "${absoluteInputPath}" -c:v libx264 ${pixelFormat} -preset veryslow -crf 28 ${fpsFilter} -g ${keyframeInterval} -sc_threshold 0 ${audioFilter} -hls_time ${hlsTime} -hls_playlist_type vod -hls_segment_type fmp4 -hls_fmp4_init_filename "${initFilename}" -hls_segment_filename "${segmentPattern}" -f hls "${m3u8Filename}"`
 
         try {
             execSync(ffmpegCmd, { cwd: outputFolder, stdio: "ignore" })
@@ -251,7 +256,7 @@ async function processVideo(
 
 async function buildVideos(showProgress = false) {
     const startTime = performance.now()
-    const files = await glob(`${INPUT_DIR}/**/*.{mp4,mov,webm}`)
+    const files = await glob(`${INPUT_DIR}/**/*.{mp4,mov,webm,gif}`)
 
     let oldManifest: VideoManifest = {}
     if (fs.existsSync(MANIFEST_PATH)) {
@@ -376,7 +381,7 @@ async function build({ watch = false, skipInitial = false } = {}) {
 
         const watcher = chokidar.watch(
             [
-                `${INPUT_DIR}/**/*.{mp4,mov,webm}`,
+                `${INPUT_DIR}/**/*.{mp4,mov,webm,gif}`,
                 `${INPUT_DIR}/**/*-poster.webp`
             ],
             {

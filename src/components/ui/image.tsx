@@ -40,6 +40,10 @@ function Image({
     const metadata =
         imageManifest[normalizedSrc.replace(FILE_EXTENSION_REGEX, "")]
 
+    if (!metadata) {
+        console.error(`[Image]: No metadata for "${src}" in manifest.`)
+    }
+
     const lastDotIndex = src.lastIndexOf(".")
     const pathWithoutExt = src.slice(0, lastDotIndex)
     const fileName = src.slice(src.lastIndexOf("/") + 1, lastDotIndex)
@@ -152,7 +156,7 @@ function Image({
                             key={index}
                             src={`${basePath}/${fileName}_scrambled.webp`}
                             alt=""
-                            className="absolute h-[--h] w-[--w] max-w-none"
+                            className="absolute h-[--h] w-[--w] max-w-none select-none"
                             style={{
                                 clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(Cols - 1 - sourceC).toString()}) var(--y${(Rows - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
                                 transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`

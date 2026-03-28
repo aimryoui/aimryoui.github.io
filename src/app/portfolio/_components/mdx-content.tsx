@@ -2,6 +2,8 @@ import * as runtime from "react/jsx-runtime"
 
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
+import { Carousel, CarouselImage, CarouselItem } from "@/components/ui/carousel"
+import { Gif } from "@/components/ui/gif"
 import { Image } from "@/components/ui/image"
 import { Masonry } from "@/components/ui/masonry"
 import { Video } from "@/components/ui/video"
@@ -9,6 +11,10 @@ import { Video } from "@/components/ui/video"
 const sharedComponents = {
     Image,
     Video,
+    Gif,
+    Carousel,
+    CarouselItem,
+    CarouselImage,
     Masonry,
     MediaFrame,
     SectionLine

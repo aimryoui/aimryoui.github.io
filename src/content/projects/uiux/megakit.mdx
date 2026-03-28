@@ -26,7 +26,7 @@ detail:
     <Image
         src="/uiux/megakit/1.jpg"
         alt="Branding Presentation"
-        className="rounded-2xl border-6 border-transparent bg-[linear-gradient(white,white),linear-gradient(to_bottom_right,oklch(0.9054_0.1546_194.8)_0%,oklch(0.8758_0.2303_152.0)_24%,oklch(0.5616_0.2419_260.9)_100%)] bg-origin-border bg-clip-[padding-box,border-box]"
+        className="rounded-2xl border-6 border-transparent bg-[linear-gradient(white,white),linear-gradient(to_bottom_right,oklch(0.9054_0.1546_194.8)_0%,oklch(0.8758_0.2303_152.0)_21.5%,oklch(0.5616_0.2419_260.9)_100%)] bg-origin-border bg-clip-[padding-box,border-box]"
         noBorder
     />
 </MediaFrame>
@@ -46,80 +46,71 @@ detail:
 </MediaFrame>
 
 <MediaFrame sectionName="Check Point #1">
-    <Image src="/uiux/megakit/9.jpg" alt="Cover" />
-    <Image src="/uiux/megakit/10.jpg" alt="CP1" />
-    <Image src="/uiux/megakit/11.jpg" alt="CP1" />
-    <Image src="/uiux/megakit/12.jpg" alt="CP1" />
-    <Image src="/uiux/megakit/13.jpg" alt="CP1" />
-    <Image src="/uiux/megakit/14.jpg" alt="CP1" />
-    <Image src="/uiux/megakit/15.jpg" alt="CP1" />
-    <Image src="/uiux/megakit/16.jpg" alt="CP1" />
+    <Carousel>
+        <CarouselItem>
+            <Image
+                src="/uiux/megakit/9.jpg"
+                alt="Cover"
+                className="rounded-[1.5%/calc(1.5%*1.78125)]"
+            />
+        </CarouselItem>
+        <CarouselImage
+            srcPattern="/uiux/megakit/{10-16}.jpg"
+            alt="CP1"
+            className="rounded-[1.5%/calc(1.5%*1.78125)]"
+        />
+    </Carousel>
 </MediaFrame>
 
-<MediaFrame className="grid-cols-4 md:grid-cols-4" sectionName="Check Point #2">
-    <Image src="/uiux/megakit/17.jpg" alt="Cover" className="col-span-4" />
-    <Image src="/uiux/megakit/18.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/19.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/20.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/21.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/22.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/23.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/24.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/25.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/26.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/27.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/28.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/29.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/30.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/31.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/32.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/33.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/34.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/35.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/36.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/37.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/38.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/39.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/40.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/41.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/42.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/43.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/44.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/45.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/46.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/47.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/48.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/49.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/50.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/51.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/52.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/53.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/54.jpg" alt="CP2" />
-    <Image src="/uiux/megakit/55.jpg" alt="CP2" />
+<MediaFrame sectionName="Check Point #2">
+    <Carousel>
+        <CarouselItem>
+            <Image
+                src="/uiux/megakit/17.jpg"
+                alt="Cover"
+                className="rounded-[1.5%/calc(1.5%*1.78125)]"
+            />
+        </CarouselItem>
+        <CarouselImage
+            srcPattern="/uiux/megakit/{18-55}.jpg"
+            alt="CP2"
+            className="rounded-[1.5%/calc(1.5%*1.78125)]"
+        />
+    </Carousel>
 </MediaFrame>
 
 <MediaFrame sectionName="Check Point #3">
-    <Image src="/uiux/megakit/56.jpg" alt="Cover" />
-    <Image src="/uiux/megakit/57.jpg" alt="CP3" />
+    <Carousel>
+        <CarouselItem>
+            <Image
+                src="/uiux/megakit/56.jpg"
+                alt="Cover"
+                className="rounded-[1.5%/calc(1.5%*1.78125)]"
+            />
+        </CarouselItem>
+        <CarouselImage
+            srcPattern="/uiux/megakit/{57}.jpg"
+            alt="CP3"
+            className="rounded-[2.25%/calc(2.25%*1.78125)]"
+        />
+    </Carousel>
 </MediaFrame>
 
-<MediaFrame className="grid-cols-4 md:grid-cols-4" sectionName="Check Point #4">
-    <Image src="/uiux/megakit/58.jpg" alt="Cover" className="col-span-4" />
-    <Image src="/uiux/megakit/59.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/60.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/61.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/62.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/63.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/64.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/65.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/66.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/67.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/68.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/69.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/70.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/71.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/72.jpg" alt="CP4" />
-    <Image src="/uiux/megakit/73.jpg" alt="CP4" />
+<MediaFrame sectionName="Check Point #4">
+    <Carousel>
+        <CarouselItem>
+            <Image
+                src="/uiux/megakit/58.jpg"
+                alt="Cover"
+                className="rounded-[1.5%/calc(1.5%*1.78125)]"
+            />
+        </CarouselItem>
+        <CarouselImage
+            srcPattern="/uiux/megakit/{59-73}.jpg"
+            alt="CP4"
+            className="rounded-[1.5%/calc(1.5%*1.78125)]"
+        />
+    </Carousel>
 </MediaFrame>
 
 <MediaFrame sectionName="User Interface > Home">
