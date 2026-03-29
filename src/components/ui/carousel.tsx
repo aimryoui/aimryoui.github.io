@@ -20,6 +20,7 @@ import WheelGesturesPlugin from "embla-carousel-wheel-gestures"
 
 import { Button } from "@/components/ui/button"
 import { Image } from "@/components/ui/image"
+import { Slider } from "@/components/ui/slider"
 import { cn } from "@/lib/utils"
 
 type CarouselApi = UseEmblaCarouselType[1]
@@ -81,6 +82,9 @@ const CarouselIndicator = forwardRef<
 
     if (count === 0) return null
 
+    const padLength = String(count).length
+    const displayCurrent = String(current).padStart(padLength, "0")
+
     return (
         <div
             ref={ref}
@@ -90,7 +94,7 @@ const CarouselIndicator = forwardRef<
             )}
             {...props}
         >
-            {current} / {count}
+            {displayCurrent} / {count}
         </div>
     )
 })
@@ -194,11 +198,22 @@ const Carousel = forwardRef<
                     <CarouselContent>{children}</CarouselContent>
                     <div
                         className={cn(
-                            "flex w-full items-center justify-between gap-2"
+                            "grid w-full items-center gap-2",
+                            "grid-cols-[1fr_75%_1fr]"
                         )}
                     >
-                        <CarouselIndicator />
-                        <div className={cn("flex gap-2")}>
+                        {/* Cột 1: Indicator căn trái */}
+                        <div className="flex justify-start">
+                            <CarouselIndicator />
+                        </div>
+
+                        {/* Cột 2: Scrollbar nằm giữa, bung hết 75% */}
+                        <div className="flex w-full items-center">
+                            <CarouselScrollbar className="w-full" />
+                        </div>
+
+                        {/* Cột 3: Nút bấm căn phải */}
+                        <div className="flex justify-end gap-2">
                             <CarouselPrevious />
                             <CarouselNext />
                         </div>
@@ -222,7 +237,7 @@ const CarouselContent = forwardRef<
                 ref={ref}
                 className={cn(
                     "flex",
-                    orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
+                    orientation === "horizontal" ? "-ml-2" : "-mt-2 flex-col",
                     className
                 )}
                 {...props}
@@ -376,6 +391,77 @@ CarouselNext.displayName = "CarouselNext"
 //     )
 // })
 // CarouselThumbButton.displayName = "CarouselThumbButton"
+
+const CarouselScrollbar = forwardRef<
+    HTMLDivElement,
+    React.ComponentProps<typeof Slider>
+>(({ className, ...props }, ref) => {
+    const { api } = useCarousel()
+    const [value, setValue] = useState(0)
+
+    const onScrollBarChange = useCallback(
+        (val: number | readonly number[]) => {
+            if (!api) return
+            const newProgress = val as number
+            setValue(newProgress)
+
+            const engine = api.internalEngine()
+            engine.animation.stop()
+
+            const targetPosition =
+                engine.limit.max +
+                newProgress * (engine.limit.min - engine.limit.max)
+            engine.location.set(targetPosition)
+            engine.target.set(targetPosition)
+            engine.translate.to(targetPosition)
+        },
+        [api]
+    )
+
+    const onScrollBarRelease = useCallback(
+        (val: number | readonly number[]) => {
+            if (!api) return
+            const finalValue = val as number
+
+            const count = api.scrollSnapList().length
+            const closestIndex = Math.round(finalValue * (count - 1))
+
+            api.scrollTo(closestIndex)
+        },
+        [api]
+    )
+
+    useEffect(() => {
+        if (!api) return
+        const updateScroll = () => {
+            setValue(Math.max(0, Math.min(1, api.scrollProgress())))
+        }
+
+        updateScroll()
+        api.on("scroll", updateScroll)
+        api.on("reInit", updateScroll)
+        return () => {
+            api.off("scroll", updateScroll)
+            api.off("reInit", updateScroll)
+        }
+    }, [api])
+
+    return (
+        <Slider
+            ref={ref}
+            min={0}
+            max={1}
+            step={0.001}
+            value={value}
+            onValueChange={onScrollBarChange}
+            onValueCommitted={onScrollBarRelease}
+            label="Slide scrollbar"
+            className={className}
+            {...props}
+        />
+    )
+})
+CarouselScrollbar.displayName = "CarouselScrollbar"
 
 interface CarouselImageProps {
     srcPattern: string

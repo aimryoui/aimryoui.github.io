@@ -60,7 +60,7 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
                         )
                     }}
                     className={cn(
-                        "disabled:cursor-progress disabled:opacity-100",
+                        "disabled:cursor-wait disabled:opacity-100",
                         className
                     )}
                     suppressHydrationWarning
