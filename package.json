@@ -72,6 +72,7 @@
         "@oddbird/css-anchor-positioning": "^0.9.0",
         "@radix-ui/react-slot": "^1.2.4",
         "class-variance-authority": "^0.7.1",
+        "embla-carousel": "^8.6.0",
         "embla-carousel-accessibility": "9.0.0-rc01",
         "embla-carousel-react": "^8.6.0",
         "embla-carousel-wheel-gestures": "^8.1.0",

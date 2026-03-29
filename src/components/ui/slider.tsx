@@ -24,7 +24,7 @@ function Slider({
     return (
         <SliderPrimitive.Root
             className={cn(
-                "cursor-pointer data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full",
+                "cursor-pointer data-horizontal:w-full data-vertical:h-full",
                 className
             )}
             data-slot="slider"
@@ -32,33 +32,32 @@ function Slider({
             value={value}
             min={min}
             max={max}
-            thumbAlignment="edge"
+            thumbAlignment="edge-client-only"
             {...props}
         >
             <SliderPrimitive.Control
                 className={cn(
                     "relative flex w-full touch-none select-none items-center",
                     {
-                        "data-[orientation=vertical]":
-                            "h-full min-h-40 w-auto flex-col",
-                        "data-[disabled]": "opacity-40"
+                        "data-vertical": "h-full min-h-40 w-auto flex-col",
+                        "data-disabled": "opacity-40"
                     }
                 )}
             >
                 <SliderPrimitive.Track
                     data-slot="slider-track"
                     className={cn(
-                        "relative grow select-none overflow-hidden rounded-full border border-default/15 bg-background",
+                        "relative grow select-none overflow-hidden rounded-full border border-default/15 bg-background hover:bg-element-hover",
                         {
-                            "data-[orientation=horizontal]": "h-1.5 w-full",
-                            "data-[orientation=vertical]": "h-full w-1.5"
+                            "data-horizontal": "h-1.5 w-full",
+                            "data-vertical": "h-full w-1.5"
                         }
                     )}
                 >
                     <SliderPrimitive.Indicator
                         data-slot="slider-range"
                         className={cn(
-                            "select-none bg-muted-foreground data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full"
+                            "select-none bg-muted-foreground/60 data-horizontal:h-full data-vertical:w-full"
                         )}
                     />
                 </SliderPrimitive.Track>
@@ -68,12 +67,12 @@ function Slider({
                         aria-label={label}
                         data-slot="slider-thumb"
                         className={cn(
-                            "relative block size-4 shrink-0 select-none rounded-sm border border-default/20 bg-background ring-ring/50 transition-[color,box-shadow]",
+                            "relative block size-5 shrink-0 select-none rounded-sm border border-muted-foreground/60 bg-background ring-ring/50 will-change-[color,box-shadow] transition-[color,box-shadow]",
                             {
                                 after: "absolute -inset-2",
-                                hover: "ring-2",
+                                hover: "bg-element-hover ring-2",
                                 "focus-visible": "ring-2 outline-hidden",
-                                active: "ring-2",
+                                active: "ring-4",
                                 disabled: "pointer-events-none opacity-40"
                             }
                         )}

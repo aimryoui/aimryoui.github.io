@@ -131,7 +131,10 @@ export default {
             data: {
                 instant: "instant",
                 "starting-style": "starting-style",
-                "ending-style": "ending-style"
+                "ending-style": "ending-style",
+                disabled: "disabled",
+                horizontal: "orientation=horizontal",
+                vertical: "orientation=vertical"
             },
             opacity: {
                 8: ".08"
