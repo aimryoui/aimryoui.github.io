@@ -1,10 +1,7 @@
 "use client"
 
 import {
-    type ComponentProps,
     createContext,
-    forwardRef,
-    type HTMLAttributes,
     type KeyboardEvent,
     useCallback,
     useContext,
@@ -14,7 +11,6 @@ import {
     useState
 } from "react"
 
-import { type EmblaEventType } from "embla-carousel"
 import useEmblaCarousel, {
     type UseEmblaCarouselType
 } from "embla-carousel-react"
@@ -23,6 +19,7 @@ import WheelGesturesPlugin from "embla-carousel-wheel-gestures"
 import { Button } from "@/components/ui/button"
 import { Image } from "@/components/ui/image"
 import { Slider } from "@/components/ui/slider"
+import { Spinner } from "@/components/ui/spinner"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 
@@ -57,10 +54,10 @@ function useCarousel() {
     return context
 }
 
-const CarouselIndicator = forwardRef<
-    HTMLDivElement,
-    HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+function CarouselIndicator({
+    className,
+    ...props
+}: React.ComponentProps<"div">) {
     const { api } = useCarousel()
     const [current, setCurrent] = useState(0)
     const [count, setCount] = useState(0)
@@ -69,258 +66,240 @@ const CarouselIndicator = forwardRef<
         if (!api) return
 
         const updateCarouselState = () => {
-            setCount(api.scrollSnapList().length)
-            setCurrent(api.selectedScrollSnap() + 1)
+            const snapList = api.scrollSnapList()
+            setCount(snapList.length)
+
+            const engine = api.internalEngine()
+            const currentLocation = engine.location.get()
+
+            const realtimeProgress = engine.scrollProgress.get(currentLocation)
+
+            let closestIndex = 0
+            let minDiff = Infinity
+
+            for (let i = 0; i < snapList.length; i++) {
+                const diff = Math.abs(snapList[i] - realtimeProgress)
+                if (diff < minDiff) {
+                    minDiff = diff
+                    closestIndex = i
+                }
+            }
+
+            setCurrent(closestIndex + 1)
         }
 
         updateCarouselState()
         api.on("reInit", updateCarouselState)
         api.on("select", updateCarouselState)
+        api.on("scroll", updateCarouselState)
 
         return () => {
             api.off("reInit", updateCarouselState)
             api.off("select", updateCarouselState)
+            api.off("scroll", updateCarouselState)
         }
     }, [api])
-
-    if (count === 0) return null
 
     const padLength = String(count).length
     const displayCurrent = String(current).padStart(padLength, "0")
 
     return (
         <div
-            ref={ref}
+            data-slot="carousel-indicator"
             className={cn(
                 "grid h-9 select-none place-items-center rounded-lg border border-default/15 bg-background px-4 font-mono text-sm",
+                (!api || count === 0) && "opacity-40",
                 className
             )}
             {...props}
         >
-            {displayCurrent} / {count}
+            {!api || count === 0 ? <Spinner /> : `${displayCurrent} / ${count}`}
         </div>
     )
-})
-CarouselIndicator.displayName = "CarouselIndicator"
+}
 
-const TWEEN_FACTOR_BASE = 0.84
+const TWEEN_FACTOR_BASE = 0.36
 
 const numberWithinRange = (number: number, min: number, max: number): number =>
     Math.min(Math.max(number, min), max)
 
-const Carousel = forwardRef<
-    HTMLDivElement,
-    HTMLAttributes<HTMLDivElement> & CarouselProps
->(
-    (
+function Carousel({
+    orientation = "horizontal",
+    opts,
+    setApi,
+    plugins,
+    className,
+    children,
+    ...props
+}: React.ComponentProps<"div"> & CarouselProps) {
+    const [defaultPlugins] = useState(() => [
+        WheelGesturesPlugin({
+            wheelDraggingClass: "dragging"
+        })
+    ])
+
+    const [carouselRef, api] = useEmblaCarousel(
         {
-            orientation = "horizontal",
-            opts,
-            setApi,
-            plugins,
-            className,
-            children,
-            ...props
+            ...opts,
+            containScroll: false,
+            skipSnaps: true,
+            axis: orientation === "horizontal" ? "x" : "y"
         },
-        ref
-    ) => {
-        const [defaultPlugins] = useState(() => [
-            WheelGesturesPlugin({
-                wheelDraggingClass: "dragging"
-            })
-        ])
+        plugins ?? defaultPlugins
+    )
 
-        const [carouselRef, api] = useEmblaCarousel(
-            {
-                ...opts,
-                containScroll: false,
-                skipSnaps: true,
-                axis: orientation === "horizontal" ? "x" : "y"
-            },
-            plugins ?? defaultPlugins
-        )
+    const tweenFactor = useRef(0)
 
-        const tweenFactor = useRef(0)
+    const setTweenFactor = useCallback((api: CarouselApi) => {
+        if (!api) return
+        tweenFactor.current = TWEEN_FACTOR_BASE * api.scrollSnapList().length
+    }, [])
 
-        const setTweenFactor = useCallback((api: CarouselApi) => {
-            if (!api) return
-            tweenFactor.current =
-                TWEEN_FACTOR_BASE * api.scrollSnapList().length
-        }, [])
+    const tweenOpacity = useCallback((api: CarouselApi) => {
+        if (!api) return
+        const engine = api.internalEngine()
 
-        const tweenOpacity = useCallback(
-            (api: CarouselApi, eventName?: EmblaEventType) => {
-                if (!api) return
-                const engine = api.internalEngine()
+        const currentLocation = engine.location.get()
+        const realtimeProgress = engine.scrollProgress.get(currentLocation)
 
-                const currentLocation = engine.location.get()
-                const realtimeProgress =
-                    engine.scrollProgress.get(currentLocation)
-                const slidesInView = api.slidesInView()
-                const isScrollEvent = eventName === "scroll"
+        api.scrollSnapList().forEach((scrollSnap, snapIndex) => {
+            let diffToTarget = scrollSnap - realtimeProgress
+            const slidesInSnap = engine.slideRegistry[snapIndex]
 
-                api.scrollSnapList().forEach((scrollSnap, snapIndex) => {
-                    let diffToTarget = scrollSnap - realtimeProgress
-                    const slidesInSnap = engine.slideRegistry[snapIndex]
-
-                    slidesInSnap.forEach((slideIndex) => {
-                        if (isScrollEvent && !slidesInView.includes(slideIndex))
-                            return
-
-                        if (engine.options.loop) {
-                            engine.slideLooper.loopPoints.forEach(
-                                (loopItem) => {
-                                    const target = loopItem.target()
-                                    if (
-                                        slideIndex === loopItem.index &&
-                                        target !== 0
-                                    ) {
-                                        const sign = Math.sign(target)
-                                        if (sign === -1)
-                                            diffToTarget =
-                                                scrollSnap -
-                                                (1 + realtimeProgress)
-                                        if (sign === 1)
-                                            diffToTarget =
-                                                scrollSnap +
-                                                (1 - realtimeProgress)
-                                    }
-                                }
-                            )
+            slidesInSnap.forEach((slideIndex) => {
+                if (engine.options.loop) {
+                    engine.slideLooper.loopPoints.forEach((loopItem) => {
+                        const target = loopItem.target()
+                        if (slideIndex === loopItem.index && target !== 0) {
+                            const sign = Math.sign(target)
+                            if (sign === -1)
+                                diffToTarget =
+                                    scrollSnap - (1 + realtimeProgress)
+                            if (sign === 1)
+                                diffToTarget =
+                                    scrollSnap + (1 - realtimeProgress)
                         }
-
-                        const tweenValue =
-                            1 - Math.abs(diffToTarget * tweenFactor.current)
-                        const opacity = numberWithinRange(
-                            tweenValue,
-                            0.4,
-                            1
-                        ).toString()
-                        api.slideNodes()[slideIndex].style.opacity = opacity
                     })
-                })
-            },
-            []
-        )
-
-        const scrollPrev = useCallback(() => {
-            api?.scrollPrev()
-        }, [api])
-
-        const scrollNext = useCallback(() => {
-            api?.scrollNext()
-        }, [api])
-
-        const handleKeyDown = useCallback(
-            (event: KeyboardEvent<HTMLDivElement>) => {
-                if (event.key === "ArrowLeft") {
-                    event.preventDefault()
-                    scrollPrev()
-                } else if (event.key === "ArrowRight") {
-                    event.preventDefault()
-                    scrollNext()
                 }
-            },
-            [scrollPrev, scrollNext]
-        )
 
-        useEffect(() => {
-            if (!api || !setApi) {
-                return
+                if (Math.abs(diffToTarget) > 2) {
+                    api.slideNodes()[slideIndex].style.opacity = "0.4"
+                    return
+                }
+
+                const tweenValue =
+                    1 - Math.abs(diffToTarget * tweenFactor.current)
+                const opacity = numberWithinRange(tweenValue, 0.4, 1).toString()
+                api.slideNodes()[slideIndex].style.opacity = opacity
+            })
+        })
+    }, [])
+
+    const scrollPrev = useCallback(() => {
+        api?.scrollPrev()
+    }, [api])
+
+    const scrollNext = useCallback(() => {
+        api?.scrollNext()
+    }, [api])
+
+    const handleKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLDivElement>) => {
+            if (event.key === "ArrowLeft") {
+                event.preventDefault()
+                scrollPrev()
+            } else if (event.key === "ArrowRight") {
+                event.preventDefault()
+                scrollNext()
             }
+        },
+        [scrollPrev, scrollNext]
+    )
 
-            setApi(api)
-        }, [api, setApi])
+    useEffect(() => {
+        if (!api || !setApi) {
+            return
+        }
 
-        useEffect(() => {
-            if (!api) return
+        setApi(api)
+    }, [api, setApi])
 
-            setTweenFactor(api)
-            tweenOpacity(api)
+    useEffect(() => {
+        if (!api) return
 
-            api.on("reInit", setTweenFactor)
-                .on("reInit", tweenOpacity)
-                .on("scroll", tweenOpacity)
-                .on("slideFocus", tweenOpacity)
+        setTweenFactor(api)
+        tweenOpacity(api)
 
-            return () => {
-                api.off("reInit", setTweenFactor)
-                    .off("reInit", tweenOpacity)
-                    .off("scroll", tweenOpacity)
-                    .off("slideFocus", tweenOpacity)
-            }
-        }, [api, setTweenFactor, tweenOpacity])
+        api.on("reInit", setTweenFactor)
+            .on("reInit", tweenOpacity)
+            .on("scroll", tweenOpacity)
+            .on("slideFocus", tweenOpacity)
 
-        const contextValue = useMemo(
-            () => ({
-                carouselRef,
-                api,
-                setApi,
-                opts,
-                orientation,
-                scrollPrev,
-                scrollNext
-            }),
-            [
-                carouselRef,
-                api,
-                setApi,
-                opts,
-                orientation,
-                scrollPrev,
-                scrollNext
-            ]
-        )
+        return () => {
+            api.off("reInit", setTweenFactor)
+                .off("reInit", tweenOpacity)
+                .off("scroll", tweenOpacity)
+                .off("slideFocus", tweenOpacity)
+        }
+    }, [api, setTweenFactor, tweenOpacity])
 
-        return (
-            <CarouselContext.Provider value={contextValue}>
+    const contextValue = useMemo(
+        () => ({
+            carouselRef,
+            api,
+            setApi,
+            opts,
+            orientation,
+            scrollPrev,
+            scrollNext
+        }),
+        [carouselRef, api, setApi, opts, orientation, scrollPrev, scrollNext]
+    )
+
+    return (
+        <CarouselContext.Provider value={contextValue}>
+            <div
+                onKeyDownCapture={handleKeyDown}
+                className={cn("relative flex w-full flex-col gap-2", className)}
+                role="region"
+                aria-roledescription="carousel"
+                data-slot="carousel"
+                {...props}
+            >
+                <CarouselContent>{children}</CarouselContent>
                 <div
-                    ref={ref}
-                    onKeyDownCapture={handleKeyDown}
                     className={cn(
-                        "relative flex w-full flex-col gap-2",
-                        className
+                        "grid w-full items-center gap-2",
+                        "grid-cols-[1fr_75%_1fr]"
                     )}
-                    role="region"
-                    aria-roledescription="carousel"
-                    {...props}
                 >
-                    <CarouselContent>{children}</CarouselContent>
-                    <div
-                        className={cn(
-                            "grid w-full items-center gap-2",
-                            "grid-cols-[1fr_75%_1fr]"
-                        )}
-                    >
-                        <div className="flex w-full justify-start gap-2">
-                            <CarouselStart />
-                            <CarouselIndicator className="flex-1" />
-                        </div>
+                    <div className="flex w-full justify-start gap-2">
+                        <CarouselReplay />
+                        <CarouselIndicator className="flex-1" />
+                    </div>
 
-                        <CarouselScrollbar className="w-full" />
+                    <CarouselScrollbar className="flex-1" />
 
-                        <div className="flex w-full justify-end gap-2">
-                            <CarouselPrevious className="flex-1" />
-                            <CarouselNext className="flex-1" />
-                        </div>
+                    <div className="flex w-full justify-end gap-2">
+                        <CarouselPrevious className="flex-1" />
+                        <CarouselNext className="flex-1" />
                     </div>
                 </div>
-            </CarouselContext.Provider>
-        )
-    }
-)
-Carousel.displayName = "Carousel"
+            </div>
+        </CarouselContext.Provider>
+    )
+}
 
-const CarouselContent = forwardRef<
-    HTMLDivElement,
-    HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
+function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
     const { carouselRef, orientation } = useCarousel()
 
     return (
-        <div ref={carouselRef} className="flex-1 overflow-hidden">
+        <div
+            ref={carouselRef}
+            className="flex-1 overflow-hidden"
+            data-slot="carousel-content"
+        >
             <div
-                ref={ref}
                 className={cn(
                     "flex",
                     orientation === "horizontal" ? "-ml-2" : "-mt-2 flex-col",
@@ -330,34 +309,32 @@ const CarouselContent = forwardRef<
             />
         </div>
     )
-})
-CarouselContent.displayName = "CarouselContent"
+}
 
-const CarouselItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-    ({ className, ...props }, ref) => {
-        const { orientation } = useCarousel()
+function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
+    const { orientation } = useCarousel()
 
-        return (
-            <div
-                ref={ref}
-                role="group"
-                aria-roledescription="slide"
-                className={cn(
-                    "min-w-0 shrink-0 grow-0 basis-3/4 will-change-[opacity]",
-                    orientation === "horizontal" ? "pl-2" : "pt-2",
-                    className
-                )}
-                {...props}
-            />
-        )
-    }
-)
-CarouselItem.displayName = "CarouselItem"
+    return (
+        <div
+            role="group"
+            aria-roledescription="slide"
+            data-slot="carousel-item"
+            className={cn(
+                "min-w-0 shrink-0 grow-0 basis-3/4 will-change-[opacity]",
+                orientation === "horizontal" ? "pl-2" : "pt-2",
+                className
+            )}
+            {...props}
+        />
+    )
+}
 
-const CarouselStart = forwardRef<
-    HTMLButtonElement,
-    ComponentProps<typeof Button>
->(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+function CarouselReplay({
+    className,
+    variant = "outline",
+    size = "icon",
+    ...props
+}: React.ComponentProps<typeof Button>) {
     const { orientation, api } = useCarousel()
 
     const [canScrollPrev, setCanScrollPrev] = useState(false)
@@ -387,7 +364,7 @@ const CarouselStart = forwardRef<
             }}
             render={
                 <Button
-                    ref={ref}
+                    data-slot="carousel-replay"
                     variant={variant}
                     size={size}
                     className={cn(
@@ -409,18 +386,19 @@ const CarouselStart = forwardRef<
                             d="M20.357 12.006A8.35 8.35 0 0 1 12 20.363a8.36 8.36 0 0 1-8.357-8.357c0-.64.436-1.077 1.059-1.077.594 0 1.002.437 1.002 1.068a6.295 6.295 0 1 0 12.591 0A6.29 6.29 0 0 0 12 5.701c-.501 0-.975.037-1.365.121l2.303 2.284a.9.9 0 0 1 .288.678.99.99 0 0 1-1.003 1.012 1 1 0 0 1-.706-.278L7.71 5.683c-.214-.223-.325-.474-.325-.762 0-.278.12-.538.325-.752L11.517.306A.9.9 0 0 1 12.223 0c.566 0 1.003.464 1.003 1.03 0 .28-.102.511-.279.697l-2.08 2.024A6 6 0 0 1 12 3.64a8.354 8.354 0 0 1 8.357 8.366"
                         />
                     </svg>
-                    <span className="sr-only">First slide</span>
+                    <span className="sr-only">Scroll to start</span>
                 </Button>
             }
         />
     )
-})
-CarouselStart.displayName = "CarouselStart"
+}
 
-const CarouselPrevious = forwardRef<
-    HTMLButtonElement,
-    ComponentProps<typeof Button>
->(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+function CarouselPrevious({
+    className,
+    variant = "outline",
+    size = "icon",
+    ...props
+}: React.ComponentProps<typeof Button>) {
     const { orientation, scrollPrev, api } = useCarousel()
 
     const [canScrollPrev, setCanScrollPrev] = useState(false)
@@ -447,7 +425,7 @@ const CarouselPrevious = forwardRef<
             }}
             render={
                 <Button
-                    ref={ref}
+                    data-slot="carousel-previous"
                     variant={variant}
                     size={size}
                     className={cn(
@@ -474,13 +452,14 @@ const CarouselPrevious = forwardRef<
             }
         />
     )
-})
-CarouselPrevious.displayName = "CarouselPrevious"
+}
 
-const CarouselNext = forwardRef<
-    HTMLButtonElement,
-    ComponentProps<typeof Button>
->(({ className, variant = "outline", size = "icon", ...props }, ref) => {
+function CarouselNext({
+    className,
+    variant = "outline",
+    size = "icon",
+    ...props
+}: React.ComponentProps<typeof Button>) {
     const { orientation, scrollNext, api } = useCarousel()
 
     const [canScrollNext, setCanScrollNext] = useState(false)
@@ -507,7 +486,7 @@ const CarouselNext = forwardRef<
             }}
             render={
                 <Button
-                    ref={ref}
+                    data-slot="carousel-next"
                     variant={variant}
                     size={size}
                     className={cn(
@@ -534,35 +513,16 @@ const CarouselNext = forwardRef<
             }
         />
     )
-})
-CarouselNext.displayName = "CarouselNext"
+}
 
-// interface ThumbProps {
-//     selected: boolean
-//     index: number
-//     onClick: () => void
-// }
-
-// const CarouselThumbButton = forwardRef<
-//     HTMLDivElement,
-//     HTMLAttributes<HTMLDivElement> & ThumbProps
-// >(({ selected, index, onClick, className, ...props }, ref) => {
-//     return (
-//         <div ref={ref} className={cn(selected && "active")}>
-//             <button onClick={onClick} type="button">
-//                 {index + 1}
-//             </button>
-//         </div>
-//     )
-// })
-// CarouselThumbButton.displayName = "CarouselThumbButton"
-
-const CarouselScrollbar = forwardRef<
-    HTMLDivElement,
-    React.ComponentProps<typeof Slider>
->(({ className, ...props }, ref) => {
+function CarouselScrollbar({
+    className,
+    ...props
+}: React.ComponentProps<typeof Slider>) {
     const { api } = useCarousel()
     const [value, setValue] = useState(0)
+
+    const [snapCount, setSnapCount] = useState(0)
 
     const isDragging = useRef(false)
 
@@ -609,22 +569,33 @@ const CarouselScrollbar = forwardRef<
             setValue(Math.max(0, Math.min(1, api.scrollProgress())))
         }
 
+        const updateSnapCount = () => {
+            setSnapCount(api.scrollSnapList().length)
+        }
+
         updateScroll()
+        updateSnapCount()
+
         api.on("scroll", updateScroll)
         api.on("reInit", updateScroll)
+        api.on("reInit", updateSnapCount)
+
         return () => {
             api.off("scroll", updateScroll)
             api.off("reInit", updateScroll)
+            api.off("reInit", updateSnapCount)
         }
     }, [api])
 
     return (
         <Slider
-            ref={ref}
+            data-slot="carousel-scrollbar"
             min={0}
             max={1}
             step={0.001}
             value={value}
+            snapCount={snapCount}
+            disabled={!api}
             onValueChange={onScrollBarChange}
             onValueCommitted={onScrollBarRelease}
             label="Slide scrollbar"
@@ -632,20 +603,18 @@ const CarouselScrollbar = forwardRef<
             {...props}
         />
     )
-})
-CarouselScrollbar.displayName = "CarouselScrollbar"
-
-interface CarouselImageProps {
-    srcPattern: string
-    alt: string
-    className?: string
 }
 
-const CarouselImage = ({
+function CarouselImage({
     srcPattern,
     alt,
     className
-}: HTMLAttributes<HTMLDivElement> & CarouselImageProps & CarouselProps) => {
+}: React.ComponentProps<"div"> &
+    CarouselProps & {
+        srcPattern: string
+        alt: string
+        className?: string
+    }) {
     const match = /\{(\d+)(?:-(\d+))?\}/.exec(srcPattern)
 
     let generatedImages = [srcPattern]
@@ -675,7 +644,10 @@ export {
     type CarouselApi,
     CarouselContent,
     CarouselImage,
+    CarouselIndicator,
     CarouselItem,
     CarouselNext,
-    CarouselPrevious
+    CarouselPrevious,
+    CarouselReplay,
+    CarouselScrollbar
 }

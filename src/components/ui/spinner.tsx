@@ -5,7 +5,12 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
     const duration = 1000
 
     return (
-        <svg viewBox="0 0 30 30" className={cn("size-5", className)} {...props}>
+        <svg
+            viewBox="0 0 30 30"
+            data-slot="spinner"
+            className={cn("size-5", className)}
+            {...props}
+        >
             {Array.from({ length: lines }).map((_, index) => {
                 const angle =
                     (360 / lines) * index + (index < lines / 2 ? 180 : -180)

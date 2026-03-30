@@ -102,12 +102,14 @@ export function TableOfContents({ items }: TocProps) {
 
     return (
         <>
-            <TocSearch
-                ref={inputRef}
-                value={query}
-                onChange={setQuery}
-                onClear={handleClearSearch}
-            />
+            <header className={cn("px-6 py-5.5")}>
+                <TocSearch
+                    ref={inputRef}
+                    value={query}
+                    onChange={setQuery}
+                    onClear={handleClearSearch}
+                />
+            </header>
             <SectionLine fit />
             <nav className="flex flex-1 flex-col overflow-auto">
                 {filteredItems.length === 0 ? (

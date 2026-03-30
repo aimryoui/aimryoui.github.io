@@ -74,12 +74,14 @@ export function ExpandableWrapper({
                 {!isExpanded && isOverflowing && (
                     <div
                         className={cn(
-                            "absolute -bottom-6 z-40 flex h-120 w-full flex-col items-center justify-end bg-gradient-to-t from-background from-10% to-transparent pb-11.5"
+                            "pointer-events-none absolute -bottom-6 z-40 flex h-120 w-full flex-col items-center justify-end bg-gradient-to-t from-background from-10% to-transparent pb-11.5"
                         )}
                     >
                         <Button
                             variant="outline"
-                            className={cn("gap-2 rounded-full shadow-sm")}
+                            className={cn(
+                                "pointer-events-auto gap-2 rounded-full shadow-sm"
+                            )}
                             onClick={() => {
                                 setIsExpanded(true)
                             }}

@@ -1,6 +1,6 @@
 "use client"
 
-import { forwardRef, memo } from "react"
+import { memo } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -14,67 +14,72 @@ import { useHotkeys } from "@/hooks/use-hotkeys"
 import { usePlatform } from "@/hooks/use-platform"
 import { cn } from "@/lib/utils"
 
-interface TocSearchProps {
+interface TocSearchProps extends Omit<
+    React.ComponentProps<"input">,
+    "value" | "onChange"
+> {
     value: string
     onChange: (value: string) => void
     onClear: () => void
-    className?: string
 }
 
-const TocSearch = forwardRef<HTMLInputElement, TocSearchProps>(
-    ({ value, onChange, onClear, className }, ref) => {
-        const platform = usePlatform()
+function TocSearch({
+    value,
+    onChange,
+    onClear,
+    className,
+    ref,
+    ...props
+}: TocSearchProps) {
+    const platform = usePlatform()
 
-        useHotkeys([
-            [
-                "mod + K",
-                () => {
-                    if (typeof ref === "object" && ref?.current) {
-                        ref.current.focus()
-                    }
+    useHotkeys([
+        [
+            "mod + K",
+            () => {
+                if (typeof ref === "object" && ref?.current) {
+                    ref.current.focus()
                 }
-            ]
-        ])
+            }
+        ]
+    ])
 
-        const hasValue = Boolean(value)
+    const hasValue = Boolean(value)
 
-        return (
-            <header className={cn("px-6 py-5.5", className)}>
-                <InputGroup as="search">
-                    <LeftAddon />
-                    <InputGroupInput
-                        ref={ref}
-                        id="toc-search"
-                        type="search"
-                        role="searchbox"
-                        placeholder="Search for sections..."
-                        autoComplete="off"
-                        value={value}
-                        onChange={(e) => {
-                            onChange(e.target.value)
-                        }}
-                        onKeyDown={(e) => {
-                            if (e.key === "Escape") {
-                                if (value) {
-                                    onClear()
-                                } else {
-                                    e.currentTarget.blur()
-                                }
-                            }
-                        }}
-                        className="text-sm"
-                    />
-                    <RightAddon
-                        hasValue={hasValue}
-                        platform={platform}
-                        onClear={onClear}
-                    />
-                </InputGroup>
-            </header>
-        )
-    }
-)
-TocSearch.displayName = "TocSearch"
+    return (
+        <InputGroup as="search">
+            <LeftAddon />
+            <InputGroupInput
+                ref={ref}
+                id="toc-search"
+                type="search"
+                role="searchbox"
+                placeholder="Search for sections..."
+                autoComplete="off"
+                value={value}
+                onChange={(e) => {
+                    onChange(e.target.value)
+                }}
+                onKeyDown={(e) => {
+                    if (e.key === "Escape") {
+                        if (value) {
+                            onClear()
+                        } else {
+                            e.currentTarget.blur()
+                        }
+                    }
+                }}
+                className={cn("text-sm", className)}
+                {...props}
+            />
+            <RightAddon
+                hasValue={hasValue}
+                platform={platform}
+                onClear={onClear}
+            />
+        </InputGroup>
+    )
+}
 
 function LeftAddon() {
     return (
