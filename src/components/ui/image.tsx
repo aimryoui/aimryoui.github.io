@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
 import NextImage from "next/image"
 
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
@@ -36,6 +37,31 @@ function Image({
     objectFit = "cover",
     ...props
 }: ImageProps) {
+    const containerRef = useRef<HTMLDivElement>(null)
+
+    const [isNearViewport, setIsNearViewport] = useState(true)
+
+    useEffect(() => {
+        const element = containerRef.current
+        if (!element) return
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsNearViewport(entry.isIntersecting)
+            },
+            {
+                rootMargin: "200% 0px 200% 0px",
+                threshold: 0
+            }
+        )
+
+        observer.observe(element)
+
+        return () => {
+            observer.unobserve(element)
+        }
+    }, [])
+
     const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
     const metadata =
         imageManifest[normalizedSrc.replace(FILE_EXTENSION_REGEX, "")]
@@ -84,6 +110,7 @@ function Image({
 
     return (
         <div
+            ref={containerRef}
             className={cn(
                 "relative grid w-full place-items-center",
                 !pngBorder && "overflow-hidden",
@@ -98,6 +125,9 @@ function Image({
                 flex: imageRow
                     ? `${imageRow === "justified" ? `calc(${exactW.toString()}/${exactH.toString()})` : exactW.toString()} 1 0%`
                     : undefined,
+                aspectRatio: asBackgroundImage
+                    ? undefined
+                    : `${exactW.toString()}/${exactH.toString()}`,
                 ...cssVars
             }}
             {...props}
@@ -124,51 +154,54 @@ function Image({
                 }}
             />
 
-            {/* Represent image from `src` attribute or url() function */}
-            <div
-                className={cn(
-                    "z-1 max-h-inherit max-w-inherit",
-                    asBackgroundImage && "absolute",
-                    objectFit === "fill" && "size-full",
-                    objectFit === "contain" &&
-                        "size-auto max-h-full max-w-full",
-                    objectFit === "cover" && "size-auto min-h-full min-w-full"
-                )}
-                style={{
-                    aspectRatio: `${exactW.toString()}/${exactH.toString()}`
-                }}
-                aria-hidden={true}
-            >
-                {Array.from({ length: Rows * Cols }).map((_, index) => {
-                    const targetC = index % Cols
-                    const targetR = Math.floor(index / Cols)
+            {isNearViewport && (
+                // Represent image from `src` attribute or url() function
+                <div
+                    className={cn(
+                        "z-1 max-h-inherit max-w-inherit",
+                        asBackgroundImage && "absolute",
+                        objectFit === "fill" && "size-full",
+                        objectFit === "contain" &&
+                            "size-auto max-h-full max-w-full",
+                        objectFit === "cover" &&
+                            "size-auto min-h-full min-w-full"
+                    )}
+                    style={{
+                        aspectRatio: `${exactW.toString()}/${exactH.toString()}`
+                    }}
+                    aria-hidden={true}
+                >
+                    {Array.from({ length: Rows * Cols }).map((_, index) => {
+                        const targetC = index % Cols
+                        const targetR = Math.floor(index / Cols)
 
-                    const scrambledIndex = metadata.mapping[index]
-                    const sourceC = scrambledIndex % Cols
-                    const sourceR = Math.floor(scrambledIndex / Cols)
+                        const scrambledIndex = metadata.mapping[index]
+                        const sourceC = scrambledIndex % Cols
+                        const sourceR = Math.floor(scrambledIndex / Cols)
 
-                    const translateX =
-                        targetC * targetColPct - sourceC * colPct - padX
-                    const translateY =
-                        targetR * targetRowPct - sourceR * rowPct - padY
+                        const translateX =
+                            targetC * targetColPct - sourceC * colPct - padX
+                        const translateY =
+                            targetR * targetRowPct - sourceR * rowPct - padY
 
-                    return (
-                        <img
-                            key={index}
-                            src={`${basePath}/${fileName}_scrambled.webp`}
-                            alt=""
-                            className="absolute h-[--h] w-[--w] max-w-none select-none"
-                            style={{
-                                clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(Cols - 1 - sourceC).toString()}) var(--y${(Rows - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
-                                transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
-                            }}
-                            decoding="async"
-                            loading="lazy"
-                            draggable={false}
-                        />
-                    )
-                })}
-            </div>
+                        return (
+                            <img
+                                key={index}
+                                src={`${basePath}/${fileName}_scrambled.webp`}
+                                alt=""
+                                className="absolute h-[--h] w-[--w] max-w-none select-none"
+                                style={{
+                                    clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(Cols - 1 - sourceC).toString()}) var(--y${(Rows - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
+                                    transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
+                                }}
+                                decoding="async"
+                                loading="lazy"
+                                draggable={false}
+                            />
+                        )
+                    })}
+                </div>
+            )}
 
             <noscript>
                 <img src={`${basePath}/${fileName}_preview.webp`} alt={alt} />
