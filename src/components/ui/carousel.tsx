@@ -145,6 +145,11 @@ function Carousel({
     const slides = Array(slideCount).fill(75)
 
     const carouselId = useId()
+
+    const [activePlugins, setActivePlugins] = useState(
+        () => plugins ?? [WheelGestures({ wheelDraggingClass: "dragging" })]
+    )
+
     const [emblaRef, emblaApi, emblaServerApi] = useEmblaCarousel(
         {
             ...opts,
@@ -156,21 +161,24 @@ function Carousel({
             skipSnaps: true,
             axis: orientation === "horizontal" ? "x" : "y"
         },
-        [WheelGestures({ wheelDraggingClass: "dragging" })]
+        activePlugins
     )
     useEffect(() => {
-        if (!emblaApi) return
+        const timer = setTimeout(() => {
+            setActivePlugins((prevPlugins) => [
+                ...prevPlugins,
+                Accessibility({
+                    announceChanges: true,
+                    rootNode: (emblaRoot) =>
+                        emblaRoot.parentElement ?? document.body
+                })
+            ])
+        }, 0)
 
-        const activePlugins = plugins ?? [
-            Accessibility({
-                announceChanges: true,
-                rootNode: (emblaRoot) => emblaRoot.parentElement
-            }),
-            WheelGestures({ wheelDraggingClass: "dragging" })
-        ]
-
-        emblaApi.reInit(undefined, activePlugins)
-    }, [emblaApi, plugins])
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [])
     const renderSsrStyles = !emblaApi
 
     const tweenFactor = useRef(0)

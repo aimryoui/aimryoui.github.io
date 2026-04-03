@@ -5,6 +5,7 @@ import { type EmblaCarouselType } from "embla-carousel"
 const useAccessibility = (emblaApi: EmblaCarouselType | undefined): void => {
     const setupAccessibility = (emblaApi: EmblaCarouselType) => {
         const accessibility = emblaApi.plugins().accessibility
+        if (!accessibility) return
 
         accessibility.setupLiveRegion("[data-slot='carousel-live-region']")
         accessibility.setupDotButtons("[data-slot='carousel-dots']")
