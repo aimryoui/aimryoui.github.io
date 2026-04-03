@@ -62,43 +62,43 @@ function Slider({
                         )}
                     />
                 </SliderPrimitive.Track>
-                {snapCount > 2 && (
-                    <div
-                        className={cn(
-                            "pointer-events-none absolute flex justify-between",
-                            {
-                                "group-data-horizontal":
-                                    "inset-x-2 top-1/2 -translate-y-1/2",
-                                "group-data-vertical":
-                                    "inset-y-2 left-1/2 -translate-x-1/2 flex-col"
-                            }
-                        )}
-                    >
-                        {Array.from({ length: snapCount }).map((_, index) => {
-                            const fraction = index / (snapCount - 1)
+                <div
+                    data-slot="carousel-dots"
+                    className={cn(
+                        "pointer-events-none absolute flex justify-between",
+                        snapCount < 2 && "opacity-0",
+                        {
+                            "group-data-horizontal":
+                                "inset-x-2 top-1/2 -translate-y-1/2",
+                            "group-data-vertical":
+                                "inset-y-2 left-1/2 -translate-x-1/2 flex-col"
+                        }
+                    )}
+                >
+                    {Array.from({ length: snapCount }).map((_, index) => {
+                        const fraction = index / (snapCount - 1)
+                        const currentProgress = Array.isArray(value)
+                            ? (value[0] as number)
+                            : typeof value === "number"
+                              ? value
+                              : 0
 
-                            const currentProgress = Array.isArray(value)
-                                ? (value[0] as number)
-                                : typeof value === "number"
-                                  ? value
-                                  : 0
+                        const isActive = currentProgress >= fraction - 0.001
 
-                            const isActive = currentProgress >= fraction - 0.001
-
-                            return (
-                                <div
-                                    key={index}
-                                    className={cn(
-                                        "size-1 rounded-full first:-translate-x-1.5 last:translate-x-1.5",
-                                        isActive
-                                            ? "bg-background dark:bg-default/60"
-                                            : "bg-muted-foreground/60"
-                                    )}
-                                />
-                            )
-                        })}
-                    </div>
-                )}
+                        return (
+                            <div
+                                key={index}
+                                data-slot="carousel-dot"
+                                className={cn(
+                                    "size-1 rounded-full first:-translate-x-1.5 last:translate-x-1.5",
+                                    isActive
+                                        ? "bg-background dark:bg-default/60"
+                                        : "bg-muted-foreground/60"
+                                )}
+                            />
+                        )
+                    })}
+                </div>
                 {Array.from({ length: _values.length }, (_, index) => (
                     <SliderPrimitive.Thumb
                         key={index}

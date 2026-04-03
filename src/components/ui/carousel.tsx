@@ -6,15 +6,17 @@ import {
     useCallback,
     useContext,
     useEffect,
+    useId,
     useMemo,
     useRef,
     useState
 } from "react"
 
+import Accessibility from "embla-carousel-accessibility"
 import useEmblaCarousel, {
     type UseEmblaCarouselType
 } from "embla-carousel-react"
-import WheelGesturesPlugin from "embla-carousel-wheel-gestures"
+import WheelGestures from "embla-carousel-wheel-gestures"
 
 import { ArrowLeft, ArrowRight, Refresh } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
@@ -22,6 +24,7 @@ import { Image } from "@/components/ui/image"
 import { Slider } from "@/components/ui/slider"
 import { Spinner } from "@/components/ui/spinner"
 import { TooltipTrigger } from "@/components/ui/tooltip"
+import { useAccessibility } from "@/hooks/use-accessibility"
 import { cn } from "@/lib/utils"
 
 type CarouselApi = UseEmblaCarouselType[1]
@@ -31,16 +34,17 @@ type CarouselPlugin = UseCarouselParameters[1]
 
 interface CarouselProps {
     opts?: CarouselOptions
+    slideCount: number
     plugins?: CarouselPlugin
     orientation?: "horizontal" | "vertical"
-    setApi?: (api: CarouselApi) => void
+    setEmblaApi?: (api: CarouselApi) => void
 }
 
 type CarouselContextProps = {
-    carouselRef: ReturnType<typeof useEmblaCarousel>[0]
-    api: ReturnType<typeof useEmblaCarousel>[1]
-    scrollPrev: () => void
-    scrollNext: () => void
+    emblaRef: ReturnType<typeof useEmblaCarousel>[0]
+    emblaApi: ReturnType<typeof useEmblaCarousel>[1]
+    goToPrev: () => void
+    goToNext: () => void
 } & CarouselProps
 
 const CarouselContext = createContext<CarouselContextProps | null>(null)
@@ -59,18 +63,18 @@ function CarouselIndicator({
     className,
     ...props
 }: React.ComponentProps<"div">) {
-    const { api } = useCarousel()
+    const { emblaApi } = useCarousel()
     const [current, setCurrent] = useState(0)
     const [count, setCount] = useState(0)
 
     useEffect(() => {
-        if (!api) return
+        if (!emblaApi) return
 
         const updateCarouselState = () => {
-            const snapList = api.scrollSnapList()
+            const snapList = emblaApi.snapList()
             setCount(snapList.length)
 
-            const engine = api.internalEngine()
+            const engine = emblaApi.internalEngine()
             const currentLocation = engine.location.get()
 
             const realtimeProgress = engine.scrollProgress.get(currentLocation)
@@ -90,16 +94,16 @@ function CarouselIndicator({
         }
 
         updateCarouselState()
-        api.on("reInit", updateCarouselState)
-        api.on("select", updateCarouselState)
-        api.on("scroll", updateCarouselState)
+        emblaApi.on("reinit", updateCarouselState)
+        emblaApi.on("select", updateCarouselState)
+        emblaApi.on("scroll", updateCarouselState)
 
         return () => {
-            api.off("reInit", updateCarouselState)
-            api.off("select", updateCarouselState)
-            api.off("scroll", updateCarouselState)
+            emblaApi.off("reinit", updateCarouselState)
+            emblaApi.off("select", updateCarouselState)
+            emblaApi.off("scroll", updateCarouselState)
         }
-    }, [api])
+    }, [emblaApi])
 
     const padLength = String(count).length
     const displayCurrent = String(current).padStart(padLength, "0")
@@ -109,12 +113,16 @@ function CarouselIndicator({
             data-slot="carousel-indicator"
             className={cn(
                 "grid h-9 select-none place-items-center rounded-lg border border-default/15 bg-background px-4 font-mono text-sm",
-                (!api || count === 0) && "opacity-40",
+                (!emblaApi || count === 0) && "opacity-40",
                 className
             )}
             {...props}
         >
-            {!api || count === 0 ? <Spinner /> : `${displayCurrent} / ${count}`}
+            {!emblaApi || count === 0 ? (
+                <Spinner />
+            ) : (
+                `${displayCurrent} / ${count}`
+            )}
         </div>
     )
 }
@@ -127,45 +135,61 @@ const numberWithinRange = (number: number, min: number, max: number): number =>
 function Carousel({
     orientation = "horizontal",
     opts,
-    setApi,
+    slideCount,
+    setEmblaApi,
     plugins,
     className,
     children,
     ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
-    const [defaultPlugins] = useState(() => [
-        WheelGesturesPlugin({
-            wheelDraggingClass: "dragging"
-        })
-    ])
+    const slides = Array(slideCount).fill(75)
 
-    const [carouselRef, api] = useEmblaCarousel(
+    const carouselId = useId()
+    const [emblaRef, emblaApi, emblaServerApi] = useEmblaCarousel(
         {
             ...opts,
+            breakpoints: {
+                "(prefers-reduced-motion: reduce)": { duration: 0 }
+            },
+            ssr: slides,
             containScroll: false,
             skipSnaps: true,
             axis: orientation === "horizontal" ? "x" : "y"
         },
-        plugins ?? defaultPlugins
+        [WheelGestures({ wheelDraggingClass: "dragging" })]
     )
+    useEffect(() => {
+        if (!emblaApi) return
+
+        const activePlugins = plugins ?? [
+            Accessibility({
+                announceChanges: true,
+                rootNode: (emblaRoot) => emblaRoot.parentElement
+            }),
+            WheelGestures({ wheelDraggingClass: "dragging" })
+        ]
+
+        emblaApi.reInit(undefined, activePlugins)
+    }, [emblaApi, plugins])
+    const renderSsrStyles = !emblaApi
 
     const tweenFactor = useRef(0)
 
-    const setTweenFactor = useCallback((api: CarouselApi) => {
-        if (!api) return
-        tweenFactor.current = TWEEN_FACTOR_BASE * api.scrollSnapList().length
+    const setTweenFactor = useCallback((emblaApi: CarouselApi) => {
+        if (!emblaApi) return
+        tweenFactor.current = TWEEN_FACTOR_BASE * emblaApi.snapList().length
     }, [])
 
-    const tweenOpacity = useCallback((api: CarouselApi) => {
-        if (!api) return
-        const engine = api.internalEngine()
+    const tweenOpacity = useCallback((emblaApi: CarouselApi) => {
+        if (!emblaApi) return
+        const engine = emblaApi.internalEngine()
 
         const currentLocation = engine.location.get()
         const realtimeProgress = engine.scrollProgress.get(currentLocation)
 
-        api.scrollSnapList().forEach((scrollSnap, snapIndex) => {
+        emblaApi.snapList().forEach((scrollSnap, snapIndex) => {
             let diffToTarget = scrollSnap - realtimeProgress
-            const slidesInSnap = engine.slideRegistry[snapIndex]
+            const slidesInSnap = engine.scrollSnapList.slidesBySnap[snapIndex]
 
             slidesInSnap.forEach((slideIndex) => {
                 if (engine.options.loop) {
@@ -184,119 +208,149 @@ function Carousel({
                 }
 
                 if (Math.abs(diffToTarget) > 2) {
-                    api.slideNodes()[slideIndex].style.opacity = "0.4"
+                    emblaApi.slideNodes()[slideIndex].style.opacity = "0.4"
                     return
                 }
 
                 const tweenValue =
                     1 - Math.abs(diffToTarget * tweenFactor.current)
                 const opacity = numberWithinRange(tweenValue, 0.4, 1).toString()
-                api.slideNodes()[slideIndex].style.opacity = opacity
+                emblaApi.slideNodes()[slideIndex].style.opacity = opacity
             })
         })
     }, [])
 
-    const scrollPrev = useCallback(() => {
-        api?.scrollPrev()
-    }, [api])
+    const goToPrev = useCallback(() => {
+        emblaApi?.goToPrev()
+    }, [emblaApi])
 
-    const scrollNext = useCallback(() => {
-        api?.scrollNext()
-    }, [api])
+    const goToNext = useCallback(() => {
+        emblaApi?.goToNext()
+    }, [emblaApi])
+
+    useAccessibility(emblaApi)
 
     const handleKeyDown = useCallback(
         (event: KeyboardEvent<HTMLDivElement>) => {
             if (event.key === "ArrowLeft") {
                 event.preventDefault()
-                scrollPrev()
+                goToPrev()
             } else if (event.key === "ArrowRight") {
                 event.preventDefault()
-                scrollNext()
+                goToNext()
             }
         },
-        [scrollPrev, scrollNext]
+        [goToPrev, goToNext]
     )
 
     useEffect(() => {
-        if (!api || !setApi) {
+        if (!emblaApi || !setEmblaApi) {
             return
         }
 
-        setApi(api)
-    }, [api, setApi])
+        setEmblaApi(emblaApi)
+    }, [emblaApi, setEmblaApi])
 
     useEffect(() => {
-        if (!api) return
+        if (!emblaApi) return
 
-        setTweenFactor(api)
-        tweenOpacity(api)
+        setTweenFactor(emblaApi)
+        tweenOpacity(emblaApi)
 
-        api.on("reInit", setTweenFactor)
-            .on("reInit", tweenOpacity)
+        emblaApi
+            .on("reinit", setTweenFactor)
+            .on("reinit", tweenOpacity)
             .on("scroll", tweenOpacity)
-            .on("slideFocus", tweenOpacity)
+            .on("slidefocus", tweenOpacity)
 
         return () => {
-            api.off("reInit", setTweenFactor)
-                .off("reInit", tweenOpacity)
+            emblaApi
+                .off("reinit", setTweenFactor)
+                .off("reinit", tweenOpacity)
                 .off("scroll", tweenOpacity)
-                .off("slideFocus", tweenOpacity)
+                .off("slidefocus", tweenOpacity)
         }
-    }, [api, setTweenFactor, tweenOpacity])
+    }, [emblaApi, setTweenFactor, tweenOpacity])
 
     const contextValue = useMemo(
         () => ({
-            carouselRef,
-            api,
-            setApi,
+            emblaRef,
+            emblaApi,
+            setEmblaApi,
             opts,
+            slideCount,
             orientation,
-            scrollPrev,
-            scrollNext
+            goToPrev,
+            goToNext
         }),
-        [carouselRef, api, setApi, opts, orientation, scrollPrev, scrollNext]
+        [
+            emblaRef,
+            emblaApi,
+            setEmblaApi,
+            opts,
+            slideCount,
+            orientation,
+            goToPrev,
+            goToNext
+        ]
     )
 
     return (
-        <CarouselContext.Provider value={contextValue}>
-            <div
-                onKeyDownCapture={handleKeyDown}
-                className={cn("relative flex w-full flex-col gap-2", className)}
-                role="region"
-                aria-roledescription="carousel"
-                data-slot="carousel"
-                {...props}
-            >
-                <CarouselContent>{children}</CarouselContent>
-                <div
-                    className={cn(
-                        "grid w-full items-center gap-2",
-                        "grid-cols-[1fr_75%_1fr]"
+        <>
+            {renderSsrStyles && (
+                <style>
+                    {emblaServerApi.ssrStyles(
+                        `#${carouselId}`,
+                        "[data-slot='carousel-item']"
                     )}
+                </style>
+            )}
+            <CarouselContext.Provider value={contextValue}>
+                <div
+                    onKeyDownCapture={handleKeyDown}
+                    className={cn(
+                        "relative flex w-full flex-col gap-2",
+                        className
+                    )}
+                    role="region"
+                    aria-roledescription="carousel"
+                    data-slot="carousel"
+                    {...props}
                 >
-                    <div className="flex w-full justify-start gap-2">
-                        <CarouselReplay />
-                        <CarouselIndicator className="flex-1" />
-                    </div>
+                    <CarouselContent id={carouselId}>
+                        {children}
+                    </CarouselContent>
+                    <div
+                        className={cn(
+                            "grid w-full items-center gap-2",
+                            "grid-cols-[1fr_75%_1fr]"
+                        )}
+                    >
+                        <div className="flex w-full justify-start gap-2">
+                            <CarouselReplay />
+                            <CarouselIndicator className="flex-1" />
+                        </div>
 
-                    <CarouselScrollbar className="flex-1" />
+                        <CarouselScrollbar className="flex-1" />
 
-                    <div className="flex w-full justify-end gap-2">
-                        <CarouselPrevious className="flex-1" />
-                        <CarouselNext className="flex-1" />
+                        <div className="flex w-full justify-end gap-2">
+                            <CarouselPrevious className="flex-1" />
+                            <CarouselNext className="flex-1" />
+                        </div>
                     </div>
+                    <div data-slot="carousel-live-region" className="sr-only" />
                 </div>
-            </div>
-        </CarouselContext.Provider>
+            </CarouselContext.Provider>
+        </>
     )
 }
 
 function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
-    const { carouselRef, orientation } = useCarousel()
+    const { emblaRef, orientation } = useCarousel()
 
     return (
         <div
-            ref={carouselRef}
+            ref={emblaRef}
             className="flex-1 overflow-hidden"
             data-slot="carousel-content"
         >
@@ -336,32 +390,32 @@ function CarouselReplay({
     size = "icon",
     ...props
 }: React.ComponentProps<typeof Button>) {
-    const { orientation, api } = useCarousel()
+    const { orientation, emblaApi } = useCarousel()
 
-    const [canScrollPrev, setCanScrollPrev] = useState(false)
+    const [canGoToPrev, setCanGoToPrev] = useState(false)
 
     const scrollStart = useCallback(() => {
-        api?.scrollTo(0)
-    }, [api])
+        emblaApi?.goTo(0)
+    }, [emblaApi])
 
     useEffect(() => {
-        if (!api) return
+        if (!emblaApi) return
         const updateState = () => {
-            setCanScrollPrev(api.canScrollPrev())
+            setCanGoToPrev(emblaApi.canGoToPrev())
         }
         updateState()
-        api.on("reInit", updateState)
-        api.on("select", updateState)
+        emblaApi.on("reinit", updateState)
+        emblaApi.on("select", updateState)
         return () => {
-            api.off("reInit", updateState)
-            api.off("select", updateState)
+            emblaApi.off("reinit", updateState)
+            emblaApi.off("select", updateState)
         }
-    }, [api])
+    }, [emblaApi])
 
     return (
         <TooltipTrigger
             payload={{
-                content: <span>Scroll to start</span>
+                content: <span>Go to first Slide</span>
             }}
             render={
                 <Button
@@ -373,7 +427,7 @@ function CarouselReplay({
                         orientation === "horizontal" ? "" : "rotate-90",
                         className
                     )}
-                    disabled={!canScrollPrev}
+                    disabled={!canGoToPrev}
                     onClick={scrollStart}
                     {...props}
                 >
@@ -391,23 +445,23 @@ function CarouselPrevious({
     size = "icon",
     ...props
 }: React.ComponentProps<typeof Button>) {
-    const { orientation, scrollPrev, api } = useCarousel()
+    const { orientation, goToPrev, emblaApi } = useCarousel()
 
-    const [canScrollPrev, setCanScrollPrev] = useState(false)
+    const [canGoToPrev, setCanGoToPrev] = useState(false)
 
     useEffect(() => {
-        if (!api) return
+        if (!emblaApi) return
         const updateState = () => {
-            setCanScrollPrev(api.canScrollPrev())
+            setCanGoToPrev(emblaApi.canGoToPrev())
         }
         updateState()
-        api.on("reInit", updateState)
-        api.on("select", updateState)
+        emblaApi.on("reinit", updateState)
+        emblaApi.on("select", updateState)
         return () => {
-            api.off("reInit", updateState)
-            api.off("select", updateState)
+            emblaApi.off("reinit", updateState)
+            emblaApi.off("select", updateState)
         }
-    }, [api])
+    }, [emblaApi])
 
     return (
         <TooltipTrigger
@@ -425,8 +479,8 @@ function CarouselPrevious({
                         orientation === "horizontal" ? "" : "rotate-90",
                         className
                     )}
-                    disabled={!canScrollPrev}
-                    onClick={scrollPrev}
+                    disabled={!canGoToPrev}
+                    onClick={goToPrev}
                     {...props}
                 >
                     <ArrowLeft />
@@ -443,23 +497,23 @@ function CarouselNext({
     size = "icon",
     ...props
 }: React.ComponentProps<typeof Button>) {
-    const { orientation, scrollNext, api } = useCarousel()
+    const { orientation, goToNext, emblaApi } = useCarousel()
 
-    const [canScrollNext, setCanScrollNext] = useState(false)
+    const [canGoToNext, setCanGoToNext] = useState(false)
 
     useEffect(() => {
-        if (!api) return
+        if (!emblaApi) return
         const updateState = () => {
-            setCanScrollNext(api.canScrollNext())
+            setCanGoToNext(emblaApi.canGoToNext())
         }
         updateState()
-        api.on("reInit", updateState)
-        api.on("select", updateState)
+        emblaApi.on("reinit", updateState)
+        emblaApi.on("select", updateState)
         return () => {
-            api.off("reInit", updateState)
-            api.off("select", updateState)
+            emblaApi.off("reinit", updateState)
+            emblaApi.off("select", updateState)
         }
-    }, [api])
+    }, [emblaApi])
 
     return (
         <TooltipTrigger
@@ -477,8 +531,8 @@ function CarouselNext({
                         orientation === "horizontal" ? "" : "rotate-90",
                         className
                     )}
-                    disabled={!canScrollNext}
-                    onClick={scrollNext}
+                    disabled={!canGoToNext}
+                    onClick={goToNext}
                     {...props}
                 >
                     <ArrowRight />
@@ -493,7 +547,7 @@ function CarouselScrollbar({
     className,
     ...props
 }: React.ComponentProps<typeof Slider>) {
-    const { api } = useCarousel()
+    const { emblaApi } = useCarousel()
     const [value, setValue] = useState(0)
 
     const [snapCount, setSnapCount] = useState(0)
@@ -502,13 +556,13 @@ function CarouselScrollbar({
 
     const onScrollBarChange = useCallback(
         (val: number | readonly number[]) => {
-            if (!api) return
+            if (!emblaApi) return
             isDragging.current = true
 
             const newProgress = val as number
             setValue(newProgress)
 
-            const engine = api.internalEngine()
+            const engine = emblaApi.internalEngine()
             engine.animation.stop()
 
             const targetPosition =
@@ -517,49 +571,49 @@ function CarouselScrollbar({
             engine.target.set(targetPosition)
             engine.translate.to(targetPosition)
 
-            api.emit("scroll")
+            emblaApi.createEvent("scroll", { isDragging: true }).emit()
         },
-        [api]
+        [emblaApi]
     )
 
     const onScrollBarRelease = useCallback(
         (val: number | readonly number[]) => {
-            if (!api) return
+            if (!emblaApi) return
             isDragging.current = false
 
             const finalValue = val as number
-            const count = api.scrollSnapList().length
+            const count = emblaApi.snapList().length
             const closestIndex = Math.round(finalValue * (count - 1))
 
-            api.scrollTo(closestIndex)
+            emblaApi.goTo(closestIndex)
         },
-        [api]
+        [emblaApi]
     )
 
     useEffect(() => {
-        if (!api) return
+        if (!emblaApi) return
         const updateScroll = () => {
             if (isDragging.current) return
-            setValue(Math.max(0, Math.min(1, api.scrollProgress())))
+            setValue(Math.max(0, Math.min(1, emblaApi.scrollProgress())))
         }
 
         const updateSnapCount = () => {
-            setSnapCount(api.scrollSnapList().length)
+            setSnapCount(emblaApi.snapList().length)
         }
 
         updateScroll()
         updateSnapCount()
 
-        api.on("scroll", updateScroll)
-        api.on("reInit", updateScroll)
-        api.on("reInit", updateSnapCount)
+        emblaApi.on("scroll", updateScroll)
+        emblaApi.on("reinit", updateScroll)
+        emblaApi.on("reinit", updateSnapCount)
 
         return () => {
-            api.off("scroll", updateScroll)
-            api.off("reInit", updateScroll)
-            api.off("reInit", updateSnapCount)
+            emblaApi.off("scroll", updateScroll)
+            emblaApi.off("reinit", updateScroll)
+            emblaApi.off("reinit", updateSnapCount)
         }
-    }, [api])
+    }, [emblaApi])
 
     return (
         <Slider
@@ -569,7 +623,7 @@ function CarouselScrollbar({
             step={0.001}
             value={value}
             snapCount={snapCount}
-            disabled={!api}
+            disabled={!emblaApi}
             onValueChange={onScrollBarChange}
             onValueCommitted={onScrollBarRelease}
             label="Slide scrollbar"
@@ -583,12 +637,11 @@ function CarouselImage({
     srcPattern,
     alt,
     className
-}: React.ComponentProps<"div"> &
-    CarouselProps & {
-        srcPattern: string
-        alt: string
-        className?: string
-    }) {
+}: React.ComponentProps<"div"> & {
+    srcPattern: string
+    alt: string
+    className?: string
+}) {
     const match = /\{(\d+)(?:-(\d+))?\}/.exec(srcPattern)
 
     let generatedImages = [srcPattern]
