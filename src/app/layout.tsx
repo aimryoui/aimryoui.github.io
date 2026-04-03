@@ -9,6 +9,7 @@ import { MarginLine } from "@/components/layout/line"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
+import { ProgressProvider } from "@/providers/progress-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
 import AppData from "~/package.json"
@@ -169,17 +170,19 @@ export default function RootLayout({
                 )}
             >
                 <ThemeProvider disableTransitionOnChange>
-                    <TooltipProvider>
-                        <div
-                            className={cn(
-                                "fixed inset-0 -z-50 size-full",
-                                "bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]"
-                            )}
-                        />
-                        <MarginLine />
-                        <MarginLine className="order-last" />
-                        {children}
-                    </TooltipProvider>
+                    <ProgressProvider>
+                        <TooltipProvider>
+                            <div
+                                className={cn(
+                                    "fixed inset-0 -z-50 size-full",
+                                    "bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]"
+                                )}
+                            />
+                            <MarginLine />
+                            <MarginLine className="order-last" />
+                            {children}
+                        </TooltipProvider>
+                    </ProgressProvider>
                 </ThemeProvider>
             </body>
         </html>

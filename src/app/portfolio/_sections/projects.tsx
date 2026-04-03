@@ -1,19 +1,165 @@
-import { Fragment } from "react"
+"use client"
 
+import { Fragment } from "react"
+import Link from "next/link"
+
+import { ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { groupProjectsByCategory } from "@/lib/project-sort"
+import { Bold, Text } from "@/components/ui/typography"
+import {
+    getCategoryPath,
+    getProjectPath,
+    groupProjectsByCategory
+} from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import { ExpandableWrapper } from "@/portfolio/_components/_layout/expandable-wrapper"
 import { MDXContent } from "@/portfolio/_components/mdx-content"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import SectionTitle from "@/portfolio/_components/section-title"
+import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
 
 function Projects() {
+    const mode = usePortfolioModeStore((state) => state.mode)
     const projectGroups = groupProjectsByCategory(projects)
+
+    if (mode === "pages") {
+        return (
+            <>
+                <Space />
+                <SectionLine showDecoration />
+
+                <Space />
+                <SectionLine />
+
+                {projectGroups.map((group, groupIndex) => (
+                    <Fragment key={group.id}>
+                        <section className={cn("bg-background")}>
+                            <Link
+                                href={getCategoryPath(group.id)}
+                                className={cn(
+                                    "group flex items-center justify-between gap-4 bg-background pe-6 will-change-[background-color] transition-[background-color] duration-100",
+                                    {
+                                        hover: "bg-element-hover transition-none"
+                                    }
+                                )}
+                            >
+                                <SectionTitle
+                                    id={group.id}
+                                    title={group.title}
+                                    noteId={
+                                        groupIndex === 0
+                                            ? "projects"
+                                            : undefined
+                                    }
+                                    note={
+                                        groupIndex === 0
+                                            ? "Projects"
+                                            : undefined
+                                    }
+                                    className={cn(
+                                        "group flex-1 bg-transparent"
+                                    )}
+                                />
+                                <ArrowRight
+                                    className={cn(
+                                        "will-change-[color] transition-[color] duration-100",
+                                        {
+                                            "group-hover":
+                                                "text-highlighted transition-none"
+                                        }
+                                    )}
+                                />
+                            </Link>
+                            <SectionLine />
+                            <div
+                                className={cn(
+                                    "grid grid-cols-2 bg-background md:grid-cols-1"
+                                )}
+                            >
+                                {group.projects.map((project, index) => (
+                                    <div
+                                        key={project.slug}
+                                        className={cn({
+                                            "[&:nth-child(odd)]":
+                                                "border-r border-dashed border-stroke",
+                                            md: "border-none"
+                                        })}
+                                    >
+                                        <Link
+                                            href={getProjectPath(project)}
+                                            className={cn(
+                                                "group flex h-20 items-center justify-between gap-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
+                                                {
+                                                    hover: "bg-element-hover transition-none"
+                                                }
+                                            )}
+                                        >
+                                            <div
+                                                className={cn(
+                                                    "flex flex-col gap-1"
+                                                )}
+                                            >
+                                                <Bold
+                                                    className={cn(
+                                                        "line-clamp-1 will-change-[color] transition-[color] duration-100",
+                                                        {
+                                                            "group-hover":
+                                                                "text-highlighted transition-none"
+                                                        }
+                                                    )}
+                                                >
+                                                    {project.projectName}
+                                                </Bold>
+                                                <Text
+                                                    className={cn(
+                                                        "line-clamp-1 text-sm will-change-[color] transition-[color] duration-100",
+                                                        {
+                                                            "group-hover":
+                                                                "text-foreground transition-none"
+                                                        }
+                                                    )}
+                                                >
+                                                    {project.category}
+                                                </Text>
+                                            </div>
+                                            <ArrowRight
+                                                className={cn(
+                                                    "will-change-[color] transition-[color] duration-100",
+                                                    {
+                                                        "group-hover":
+                                                            "text-highlighted transition-none"
+                                                    }
+                                                )}
+                                            />
+                                        </Link>
+                                        {index < group.projects.length - 1 && (
+                                            <SectionLine />
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                        {groupIndex < projectGroups.length - 1 ? (
+                            <>
+                                <SectionLine />
+                                <Divider />
+                                <SectionLine />
+                            </>
+                        ) : (
+                            <>
+                                <SectionLine />
+                                <Divider />
+                            </>
+                        )}
+                    </Fragment>
+                ))}
+            </>
+        )
+    }
 
     return projectGroups.map((group, index) => (
         <Fragment key={group.id}>

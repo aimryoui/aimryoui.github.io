@@ -1,16 +1,37 @@
-import Link from "next/link"
+"use client"
 
+import { useMemo, useState } from "react"
+import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+
+import { Bar, Progress } from "@bprogress/next"
 import { domAnimation, LazyMotion, MotionConfig } from "motion/react"
 
+import { Ellipsis } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
 import { Button } from "@/components/ui/button"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuLabel,
+    DropdownMenuRadioGroup,
+    DropdownMenuRadioItem,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
-import { slugify } from "@/helpers/slugify"
-import { Ellipsis } from "@/lib/icons"
-import { groupProjectsByCategory } from "@/lib/project-sort"
+import {
+    getCategoryPath,
+    getProjectPath,
+    getProjectRouteSlug,
+    groupProjectsByCategory
+} from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import {
     AboutIcon,
@@ -18,72 +39,162 @@ import {
     ContactIcon,
     EducationIcon,
     ExperienceIcon,
+    ProjectsIcon,
     SoftwareIcon
 } from "@/portfolio/_components/_icons/toc-icons"
 import { type TocItemProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
 import { TableOfContents } from "@/portfolio/_components/_layout/table-of-contents"
+import {
+    type PortfolioMode,
+    usePortfolioModeStore
+} from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
 
 function Sidebar() {
+    const router = useRouter()
+    const pathname = usePathname()
+    const mode = usePortfolioModeStore((state) => state.mode)
+    const setMode = usePortfolioModeStore((state) => state.setMode)
+
     const projectGroups = groupProjectsByCategory(projects)
-    const projectItems = projectGroups.flatMap((group) => {
-        const items: TocItemProps[] = [
-            {
-                id: group.id,
-                label: group.title,
-                depth: 2
+
+    const projectItems = useMemo<TocItemProps[]>(() => {
+        return projectGroups.flatMap((group) => {
+            const items: TocItemProps[] = [
+                {
+                    id: group.id,
+                    label: group.title,
+                    depth: 2,
+                    kind: "project",
+                    mode: mode === "pages" ? "route" : "anchor",
+                    href:
+                        mode === "pages"
+                            ? getCategoryPath(group.id)
+                            : `#${group.id}`
+                }
+            ]
+
+            for (const project of group.projects) {
+                items.push({
+                    id: getProjectRouteSlug(project),
+                    label: project.projectName,
+                    depth: 3,
+                    kind: "project",
+                    mode: mode === "pages" ? "route" : "anchor",
+                    href:
+                        mode === "pages"
+                            ? getProjectPath(project)
+                            : `#${getProjectRouteSlug(project)}`
+                })
             }
-        ]
 
-        for (const project of group.projects) {
-            items.push({
-                id: slugify(project.projectName),
-                label: project.projectName,
-                depth: 3
-            })
-        }
+            return items
+        })
+    }, [mode, projectGroups])
 
-        return items
-    })
+    const staticItemMode = mode === "pages" ? "route" : "anchor"
 
-    const tocItems = [
-        { id: "about", label: "About", depth: 3, icon: <AboutIcon /> },
+    const tocItems: TocItemProps[] = [
+        {
+            id: "about",
+            label: "About",
+            depth: 3,
+            kind: "static",
+            icon: <AboutIcon />,
+            mode: staticItemMode,
+            href: mode === "pages" ? "/portfolio#about" : "#about"
+        },
         {
             id: "experience",
             label: "Experience",
             depth: 3,
-            icon: <ExperienceIcon />
+            kind: "static",
+            icon: <ExperienceIcon />,
+            mode: staticItemMode,
+            href: mode === "pages" ? "/portfolio#experience" : "#experience"
         },
         {
             id: "education",
             label: "Education",
             depth: 3,
-            icon: <EducationIcon />
+            kind: "static",
+            icon: <EducationIcon />,
+            mode: staticItemMode,
+            href: mode === "pages" ? "/portfolio#education" : "#education"
         },
         {
             id: "software",
             label: "Software",
             depth: 3,
-            icon: <SoftwareIcon />
+            kind: "static",
+            icon: <SoftwareIcon />,
+            mode: staticItemMode,
+            href: mode === "pages" ? "/portfolio#software" : "#software"
         },
         {
             id: "contact",
             label: "Contact",
             depth: 3,
-            icon: <ContactIcon />
+            kind: "static",
+            icon: <ContactIcon />,
+            mode: staticItemMode,
+            href: mode === "pages" ? "/portfolio#contact" : "#contact"
         },
-        { id: "alert", label: "Alert", depth: 2, hidden: true }, // Hidden
-        { id: "outlines", label: "Outlines", depth: 2 },
+        {
+            id: "projects",
+            label: "Projects",
+            depth: 4,
+            kind: "static",
+            icon: <ProjectsIcon />,
+            mode: staticItemMode,
+            href: "/portfolio#projects",
+            hidden: mode === "spread"
+        },
+        { id: "alert", label: "Alert", depth: 2, kind: "static", hidden: true }, // Hidden
+        {
+            id: "outlines",
+            label: "Outlines",
+            depth: 2,
+            kind: "static",
+            hidden: mode === "pages"
+        },
         ...projectItems,
-        { id: "footer", label: "Footer", depth: 2, hidden: true }, // Hidden
+        {
+            id: "footer",
+            label: "Footer",
+            depth: 2,
+            kind: "static",
+            hidden: true
+        }, // Hidden
         {
             id: "adopt-me",
             label: "Adopt Me",
             depth: 4,
-            icon: <AdoptMeIcon />
+            kind: "static",
+            icon: <AdoptMeIcon />,
+            mode: staticItemMode,
+            href: "#adopt-me",
+            hidden: mode === "pages"
         }
     ]
+
+    // Navigate back to the `/portfolio` page if mode is set to "spread"
+    // and the current URL is not `/portfolio`
+    const handleModeChange = (nextMode: PortfolioMode) => {
+        setMode(nextMode)
+
+        if (nextMode === "spread") {
+            if (pathname !== "/portfolio") {
+                router.push("/portfolio")
+            }
+        }
+    }
+
+    const [sidebarPostion, setSidebarPostion] = useState<"left" | "right">(
+        "left"
+    )
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
     return (
         <aside
@@ -94,10 +205,22 @@ function Sidebar() {
             <LazyMotion features={domAnimation} strict>
                 {/* https://motion.dev/docs/react-accessibility */}
                 <MotionConfig reducedMotion="user">
-                    <TableOfContents items={tocItems} />
+                    <TableOfContents mode={mode} items={tocItems} />
                 </MotionConfig>
             </LazyMotion>
-            <SectionLine fit />
+            <div className="relative w-full">
+                <Progress
+                    className={cn(
+                        "absolute inset-x-0 -top-px z-20 h-0.75 w-full overflow-hidden"
+                    )}
+                >
+                    <Bar
+                        role="progressbar"
+                        className={cn("size-full bg-highlighted")}
+                    />
+                </Progress>
+                <SectionLine fit />
+            </div>
             <menu className={cn("flex w-full gap-2 bg-background px-6 py-5.5")}>
                 <li className="me-auto">
                     <Link href="/" className="group flex gap-2">
@@ -141,7 +264,7 @@ function Sidebar() {
                                 {siteConfig.username}
                             </Bold>
                             <p className="font-mono text-xs">
-                                {projects.length} PROJECTS
+                                {`${projects.length} PROJECTS`}
                             </p>
                         </div>
                     </Link>
@@ -150,18 +273,84 @@ function Sidebar() {
                     <ModeToggle />
                 </li>
                 <li>
-                    <TooltipTrigger
-                        delay={500}
-                        payload={{
-                            content: <span>More settings</span>
+                    <DropdownMenu
+                        onOpenChange={(open) => {
+                            setIsSettingsOpen(open)
                         }}
-                        render={
-                            <Button size="icon" variant="outline">
-                                <Ellipsis />
-                                <span className="sr-only">More settings</span>
-                            </Button>
-                        }
-                    />
+                    >
+                        <TooltipTrigger
+                            delay={500}
+                            disabled={isSettingsOpen}
+                            payload={{
+                                content: <span>Settings</span>
+                            }}
+                            render={
+                                <DropdownMenuTrigger
+                                    render={
+                                        <Button size="icon" variant="outline" />
+                                    }
+                                >
+                                    <Ellipsis />
+                                    <span className="sr-only">Settings</span>
+                                </DropdownMenuTrigger>
+                            }
+                        />
+                        <DropdownMenuContent>
+                            <DropdownMenuGroup>
+                                <DropdownMenuLabel>Settings</DropdownMenuLabel>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger>
+                                        View mode
+                                    </DropdownMenuSubTrigger>
+                                    <DropdownMenuSubContent>
+                                        <DropdownMenuRadioGroup
+                                            value={mode}
+                                            onValueChange={(value) => {
+                                                handleModeChange(
+                                                    value as PortfolioMode
+                                                )
+                                            }}
+                                        >
+                                            <DropdownMenuRadioItem
+                                                value="pages"
+                                                closeOnClick
+                                            >
+                                                Pages
+                                            </DropdownMenuRadioItem>
+                                            <DropdownMenuRadioItem
+                                                value="spread"
+                                                closeOnClick
+                                            >
+                                                Spread
+                                            </DropdownMenuRadioItem>
+                                        </DropdownMenuRadioGroup>
+                                    </DropdownMenuSubContent>
+                                </DropdownMenuSub>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger>
+                                        Sidebar position
+                                    </DropdownMenuSubTrigger>
+                                    <DropdownMenuSubContent>
+                                        <DropdownMenuRadioGroup
+                                            value={sidebarPostion}
+                                            onValueChange={(value) => {
+                                                setSidebarPostion(
+                                                    value as "left" | "right"
+                                                )
+                                            }}
+                                        >
+                                            <DropdownMenuRadioItem value="left">
+                                                Left
+                                            </DropdownMenuRadioItem>
+                                            <DropdownMenuRadioItem value="right">
+                                                Right
+                                            </DropdownMenuRadioItem>
+                                        </DropdownMenuRadioGroup>
+                                    </DropdownMenuSubContent>
+                                </DropdownMenuSub>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </li>
             </menu>
         </aside>

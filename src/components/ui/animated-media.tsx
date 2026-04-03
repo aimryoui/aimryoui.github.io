@@ -13,6 +13,9 @@ import { type VideoManifest } from "@/scripts/process-videos"
 
 let sharedStyleSheet: CSSStyleSheet | null = null
 
+// Keep a stable reference for closed shadow roots so effects can safely re-run.
+const shadowRootRegistry = new WeakMap<HTMLElement, ShadowRoot>()
+
 function getSharedStyleSheet() {
     if (typeof window === "undefined" || !("CSSStyleSheet" in window)) {
         return null
@@ -78,16 +81,34 @@ export function AnimatedMedia({
     // #shadow-root (closed) with #adopted-style-sheets
     useIsomorphicLayoutEffect(() => {
         const hostEl = hostRef.current
-        if (!hostEl || hostEl.shadowRoot) return
+        if (!hostEl) return
 
-        const root = hostEl.attachShadow({ mode: "closed" })
-
-        const sheet = getSharedStyleSheet()
-        if (sheet) {
-            root.adoptedStyleSheets = [sheet]
+        const existingRoot = shadowRootRegistry.get(hostEl)
+        if (existingRoot) {
+            setShadowRoot(existingRoot)
+            return
         }
 
-        setShadowRoot(root)
+        try {
+            const root = hostEl.attachShadow({ mode: "closed" })
+
+            const sheet = getSharedStyleSheet()
+            if (sheet) {
+                root.adoptedStyleSheets = [sheet]
+            }
+
+            shadowRootRegistry.set(hostEl, root)
+            setShadowRoot(root)
+        } catch (error: unknown) {
+            if (
+                error instanceof DOMException &&
+                error.name === "NotSupportedError"
+            ) {
+                return
+            }
+
+            throw error
+        }
     }, [])
 
     // Lazy load

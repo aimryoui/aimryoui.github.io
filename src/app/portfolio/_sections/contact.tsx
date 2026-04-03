@@ -350,4 +350,5 @@ function Contact() {
     )
 }
 
+export { sections }
 export default Contact

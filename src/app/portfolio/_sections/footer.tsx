@@ -1,4 +1,7 @@
+"use client"
+
 import { Fragment } from "react"
+import NextLink from "next/link"
 
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
@@ -6,8 +9,55 @@ import { SectionName } from "@/components/layout/media-frame"
 import { Space } from "@/components/layout/space"
 import { Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
+import { sections } from "@/portfolio/_sections/contact"
+import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 function Footer() {
+    const mode = usePortfolioModeStore((state) => state.mode)
+
+    if (mode === "pages") {
+        return (
+            <footer className={cn("relative")}>
+                <SectionLine />
+                <Divider
+                    className={cn(
+                        "grid h-12 place-items-center bg-background text-sm"
+                    )}
+                >
+                    <p>
+                        {`© ${new Date().getFullYear()} hoangnhan2ka3. NO AI training allowed. All Rights Reserved.`}
+                    </p>
+                </Divider>
+                <SectionLine />
+                <Space className={cn("flex items-center")}>
+                    {sections
+                        .flatMap((section) => section.platforms)
+                        .map((platform, index, arr) => (
+                            <Fragment key={platform.title}>
+                                <NextLink
+                                    href={platform.links.url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className={cn(
+                                        "grid h-full flex-1 place-items-center bg-background px-6 py-4 opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
+                                        {
+                                            hover: "bg-element-hover text-highlighted opacity-100 transition-none"
+                                        }
+                                    )}
+                                >
+                                    {platform.icon}
+                                    <span className="sr-only">
+                                        {platform.title}
+                                    </span>
+                                </NextLink>
+                                {index < arr.length - 1 && <ElementLine />}
+                            </Fragment>
+                        ))}
+                </Space>
+            </footer>
+        )
+    }
+
     return (
         <footer>
             <Space className={cn("grid place-items-center")}>

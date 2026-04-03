@@ -57,18 +57,12 @@
             oklch(0.21 0.034 264.665),
             oklch(0.985 0.002 247.839)
         );
-        --muted: light-dark(
-            oklch(0.967 0.003 264.542),
-            oklch(0.278 0.033 256.848)
-        );
+        --muted: var(--stroke); /* NHN */
         --muted-foreground: light-dark(
-            oklch(0.6091 0.0162 264.4),
-            oklch(0.6395 0.0174 266.2)
+            oklch(0.5655 0.01472 266.647),
+            oklch(0.6726 0.01727 266.252)
         ); /* NHN */
-        --accent: light-dark(
-            oklch(0.967 0.003 264.542),
-            oklch(0.278 0.033 256.848)
-        );
+        --accent: var(--stroke); /* NHN */
         --accent-foreground: light-dark(
             oklch(0.21 0.034 264.665),
             oklch(0.985 0.002 247.839)

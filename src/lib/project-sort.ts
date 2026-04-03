@@ -1,3 +1,4 @@
+import { slugify } from "@/helpers/slugify"
 import { PROJECT_CATEGORIES } from "@/portfolio/_configs/project-categories"
 
 import { type Project } from "~/.velite"
@@ -42,7 +43,6 @@ const getDurationDates = (duration: string) => {
  * 3. If both are the same, alphabetical order by project name.
  *
  * @param {Project[]} projects Projects to be sorted
- *
  * @returns {Project[]} Sorted Projects
  */
 function sortProjects(projects: Project[]): Project[] {
@@ -98,5 +98,27 @@ function groupProjectsByCategory(allProjects: Project[]): ProjectGroup[] {
         })
 }
 
+function getProjectRouteSlug(project: Project): string {
+    return slugify(project.projectName)
+}
+
+function getProjectPath(project: Project): string {
+    const parts = project.slug.split("/")
+    const category = parts.length > 1 ? parts[1] : null
+
+    if (!category) return "/portfolio"
+
+    return `/portfolio/${category}/${getProjectRouteSlug(project)}`
+}
+
+function getCategoryPath(category: string): string {
+    return `/portfolio/${category}`
+}
+
 export type { ProjectGroup }
-export { groupProjectsByCategory }
+export {
+    getCategoryPath,
+    getProjectPath,
+    getProjectRouteSlug,
+    groupProjectsByCategory
+}

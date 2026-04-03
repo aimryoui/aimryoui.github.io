@@ -21,7 +21,7 @@ export function SectionName({
     return (
         <ContainerComp
             className={cn(
-                as === "h4" && "sticky top-3.5 z-30",
+                as === "h4" && "pointer-events-none sticky top-3.5 z-30",
                 "grid h-13 place-items-center",
                 containerClassName
             )}
@@ -30,7 +30,7 @@ export function SectionName({
             <Comp
                 aria-hidden={as === "h4" ? undefined : "true"}
                 className={cn(
-                    "rounded-full bg-background px-3.5 py-1.5 font-mono",
+                    "pointer-events-auto rounded-full bg-background px-3.5 py-1.5 font-mono",
                     !lowercase && "uppercase",
                     className
                 )}

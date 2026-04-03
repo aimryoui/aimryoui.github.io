@@ -62,16 +62,18 @@ function SectionLine({
 }
 
 function ElementLine({
+    className,
     dir = "vertical"
-}: {
+}: React.ComponentProps<"hr"> & {
     dir?: "vertical" | "horizontal"
 }) {
     return (
         <hr
             className={cn(
                 dir === "vertical"
-                    ? "border-r border-dashed border-stroke"
-                    : "w-full border-b border-dashed border-stroke"
+                    ? "h-full border-r border-dashed border-stroke"
+                    : "w-full border-b border-dashed border-stroke",
+                className
             )}
         />
     )

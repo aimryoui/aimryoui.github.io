@@ -18,6 +18,8 @@ import overflowAnchor from "./src/lib/tailwindcss-plugins/utilities/overflow-anc
 import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
+import all from "./src/lib/tailwindcss-plugins/variants/all"
+import not from "./src/lib/tailwindcss-plugins/variants/not"
 import slotted from "./src/lib/tailwindcss-plugins/variants/slotted"
 
 export const BASE_FONT_SIZE = 16
@@ -119,6 +121,9 @@ export default {
                 3: ".1875rem",
                 6: ".375rem"
             },
+            ringWidth: {
+                DEFAULT: "var(--px)"
+            },
             aspectRatio: {
                 "3/2": "3/2",
                 3: "3"
@@ -129,9 +134,16 @@ export default {
                 infinite: "2147483647"
             },
             data: {
+                open: "open",
+                closed: "closed",
+                "popup-open": "popup-open",
+                "popup-closed": "popup-closed",
+                current: "current",
+                previous: "previous",
                 instant: "instant",
                 "starting-style": "starting-style",
                 "ending-style": "ending-style",
+                inset: "inset",
                 disabled: "disabled",
                 horizontal: "orientation=horizontal",
                 vertical: "orientation=vertical"
@@ -141,7 +153,8 @@ export default {
             },
             animation: {
                 spinner: "spinner",
-                focus: ".2s ease-out focus forwards"
+                focus: ".2s ease-out focus forwards",
+                inert: "inert forwards"
             },
             keyframes: ({ theme }) => ({
                 spinner: {
@@ -160,6 +173,14 @@ export default {
                     "100%": {
                         outlineWidth: theme("outlineWidth.4") as string,
                         outlineColor: theme("colors.highlighted/0.3") as string
+                    }
+                },
+                inert: {
+                    "0%": {
+                        pointerEvent: "none"
+                    },
+                    "100%": {
+                        pointerEvent: "auto"
                     }
                 }
             })
@@ -237,9 +258,12 @@ export default {
         outline,
         overflowAnchor,
         scrollbar,
-        slotted,
         transition,
         transitionBehavior,
+
+        all,
+        not,
+        slotted,
 
         plugin(({ addBase, addVariant }) => {
             addBase({

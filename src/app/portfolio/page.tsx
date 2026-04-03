@@ -6,6 +6,7 @@ import { Space } from "@/components/layout/space"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
+import FlashOverlay from "@/portfolio/_components/flash-overlay"
 import { AnchorPolyfill } from "@/portfolio/_providers/anchor-polyfill"
 import Contact from "@/portfolio/_sections/contact"
 import Education from "@/portfolio/_sections/education"
@@ -21,7 +22,8 @@ export default function Portfolio() {
         <>
             <AnchorPolyfill />
             <NoAIOverlay />
-            <main className={cn("flex-1")}>
+            <main className={cn("relative flex-1")}>
+                <FlashOverlay />
                 <Space />
                 <SectionLine showDecoration />
                 <Space />
@@ -243,27 +245,16 @@ export default function Portfolio() {
                 <SectionLine />
 
                 <Contact />
-
                 <SectionLine />
                 <Divider />
 
                 <NoAIPlaceholder />
-
                 <Divider />
-
                 <SectionLine />
-                <Space />
-                <SectionLine showDecoration />
 
                 <Outlines />
 
-                <SectionLine />
-
-                {/* <Suspense
-                    fallback={<div className="h-dvh w-full bg-background" />}
-                > */}
                 <Projects />
-                {/* </Suspense> */}
 
                 <SectionLine />
 

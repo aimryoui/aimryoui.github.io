@@ -16,6 +16,7 @@ import useEmblaCarousel, {
 } from "embla-carousel-react"
 import WheelGesturesPlugin from "embla-carousel-wheel-gestures"
 
+import { ArrowLeft, ArrowRight, Refresh } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
 import { Image } from "@/components/ui/image"
 import { Slider } from "@/components/ui/slider"
@@ -376,16 +377,7 @@ function CarouselReplay({
                     onClick={scrollStart}
                     {...props}
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        className="size-5"
-                    >
-                        <path
-                            fill="currentColor"
-                            d="M20.357 12.006A8.35 8.35 0 0 1 12 20.363a8.36 8.36 0 0 1-8.357-8.357c0-.64.436-1.077 1.059-1.077.594 0 1.002.437 1.002 1.068a6.295 6.295 0 1 0 12.591 0A6.29 6.29 0 0 0 12 5.701c-.501 0-.975.037-1.365.121l2.303 2.284a.9.9 0 0 1 .288.678.99.99 0 0 1-1.003 1.012 1 1 0 0 1-.706-.278L7.71 5.683c-.214-.223-.325-.474-.325-.762 0-.278.12-.538.325-.752L11.517.306A.9.9 0 0 1 12.223 0c.566 0 1.003.464 1.003 1.03 0 .28-.102.511-.279.697l-2.08 2.024A6 6 0 0 1 12 3.64a8.354 8.354 0 0 1 8.357 8.366"
-                        />
-                    </svg>
+                    <Refresh className="size-5" />
                     <span className="sr-only">Scroll to start</span>
                 </Button>
             }
@@ -437,16 +429,7 @@ function CarouselPrevious({
                     onClick={scrollPrev}
                     {...props}
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        className="size-4"
-                    >
-                        <path
-                            fill="currentColor"
-                            d="M23 11.997c0 .741-.521 1.263-1.286 1.263H7.325l-2.502-.093 3.418 3.058 2.595 2.63c.22.22.37.545.37.892 0 .695-.532 1.217-1.24 1.217-.335 0-.636-.128-.914-.394l-7.646-7.635A1.34 1.34 0 0 1 1 11.997c0-.348.15-.684.405-.939l7.648-7.633c.278-.266.579-.394.915-.394.707 0 1.24.51 1.24 1.205 0 .36-.151.672-.371.904L8.242 7.77l-3.406 3.058 2.49-.093h14.389c.764 0 1.285.51 1.285 1.263"
-                        />
-                    </svg>
+                    <ArrowLeft />
                     <span className="sr-only">Previous slide</span>
                 </Button>
             }
@@ -498,16 +481,7 @@ function CarouselNext({
                     onClick={scrollNext}
                     {...props}
                 >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        className="size-4"
-                    >
-                        <path
-                            fill="currentColor"
-                            d="M1 11.995c0-.741.521-1.263 1.286-1.263h14.389l2.502.093-3.418-3.058-2.595-2.63a1.28 1.28 0 0 1-.37-.892c0-.695.532-1.217 1.24-1.217.335 0 .636.128.914.394l7.646 7.635c.255.255.406.59.406.938s-.15.684-.405.939l-7.648 7.633c-.278.266-.579.394-.915.394-.707 0-1.24-.51-1.24-1.205 0-.36.151-.672.371-.904l2.595-2.63 3.406-3.058-2.49.093H2.285c-.764 0-1.285-.51-1.285-1.263"
-                        />
-                    </svg>
+                    <ArrowRight />
                     <span className="sr-only">Next slide</span>
                 </Button>
             }

@@ -1,6 +1,7 @@
 "use client"
 
-import { Fragment, useCallback, useEffect, useRef } from "react"
+import { Fragment, useCallback, useEffect, useRef, useState } from "react"
+import { usePathname } from "next/navigation"
 
 import { stagger } from "motion/react"
 import * as m from "motion/react-m"
@@ -12,8 +13,10 @@ import {
     type TocItemProps,
     TocItemRow
 } from "@/portfolio/_components/_layout/_toc/toc-item-row"
+import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocListProps {
+    mode: PortfolioMode
     items: TocItemProps[]
     filteredItems: TocItemProps[]
     hasPageMounted: boolean
@@ -34,26 +37,66 @@ const ulVariants = {
     }
 }
 
+const _DELAY = 400
+
 function TocList({
+    mode,
     items,
     filteredItems,
     hasPageMounted,
     setHasPageMounted
 }: TocListProps) {
+    const pathname = usePathname()
     const scrollContainerRef = useRef<HTMLUListElement>(null)
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
 
     const allIds = items.map((item) => item.id)
-    const activeId = useScrollSpy(allIds)
+    const rawActiveId = useScrollSpy(allIds)
+    const [activeId, setActiveId] = useState(rawActiveId)
+    const lastUpdateTimestamp = useRef(0)
 
-    const handleItemClick = useCallback((targetId: string) => {
+    // Make sure the scrollIntoView animation is finished
+    // before setting the other activeIds
+    useEffect(() => {
+        if (activeId === rawActiveId) return
+
+        let delay = 0
+
+        if (pathname === "/portfolio" && activeId) {
+            const elapsed = Date.now() - lastUpdateTimestamp.current
+            if (elapsed < _DELAY) {
+                delay = _DELAY - elapsed
+            }
+        }
+
+        const timer = setTimeout(() => {
+            lastUpdateTimestamp.current = Date.now()
+            setActiveId(rawActiveId)
+        }, delay)
+
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [rawActiveId, activeId, pathname])
+
+    console.log(activeId)
+
+    const handleItemClick = useCallback((item: TocItemProps) => {
+        const targetId = item.id
+
+        if (item.mode === "route") return
+
         clickedTargetRef.current = targetId
         const el = document.getElementById(targetId)
         if (el) {
             el.scrollIntoView({ behavior: "smooth", block: "start" })
         }
         window.history.pushState(null, "", `#${targetId}`)
+    }, [])
+
+    const handleSameLinkClick = useCallback(() => {
+        window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
     }, [])
 
     useEffect(() => {
@@ -107,9 +150,11 @@ function TocList({
                         )}
 
                         <TocItemRow
+                            mode={mode}
                             item={item}
                             isActive={activeId === item.id}
                             onClick={handleItemClick}
+                            onSameLinkClick={handleSameLinkClick}
                         />
                     </Fragment>
                 )

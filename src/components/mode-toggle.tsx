@@ -4,11 +4,11 @@ import { useSyncExternalStore } from "react"
 
 import { useTheme } from "next-themes"
 
+import { Moon, Sun, System } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
-import { Moon, Sun, System } from "@/lib/icons"
 import { cn } from "@/lib/utils"
 
 function ThemedIcon() {
@@ -16,12 +16,12 @@ function ThemedIcon() {
 
     switch (theme) {
         case "light":
-            return <Sun />
+            return <Sun className="size-6" />
         case "dark":
-            return <Moon />
+            return <Moon className="size-6" />
         case "system":
         case undefined:
-            return <System />
+            return <System className="size-6" />
     }
 }
 

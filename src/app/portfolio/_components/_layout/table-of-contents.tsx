@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { type TocItemProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
 import { TocList } from "@/portfolio/_components/_layout/_toc/toc-list"
 import { TocSearch } from "@/portfolio/_components/_layout/_toc/toc-search"
+import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocProps {
     items: TocItemProps[]
@@ -72,7 +73,10 @@ function getFilteredItems(items: TocItemProps[], query: string) {
     return result
 }
 
-export function TableOfContents({ items }: TocProps) {
+export function TableOfContents({
+    mode,
+    items
+}: TocProps & { mode: PortfolioMode }) {
     const [query, setQuery] = useState("")
     const [debouncedQuery, setDebouncedQuery] = useState("")
     const [hasPageMounted, setHasPageMounted] = useState(false)
@@ -126,6 +130,7 @@ export function TableOfContents({ items }: TocProps) {
                     </Text>
                 ) : (
                     <TocList
+                        mode={mode}
                         items={items}
                         filteredItems={filteredItems}
                         hasPageMounted={hasPageMounted}

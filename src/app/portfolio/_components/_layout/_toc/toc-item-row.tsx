@@ -2,18 +2,24 @@
 
 import { memo } from "react"
 import Link from "next/link"
+import { usePathname, useSearchParams } from "next/navigation"
 
 import { ChevronDown } from "lucide-react"
 import { type Variants } from "motion/react"
 import * as m from "motion/react-m"
 
+import { ArrowRight, ArrowUp } from "@/components/icons/icons"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { cn } from "@/lib/utils"
+import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocItemProps {
     id: string
     label: string
     depth: number
+    href?: string
+    mode?: "anchor" | "route"
+    kind?: "static" | "project"
     icon?: React.ReactNode
     hidden?: boolean
 }
@@ -29,19 +35,27 @@ const liVariants: Variants = {
 
 const TocItemRow = memo(
     ({
+        mode,
         item,
         isActive,
-        onClick
+        onClick,
+        onSameLinkClick
     }: {
+        mode: PortfolioMode
         item: TocItemProps
         isActive: boolean
-        onClick: (id: string) => void
+        onClick: (item: TocItemProps) => void
+        onSameLinkClick: () => void
     }) => {
+        const href = item.href ?? `#${item.id}`
+        const pathname = usePathname()
+        const searchParams = useSearchParams()
+        const currentSearch = searchParams.toString()
+
         return (
             <m.li
                 variants={liVariants}
                 className={cn(
-                    item.label.toLowerCase() === "footer" && "hidden",
                     item.depth === 3 &&
                         !item.icon &&
                         "border-s-[.0625rem] border-muted-foreground/20",
@@ -54,11 +68,40 @@ const TocItemRow = memo(
                 )}
             >
                 <Link
-                    href={`#${item.id}`}
+                    href={href}
                     data-toc-id={item.id}
                     onClick={(e) => {
+                        const isSameUrl = (() => {
+                            try {
+                                const targetUrl = new URL(
+                                    href,
+                                    window.location.href
+                                )
+                                const targetSearch =
+                                    targetUrl.search.startsWith("?")
+                                        ? targetUrl.search.slice(1)
+                                        : targetUrl.search
+
+                                return (
+                                    pathname === targetUrl.pathname &&
+                                    currentSearch === targetSearch &&
+                                    window.location.hash === targetUrl.hash
+                                )
+                            } catch {
+                                return false
+                            }
+                        })()
+
+                        if (isSameUrl) {
+                            e.preventDefault()
+                            onSameLinkClick()
+                            return
+                        }
+
+                        if (item.mode === "route") return
+
                         e.preventDefault()
-                        onClick(item.id)
+                        onClick(item)
                     }}
                     className={cn(
                         isActive
@@ -102,16 +145,11 @@ const TocItemRow = memo(
                                 "group-hover:grid group-focus-visible/link:hidden dark:bg-highlighted/20"
                             )}
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                className={cn("size-3")}
-                            >
-                                <path
-                                    fill="currentColor"
-                                    d="M11.998 23c-.741 0-1.263-.521-1.263-1.286V7.325l.093-2.502L7.77 8.241l-2.63 2.595c-.22.22-.545.37-.892.37-.695 0-1.217-.532-1.217-1.24 0-.335.128-.636.394-.914l7.635-7.647c.255-.254.59-.405.938-.405s.684.15.939.405l7.634 7.647c.266.278.394.579.394.915 0 .707-.51 1.24-1.205 1.24-.36 0-.672-.151-.904-.371l-2.63-2.595-3.058-3.406.093 2.49v14.39c0 .764-.51 1.285-1.263 1.285Z"
-                                />
-                            </svg>
+                            {mode === "pages" ? (
+                                <ArrowRight className={cn("size-3")} />
+                            ) : (
+                                <ArrowUp className={cn("size-3")} />
+                            )}
                         </div>
                     )}
                 </Link>
@@ -131,5 +169,5 @@ const TocItemRow = memo(
 )
 TocItemRow.displayName = "TocItemRow"
 
-export { TocItemRow }
 export type { TocItemProps }
+export { TocItemRow }

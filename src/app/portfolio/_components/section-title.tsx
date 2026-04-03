@@ -2,28 +2,44 @@ import { H2, Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
 function SectionTitle({
+    className,
     id,
+    noteId,
     order,
     title,
     note
-}: {
+}: React.ComponentProps<"div"> & {
     id: string
+    noteId?: string
     order?: number
     title: string
     note?: string
 }) {
     return (
-        <div className={cn("relative bg-background px-6 pb-5 pt-3.5")}>
+        <div
+            className={cn("relative bg-background px-6 pb-5 pt-3.5", className)}
+        >
             {note && (
                 <span
+                    id={noteId}
                     className={cn(
-                        "absolute -top-10 left-6 font-mono uppercase tracking-normal"
+                        "absolute -top-10 left-6 font-mono uppercase tracking-normal",
+                        noteId &&
+                            "scroll-mt-[calc(var(--spacing)*20*2+var(--px)-2.59375rem)]"
                     )}
                 >
                     {note}
                 </span>
             )}
-            <H2 id={id}>
+            <H2
+                id={id}
+                className={cn(
+                    "text-foreground will-change-[color] transition-[color] duration-100",
+                    {
+                        "group-hover": "text-highlighted transition-none"
+                    }
+                )}
+            >
                 {order && (
                     <Highlight>{String(order).padStart(2, "0")}.</Highlight>
                 )}{" "}
