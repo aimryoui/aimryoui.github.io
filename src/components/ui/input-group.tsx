@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/a11y/useSemanticElements: shadcn/ui */
+/** Biome-ignore-all lint/a11y/useSemanticElements: shadcn/ui */
 "use client"
 
 import { cva, type VariantProps } from "class-variance-authority"
@@ -21,7 +21,7 @@ function InputGroup({
             data-slot="input-group"
             role="group"
             className={cn(
-                "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-xl border border-input will-change-[outline,border] has-[>textarea]:h-auto",
+                "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-lg border border-input will-change-[outline,border] has-[>textarea]:h-auto",
                 {
                     hover: "bg-element-hover",
                     dark: "bg-input/30",

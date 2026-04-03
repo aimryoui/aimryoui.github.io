@@ -1,8 +1,12 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import NextLink from "next/link"
 
+import { ArrowLeft } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
+import { Button } from "@/components/ui/button"
+import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import { type TocItemProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
@@ -11,6 +15,8 @@ import { TocSearch } from "@/portfolio/_components/_layout/_toc/toc-search"
 import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocProps {
+    mode: PortfolioMode
+    pathname: string
     items: TocItemProps[]
 }
 
@@ -73,10 +79,31 @@ function getFilteredItems(items: TocItemProps[], query: string) {
     return result
 }
 
-export function TableOfContents({
-    mode,
-    items
-}: TocProps & { mode: PortfolioMode }) {
+function BackToPortfolio() {
+    return (
+        <TooltipTrigger
+            delay={500}
+            payload={{
+                content: (
+                    <span className="flex items-center gap-1">
+                        Back to Portfolio
+                    </span>
+                ),
+                side: "bottom"
+            }}
+            render={
+                <Button size="icon" variant="outline" asChild>
+                    <NextLink href="/portfolio#projects">
+                        <ArrowLeft className="size-4" />
+                        <span className="sr-only">Back to Portfolio</span>
+                    </NextLink>
+                </Button>
+            }
+        />
+    )
+}
+
+export function TableOfContents({ mode, pathname, items }: TocProps) {
     const [query, setQuery] = useState("")
     const [debouncedQuery, setDebouncedQuery] = useState("")
     const [hasPageMounted, setHasPageMounted] = useState(false)
@@ -106,8 +133,12 @@ export function TableOfContents({
 
     return (
         <>
-            <header className={cn("px-6 py-5.5")}>
+            <header className={cn("flex gap-2 px-6 py-5.5")}>
+                {mode === "pages" && pathname !== "/portfolio" && (
+                    <BackToPortfolio />
+                )}
                 <TocSearch
+                    pathname={pathname}
                     ref={inputRef}
                     value={query}
                     onChange={setQuery}
@@ -131,6 +162,7 @@ export function TableOfContents({
                 ) : (
                     <TocList
                         mode={mode}
+                        pathname={pathname}
                         items={items}
                         filteredItems={filteredItems}
                         hasPageMounted={hasPageMounted}

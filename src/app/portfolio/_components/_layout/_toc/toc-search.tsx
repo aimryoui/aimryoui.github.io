@@ -19,12 +19,14 @@ interface TocSearchProps extends Omit<
     React.ComponentProps<"input">,
     "value" | "onChange"
 > {
+    pathname: string
     value: string
     onChange: (value: string) => void
     onClear: () => void
 }
 
 function TocSearch({
+    pathname,
     value,
     onChange,
     onClear,
@@ -55,7 +57,11 @@ function TocSearch({
                 id="toc-search"
                 type="search"
                 role="searchbox"
-                placeholder="Search for sections..."
+                placeholder={
+                    pathname === "/portfolio"
+                        ? "Search for sections..."
+                        : "Search for..."
+                }
                 autoComplete="off"
                 value={value}
                 onChange={(e) => {

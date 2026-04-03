@@ -1,7 +1,13 @@
 "use client"
 
-import { Fragment, useCallback, useEffect, useRef, useState } from "react"
-import { usePathname } from "next/navigation"
+import {
+    Fragment,
+    Suspense,
+    useCallback,
+    useEffect,
+    useRef,
+    useState
+} from "react"
 
 import { stagger } from "motion/react"
 import * as m from "motion/react-m"
@@ -17,6 +23,7 @@ import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocListProps {
     mode: PortfolioMode
+    pathname: string
     items: TocItemProps[]
     filteredItems: TocItemProps[]
     hasPageMounted: boolean
@@ -41,12 +48,12 @@ const _DELAY = 400
 
 function TocList({
     mode,
+    pathname,
     items,
     filteredItems,
     hasPageMounted,
     setHasPageMounted
 }: TocListProps) {
-    const pathname = usePathname()
     const scrollContainerRef = useRef<HTMLUListElement>(null)
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
@@ -79,8 +86,6 @@ function TocList({
             clearTimeout(timer)
         }
     }, [rawActiveId, activeId, pathname])
-
-    console.log(activeId)
 
     const handleItemClick = useCallback((item: TocItemProps) => {
         const targetId = item.id
@@ -128,38 +133,40 @@ function TocList({
     }, [activeId])
 
     return (
-        <m.ul
-            variants={ulVariants}
-            initial={hasPageMounted ? false : "hidden"}
-            animate={"visible"}
-            onAnimationComplete={() => {
-                if (!hasPageMounted) setHasPageMounted(true)
-            }}
-            ref={scrollContainerRef}
-            className={cn(
-                "group overflow-y-scroll overscroll-contain scroll-auto py-3.25 text-sm will-change-[opacity] scrollbar-thin"
-            )}
-        >
-            {filteredItems.map((item) => {
-                if (item.hidden) return null
+        <Suspense fallback={null}>
+            <m.ul
+                variants={ulVariants}
+                initial={hasPageMounted ? false : "hidden"}
+                animate={"visible"}
+                onAnimationComplete={() => {
+                    if (!hasPageMounted) setHasPageMounted(true)
+                }}
+                ref={scrollContainerRef}
+                className={cn(
+                    "group overflow-y-scroll overscroll-contain scroll-auto py-3.25 text-sm will-change-[opacity] scrollbar-thin"
+                )}
+            >
+                {filteredItems.map((item) => {
+                    if (item.hidden) return null
 
-                return (
-                    <Fragment key={item.id}>
-                        {(item.depth === 2 || item.depth === 4) && (
-                            <TocDivider />
-                        )}
+                    return (
+                        <Fragment key={item.id}>
+                            {(item.depth === 2 || item.depth === 4) && (
+                                <TocDivider />
+                            )}
 
-                        <TocItemRow
-                            mode={mode}
-                            item={item}
-                            isActive={activeId === item.id}
-                            onClick={handleItemClick}
-                            onSameLinkClick={handleSameLinkClick}
-                        />
-                    </Fragment>
-                )
-            })}
-        </m.ul>
+                            <TocItemRow
+                                mode={mode}
+                                item={item}
+                                isActive={activeId === item.id}
+                                onClick={handleItemClick}
+                                onSameLinkClick={handleSameLinkClick}
+                            />
+                        </Fragment>
+                    )
+                })}
+            </m.ul>
+        </Suspense>
     )
 }
 

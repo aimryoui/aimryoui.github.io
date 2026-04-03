@@ -199,13 +199,17 @@ function Sidebar() {
     return (
         <aside
             className={cn(
-                "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-78 flex-col justify-end bg-background lg:hidden"
+                "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-sidebar flex-col justify-end bg-background lg:hidden"
             )}
         >
             <LazyMotion features={domAnimation} strict>
                 {/* https://motion.dev/docs/react-accessibility */}
                 <MotionConfig reducedMotion="user">
-                    <TableOfContents mode={mode} items={tocItems} />
+                    <TableOfContents
+                        mode={mode}
+                        pathname={pathname}
+                        items={tocItems}
+                    />
                 </MotionConfig>
             </LazyMotion>
             <div className="relative w-full">
@@ -290,7 +294,7 @@ function Sidebar() {
                                         <Button size="icon" variant="outline" />
                                     }
                                 >
-                                    <Ellipsis />
+                                    <Ellipsis className="size-6" />
                                     <span className="sr-only">Settings</span>
                                 </DropdownMenuTrigger>
                             }
