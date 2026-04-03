@@ -1,6 +1,7 @@
 "use client"
 
 import { memo } from "react"
+import { usePathname } from "next/navigation"
 
 import { Search, XCircle } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
@@ -19,14 +20,12 @@ interface TocSearchProps extends Omit<
     React.ComponentProps<"input">,
     "value" | "onChange"
 > {
-    pathname: string
     value: string
     onChange: (value: string) => void
     onClear: () => void
 }
 
 function TocSearch({
-    pathname,
     value,
     onChange,
     onClear,
@@ -34,6 +33,7 @@ function TocSearch({
     ref,
     ...props
 }: TocSearchProps) {
+    const pathname = usePathname()
     const platform = usePlatform()
 
     useHotkeys([

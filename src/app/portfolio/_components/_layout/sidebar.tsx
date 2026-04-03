@@ -151,7 +151,13 @@ function Sidebar() {
             href: "/portfolio#projects",
             hidden: mode === "spread"
         },
-        { id: "alert", label: "Alert", depth: 2, kind: "static", hidden: true }, // Hidden
+        {
+            id: "alert",
+            label: "Alert",
+            depth: 2,
+            kind: "static",
+            hidden: true
+        }, // Hidden
         {
             id: "outlines",
             label: "Outlines",
@@ -205,11 +211,7 @@ function Sidebar() {
             <LazyMotion features={domAnimation} strict>
                 {/* https://motion.dev/docs/react-accessibility */}
                 <MotionConfig reducedMotion="user">
-                    <TableOfContents
-                        mode={mode}
-                        pathname={pathname}
-                        items={tocItems}
-                    />
+                    <TableOfContents mode={mode} items={tocItems} />
                 </MotionConfig>
             </LazyMotion>
             <div className="relative w-full">

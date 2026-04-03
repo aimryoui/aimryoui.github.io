@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import NextLink from "next/link"
+import { usePathname } from "next/navigation"
 
 import { ArrowLeft } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
@@ -16,7 +17,6 @@ import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocProps {
     mode: PortfolioMode
-    pathname: string
     items: TocItemProps[]
 }
 
@@ -79,31 +79,35 @@ function getFilteredItems(items: TocItemProps[], query: string) {
     return result
 }
 
-function BackToPortfolio() {
-    return (
-        <TooltipTrigger
-            delay={500}
-            payload={{
-                content: (
-                    <span className="flex items-center gap-1">
-                        Back to Portfolio
-                    </span>
-                ),
-                side: "bottom"
-            }}
-            render={
-                <Button size="icon" variant="outline" asChild>
-                    <NextLink href="/portfolio#projects">
-                        <ArrowLeft className="size-4" />
-                        <span className="sr-only">Back to Portfolio</span>
-                    </NextLink>
-                </Button>
-            }
-        />
-    )
+function BackToPortfolio({ mode }: { mode: PortfolioMode }) {
+    const pathname = usePathname()
+
+    if (mode === "pages" && pathname !== "/portfolio") {
+        return (
+            <TooltipTrigger
+                delay={500}
+                payload={{
+                    content: (
+                        <span className="flex items-center gap-1">
+                            Back to Portfolio
+                        </span>
+                    ),
+                    side: "bottom"
+                }}
+                render={
+                    <Button size="icon" variant="outline" asChild>
+                        <NextLink href="/portfolio#projects">
+                            <ArrowLeft className="size-4" />
+                            <span className="sr-only">Back to Portfolio</span>
+                        </NextLink>
+                    </Button>
+                }
+            />
+        )
+    }
 }
 
-export function TableOfContents({ mode, pathname, items }: TocProps) {
+export function TableOfContents({ mode, items }: TocProps) {
     const [query, setQuery] = useState("")
     const [debouncedQuery, setDebouncedQuery] = useState("")
     const [hasPageMounted, setHasPageMounted] = useState(false)
@@ -134,11 +138,8 @@ export function TableOfContents({ mode, pathname, items }: TocProps) {
     return (
         <>
             <header className={cn("flex gap-2 px-6 py-5.5")}>
-                {mode === "pages" && pathname !== "/portfolio" && (
-                    <BackToPortfolio />
-                )}
+                <BackToPortfolio mode={mode} />
                 <TocSearch
-                    pathname={pathname}
                     ref={inputRef}
                     value={query}
                     onChange={setQuery}
@@ -162,7 +163,6 @@ export function TableOfContents({ mode, pathname, items }: TocProps) {
                 ) : (
                     <TocList
                         mode={mode}
-                        pathname={pathname}
                         items={items}
                         filteredItems={filteredItems}
                         hasPageMounted={hasPageMounted}

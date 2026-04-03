@@ -2,7 +2,6 @@
 
 import { memo } from "react"
 import Link from "next/link"
-import { usePathname, useSearchParams } from "next/navigation"
 
 import { ChevronDown } from "lucide-react"
 import { type Variants } from "motion/react"
@@ -48,9 +47,6 @@ const TocItemRow = memo(
         onSameLinkClick: () => void
     }) => {
         const href = item.href ?? `#${item.id}`
-        const pathname = usePathname()
-        const searchParams = useSearchParams()
-        const currentSearch = searchParams.toString()
 
         return (
             <m.li
@@ -82,8 +78,14 @@ const TocItemRow = memo(
                                         ? targetUrl.search.slice(1)
                                         : targetUrl.search
 
+                                const currentSearch =
+                                    window.location.search.startsWith("?")
+                                        ? window.location.search.slice(1)
+                                        : window.location.search
+
                                 return (
-                                    pathname === targetUrl.pathname &&
+                                    window.location.pathname ===
+                                        targetUrl.pathname &&
                                     currentSearch === targetSearch &&
                                     window.location.hash === targetUrl.hash
                                 )
