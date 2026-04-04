@@ -129,7 +129,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <Divider />
             <SectionLine />
 
-            <Space className={cn("grid place-items-center")}>
+            <Space
+                className={cn("grid place-items-center", {
+                    md: "min-h-16"
+                })}
+            >
                 <Highlight
                     className={cn(
                         "grid size-full place-items-center bg-highlighted/10 px-6 py-4.5"

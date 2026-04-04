@@ -17,19 +17,24 @@ function Footer() {
 
     if (mode === "pages") {
         return (
-            <footer className={cn("relative")}>
+            <footer className={cn("relative bg-background")}>
                 <SectionLine />
                 <Divider
                     className={cn(
-                        "grid h-12 place-items-center bg-background text-sm"
+                        "grid h-auto place-items-center bg-background px-4 py-3 text-sm"
                     )}
                 >
-                    <p>
+                    <p className="text-balance text-center">
                         {`© ${new Date().getFullYear()} hoangnhan2ka3. NO AI training allowed. All Rights Reserved.`}
                     </p>
                 </Divider>
                 <SectionLine />
-                <Space className={cn("flex items-center")}>
+                <Space
+                    className={cn("flex items-center bg-transparent", {
+                        lg: "flex-wrap",
+                        md: "min-h-16"
+                    })}
+                >
                     {sections
                         .flatMap((section) => section.platforms)
                         .map((platform, index, arr) => (
@@ -39,9 +44,10 @@ function Footer() {
                                     target="_blank"
                                     rel="noreferrer"
                                     className={cn(
-                                        "grid h-full flex-1 place-items-center bg-background px-6 py-4 opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
+                                        "grid h-full flex-1 place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
                                         {
-                                            hover: "bg-element-hover text-highlighted opacity-100 transition-none"
+                                            hover: "bg-element-hover text-highlighted opacity-100 transition-none",
+                                            lg: "basis-[calc(20%-var(--px)*4)] opacity-100"
                                         }
                                     )}
                                 >
@@ -50,7 +56,14 @@ function Footer() {
                                         {platform.title}
                                     </span>
                                 </NextLink>
-                                {index < arr.length - 1 && <ElementLine />}
+                                {index < arr.length - 1 && (
+                                    <ElementLine
+                                        className={cn({
+                                            "lg:nth-of-type-5":
+                                                "h-auto w-full border-b border-r-0"
+                                        })}
+                                    />
+                                )}
                             </Fragment>
                         ))}
                 </Space>

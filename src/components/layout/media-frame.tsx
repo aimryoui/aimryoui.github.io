@@ -32,6 +32,9 @@ export function SectionName({
                 className={cn(
                     "pointer-events-auto rounded-full bg-background px-3.5 py-1.5 font-mono",
                     !lowercase && "uppercase",
+                    {
+                        md: "py-2 text-sm"
+                    },
                     className
                 )}
             >
@@ -96,7 +99,7 @@ function MediaFrame({
                     )}
                     <div
                         className={cn(
-                            "relative grid w-full items-start justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
+                            "relative grid w-full grid-cols-1 items-start justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
                             className
                         )}
                     >

@@ -84,7 +84,7 @@ function NoAIOverlay() {
                         This content is not authorized for use in training AI
                         models or for AI generation purposes.
                         <br />
-                        All rights reserved.
+                        All Rights Reserved.
                     </p>
                     <i translate="no" className={cn("text-sm opacity-80")}>
                         Tất cả văn bản, hình ảnh và video trên trang web này đều

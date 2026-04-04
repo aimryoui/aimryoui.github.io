@@ -28,7 +28,10 @@ function ProjectHeader({
         <div className={cn("relative bg-background")}>
             <div
                 className={cn(
-                    "grid grid-cols-[minmax(0,3fr)_var(--px)_calc(var(--spacing)*6)_var(--px)_minmax(0,2fr)]"
+                    "grid grid-cols-[minmax(0,3fr)_var(--px)_calc(var(--spacing)*6)_var(--px)_minmax(0,2fr)]",
+                    {
+                        md: "grid-cols-1"
+                    }
                 )}
             >
                 <span
@@ -59,18 +62,22 @@ function ProjectHeader({
                         {category}
                     </Highlight>
                 </div>
-                <ElementLine />
-                <Divider dir="vertical" />
-                <ElementLine />
+                <ElementLine
+                    className={cn({
+                        md: "h-auto w-full border-b border-r-0"
+                    })}
+                />
+                <Divider dir="vertical" className={cn("md:hidden")} />
+                <ElementLine className={cn("md:hidden")} />
                 <div
                     className={cn(
-                        "flex flex-1 flex-col justify-between px-6 pb-3.75 pt-3.25"
+                        "flex flex-1 flex-col justify-between text-pretty px-6 pb-3.75 pt-3.25 md:text-sm"
                     )}
                 >
                     <Highlight
                         className={cn(
                             "font-normal",
-                            !information.newest && "text-transparent"
+                            !information.newest && "text-transparent md:hidden"
                         )}
                     >
                         {information.newest ? "Newest" : "Older"}
@@ -122,7 +129,7 @@ function ProjectHeader({
                             {formatOrdinal(detail.description)}
                         </Bold>
                         {detail.abbreviation && (
-                            <Text className={cn("text-pretty")}>
+                            <Text className={cn("text-pretty md:text-sm")}>
                                 {formatOrdinal(detail.abbreviation)}
                             </Text>
                         )}

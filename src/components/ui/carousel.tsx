@@ -121,7 +121,9 @@ function CarouselIndicator({
             {!emblaApi || count === 0 ? (
                 <Spinner />
             ) : (
-                `${displayCurrent} / ${count}`
+                <span className="line-clamp-1">
+                    {`${displayCurrent} / ${count}`}
+                </span>
             )}
         </div>
     )
@@ -142,7 +144,7 @@ function Carousel({
     children,
     ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
-    const slides = Array(slideCount).fill(75)
+    const slides = Array(slideCount)
 
     const carouselId = useId()
 
@@ -153,10 +155,13 @@ function Carousel({
     const [emblaRef, emblaApi, emblaServerApi] = useEmblaCarousel(
         {
             ...opts,
+            ssr: slides.fill(75),
             breakpoints: {
                 "(prefers-reduced-motion: reduce)": { duration: 0 }
+                // "(min-width: 48rem)": {
+                //     ssr: slides.fill(100)
+                // }
             },
-            ssr: slides,
             containScroll: false,
             skipSnaps: true,
             axis: orientation === "horizontal" ? "x" : "y"
@@ -169,8 +174,7 @@ function Carousel({
                 ...prevPlugins,
                 Accessibility({
                     announceChanges: true,
-                    rootNode: (emblaRoot) =>
-                        emblaRoot.parentElement ?? document.body
+                    rootNode: (emblaRoot) => emblaRoot.parentElement
                 })
             ])
         }, 0)
@@ -179,6 +183,7 @@ function Carousel({
             clearTimeout(timer)
         }
     }, [])
+    useAccessibility(emblaApi)
     const renderSsrStyles = !emblaApi
 
     const tweenFactor = useRef(0)
@@ -235,8 +240,6 @@ function Carousel({
     const goToNext = useCallback(() => {
         emblaApi?.goToNext()
     }, [emblaApi])
-
-    useAccessibility(emblaApi)
 
     const handleKeyDown = useCallback(
         (event: KeyboardEvent<HTMLDivElement>) => {
@@ -331,7 +334,13 @@ function Carousel({
                     <div
                         className={cn(
                             "grid w-full items-center gap-2",
-                            "grid-cols-[1fr_75%_1fr]"
+                            "grid-cols-[1fr_75%_1fr]",
+                            {
+                                "2xl": "grid-cols-6",
+                                xl: "grid-cols-4",
+                                md: "grid-cols-3",
+                                sm: "grid-cols-2"
+                            }
                         )}
                     >
                         <div className="flex w-full justify-start gap-2">
@@ -339,9 +348,22 @@ function Carousel({
                             <CarouselIndicator className="flex-1" />
                         </div>
 
-                        <CarouselScrollbar className="flex-1" />
+                        <CarouselScrollbar
+                            className={cn("flex-1", {
+                                "2xl": "col-span-4",
+                                xl: "order-first col-span-4 my-2",
+                                md: "col-span-3",
+                                sm: "col-span-2"
+                            })}
+                        />
 
-                        <div className="flex w-full justify-end gap-2">
+                        <div
+                            className={cn("flex w-full justify-end gap-2", {
+                                xl: "col-start-4",
+                                md: "col-start-3",
+                                sm: "col-start-2"
+                            })}
+                        >
                             <CarouselPrevious className="flex-1" />
                             <CarouselNext className="flex-1" />
                         </div>
@@ -385,6 +407,9 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
             className={cn(
                 "min-w-0 shrink-0 grow-0 basis-3/4 will-change-[opacity]",
                 orientation === "horizontal" ? "pl-2" : "pt-2",
+                {
+                    md: "basis-full"
+                },
                 className
             )}
             {...props}
@@ -613,11 +638,13 @@ function CarouselScrollbar({
         updateSnapCount()
 
         emblaApi.on("scroll", updateScroll)
+        emblaApi.on("resize", updateScroll)
         emblaApi.on("reinit", updateScroll)
         emblaApi.on("reinit", updateSnapCount)
 
         return () => {
             emblaApi.off("scroll", updateScroll)
+            emblaApi.off("resize", updateScroll)
             emblaApi.off("reinit", updateScroll)
             emblaApi.off("reinit", updateSnapCount)
         }

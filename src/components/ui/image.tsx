@@ -108,6 +108,8 @@ function Image({
         cssVars[`--y${i.toString()}`] = `${(i * rowPct + padY).toString()}%`
     }
 
+    const aspect = `${exactW.toString()}/${exactH.toString()}`
+
     return (
         <div
             ref={containerRef}
@@ -115,19 +117,20 @@ function Image({
                 "relative grid w-full place-items-center",
                 !pngBorder && "overflow-hidden",
                 asBackgroundImage ? "h-full" : "h-fit",
+                limitHeight && "max-w-full",
                 !noBorder && {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },
-                limitHeight && "h-200",
                 className
             )}
             style={{
                 flex: imageRow
-                    ? `${imageRow === "justified" ? `calc(${exactW.toString()}/${exactH.toString()})` : exactW.toString()} 1 0%`
+                    ? `${imageRow === "justified" ? `calc(${aspect})` : exactW.toString()} 1 0%`
                     : undefined,
-                aspectRatio: asBackgroundImage
-                    ? undefined
-                    : `${exactW.toString()}/${exactH.toString()}`,
+                aspectRatio: asBackgroundImage ? undefined : aspect,
+                ...(limitHeight && {
+                    width: `calc(max(80vh, calc(var(--spacing) * 125)) * calc(${aspect}))`
+                }),
                 ...cssVars
             }}
             {...props}
