@@ -1,4 +1,7 @@
+import { ViewTransition } from "react"
+
 import { H2, Highlight } from "@/components/ui/typography"
+import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { cn } from "@/lib/utils"
 
 function SectionTitle({
@@ -31,20 +34,24 @@ function SectionTitle({
                     {note}
                 </span>
             )}
-            <H2
-                id={id}
-                className={cn(
-                    "text-foreground will-change-[color] transition-[color] duration-100",
-                    {
-                        "group-hover": "text-highlighted transition-none"
-                    }
-                )}
+            <ViewTransition
+                name={formatViewTransitionName(`overall-category-${title}`)}
             >
-                {order && (
-                    <Highlight>{String(order).padStart(2, "0")}.</Highlight>
-                )}{" "}
-                {title}.
-            </H2>
+                <H2
+                    id={id}
+                    className={cn(
+                        "w-fit text-foreground will-change-[color] transition-[color] duration-100",
+                        {
+                            "group-hover": "text-highlighted transition-none"
+                        }
+                    )}
+                >
+                    {order && (
+                        <Highlight>{String(order).padStart(2, "0")}.</Highlight>
+                    )}{" "}
+                    {title}.
+                </H2>
+            </ViewTransition>
         </div>
     )
 }

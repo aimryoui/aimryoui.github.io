@@ -128,6 +128,8 @@
         "typescript/prefer-optional-chain": "warn",
         "typescript/prefer-regexp-exec": "warn",
 
+        "typescript/consistent-type-exports": "warn",
+
         //* Stylistic
         "@stylistic/quotes": [
             "warn",

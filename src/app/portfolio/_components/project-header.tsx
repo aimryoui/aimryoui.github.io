@@ -1,8 +1,11 @@
+import { ViewTransition } from "react"
+
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
+import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 import { TOOL_ICONS } from "@/portfolio/_configs/tools"
@@ -48,19 +51,37 @@ function ProjectHeader({
                 >
                     <H3
                         id={headerId}
-                        className={cn("text-pretty text-foreground")}
+                        className={cn("w-fit text-pretty text-foreground")}
                     >
-                        {formatOrdinal(
-                            projectName +
-                                (TRAILING_REGEX.test(projectName) ||
-                                MEDIA_REGEX.test(projectName)
-                                    ? ""
-                                    : ".")
+                        <ViewTransition
+                            name={formatViewTransitionName(
+                                `project-${projectName}`
+                            )}
+                        >
+                            <span>{formatOrdinal(projectName)}</span>
+                        </ViewTransition>
+                        {!(
+                            TRAILING_REGEX.test(projectName) ||
+                            MEDIA_REGEX.test(projectName)
+                        ) && (
+                            <span
+                                style={{
+                                    viewTransitionName: "project-name-dot"
+                                }}
+                            >
+                                .
+                            </span>
                         )}
                     </H3>
-                    <Highlight className={cn("font-normal")}>
-                        {category}
-                    </Highlight>
+                    <ViewTransition
+                        name={formatViewTransitionName(
+                            `category-${projectName}-${category}`
+                        )}
+                    >
+                        <Highlight className={cn("w-fit font-normal")}>
+                            {category}
+                        </Highlight>
+                    </ViewTransition>
                 </div>
                 <ElementLine
                     className={cn({

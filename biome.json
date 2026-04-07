@@ -34,8 +34,7 @@
                         "useImportType": {
                             "level": "warn",
                             "options": { "style": "inlineType" }
-                        },
-                        "useExportType": "on"
+                        }
                     }
                 }
             }

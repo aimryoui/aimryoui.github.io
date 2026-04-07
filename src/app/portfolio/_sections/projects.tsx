@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment } from "react"
+import { Fragment, ViewTransition } from "react"
 import Link from "next/link"
 
 import { ArrowRight } from "@/components/icons/icons"
@@ -8,6 +8,7 @@ import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { Bold, Text } from "@/components/ui/typography"
+import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import {
     getCategoryPath,
     getProjectPath,
@@ -103,28 +104,40 @@ function Projects() {
                                                     "flex flex-col gap-1"
                                                 )}
                                             >
-                                                <Bold
-                                                    className={cn(
-                                                        "line-clamp-1 will-change-[color] transition-[color] duration-100",
-                                                        {
-                                                            "group-hover":
-                                                                "text-highlighted transition-none"
-                                                        }
+                                                <ViewTransition
+                                                    name={formatViewTransitionName(
+                                                        `project-${project.projectName}`
                                                     )}
                                                 >
-                                                    {project.projectName}
-                                                </Bold>
-                                                <Text
-                                                    className={cn(
-                                                        "line-clamp-1 text-sm will-change-[color] transition-[color] duration-100",
-                                                        {
-                                                            "group-hover":
-                                                                "text-foreground transition-none"
-                                                        }
+                                                    <Bold
+                                                        className={cn(
+                                                            "line-clamp-1 w-fit will-change-[color] transition-[color] duration-100",
+                                                            {
+                                                                "group-hover":
+                                                                    "text-highlighted transition-none"
+                                                            }
+                                                        )}
+                                                    >
+                                                        {project.projectName}
+                                                    </Bold>
+                                                </ViewTransition>
+                                                <ViewTransition
+                                                    name={formatViewTransitionName(
+                                                        `category-${project.projectName}-${project.category}`
                                                     )}
                                                 >
-                                                    {project.category}
-                                                </Text>
+                                                    <Text
+                                                        className={cn(
+                                                            "line-clamp-1 w-fit text-sm will-change-[color] transition-[color] duration-100",
+                                                            {
+                                                                "group-hover":
+                                                                    "text-foreground transition-none"
+                                                            }
+                                                        )}
+                                                    >
+                                                        {project.category}
+                                                    </Text>
+                                                </ViewTransition>
                                             </div>
                                             <ArrowRight
                                                 className={cn(

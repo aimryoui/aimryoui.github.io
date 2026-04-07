@@ -49,6 +49,7 @@ const TocItemRow = memo(
         const href = item.href ?? `#${item.id}`
 
         return (
+            // <ViewTransition name={`toc-item-${item.id}`}>
             <m.li
                 variants={liVariants}
                 className={cn(
@@ -166,6 +167,7 @@ const TocItemRow = memo(
                     </div>
                 )}
             </m.li>
+            // </ViewTransition>
         )
     }
 )

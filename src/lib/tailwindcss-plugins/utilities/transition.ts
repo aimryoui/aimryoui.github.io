@@ -1,4 +1,5 @@
 import plugin from "tailwindcss/plugin"
+import { type PluginAPI } from "tailwindcss/types/config"
 
 export default plugin(
     ({ addBase, matchUtilities, theme }) => {
@@ -70,6 +71,7 @@ export default plugin(
     {
         corePlugins: {
             transitionProperty: false,
+            transitionDelay: false,
             transitionDuration: false,
             transitionTimingFunction: false
         },
@@ -101,9 +103,14 @@ export default plugin(
                 200: ".2s",
                 300: ".3s",
                 500: ".5s",
+                550: ".55s",
                 700: ".7s",
+                800: ".8s",
                 1000: "1s"
-            }
+            },
+            transitionDelay: ({ theme }: { theme: PluginAPI["theme"] }) => ({
+                ...theme("transitionDuration")
+            })
         }
     }
 )

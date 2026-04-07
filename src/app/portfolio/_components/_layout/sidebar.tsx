@@ -214,7 +214,12 @@ function Sidebar() {
                     <TableOfContents mode={mode} items={tocItems} />
                 </MotionConfig>
             </LazyMotion>
-            <div className="relative w-full">
+            <div
+                className="relative z-1 w-full"
+                // style={{
+                //     viewTransitionName: "progress-bar"
+                // }}
+            >
                 <Progress
                     className={cn(
                         "absolute inset-x-0 -top-px z-20 h-0.75 w-full overflow-hidden"
@@ -225,9 +230,19 @@ function Sidebar() {
                         className={cn("size-full bg-highlighted")}
                     />
                 </Progress>
-                <SectionLine fit />
+                <SectionLine
+                    fit
+                    // style={{
+                    //     viewTransitionName: "toc-divider-menu"
+                    // }}
+                />
             </div>
-            <menu className={cn("flex w-full gap-2 bg-background px-6 py-5.5")}>
+            <menu
+                className={cn("flex w-full gap-2 bg-background px-6 py-5.5")}
+                // style={{
+                //     viewTransitionName: "menu"
+                // }}
+            >
                 <li className="me-auto">
                     <Link href="/" className="group flex gap-2">
                         <svg

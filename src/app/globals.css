@@ -178,3 +178,34 @@
         }
     }
 }
+
+@layer base {
+    @view-transition {
+        navigation: auto;
+    }
+
+    ::view-transition-group(*) {
+        @apply animation-duration-800 animation-ease-spring;
+    }
+    ::view-transition-group(project-name-dot) {
+        @apply animation-delay-550;
+    }
+    /* ::view-transition-group(header),
+    ::view-transition-group(toc-divider-search),
+    ::view-transition-group(progress-bar),
+    ::view-transition-group(toc-divider-menu),
+    ::view-transition-group(menu) {
+        @apply z-50 !animate-none !animation-duration-0 !animation-delay-0;
+    } */
+    /* ::view-transition-group(pattern) {
+        @apply -z-infinite !animate-none !animation-duration-0 !animation-delay-0;
+    } */
+
+    @media (prefers-reduced-motion: reduce) {
+        ::view-transition-old(*),
+        ::view-transition-new(*),
+        ::view-transition-group(*) {
+            @apply !animation-duration-0 !animation-delay-0;
+        }
+    }
+}

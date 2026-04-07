@@ -33,9 +33,8 @@ function SectionLine({
     className,
     showDecoration = false,
     fit = false,
-    ref,
     ...props
-}: React.ComponentProps<"div"> & {
+}: React.ComponentProps<"hr"> & {
     showDecoration?: boolean
     fit?: boolean
 }) {
@@ -45,8 +44,6 @@ function SectionLine({
                 "relative z-10 h-0 w-full",
                 showDecoration && "flex items-center justify-between"
             )}
-            {...props}
-            ref={ref}
         >
             {showDecoration && <Plus position="left" />}
             <hr
@@ -55,6 +52,7 @@ function SectionLine({
                     fit ? "left-1/2 w-full -translate-x-1/2" : "-right-6 w-dvw",
                     className
                 )}
+                {...props}
             />
             {showDecoration && <Plus position="right" />}
         </div>

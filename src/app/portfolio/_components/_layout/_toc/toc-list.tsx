@@ -145,7 +145,7 @@ function TocList({
                 return (
                     <Fragment key={item.id}>
                         {(item.depth === 2 || item.depth === 4) && (
-                            <TocDivider />
+                            <TocDivider id={item.id} />
                         )}
 
                         <TocItemRow

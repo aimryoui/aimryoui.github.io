@@ -107,27 +107,31 @@ function BackToPortfolio({ mode }: { mode: PortfolioMode }) {
     }
 }
 
+const SEARCH_DELAY = 500
+
 export function TableOfContents({ mode, items }: TocProps) {
     const [query, setQuery] = useState("")
+    // const [isPending, startTransition] = useTransition()
     const [debouncedQuery, setDebouncedQuery] = useState("")
     const [hasPageMounted, setHasPageMounted] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const SearchDelay = 500
-
     useEffect(() => {
-        const delay = query.length === 0 ? 0 : SearchDelay
+        // if (!isPending) {
+        const delay = query.length === 0 ? 0 : SEARCH_DELAY
         const timer = setTimeout(() => {
+            // startTransition(() => {
             setDebouncedQuery(query)
+            // })
         }, delay)
         return () => {
             clearTimeout(timer)
         }
+        // }
     }, [query])
 
     const handleClearSearch = useCallback(() => {
         setQuery("")
-        setDebouncedQuery("")
         inputRef.current?.focus()
     }, [])
 
@@ -137,7 +141,12 @@ export function TableOfContents({ mode, items }: TocProps) {
 
     return (
         <>
-            <header className={cn("flex gap-2 px-6 py-5.5")}>
+            <header
+                className={cn("flex gap-2 bg-background px-6 py-5.5")}
+                // style={{
+                //     viewTransitionName: "header"
+                // }}
+            >
                 <BackToPortfolio mode={mode} />
                 <TocSearch
                     ref={inputRef}
@@ -146,8 +155,13 @@ export function TableOfContents({ mode, items }: TocProps) {
                     onClear={handleClearSearch}
                 />
             </header>
-            <SectionLine fit />
-            <nav className="flex flex-1 flex-col overflow-auto">
+            <SectionLine
+                fit
+                // style={{
+                //     viewTransitionName: "toc-divider-search"
+                // }}
+            />
+            <nav className={cn("flex flex-1 flex-col overflow-auto")}>
                 {filteredItems.length === 0 ? (
                     <Text className={cn("px-6 py-4 text-sm")}>
                         No results found.{" "}

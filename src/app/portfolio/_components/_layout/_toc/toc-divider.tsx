@@ -13,13 +13,15 @@ const lineVariants: Variants = {
     }
 }
 
-const TocDivider = memo(() => (
+const TocDivider = memo(({ id }: { id: string }) => (
+    // <ViewTransition name={`toc-divider-${id}`}>
     <m.li
         variants={lineVariants}
         className="my-3 h-px will-change-[opacity] first:hidden"
     >
         <SectionLine fit />
     </m.li>
+    // </ViewTransition>
 ))
 TocDivider.displayName = "TocDivider"
 
