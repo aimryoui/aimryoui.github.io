@@ -1,5 +1,6 @@
 /**
  * Slugify a string
+ *
  * @param {string} str Input string
  * @returns {string} Slugified string
  */

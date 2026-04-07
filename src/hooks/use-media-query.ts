@@ -13,7 +13,6 @@ type MediaQueryCallback = (event: { matches: boolean; media: string }) => void
  *
  * @param {MediaQueryList} query Media query list
  * @param {MediaQueryCallback} callback Callback function
- *
  * @returns {Function} Unmount function
  */
 function attachMediaListener(

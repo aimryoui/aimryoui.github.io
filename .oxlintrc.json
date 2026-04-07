@@ -60,6 +60,7 @@
         "max-lines-per-function": "off",
         "no-inline-comments": "off",
         "prefer-tag-over-role": "off",
+        "object-shorthand": "warn",
 
         //* TypeScript
         // recommended

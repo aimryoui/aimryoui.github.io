@@ -67,6 +67,18 @@ export default plugin(
                 type: ["any"]
             }
         )
+        matchUtilities(
+            {
+                delay: (value: string) => ({
+                    transitionDelay: value
+                })
+            },
+            {
+                values: theme("transitionDelay"),
+                // type: ["time"]
+                type: ["any"]
+            }
+        )
     },
     {
         corePlugins: {

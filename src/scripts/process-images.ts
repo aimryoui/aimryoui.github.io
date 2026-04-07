@@ -167,8 +167,8 @@ async function processImage(
         version: SCRIPT_VERSION,
         width: exactW,
         height: exactH,
-        mapping: mapping,
-        blurDataURL: blurDataURL
+        mapping,
+        blurDataURL
     }
 
     await image
