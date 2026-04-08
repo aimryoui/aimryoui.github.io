@@ -1,14 +1,12 @@
 "use client"
 
-import { Fragment, ViewTransition } from "react"
+import { Fragment } from "react"
 import Link from "next/link"
 
 import { ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { Bold, Text } from "@/components/ui/typography"
-import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import {
     getCategoryPath,
     getProjectPath,
@@ -19,6 +17,7 @@ import { ExpandableWrapper } from "@/portfolio/_components/_layout/expandable-wr
 import { MDXContent } from "@/portfolio/_components/mdx-content"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import SectionTitle from "@/portfolio/_components/section-title"
+import ProjectCard from "@/portfolio/[category]/_components/project-card"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
@@ -104,40 +103,9 @@ function Projects() {
                                                     "flex flex-col gap-1"
                                                 )}
                                             >
-                                                <ViewTransition
-                                                    name={formatViewTransitionName(
-                                                        `project-${project.projectName}`
-                                                    )}
-                                                >
-                                                    <Bold
-                                                        className={cn(
-                                                            "line-clamp-1 w-fit will-change-[color] transition-[color] duration-100",
-                                                            {
-                                                                "group-hover":
-                                                                    "text-highlighted transition-none"
-                                                            }
-                                                        )}
-                                                    >
-                                                        {project.projectName}
-                                                    </Bold>
-                                                </ViewTransition>
-                                                <ViewTransition
-                                                    name={formatViewTransitionName(
-                                                        `category-${project.projectName}-${project.category}`
-                                                    )}
-                                                >
-                                                    <Text
-                                                        className={cn(
-                                                            "line-clamp-1 w-fit text-sm will-change-[color] transition-[color] duration-100",
-                                                            {
-                                                                "group-hover":
-                                                                    "text-foreground transition-none"
-                                                            }
-                                                        )}
-                                                    >
-                                                        {project.category}
-                                                    </Text>
-                                                </ViewTransition>
+                                                <ProjectCard
+                                                    project={project}
+                                                />
                                             </div>
                                             <ArrowRight
                                                 className={cn(

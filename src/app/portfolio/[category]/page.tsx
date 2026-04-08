@@ -1,4 +1,3 @@
-import { ViewTransition } from "react"
 import NextLink from "next/link"
 import { notFound } from "next/navigation"
 
@@ -7,7 +6,6 @@ import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { Bold, Highlight, Text } from "@/components/ui/typography"
-import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import {
     getCategoryPath,
     getProjectPath,
@@ -17,6 +15,7 @@ import { cn } from "@/lib/utils"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
 import SectionTitle from "@/portfolio/_components/section-title"
 import Footer from "@/portfolio/_sections/footer"
+import ProjectCard from "@/portfolio/[category]/_components/project-card"
 
 import { projects } from "~/.velite"
 
@@ -104,40 +103,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 )}
                             >
                                 <div className={cn("flex flex-col gap-1")}>
-                                    <ViewTransition
-                                        name={formatViewTransitionName(
-                                            `project-${project.projectName}`
-                                        )}
-                                    >
-                                        <Bold
-                                            className={cn(
-                                                "line-clamp-1 w-fit will-change-[color] transition-[color] duration-100",
-                                                {
-                                                    "group-hover":
-                                                        "text-highlighted transition-none"
-                                                }
-                                            )}
-                                        >
-                                            {project.projectName}
-                                        </Bold>
-                                    </ViewTransition>
-                                    <ViewTransition
-                                        name={formatViewTransitionName(
-                                            `category-${project.projectName}-${project.category}`
-                                        )}
-                                    >
-                                        <Text
-                                            className={cn(
-                                                "line-clamp-1 w-fit text-sm will-change-[color] transition-[color] duration-100",
-                                                {
-                                                    "group-hover":
-                                                        "text-foreground transition-none"
-                                                }
-                                            )}
-                                        >
-                                            {project.category}
-                                        </Text>
-                                    </ViewTransition>
+                                    <ProjectCard project={project} />
                                 </div>
                                 <ArrowRight
                                     className={cn(

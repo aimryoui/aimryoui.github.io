@@ -185,10 +185,10 @@
     }
 
     ::view-transition-group(*) {
-        @apply animation-duration-800 animation-ease-spring;
+        @apply animation-duration-700 animation-ease-in-out;
     }
     ::view-transition-group(project-name-dot) {
-        @apply animation-delay-550;
+        @apply animation-delay-500;
     }
     /* ::view-transition-group(header),
     ::view-transition-group(toc-divider-search),
@@ -209,3 +209,26 @@
         }
     }
 }
+
+/* @layer utilities {
+    @keyframes enable-vt {
+        0%,
+        100% {
+            view-transition-name: none;
+        }
+        0.01%,
+        99.99% {
+            view-transition-name: revert !important;
+        }
+    }
+
+    .vt-element {
+        view-timeline-name: --enable-vt;
+        view-timeline-axis: block;
+
+        animation: linear enable-vt both;
+        animation-timeline: view();
+
+        animation-range: cover;
+    }
+} */
