@@ -1,9 +1,11 @@
 import { SectionLine } from "@/components/layout/line"
+import { Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
 interface SectionNameProps extends React.ComponentProps<"div"> {
     as?: React.ElementType
     sectionName: string
+    author?: string
     lowercase?: boolean
     containerClassName?: string
 }
@@ -12,6 +14,7 @@ export function SectionName({
     as = "h4",
     lowercase = false,
     sectionName,
+    author,
     className,
     containerClassName,
     ...props
@@ -38,7 +41,12 @@ export function SectionName({
                     className
                 )}
             >
-                {sectionName}
+                {sectionName}{" "}
+                {author && (
+                    <Highlight className="font-mono normal-case" italic>
+                        ({author})
+                    </Highlight>
+                )}
             </Comp>
         </ContainerComp>
     )
@@ -46,6 +54,7 @@ export function SectionName({
 
 function MediaFrame({
     sectionName,
+    author,
     lowercase,
     flex,
     continuous,
@@ -53,6 +62,7 @@ function MediaFrame({
     children
 }: {
     sectionName?: string
+    author?: string
     lowercase?: boolean
     flex?: boolean
     continuous?: boolean
@@ -69,6 +79,7 @@ function MediaFrame({
                     <>
                         <SectionName
                             sectionName={sectionName}
+                            author={author}
                             lowercase={lowercase}
                         />
                         <SectionLine />
@@ -90,6 +101,7 @@ function MediaFrame({
                             <SectionName
                                 as="div"
                                 sectionName={sectionName}
+                                author={author}
                                 lowercase={lowercase}
                                 className={cn(
                                     "bg-transparent text-transparent shadow-sm -outline-offset-px outline-stroke outline"
@@ -99,7 +111,7 @@ function MediaFrame({
                     )}
                     <div
                         className={cn(
-                            "relative grid w-full grid-cols-1 items-start justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
+                            "relative grid w-full grid-cols-1 place-items-center justify-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
                             className
                         )}
                     >

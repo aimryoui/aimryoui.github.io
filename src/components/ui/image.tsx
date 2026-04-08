@@ -21,6 +21,7 @@ interface ImageProps extends React.ComponentProps<"div"> {
     limitHeight?: boolean
     noBorder?: boolean
     pngBorder?: boolean
+    rounded?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
 }
 
@@ -34,6 +35,7 @@ function Image({
     limitHeight = false,
     noBorder = false,
     pngBorder = false,
+    rounded = false,
     objectFit = "cover",
     ...props
 }: ImageProps) {
@@ -114,10 +116,11 @@ function Image({
         <div
             ref={containerRef}
             className={cn(
-                "relative grid w-full place-items-center",
-                !pngBorder && "overflow-hidden",
+                limitHeight ? "min-w-0 max-w-full" : "w-full",
                 asBackgroundImage ? "h-full" : "h-fit",
-                limitHeight && "max-w-full",
+                "relative grid place-items-center",
+                !pngBorder && "overflow-hidden",
+                rounded && "rounded-2xl",
                 !noBorder && {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },

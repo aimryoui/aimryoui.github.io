@@ -68,6 +68,7 @@ export default {
                 "4xl": ["2.25rem", "1.3"]
             },
             fontWeight: {
+                base: "400",
                 normal: "500"
             },
             spacing: {

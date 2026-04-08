@@ -41,6 +41,7 @@ export interface AnimatedMediaProps extends React.ComponentProps<"video"> {
     src: string
     alt: string
     posterPath?: string
+    rounded?: boolean
     autoplay?: boolean
     mute?: boolean
 }
@@ -49,6 +50,7 @@ export function AnimatedMedia({
     src,
     alt,
     posterPath,
+    rounded = false,
     className,
     autoPlay,
     autoplay,
@@ -221,6 +223,7 @@ export function AnimatedMedia({
             ref={hostRef}
             className={cn(
                 "relative w-full overflow-hidden",
+                rounded && "rounded-2xl",
                 {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },
