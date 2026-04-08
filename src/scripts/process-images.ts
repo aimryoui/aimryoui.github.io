@@ -14,7 +14,7 @@ const INPUT_DIR = "private/media"
 const OUTPUT_BASE = "public/assets/media"
 const MANIFEST_PATH = "src/lib/image-manifest.json"
 
-const SCRIPT_VERSION = "3"
+const SCRIPT_VERSION = "1"
 
 const BRAND_COLOR = "\x1B[38;2;0;166;244m"
 const RESET = "\x1B[0m"
@@ -147,7 +147,7 @@ async function processImage(
     const blurBuffer = await image
         .clone()
         .resize({ width: 10 })
-        .webp({ quality: 20 })
+        .webp({ quality: 20, effort: 6 })
         .toBuffer()
 
     const blurDataURL = `data:image/webp;base64,${blurBuffer.toString("base64")}`
@@ -179,7 +179,7 @@ async function processImage(
             fit: "inside",
             withoutEnlargement: true
         })
-        .webp({ quality: 1 })
+        .webp({ quality: 1, alphaQuality: 100, effort: 6 })
         .toFile(previewOutput)
 
     const tileW = exactW / GRID_COLS
@@ -232,7 +232,7 @@ async function processImage(
         }
     })
         .composite(composites as sharp.OverlayOptions[])
-        .webp({ quality: 95 })
+        .webp({ quality: 95, effort: 6 })
         .toFile(scrambledOutput)
 
     cleanImageOutputFolder(outputFolder, [

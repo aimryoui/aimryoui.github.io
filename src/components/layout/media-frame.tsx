@@ -1,5 +1,6 @@
 import { SectionLine } from "@/components/layout/line"
 import { Highlight } from "@/components/ui/typography"
+import { formatOrdinal } from "@/helpers/format-ordinal"
 import { cn } from "@/lib/utils"
 
 interface SectionNameProps extends React.ComponentProps<"div"> {
@@ -41,7 +42,7 @@ export function SectionName({
                     className
                 )}
             >
-                {sectionName}{" "}
+                {formatOrdinal(sectionName)}{" "}
                 {author && (
                     <Highlight className="font-mono normal-case" italic>
                         ({author})
