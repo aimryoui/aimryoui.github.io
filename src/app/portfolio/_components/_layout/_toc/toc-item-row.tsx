@@ -112,7 +112,9 @@ const TocItemRow = memo(
                                   "focus-visible": "text-foreground"
                               },
                         "group/link relative flex-1 leading-6 will-change-[color]",
-                        item.depth === 3 && !item.icon ? "ps-3" : "font-bold",
+                        item.depth === 3 && !item.icon
+                            ? "ps-3.75"
+                            : "font-bold",
                         item.icon ? "flex gap-2 py-1" : "inline-block py-0.5"
                     )}
                 >

@@ -41,9 +41,9 @@ function Projects() {
                             <NextLink
                                 href={getCategoryPath(group.id)}
                                 className={cn(
-                                    "group flex items-center justify-between gap-4 bg-background pe-6 will-change-[background-color] transition-[background-color] duration-100",
+                                    "group flex items-center justify-between gap-4 bg-element-hover pe-6 will-change-[background-color] transition-[background-color] duration-100",
                                     {
-                                        hover: "bg-element-hover transition-none"
+                                        hover: "bg-highlighted/8 transition-none"
                                     }
                                 )}
                             >
@@ -60,9 +60,7 @@ function Projects() {
                                             ? "Projects"
                                             : undefined
                                     }
-                                    className={cn(
-                                        "group flex-1 bg-transparent"
-                                    )}
+                                    className={cn("flex-1 bg-transparent")}
                                 />
                                 <ArrowRight
                                     className={cn(
