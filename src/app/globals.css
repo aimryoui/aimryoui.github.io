@@ -209,7 +209,7 @@
     } */
     /* ::view-transition-new(pattern), */
     ::view-transition-group(sidebar) {
-        @apply !z-50 !animate-none;
+        @apply !animate-none;
     }
     /* Prevent main from being fade in/out while keep text transitioning */
     /* ::view-transition-group(main) {

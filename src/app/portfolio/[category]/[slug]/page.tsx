@@ -8,6 +8,7 @@ import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { Bold, Highlight, Text } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
+import { formatOrdinal } from "@/helpers/format-ordinal"
 import {
     getCategoryPath,
     getProjectPath,
@@ -21,7 +22,6 @@ import ProjectHeader from "@/portfolio/_components/project-header"
 import Footer from "@/portfolio/_sections/footer"
 
 import { projects } from "~/.velite"
-import { formatOrdinal } from "~/src/helpers/format-ordinal"
 
 interface ProjectPageProps {
     params: Promise<{
