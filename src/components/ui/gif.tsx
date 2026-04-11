@@ -1,17 +1,20 @@
-import { AnimatedMedia } from "@/components/ui/animated-media"
+import {
+    AnimatedMedia,
+    type AnimatedMediaProps
+} from "@/components/ui/animated-media"
 
-interface GifProps {
-    src: string
-    alt: string
-    className?: string
-}
-
-export function Gif({ src, alt, className }: GifProps) {
+export function Gif({
+    src,
+    alt,
+    rounded,
+    className
+}: Pick<AnimatedMediaProps, "src" | "alt" | "rounded" | "className">) {
     return (
         <AnimatedMedia
             src={src}
             alt={alt}
             className={className}
+            rounded={rounded}
             autoplay={true}
             autoPlay={true}
             loop={true}
