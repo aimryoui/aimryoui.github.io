@@ -51,6 +51,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     if (!group) notFound()
 
     return (
+        // <ViewTransition name="main">
         <main className={cn("relative flex-1")}>
             <FlashOverlay />
             <Space />
@@ -93,28 +94,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 md: "border-none"
                             })}
                         >
-                            <NextLink
+                            <ProjectCard
                                 href={getProjectPath(project)}
-                                className={cn(
-                                    "group flex h-20 items-center justify-between gap-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
-                                    {
-                                        hover: "bg-element-hover transition-none"
-                                    }
-                                )}
-                            >
-                                <div className={cn("flex flex-col gap-1")}>
-                                    <ProjectCard project={project} />
-                                </div>
-                                <ArrowRight
-                                    className={cn(
-                                        "will-change-[color] transition-[color] duration-100",
-                                        {
-                                            "group-hover":
-                                                "text-highlighted transition-none"
-                                        }
-                                    )}
-                                />
-                            </NextLink>
+                                project={project}
+                            />
                             {index < group.projects.length - 1 && (
                                 <SectionLine />
                             )}
@@ -303,5 +286,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
             <Footer />
         </main>
+        // </ViewTransition>
     )
 }

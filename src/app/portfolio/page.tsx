@@ -22,6 +22,7 @@ export default function Portfolio() {
         <>
             <AnchorPolyfill />
             <NoAIOverlay />
+            {/* <ViewTransition name="main"> */}
             <main className={cn("relative flex-1")}>
                 <FlashOverlay />
                 <Space />
@@ -182,7 +183,10 @@ export default function Portfolio() {
                         )}
                     >
                         <TooltipTrigger
-                            payload={{ content: "Việt Nam", sideOffset: 19 }}
+                            payload={{
+                                content: "Việt Nam",
+                                sideOffset: 19
+                            }}
                             render={
                                 <Link
                                     href="https://wikipedia.org/wiki/Vietnam"
@@ -260,6 +264,7 @@ export default function Portfolio() {
 
                 <Footer />
             </main>
+            {/* </ViewTransition> */}
         </>
     )
 }

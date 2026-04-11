@@ -1,7 +1,7 @@
 "use client"
 
 import { Fragment } from "react"
-import Link from "next/link"
+import NextLink from "next/link"
 
 import { ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
@@ -38,7 +38,7 @@ function Projects() {
                 {projectGroups.map((group, groupIndex) => (
                     <Fragment key={group.id}>
                         <section className={cn("bg-background")}>
-                            <Link
+                            <NextLink
                                 href={getCategoryPath(group.id)}
                                 className={cn(
                                     "group flex items-center justify-between gap-4 bg-background pe-6 will-change-[background-color] transition-[background-color] duration-100",
@@ -73,7 +73,7 @@ function Projects() {
                                         }
                                     )}
                                 />
-                            </Link>
+                            </NextLink>
                             <SectionLine />
                             <div
                                 className={cn(
@@ -89,34 +89,10 @@ function Projects() {
                                             md: "border-none"
                                         })}
                                     >
-                                        <Link
+                                        <ProjectCard
                                             href={getProjectPath(project)}
-                                            className={cn(
-                                                "group flex h-20 items-center justify-between gap-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
-                                                {
-                                                    hover: "bg-element-hover transition-none"
-                                                }
-                                            )}
-                                        >
-                                            <div
-                                                className={cn(
-                                                    "flex flex-col gap-1"
-                                                )}
-                                            >
-                                                <ProjectCard
-                                                    project={project}
-                                                />
-                                            </div>
-                                            <ArrowRight
-                                                className={cn(
-                                                    "will-change-[color] transition-[color] duration-100",
-                                                    {
-                                                        "group-hover":
-                                                            "text-highlighted transition-none"
-                                                    }
-                                                )}
-                                            />
-                                        </Link>
+                                            project={project}
+                                        />
                                         {index < group.projects.length - 1 && (
                                             <SectionLine />
                                         )}

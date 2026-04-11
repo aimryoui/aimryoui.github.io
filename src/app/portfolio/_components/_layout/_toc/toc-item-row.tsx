@@ -1,7 +1,7 @@
 "use client"
 
 import { memo } from "react"
-import Link from "next/link"
+import NextLink from "next/link"
 
 import { ChevronDown } from "lucide-react"
 import { type Variants } from "motion/react"
@@ -23,6 +23,14 @@ interface TocItemProps {
     hidden?: boolean
 }
 
+interface TocItemRowProps {
+    mode: PortfolioMode
+    item: TocItemProps
+    isActive: boolean
+    onClick: (item: TocItemProps) => void
+    onSameLinkClick: () => void
+}
+
 const liVariants: Variants = {
     hidden: { x: 10, opacity: 0 },
     visible: {
@@ -33,23 +41,11 @@ const liVariants: Variants = {
 }
 
 const TocItemRow = memo(
-    ({
-        mode,
-        item,
-        isActive,
-        onClick,
-        onSameLinkClick
-    }: {
-        mode: PortfolioMode
-        item: TocItemProps
-        isActive: boolean
-        onClick: (item: TocItemProps) => void
-        onSameLinkClick: () => void
-    }) => {
+    ({ mode, item, isActive, onClick, onSameLinkClick }: TocItemRowProps) => {
         const href = item.href ?? `#${item.id}`
 
         return (
-            // <ViewTransition name={`toc-item-${item.id}`}>
+            // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
             <m.li
                 variants={liVariants}
                 className={cn(
@@ -64,7 +60,7 @@ const TocItemRow = memo(
                         }
                 )}
             >
-                <Link
+                <NextLink
                     href={href}
                     data-toc-id={item.id}
                     onClick={(e) => {
@@ -155,7 +151,7 @@ const TocItemRow = memo(
                             )}
                         </div>
                     )}
-                </Link>
+                </NextLink>
                 {item.depth === 2 && item.id !== "outlines" && (
                     <div
                         className={cn(

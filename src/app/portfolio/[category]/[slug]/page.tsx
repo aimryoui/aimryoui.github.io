@@ -21,6 +21,7 @@ import ProjectHeader from "@/portfolio/_components/project-header"
 import Footer from "@/portfolio/_sections/footer"
 
 import { projects } from "~/.velite"
+import { formatOrdinal } from "~/src/helpers/format-ordinal"
 
 interface ProjectPageProps {
     params: Promise<{
@@ -100,6 +101,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         !next && groupIndex < groups.length - 1 ? groups[groupIndex + 1] : null
 
     return (
+        // <ViewTransition name="main">
         <main className={cn("relative flex-1")}>
             <FlashOverlay />
             <section>
@@ -185,7 +187,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             }
                                         )}
                                     >
-                                        {prev.projectName}
+                                        {formatOrdinal(prev.projectName)}
                                     </Bold>
                                     <Text
                                         className={cn(
@@ -255,7 +257,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             }
                                         )}
                                     >
-                                        {next.projectName}
+                                        {formatOrdinal(next.projectName)}
                                     </Bold>
                                     <Text
                                         className={cn(
@@ -341,5 +343,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
             <Footer />
         </main>
+        // </ViewTransition>
     )
 }

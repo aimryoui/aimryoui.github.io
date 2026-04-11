@@ -183,6 +183,9 @@
     @view-transition {
         navigation: auto;
     }
+    /* :root {
+        view-transition-name: none;
+    } */
 
     ::view-transition-group(*) {
         @apply animation-duration-700 animation-ease-in-out;
@@ -198,7 +201,23 @@
         @apply z-50 !animate-none !animation-duration-0 !animation-delay-0;
     } */
     /* ::view-transition-group(pattern) {
-        @apply -z-infinite !animate-none !animation-duration-0 !animation-delay-0;
+        @apply !-z-50 !animate-none;
+    } */
+    /* ::view-transition-new(pattern),
+    ::view-transition-old(pattern) {
+        @apply fixed inset-0 size-full !opacity-100;
+    } */
+    /* ::view-transition-new(pattern), */
+    ::view-transition-group(sidebar) {
+        @apply !z-50 !animate-none;
+    }
+    /* Prevent main from being fade in/out while keep text transitioning */
+    /* ::view-transition-group(main) {
+        @apply !animate-none;
+    } */
+    /* Prevent old snapshot from being visible while keep text transitioning */
+    /* ::view-transition-old(main) {
+        @apply !opacity-0;
     } */
 
     @media (prefers-reduced-motion: reduce) {

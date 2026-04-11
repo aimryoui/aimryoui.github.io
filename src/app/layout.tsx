@@ -166,18 +166,16 @@ export default function RootLayout({
                 className={cn(
                     "relative flex bg-background px-6 -tracking-[.03em] text-muted-foreground",
                     // Fix tooltip viewport transition overflow bug
-                    "overflow-x-hidden"
+                    "overflow-x-hidden",
+                    {
+                        before: "absolute inset-0 size-full bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]"
+                    }
                 )}
             >
                 <ThemeProvider disableTransitionOnChange>
                     <ProgressProvider>
                         <TooltipProvider>
-                            <div
-                                className={cn(
-                                    "fixed inset-0 -z-50 size-full",
-                                    "bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]"
-                                )}
-                            />
+                            {/* <BackgroundPattern /> */}
                             <MarginLine />
                             <MarginLine className="order-last" />
                             {children}
@@ -188,3 +186,16 @@ export default function RootLayout({
         </html>
     )
 }
+
+// function BackgroundPattern() {
+//     return (
+//         <ViewTransition name="pattern">
+//             <div
+//                 className={cn(
+//                     "fixed inset-0 -z-50 size-full",
+//                     "bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]"
+//                 )}
+//             />
+//         </ViewTransition>
+//     )
+// }

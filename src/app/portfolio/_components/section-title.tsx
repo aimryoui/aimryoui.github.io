@@ -34,25 +34,39 @@ function SectionTitle({
                     {note}
                 </span>
             )}
-            <ViewTransition
-                name={formatViewTransitionName(`overall-category-${title}`)}
-            >
-                <H2
-                    id={id}
-                    className={cn(
-                        "w-fit text-foreground will-change-[color] transition-[color] duration-100",
-                        {
-                            "group-hover": "text-highlighted transition-none"
-                        }
-                    )}
-                >
-                    {order && (
-                        <Highlight>{String(order).padStart(2, "0")}.</Highlight>
-                    )}{" "}
-                    {title}.
-                </H2>
-            </ViewTransition>
+            <Title id={id} order={order} title={title} />
         </div>
+    )
+}
+
+function Title({
+    id,
+    order,
+    title
+}: {
+    id: string
+    order?: number
+    title: string
+}) {
+    return (
+        <ViewTransition
+            name={formatViewTransitionName(`overall-category-${title}`)}
+        >
+            <H2
+                id={id}
+                className={cn(
+                    "w-fit text-foreground will-change-[color] transition-[color] duration-100",
+                    {
+                        "group-hover": "text-highlighted transition-none"
+                    }
+                )}
+            >
+                {order && (
+                    <Highlight>{String(order).padStart(2, "0")}.</Highlight>
+                )}{" "}
+                {title}.
+            </H2>
+        </ViewTransition>
     )
 }
 

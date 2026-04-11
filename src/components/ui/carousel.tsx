@@ -16,6 +16,7 @@ import Accessibility from "embla-carousel-accessibility"
 import useEmblaCarousel, {
     type UseEmblaCarouselType
 } from "embla-carousel-react"
+import Ssr from "embla-carousel-ssr"
 import WheelGestures from "embla-carousel-wheel-gestures"
 
 import { ArrowLeft, ArrowRight, Refresh } from "@/components/icons/icons"
@@ -149,18 +150,25 @@ function Carousel({
     const carouselId = useId()
 
     const [activePlugins, setActivePlugins] = useState(
-        () => plugins ?? [WheelGestures({ wheelDraggingClass: "dragging" })]
+        () =>
+            plugins ?? [
+                WheelGestures({ wheelDraggingClass: "dragging" }),
+                Ssr({
+                    slideSizes: slides.fill(75)
+                    // breakpoints: {
+                    //     "(max-width: 48rem)": {
+                    //         slideSizes: slides.fill(100)
+                    //     }
+                    // }
+                })
+            ]
     )
 
     const [emblaRef, emblaApi, emblaServerApi] = useEmblaCarousel(
         {
             ...opts,
-            ssr: slides.fill(75),
             breakpoints: {
                 "(prefers-reduced-motion: reduce)": { duration: 0 }
-                // "(min-width: 48rem)": {
-                //     ssr: slides.fill(100)
-                // }
             },
             containScroll: false,
             skipSnaps: true,
@@ -310,10 +318,12 @@ function Carousel({
         <>
             {renderSsrStyles && (
                 <style>
-                    {emblaServerApi.ssrStyles(
-                        `#${carouselId}`,
-                        "[data-slot='carousel-item']"
-                    )}
+                    {emblaServerApi
+                        .plugins()
+                        .ssr?.getStyles(
+                            `#${carouselId}`,
+                            "[data-slot='carousel-item']"
+                        )}
                 </style>
             )}
             <CarouselContext.Provider value={contextValue}>

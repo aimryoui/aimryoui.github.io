@@ -53,13 +53,7 @@ function ProjectHeader({
                         id={headerId}
                         className={cn("w-fit text-pretty text-foreground")}
                     >
-                        <ViewTransition
-                            name={formatViewTransitionName(
-                                `project-${projectName}`
-                            )}
-                        >
-                            <span>{formatOrdinal(projectName)}</span>
-                        </ViewTransition>
+                        <ProjectName projectName={projectName} />
                         {!(
                             TRAILING_REGEX.test(projectName) ||
                             MEDIA_REGEX.test(projectName)
@@ -73,15 +67,10 @@ function ProjectHeader({
                             </span>
                         )}
                     </H3>
-                    <ViewTransition
-                        name={formatViewTransitionName(
-                            `category-${projectName}-${category}`
-                        )}
-                    >
-                        <Highlight className={cn("w-fit font-normal")}>
-                            {category}
-                        </Highlight>
-                    </ViewTransition>
+                    <ProjectCategory
+                        projectName={projectName}
+                        category={category}
+                    />
                 </div>
                 <ElementLine
                     className={cn({
@@ -158,6 +147,36 @@ function ProjectHeader({
                 </>
             )}
         </div>
+    )
+}
+
+function ProjectName({ projectName }: { projectName: string }) {
+    return (
+        <ViewTransition
+            name={formatViewTransitionName(`project-${projectName}`)}
+        >
+            <span>{formatOrdinal(projectName)}</span>
+        </ViewTransition>
+    )
+}
+
+function ProjectCategory({
+    projectName,
+    category
+}: {
+    projectName: string
+    category: string
+}) {
+    return (
+        <ViewTransition
+            name={formatViewTransitionName(
+                `category-${projectName}-${category}`
+            )}
+        >
+            <Highlight className={cn("w-fit font-normal")}>
+                {category}
+            </Highlight>
+        </ViewTransition>
     )
 }
 

@@ -111,7 +111,7 @@ const SEARCH_DELAY = 500
 
 export function TableOfContents({ mode, items }: TocProps) {
     const [query, setQuery] = useState("")
-    // const [isPending, startTransition] = useTransition()
+    // const [_, startTransition] = useTransition()
     const [debouncedQuery, setDebouncedQuery] = useState("")
     const [hasPageMounted, setHasPageMounted] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
