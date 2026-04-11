@@ -1600,7 +1600,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function Others({ className }: React.ComponentProps<"svg">) {
+function Miscellaneous({ className }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1681,8 +1681,8 @@ export {
     Animations,
     Branding,
     Events,
+    Miscellaneous,
     OtherCourseProjects,
-    Others,
     Photography,
     ShortFilms,
     UIUX,

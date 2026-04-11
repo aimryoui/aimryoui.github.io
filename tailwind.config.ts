@@ -19,6 +19,7 @@ import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
 import all from "./src/lib/tailwindcss-plugins/variants/all"
+import has from "./src/lib/tailwindcss-plugins/variants/has"
 import not from "./src/lib/tailwindcss-plugins/variants/not"
 import nth from "./src/lib/tailwindcss-plugins/variants/nth"
 import slotted from "./src/lib/tailwindcss-plugins/variants/slotted"
@@ -264,6 +265,7 @@ export default {
         transitionBehavior,
 
         all,
+        has,
         not,
         nth,
         slotted,

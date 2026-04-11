@@ -2,8 +2,8 @@ import {
     Animations,
     Branding,
     Events,
+    Miscellaneous,
     OtherCourseProjects,
-    Others,
     Photography,
     ShortFilms,
     UIUX,
@@ -57,9 +57,9 @@ export const PROJECT_CATEGORIES: Record<string, CategoryConfig> = {
         note: "Typography / Infographics / Illustrations",
         icons: <OtherCourseProjects />
     },
-    others: {
-        title: "Others",
+    miscellaneous: {
+        title: "Miscellaneous",
         note: "Miscellaneous Projects",
-        icons: <Others />
+        icons: <Miscellaneous />
     }
 }

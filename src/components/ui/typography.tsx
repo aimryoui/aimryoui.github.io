@@ -162,7 +162,8 @@ function Link({
             className={cn(
                 "w-fit cursor-pointer font-bold text-foreground underline",
                 {
-                    hover: "decoration-current decoration-solid"
+                    hover: "decoration-current decoration-solid",
+                    "focus-visible": "text-highlighted"
                 },
                 highlight && "text-highlighted",
                 italic && "italic",
