@@ -131,7 +131,7 @@ const sections: Section[] = [
                 endDate: "04.2026",
                 position: "Freelance Designer",
                 organization: {
-                    text: "Cường Khanh Advertising",
+                    text: "Cường Khanh Advertising Co., Ltd",
                     url: "https://cuongkhanhadv.com.vn",
                     ariaLabel: "Go to the Cường Khanh Advertising website"
                 }
@@ -141,7 +141,7 @@ const sections: Section[] = [
                 endDate: "01.2026",
                 position: "Freelance Designer",
                 organization: {
-                    text: "Nguyên Liệu 24H",
+                    text: "Nguyên Liệu 24H Co., Ltd",
                     url: "https://masothue.com/0319246054-cong-ty-tnhh-nguyen-lieu-24h",
                     ariaLabel: "Go see the Nguyên Liệu 24H information"
                 }
@@ -233,12 +233,24 @@ function Experience() {
                 <Fragment key={section.section}>
                     <div
                         data-slot="table-container"
-                        className="relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background pb-3 pt-3.25"
+                        className={cn(
+                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background pb-3 pt-3.25"
+                        )}
                     >
-                        <Table className="col-span-full col-start-2 grid table-fixed">
+                        <Table
+                            className={cn(
+                                "col-span-full col-start-2 grid table-fixed",
+                                {
+                                    lg: "col-start-1 ps-6"
+                                }
+                            )}
+                        >
                             <TableCaption
                                 className={cn(
-                                    "absolute left-6 whitespace-pre-line"
+                                    "absolute left-6 whitespace-pre-line",
+                                    {
+                                        lg: "static pb-3.25 font-bold"
+                                    }
                                 )}
                             >
                                 {section.section}
@@ -250,15 +262,19 @@ function Experience() {
                                 <col span={2} />
                             </colgroup>
 
-                            <TableHeader className="sr-only">
-                                <TableRow>
+                            <TableHeader className={cn("sr-only grid")}>
+                                <TableRow
+                                    className={cn(
+                                        "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                    )}
+                                >
                                     <TableHead className="px-0">
                                         Period
                                     </TableHead>
                                     <TableHead className="px-0">
                                         Position
                                     </TableHead>
-                                    <TableHead className="px-0">
+                                    <TableHead className="col-span-2 px-0">
                                         Organization
                                     </TableHead>
                                 </TableRow>
@@ -268,7 +284,9 @@ function Experience() {
                                 {section.items.map((place, placeindex) => (
                                     <TableRow
                                         key={placeindex}
-                                        className="grid flex-1 grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent"
+                                        className={cn(
+                                            "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent"
+                                        )}
                                     >
                                         <TableCell
                                             className={cn(
@@ -282,7 +300,7 @@ function Experience() {
 
                                         <TableCell
                                             className={cn(
-                                                "p-0 align-top font-bold text-foreground"
+                                                "flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top font-bold text-foreground"
                                             )}
                                         >
                                             {place.position}{" "}
@@ -293,7 +311,9 @@ function Experience() {
 
                                         <TableCell
                                             colSpan={2}
-                                            className={cn("p-0 align-top")}
+                                            className={cn(
+                                                "col-span-2 p-0 pe-6 align-top"
+                                            )}
                                         >
                                             {place.organization && (
                                                 <Link

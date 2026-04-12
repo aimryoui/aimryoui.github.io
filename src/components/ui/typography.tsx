@@ -204,17 +204,22 @@ function At({
     mono
 }: React.ComponentProps<"span"> & TextProps) {
     return (
-        <span
-            className={cn(
-                "inline-block -translate-y-[0.125em] font-normal text-muted-foreground",
-                highlight && "text-highlighted",
-                italic && "italic",
-                mono && "font-mono",
-                className
-            )}
-        >
-            @
-        </span>
+        <>
+            <span
+                aria-hidden="true"
+                role="presentation"
+                className={cn(
+                    "inline-block -translate-y-[0.125em] font-normal text-muted-foreground",
+                    highlight && "text-highlighted",
+                    italic && "italic",
+                    mono && "font-mono",
+                    className
+                )}
+            >
+                @
+            </span>
+            <span className="sr-only">at</span>
+        </>
     )
 }
 

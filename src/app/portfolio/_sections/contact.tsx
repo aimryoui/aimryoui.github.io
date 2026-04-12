@@ -46,7 +46,7 @@ const sections: Section[] = [
                 ),
                 links: {
                     text: siteConfig.tel.fullWithBrackets,
-                    url: siteConfig.link.zalo
+                    url: siteConfig.link.tel
                 }
             },
             {
@@ -74,9 +74,8 @@ const sections: Section[] = [
                     </svg>
                 ),
                 links: {
-                    text: "0817 818 898",
-                    url: siteConfig.link.zalo,
-                    hidden: true
+                    text: siteConfig.tel.spaced,
+                    url: siteConfig.link.zalo
                 },
                 prefer: true
             }

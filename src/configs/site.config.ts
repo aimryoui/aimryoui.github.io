@@ -31,9 +31,7 @@ export const siteConfig = {
     tel: {
         phone: "0817818898",
         get spaced() {
-            return this.phone
-                .replace(/^0?/, "")
-                .replace(/(\d{3})(\d{3})(\d{3})/, "$1 $2 $3")
+            return this.phone.replace(/(\d{3})(\d{3})(\d{3})/, "$1 $2 $3")
         },
         get full() {
             return (
@@ -66,6 +64,7 @@ export const siteConfig = {
     // Social media
     username: "hoangnhan2ka3",
     link: {
+        tel: "tel:+84817818898",
         facebook: "https://facebook.com/hoangnhan2ka3",
         instagram: "https://instagram.com/hoangnhan2ka3",
         threads: "https://threads.net/u/hoangnhan2ka3",
