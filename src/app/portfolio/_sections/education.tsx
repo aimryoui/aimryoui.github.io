@@ -26,7 +26,7 @@ function Education() {
             <div
                 data-slot="table-container"
                 className={cn(
-                    "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background pb-3.5 pt-3"
+                    "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3"
                 )}
             >
                 <Table
@@ -55,7 +55,7 @@ function Education() {
                             <TableHead className="col-span-2 px-0">
                                 Name
                             </TableHead>
-                            <TableHead className="px-0">Information</TableHead>
+                            <TableHead className="px-0">Detail</TableHead>
                         </TableRow>
                     </TableHeader>
 

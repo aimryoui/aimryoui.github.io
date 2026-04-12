@@ -234,7 +234,7 @@ function Experience() {
                     <div
                         data-slot="table-container"
                         className={cn(
-                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background pb-3.5 pt-3"
+                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3"
                         )}
                     >
                         <Table
@@ -275,9 +275,9 @@ function Experience() {
                             </TableHeader>
 
                             <TableBody className="grid gap-y-2">
-                                {section.items.map((place, placeindex) => (
+                                {section.items.map((place, index) => (
                                     <TableRow
-                                        key={placeindex}
+                                        key={index}
                                         className={cn(
                                             "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
                                         )}
@@ -339,7 +339,7 @@ function Experience() {
                                     <TableRow className="hover:bg-transparent">
                                         <TableCell
                                             colSpan={4}
-                                            className="flex flex-col gap-y-2 p-0 pt-3.5 align-top"
+                                            className="flex flex-col gap-y-2 p-0 pt-1.5 align-top"
                                         >
                                             <SectionLine />
                                             And a bunch of University course

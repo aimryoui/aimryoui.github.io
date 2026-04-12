@@ -3,7 +3,16 @@ import { Fragment } from "react"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { Bold, Highlight, Link, Text } from "@/components/ui/typography"
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow
+} from "@/components/ui/table"
+import { Link } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
@@ -26,7 +35,7 @@ interface Section {
 
 const sections: Section[] = [
     {
-        section: "phone",
+        section: "Phone",
         platforms: [
             {
                 title: "Phone",
@@ -82,7 +91,7 @@ const sections: Section[] = [
         ]
     },
     {
-        section: "mail",
+        section: "E-Mail",
         platforms: [
             {
                 title: "Email",
@@ -113,7 +122,7 @@ const sections: Section[] = [
         ]
     },
     {
-        section: "social",
+        section: "Social",
         platforms: [
             {
                 title: "Facebook / Messenger",
@@ -180,7 +189,7 @@ const sections: Section[] = [
         ]
     },
     {
-        section: "messaging",
+        section: "Messaging",
         platforms: [
             {
                 title: "Telegram",
@@ -231,7 +240,7 @@ const sections: Section[] = [
         ]
     },
     {
-        section: "artwork",
+        section: "Artwork",
         platforms: [
             {
                 title: "Behance",
@@ -288,55 +297,104 @@ function Contact() {
                 {sections.map((section, index, arr) => (
                     <Fragment key={section.section}>
                         <div
+                            data-slot="table-container"
                             className={cn(
-                                "relative grid grid-cols-5 gap-6 gap-y-3 bg-background pb-4 pt-3.25"
+                                "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3"
                             )}
                         >
-                            {section.platforms.map(
-                                (platform, platformindex) => (
-                                    <Fragment key={platformindex}>
-                                        <Highlight className={cn("ps-6")}>
-                                            {platform.icon}
-                                        </Highlight>
-                                        <Text>{platform.title}</Text>
-                                        <div
-                                            className={cn(
-                                                "col-span-3 grid grid-cols-2 gap-6 gap-y-3 pe-6"
-                                            )}
-                                        >
-                                            <Link
-                                                href={platform.links.url}
-                                                openInNewTab
-                                                className={
-                                                    platform.links.hidden
-                                                        ? cn("text-transparent")
-                                                        : undefined
-                                                }
-                                            >
-                                                {platform.links.text}
-                                            </Link>
+                            <Table
+                                className={cn(
+                                    "col-span-full col-start-2 grid table-fixed gap-y-2.5",
+                                    {
+                                        lg: "col-start-1 ps-6"
+                                    }
+                                )}
+                            >
+                                <TableCaption
+                                    className={cn(
+                                        "sr-only absolute left-6 whitespace-pre-line",
+                                        {
+                                            lg: "static font-bold"
+                                        }
+                                    )}
+                                >
+                                    {section.section}
+                                </TableCaption>
 
-                                            {platform.prefer ? (
-                                                <Highlight
+                                <TableHeader className={cn("sr-only grid")}>
+                                    <TableRow
+                                        className={cn(
+                                            "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                        )}
+                                    >
+                                        <TableHead className="px-0">
+                                            Name
+                                        </TableHead>
+                                        <TableHead className="px-0">
+                                            Link
+                                        </TableHead>
+                                        <TableHead className="col-span-2 px-0">
+                                            Prefer?
+                                        </TableHead>
+                                    </TableRow>
+                                </TableHeader>
+
+                                <TableBody className="grid gap-y-2">
+                                    {section.platforms.map(
+                                        (platform, index) => (
+                                            <TableRow
+                                                key={index}
+                                                className={cn(
+                                                    "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                                )}
+                                            >
+                                                <TableCell
                                                     className={cn(
-                                                        "font-normal"
+                                                        "p-0 align-top"
                                                     )}
                                                 >
-                                                    Prefer
-                                                </Highlight>
-                                            ) : (
-                                                <Bold
+                                                    <span
+                                                        className={cn(
+                                                            "absolute left-6 text-highlighted"
+                                                        )}
+                                                    >
+                                                        {platform.icon}
+                                                    </span>
+                                                    {platform.title}
+                                                </TableCell>
+                                                <TableCell
                                                     className={cn(
-                                                        "sr-only font-normal"
+                                                        "p-0 align-top"
                                                     )}
                                                 >
-                                                    Optional
-                                                </Bold>
-                                            )}
-                                        </div>
-                                    </Fragment>
-                                )
-                            )}
+                                                    <Link
+                                                        href={
+                                                            platform.links.url
+                                                        }
+                                                        openInNewTab
+                                                        translate="no"
+                                                        className={cn(
+                                                            platform.links
+                                                                .hidden &&
+                                                                "text-transparent"
+                                                        )}
+                                                    >
+                                                        {platform.links.text}
+                                                    </Link>
+                                                </TableCell>
+                                                <TableCell
+                                                    className={cn(
+                                                        "col-span-2 p-0 ps-12 align-top text-highlighted"
+                                                    )}
+                                                >
+                                                    {platform.prefer &&
+                                                        "Prefer"}
+                                                </TableCell>
+                                            </TableRow>
+                                        )
+                                    )}
+                                </TableBody>
+                            </Table>
                         </div>
                         {index < arr.length - 1 &&
                             arr[index + 1].section !== section.section && (

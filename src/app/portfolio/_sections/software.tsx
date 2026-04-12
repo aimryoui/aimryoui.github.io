@@ -75,7 +75,7 @@ function Software() {
                     <div
                         data-slot="table-container"
                         className={cn(
-                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background pb-3.5 pt-3"
+                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3"
                         )}
                     >
                         <Table
@@ -104,9 +104,9 @@ function Software() {
                                     )}
                                 >
                                     {section.frequencies.map(
-                                        (frequency, frequencyindex) => (
+                                        (frequency, index) => (
                                             <TableHead
-                                                key={frequencyindex}
+                                                key={index}
                                                 className="col-span-2 px-0"
                                             >
                                                 {frequency.title}
@@ -123,9 +123,9 @@ function Software() {
                                     )}
                                 >
                                     {section.frequencies.map(
-                                        (frequency, frequencyindex) => (
+                                        (frequency, index) => (
                                             <TableCell
-                                                key={frequencyindex}
+                                                key={index}
                                                 className={cn(
                                                     "col-span-2 p-0 align-top font-bold text-foreground"
                                                 )}
