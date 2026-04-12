@@ -39,14 +39,14 @@ function ProjectHeader({
             >
                 <span
                     className={cn(
-                        "absolute -top-10 left-6 font-mono uppercase tracking-normal"
+                        "absolute -top-9.5 left-6 font-mono uppercase tracking-normal"
                     )}
                 >
                     {type}
                 </span>
                 <div
                     className={cn(
-                        "flex flex-1 flex-col gap-2 px-6 pb-3.75 pt-3.25"
+                        "flex flex-1 flex-col gap-2 px-6 pb-4 pt-3.25"
                     )}
                 >
                     <H3
@@ -81,7 +81,7 @@ function ProjectHeader({
                 <ElementLine className={cn("md:hidden")} />
                 <div
                     className={cn(
-                        "flex flex-1 flex-col justify-between text-pretty px-6 pb-3.75 pt-3.25 md:text-sm"
+                        "flex flex-1 flex-col justify-between text-pretty px-6 pb-4 pt-3.25 md:text-sm"
                     )}
                 >
                     <Highlight
@@ -104,7 +104,7 @@ function ProjectHeader({
                 </div>
                 {tools.length > 0 && (
                     <div
-                        className={cn("absolute -top-10 right-4.5 flex gap-2")}
+                        className={cn("absolute -top-9.5 right-4.5 flex gap-2")}
                     >
                         {tools.map((key) => {
                             const tool = ICON[key]
@@ -131,9 +131,7 @@ function ProjectHeader({
                 <>
                     <SectionLine />
                     <div
-                        className={cn(
-                            "flex flex-col gap-2 px-6 pb-3.75 pt-3.25"
-                        )}
+                        className={cn("flex flex-col gap-2 px-6 pb-4 pt-3.25")}
                     >
                         <Bold className={cn("text-pretty")}>
                             {formatOrdinal(detail.description)}

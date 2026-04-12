@@ -168,7 +168,8 @@ export default function RootLayout({
                     // Fix tooltip viewport transition overflow bug
                     "overflow-x-hidden",
                     {
-                        before: "absolute inset-0 size-full bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]"
+                        before: "absolute inset-0 size-full bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]",
+                        selection: "bg-highlighted/20 dark:bg-highlighted/30"
                     }
                 )}
             >

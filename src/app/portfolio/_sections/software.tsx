@@ -3,8 +3,17 @@ import { Fragment } from "react"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow
+} from "@/components/ui/table"
 import { TooltipTrigger } from "@/components/ui/tooltip"
-import { Bold, Highlight, Link, Text } from "@/components/ui/typography"
+import { Link } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
 import { TOOL_ICONS, type ToolProps } from "@/portfolio/_configs/tools"
@@ -64,61 +73,122 @@ function Software() {
             {sections.map((section, index, arr) => (
                 <Fragment key={section.section}>
                     <div
+                        data-slot="table-container"
                         className={cn(
-                            "relative grid grid-cols-5 gap-6 gap-y-3 bg-background pb-3.75 pt-3.25",
-                            "[&>*:first-child]:ps-6 [&>*:last-child]:pe-6"
+                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background pb-3.5 pt-3"
                         )}
                     >
-                        <Highlight className={cn("font-normal")}>
-                            {section.section}
-                        </Highlight>
+                        <Table
+                            className={cn(
+                                "col-span-full col-start-2 grid table-fixed gap-y-2 pb-1",
+                                {
+                                    lg: "col-start-1 ps-6"
+                                }
+                            )}
+                        >
+                            <TableCaption
+                                className={cn(
+                                    "absolute left-6 whitespace-pre-line",
+                                    {
+                                        lg: "static font-bold"
+                                    }
+                                )}
+                            >
+                                {section.section}
+                            </TableCaption>
 
-                        {section.frequencies.map(
-                            (frequency, frequencyindex) => (
-                                <div
-                                    key={frequencyindex}
+                            <TableHeader className={cn("grid")}>
+                                <TableRow
                                     className={cn(
-                                        "col-span-2 flex flex-col gap-2"
+                                        "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
                                     )}
                                 >
-                                    <Text>{frequency.title}</Text>
-                                    <Bold className={cn("sr-only")}>
-                                        {frequency.tools.map(
-                                            (tool, toolindex) => (
-                                                <Fragment key={toolindex}>
-                                                    {tool.label}
-                                                    {toolindex <
-                                                        frequency.tools.length -
-                                                            1 && ", "}
-                                                </Fragment>
-                                            )
-                                        )}
-                                    </Bold>
-                                    <div className={cn("flex gap-3")}>
-                                        {frequency.tools.map(
-                                            (tool, toolindex) => (
-                                                <Fragment key={toolindex}>
-                                                    <TooltipTrigger
-                                                        payload={tool.label}
-                                                        render={
-                                                            <Link
-                                                                openInNewTab
-                                                                href={tool.url}
+                                    {section.frequencies.map(
+                                        (frequency, frequencyindex) => (
+                                            <TableHead
+                                                key={frequencyindex}
+                                                className="col-span-2 px-0"
+                                            >
+                                                {frequency.title}
+                                            </TableHead>
+                                        )
+                                    )}
+                                </TableRow>
+                            </TableHeader>
+
+                            <TableBody className="grid gap-y-2">
+                                <TableRow
+                                    className={cn(
+                                        "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                    )}
+                                >
+                                    {section.frequencies.map(
+                                        (frequency, frequencyindex) => (
+                                            <TableCell
+                                                key={frequencyindex}
+                                                className={cn(
+                                                    "col-span-2 p-0 align-top font-bold text-foreground"
+                                                )}
+                                            >
+                                                <span className={cn("sr-only")}>
+                                                    {frequency.tools.map(
+                                                        (tool, toolindex) => (
+                                                            <Fragment
+                                                                key={toolindex}
                                                             >
-                                                                {tool.icon}
-                                                                <span className="sr-only">
-                                                                    {tool.label}
-                                                                </span>
-                                                            </Link>
-                                                        }
-                                                    />
-                                                </Fragment>
-                                            )
-                                        )}
-                                    </div>
-                                </div>
-                            )
-                        )}
+                                                                {tool.label}
+                                                                {toolindex <
+                                                                    frequency
+                                                                        .tools
+                                                                        .length -
+                                                                        1 &&
+                                                                    ", "}
+                                                            </Fragment>
+                                                        )
+                                                    )}
+                                                </span>
+                                                <div
+                                                    aria-hidden="true"
+                                                    role="presentation"
+                                                    className={cn("flex gap-3")}
+                                                >
+                                                    {frequency.tools.map(
+                                                        (tool, toolindex) => (
+                                                            <Fragment
+                                                                key={toolindex}
+                                                            >
+                                                                <TooltipTrigger
+                                                                    payload={
+                                                                        tool.label
+                                                                    }
+                                                                    render={
+                                                                        <Link
+                                                                            openInNewTab
+                                                                            href={
+                                                                                tool.url
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                tool.icon
+                                                                            }
+                                                                            <span className="sr-only">
+                                                                                {
+                                                                                    tool.label
+                                                                                }
+                                                                            </span>
+                                                                        </Link>
+                                                                    }
+                                                                />
+                                                            </Fragment>
+                                                        )
+                                                    )}
+                                                </div>
+                                            </TableCell>
+                                        )
+                                    )}
+                                </TableRow>
+                            </TableBody>
+                        </Table>
                     </div>
                     {index < arr.length - 1 &&
                         arr[index + 1].section !== section.section && (

@@ -21,7 +21,7 @@ function Footer() {
                 <SectionLine />
                 <Divider
                     className={cn(
-                        "grid h-auto place-items-center bg-background px-4 py-3 text-sm"
+                        "grid h-auto place-items-center bg-background px-4 pb-3.5 pt-3 text-sm"
                     )}
                 >
                     <p className="text-balance text-center">

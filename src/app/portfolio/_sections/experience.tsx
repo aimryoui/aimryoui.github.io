@@ -234,12 +234,12 @@ function Experience() {
                     <div
                         data-slot="table-container"
                         className={cn(
-                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background pb-3 pt-3.25"
+                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background pb-3.5 pt-3"
                         )}
                     >
                         <Table
                             className={cn(
-                                "col-span-full col-start-2 grid table-fixed",
+                                "col-span-full col-start-2 grid table-fixed gap-y-2",
                                 {
                                     lg: "col-start-1 ps-6"
                                 }
@@ -249,18 +249,12 @@ function Experience() {
                                 className={cn(
                                     "absolute left-6 whitespace-pre-line",
                                     {
-                                        lg: "static pb-3.25 font-bold"
+                                        lg: "static font-bold"
                                     }
                                 )}
                             >
                                 {section.section}
                             </TableCaption>
-
-                            <colgroup>
-                                <col />
-                                <col />
-                                <col span={2} />
-                            </colgroup>
 
                             <TableHeader className={cn("sr-only grid")}>
                                 <TableRow
@@ -285,7 +279,7 @@ function Experience() {
                                     <TableRow
                                         key={placeindex}
                                         className={cn(
-                                            "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent"
+                                            "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
                                         )}
                                     >
                                         <TableCell
@@ -345,7 +339,7 @@ function Experience() {
                                     <TableRow className="hover:bg-transparent">
                                         <TableCell
                                             colSpan={4}
-                                            className="flex flex-col gap-y-2 p-0 pt-3.25 align-top"
+                                            className="flex flex-col gap-y-2 p-0 pt-3.5 align-top"
                                         >
                                             <SectionLine />
                                             And a bunch of University course

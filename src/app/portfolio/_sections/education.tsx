@@ -26,12 +26,12 @@ function Education() {
             <div
                 data-slot="table-container"
                 className={cn(
-                    "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background pb-3 pt-3.25"
+                    "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background pb-3.5 pt-3"
                 )}
             >
                 <Table
                     className={cn(
-                        "col-span-full col-start-2 grid table-fixed",
+                        "col-span-full col-start-2 grid table-fixed gap-y-2",
                         {
                             lg: "col-start-1 ps-6"
                         }
@@ -39,17 +39,11 @@ function Education() {
                 >
                     <TableCaption
                         className={cn("absolute left-6 whitespace-pre-line", {
-                            lg: "static pb-3.25 font-bold"
+                            lg: "static font-bold"
                         })}
                     >
                         University
                     </TableCaption>
-
-                    <colgroup>
-                        <col />
-                        <col span={2} />
-                        <col />
-                    </colgroup>
 
                     <TableHeader className={cn("sr-only grid")}>
                         <TableRow
@@ -68,7 +62,7 @@ function Education() {
                     <TableBody className="grid gap-y-2">
                         <TableRow
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent"
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
                             )}
                         >
                             <TableCell

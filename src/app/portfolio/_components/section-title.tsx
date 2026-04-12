@@ -26,7 +26,7 @@ function SectionTitle({
                 <span
                     id={noteId}
                     className={cn(
-                        "absolute -top-10 left-6 font-mono uppercase tracking-normal",
+                        "absolute -top-9.5 left-6 font-mono uppercase tracking-normal",
                         noteId &&
                             "scroll-mt-[calc(var(--spacing)*20*2+var(--px)-2.59375rem)]"
                     )}

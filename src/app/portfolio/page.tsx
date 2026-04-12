@@ -32,7 +32,7 @@ export default function Portfolio() {
                 <div className={cn("relative bg-background px-6 pb-5 pt-3.5")}>
                     <span
                         className={cn(
-                            "absolute -top-10 left-6 font-mono uppercase tracking-normal"
+                            "absolute -top-9.5 left-6 font-mono uppercase tracking-normal"
                         )}
                     >
                         About
@@ -46,11 +46,7 @@ export default function Portfolio() {
                 <SectionLine />
                 <Divider />
                 <SectionLine />
-                <div
-                    className={cn(
-                        "relative bg-background px-6 pb-3.75 pt-3.25"
-                    )}
-                >
+                <div className={cn("relative bg-background px-6 pb-4 pt-3.25")}>
                     <Text>
                         However, I came up from{" "}
                         {[

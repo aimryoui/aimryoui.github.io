@@ -289,7 +289,7 @@ function Contact() {
                     <Fragment key={section.section}>
                         <div
                             className={cn(
-                                "relative grid grid-cols-5 gap-6 gap-y-3 bg-background pb-3.75 pt-3.25"
+                                "relative grid grid-cols-5 gap-6 gap-y-3 bg-background pb-4 pt-3.25"
                             )}
                         >
                             {section.platforms.map(
