@@ -268,7 +268,7 @@ function Experience() {
                                     <TableHead className="px-0">
                                         Position
                                     </TableHead>
-                                    <TableHead className="col-span-2 px-0">
+                                    <TableHead className="col-span-2 px-0 pe-6">
                                         Organization
                                     </TableHead>
                                 </TableRow>

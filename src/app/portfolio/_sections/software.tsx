@@ -104,10 +104,14 @@ function Software() {
                                     )}
                                 >
                                     {section.frequencies.map(
-                                        (frequency, index) => (
+                                        (frequency, index, arr) => (
                                             <TableHead
                                                 key={index}
-                                                className="col-span-2 px-0"
+                                                className={cn(
+                                                    "col-span-2 px-0",
+                                                    index === arr.length - 1 &&
+                                                        "pe-6"
+                                                )}
                                             >
                                                 {frequency.title}
                                             </TableHead>
@@ -123,11 +127,13 @@ function Software() {
                                     )}
                                 >
                                     {section.frequencies.map(
-                                        (frequency, index) => (
+                                        (frequency, index, arr) => (
                                             <TableCell
                                                 key={index}
                                                 className={cn(
-                                                    "col-span-2 p-0 align-top font-bold text-foreground"
+                                                    "col-span-2 p-0 align-top font-bold text-foreground",
+                                                    index === arr.length - 1 &&
+                                                        "pe-6"
                                                 )}
                                             >
                                                 <span className={cn("sr-only")}>

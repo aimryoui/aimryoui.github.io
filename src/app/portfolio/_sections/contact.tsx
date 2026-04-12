@@ -333,7 +333,7 @@ function Contact() {
                                         <TableHead className="px-0">
                                             Link
                                         </TableHead>
-                                        <TableHead className="col-span-2 px-0">
+                                        <TableHead className="col-span-2 px-0 pe-6">
                                             Prefer?
                                         </TableHead>
                                     </TableRow>

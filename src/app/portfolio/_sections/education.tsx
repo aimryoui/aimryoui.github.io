@@ -55,7 +55,7 @@ function Education() {
                             <TableHead className="col-span-2 px-0">
                                 Name
                             </TableHead>
-                            <TableHead className="px-0">Detail</TableHead>
+                            <TableHead className="px-0 pe-6">Detail</TableHead>
                         </TableRow>
                     </TableHeader>
 
