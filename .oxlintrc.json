@@ -130,6 +130,7 @@
         "typescript/prefer-regexp-exec": "warn",
 
         "typescript/consistent-type-exports": "warn",
+        "typescript/prefer-readonly-parameter-types": "off",
 
         //* Stylistic
         "@stylistic/quotes": [

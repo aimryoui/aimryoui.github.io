@@ -136,7 +136,7 @@ function TocList({
             }}
             ref={scrollContainerRef}
             className={cn(
-                "pb-3.5.25 group overflow-y-scroll overscroll-contain scroll-auto pt-3 text-sm will-change-[opacity] scrollbar-thin"
+                "group overflow-y-scroll overscroll-contain scroll-auto py-3 text-sm will-change-[opacity] scrollbar-thin"
             )}
         >
             {filteredItems.map((item) => {

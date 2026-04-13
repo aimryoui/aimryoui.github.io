@@ -42,7 +42,7 @@ const sections: Section[] = [
                 startDate: "12.2025",
                 position: "Motion Designer",
                 organization: {
-                    text: "San Data Systems Inc.",
+                    text: "SAN Data Systems Inc.",
                     url: "https://sandatasystem.com"
                 }
             },
