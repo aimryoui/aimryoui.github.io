@@ -67,12 +67,10 @@ const optimizeAndReplacePlugin = (): Plugin => {
 }
 optimizeAndReplacePlugin.postcss = true
 
-const config = {
+export default {
     plugins: [
         "tailwindcss",
         optimizeAndReplacePlugin(),
         "autoprefixer"
     ] as never
 } satisfies Config
-
-export default config

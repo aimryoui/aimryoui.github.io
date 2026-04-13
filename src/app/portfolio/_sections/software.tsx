@@ -136,26 +136,7 @@ function Software() {
                                                         "pe-6"
                                                 )}
                                             >
-                                                <span className={cn("sr-only")}>
-                                                    {frequency.tools.map(
-                                                        (tool, toolindex) => (
-                                                            <Fragment
-                                                                key={toolindex}
-                                                            >
-                                                                {tool.label}
-                                                                {toolindex <
-                                                                    frequency
-                                                                        .tools
-                                                                        .length -
-                                                                        1 &&
-                                                                    ", "}
-                                                            </Fragment>
-                                                        )
-                                                    )}
-                                                </span>
                                                 <div
-                                                    aria-hidden="true"
-                                                    role="presentation"
                                                     className={cn("flex gap-3")}
                                                 >
                                                     {frequency.tools.map(
