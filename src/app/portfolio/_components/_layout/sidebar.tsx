@@ -16,8 +16,10 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuLabel,
+    DropdownMenuLinkItem,
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
+    DropdownMenuSeparator,
     DropdownMenuSub,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
@@ -381,6 +383,16 @@ function Sidebar() {
                                             </DropdownMenuRadioGroup>
                                         </DropdownMenuSubContent>
                                     </DropdownMenuSub>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
+                                    <DropdownMenuLabel>About</DropdownMenuLabel>
+                                    <DropdownMenuLinkItem
+                                        href="https://github.com/hoangnhan2ka3/hoangnhan2ka3.github.io"
+                                        openInNewTab
+                                    >
+                                        Source code
+                                    </DropdownMenuLinkItem>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>

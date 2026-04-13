@@ -3,7 +3,7 @@
 import type * as React from "react"
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
-import { CheckIcon, ChevronRightIcon } from "lucide-react"
+import { ArrowUpRight, CheckIcon, ChevronRightIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -101,7 +101,7 @@ function DropdownMenuLabel({
             data-slot="dropdown-menu-label"
             data-inset={inset}
             className={cn(
-                "px-3 pb-2 pt-1.5 text-xs font-medium text-muted-foreground",
+                "px-3 py-1.5 text-xs font-medium text-muted-foreground",
                 {
                     "data-inset": "pl-7"
                 },
@@ -222,6 +222,49 @@ function DropdownMenuSubContent({
     )
 }
 
+function DropdownMenuLinkItem({
+    className,
+    children,
+    href,
+    openInNewTab,
+    inset,
+    ...props
+}: MenuPrimitive.LinkItem.Props & {
+    openInNewTab?: boolean
+    inset?: boolean
+}) {
+    return (
+        <MenuPrimitive.LinkItem
+            data-slot="dropdown-menu-link-item"
+            data-inset={inset}
+            className={cn(
+                "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
+                {
+                    focus: "bg-accent text-accent-foreground **:text-accent-foreground",
+                    "data-inset": "pl-7",
+                    "data-disabled": "pointer-events-none opacity-50",
+                    "[&_svg:not([class*='size-'])]": "size-4",
+                    "[&_svg]": "pointer-events-none shrink-0"
+                },
+                className
+            )}
+            href={href}
+            {...(openInNewTab && { target: "_blank", rel: "noreferrer" })}
+            {...props}
+        >
+            {openInNewTab && (
+                <span
+                    className="pointer-events-none absolute right-3 flex items-center justify-center"
+                    data-slot="dropdown-menu-link-item-indicator"
+                >
+                    <ArrowUpRight className="size-4" />
+                </span>
+            )}
+            {children}
+        </MenuPrimitive.LinkItem>
+    )
+}
+
 function DropdownMenuCheckboxItem({
     className,
     children,
@@ -316,7 +359,7 @@ function DropdownMenuSeparator({
     return (
         <MenuPrimitive.Separator
             data-slot="dropdown-menu-separator"
-            className={cn("-mx-1 my-1 h-px bg-border", className)}
+            className={cn("-mx-1 my-1 h-px bg-stroke", className)}
             {...props}
         />
     )
@@ -346,6 +389,7 @@ export {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
+    DropdownMenuLinkItem,
     DropdownMenuPortal,
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
