@@ -51,10 +51,20 @@
         "type": "git",
         "url": "git+https://github.com/aimryoui/aimryoui.github.io.git"
     },
-    "funding": {
-        "type": "github",
-        "url": "https://github.com/sponsors/aimryoui"
-    },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/aimryoui"
+        },
+        {
+            "type": "buymeacoffee",
+            "url": "https://buymeacoffee.com/aimryoui"
+        },
+        {
+            "type": "ko-fi",
+            "url": "https://ko-fi.com/aimryoui"
+        }
+    ],
     "type": "module",
     "scripts": {
         "dev": "tsx src/scripts/process-images.ts && tsx src/scripts/process-videos.ts && next dev",
