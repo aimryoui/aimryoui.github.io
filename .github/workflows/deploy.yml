@@ -39,7 +39,7 @@ jobs:
       - name: Checkout Private Assets
         uses: actions/checkout@v4
         with:
-          repository: hoangnhan2ka3/portfolio-assets
+          repository: aimryoui/portfolio-assets
           token: ${{ secrets.ASSETS_PAT }}
           path: private
 

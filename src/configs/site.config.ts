@@ -62,18 +62,18 @@ export const siteConfig = {
         "This website is Hoang Nhan's Portfolio Space, come enjoy my artworks",
 
     // Social media
-    username: "hoangnhan2ka3",
+    username: "aimryoui",
     link: {
         tel: "tel:+84817818898",
-        facebook: "https://facebook.com/hoangnhan2ka3",
-        instagram: "https://instagram.com/hoangnhan2ka3",
-        threads: "https://threads.net/u/hoangnhan2ka3",
-        linkedIn: "https://linkedin.com/in/hoangnhan2ka3",
-        behance: "https://behance.net/hoangnhan2ka3",
-        dribbble: "https://dribbble.com/hoangnhan2ka3",
-        github: "https://github.com/hoangnhan2ka3",
-        pinterest: "https://pinterest.com/hoangnhan2ka3",
-        telegram: "https://t.me/hoangnhan2ka3",
+        facebook: "https://facebook.com/aimryoui",
+        instagram: "https://instagram.com/aimryoui",
+        threads: "https://threads.com/@aimryoui",
+        linkedIn: "https://linkedin.com/in/aimryoui",
+        behance: "https://behance.net/aimryoui",
+        dribbble: "https://dribbble.com/aimryoui",
+        github: "https://github.com/aimryoui",
+        pinterest: "https://pinterest.com/aimryoui",
+        telegram: "https://t.me/aimryoui",
         whatsapp: "https://wa.me/84817818898",
         zalo: "https://zalo.me/0817818898"
     },

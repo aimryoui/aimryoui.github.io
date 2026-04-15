@@ -20,7 +20,7 @@
  * @version 1.3.0 (Optimized - No CSS Parsing)
  * @author Simon Willison
  * @author ninjamar
- * @author hoangnhan2ka3
+ * @author aimryoui
  */
 
 interface GridLanesOptions {
@@ -1023,5 +1023,4 @@ const GridLanesPolyfill = {
 }
 
 export type { GridLanesOptions, InitResult }
-
 export { apply, GridLanesLayout, GridLanesPolyfill, init, supportsGridLanes }

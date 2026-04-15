@@ -1,6 +1,6 @@
 {
     "$schema": "https://json.schemastore.org/package.json",
-    "name": "@hoangnhan2ka3.github.io/hoangnhan2ka3",
+    "name": "@aimryoui.github.io/aimryoui",
     "displayName": "Personal Website | Nguyễn Hoàng Nhân",
     "version": "0.1.0",
     "private": true,
@@ -25,15 +25,15 @@
         "portfolio",
         "website"
     ],
-    "homepage": "https://hoangnhan2ka3.github.io",
+    "homepage": "https://aimryoui.github.io",
     "bugs": {
-        "url": "https://github.com/hoangnhan2ka3/hoangnhan2ka3.github.io/issues",
+        "url": "https://github.com/aimryoui/aimryoui.github.io/issues",
         "email": "workwith.hnhan@gmail.com"
     },
     "author": {
         "name": "Nguyen Hoang Nhan",
         "email": "workwith.hnhan@gmail.com",
-        "url": "https://hoangnhan2ka3.github.io"
+        "url": "https://aimryoui.github.io"
     },
     "maintainers": [
         {
@@ -49,11 +49,11 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/hoangnhan2ka3/hoangnhan2ka3.github.io.git"
+        "url": "git+https://github.com/aimryoui/aimryoui.github.io.git"
     },
     "funding": {
         "type": "github",
-        "url": "https://github.com/sponsors/hoangnhan2ka3"
+        "url": "https://github.com/sponsors/aimryoui"
     },
     "type": "module",
     "scripts": {
@@ -79,7 +79,7 @@
         "embla-carousel-react": "9.0.0-rc02",
         "embla-carousel-ssr": "9.0.0-rc02",
         "embla-carousel-wheel-gestures": "9.0.0-rc01",
-        "hls.js": "^1.6.15",
+        "hls.js": "^1.6.16",
         "lucide-react": "^1.8.0",
         "motion": "^12.38.0",
         "next": "^16.2.3",
@@ -91,7 +91,7 @@
         "zustand": "^5.0.12"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.4.11",
+        "@biomejs/biome": "^2.4.12",
         "@eslint/css": "^1.1.0",
         "@limegrass/eslint-plugin-import-alias": "^1.6.1",
         "@stylistic/eslint-plugin": "^5.10.0",
@@ -99,7 +99,7 @@
         "@types/node": "^25.6.0",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
-        "autoprefixer": "^10.4.27",
+        "autoprefixer": "^10.5.0",
         "babel-plugin-react-compiler": "^1.0.0",
         "chokidar": "^5.0.0",
         "cross-env": "^10.1.0",
@@ -112,7 +112,7 @@
         "jiti": "^2.6.1",
         "oxfmt": "^0.45.0",
         "oxlint": "^1.60.0",
-        "oxlint-tsgolint": "^0.20.0",
+        "oxlint-tsgolint": "^0.21.0",
         "postcss": "^8.5.9",
         "postcss-load-config": "^6.0.1",
         "sharp": "^0.34.5",

@@ -388,7 +388,7 @@ function Sidebar() {
                                 <DropdownMenuGroup>
                                     <DropdownMenuLabel>About</DropdownMenuLabel>
                                     <DropdownMenuLinkItem
-                                        href="https://github.com/hoangnhan2ka3/hoangnhan2ka3.github.io"
+                                        href="https://github.com/aimryoui/aimryoui.github.io"
                                         openInNewTab
                                     >
                                         Source code

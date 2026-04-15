@@ -25,7 +25,7 @@ function Footer() {
                     )}
                 >
                     <p className="text-balance text-center">
-                        {`© ${new Date().getFullYear()} hoangnhan2ka3. NO AI training allowed. All Rights Reserved.`}
+                        {`© ${new Date().getFullYear()} aimryoui. NO AI training allowed. All Rights Reserved.`}
                     </p>
                 </Divider>
                 <SectionLine />
