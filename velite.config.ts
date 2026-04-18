@@ -16,6 +16,7 @@ const projects = defineCollection({
         type: s.string(),
         projectName: s.string(),
         category: s.string(),
+        coverImage: s.string().optional(),
 
         forceExpand: s.boolean().default(false),
 

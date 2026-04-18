@@ -312,7 +312,9 @@ async function buildImages(showProgress = false) {
         )
     )
 
-    const existingPreviewFiles = await glob(`${OUTPUT_BASE}/**/*_preview.webp`)
+    const existingPreviewFiles = await glob(
+        `${OUTPUT_BASE}/**/*_scrambled.webp`
+    )
     for (const previewPath of existingPreviewFiles) {
         const folderPath = path.dirname(previewPath).replaceAll("\\", "/")
         if (!validOutputFolders.has(folderPath)) {

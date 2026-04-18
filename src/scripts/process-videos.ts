@@ -12,7 +12,7 @@ const INPUT_DIR = "private/media"
 const OUTPUT_BASE = "public/assets/media"
 const MANIFEST_PATH = "src/lib/video-manifest.json"
 
-const SCRIPT_VERSION = "2"
+const SCRIPT_VERSION = "1"
 
 const BRAND_COLOR = "\x1B[38;2;249;115;22m"
 const RESET = "\x1B[0m"
@@ -81,9 +81,13 @@ function getVideoDuration(filePath: string): number {
     }
 }
 
-function cleanVideoOutputFolder(folder: string) {
+function cleanVideoOutputFolder(folder: string, fileName: string) {
     if (!fs.existsSync(folder)) return
-    const allowed = new Set(["poster.webp", "index.txt", "init.mp4"])
+    const allowed = new Set([
+        `${fileName}_preview.webp`,
+        "index.txt",
+        "init.mp4"
+    ])
     const filesInDir = fs.readdirSync(folder)
     for (const file of filesInDir) {
         if (!allowed.has(file) && !/^chunk_\d+\.bin$/.test(file)) {
@@ -123,7 +127,10 @@ async function processVideo(
     const currentVideoHash = getFileHash(filePath)
     const currentPosterHash = getFileHash(posterSrc)
 
-    const posterOutput = path.join(outputFolder, "poster.webp")
+    const posterOutput = path.join(
+        outputFolder,
+        `${parsedPath.name}_preview.webp`
+    )
     const indexOutput = path.join(outputFolder, "index.txt")
     const initOutput = path.join(outputFolder, "init.mp4")
 
@@ -153,7 +160,7 @@ async function processVideo(
 
     if (!requiresVideoProcessing && !requiresPosterProcessing) {
         newManifest[manifestKey] = oldManifest[manifestKey]
-        cleanVideoOutputFolder(outputFolder)
+        cleanVideoOutputFolder(outputFolder, parsedPath.name)
         return false
     }
 
@@ -250,7 +257,7 @@ async function processVideo(
         blurDataURL
     }
 
-    cleanVideoOutputFolder(outputFolder)
+    cleanVideoOutputFolder(outputFolder, parsedPath.name)
     return true
 }
 

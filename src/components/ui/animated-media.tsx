@@ -70,9 +70,10 @@ export function AnimatedMedia({
 
     const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
     const pathWithoutExt = normalizedSrc.replace(/\.[^/.]+$/, "")
+    const fileName = pathWithoutExt.split("/").pop()
 
     const basePath = `/assets/media/${pathWithoutExt}`
-    const defaultPoster = `${basePath}/poster.webp`
+    const defaultPoster = `${basePath}/${fileName}_preview.webp`
 
     const metadata = videoManifest[pathWithoutExt]
 

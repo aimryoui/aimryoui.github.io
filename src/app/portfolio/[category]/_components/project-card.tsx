@@ -1,5 +1,4 @@
 import { ViewTransition } from "react"
-import { type Url } from "next/dist/shared/lib/router/router"
 import NextLink from "next/link"
 
 import { ArrowRight } from "@/components/icons/icons"
@@ -10,17 +9,55 @@ import { cn } from "@/lib/utils"
 
 import { type Project } from "~/.velite"
 
-function ProjectCard({ href, project }: { href: Url; project: Project }) {
+function ProjectCard({ href, project }: { href: string; project: Project }) {
+    const projectPath = href.replace("/portfolio/", "")
+
+    const coverImageSrc = project.coverImage
+        ? (() => {
+              const lastDotIndex = project.coverImage.lastIndexOf(".")
+              const pathWithoutExt = project.coverImage.slice(0, lastDotIndex)
+              const fileName = project.coverImage.slice(
+                  project.coverImage.lastIndexOf("/") + 1,
+                  lastDotIndex
+              )
+
+              return `/assets/media${pathWithoutExt}/${fileName}_preview.webp`
+          })()
+        : `/assets/media/${projectPath}/1/1_preview.webp`
+
     return (
         <NextLink
             href={href}
             className={cn(
-                "group flex h-20 items-center justify-between gap-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
+                "group flex h-20 items-center gap-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
                 {
                     hover: "bg-element-hover transition-none"
                 }
             )}
         >
+            <div className={cn("flex flex-col items-center gap-px")}>
+                <div
+                    className={cn(
+                        "h-1 w-[30%] rounded-t-xs bg-muted-foreground opacity-30"
+                    )}
+                />
+                <div
+                    className={cn(
+                        "h-1 w-3/5 rounded-t-sm bg-muted-foreground opacity-60"
+                    )}
+                />
+                <img
+                    src={coverImageSrc}
+                    alt=""
+                    className={cn(
+                        "aspect-video h-8 rounded-lg border-2 border-muted-foreground object-cover"
+                    )}
+                    fetchPriority="high"
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                />
+            </div>
             <div className={cn("flex flex-col gap-1")}>
                 <ProjectName projectName={project.projectName} />
                 <ProjectCategory
@@ -30,7 +67,7 @@ function ProjectCard({ href, project }: { href: Url; project: Project }) {
             </div>
             <ArrowRight
                 className={cn(
-                    "will-change-[color] transition-[color] duration-100",
+                    "ms-auto will-change-[color] transition-[color] duration-100",
                     {
                         "group-hover": "text-highlighted transition-none"
                     }
