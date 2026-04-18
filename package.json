@@ -71,7 +71,7 @@
         "build": "tsx src/scripts/process-images.ts && tsx src/scripts/process-videos.ts && next build",
         "start": "pnpx serve@latest out",
         "format": "oxfmt --threads 8 && biome check --write",
-        "format:check": "oxfmt --check --threads 8 && biome lint",
+        "format:check": "oxfmt --check --threads 8 && biome check",
         "lint": "oxlint --threads 8",
         "lint:fix": "oxlint --fix --threads 8",
         "check": "tsc --noEmit",

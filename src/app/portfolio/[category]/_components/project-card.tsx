@@ -59,25 +59,25 @@ function ProjectCard({
             )}
             <div
                 className={cn(
-                    "flex flex-col items-center gap-px",
+                    "flex flex-col items-center gap-0.5",
                     navigation === "backward" && "order-last"
                 )}
             >
                 <div
                     className={cn(
-                        "h-1 w-[30%] rounded-t-xs bg-muted-foreground opacity-30"
+                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40"
                     )}
                 />
                 <div
                     className={cn(
-                        "h-1 w-3/5 rounded-t-sm bg-muted-foreground opacity-60"
+                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70"
                     )}
                 />
                 <img
                     src={coverImageSrc}
                     alt=""
                     className={cn(
-                        "aspect-video h-8 rounded-lg border-2 border-muted-foreground object-cover"
+                        "aspect-video h-8 rounded-lg border-2 border-muted-foreground/80 object-cover"
                     )}
                     fetchPriority="high"
                     loading="lazy"
@@ -87,7 +87,7 @@ function ProjectCard({
             </div>
             <div
                 className={cn(
-                    "flex flex-col gap-1",
+                    "flex flex-col gap-0.5",
                     navigation === "backward" && "items-end"
                 )}
             >
