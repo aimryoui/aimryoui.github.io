@@ -57,34 +57,11 @@ function ProjectCard({
                     )}
                 />
             )}
-            <div
-                className={cn(
-                    "flex flex-col items-center gap-0.5",
-                    navigation === "backward" && "order-last"
-                )}
-            >
-                <div
-                    className={cn(
-                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40"
-                    )}
-                />
-                <div
-                    className={cn(
-                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70"
-                    )}
-                />
-                <img
-                    src={coverImageSrc}
-                    alt=""
-                    className={cn(
-                        "aspect-video w-14 rounded-lg border-2 border-muted-foreground/80 object-cover"
-                    )}
-                    fetchPriority="high"
-                    loading="lazy"
-                    decoding="async"
-                    draggable={false}
-                />
-            </div>
+            <ProjectCover
+                projectName={projectName ?? project.projectName}
+                navigation={navigation}
+                src={coverImageSrc}
+            />
             <div
                 className={cn(
                     "flex flex-1 flex-col gap-0.5",
@@ -108,6 +85,52 @@ function ProjectCard({
                 />
             )}
         </NextLink>
+    )
+}
+
+function ProjectCover({
+    projectName,
+    navigation,
+    src
+}: {
+    projectName: string
+    navigation?: "forward" | "backward"
+    src: string
+}) {
+    return (
+        <ViewTransition name={formatViewTransitionName(`cover-${projectName}`)}>
+            <div
+                className={cn(
+                    "flex flex-col items-center gap-0.5",
+                    navigation === "backward" && "order-last"
+                )}
+                style={{
+                    viewTransitionName: "none !important"
+                }}
+            >
+                <div
+                    className={cn(
+                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40"
+                    )}
+                />
+                <div
+                    className={cn(
+                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70"
+                    )}
+                />
+                <img
+                    src={src}
+                    alt=""
+                    className={cn(
+                        "aspect-video w-14 rounded-lg border-2 border-muted-foreground/80 object-cover"
+                    )}
+                    fetchPriority="high"
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                />
+            </div>
+        </ViewTransition>
     )
 }
 
