@@ -50,7 +50,7 @@ function ProjectCard({
             {navigation === "backward" && (
                 <ArrowLeft
                     className={cn(
-                        "me-auto will-change-[color] transition-[color] duration-100",
+                        "will-change-[color] transition-[color] duration-100",
                         {
                             "group-hover": "text-highlighted transition-none"
                         }
@@ -77,7 +77,7 @@ function ProjectCard({
                     src={coverImageSrc}
                     alt=""
                     className={cn(
-                        "aspect-video h-8 rounded-lg border-2 border-muted-foreground/80 object-cover"
+                        "aspect-video w-14 rounded-lg border-2 border-muted-foreground/80 object-cover"
                     )}
                     fetchPriority="high"
                     loading="lazy"
@@ -87,7 +87,7 @@ function ProjectCard({
             </div>
             <div
                 className={cn(
-                    "flex flex-col gap-0.5",
+                    "flex flex-1 flex-col gap-0.5",
                     navigation === "backward" && "items-end"
                 )}
             >
@@ -100,7 +100,7 @@ function ProjectCard({
             {navigation === "forward" && (
                 <ArrowRight
                     className={cn(
-                        "ms-auto will-change-[color] transition-[color] duration-100",
+                        "will-change-[color] transition-[color] duration-100",
                         {
                             "group-hover": "text-highlighted transition-none"
                         }
