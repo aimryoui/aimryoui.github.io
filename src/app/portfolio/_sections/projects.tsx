@@ -64,7 +64,7 @@ function Projects() {
                                 />
                                 <ArrowRight
                                     className={cn(
-                                        "will-change-[color] transition-[color] duration-100",
+                                        "m-1 will-change-[color] transition-[color] duration-100",
                                         {
                                             "group-hover":
                                                 "text-highlighted transition-none"

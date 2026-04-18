@@ -157,7 +157,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         <ProjectCard
                             href={getProjectPath(prev)}
                             navigation="backward"
-                            project={project}
+                            project={prev}
                             projectName={prev.projectName}
                             category={prev.category}
                         />
@@ -173,7 +173,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         >
                             <ArrowLeft
                                 className={cn(
-                                    "will-change-[color] transition-[color] duration-100",
+                                    "m-1 will-change-[color] transition-[color] duration-100",
                                     {
                                         "group-hover":
                                             "text-highlighted transition-none"
@@ -210,7 +210,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     {next ? (
                         <ProjectCard
                             href={getProjectPath(next)}
-                            project={project}
+                            project={next}
                             projectName={next.projectName}
                             category={next.category}
                         />
@@ -284,7 +284,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             </div>
                             <ArrowRight
                                 className={cn(
-                                    "will-change-[color] transition-[color] duration-100",
+                                    "m-1 will-change-[color] transition-[color] duration-100",
                                     {
                                         "group-hover":
                                             "text-highlighted transition-none"

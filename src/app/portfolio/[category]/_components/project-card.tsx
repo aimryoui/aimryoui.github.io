@@ -50,7 +50,7 @@ function ProjectCard({
             {navigation === "backward" && (
                 <ArrowLeft
                     className={cn(
-                        "will-change-[color] transition-[color] duration-100",
+                        "m-1 will-change-[color] transition-[color] duration-100",
                         {
                             "group-hover": "text-highlighted transition-none"
                         }
@@ -77,7 +77,7 @@ function ProjectCard({
             {navigation === "forward" && (
                 <ArrowRight
                     className={cn(
-                        "will-change-[color] transition-[color] duration-100",
+                        "m-1 will-change-[color] transition-[color] duration-100",
                         {
                             "group-hover": "text-highlighted transition-none"
                         }
@@ -101,8 +101,11 @@ function ProjectCover({
         <ViewTransition name={formatViewTransitionName(`cover-${projectName}`)}>
             <div
                 className={cn(
-                    "flex flex-col items-center gap-0.5",
-                    navigation === "backward" && "order-last"
+                    "flex flex-col items-center gap-0.5 will-change-[gap] transition-[gap] ease-spring duration-300",
+                    navigation === "backward" && "order-last",
+                    {
+                        "group-hover": "gap-1"
+                    }
                 )}
                 style={{
                     viewTransitionName: "none !important"
@@ -110,19 +113,28 @@ function ProjectCover({
             >
                 <div
                     className={cn(
-                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40"
+                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40 will-change-[height] transition-[height] ease-spring duration-300",
+                        {
+                            "group-hover": "h-0.75"
+                        }
                     )}
                 />
                 <div
                     className={cn(
-                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70"
+                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70 will-change-[height] transition-[height] ease-spring duration-300",
+                        {
+                            "group-hover": "h-0.75"
+                        }
                     )}
                 />
                 <img
                     src={src}
                     alt=""
                     className={cn(
-                        "aspect-video w-14 rounded-lg border-2 border-muted-foreground/80 object-cover"
+                        "aspect-video w-14 rounded-lg object-cover -outline-offset-2 outline-muted-foreground/80 outline-2",
+                        {
+                            "group-hover": "-outline-offset-[3px] outline-3"
+                        }
                     )}
                     fetchPriority="high"
                     loading="lazy"
