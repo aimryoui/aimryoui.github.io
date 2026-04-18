@@ -1,7 +1,7 @@
 import { ViewTransition } from "react"
 import NextLink from "next/link"
 
-import { ArrowRight } from "@/components/icons/icons"
+import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { Bold, Text } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
@@ -9,7 +9,19 @@ import { cn } from "@/lib/utils"
 
 import { type Project } from "~/.velite"
 
-function ProjectCard({ href, project }: { href: string; project: Project }) {
+function ProjectCard({
+    href,
+    project,
+    navigation = "forward",
+    projectName,
+    category
+}: {
+    href: string
+    project: Project
+    navigation?: "forward" | "backward"
+    projectName?: string
+    category?: string
+}) {
     const projectPath = href.replace("/portfolio/", "")
 
     const coverImageSrc = project.coverImage
@@ -35,7 +47,22 @@ function ProjectCard({ href, project }: { href: string; project: Project }) {
                 }
             )}
         >
-            <div className={cn("flex flex-col items-center gap-px")}>
+            {navigation === "backward" && (
+                <ArrowLeft
+                    className={cn(
+                        "me-auto will-change-[color] transition-[color] duration-100",
+                        {
+                            "group-hover": "text-highlighted transition-none"
+                        }
+                    )}
+                />
+            )}
+            <div
+                className={cn(
+                    "flex flex-col items-center gap-px",
+                    navigation === "backward" && "order-last"
+                )}
+            >
                 <div
                     className={cn(
                         "h-1 w-[30%] rounded-t-xs bg-muted-foreground opacity-30"
@@ -58,21 +85,28 @@ function ProjectCard({ href, project }: { href: string; project: Project }) {
                     draggable={false}
                 />
             </div>
-            <div className={cn("flex flex-col gap-1")}>
-                <ProjectName projectName={project.projectName} />
+            <div
+                className={cn(
+                    "flex flex-col gap-1",
+                    navigation === "backward" && "items-end"
+                )}
+            >
+                <ProjectName projectName={projectName ?? project.projectName} />
                 <ProjectCategory
-                    projectName={project.projectName}
-                    category={project.category}
+                    projectName={projectName ?? project.projectName}
+                    category={category ?? project.category}
                 />
             </div>
-            <ArrowRight
-                className={cn(
-                    "ms-auto will-change-[color] transition-[color] duration-100",
-                    {
-                        "group-hover": "text-highlighted transition-none"
-                    }
-                )}
-            />
+            {navigation === "forward" && (
+                <ArrowRight
+                    className={cn(
+                        "ms-auto will-change-[color] transition-[color] duration-100",
+                        {
+                            "group-hover": "text-highlighted transition-none"
+                        }
+                    )}
+                />
+            )}
         </NextLink>
     )
 }

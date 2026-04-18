@@ -8,7 +8,6 @@ import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { Bold, Highlight, Text } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
-import { formatOrdinal } from "@/helpers/format-ordinal"
 import {
     getCategoryPath,
     getProjectPath,
@@ -20,6 +19,7 @@ import FlashOverlay from "@/portfolio/_components/flash-overlay"
 import { MDXContent } from "@/portfolio/_components/mdx-content"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import Footer from "@/portfolio/_sections/footer"
+import ProjectCard from "@/portfolio/[category]/_components/project-card"
 
 import { projects } from "~/.velite"
 
@@ -153,187 +153,146 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         "grid grid-cols-[1fr_var(--px)_1fr] items-center"
                     )}
                 >
-                    <Link
-                        href={
-                            prev
-                                ? getProjectPath(prev)
-                                : getCategoryPath(category)
-                        }
-                        className={cn(
-                            "group flex h-full items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
-                            {
-                                hover: "bg-element-hover transition-none"
-                            }
-                        )}
-                    >
-                        <ArrowLeft
+                    {prev ? (
+                        <ProjectCard
+                            href={getProjectPath(prev)}
+                            navigation="backward"
+                            project={project}
+                            projectName={prev.projectName}
+                            category={prev.category}
+                        />
+                    ) : (
+                        <Link
+                            href={getCategoryPath(category)}
                             className={cn(
-                                "will-change-[color] transition-[color] duration-100",
+                                "group flex h-full items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
                                 {
-                                    "group-hover":
-                                        "text-highlighted transition-none"
+                                    hover: "bg-element-hover transition-none"
                                 }
                             )}
-                        />
-                        <div className={cn("text-right")}>
-                            {prev ? (
-                                <>
-                                    <Bold
-                                        className={cn(
-                                            "will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-highlighted transition-none"
-                                            }
-                                        )}
-                                    >
-                                        {formatOrdinal(prev.projectName)}
-                                    </Bold>
-                                    <Text
-                                        className={cn(
-                                            "text-sm will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-foreground transition-none"
-                                            }
-                                        )}
-                                    >
-                                        {prev.category}
-                                    </Text>
-                                </>
-                            ) : (
-                                <>
-                                    <Text
-                                        className={cn(
-                                            "inline will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-foreground transition-none"
-                                            }
-                                        )}
-                                    >
-                                        Back to
-                                    </Text>{" "}
-                                    <Bold
-                                        className={cn(
-                                            "will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-highlighted transition-none"
-                                            }
-                                        )}
-                                    >
-                                        {group.title}
-                                    </Bold>
-                                </>
-                            )}
-                        </div>
-                    </Link>
+                        >
+                            <ArrowLeft
+                                className={cn(
+                                    "will-change-[color] transition-[color] duration-100",
+                                    {
+                                        "group-hover":
+                                            "text-highlighted transition-none"
+                                    }
+                                )}
+                            />
+                            <div className={cn("text-end")}>
+                                <Text
+                                    className={cn(
+                                        "inline will-change-[color] transition-[color] duration-100",
+                                        {
+                                            "group-hover":
+                                                "text-foreground transition-none"
+                                        }
+                                    )}
+                                >
+                                    Back to
+                                </Text>{" "}
+                                <Bold
+                                    className={cn(
+                                        "will-change-[color] transition-[color] duration-100",
+                                        {
+                                            "group-hover":
+                                                "text-highlighted transition-none"
+                                        }
+                                    )}
+                                >
+                                    {group.title}
+                                </Bold>
+                            </div>
+                        </Link>
+                    )}
                     <ElementLine />
-                    <Link
-                        href={
-                            next
-                                ? getProjectPath(next)
-                                : nextCategory
-                                  ? getCategoryPath(nextCategory.id)
-                                  : "/portfolio#contact"
-                        }
-                        className={cn(
-                            "group flex h-full items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
-                            {
-                                hover: "bg-element-hover transition-none"
+                    {next ? (
+                        <ProjectCard
+                            href={getProjectPath(next)}
+                            project={project}
+                            projectName={next.projectName}
+                            category={next.category}
+                        />
+                    ) : (
+                        <Link
+                            href={
+                                nextCategory
+                                    ? getCategoryPath(nextCategory.id)
+                                    : "/portfolio#contact"
                             }
-                        )}
-                    >
-                        <div>
-                            {next ? (
-                                <>
-                                    <Bold
-                                        className={cn(
-                                            "will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-highlighted transition-none"
-                                            }
-                                        )}
-                                    >
-                                        {formatOrdinal(next.projectName)}
-                                    </Bold>
-                                    <Text
-                                        className={cn(
-                                            "text-sm will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-foreground transition-none"
-                                            }
-                                        )}
-                                    >
-                                        {next.category}
-                                    </Text>
-                                </>
-                            ) : nextCategory ? (
-                                <>
-                                    <Text
-                                        className={cn(
-                                            "inline will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-foreground transition-none"
-                                            }
-                                        )}
-                                    >
-                                        Next to
-                                    </Text>{" "}
-                                    <Bold
-                                        className={cn(
-                                            "will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-highlighted transition-none"
-                                            }
-                                        )}
-                                    >
-                                        {nextCategory.title}
-                                    </Bold>
-                                </>
-                            ) : (
-                                <>
-                                    <Text
-                                        className={cn(
-                                            "inline will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-foreground transition-none"
-                                            }
-                                        )}
-                                    >
-                                        End of portfolio.
-                                    </Text>{" "}
-                                    <Bold
-                                        className={cn(
-                                            "will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-highlighted transition-none"
-                                            }
-                                        )}
-                                    >
-                                        Contact me
-                                    </Bold>
-                                    .
-                                </>
-                            )}
-                        </div>
-                        <ArrowRight
                             className={cn(
-                                "will-change-[color] transition-[color] duration-100",
+                                "group flex h-full items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
                                 {
-                                    "group-hover":
-                                        "text-highlighted transition-none"
+                                    hover: "bg-element-hover transition-none"
                                 }
                             )}
-                        />
-                    </Link>
+                        >
+                            <div>
+                                {nextCategory ? (
+                                    <>
+                                        <Text
+                                            className={cn(
+                                                "inline will-change-[color] transition-[color] duration-100",
+                                                {
+                                                    "group-hover":
+                                                        "text-foreground transition-none"
+                                                }
+                                            )}
+                                        >
+                                            Next to
+                                        </Text>{" "}
+                                        <Bold
+                                            className={cn(
+                                                "will-change-[color] transition-[color] duration-100",
+                                                {
+                                                    "group-hover":
+                                                        "text-highlighted transition-none"
+                                                }
+                                            )}
+                                        >
+                                            {nextCategory.title}
+                                        </Bold>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Text
+                                            className={cn(
+                                                "inline will-change-[color] transition-[color] duration-100",
+                                                {
+                                                    "group-hover":
+                                                        "text-foreground transition-none"
+                                                }
+                                            )}
+                                        >
+                                            End of portfolio.
+                                        </Text>{" "}
+                                        <Bold
+                                            className={cn(
+                                                "will-change-[color] transition-[color] duration-100",
+                                                {
+                                                    "group-hover":
+                                                        "text-highlighted transition-none"
+                                                }
+                                            )}
+                                        >
+                                            Contact me
+                                        </Bold>
+                                        .
+                                    </>
+                                )}
+                            </div>
+                            <ArrowRight
+                                className={cn(
+                                    "will-change-[color] transition-[color] duration-100",
+                                    {
+                                        "group-hover":
+                                            "text-highlighted transition-none"
+                                    }
+                                )}
+                            />
+                        </Link>
+                    )}
                 </div>
             </section>
 
