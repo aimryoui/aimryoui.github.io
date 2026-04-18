@@ -109,5 +109,5 @@ type ToolMap = ReturnType<typeof TOOL_ICONS>
 type ToolProps = ToolMap[ToolKey]
 type ToolKey = keyof ToolMap
 
-export { TOOL_ICONS }
 export type { ToolKey, ToolProps }
+export { TOOL_ICONS }
