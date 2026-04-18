@@ -79,7 +79,7 @@ jobs:
             public/assets/media
             src/lib/image-manifest.json
             src/lib/video-manifest.json
-          key: ${{ runner.os }}-media-${{ hashFiles('private/media/**/*') }}
+          key: ${{ runner.os }}-media-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('**/*process-*.ts') }}
           restore-keys: |
             ${{ runner.os }}-media-
 
