@@ -104,7 +104,7 @@ function ProjectCover({
                     "flex flex-col items-center gap-0.5 will-change-[gap] transition-[gap] ease-spring duration-300",
                     navigation === "backward" && "order-last",
                     {
-                        "group-hover": "gap-1"
+                        "group-hover": "gap-0.75"
                     }
                 )}
                 style={{

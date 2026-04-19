@@ -139,14 +139,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     >
                         <ArrowLeft
                             className={cn(
-                                "will-change-[color] transition-[color] duration-100",
+                                "m-1 will-change-[color] transition-[color] duration-100",
                                 {
                                     "group-hover":
                                         "text-highlighted transition-none"
                                 }
                             )}
                         />
-                        <div className={cn("text-right")}>
+                        <div className={cn("flex flex-col gap-0.5 text-right")}>
                             {prev ? (
                                 <>
                                     <Bold
@@ -214,7 +214,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                             }
                         )}
                     >
-                        <div>
+                        <div className={cn("flex flex-col gap-0.5")}>
                             {next ? (
                                 <>
                                     <Bold
@@ -270,7 +270,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         </div>
                         <ArrowRight
                             className={cn(
-                                "will-change-[color] transition-[color] duration-100",
+                                "m-1 will-change-[color] transition-[color] duration-100",
                                 {
                                     "group-hover":
                                         "text-highlighted transition-none"
