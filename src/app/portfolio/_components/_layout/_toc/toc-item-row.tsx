@@ -44,20 +44,26 @@ const TocItemRow = memo(
     ({ mode, item, isActive, onClick, onSameLinkClick }: TocItemRowProps) => {
         const href = item.href ?? `#${item.id}`
 
+        const isProject = item.depth === 3 && !item.icon
+
         return (
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
             <m.li
                 variants={liVariants}
                 className={cn(
-                    item.depth === 3 &&
-                        !item.icon &&
-                        "border-s-[.0625rem] border-muted-foreground/20",
                     "relative mx-6 box-content flex h-fit list-inside items-center gap-4 will-change-[transform,opacity]",
-                    item.depth === 3 &&
-                        isActive &&
-                        !item.icon && {
-                            before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-highlighted"
-                        }
+                    isProject && [
+                        "border-s-[.0625rem] border-muted-foreground/20",
+                        isActive
+                            ? {
+                                  before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-highlighted"
+                              }
+                            : {
+                                  hover: {
+                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground"
+                                  }
+                              }
+                    ]
                 )}
             >
                 <NextLink
@@ -103,19 +109,21 @@ const TocItemRow = memo(
                         onClick(item)
                     }}
                     className={cn(
+                        "group/link relative flex-1 leading-6 will-change-[color]",
+                        item.icon ? "flex gap-2 py-1" : "inline-block py-0.5",
+                        isProject
+                            ? "ps-3.75 text-foreground dark:text-muted-foreground"
+                            : "font-bold",
                         isActive
                             ? "text-highlighted"
                             : {
                                   "group-hover":
                                       "transition-[color] duration-100",
-                                  hover: "text-foreground !transition-none",
+                                  hover: isProject
+                                      ? "text-muted-foreground !transition-none dark:text-foreground"
+                                      : "text-foreground !transition-none",
                                   "focus-visible": "text-foreground"
-                              },
-                        "group/link relative flex-1 leading-6 will-change-[color]",
-                        item.depth === 3 && !item.icon
-                            ? "ps-3.75"
-                            : "font-bold",
-                        item.icon ? "flex gap-2 py-1" : "inline-block py-0.5"
+                              }
                     )}
                 >
                     {item.icon && (

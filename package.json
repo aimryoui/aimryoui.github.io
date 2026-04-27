@@ -90,7 +90,7 @@
         "embla-carousel-ssr": "9.0.0-rc02",
         "embla-carousel-wheel-gestures": "9.0.0-rc01",
         "hls.js": "^1.6.16",
-        "lucide-react": "^1.8.0",
+        "lucide-react": "^1.11.0",
         "motion": "^12.38.0",
         "next": "^16.2.4",
         "next-themes": "^0.4.6",
@@ -101,7 +101,7 @@
         "zustand": "^5.0.12"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.4.12",
+        "@biomejs/biome": "^2.4.13",
         "@eslint/css": "^1.1.0",
         "@limegrass/eslint-plugin-import-alias": "^1.6.1",
         "@stylistic/eslint-plugin": "^5.10.0",
@@ -120,10 +120,10 @@
         "eslint-plugin-tailwindcss": "3.18.2",
         "glob": "^13.0.6",
         "jiti": "^2.6.1",
-        "oxfmt": "^0.45.0",
-        "oxlint": "^1.60.0",
-        "oxlint-tsgolint": "^0.21.1",
-        "postcss": "^8.5.10",
+        "oxfmt": "^0.46.0",
+        "oxlint": "^1.61.0",
+        "oxlint-tsgolint": "^0.22.0",
+        "postcss": "^8.5.12",
         "postcss-load-config": "^6.0.1",
         "sharp": "^0.34.5",
         "tailwindcss": "^3.4.19",
@@ -135,5 +135,5 @@
     "engines": {
         "node": ">=22.18.0"
     },
-    "packageManager": "pnpm@10.33.0"
+    "packageManager": "pnpm@10.33.2"
 }
