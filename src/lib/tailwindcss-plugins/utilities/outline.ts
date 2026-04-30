@@ -51,7 +51,13 @@ export default plugin(
             extend: {
                 outlineOffset: {
                     0: "0",
-                    px: "var(--px)"
+                    px: "var(--px)",
+                    1: "var(--px)",
+                    2: "125rem",
+                    3: "1875rem",
+                    4: "25rem",
+                    8: "5rem",
+                    40: "2.5rem"
                 }
             },
             outlineStyle: {
