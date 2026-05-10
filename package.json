@@ -92,21 +92,21 @@
         "hls.js": "^1.6.16",
         "lucide-react": "^1.14.0",
         "motion": "^12.38.0",
-        "next": "^16.2.4",
+        "next": "^16.2.6",
         "next-themes": "^0.4.6",
-        "react": "^19.2.5",
-        "react-dom": "^19.2.5",
+        "react": "^19.2.6",
+        "react-dom": "^19.2.6",
         "tailwind-merge": "^2.6.1",
         "twg": "^7.1.4",
-        "zustand": "^5.0.12"
+        "zustand": "^5.0.13"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.4.13",
-        "@eslint/css": "^1.1.0",
+        "@biomejs/biome": "^2.4.15",
+        "@eslint/css": "^1.2.0",
         "@limegrass/eslint-plugin-import-alias": "^1.6.1",
         "@stylistic/eslint-plugin": "^5.10.0",
         "@toolwind/anchors": "^1.0.10",
-        "@types/node": "^25.6.0",
+        "@types/node": "^25.6.2",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
         "autoprefixer": "^10.5.0",
@@ -119,11 +119,11 @@
         "eslint-plugin-simple-import-sort": "^12.1.1",
         "eslint-plugin-tailwindcss": "3.18.2",
         "glob": "^13.0.6",
-        "jiti": "^2.6.1",
-        "oxfmt": "^0.47.0",
-        "oxlint": "^1.62.0",
+        "jiti": "^2.7.0",
+        "oxfmt": "^0.48.0",
+        "oxlint": "^1.63.0",
         "oxlint-tsgolint": "^0.22.1",
-        "postcss": "^8.5.12",
+        "postcss": "^8.5.14",
         "postcss-load-config": "^6.0.1",
         "sharp": "^0.34.5",
         "tailwindcss": "^3.4.19",
@@ -135,5 +135,5 @@
     "engines": {
         "node": ">=22.18.0"
     },
-    "packageManager": "pnpm@10.33.2"
+    "packageManager": "pnpm@11.0.9"
 }

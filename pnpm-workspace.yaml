@@ -1,6 +1,6 @@
-onlyBuiltDependencies:
-  - "@toolwind/anchors"
-  - esbuild
-  - msw
-  - sharp
-  - unrs-resolver
+allowBuilds:
+  "@toolwind/anchors": true
+  esbuild: true
+  msw: true
+  sharp: true
+  unrs-resolver: true
