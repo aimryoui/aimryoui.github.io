@@ -128,7 +128,7 @@ const sections: Section[] = [
             },
             {
                 startDate: "04.2026",
-                endDate: "04.2026",
+                endDate: "06.2026",
                 position: "Freelance Designer",
                 organization: {
                     text: "Cường Khanh Advertising Co., Ltd",
