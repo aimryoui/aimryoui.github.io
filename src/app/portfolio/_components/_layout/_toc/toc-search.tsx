@@ -57,6 +57,7 @@ function TocSearch({
                 id="toc-search"
                 type="search"
                 role="searchbox"
+                tabIndex={0}
                 placeholder={
                     pathname === "/portfolio"
                         ? "Search for sections..."

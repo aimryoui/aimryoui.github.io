@@ -1,4 +1,4 @@
-// oxlint-disable no-unused-vars WIP
+// oxlint-disable no-unused-vars
 "use client"
 
 import { cn } from "@/lib/utils"
