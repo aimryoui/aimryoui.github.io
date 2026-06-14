@@ -60,7 +60,7 @@ const TocItemRow = memo(
                               }
                             : {
                                   hover: {
-                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground"
+                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground/30 dark:bg-muted-foreground"
                                   }
                               }
                     ]
@@ -115,7 +115,7 @@ const TocItemRow = memo(
                             ? "ps-3.75 text-foreground dark:text-muted-foreground"
                             : "font-bold",
                         isActive
-                            ? "text-highlighted"
+                            ? "!text-highlighted"
                             : {
                                   "group-hover":
                                       "transition-[color] duration-100",
