@@ -78,11 +78,11 @@
         "shadcn:add": "pnpm dlx shadcn@2.3.0 add"
     },
     "dependencies": {
-        "@base-ui/react": "^1.5.0",
+        "@base-ui/react": "^1.6.0",
         "@bprogress/next": "^3.2.12",
         "@oddbird/css-anchor-positioning": "^0.9.0",
-        "@radix-ui/react-dropdown-menu": "^2.1.17",
-        "@radix-ui/react-slot": "^1.2.5",
+        "@radix-ui/react-dropdown-menu": "^2.1.18",
+        "@radix-ui/react-slot": "^1.3.0",
         "class-variance-authority": "^0.7.1",
         "embla-carousel": "9.0.0-rc02",
         "embla-carousel-accessibility": "9.0.0-rc02",
@@ -90,7 +90,7 @@
         "embla-carousel-ssr": "9.0.0-rc02",
         "embla-carousel-wheel-gestures": "9.0.0-rc01",
         "hls.js": "^1.6.16",
-        "lucide-react": "^1.18.0",
+        "lucide-react": "^1.21.0",
         "motion": "^12.40.0",
         "next": "^16.2.9",
         "next-themes": "^0.4.6",
@@ -106,7 +106,7 @@
         "@limegrass/eslint-plugin-import-alias": "^1.6.1",
         "@stylistic/eslint-plugin": "^5.10.0",
         "@toolwind/anchors": "^1.0.10",
-        "@types/node": "^25.9.3",
+        "@types/node": "^26.0.0",
         "@types/react": "^19.2.17",
         "@types/react-dom": "^19.2.3",
         "autoprefixer": "^10.5.0",
@@ -120,20 +120,20 @@
         "eslint-plugin-tailwindcss": "3.18.2",
         "glob": "^13.0.6",
         "jiti": "^2.7.0",
-        "oxfmt": "^0.54.0",
-        "oxlint": "^1.69.0",
+        "oxfmt": "^0.55.0",
+        "oxlint": "^1.70.0",
         "oxlint-tsgolint": "^0.23.0",
         "postcss": "^8.5.15",
         "postcss-load-config": "^6.0.1",
-        "sharp": "^0.35.1",
+        "sharp": "^0.35.2",
         "tailwindcss": "^3.4.19",
         "tailwindcss-animate": "^1.0.7",
         "tsx": "^4.22.4",
         "typescript": "^6.0.3",
-        "velite": "^0.3.1"
+        "velite": "^0.4.0"
     },
     "engines": {
         "node": ">=22.18.0"
     },
-    "packageManager": "pnpm@11.6.0"
+    "packageManager": "pnpm@11.8.0"
 }

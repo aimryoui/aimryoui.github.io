@@ -53,5 +53,5 @@
     "cssrem.vw": true,
     "cssrem.vwDesign": 1707.33,
     // TypeScript Version
-    "js/ts.tsdk.path": "node_modules\\typescript\\lib"
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }
