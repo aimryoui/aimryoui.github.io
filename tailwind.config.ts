@@ -64,6 +64,7 @@ export default {
         extend: {
             fontSize: {
                 xxs: "0.5rem",
+                sm: ["0.875rem", "1.3"],
                 base: ["1rem", "1.3"],
                 "2xl": ["1.5rem", "1.3"],
                 "4xl": ["2.25rem", "1.3"]

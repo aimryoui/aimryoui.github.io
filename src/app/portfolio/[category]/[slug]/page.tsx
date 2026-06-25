@@ -278,7 +278,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                         >
                                             Contact me
                                         </Bold>
-                                        .
                                     </>
                                 )}
                             </div>

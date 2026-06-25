@@ -47,7 +47,7 @@ export default function Portfolio() {
                 <Divider />
                 <SectionLine />
                 <div className={cn("relative bg-background px-6 pb-4 pt-3.25")}>
-                    <Text>
+                    <Text className={cn("text-pretty")}>
                         However, I came up from{" "}
                         {[
                             "event projects",
@@ -63,7 +63,7 @@ export default function Portfolio() {
                         , or event-type university course projects.
                     </Text>
                     <br />
-                    <Text>
+                    <Text className={cn("text-pretty")}>
                         Also, I love coding, I have some experience with{" "}
                         {[
                             "HTML5",

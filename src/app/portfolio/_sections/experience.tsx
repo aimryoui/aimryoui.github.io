@@ -241,7 +241,7 @@ function Experience() {
                             className={cn(
                                 "col-span-full col-start-2 grid table-fixed gap-y-2",
                                 {
-                                    lg: "col-start-1 ps-6"
+                                    xl: "col-start-1 ps-6"
                                 }
                             )}
                         >
@@ -249,7 +249,7 @@ function Experience() {
                                 className={cn(
                                     "absolute left-6 whitespace-pre-line",
                                     {
-                                        lg: "static font-bold"
+                                        xl: "static font-bold"
                                     }
                                 )}
                             >
@@ -279,12 +279,18 @@ function Experience() {
                                     <TableRow
                                         key={index}
                                         className={cn(
-                                            "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                            {
+                                                xl: "grid-cols-3"
+                                            }
                                         )}
                                     >
                                         <TableCell
                                             className={cn(
-                                                "p-0 align-top font-mono"
+                                                "p-0 align-top font-mono",
+                                                {
+                                                    xl: "absolute"
+                                                }
                                             )}
                                         >
                                             {place.startDate === place.endDate
@@ -294,7 +300,10 @@ function Experience() {
 
                                         <TableCell
                                             className={cn(
-                                                "flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top font-bold text-foreground"
+                                                "flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top font-bold text-foreground",
+                                                {
+                                                    xl: "mt-6"
+                                                }
                                             )}
                                         >
                                             {place.position}{" "}
@@ -306,7 +315,10 @@ function Experience() {
                                         <TableCell
                                             colSpan={2}
                                             className={cn(
-                                                "col-span-2 p-0 pe-6 align-top"
+                                                "col-span-2 p-0 pe-6 align-top",
+                                                {
+                                                    xl: "mt-6"
+                                                }
                                             )}
                                         >
                                             {place.organization && (

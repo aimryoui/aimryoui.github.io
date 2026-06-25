@@ -60,7 +60,9 @@ function Projects() {
                                             ? "Projects"
                                             : undefined
                                     }
-                                    className={cn("flex-1 bg-transparent")}
+                                    className={cn("flex-1 bg-transparent", {
+                                        md: "line-clamp-1"
+                                    })}
                                 />
                                 <ArrowRight
                                     className={cn(
@@ -82,9 +84,8 @@ function Projects() {
                                     <div
                                         key={project.slug}
                                         className={cn({
-                                            "[&:nth-child(odd)]":
-                                                "border-r border-dashed border-stroke",
-                                            md: "border-none"
+                                            odd: "border-r border-dashed border-stroke",
+                                            md: "!border-none"
                                         })}
                                     >
                                         <ProjectCard

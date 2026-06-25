@@ -75,7 +75,10 @@ function Software() {
                     <div
                         data-slot="table-container"
                         className={cn(
-                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3"
+                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3",
+                            {
+                                lg: "grid-cols-1"
+                            }
                         )}
                     >
                         <Table

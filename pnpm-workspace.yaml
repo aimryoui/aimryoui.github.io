@@ -4,3 +4,6 @@ allowBuilds:
   msw: true
   sharp: true
   unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@types/node@26.0.1'
+  - autoprefixer@10.5.2

@@ -23,7 +23,7 @@ function H1({
     return (
         <Comp
             className={cn(
-                "text-4xl font-extrabold",
+                "text-pretty text-4xl font-extrabold",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
                 mono && "font-mono",
@@ -46,10 +46,13 @@ function H2({
     return (
         <Comp
             className={cn(
-                "text-4xl font-extrabold",
+                "text-pretty text-4xl font-extrabold",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
                 mono && "font-mono",
+                {
+                    md: "text-3xl"
+                },
                 className
             )}
             {...props}
@@ -69,7 +72,7 @@ function H3({
     return (
         <Comp
             className={cn(
-                "text-4xl font-extrabold",
+                "text-pretty text-4xl font-extrabold",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
                 mono && "font-mono",
@@ -92,6 +95,7 @@ function H4({
     return (
         <Comp
             className={cn(
+                "text-pretty",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
                 mono && "font-mono",
@@ -113,7 +117,7 @@ function Bold({
     return (
         <Comp
             className={cn(
-                "text-foreground",
+                "text-pretty text-foreground",
                 italic && "italic",
                 mono && "font-mono",
                 className
@@ -134,7 +138,7 @@ function Highlight({
     return (
         <Comp
             className={cn(
-                "text-highlighted",
+                "text-pretty text-highlighted",
                 italic && "italic",
                 mono && "font-mono",
                 className
@@ -160,7 +164,7 @@ function Link({
     return (
         <Comp
             className={cn(
-                "w-fit cursor-pointer font-bold text-foreground underline",
+                "w-fit cursor-pointer text-pretty font-bold text-foreground underline",
                 {
                     hover: "decoration-current decoration-solid",
                     "focus-visible": "text-highlighted"
@@ -187,7 +191,7 @@ function Text({
     return (
         <Comp
             className={cn(
-                "text-muted-foreground",
+                "text-pretty text-muted-foreground",
                 italic && "italic",
                 mono && "font-mono",
                 className
