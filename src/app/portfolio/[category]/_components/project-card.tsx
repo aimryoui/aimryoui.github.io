@@ -190,8 +190,10 @@ function ProjectName({
         >
             <Bold
                 className={cn(
-                    "truncate will-change-[color] transition-[color] duration-100",
-                    projectNavigation ? "w-full" : "w-fit",
+                    "will-change-[color] transition-[color] duration-100",
+                    projectNavigation
+                        ? "w-full truncate"
+                        : "line-clamp-1 w-fit",
                     {
                         "group-hover": "text-highlighted transition-none"
                     },
@@ -226,8 +228,10 @@ function ProjectCategory({
         >
             <Text
                 className={cn(
-                    "truncate text-sm will-change-[color] transition-[color] duration-100",
-                    projectNavigation ? "w-full" : "w-fit",
+                    "text-sm will-change-[color] transition-[color] duration-100",
+                    projectNavigation
+                        ? "w-full truncate"
+                        : "line-clamp-1 w-fit",
                     {
                         "group-hover": "text-foreground transition-none"
                     },
