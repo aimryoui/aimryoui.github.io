@@ -20,13 +20,13 @@ function SectionTitle({
 }) {
     return (
         <div
-            className={cn("relative bg-background px-6 pb-5 pt-3.5", className)}
+            className={cn("relative bg-background px-6 pb-4.5 pt-4", className)}
         >
             {note && (
                 <span
                     id={noteId}
                     className={cn(
-                        "absolute -top-9.5 left-6 font-mono uppercase tracking-normal",
+                        "absolute inset-x-6 bottom-22 font-mono uppercase tracking-normal",
                         noteId &&
                             "scroll-mt-[calc(var(--spacing)*20*2+var(--px)-2.59375rem)]"
                     )}

@@ -21,6 +21,7 @@ import { TOOL_ICONS, type ToolProps } from "@/portfolio/_configs/tools"
 interface SectionProps {
     title: string
     tools: ToolProps[]
+    hideOnMd?: boolean
 }
 
 interface Section {
@@ -46,7 +47,8 @@ const sections: Section[] = [
             },
             {
                 title: "Less experienced",
-                tools: [ICON.blender, ICON.premierePro]
+                tools: [ICON.blender, ICON.premierePro],
+                hideOnMd: true
             }
         ]
     },
@@ -77,7 +79,7 @@ function Software() {
                         className={cn(
                             "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3",
                             {
-                                lg: "grid-cols-1"
+                                lg: "grid-cols-1 py-4"
                             }
                         )}
                     >
@@ -85,7 +87,7 @@ function Software() {
                             className={cn(
                                 "col-span-full col-start-2 grid table-fixed gap-y-2 pb-1",
                                 {
-                                    lg: "col-start-1 ps-6"
+                                    lg: "col-start-1 px-6"
                                 }
                             )}
                         >
@@ -113,7 +115,9 @@ function Software() {
                                                 className={cn(
                                                     "col-span-2 px-0",
                                                     index === arr.length - 1 &&
-                                                        "pe-6"
+                                                        "pe-6",
+                                                    frequency.hideOnMd &&
+                                                        "md:hidden"
                                                 )}
                                             >
                                                 {frequency.title}
@@ -136,7 +140,9 @@ function Software() {
                                                 className={cn(
                                                     "col-span-2 p-0 align-top font-bold text-foreground",
                                                     index === arr.length - 1 &&
-                                                        "pe-6"
+                                                        "pe-6",
+                                                    frequency.hideOnMd &&
+                                                        "md:hidden"
                                                 )}
                                             >
                                                 <div

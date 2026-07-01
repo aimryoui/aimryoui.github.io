@@ -26,14 +26,15 @@ function Education() {
             <div
                 data-slot="table-container"
                 className={cn(
-                    "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3"
+                    "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3",
+                    { lg: "py-4" }
                 )}
             >
                 <Table
                     className={cn(
                         "col-span-full col-start-2 grid table-fixed gap-y-2",
                         {
-                            lg: "col-start-1 ps-6"
+                            lg: "col-start-1 gap-y-4 px-6"
                         }
                     )}
                 >
@@ -59,28 +60,42 @@ function Education() {
                         </TableRow>
                     </TableHeader>
 
-                    <TableBody className="grid gap-y-2">
+                    <TableBody
+                        className={cn("grid gap-y-2", { lg: "gap-y-4" })}
+                    >
                         <TableRow
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                {
+                                    xl: "grid-cols-2"
+                                }
                             )}
                         >
                             <TableCell
-                                className={cn("p-0 align-top font-mono")}
+                                className={cn("p-0 align-top font-mono", {
+                                    xl: "absolute"
+                                })}
                             >
                                 09.2021 — 11.2025
                             </TableCell>
 
                             <TableCell
                                 className={cn(
-                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top font-bold text-foreground"
+                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top font-bold text-foreground",
+                                    {
+                                        xl: "col-span-1 mt-8"
+                                    }
                                 )}
                             >
                                 Bachelor&#39;s Degree / Digital Art & Design{" "}
                                 <At className="float-end mx-auto" />
                             </TableCell>
 
-                            <TableCell className={cn("p-0 pe-6 align-top")}>
+                            <TableCell
+                                className={cn("p-0 pe-6 align-top", {
+                                    xl: "mt-8"
+                                })}
+                            >
                                 <Link
                                     href="https://daihoc.fpt.edu.vn/hcm/"
                                     openInNewTab
@@ -93,13 +108,22 @@ function Education() {
 
                         <TableRow
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent"
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent",
+                                {
+                                    xl: "grid-cols-2"
+                                }
                             )}
                         >
-                            <TableCell />
+                            <TableCell
+                                className={cn({
+                                    xl: "hidden"
+                                })}
+                            />
 
                             <TableCell
-                                className={cn("col-span-2 p-0 align-top")}
+                                className={cn("col-span-2 p-0 align-top", {
+                                    xl: "col-span-1"
+                                })}
                             >
                                 Grade Point Average (GPA)
                             </TableCell>
@@ -115,13 +139,22 @@ function Education() {
 
                         <TableRow
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent"
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent",
+                                {
+                                    xl: "grid-cols-2"
+                                }
                             )}
                         >
-                            <TableCell />
+                            <TableCell
+                                className={cn({
+                                    xl: "hidden"
+                                })}
+                            />
 
                             <TableCell
-                                className={cn("col-span-2 p-0 align-top")}
+                                className={cn("col-span-2 p-0 align-top", {
+                                    xl: "col-span-1"
+                                })}
                             >
                                 Degree Classification
                             </TableCell>

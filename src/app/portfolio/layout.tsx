@@ -1,10 +1,7 @@
 import { type Metadata } from "next"
 
-import { Divider } from "@/components/layout/divider"
-import { MarginLine } from "@/components/layout/line"
 import { siteConfig } from "@/configs/site.config"
-import { cn } from "@/lib/utils"
-import Sidebar from "@/portfolio/_components/_layout/sidebar"
+import { Navigation } from "@/portfolio/_components/_layout/navigation"
 
 const APP_PATH_TITLE = "Portfolio | Q1.2026 | Nguyễn Hoàng Nhân"
 // const APP_TITLE_TEMPLATE = "%s | Q1.2026 | Nguyễn Hoàng Nhân"
@@ -42,13 +39,7 @@ export default function PortfolioLayout({
 }>) {
     return (
         <>
-            <Sidebar />
-            <MarginLine className={cn("ms-sidebar lg:hidden")} />
-            <Divider
-                dir="vertical"
-                className={cn("sticky top-0 h-dvh lg:hidden")}
-            />
-            <MarginLine className={cn("lg:hidden")} />
+            <Navigation />
             {children}
         </>
     )

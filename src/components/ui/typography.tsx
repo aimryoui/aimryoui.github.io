@@ -27,6 +27,9 @@ function H1({
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
                 mono && "font-mono",
+                {
+                    md: "text-3xl"
+                },
                 className
             )}
             {...props}
@@ -117,7 +120,7 @@ function Bold({
     return (
         <Comp
             className={cn(
-                "text-pretty text-foreground",
+                "text-foreground",
                 italic && "italic",
                 mono && "font-mono",
                 className
@@ -191,7 +194,7 @@ function Text({
     return (
         <Comp
             className={cn(
-                "text-pretty text-muted-foreground",
+                "text-muted-foreground",
                 italic && "italic",
                 mono && "font-mono",
                 className

@@ -120,7 +120,7 @@ function Image({
                 asBackgroundImage ? "h-full" : "h-fit",
                 "relative grid place-items-center",
                 !pngBorder && "overflow-hidden",
-                rounded && "rounded-2xl",
+                rounded && "rounded-2xl md:rounded-xl",
                 !noBorder && {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },

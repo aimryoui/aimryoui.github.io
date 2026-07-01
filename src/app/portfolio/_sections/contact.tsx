@@ -299,14 +299,18 @@ function Contact() {
                         <div
                             data-slot="table-container"
                             className={cn(
-                                "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3"
+                                "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3",
+                                {
+                                    lg: "py-4"
+                                }
                             )}
                         >
                             <Table
                                 className={cn(
                                     "col-span-full col-start-2 grid table-fixed gap-y-2.5",
                                     {
-                                        lg: "col-start-1 ps-6"
+                                        lg: "col-start-1 ps-6",
+                                        md: "pe-6"
                                     }
                                 )}
                             >
@@ -314,7 +318,7 @@ function Contact() {
                                     className={cn(
                                         "sr-only absolute left-6 whitespace-pre-line",
                                         {
-                                            lg: "static font-bold"
+                                            lg: "font-bold"
                                         }
                                     )}
                                 >
@@ -339,13 +343,20 @@ function Contact() {
                                     </TableRow>
                                 </TableHeader>
 
-                                <TableBody className="grid gap-y-2">
+                                <TableBody
+                                    className={cn("grid gap-y-2", {
+                                        lg: "gap-y-4"
+                                    })}
+                                >
                                     {section.platforms.map(
                                         (platform, index) => (
                                             <TableRow
                                                 key={index}
                                                 className={cn(
-                                                    "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                                    "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                                    {
+                                                        md: "flex gap-6"
+                                                    }
                                                 )}
                                             >
                                                 <TableCell
@@ -355,16 +366,30 @@ function Contact() {
                                                 >
                                                     <span
                                                         className={cn(
-                                                            "absolute left-6 text-highlighted"
+                                                            "absolute left-6 text-highlighted",
+                                                            {
+                                                                lg: "hidden",
+                                                                md: "static block"
+                                                            }
                                                         )}
                                                     >
                                                         {platform.icon}
                                                     </span>
-                                                    {platform.title}
+                                                    <p
+                                                        className={cn({
+                                                            md: "sr-only"
+                                                        })}
+                                                    >
+                                                        {platform.title}
+                                                    </p>
                                                 </TableCell>
                                                 <TableCell
                                                     className={cn(
-                                                        "p-0 align-top"
+                                                        "p-0 align-top",
+                                                        {
+                                                            xl: "col-span-2",
+                                                            lg: "col-span-1"
+                                                        }
                                                     )}
                                                 >
                                                     <Link
@@ -384,7 +409,12 @@ function Contact() {
                                                 </TableCell>
                                                 <TableCell
                                                     className={cn(
-                                                        "col-span-2 p-0 ps-12 align-top text-highlighted"
+                                                        "col-span-2 p-0 ps-12 align-top text-highlighted",
+                                                        {
+                                                            xl: "col-span-1",
+                                                            lg: "col-span-2",
+                                                            md: "sr-only"
+                                                        }
                                                     )}
                                                 >
                                                     {platform.prefer &&

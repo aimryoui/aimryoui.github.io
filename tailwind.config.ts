@@ -16,9 +16,11 @@ import fieldSizing from "./src/lib/tailwindcss-plugins/utilities/field-sizing"
 import outline from "./src/lib/tailwindcss-plugins/utilities/outline"
 import overflowAnchor from "./src/lib/tailwindcss-plugins/utilities/overflow-anchor"
 import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
+import scrollbarGutter from "./src/lib/tailwindcss-plugins/utilities/scrollbar-gutter"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
 import all from "./src/lib/tailwindcss-plugins/variants/all"
+import containerQueries from "./src/lib/tailwindcss-plugins/variants/container-queries"
 import has from "./src/lib/tailwindcss-plugins/variants/has"
 import not from "./src/lib/tailwindcss-plugins/variants/not"
 import nth from "./src/lib/tailwindcss-plugins/variants/nth"
@@ -88,6 +90,7 @@ export default {
                 11.5: "2.875rem",
                 13: "3.25rem",
                 16.5: "4.125rem",
+                22: "5.5rem",
                 37.5: "9.375rem",
                 56.25: "14.0625rem",
                 61.25: "15.3125rem",
@@ -117,6 +120,7 @@ export default {
                 lg: "var(--radius-lg)",
                 xl: "var(--radius-xl)",
                 "2xl": "var(--radius-2xl)",
+                "3xl": "var(--radius-3xl)",
                 inherit: "inherit"
             },
             borderWidth: {
@@ -263,10 +267,12 @@ export default {
         outline,
         overflowAnchor,
         scrollbar,
+        scrollbarGutter,
         transition,
         transitionBehavior,
 
         all,
+        containerQueries,
         has,
         not,
         nth,

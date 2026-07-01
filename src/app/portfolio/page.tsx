@@ -29,7 +29,7 @@ export default function Portfolio() {
                 <SectionLine showDecoration />
                 <Space />
                 <SectionLine />
-                <div className={cn("relative bg-background px-6 pb-5 pt-3.5")}>
+                <div className={cn("relative bg-background px-6 pb-4.5 pt-4")}>
                     <span
                         className={cn(
                             "absolute -top-9.5 left-6 font-mono uppercase tracking-normal"
@@ -46,7 +46,11 @@ export default function Portfolio() {
                 <SectionLine />
                 <Divider />
                 <SectionLine />
-                <div className={cn("relative bg-background px-6 pb-4 pt-3.25")}>
+                <div
+                    className={cn("relative bg-background px-6 pb-4 pt-3.25", {
+                        lg: "pb-5 pt-4"
+                    })}
+                >
                     <Text className={cn("text-pretty")}>
                         However, I came up from{" "}
                         {[
@@ -96,20 +100,25 @@ export default function Portfolio() {
                 <SectionLine />
                 <Divider />
                 <SectionLine />
-                <div className={cn("flex h-24 bg-background")}>
+                <div className={cn("flex flex-wrap bg-background")}>
                     {[
                         { value: "2003", label: "Year of birth" },
                         { value: "45+", label: "Projects" },
                         { value: "4+", label: "Years as Designer" }
-                    ].map((item) => (
+                    ].map((item, index, array) => (
                         <Fragment key={item.label}>
                             <div
                                 className={cn(
-                                    "relative grid flex-1 place-items-center bg-highlighted/10"
+                                    "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
+                                    {
+                                        md: "min-w-[20%]"
+                                    }
                                 )}
                             >
                                 <Highlight
-                                    className={cn("text-4xl font-extrabold")}
+                                    className={cn("text-4xl font-extrabold", {
+                                        xl: "text-3xl"
+                                    })}
                                 >
                                     {item.value}
                                 </Highlight>
@@ -127,14 +136,37 @@ export default function Portfolio() {
                                     </span>
                                 </div>
                             </div>
-                            <ElementLine />
-                            <Divider dir="vertical" />
-                            <ElementLine />
+                            {index < array.length - 1 && (
+                                <>
+                                    <ElementLine className="h-24" />
+                                    <Divider dir="vertical" className="h-24" />
+                                    <ElementLine className="h-24" />
+                                </>
+                            )}
                         </Fragment>
                     ))}
+                    <ElementLine
+                        className={cn("h-24", {
+                            md: "h-0 w-full border-b border-r-0"
+                        })}
+                    />
+                    <Divider
+                        dir="vertical"
+                        className={cn("h-24", {
+                            md: "h-6 w-full"
+                        })}
+                    />
+                    <ElementLine
+                        className={cn("h-24", {
+                            md: "h-0 w-full border-b border-r-0"
+                        })}
+                    />
                     <div
                         className={cn(
-                            "relative grid flex-1 place-items-center bg-highlighted/10"
+                            "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
+                            {
+                                md: "min-w-[40%]"
+                            }
                         )}
                     >
                         <TooltipTrigger
@@ -144,13 +176,11 @@ export default function Portfolio() {
                                     href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
                                     openInNewTab
                                     highlight
-                                    className={cn("text-4xl")}
+                                    className={cn("text-4xl", {
+                                        xl: "text-3xl"
+                                    })}
                                 >
-                                    <Highlight
-                                        className={cn(
-                                            "text-4xl font-extrabold"
-                                        )}
-                                    >
+                                    <Highlight className={cn("font-extrabold")}>
                                         HCMC
                                     </Highlight>
                                 </Link>
@@ -170,12 +200,15 @@ export default function Portfolio() {
                             </span>
                         </div>
                     </div>
-                    <ElementLine />
-                    <Divider dir="vertical" />
-                    <ElementLine />
+                    <ElementLine className="h-24" />
+                    <Divider dir="vertical" className="h-24" />
+                    <ElementLine className="h-24" />
                     <div
                         className={cn(
-                            "relative grid flex-1 place-items-center bg-highlighted/10"
+                            "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
+                            {
+                                md: "min-w-[40%]"
+                            }
                         )}
                     >
                         <TooltipTrigger
@@ -193,7 +226,10 @@ export default function Portfolio() {
                                 >
                                     <Highlight
                                         className={cn(
-                                            "sr-only text-4xl font-extrabold"
+                                            "sr-only text-4xl font-extrabold",
+                                            {
+                                                md: "text-3xl"
+                                            }
                                         )}
                                     >
                                         Vietnam
@@ -249,7 +285,7 @@ export default function Portfolio() {
                 <Divider />
 
                 <NoAIPlaceholder />
-                <Divider />
+                <Divider className="lg:hidden" />
                 <SectionLine />
 
                 <Outlines />

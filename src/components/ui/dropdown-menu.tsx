@@ -66,7 +66,7 @@ function DropdownMenuContent({
                                     "data-[side=top]": {
                                         "data-[align=start]":
                                             "translate-y-full",
-                                        "data-[align=end]": "-translate-y-full"
+                                        "data-[align=end]": "translate-y-full"
                                     },
                                     "data-[side=bottom]": {
                                         "data-[align=start]":

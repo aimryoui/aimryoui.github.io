@@ -59,6 +59,7 @@ function NoAIOverlay() {
                 isActive ? "bg-alert" : "bg-background",
                 "px-[calc(var(--spacing)*6.5*2+theme(spacing.sidebar)+var(--px)*3+var(--spacing)*6)] lg:px-[calc(var(--spacing)*6.5+var(--px)*2+var(--spacing)*6)]",
                 {
+                    xl: "px-36",
                     lg: "hidden"
                 }
             )}

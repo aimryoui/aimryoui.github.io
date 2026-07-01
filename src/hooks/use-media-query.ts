@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useSyncExternalStore } from "react"
 
 interface UseMediaQueryOptions {
     getInitialValueInEffect: boolean
@@ -50,24 +50,52 @@ const defaultOptions: UseMediaQueryOptions = {
     getInitialValueInEffect: true
 }
 
+export const BREAKPOINTS = {
+    "2xl": "(max-width: 96rem)",
+    xl: "(max-width: 80rem)",
+    lg: "(max-width: 64rem)",
+    md: "(max-width: 48rem)",
+    sm: "(max-width: 40rem)"
+} as const
+
+export type BreakpointKey = keyof typeof BREAKPOINTS
+
 export function useMediaQuery(
-    query: string,
+    query: BreakpointKey | (string & Record<never, never>),
     initialValue?: boolean,
     { getInitialValueInEffect }: UseMediaQueryOptions = defaultOptions
 ): boolean {
-    const [matches, setMatches] = useState(
-        getInitialValueInEffect ? initialValue : getInitialValue(query)
-    )
-    useEffect(() => {
-        try {
-            const mediaQuery = window.matchMedia(query)
-            return attachMediaListener(mediaQuery, (event) => {
-                setMatches(event.matches)
-            })
-        } catch (_e) {
-            // Safari iframe compatibility issue
-        }
-    }, [query])
+    const mediaQueryString =
+        query in BREAKPOINTS ? BREAKPOINTS[query as BreakpointKey] : query
 
-    return matches ?? false
+    const subscribe = useCallback(
+        (callback: () => void) => {
+            try {
+                const mediaQuery = window.matchMedia(mediaQueryString)
+                return attachMediaListener(mediaQuery, callback)
+            } catch (_e) {
+                // Safari iframe compatibility issue
+                return () => {}
+            }
+        },
+        [mediaQueryString]
+    )
+
+    const getSnapshot = useCallback(
+        () => getInitialValue(mediaQueryString),
+        [mediaQueryString]
+    )
+
+    const getServerSnapshot = useCallback(
+        () => initialValue ?? false,
+        [initialValue]
+    )
+
+    const matches = useSyncExternalStore(
+        subscribe,
+        getSnapshot,
+        getInitialValueInEffect ? getServerSnapshot : getSnapshot
+    )
+
+    return matches
 }

@@ -157,6 +157,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         <ProjectCard
                             href={getProjectPath(prev)}
                             navigation="backward"
+                            projectNavigation
                             project={prev}
                             projectName={prev.projectName}
                             category={prev.category}
@@ -210,6 +211,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     {next ? (
                         <ProjectCard
                             href={getProjectPath(next)}
+                            projectNavigation
                             project={next}
                             projectName={next.projectName}
                             category={next.category}

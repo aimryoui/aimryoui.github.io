@@ -27,8 +27,17 @@ export function useScrollSpy(ids: string[], offsetPercent = 40) {
                 const innerHeight = window.innerHeight
 
                 const existingElements = ids
-                    .map((id) => document.getElementById(id))
-                    .filter((el) => el !== null)
+                    .map((id) => {
+                        const el = document.getElementById(id)
+                        if (!el) return null
+                        const rect = el.getBoundingClientRect()
+                        return { el, rect }
+                    })
+                    .filter(
+                        (item) =>
+                            item !== null &&
+                            (item.rect.width > 0 || item.rect.height > 0)
+                    )
 
                 if (existingElements.length === 0) {
                     isScrollPending.current = false
@@ -36,7 +45,7 @@ export function useScrollSpy(ids: string[], offsetPercent = 40) {
                 }
 
                 if (pathname === "/portfolio" && scrollY < 10) {
-                    setActiveId(existingElements[0].id)
+                    setActiveId(existingElements[0].el.id)
                     isScrollPending.current = false
                     return
                 }
@@ -47,7 +56,7 @@ export function useScrollSpy(ids: string[], offsetPercent = 40) {
 
                 if (pathname === "/portfolio" && isBottom) {
                     setActiveId(
-                        existingElements[existingElements.length - 1].id
+                        existingElements[existingElements.length - 1].el.id
                     )
                     isScrollPending.current = false
                     return
@@ -58,11 +67,10 @@ export function useScrollSpy(ids: string[], offsetPercent = 40) {
                 let newActiveId = ""
 
                 for (let i = existingElements.length - 1; i >= 0; i--) {
-                    const element = existingElements[i]
-                    const rect = element.getBoundingClientRect()
+                    const { el, rect } = existingElements[i]
 
                     if (rect.top <= activePoint) {
-                        newActiveId = element.id
+                        newActiveId = el.id
                         break
                     }
                 }

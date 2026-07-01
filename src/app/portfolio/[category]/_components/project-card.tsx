@@ -13,12 +13,14 @@ function ProjectCard({
     href,
     project,
     navigation = "forward",
+    projectNavigation = false,
     projectName,
     category
 }: {
     href: string
     project: Project
     navigation?: "forward" | "backward"
+    projectNavigation?: boolean
     projectName?: string
     category?: string
 }) {
@@ -41,9 +43,12 @@ function ProjectCard({
         <NextLink
             href={href}
             className={cn(
-                "group flex h-20 items-center gap-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
+                "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
                 {
                     hover: "bg-element-hover transition-none"
+                },
+                projectNavigation && {
+                    sm: "flex-wrap gap-x-0 gap-y-2"
                 }
             )}
         >
@@ -61,17 +66,35 @@ function ProjectCard({
                 projectName={projectName ?? project.projectName}
                 navigation={navigation}
                 src={coverImageSrc}
+                className={cn(
+                    projectNavigation && navigation === "backward"
+                        ? {
+                              sm: "ms-auto"
+                          }
+                        : {
+                              sm: "me-auto"
+                          }
+                )}
             />
             <div
                 className={cn(
-                    "flex flex-1 flex-col gap-0.5",
-                    navigation === "backward" && "items-end"
+                    "flex min-w-0 flex-1 flex-col gap-0.5",
+                    navigation === "backward" && "items-end",
+                    projectNavigation && {
+                        sm: "order-3 w-full flex-none"
+                    }
                 )}
             >
-                <ProjectName projectName={projectName ?? project.projectName} />
+                <ProjectName
+                    projectName={projectName ?? project.projectName}
+                    projectNavigation={projectNavigation}
+                    className={cn(navigation === "backward" && "text-right")}
+                />
                 <ProjectCategory
                     projectName={projectName ?? project.projectName}
+                    projectNavigation={projectNavigation}
                     category={category ?? project.category}
+                    className={cn(navigation === "backward" && "text-right")}
                 />
             </div>
             {navigation === "forward" && (
@@ -80,6 +103,9 @@ function ProjectCard({
                         "m-1 will-change-[color] transition-[color] duration-100",
                         {
                             "group-hover": "text-highlighted transition-none"
+                        },
+                        projectNavigation && {
+                            sm: "order-2"
                         }
                     )}
                 />
@@ -91,21 +117,24 @@ function ProjectCard({
 function ProjectCover({
     projectName,
     navigation,
-    src
+    src,
+    className
 }: {
     projectName: string
     navigation?: "forward" | "backward"
     src: string
+    className?: string
 }) {
     return (
         <ViewTransition name={formatViewTransitionName(`cover-${projectName}`)}>
             <div
                 className={cn(
-                    "flex flex-col items-center gap-0.5 will-change-[gap] transition-[gap] ease-spring duration-300",
-                    navigation === "backward" && "order-last",
+                    "flex h-11 flex-col items-center justify-center gap-0.5 will-change-[gap] transition-[gap] ease-spring duration-300",
+                    navigation === "backward" && "order-last sm:order-none",
                     {
                         "group-hover": "gap-0.75"
-                    }
+                    },
+                    className
                 )}
                 style={{
                     viewTransitionName: "none !important"
@@ -146,17 +175,27 @@ function ProjectCover({
     )
 }
 
-function ProjectName({ projectName }: { projectName: string }) {
+function ProjectName({
+    projectName,
+    projectNavigation,
+    className
+}: {
+    projectName: string
+    projectNavigation: boolean
+    className?: string
+}) {
     return (
         <ViewTransition
             name={formatViewTransitionName(`project-${projectName}`)}
         >
             <Bold
                 className={cn(
-                    "line-clamp-1 w-fit will-change-[color] transition-[color] duration-100",
+                    "truncate will-change-[color] transition-[color] duration-100",
+                    projectNavigation ? "w-full" : "w-fit",
                     {
                         "group-hover": "text-highlighted transition-none"
-                    }
+                    },
+                    className
                 )}
                 style={{
                     viewTransitionName: "none !important"
@@ -170,10 +209,14 @@ function ProjectName({ projectName }: { projectName: string }) {
 
 function ProjectCategory({
     projectName,
-    category
+    projectNavigation,
+    category,
+    className
 }: {
     projectName: string
+    projectNavigation: boolean
     category: string
+    className?: string
 }) {
     return (
         <ViewTransition
@@ -183,10 +226,12 @@ function ProjectCategory({
         >
             <Text
                 className={cn(
-                    "line-clamp-1 w-fit text-sm will-change-[color] transition-[color] duration-100",
+                    "truncate text-sm will-change-[color] transition-[color] duration-100",
+                    projectNavigation ? "w-full" : "w-fit",
                     {
                         "group-hover": "text-foreground transition-none"
-                    }
+                    },
+                    className
                 )}
                 style={{
                     viewTransitionName: "none !important"

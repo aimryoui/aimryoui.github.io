@@ -136,7 +136,7 @@ const RightAddon = memo(function SearchRightAddon({
                     }
                 />
             ) : (
-                <KbdGroup>
+                <KbdGroup className={cn({ lg: "hidden" })}>
                     <Kbd>
                         {platform === "mac" ? (
                             <Command className="size-2.5" />

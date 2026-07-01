@@ -70,7 +70,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         <div
                             className={cn(
                                 "flex aspect-3 size-full items-center justify-evenly rounded-2xl border border-highlighted bg-background",
-                                "bg-[radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-position-[0_0,.375rem_.375rem] bg-size-[.75rem_.75rem]"
+                                "bg-[radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-position-[0_0,.375rem_.375rem] bg-size-[.75rem_.75rem]",
+                                {
+                                    md: "rounded-xl"
+                                }
                             )}
                         >
                             {group.icons}
@@ -91,7 +94,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                             className={cn({
                                 "[&:nth-child(odd)]":
                                     "border-r border-dashed border-stroke",
-                                md: "border-none"
+                                md: "!border-none"
                             })}
                         >
                             <ProjectCard
