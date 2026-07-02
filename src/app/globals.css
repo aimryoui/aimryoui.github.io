@@ -234,6 +234,12 @@
     }
 }
 
+@screen lg {
+    aside *:not(li:has(hr), li:has(hr) *) {
+        zoom: 1.034;
+    }
+}
+
 /* @layer utilities {
     @keyframes enable-vt {
         0%,
