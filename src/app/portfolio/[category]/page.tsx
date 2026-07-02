@@ -1,3 +1,4 @@
+import { type Metadata } from "next"
 import NextLink from "next/link"
 import { notFound } from "next/navigation"
 
@@ -6,6 +7,7 @@ import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { Bold, Highlight, Text } from "@/components/ui/typography"
+import { siteConfig } from "@/configs/site.config"
 import {
     getCategoryPath,
     getProjectPath,
@@ -31,6 +33,46 @@ export function generateStaticParams() {
     return groups.map((group) => ({
         category: group.id
     }))
+}
+
+const APP_FULL_URL = siteConfig.fullUrl
+const APP_BASE_PATH = "/portfolio"
+
+export async function generateMetadata({
+    params
+}: CategoryPageProps): Promise<Metadata> {
+    const { category } = await params
+    const groups = groupProjectsByCategory(projects)
+    const group = groups.find((projectGroup) => projectGroup.id === category)
+
+    if (!group) {
+        return {}
+    }
+
+    const CATEGORY_TITLE = `${group.title} Projects | aimryoui`
+    const CATEGORY_DESCRIPTION = `${group.title} Category detail page.`
+    const portfolioOgImage = `${siteConfig.fullUrl}/portfolio/opengraph-image.jpg`
+
+    return {
+        title: CATEGORY_TITLE,
+        description: CATEGORY_DESCRIPTION,
+        openGraph: {
+            title: CATEGORY_TITLE,
+            description: CATEGORY_DESCRIPTION,
+            type: "website",
+            url: APP_FULL_URL + APP_BASE_PATH,
+            siteName: siteConfig.domain,
+            locale: "vi_VN",
+            images: [{ url: portfolioOgImage }]
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: CATEGORY_TITLE,
+            description: CATEGORY_DESCRIPTION,
+            site: APP_FULL_URL + APP_BASE_PATH,
+            images: [portfolioOgImage]
+        }
+    }
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {

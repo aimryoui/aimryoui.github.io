@@ -39,6 +39,9 @@ export function generateStaticParams() {
     )
 }
 
+const APP_FULL_URL = siteConfig.fullUrl
+const APP_BASE_PATH = "/portfolio"
+
 export async function generateMetadata({
     params
 }: ProjectPageProps): Promise<Metadata> {
@@ -52,25 +55,28 @@ export async function generateMetadata({
         return {}
     }
 
-    const description = project.detail?.description ?? "Project detail page."
-    const portfolioUrl = `${siteConfig.fullUrl}/portfolio`
+    const SLUG_TITLE = `Project — ${project.projectName} | aimryoui`
+    const SLUG_DESCRIPTION =
+        project.detail?.description ?? "Project detail page."
     const portfolioOgImage = `${siteConfig.fullUrl}/portfolio/opengraph-image.jpg`
 
     return {
-        title: project.projectName,
-        description,
+        title: SLUG_TITLE,
+        description: SLUG_DESCRIPTION,
         openGraph: {
-            title: project.projectName,
-            description,
+            title: SLUG_TITLE,
+            description: SLUG_DESCRIPTION,
             type: "website",
-            url: portfolioUrl,
+            url: APP_FULL_URL + APP_BASE_PATH,
+            siteName: siteConfig.domain,
+            locale: "vi_VN",
             images: [{ url: portfolioOgImage }]
         },
         twitter: {
             card: "summary_large_image",
-            title: project.projectName,
-            description,
-            site: portfolioUrl,
+            title: SLUG_TITLE,
+            description: SLUG_DESCRIPTION,
+            site: APP_FULL_URL + APP_BASE_PATH,
             images: [portfolioOgImage]
         }
     }
