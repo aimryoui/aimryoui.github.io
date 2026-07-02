@@ -14,8 +14,8 @@ import { type projects } from "~/.velite"
 
 const ICON = TOOL_ICONS({ size: "sm" })
 
-const TRAILING_REGEX = /[.!?]$/
-const MEDIA_REGEX = /\.(jpg|png|mp4|mp3)$/
+const TRAILING_REGEX = /[.!?]$/u
+const MEDIA_REGEX = /\.(jpg|png|mp4|mp3)$/u
 
 function ProjectHeader({
     type,

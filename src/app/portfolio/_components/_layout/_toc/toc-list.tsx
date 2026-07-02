@@ -1,6 +1,14 @@
 "use client"
 
-import { Fragment, useCallback, useEffect, useRef, useState } from "react"
+import {
+    Fragment,
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+    useState
+} from "react"
 import { usePathname } from "next/navigation"
 
 import { stagger } from "motion/react"
@@ -23,16 +31,19 @@ interface TocListProps {
     setHasPageMounted: (value: boolean) => void
 }
 
-const ulVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            duration: 1,
-            delayChildren: stagger(0.025, {
-                startDelay: -0.1,
-                ease: "easeOut"
-            })
+function getUlVariants(fromIndex: number) {
+    return {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                duration: 1,
+                delayChildren: stagger(0.025, {
+                    startDelay: -0.1,
+                    ease: "easeOut",
+                    from: fromIndex
+                })
+            }
         }
     }
 }
@@ -52,10 +63,78 @@ function TocList({
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
 
-    const allIds = items.map((item) => item.id)
+    const allIds = useMemo(() => items.map((item) => item.id), [items])
     const rawActiveId = useScrollSpy(allIds)
     const [activeId, setActiveId] = useState(rawActiveId)
     const lastUpdateTimestamp = useRef(0)
+
+    // Stagger "from" index & animation gate, computed once before first paint.
+    // null = waiting for useLayoutEffect to compute, number = ready to animate.
+    const [staggerFrom, setStaggerFrom] = useState<number | null>(
+        hasPageMounted ? 0 : null
+    )
+
+    const ulVariants = useMemo(
+        () => getUlVariants(staggerFrom ?? 0),
+        [staggerFrom]
+    )
+
+    // Before the first paint: figure out which TOC section is initially active
+    // (useScrollSpy hasn't fired yet), scroll the TOC container to center it,
+    // then find which <li> is at the top of the visible area to start stagger.
+    useLayoutEffect(() => {
+        if (hasPageMounted) return
+
+        const container = scrollContainerRef.current
+        if (!container) {
+            setStaggerFrom(0)
+            return
+        }
+
+        // Compute initial active ID independently (useScrollSpy hasn't fired)
+        const hash = window.location.hash.slice(1)
+        let initialActiveId = hash && allIds.includes(hash) ? hash : ""
+
+        if (!initialActiveId) {
+            const activePoint = window.innerHeight * 0.4
+            for (let i = allIds.length - 1; i >= 0; i--) {
+                const el = document.getElementById(allIds[i])
+                if (!el) continue
+                const rect = el.getBoundingClientRect()
+                if (rect.width === 0 && rect.height === 0) continue
+                if (rect.top <= activePoint) {
+                    initialActiveId = allIds[i]
+                    break
+                }
+            }
+        }
+
+        // Scroll TOC to center the active element (instant, before paint)
+        if (initialActiveId) {
+            const activeEl = container.querySelector(
+                `[data-toc-id="${initialActiveId}"]`
+            )
+            if (activeEl) {
+                activeEl.scrollIntoView({ block: "center", behavior: "auto" })
+                isFirstRenderRef.current = false
+            }
+        }
+
+        // Find the stagger index of the first visible <li>
+        const containerRect = container.getBoundingClientRect()
+        const listItems = container.querySelectorAll(":scope > li")
+        let firstVisibleIdx = 0
+        for (let i = 0; i < listItems.length; i++) {
+            const rect = listItems[i].getBoundingClientRect()
+            if (rect.bottom > containerRect.top) {
+                firstVisibleIdx = i
+                break
+            }
+        }
+
+        setStaggerFrom(firstVisibleIdx)
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     // Make sure the scrollIntoView animation is finished
     // before setting the other activeIds
@@ -130,7 +209,7 @@ function TocList({
         <m.ul
             variants={ulVariants}
             initial={hasPageMounted ? false : "hidden"}
-            animate={"visible"}
+            animate={staggerFrom === null ? "hidden" : "visible"}
             onAnimationComplete={() => {
                 if (!hasPageMounted) setHasPageMounted(true)
             }}
