@@ -7,7 +7,7 @@ function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
                 className={cn(
                     "sticky top-0 h-full border-r border-dashed border-stroke",
                     {
-                        md: "border-r-[1px]"
+                        md: "border-r-[2px]"
                     }
                 )}
             />
