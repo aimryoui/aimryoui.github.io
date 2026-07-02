@@ -38,22 +38,21 @@ const maskCommon = {
 
 /**
  * Build the `@supports` block for scroll-driven animation on a given set of
- * directions. Returns two blocks: one for supporting browsers, one for the
- * static fallback.
+ * directions. Returns two blocks: one for supporting browsers, one that
+ * disables the effect entirely on browsers without scroll-driven animation
+ * support (e.g. Safari < 26, Firefox) to avoid a permanently-on static mask
+ * that looks broken.
  *
  * @param {string[]} animations - Animations to apply to the element.
  * @param {string[]} timelines - Timelines for the animations.
  * @param {string[]} ranges - Ranges for the animations.
- * @param {Record<string, string>} fallbackVars - Fallback variables for the
- *   animations.
  * @returns {Object} An object with `@supports` blocks for scroll-driven
- *   animation and a fallback.
+ *   animation and a no-op fallback.
  */
 function scrollAnimationBlock(
     animations: string[],
     timelines: string[],
-    ranges: string[],
-    fallbackVars: Record<string, string>
+    ranges: string[]
 ) {
     return {
         "@supports (animation-timeline: scroll())": {
@@ -62,7 +61,9 @@ function scrollAnimationBlock(
             "animation-range": ranges.join(", "),
             "animation-fill-mode": "both"
         },
-        "@supports not (animation-timeline: scroll())": fallbackVars
+        "@supports not (animation-timeline: scroll())": {
+            "--scroll-fade-mask": "none"
+        }
     }
 }
 
@@ -72,58 +73,66 @@ function scrollAnimationBlock(
 
 export default plugin(
     ({ addBase, addUtilities, matchUtilities, theme }) => {
-    // ---------------------------------------------------------------
-    // 1. @property declarations (registered custom properties)
-    // ---------------------------------------------------------------
-    addBase({
-        "@property --scroll-fade-t": {
-            syntax: "'<length-percentage>'",
-            inherits: "false",
-            initialValue: "0px"
-        },
-        "@property --scroll-fade-b": {
-            syntax: "'<length-percentage>'",
-            inherits: "false",
-            initialValue: "0px"
-        },
-        "@property --scroll-fade-s": {
-            syntax: "'<length-percentage>'",
-            inherits: "false",
-            initialValue: "0px"
-        },
-        "@property --scroll-fade-e": {
-            syntax: "'<length-percentage>'",
-            inherits: "false",
-            initialValue: "0px"
-        },
-        "@property --scroll-fade-mask": {
-            syntax: "'*'",
-            inherits: "false"
-        }
-    })
+        // ---------------------------------------------------------------
+        // 1. @property declarations (registered custom properties)
+        // ---------------------------------------------------------------
+        addBase({
+            "@property --scroll-fade-t": {
+                syntax: "'<length-percentage>'",
+                inherits: "false",
+                initialValue: "0px"
+            },
+            "@property --scroll-fade-b": {
+                syntax: "'<length-percentage>'",
+                inherits: "false",
+                initialValue: "0px"
+            },
+            "@property --scroll-fade-s": {
+                syntax: "'<length-percentage>'",
+                inherits: "false",
+                initialValue: "0px"
+            },
+            "@property --scroll-fade-e": {
+                syntax: "'<length-percentage>'",
+                inherits: "false",
+                initialValue: "0px"
+            },
+            "@property --scroll-fade-mask": {
+                syntax: "'*'",
+                inherits: "false"
+            }
+        })
 
-    // ---------------------------------------------------------------
-    // 2. Keyframes
-    // ---------------------------------------------------------------
-    addUtilities({
-        "@keyframes scroll-fade-reveal-t": theme("keyframes.scroll-fade-reveal-t"),
-        "@keyframes scroll-fade-reveal-b": theme("keyframes.scroll-fade-reveal-b"),
-        "@keyframes scroll-fade-reveal-s": theme("keyframes.scroll-fade-reveal-s"),
-        "@keyframes scroll-fade-reveal-e": theme("keyframes.scroll-fade-reveal-e")
-    })
+        // ---------------------------------------------------------------
+        // 2. Keyframes
+        // ---------------------------------------------------------------
+        addUtilities({
+            "@keyframes scroll-fade-reveal-t": theme(
+                "keyframes.scroll-fade-reveal-t"
+            ),
+            "@keyframes scroll-fade-reveal-b": theme(
+                "keyframes.scroll-fade-reveal-b"
+            ),
+            "@keyframes scroll-fade-reveal-s": theme(
+                "keyframes.scroll-fade-reveal-s"
+            ),
+            "@keyframes scroll-fade-reveal-e": theme(
+                "keyframes.scroll-fade-reveal-e"
+            )
+        })
 
-    // ---------------------------------------------------------------
-    // 3. Base utilities — scroll-fade / scroll-fade-y (vertical)
-    // ---------------------------------------------------------------
+        // ---------------------------------------------------------------
+        // 3. Base utilities — scroll-fade / scroll-fade-y (vertical)
+        // ---------------------------------------------------------------
 
-    /**
-     * Shared block-axis (vertical) styles used by both `.scroll-fade` and
-     * `.scroll-fade-y`.
-     */
-    const verticalBase = {
-        "--_scroll-fade-size-t": sizeVar("t"),
-        "--_scroll-fade-size-b": sizeVar("b"),
-        "--scroll-fade-block": `
+        /**
+         * Shared block-axis (vertical) styles used by both `.scroll-fade` and
+         * `.scroll-fade-y`.
+         */
+        const verticalBase = {
+            "--_scroll-fade-size-t": sizeVar("t"),
+            "--_scroll-fade-size-b": sizeVar("b"),
+            "--scroll-fade-block": `
             linear-gradient(
                 to bottom, 
                 transparent 0, 
@@ -131,35 +140,31 @@ export default plugin(
                 #000 calc(100% - var(--scroll-fade-b, 0px)), 
                 transparent 100%
             )`,
-        "-webkit-mask-image":
-            "var(--scroll-fade-mask, var(--scroll-fade-block))",
-        "mask-image": "var(--scroll-fade-mask, var(--scroll-fade-block))",
-        ...maskCommon,
-        ...scrollAnimationBlock(
-            [
-                "scroll-fade-reveal-t 1ms ease-in-out",
-                "scroll-fade-reveal-b 1ms ease-in-out"
-            ],
-            ["scroll(self y)", "scroll(self y)"],
-            [`0 ${REVEAL}`, `calc(100% - ${REVEAL}) 100%`],
-            {
-                "--scroll-fade-t": "var(--_scroll-fade-size-t)",
-                "--scroll-fade-b": "var(--_scroll-fade-size-b)"
-            }
-        )
-    }
+            "-webkit-mask-image":
+                "var(--scroll-fade-mask, var(--scroll-fade-block))",
+            "mask-image": "var(--scroll-fade-mask, var(--scroll-fade-block))",
+            ...maskCommon,
+            ...scrollAnimationBlock(
+                [
+                    "scroll-fade-reveal-t 1ms ease-in-out",
+                    "scroll-fade-reveal-b 1ms ease-in-out"
+                ],
+                ["scroll(self y)", "scroll(self y)"],
+                [`0 ${REVEAL}`, `calc(100% - ${REVEAL}) 100%`]
+            )
+        }
 
-    addUtilities({
-        ".scroll-fade": verticalBase,
-        ".scroll-fade-y": verticalBase,
+        addUtilities({
+            ".scroll-fade": verticalBase,
+            ".scroll-fade-y": verticalBase,
 
-        // ---------------------------------------------------------------
-        // 4. scroll-fade-x (horizontal, RTL-aware)
-        // ---------------------------------------------------------------
-        ".scroll-fade-x": {
-            "--_scroll-fade-size-s": sizeVar("s"),
-            "--_scroll-fade-size-e": sizeVar("e"),
-            "--scroll-fade-inline": `
+            // ---------------------------------------------------------------
+            // 4. scroll-fade-x (horizontal, RTL-aware)
+            // ---------------------------------------------------------------
+            ".scroll-fade-x": {
+                "--_scroll-fade-size-s": sizeVar("s"),
+                "--_scroll-fade-size-e": sizeVar("e"),
+                "--scroll-fade-inline": `
                 linear-gradient(
                     to right,
                     transparent 0,
@@ -167,8 +172,8 @@ export default plugin(
                     #000 calc(100% - var(--scroll-fade-e, 0px)),
                     transparent 100%
                 )`,
-            "&:where([dir='rtl'], [dir='rtl'] *)": {
-                "--scroll-fade-inline": `
+                "&:where([dir='rtl'], [dir='rtl'] *)": {
+                    "--scroll-fade-inline": `
                     linear-gradient(
                         to left,
                         transparent 0,
@@ -176,33 +181,30 @@ export default plugin(
                         #000 calc(100% - var(--scroll-fade-e, 0px)),
                         transparent 100%
                     )`
+                },
+                "-webkit-mask-image":
+                    "var(--scroll-fade-mask, var(--scroll-fade-inline))",
+                "mask-image":
+                    "var(--scroll-fade-mask, var(--scroll-fade-inline))",
+                ...maskCommon,
+                ...scrollAnimationBlock(
+                    [
+                        "scroll-fade-reveal-s 1ms ease-in-out",
+                        "scroll-fade-reveal-e 1ms ease-in-out"
+                    ],
+                    ["scroll(self inline)", "scroll(self inline)"],
+                    [`0 ${REVEAL}`, `calc(100% - ${REVEAL}) 100%`]
+                )
             },
-            "-webkit-mask-image":
-                "var(--scroll-fade-mask, var(--scroll-fade-inline))",
-            "mask-image": "var(--scroll-fade-mask, var(--scroll-fade-inline))",
-            ...maskCommon,
-            ...scrollAnimationBlock(
-                [
-                    "scroll-fade-reveal-s 1ms ease-in-out",
-                    "scroll-fade-reveal-e 1ms ease-in-out"
-                ],
-                ["scroll(self inline)", "scroll(self inline)"],
-                [`0 ${REVEAL}`, `calc(100% - ${REVEAL}) 100%`],
-                {
-                    "--scroll-fade-s": "var(--_scroll-fade-size-s)",
-                    "--scroll-fade-e": "var(--_scroll-fade-size-e)"
-                }
-            )
-        },
 
-        // ---------------------------------------------------------------
-        // 5. Single-edge utilities
-        // ---------------------------------------------------------------
+            // ---------------------------------------------------------------
+            // 5. Single-edge utilities
+            // ---------------------------------------------------------------
 
-        // Top
-        ".scroll-fade-t": {
-            "--_scroll-fade-size-t": sizeVar("t"),
-            "--scroll-fade-mask": `
+            // Top
+            ".scroll-fade-t": {
+                "--_scroll-fade-size-t": sizeVar("t"),
+                "--scroll-fade-mask": `
                 linear-gradient(
                     to bottom,
                     transparent 0,
@@ -210,21 +212,20 @@ export default plugin(
                     #000 100%
                 )`,
 
-            "-webkit-mask-image": "var(--scroll-fade-mask)",
-            "mask-image": "var(--scroll-fade-mask)",
-            ...maskCommon,
-            ...scrollAnimationBlock(
-                ["scroll-fade-reveal-t 1ms ease-in-out"],
-                ["scroll(self y)"],
-                [`0 ${REVEAL}`],
-                { "--scroll-fade-t": "var(--_scroll-fade-size-t)" }
-            )
-        },
+                "-webkit-mask-image": "var(--scroll-fade-mask)",
+                "mask-image": "var(--scroll-fade-mask)",
+                ...maskCommon,
+                ...scrollAnimationBlock(
+                    ["scroll-fade-reveal-t 1ms ease-in-out"],
+                    ["scroll(self y)"],
+                    [`0 ${REVEAL}`]
+                )
+            },
 
-        // Bottom
-        ".scroll-fade-b": {
-            "--_scroll-fade-size-b": sizeVar("b"),
-            "--scroll-fade-mask": `
+            // Bottom
+            ".scroll-fade-b": {
+                "--_scroll-fade-size-b": sizeVar("b"),
+                "--scroll-fade-mask": `
                 linear-gradient(
                     to bottom,
                     #000 0,
@@ -232,21 +233,20 @@ export default plugin(
                     transparent 100%
                 )`,
 
-            "-webkit-mask-image": "var(--scroll-fade-mask)",
-            "mask-image": "var(--scroll-fade-mask)",
-            ...maskCommon,
-            ...scrollAnimationBlock(
-                ["scroll-fade-reveal-b 1ms ease-in-out"],
-                ["scroll(self y)"],
-                [`calc(100% - ${REVEAL}) 100%`],
-                { "--scroll-fade-b": "var(--_scroll-fade-size-b)" }
-            )
-        },
+                "-webkit-mask-image": "var(--scroll-fade-mask)",
+                "mask-image": "var(--scroll-fade-mask)",
+                ...maskCommon,
+                ...scrollAnimationBlock(
+                    ["scroll-fade-reveal-b 1ms ease-in-out"],
+                    ["scroll(self y)"],
+                    [`calc(100% - ${REVEAL}) 100%`]
+                )
+            },
 
-        // Left (physical)
-        ".scroll-fade-l": {
-            "--_scroll-fade-size-s": sizeVar("s"),
-            "--scroll-fade-mask": `
+            // Left (physical)
+            ".scroll-fade-l": {
+                "--_scroll-fade-size-s": sizeVar("s"),
+                "--scroll-fade-mask": `
                 linear-gradient(
                     to right,
                     transparent 0,
@@ -254,21 +254,20 @@ export default plugin(
                     #000 100%
                 )`,
 
-            "-webkit-mask-image": "var(--scroll-fade-mask)",
-            "mask-image": "var(--scroll-fade-mask)",
-            ...maskCommon,
-            ...scrollAnimationBlock(
-                ["scroll-fade-reveal-s 1ms ease-in-out"],
-                ["scroll(self x)"],
-                [`0 ${REVEAL}`],
-                { "--scroll-fade-s": "var(--_scroll-fade-size-s)" }
-            )
-        },
+                "-webkit-mask-image": "var(--scroll-fade-mask)",
+                "mask-image": "var(--scroll-fade-mask)",
+                ...maskCommon,
+                ...scrollAnimationBlock(
+                    ["scroll-fade-reveal-s 1ms ease-in-out"],
+                    ["scroll(self x)"],
+                    [`0 ${REVEAL}`]
+                )
+            },
 
-        // Right (physical)
-        ".scroll-fade-r": {
-            "--_scroll-fade-size-e": sizeVar("e"),
-            "--scroll-fade-mask": `
+            // Right (physical)
+            ".scroll-fade-r": {
+                "--_scroll-fade-size-e": sizeVar("e"),
+                "--scroll-fade-mask": `
                 linear-gradient(
                     to right,
                     #000 0,
@@ -276,118 +275,94 @@ export default plugin(
                     transparent 100%
                 )`,
 
-            "-webkit-mask-image": "var(--scroll-fade-mask)",
-            "mask-image": "var(--scroll-fade-mask)",
-            ...maskCommon,
-            ...scrollAnimationBlock(
-                ["scroll-fade-reveal-e 1ms ease-in-out"],
-                ["scroll(self x)"],
-                [`calc(100% - ${REVEAL}) 100%`],
-                { "--scroll-fade-e": "var(--_scroll-fade-size-e)" }
-            )
-        },
+                "-webkit-mask-image": "var(--scroll-fade-mask)",
+                "mask-image": "var(--scroll-fade-mask)",
+                ...maskCommon,
+                ...scrollAnimationBlock(
+                    ["scroll-fade-reveal-e 1ms ease-in-out"],
+                    ["scroll(self x)"],
+                    [`calc(100% - ${REVEAL}) 100%`]
+                )
+            },
 
-        // Inline-start (logical, RTL-aware)
-        ".scroll-fade-s": {
-            "--_scroll-fade-size-s": sizeVar("s"),
-            "--scroll-fade-mask": `
+            // Inline-start (logical, RTL-aware)
+            ".scroll-fade-s": {
+                "--_scroll-fade-size-s": sizeVar("s"),
+                "--scroll-fade-mask": `
                 linear-gradient(
                     to right,
                     transparent 0,
                     #000 var(--scroll-fade-s, 0px),
                     #000 100%
                 )`,
-            "&:where([dir='rtl'], [dir='rtl'] *)": {
-                "--scroll-fade-mask": `
+                "&:where([dir='rtl'], [dir='rtl'] *)": {
+                    "--scroll-fade-mask": `
                     linear-gradient(
                         to left,
                         transparent 0,
                         #000 var(--scroll-fade-s, 0px),
                         #000 100%
                     )`
+                },
+                "-webkit-mask-image": "var(--scroll-fade-mask)",
+                "mask-image": "var(--scroll-fade-mask)",
+                ...maskCommon,
+                ...scrollAnimationBlock(
+                    ["scroll-fade-reveal-s 1ms ease-in-out"],
+                    ["scroll(self inline)"],
+                    [`0 ${REVEAL}`]
+                )
             },
-            "-webkit-mask-image": "var(--scroll-fade-mask)",
-            "mask-image": "var(--scroll-fade-mask)",
-            ...maskCommon,
-            ...scrollAnimationBlock(
-                ["scroll-fade-reveal-s 1ms ease-in-out"],
-                ["scroll(self inline)"],
-                [`0 ${REVEAL}`],
-                { "--scroll-fade-s": "var(--_scroll-fade-size-s)" }
-            )
-        },
 
-        // Inline-end (logical, RTL-aware)
-        ".scroll-fade-e": {
-            "--_scroll-fade-size-e": sizeVar("e"),
-            "--scroll-fade-mask": `
+            // Inline-end (logical, RTL-aware)
+            ".scroll-fade-e": {
+                "--_scroll-fade-size-e": sizeVar("e"),
+                "--scroll-fade-mask": `
                 linear-gradient(
                     to right,
                     #000 0,
                     #000 calc(100% - var(--scroll-fade-e, 0px)),
                     transparent 100%
                 )`,
-            "&:where([dir='rtl'], [dir='rtl'] *)": {
-                "--scroll-fade-mask": `
+                "&:where([dir='rtl'], [dir='rtl'] *)": {
+                    "--scroll-fade-mask": `
                     linear-gradient(
                         to left,
                         #000 0,
                         #000 calc(100% - var(--scroll-fade-e, 0px)),
                         transparent 100%
                     )`
+                },
+                "-webkit-mask-image": "var(--scroll-fade-mask)",
+                "mask-image": "var(--scroll-fade-mask)",
+                ...maskCommon,
+                ...scrollAnimationBlock(
+                    ["scroll-fade-reveal-e 1ms ease-in-out"],
+                    ["scroll(self inline)"],
+                    [`calc(100% - ${REVEAL}) 100%`]
+                )
             },
-            "-webkit-mask-image": "var(--scroll-fade-mask)",
-            "mask-image": "var(--scroll-fade-mask)",
-            ...maskCommon,
-            ...scrollAnimationBlock(
-                ["scroll-fade-reveal-e 1ms ease-in-out"],
-                ["scroll(self inline)"],
-                [`calc(100% - ${REVEAL}) 100%`],
-                { "--scroll-fade-e": "var(--_scroll-fade-size-e)" }
-            )
-        },
+
+            // ---------------------------------------------------------------
+            // 6. scroll-fade-none — disable
+            // ---------------------------------------------------------------
+            ".scroll-fade-none": {
+                "--scroll-fade-mask": "none"
+            }
+        })
 
         // ---------------------------------------------------------------
-        // 6. scroll-fade-none — disable
+        // 7. Size modifiers via matchUtilities (scroll-fade-{n})
         // ---------------------------------------------------------------
-        ".scroll-fade-none": {
-            "--scroll-fade-mask": "none"
-        }
-    })
 
-    // ---------------------------------------------------------------
-    // 7. Size modifiers via matchUtilities (scroll-fade-{n})
-    // ---------------------------------------------------------------
+        /** Spacing scale values for size modifiers. */
+        const spacingValues = theme("spacing") as Record<string, string>
 
-    /** Spacing scale values for size modifiers. */
-    const spacingValues = theme("spacing") as Record<string, string>
-
-    // scroll-fade-{n} — global size override
-    matchUtilities(
-        {
-            "scroll-fade": (value: string) => ({
-                "--scroll-fade-size": value
-            })
-        },
-        {
-            values: spacingValues,
-            type: ["length", "percentage"]
-        }
-    )
-
-    // Per-edge size overrides
-    const edgeMap = {
-        "scroll-fade-t": "--scroll-fade-t-size",
-        "scroll-fade-b": "--scroll-fade-b-size",
-        "scroll-fade-s": "--scroll-fade-s-size",
-        "scroll-fade-e": "--scroll-fade-e-size"
-    } as const
-
-    for (const [utilityName, cssVar] of Object.entries(edgeMap)) {
+        // scroll-fade-{n} — global size override
         matchUtilities(
             {
-                [utilityName]: (value: string) => ({
-                    [cssVar]: value
+                "scroll-fade": (value: string) => ({
+                    "--scroll-fade-size": value
                 })
             },
             {
@@ -395,6 +370,27 @@ export default plugin(
                 type: ["length", "percentage"]
             }
         )
+
+        // Per-edge size overrides
+        const edgeMap = {
+            "scroll-fade-t": "--scroll-fade-t-size",
+            "scroll-fade-b": "--scroll-fade-b-size",
+            "scroll-fade-s": "--scroll-fade-s-size",
+            "scroll-fade-e": "--scroll-fade-e-size"
+        } as const
+
+        for (const [utilityName, cssVar] of Object.entries(edgeMap)) {
+            matchUtilities(
+                {
+                    [utilityName]: (value: string) => ({
+                        [cssVar]: value
+                    })
+                },
+                {
+                    values: spacingValues,
+                    type: ["length", "percentage"]
+                }
+            )
         }
     },
     {
