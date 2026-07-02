@@ -162,7 +162,7 @@ function ProjectCover({
                     className={cn(
                         "aspect-video w-14 rounded-lg object-cover -outline-offset-2 outline-muted-foreground/80 outline-2",
                         {
-                            "group-hover": "-outline-offset-[3px] outline-3"
+                            "group-hover": "-outline-offset-3 outline-3"
                         }
                     )}
                     fetchPriority="high"

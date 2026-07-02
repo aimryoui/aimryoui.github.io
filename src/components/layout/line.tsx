@@ -5,7 +5,10 @@ function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
         <div className={cn("sticky top-0 h-dvh w-px", className)} {...props}>
             <hr
                 className={cn(
-                    "sticky top-0 h-full border-r border-dashed border-stroke"
+                    "sticky top-0 h-full border-r border-dashed border-stroke",
+                    {
+                        md: "border-r-[2px]"
+                    }
                 )}
             />
         </div>
@@ -69,7 +72,7 @@ function ElementLine({
         <hr
             className={cn(
                 dir === "vertical"
-                    ? "h-full border-r border-dashed border-stroke"
+                    ? "h-full border-r border-dashed border-stroke md:border-r-[2px]"
                     : "w-full border-b border-dashed border-stroke",
                 className
             )}
