@@ -16,6 +16,7 @@ import fieldSizing from "./src/lib/tailwindcss-plugins/utilities/field-sizing"
 import outline from "./src/lib/tailwindcss-plugins/utilities/outline"
 import overflowAnchor from "./src/lib/tailwindcss-plugins/utilities/overflow-anchor"
 import overflowWrap from "./src/lib/tailwindcss-plugins/utilities/overflow-wrap"
+import scrollFade from "./src/lib/tailwindcss-plugins/utilities/scroll-fade"
 import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
 import scrollbarGutter from "./src/lib/tailwindcss-plugins/utilities/scrollbar-gutter"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
@@ -268,6 +269,7 @@ export default {
         outline,
         overflowAnchor,
         overflowWrap,
+        scrollFade,
         scrollbar,
         scrollbarGutter,
         transition,
