@@ -21,7 +21,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
                     "aria-invalid":
                         "border-destructive ring-destructive/20 dark:ring-destructive/40",
 
-                    md: "text-sm"
+                    lg: "text-[16px]"
                 },
                 className
             )}

@@ -95,9 +95,16 @@ function BackToPortfolio({ mode }: { mode: PortfolioMode }) {
                     side: "bottom"
                 }}
                 render={
-                    <Button size="icon" variant="outline" asChild>
+                    <Button
+                        size="icon"
+                        variant="outline"
+                        asChild
+                        className={cn({
+                            lg: "size-10"
+                        })}
+                    >
                         <NextLink href="/portfolio#projects">
-                            <ArrowLeft className="size-4" />
+                            <ArrowLeft className="size-4 lg:size-5" />
                             <span className="sr-only">Back to Portfolio</span>
                         </NextLink>
                     </Button>

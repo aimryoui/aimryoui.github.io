@@ -13,6 +13,7 @@ import {
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { useHotkeys } from "@/hooks/use-hotkeys"
+import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePlatform } from "@/hooks/use-platform"
 import { cn } from "@/lib/utils"
 
@@ -33,6 +34,7 @@ function TocSearch({
     ref,
     ...props
 }: TocSearchProps) {
+    const isMobile = useMediaQuery("lg")
     const pathname = usePathname()
     const platform = usePlatform()
 
@@ -50,7 +52,12 @@ function TocSearch({
     const hasValue = Boolean(value)
 
     return (
-        <InputGroup as="search">
+        <InputGroup
+            as="search"
+            className={cn({
+                lg: "h-10"
+            })}
+        >
             <LeftAddon />
             <InputGroupInput
                 ref={ref}
@@ -59,7 +66,7 @@ function TocSearch({
                 role="searchbox"
                 tabIndex={0}
                 placeholder={
-                    pathname === "/portfolio"
+                    pathname === "/portfolio" || isMobile
                         ? "Search for sections..."
                         : "Search for..."
                 }
@@ -92,7 +99,7 @@ function TocSearch({
 function LeftAddon() {
     return (
         <InputGroupAddon>
-            <Search />
+            <Search className="lg:size-5" />
         </InputGroupAddon>
     )
 }
