@@ -72,7 +72,7 @@ function MobileTocPanel() {
                                 transition={{
                                     type: "spring",
                                     bounce: 0,
-                                    duration: 0.5
+                                    duration: 0.7
                                 }}
                                 className={cn(
                                     "flex h-[70dvh] flex-col overflow-hidden rounded-t-3xl !text-base",
