@@ -10,11 +10,8 @@ import plugin from "tailwindcss/plugin"
  * @see {@link https://ui.shadcn.com/docs/utils/scroll-fade}
  */
 
-/**
- * Default fade depth: min(12%, 2.5rem ≈ 40px) — matches shadcn's min(12%,
- * calc(var(--spacing) * 10)).
- */
-const DEFAULT_FADE_SIZE = "min(12%, 2.5rem)"
+/** Default fade depth: min(12%, 2.5rem ≈ 40px). */
+const DEFAULT_FADE_SIZE = "min(12%, calc(var(--spacing) * 10))"
 
 /**
  * The CSS variable chain each edge resolves through.
@@ -25,11 +22,8 @@ const DEFAULT_FADE_SIZE = "min(12%, 2.5rem)"
 const sizeVar = (edge: string) =>
     `var(--scroll-fade-${edge}-size, var(--scroll-fade-size, ${DEFAULT_FADE_SIZE}))`
 
-/**
- * Default reveal distance: 6rem ≈ 96px — matches shadcn's calc(var(--spacing) *
- * 24).
- */
-const REVEAL = "var(--scroll-fade-reveal, 6rem)"
+/** Default reveal distance: 6rem ≈ 96px. */
+const REVEAL = "var(--scroll-fade-reveal, calc(var(--spacing) * 24))"
 
 // ---------------------------------------------------------------------------
 // Shared style fragments
@@ -76,7 +70,8 @@ function scrollAnimationBlock(
 // Plugin
 // ---------------------------------------------------------------------------
 
-export default plugin(({ addBase, addUtilities, matchUtilities, theme }) => {
+export default plugin(
+    ({ addBase, addUtilities, matchUtilities, theme }) => {
     // ---------------------------------------------------------------
     // 1. @property declarations (registered custom properties)
     // ---------------------------------------------------------------
@@ -111,30 +106,10 @@ export default plugin(({ addBase, addUtilities, matchUtilities, theme }) => {
     // 2. Keyframes
     // ---------------------------------------------------------------
     addUtilities({
-        "@keyframes scroll-fade-reveal-t": {
-            from: { "--scroll-fade-t": "0px" },
-            to: {
-                "--scroll-fade-t": `var(--_scroll-fade-size-t, ${DEFAULT_FADE_SIZE})`
-            }
-        },
-        "@keyframes scroll-fade-reveal-b": {
-            from: {
-                "--scroll-fade-b": `var(--_scroll-fade-size-b, ${DEFAULT_FADE_SIZE})`
-            },
-            to: { "--scroll-fade-b": "0px" }
-        },
-        "@keyframes scroll-fade-reveal-s": {
-            from: { "--scroll-fade-s": "0px" },
-            to: {
-                "--scroll-fade-s": `var(--_scroll-fade-size-s, ${DEFAULT_FADE_SIZE})`
-            }
-        },
-        "@keyframes scroll-fade-reveal-e": {
-            from: {
-                "--scroll-fade-e": `var(--_scroll-fade-size-e, ${DEFAULT_FADE_SIZE})`
-            },
-            to: { "--scroll-fade-e": "0px" }
-        }
+        "@keyframes scroll-fade-reveal-t": theme("keyframes.scroll-fade-reveal-t"),
+        "@keyframes scroll-fade-reveal-b": theme("keyframes.scroll-fade-reveal-b"),
+        "@keyframes scroll-fade-reveal-s": theme("keyframes.scroll-fade-reveal-s"),
+        "@keyframes scroll-fade-reveal-e": theme("keyframes.scroll-fade-reveal-e")
     })
 
     // ---------------------------------------------------------------
@@ -420,5 +395,38 @@ export default plugin(({ addBase, addUtilities, matchUtilities, theme }) => {
                 type: ["length", "percentage"]
             }
         )
+        }
+    },
+    {
+        theme: {
+            extend: {
+                keyframes: {
+                    "scroll-fade-reveal-t": {
+                        from: { "--scroll-fade-t": "0px" },
+                        to: {
+                            "--scroll-fade-t": `var(--_scroll-fade-size-t, ${DEFAULT_FADE_SIZE})`
+                        }
+                    },
+                    "scroll-fade-reveal-b": {
+                        from: {
+                            "--scroll-fade-b": `var(--_scroll-fade-size-b, ${DEFAULT_FADE_SIZE})`
+                        },
+                        to: { "--scroll-fade-b": "0px" }
+                    },
+                    "scroll-fade-reveal-s": {
+                        from: { "--scroll-fade-s": "0px" },
+                        to: {
+                            "--scroll-fade-s": `var(--_scroll-fade-size-s, ${DEFAULT_FADE_SIZE})`
+                        }
+                    },
+                    "scroll-fade-reveal-e": {
+                        from: {
+                            "--scroll-fade-e": `var(--_scroll-fade-size-e, ${DEFAULT_FADE_SIZE})`
+                        },
+                        to: { "--scroll-fade-e": "0px" }
+                    }
+                }
+            }
+        }
     }
-})
+)
