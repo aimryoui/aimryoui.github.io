@@ -187,13 +187,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     }
                                 )}
                             />
-                            <div className={cn("text-end")}>
+                            <div
+                                className={cn("text-end", {
+                                    sm: "flex flex-col"
+                                })}
+                            >
                                 <Text
                                     className={cn(
-                                        "inline text-sm will-change-[color] transition-[color] duration-100",
+                                        "inline will-change-[color] wrap-anywhere transition-[color] duration-100",
                                         {
                                             "group-hover":
-                                                "text-foreground transition-none"
+                                                "text-foreground transition-none",
+                                            sm: "text-sm"
                                         }
                                     )}
                                 >
@@ -201,7 +206,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 </Text>{" "}
                                 <Bold
                                     className={cn(
-                                        "will-change-[color] transition-[color] duration-100",
+                                        "will-change-[color] wrap-anywhere transition-[color] duration-100",
                                         {
                                             "group-hover":
                                                 "text-highlighted transition-none"
@@ -236,15 +241,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 }
                             )}
                         >
-                            <div>
+                            <div
+                                className={cn({
+                                    sm: "flex flex-col"
+                                })}
+                            >
                                 {nextCategory ? (
                                     <>
                                         <Text
                                             className={cn(
-                                                "inline will-change-[color] transition-[color] duration-100",
+                                                "inline will-change-[color] wrap-anywhere transition-[color] duration-100",
                                                 {
                                                     "group-hover":
-                                                        "text-foreground transition-none"
+                                                        "text-foreground transition-none",
+                                                    sm: "text-sm"
                                                 }
                                             )}
                                         >
@@ -252,7 +262,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                         </Text>{" "}
                                         <Bold
                                             className={cn(
-                                                "will-change-[color] transition-[color] duration-100",
+                                                "will-change-[color] wrap-anywhere transition-[color] duration-100",
                                                 {
                                                     "group-hover":
                                                         "text-highlighted transition-none"
@@ -266,7 +276,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     <>
                                         <Text
                                             className={cn(
-                                                "inline will-change-[color] transition-[color] duration-100",
+                                                "inline will-change-[color] wrap-anywhere transition-[color] duration-100",
                                                 {
                                                     "group-hover":
                                                         "text-foreground transition-none"
@@ -277,7 +287,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                         </Text>{" "}
                                         <Bold
                                             className={cn(
-                                                "will-change-[color] transition-[color] duration-100",
+                                                "will-change-[color] wrap-anywhere transition-[color] duration-100",
                                                 {
                                                     "group-hover":
                                                         "text-highlighted transition-none"

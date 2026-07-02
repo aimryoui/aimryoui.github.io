@@ -196,7 +196,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 <>
                                     <Bold
                                         className={cn(
-                                            "text-ellipsis will-change-[color] transition-[color] duration-100",
+                                            "text-ellipsis will-change-[color] wrap-anywhere transition-[color] duration-100",
                                             {
                                                 "group-hover":
                                                     "text-highlighted transition-none"
@@ -207,7 +207,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     </Bold>
                                     <Text
                                         className={cn(
-                                            "text-sm will-change-[color] transition-[color] duration-100",
+                                            "text-sm will-change-[color] wrap-anywhere transition-[color] duration-100",
                                             {
                                                 "group-hover":
                                                     "text-foreground transition-none"
@@ -264,7 +264,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 <>
                                     <Bold
                                         className={cn(
-                                            "will-change-[color] transition-[color] duration-100",
+                                            "will-change-[color] wrap-anywhere transition-[color] duration-100",
                                             {
                                                 "group-hover":
                                                     "text-highlighted transition-none"
@@ -275,7 +275,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     </Bold>
                                     <Text
                                         className={cn(
-                                            "text-sm will-change-[color] transition-[color] duration-100",
+                                            "text-sm will-change-[color] wrap-anywhere transition-[color] duration-100",
                                             {
                                                 "group-hover":
                                                     "text-foreground transition-none"

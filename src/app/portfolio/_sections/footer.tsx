@@ -138,7 +138,7 @@ function Footer() {
                     "grid h-auto place-items-center bg-background px-4 py-3 text-sm"
                 )}
             >
-                <p className="flex flex-wrap justify-center gap-x-0.5 text-balance">
+                <p className="flex flex-wrap justify-center gap-x-0.5 text-balance text-center">
                     {`© ${new Date().getFullYear()} aimryoui. NO AI training allowed.`}
                     <span>All Rights Reserved.</span>
                 </p>
@@ -161,7 +161,8 @@ function Footer() {
                                     "grid h-full flex-1 place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
                                     {
                                         hover: "bg-element-hover text-highlighted opacity-100 transition-none",
-                                        xl: "h-20 basis-[calc(20%-var(--px)*4)] opacity-100"
+                                        xl: "h-20 basis-[calc(20%-var(--px)*4)]",
+                                        lg: "opacity-100"
                                     }
                                 )}
                             >

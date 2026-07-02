@@ -9,10 +9,14 @@ import { NoAIOverlay, NoAIPlaceholder } from "@/portfolio/_sections/no-ai"
 // never changes at runtime, we return a no-op unsubscribe.
 const subscribe = (_: () => void) => () => {}
 const getSnapshot = () => "anchorName" in document.documentElement.style
-const getServerSnapshot = () => false
+const getServerSnapshot = () => true
 
 function AnchorSections() {
-    const supported = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+    const supported = useSyncExternalStore(
+        subscribe,
+        getSnapshot,
+        getServerSnapshot
+    )
 
     if (!supported) return null
 
@@ -20,7 +24,11 @@ function AnchorSections() {
 }
 
 function AnchorPlaceholder() {
-    const supported = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+    const supported = useSyncExternalStore(
+        subscribe,
+        getSnapshot,
+        getServerSnapshot
+    )
 
     if (!supported) return null
 

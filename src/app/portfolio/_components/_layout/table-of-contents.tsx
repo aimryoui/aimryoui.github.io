@@ -23,8 +23,8 @@ interface TocProps {
 function removeAccents(str: string): string {
     return str
         .normalize("NFD")
-        .replaceAll(/[\u0300-\u036F]/g, "")
-        .replaceAll(/[đĐ]/g, "d")
+        .replaceAll(/[\u0300-\u036F]/gu, "")
+        .replaceAll(/[đĐ]/gu, "d")
 }
 
 function getFilteredItems(items: TocItemProps[], query: string) {
@@ -142,7 +142,9 @@ export function TableOfContents({ mode, items }: TocProps) {
     return (
         <>
             <header
-                className={cn("flex gap-2 bg-background px-6 py-5.5")}
+                className={cn("flex gap-2 bg-background px-6 py-5.5", {
+                    lg: "gap-4"
+                })}
                 // style={{
                 //     viewTransitionName: "header"
                 // }}
