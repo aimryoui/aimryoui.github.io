@@ -184,7 +184,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             <div className={cn("text-end")}>
                                 <Text
                                     className={cn(
-                                        "inline will-change-[color] transition-[color] duration-100",
+                                        "inline text-sm will-change-[color] transition-[color] duration-100",
                                         {
                                             "group-hover":
                                                 "text-foreground transition-none"

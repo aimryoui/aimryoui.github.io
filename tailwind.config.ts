@@ -15,6 +15,7 @@ import displayGridLanes from "./src/lib/tailwindcss-plugins/utilities/display-gr
 import fieldSizing from "./src/lib/tailwindcss-plugins/utilities/field-sizing"
 import outline from "./src/lib/tailwindcss-plugins/utilities/outline"
 import overflowAnchor from "./src/lib/tailwindcss-plugins/utilities/overflow-anchor"
+import overflowWrap from "./src/lib/tailwindcss-plugins/utilities/overflow-wrap"
 import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
 import scrollbarGutter from "./src/lib/tailwindcss-plugins/utilities/scrollbar-gutter"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
@@ -266,6 +267,7 @@ export default {
         fieldSizing,
         outline,
         overflowAnchor,
+        overflowWrap,
         scrollbar,
         scrollbarGutter,
         transition,

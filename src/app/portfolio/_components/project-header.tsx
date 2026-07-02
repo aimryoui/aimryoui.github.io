@@ -51,7 +51,9 @@ function ProjectHeader({
                 >
                     <H3
                         id={headerId}
-                        className={cn("w-fit text-pretty text-foreground")}
+                        className={cn(
+                            "w-fit text-pretty text-foreground wrap-anywhere"
+                        )}
                     >
                         <ProjectName projectName={projectName} />
                         {!(
@@ -81,7 +83,10 @@ function ProjectHeader({
                 <ElementLine className={cn("md:hidden")} />
                 <div
                     className={cn(
-                        "flex flex-1 flex-col justify-between text-pretty px-6 pb-4 pt-3.25 md:text-sm"
+                        "flex flex-1 flex-col justify-between text-pretty px-6 pb-4 pt-3.25",
+                        {
+                            md: "gap-2 text-sm"
+                        }
                     )}
                 >
                     <Highlight
@@ -104,7 +109,7 @@ function ProjectHeader({
                 </div>
                 {tools.length > 0 && (
                     <div
-                        className={cn("absolute -top-9.5 right-4.5 flex gap-2")}
+                        className={cn("absolute -top-10 right-4.5 flex gap-2")}
                     >
                         {tools.map((key) => {
                             const tool = ICON[key]

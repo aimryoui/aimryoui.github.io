@@ -154,7 +154,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 <>
                                     <Bold
                                         className={cn(
-                                            "line-clamp-1 text-ellipsis will-change-[color] transition-[color] duration-100",
+                                            "text-ellipsis will-change-[color] transition-[color] duration-100",
                                             {
                                                 "group-hover":
                                                     "text-highlighted transition-none"
@@ -179,7 +179,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 <>
                                     <Text
                                         className={cn(
-                                            "inline will-change-[color] transition-[color] duration-100",
+                                            "inline text-sm will-change-[color] transition-[color] duration-100",
                                             {
                                                 "group-hover":
                                                     "text-foreground transition-none"
