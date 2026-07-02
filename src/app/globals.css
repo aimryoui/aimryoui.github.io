@@ -125,7 +125,7 @@
         --px: 0.09375rem;
         font-size: 0.937135vw;
 
-        @apply 2xl:text-base lg:text-sm lg:[--px:0.15rem];
+        @apply 2xl:text-base lg:text-sm lg:[--px:0.13rem];
     }
 
     * {
