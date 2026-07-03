@@ -161,68 +161,19 @@ export function AnimatedMedia({
             }
         }
 
-        const doLoop = () => {
-            if (hls) {
-                // hls.js: MSE buffer is exhausted after stream ends.
-                // Simply seeking to 0 is not enough; hls.js must reload
-                // segments from position 0 to refill the buffer.
-                video.currentTime = 0
-                hls.startLoad(0)
-            } else {
-                video.currentTime = 0
-            }
-            video.play().catch(() => {})
-        }
+        // const handleEnded = () => {
+        //     if (loop) {
+        //         video.currentTime = 0
+        //         video.play().catch(() => {})
+        //     }
+        // }
 
-        // Layer 1: "ended" event — works reliably for hls.js (MSE) on all desktop browsers.
-        const handleEnded = () => {
-            if (loop) doLoop()
-        }
         video.addEventListener("timeupdate", handleTimeUpdate)
-        video.addEventListener("ended", handleEnded)
-
-        // Layer 2: requestVideoFrameCallback — frame-perfect loop for iOS Safari native HLS,
-        // where "ended" often doesn't fire for HLS streams.
-        // rVFC fires once per painted frame; we reschedule only while playing,
-        // so CPU cost is zero when paused/stopped.
-        // Available: Chrome 83+, Firefox 132+, Safari 15.4+ (iOS 15.4+).
-        let rafcId: ReturnType<typeof video.requestVideoFrameCallback> | null = null
-        if (!hls && "requestVideoFrameCallback" in video) {
-            const onFrame = () => {
-                if (loop && (video.ended || (isFinite(video.duration) && video.currentTime >= video.duration))) {
-                    doLoop()
-                } else if (!video.paused && !video.ended) {
-                    // Reschedule only while actively playing
-                    rafcId = video.requestVideoFrameCallback(onFrame)
-                }
-            }
-            // Start the frame watcher when playback begins
-            const startFrameWatcher = () => {
-                if (rafcId !== null) return
-                rafcId = video.requestVideoFrameCallback(onFrame)
-            }
-            const stopFrameWatcher = () => {
-                if (rafcId !== null) {
-                    video.cancelVideoFrameCallback(rafcId)
-                    rafcId = null
-                }
-            }
-            video.addEventListener("play", startFrameWatcher)
-            video.addEventListener("pause", stopFrameWatcher)
-
-            return () => {
-                video.removeEventListener("timeupdate", handleTimeUpdate)
-                video.removeEventListener("ended", handleEnded)
-                video.removeEventListener("play", startFrameWatcher)
-                video.removeEventListener("pause", stopFrameWatcher)
-                stopFrameWatcher()
-                if (hls) hls.destroy()
-            }
-        }
+        // video.addEventListener("ended", handleEnded)
 
         return () => {
             video.removeEventListener("timeupdate", handleTimeUpdate)
-            video.removeEventListener("ended", handleEnded)
+            // video.removeEventListener("ended", handleEnded)
             if (hls) hls.destroy()
         }
     }, [basePath, shouldLoad, loop])
@@ -345,6 +296,7 @@ export function AnimatedMedia({
                         disablePictureInPicture
                         autoPlay={shouldAutoPlay}
                         playsInline
+                        loop={loop}
                         muted={shouldMute}
                         preload="none"
                         {...props}
