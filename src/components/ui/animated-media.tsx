@@ -153,16 +153,32 @@ export function AnimatedMedia({
             video.src = playlistUrl
         }
 
-        const handlePlaying = () => {
+        // "timeupdate" fires only when currentTime actually advances,
+        // meaning the first frame has been decoded and is being rendered.
+        // This is more reliable than "playing" which fires before buffering completes.
+        const handleTimeUpdate = () => {
             setIsVideoReady(true)
+            video.removeEventListener("timeupdate", handleTimeUpdate)
         }
-        video.addEventListener("playing", handlePlaying)
+
+        // HLS (MSE) streams often fail to loop natively.
+        // We manually seek to 0 and play when it ends.
+        const handleEnded = () => {
+            if (loop) {
+                video.currentTime = 0
+                video.play().catch(() => {})
+            }
+        }
+
+        video.addEventListener("timeupdate", handleTimeUpdate)
+        video.addEventListener("ended", handleEnded)
 
         return () => {
-            video.removeEventListener("playing", handlePlaying)
+            video.removeEventListener("timeupdate", handleTimeUpdate)
+            video.removeEventListener("ended", handleEnded)
             if (hls) hls.destroy()
         }
-    }, [basePath, shouldLoad])
+    }, [basePath, shouldLoad, loop])
 
     // Auto-play
     useEffect(() => {
@@ -248,11 +264,11 @@ export function AnimatedMedia({
 
     // Force muted attribute
     // @see https://github.com/react/react/issues/10389
-    useEffect(() => {
-        const videoEl = videoRef.current
-        if (!videoEl) return
-        videoEl.setAttribute("muted", "")
-    }, [shadowRoot])
+    // useEffect(() => {
+    //     const videoEl = videoRef.current
+    //     if (!videoEl) return
+    //     videoEl.setAttribute("muted", "")
+    // }, [shadowRoot])
 
     const exactW = metadata.width
     const exactH = metadata.height

@@ -279,7 +279,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                                 "inline will-change-[color] wrap-anywhere transition-[color] duration-100",
                                                 {
                                                     "group-hover":
-                                                        "text-foreground transition-none"
+                                                        "text-foreground transition-none",
+                                                    sm: "text-sm"
                                                 }
                                             )}
                                         >

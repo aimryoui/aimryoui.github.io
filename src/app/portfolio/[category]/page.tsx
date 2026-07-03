@@ -259,7 +259,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                             }
                         )}
                     >
-                        <div className={cn("flex flex-col gap-0.5")}>
+                        <div className={cn("flex flex-col")}>
                             {next ? (
                                 <>
                                     <Bold
@@ -292,7 +292,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                             "inline will-change-[color] transition-[color] duration-100",
                                             {
                                                 "group-hover":
-                                                    "text-foreground transition-none"
+                                                    "text-foreground transition-none",
+                                                sm: "text-sm"
                                             }
                                         )}
                                     >
