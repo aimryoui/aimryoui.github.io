@@ -246,6 +246,14 @@ export function AnimatedMedia({
         }
     }, [shouldAutoPlay, shadowRoot])
 
+    // Force muted attribute
+    // @see https://github.com/react/react/issues/10389
+    useEffect(() => {
+        const videoEl = videoRef.current
+        if (!videoEl) return
+        videoEl.setAttribute("muted", "")
+    }, [shadowRoot])
+
     const exactW = metadata.width
     const exactH = metadata.height
 
@@ -266,7 +274,7 @@ export function AnimatedMedia({
         >
             {shadowRoot &&
                 createPortal(
-                    // oxlint-disable-next-line jsx_a11y/media-has-caption
+                    // oxlint-disable-next-line jsx-a11y/media-has-caption
                     <video
                         ref={videoRef}
                         poster={posterPath ?? defaultPoster}
