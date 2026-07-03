@@ -99,7 +99,7 @@ function TocSearch({
 function LeftAddon() {
     return (
         <InputGroupAddon>
-            <Search className="lg:size-5" />
+            <Search className="lg:size-5.5" />
         </InputGroupAddon>
     )
 }
@@ -137,7 +137,7 @@ const RightAddon = memo(function SearchRightAddon({
                             className="hover:bg-transparent"
                             onClick={onClear}
                         >
-                            <XCircle className="cursor-pointer" />
+                            <XCircle className="cursor-pointer lg:size-5.5" />
                             <span className="sr-only">Clear search</span>
                         </Button>
                     }
