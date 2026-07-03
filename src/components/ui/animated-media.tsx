@@ -153,16 +153,14 @@ export function AnimatedMedia({
             video.src = playlistUrl
         }
 
-        // "timeupdate" fires only when currentTime actually advances,
-        // meaning the first frame has been decoded and is being rendered.
-        // This is more reliable than "playing" which fires before buffering completes.
+        let isReady = false
         const handleTimeUpdate = () => {
-            setIsVideoReady(true)
-            video.removeEventListener("timeupdate", handleTimeUpdate)
+            if (!isReady) {
+                isReady = true
+                setIsVideoReady(true)
+            }
         }
 
-        // HLS (MSE) streams often fail to loop natively.
-        // We manually seek to 0 and play when it ends.
         const handleEnded = () => {
             if (loop) {
                 video.currentTime = 0
@@ -298,7 +296,6 @@ export function AnimatedMedia({
                         disablePictureInPicture
                         autoPlay={shouldAutoPlay}
                         playsInline
-                        loop={loop}
                         muted={shouldMute}
                         preload="none"
                         {...props}
