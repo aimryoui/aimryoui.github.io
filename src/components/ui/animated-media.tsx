@@ -6,6 +6,7 @@ import NextImage from "next/image"
 
 import Hls from "hls.js"
 
+import { Spinner } from "@/components/ui/spinner"
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 import { cn } from "@/lib/utils"
 import videoManifestRaw from "@/lib/video-manifest.json"
@@ -13,7 +14,6 @@ import { type VideoManifest } from "@/scripts/process-videos"
 
 let sharedStyleSheet: CSSStyleSheet | null = null
 
-// Keep a stable reference for closed shadow roots so effects can safely re-run.
 const shadowRootRegistry = new WeakMap<HTMLElement, ShadowRoot>()
 
 function getSharedStyleSheet() {
@@ -64,6 +64,7 @@ export function AnimatedMedia({
     const videoRef = useRef<HTMLVideoElement>(null)
     const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null)
     const [shouldLoad, setShouldLoad] = useState(false)
+    const [isVideoReady, setIsVideoReady] = useState(false)
 
     const shouldAutoPlay = autoPlay ?? autoplay ?? true
     const shouldMute = muted ?? mute ?? true
@@ -152,7 +153,13 @@ export function AnimatedMedia({
             video.src = playlistUrl
         }
 
+        const handlePlaying = () => {
+            setIsVideoReady(true)
+        }
+        video.addEventListener("playing", handlePlaying)
+
         return () => {
+            video.removeEventListener("playing", handlePlaying)
             if (hls) hls.destroy()
         }
     }, [basePath, shouldLoad])
@@ -164,8 +171,11 @@ export function AnimatedMedia({
         if (!video || !hostEl) return
 
         let isIntersecting = false
+        let userPaused = false
+        let pausingByScroll = false
 
         const tryPlay = () => {
+            if (userPaused) return
             if (video.paused && !document.hidden && shouldAutoPlay) {
                 video.play().catch((error: unknown) => {
                     if (error instanceof Error) {
@@ -183,12 +193,27 @@ export function AnimatedMedia({
             }
         }
 
+        const handlePause = () => {
+            if (!pausingByScroll) {
+                userPaused = true
+            }
+            pausingByScroll = false
+        }
+
+        const handlePlay = () => {
+            userPaused = false
+        }
+
+        video.addEventListener("pause", handlePause)
+        video.addEventListener("play", handlePlay)
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 isIntersecting = entry.isIntersecting
                 if (entry.isIntersecting) {
                     tryPlay()
                 } else if (!video.paused) {
+                    pausingByScroll = true
                     video.pause()
                 }
             },
@@ -199,7 +224,10 @@ export function AnimatedMedia({
 
         const handleVisibilityChange = () => {
             if (document.hidden) {
-                if (!video.paused) video.pause()
+                if (!video.paused) {
+                    pausingByScroll = true
+                    video.pause()
+                }
             } else if (isIntersecting) {
                 tryPlay()
             }
@@ -208,6 +236,8 @@ export function AnimatedMedia({
         document.addEventListener("visibilitychange", handleVisibilityChange)
 
         return () => {
+            video.removeEventListener("pause", handlePause)
+            video.removeEventListener("play", handlePlay)
             observer.disconnect()
             document.removeEventListener(
                 "visibilitychange",
@@ -242,6 +272,7 @@ export function AnimatedMedia({
                         poster={posterPath ?? defaultPoster}
                         controls={controls}
                         disablePictureInPicture
+                        autoPlay={shouldAutoPlay}
                         playsInline
                         loop={loop}
                         muted={shouldMute}
@@ -266,6 +297,19 @@ export function AnimatedMedia({
                     e.currentTarget.style.background = ""
                 }}
             />
+            {/* Loading overlay with spinner */}
+            {!isVideoReady && (
+                <div
+                    aria-hidden
+                    className={cn(
+                        "pointer-events-none absolute inset-0 z-1 grid place-items-center bg-black/30"
+                    )}
+                >
+                    <div className={cn("rounded-full bg-background/80 p-2")}>
+                        <Spinner />
+                    </div>
+                </div>
+            )}
             <noscript>
                 {/* oxlint-disable-next-line next/no-img-element */}
                 <img src={posterPath ?? defaultPoster} alt={alt} />
