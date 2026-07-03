@@ -10,7 +10,7 @@ import { type ImageManifest } from "@/scripts/process-images"
 
 const imageManifest = imageManifestRaw as ImageManifest
 
-const FILE_EXTENSION_REGEX = /\.[^/.]+$/
+const FILE_EXTENSION_REGEX = /\.[^/.]+$/u
 
 interface ImageProps extends React.ComponentProps<"div"> {
     src: string

@@ -69,7 +69,7 @@ export function AnimatedMedia({
     const shouldMute = muted ?? mute ?? true
 
     const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
-    const pathWithoutExt = normalizedSrc.replace(/\.[^/.]+$/, "")
+    const pathWithoutExt = normalizedSrc.replace(/\.[^/.]+$/u, "")
     const fileName = pathWithoutExt.split("/").pop()
 
     const basePath = `/assets/media/${pathWithoutExt}`
@@ -224,7 +224,7 @@ export function AnimatedMedia({
             ref={hostRef}
             className={cn(
                 "relative w-full overflow-hidden",
-                rounded && "rounded-2xl",
+                rounded && "rounded-2xl md:rounded-xl",
                 {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },
@@ -267,6 +267,7 @@ export function AnimatedMedia({
                 }}
             />
             <noscript>
+                {/* oxlint-disable-next-line next/no-img-element */}
                 <img src={posterPath ?? defaultPoster} alt={alt} />
             </noscript>
         </div>
