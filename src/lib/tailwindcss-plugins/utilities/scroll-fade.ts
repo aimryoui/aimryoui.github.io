@@ -30,9 +30,7 @@ const REVEAL = "var(--scroll-fade-reveal, calc(var(--spacing) * 24))"
 // ---------------------------------------------------------------------------
 
 const maskCommon = {
-    "-webkit-mask-composite": "source-in",
     "mask-composite": "intersect",
-    "-webkit-mask-repeat": "no-repeat",
     "mask-repeat": "no-repeat"
 } as const
 
@@ -140,8 +138,6 @@ export default plugin(
                 #000 calc(100% - var(--scroll-fade-b, 0px)), 
                 transparent 100%
             )`,
-            "-webkit-mask-image":
-                "var(--scroll-fade-mask, var(--scroll-fade-block))",
             "mask-image": "var(--scroll-fade-mask, var(--scroll-fade-block))",
             ...maskCommon,
             ...scrollAnimationBlock(
@@ -182,8 +178,6 @@ export default plugin(
                         transparent 100%
                     )`
                 },
-                "-webkit-mask-image":
-                    "var(--scroll-fade-mask, var(--scroll-fade-inline))",
                 "mask-image":
                     "var(--scroll-fade-mask, var(--scroll-fade-inline))",
                 ...maskCommon,
@@ -212,7 +206,6 @@ export default plugin(
                     #000 100%
                 )`,
 
-                "-webkit-mask-image": "var(--scroll-fade-mask)",
                 "mask-image": "var(--scroll-fade-mask)",
                 ...maskCommon,
                 ...scrollAnimationBlock(
@@ -233,7 +226,6 @@ export default plugin(
                     transparent 100%
                 )`,
 
-                "-webkit-mask-image": "var(--scroll-fade-mask)",
                 "mask-image": "var(--scroll-fade-mask)",
                 ...maskCommon,
                 ...scrollAnimationBlock(
@@ -254,7 +246,6 @@ export default plugin(
                     #000 100%
                 )`,
 
-                "-webkit-mask-image": "var(--scroll-fade-mask)",
                 "mask-image": "var(--scroll-fade-mask)",
                 ...maskCommon,
                 ...scrollAnimationBlock(
@@ -275,7 +266,6 @@ export default plugin(
                     transparent 100%
                 )`,
 
-                "-webkit-mask-image": "var(--scroll-fade-mask)",
                 "mask-image": "var(--scroll-fade-mask)",
                 ...maskCommon,
                 ...scrollAnimationBlock(
@@ -304,7 +294,6 @@ export default plugin(
                         #000 100%
                     )`
                 },
-                "-webkit-mask-image": "var(--scroll-fade-mask)",
                 "mask-image": "var(--scroll-fade-mask)",
                 ...maskCommon,
                 ...scrollAnimationBlock(
@@ -333,7 +322,6 @@ export default plugin(
                         transparent 100%
                     )`
                 },
-                "-webkit-mask-image": "var(--scroll-fade-mask)",
                 "mask-image": "var(--scroll-fade-mask)",
                 ...maskCommon,
                 ...scrollAnimationBlock(

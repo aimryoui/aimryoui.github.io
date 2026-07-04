@@ -15,18 +15,18 @@ export function Navigation() {
                 className={cn("z-50", {
                     lg: "fixed inset-x-0 bottom-0"
                 })}
-                style={{
-                    viewTransitionName: "mobile-toc"
-                }}
             >
                 <MobileTocPanel />
-                <header
+                <div
                     className={cn(
                         "relative z-50 min-h-20 w-full bg-background"
                     )}
+                    style={{
+                        viewTransitionName: "toolbar"
+                    }}
                 >
                     <Menu />
-                </header>
+                </div>
             </div>
         )
     }

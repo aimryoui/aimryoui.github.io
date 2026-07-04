@@ -235,8 +235,8 @@
 }
 
 @screen lg {
-    aside *:not(li:has(hr), li:has(hr) *, header, header *) {
-        zoom: 1.06485;
+    aside *:is(li > a, li > div) {
+        zoom: 1.2858;
     }
 }
 

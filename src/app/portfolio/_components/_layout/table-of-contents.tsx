@@ -100,7 +100,7 @@ function BackToPortfolio({ mode }: { mode: PortfolioMode }) {
                         variant="outline"
                         asChild
                         className={cn({
-                            lg: "size-10"
+                            lg: "size-[36px]"
                         })}
                     >
                         <NextLink href="/portfolio#projects">
@@ -148,7 +148,7 @@ export function TableOfContents({ mode, items }: TocProps) {
 
     return (
         <>
-            <header
+            <div
                 className={cn("flex gap-2 bg-background px-6 py-5.5", {
                     lg: "gap-4"
                 })}
@@ -163,7 +163,7 @@ export function TableOfContents({ mode, items }: TocProps) {
                     onChange={setQuery}
                     onClear={handleClearSearch}
                 />
-            </header>
+            </div>
             <SectionLine
                 fit
                 // style={{

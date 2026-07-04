@@ -55,7 +55,7 @@ function TocSearch({
         <InputGroup
             as="search"
             className={cn({
-                lg: "h-10"
+                lg: "h-[36px]"
             })}
         >
             <LeftAddon />
