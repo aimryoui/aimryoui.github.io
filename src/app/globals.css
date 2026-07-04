@@ -235,7 +235,8 @@
 }
 
 @screen lg {
-    aside *:is(li > a, li > div) {
+    aside *:is(li > a, li > div),
+    body > [data-slot="dropdown-menu-portal"] {
         zoom: 1.2858;
     }
 }

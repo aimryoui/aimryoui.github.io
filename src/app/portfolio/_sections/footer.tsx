@@ -129,10 +129,10 @@ function Footer() {
     return (
         <footer
             className={cn("relative flex flex-col bg-background", {
-                md: "flex-col-reverse",
-                lg: "mb-20"
+                md: "flex-col-reverse"
             })}
         >
+            <Space className={cn("hidden", { lg: "block" })} />
             <Divider
                 className={cn(
                     "grid h-auto place-items-center bg-background px-4 py-3 text-sm"

@@ -60,7 +60,8 @@ function scrollAnimationBlock(
             "animation-fill-mode": "both"
         },
         "@supports not (animation-timeline: scroll())": {
-            "--scroll-fade-mask": "none"
+            "--scroll-fade-mask": "none",
+            "mask-image": "none"
         }
     }
 }
