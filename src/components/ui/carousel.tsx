@@ -145,21 +145,21 @@ function Carousel({
     children,
     ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
-    const slides = Array(slideCount)
-
     const carouselId = useId()
+
+    const getSlideSizes = (size: number) => Array<number>(slideCount).fill(size)
 
     const [activePlugins, setActivePlugins] = useState(
         () =>
             plugins ?? [
                 WheelGestures({ wheelDraggingClass: "dragging" }),
                 Ssr({
-                    slideSizes: slides.fill(75)
-                    // breakpoints: {
-                    //     "(max-width: 48rem)": {
-                    //         slideSizes: slides.fill(100)
-                    //     }
-                    // }
+                    slideSizes: getSlideSizes(75),
+                    breakpoints: {
+                        "(max-width: 48rem)": {
+                            slideSizes: getSlideSizes(100)
+                        }
+                    }
                 })
             ]
     )
@@ -613,6 +613,7 @@ function CarouselScrollbar({
     const [snapCount, setSnapCount] = useState(0)
 
     const isDragging = useRef(false)
+    const latestValue = useRef(0)
 
     const onScrollBarChange = useCallback(
         (val: number | readonly number[]) => {
@@ -620,6 +621,7 @@ function CarouselScrollbar({
             isDragging.current = true
 
             const newProgress = val as number
+            latestValue.current = newProgress
             setValue(newProgress)
 
             const engine = emblaApi.internalEngine()
@@ -688,6 +690,11 @@ function CarouselScrollbar({
             disabled={!emblaApi}
             onValueChange={onScrollBarChange}
             onValueCommitted={onScrollBarRelease}
+            onPointerUp={() => {
+                if (isDragging.current) {
+                    onScrollBarRelease(latestValue.current)
+                }
+            }}
             label="Slide scrollbar"
             className={className}
             {...props}

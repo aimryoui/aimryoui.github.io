@@ -33,7 +33,7 @@ function Slider({
             value={value}
             min={min}
             max={max}
-            thumbAlignment="edge-client-only"
+            thumbAlignment="edge"
             {...props}
         >
             <SliderPrimitive.Control
