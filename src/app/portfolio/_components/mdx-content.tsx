@@ -5,6 +5,7 @@ import { MediaFrame } from "@/components/layout/media-frame"
 import { Carousel, CarouselImage, CarouselItem } from "@/components/ui/carousel"
 import { Gif } from "@/components/ui/gif"
 import { Image } from "@/components/ui/image"
+import { JustifiedColumn } from "@/components/ui/justified-column"
 import { Masonry } from "@/components/ui/masonry"
 import { Video } from "@/components/ui/video"
 
@@ -17,6 +18,7 @@ const sharedComponents = {
     CarouselImage,
     Masonry,
     MediaFrame,
+    JustifiedColumn,
     SectionLine
 }
 

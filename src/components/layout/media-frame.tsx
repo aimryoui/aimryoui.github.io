@@ -105,7 +105,7 @@ function MediaFrame({
                                 author={author}
                                 lowercase={lowercase}
                                 className={cn(
-                                    "bg-transparent text-transparent shadow-sm -outline-offset-px outline-stroke outline"
+                                    "bg-transparent text-foreground shadow-sm -outline-offset-px outline-stroke outline"
                                 )}
                             />
                         </div>

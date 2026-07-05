@@ -21,7 +21,7 @@ import WheelGestures from "embla-carousel-wheel-gestures"
 
 import { ArrowLeft, ArrowRight, Refresh } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
-import { Image } from "@/components/ui/image"
+import { Image, type ImageProps } from "@/components/ui/image"
 import { Slider } from "@/components/ui/slider"
 import { Spinner } from "@/components/ui/spinner"
 import { TooltipTrigger } from "@/components/ui/tooltip"
@@ -406,8 +406,14 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
     )
 }
 
-function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselItem({
+    gap = 2,
+    className,
+    ...props
+}: React.ComponentProps<"div"> & { gap?: number }) {
     const { orientation } = useCarousel()
+
+    const gapToRem = `${gap / 4}rem`
 
     return (
         <div
@@ -416,12 +422,23 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
             data-slot="carousel-item"
             className={cn(
                 "min-w-0 shrink-0 grow-0 basis-3/4 will-change-[opacity]",
-                orientation === "horizontal" ? "pl-2" : "pt-2",
+                orientation === "horizontal"
+                    ? "first-of-type:!pl-2"
+                    : "first-of-type:!pt-2",
                 {
                     md: "basis-full"
                 },
                 className
             )}
+            style={
+                orientation === "horizontal"
+                    ? {
+                          paddingLeft: gapToRem
+                      }
+                    : {
+                          paddingTop: gapToRem
+                      }
+            }
             {...props}
         />
     )
@@ -680,33 +697,32 @@ function CarouselScrollbar({
 
 function CarouselImage({
     srcPattern,
-    alt,
-    className
-}: React.ComponentProps<"div"> & {
+    gap,
+    ...props
+}: Omit<ImageProps, "src"> & {
     srcPattern: string
-    alt: string
-    className?: string
+    gap?: number
 }) {
-    const match = /\{(\d+)(?:-(\d+))?\}/.exec(srcPattern)
+    const isPatternSrc = /\{(\d+)(?:-(\d+))?\}/u.exec(srcPattern)
 
-    let generatedImages = [srcPattern]
+    let spreadImages = [srcPattern]
 
-    if (match) {
-        const start = parseInt(match[1], 10)
-        const end = match[2] ? parseInt(match[2], 10) : start
-        const padLength = match[1].length
+    if (isPatternSrc) {
+        const start = parseInt(isPatternSrc[1], 10)
+        const end = isPatternSrc[2] ? parseInt(isPatternSrc[2], 10) : start
+        const padLength = isPatternSrc[1].length
 
         const result = []
         for (let i = Math.min(start, end); i <= Math.max(start, end); i++) {
             const numStr = String(i).padStart(padLength, "0")
-            result.push(srcPattern.replace(match[0], numStr))
+            result.push(srcPattern.replace(isPatternSrc[0], numStr))
         }
-        generatedImages = result
+        spreadImages = result
     }
 
-    return generatedImages.map((src) => (
-        <CarouselItem key={src}>
-            <Image src={src} alt={alt} className={className} />
+    return spreadImages.map((src) => (
+        <CarouselItem key={src} gap={gap}>
+            <Image {...props} src={src} />
         </CarouselItem>
     ))
 }
