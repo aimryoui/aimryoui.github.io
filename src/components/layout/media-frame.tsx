@@ -34,7 +34,7 @@ export function SectionName({
             <Comp
                 aria-hidden={as === "h4" ? undefined : "true"}
                 className={cn(
-                    "pointer-events-auto mx-4 rounded-full bg-background px-3.5 py-1.5 text-center font-mono",
+                    "pointer-events-auto mx-4 text-pretty rounded-full bg-background px-3.5 py-1.5 text-center font-mono",
                     !lowercase && "uppercase",
                     {
                         md: "py-2 text-sm"
