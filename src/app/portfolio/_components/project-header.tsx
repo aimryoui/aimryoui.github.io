@@ -85,7 +85,7 @@ function ProjectHeader({
                     className={cn(
                         "flex flex-1 flex-col justify-between text-pretty px-6 pb-4 pt-3.25",
                         {
-                            md: "gap-2 text-sm"
+                            md: "gap-2"
                         }
                     )}
                 >
@@ -142,7 +142,7 @@ function ProjectHeader({
                             {formatOrdinal(detail.description)}
                         </Bold>
                         {detail.abbreviation && (
-                            <Text className={cn("text-pretty md:text-sm")}>
+                            <Text className={cn("text-pretty")}>
                                 {formatOrdinal(detail.abbreviation)}
                             </Text>
                         )}
