@@ -12,7 +12,7 @@ const imageManifest = imageManifestRaw as ImageManifest
 
 const FILE_EXTENSION_REGEX = /\.[^/.]+$/u
 
-interface ImageProps extends React.ComponentProps<"div"> {
+type ImageProps = React.ComponentProps<"div"> & {
     src: string
     alt: string
     placeholderPriority?: boolean
@@ -20,11 +20,9 @@ interface ImageProps extends React.ComponentProps<"div"> {
     imageRow?: "justified" | "proportional"
     limitHeight?: boolean
     noBorder?: boolean
-    noPreviewImage?: boolean
-    pngBorder?: boolean
     rounded?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
-}
+} & XOR<{ pngAntiBleed?: boolean }, { pngBorder?: boolean }>
 
 function Image({
     className,
@@ -35,7 +33,7 @@ function Image({
     imageRow,
     limitHeight = false,
     noBorder = false,
-    noPreviewImage = false,
+    pngAntiBleed = false,
     pngBorder = false,
     rounded = false,
     objectFit = "cover",
@@ -44,15 +42,6 @@ function Image({
     const containerRef = useRef<HTMLDivElement>(null)
 
     const [isNearViewport, setIsNearViewport] = useState(true)
-
-    const imgRef = useRef<HTMLImageElement>(null)
-    const [isLoaded, setIsLoaded] = useState(false)
-
-    useEffect(() => {
-        if (noPreviewImage && imgRef.current?.complete) {
-            setIsLoaded(true)
-        }
-    }, [noPreviewImage, isNearViewport])
 
     useEffect(() => {
         const element = containerRef.current
@@ -157,9 +146,9 @@ function Image({
                 height={exactH}
                 className={cn(
                     "absolute size-full select-none object-cover",
-                    pngBorder &&
-                        "drop-shadow-[0_0_2px_color-mix(in_oklab,var(--white)_calc(0.50*100%),transparent)]",
-                    noPreviewImage && isLoaded && "opacity-0"
+                    pngBorder && "[filter:url(#png-border)]",
+                    pngAntiBleed &&
+                        "[clip-path:inset(.375rem)] [filter:url(#png-anti-bleed)]"
                 )}
                 style={{
                     background: `url("${metadata.blurDataURL}") center / cover no-repeat`
@@ -205,7 +194,6 @@ function Image({
                         return (
                             <img
                                 key={index}
-                                ref={index === 0 ? imgRef : undefined}
                                 src={`${basePath}/${fileName}_scrambled.webp`}
                                 alt=""
                                 className="absolute h-[--h] w-[--w] max-w-none select-none"
@@ -216,11 +204,6 @@ function Image({
                                 decoding="async"
                                 loading="lazy"
                                 draggable={false}
-                                onLoad={() => {
-                                    if (index === 0 && noPreviewImage) {
-                                        setIsLoaded(true)
-                                    }
-                                }}
                             />
                         )
                     })}

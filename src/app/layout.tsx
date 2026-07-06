@@ -6,6 +6,7 @@ import localFont from "next/font/local"
 import Script from "next/script"
 
 import { MarginLine } from "@/components/layout/line"
+import { PngAntiBleed, PngBorder } from "@/components/ui/svg-filter"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
@@ -180,6 +181,8 @@ export default function RootLayout({
                             <MarginLine />
                             <MarginLine className="order-last" />
                             {children}
+                            <PngBorder />
+                            <PngAntiBleed />
                         </TooltipProvider>
                     </ProgressProvider>
                 </ThemeProvider>
