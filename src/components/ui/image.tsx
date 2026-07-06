@@ -24,7 +24,10 @@ type ImageProps = React.ComponentProps<"div"> & {
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
 }
 
-type PngProps = XOR<{ pngAntiBleed?: boolean }, { pngBorder?: boolean }>
+type PngProps = { trimEdges?: boolean } & XOR<
+    { pngAntiBleed?: boolean },
+    { pngBorder?: boolean }
+>
 
 function Image({
     className,
@@ -34,10 +37,11 @@ function Image({
     asBackgroundImage = false,
     imageRow,
     limitHeight = false,
+    rounded = false,
     noBorder = false,
     pngAntiBleed = false,
     pngBorder = false,
-    rounded = false,
+    trimEdges = false,
     objectFit = "cover",
     ...props
 }: ImageProps & PngProps) {
@@ -150,7 +154,8 @@ function Image({
                 className={cn(
                     "absolute size-full select-none object-cover",
                     pngBorder && "[filter:url(#png-border)]",
-                    pngAntiBleed && "[filter:url(#png-anti-bleed)]"
+                    pngAntiBleed && "[filter:url(#png-anti-bleed)]",
+                    trimEdges && "[clip-path:inset(.375rem)]"
                 )}
                 style={{
                     background: `url("${metadata.blurDataURL}") center / cover no-repeat`
