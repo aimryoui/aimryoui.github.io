@@ -22,7 +22,9 @@ type ImageProps = React.ComponentProps<"div"> & {
     noBorder?: boolean
     rounded?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
-} & XOR<{ pngAntiBleed?: boolean }, { pngBorder?: boolean }>
+}
+
+type PngProps = XOR<{ pngAntiBleed?: boolean }, { pngBorder?: boolean }>
 
 function Image({
     className,
@@ -38,7 +40,7 @@ function Image({
     rounded = false,
     objectFit = "cover",
     ...props
-}: ImageProps) {
+}: ImageProps & PngProps) {
     const containerRef = useRef<HTMLDivElement>(null)
 
     const [isNearViewport, setIsNearViewport] = useState(true)
@@ -121,9 +123,10 @@ function Image({
                 "relative grid place-items-center",
                 !pngBorder && "overflow-hidden",
                 rounded && "rounded-2xl md:rounded-xl",
-                !noBorder && {
-                    after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
-                },
+                !noBorder &&
+                    !pngBorder && {
+                        after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
+                    },
                 className
             )}
             style={{
@@ -147,8 +150,7 @@ function Image({
                 className={cn(
                     "absolute size-full select-none object-cover",
                     pngBorder && "[filter:url(#png-border)]",
-                    pngAntiBleed &&
-                        "[clip-path:inset(.375rem)] [filter:url(#png-anti-bleed)]"
+                    pngAntiBleed && "[filter:url(#png-anti-bleed)]"
                 )}
                 style={{
                     background: `url("${metadata.blurDataURL}") center / cover no-repeat`
@@ -217,5 +219,5 @@ function Image({
     )
 }
 
-export type { ImageProps }
+export type { ImageProps, PngProps }
 export { Image }
