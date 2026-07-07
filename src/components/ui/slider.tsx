@@ -33,13 +33,12 @@ function Slider({
             value={value}
             min={min}
             max={max}
-            thumbAlignment="edge"
+            thumbAlignment="edge-client-only"
             {...props}
         >
             <SliderPrimitive.Control
                 className={cn(
-                    "group relative flex w-full touch-none select-none items-center",
-                    snapCount > 1 ? "cursor-pointer" : "pointer-events-none",
+                    "group relative flex w-full cursor-pointer touch-none select-none items-center",
                     {
                         "data-vertical": "h-full min-h-40 w-auto flex-col",
                         "data-disabled": "pointer-events-none opacity-40"

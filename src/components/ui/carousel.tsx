@@ -687,7 +687,7 @@ function CarouselScrollbar({
             step={0.001}
             value={value}
             snapCount={snapCount}
-            disabled={!emblaApi}
+            disabled={!emblaApi || snapCount <= 1}
             onValueChange={onScrollBarChange}
             onValueCommitted={onScrollBarRelease}
             onPointerUp={() => {
