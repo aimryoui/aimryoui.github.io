@@ -2,78 +2,83 @@ function PngAntiBleed() {
     return (
         <svg className="absolute size-0" aria-hidden={true}>
             <filter id="png-anti-bleed" colorInterpolationFilters="sRGB">
-                <feMorphology
-                    in="SourceAlpha"
-                    operator="erode"
-                    radius="3"
-                    result="DEEP_ERODE"
-                />
-
-                <feMorphology
-                    in="DEEP_ERODE"
-                    operator="dilate"
-                    radius="2.5"
-                    result="RESTORED_ALPHA"
-                />
-
                 <feGaussianBlur
-                    in="RESTORED_ALPHA"
-                    stdDeviation="0.15"
-                    result="BLURRED"
+                    in="SourceAlpha"
+                    stdDeviation="1.5"
+                    result="SMOOTH_ALPHA"
                 />
 
-                <feComponentTransfer in="BLURRED" result="SHARP">
-                    <feFuncA type="linear" slope="10" intercept="-4.5" />
+                <feComponentTransfer in="SMOOTH_ALPHA" result="SHRUNKEN_ALPHA">
+                    <feFuncA type="linear" slope="12" intercept="-7" />
                 </feComponentTransfer>
 
-                <feComposite in="SourceGraphic" in2="SHARP" operator="in" />
+                <feComposite
+                    in="SourceGraphic"
+                    in2="SHRUNKEN_ALPHA"
+                    operator="in"
+                />
             </filter>
         </svg>
     )
 }
 
-function PngAntiBleedWithBorder() {
+function PngBorder() {
     return (
         <svg className="absolute size-0" aria-hidden={true}>
-            <filter
-                id="png-border"
-                colorInterpolationFilters="sRGB"
-                x="-20%"
-                y="-20%"
-                width="140%"
-                height="140%"
-            >
+            <filter id="png-border" colorInterpolationFilters="sRGB">
+                <feOffset in="SourceAlpha" dx="0" dy="-1.5" result="O_N" />
+                <feOffset in="SourceAlpha" dx="0" dy="1.5" result="O_S" />
+                <feOffset in="SourceAlpha" dx="-1.5" dy="0" result="O_W" />
+                <feOffset in="SourceAlpha" dx="1.5" dy="0" result="O_E" />
+
+                <feOffset
+                    in="SourceAlpha"
+                    dx="-1.06"
+                    dy="-1.06"
+                    result="O_NW"
+                />
+                <feOffset in="SourceAlpha" dx="1.06" dy="-1.06" result="O_NE" />
+                <feOffset in="SourceAlpha" dx="-1.06" dy="1.06" result="O_SW" />
+                <feOffset in="SourceAlpha" dx="1.06" dy="1.06" result="O_SE" />
+
+                <feComposite in="O_N" in2="O_S" operator="in" result="C1" />
+                <feComposite in="C1" in2="O_W" operator="in" result="C2" />
+                <feComposite in="C2" in2="O_E" operator="in" result="C3" />
+                <feComposite in="C3" in2="O_NW" operator="in" result="C4" />
+                <feComposite in="C4" in2="O_NE" operator="in" result="C5" />
+                <feComposite in="C5" in2="O_SW" operator="in" result="C6" />
+                <feComposite
+                    in="C6"
+                    in2="O_SE"
+                    operator="in"
+                    result="RAW_CORE"
+                />
+
                 <feGaussianBlur
                     in="SourceAlpha"
-                    stdDeviation="1.0"
-                    result="PRE_BLUR"
+                    stdDeviation="2"
+                    result="BLUR"
                 />
-                <feComponentTransfer in="PRE_BLUR" result="CLEAN_ALPHA">
-                    <feFuncA type="linear" slope="10" intercept="-6" />
+                <feComponentTransfer in="BLUR" result="DEEP_INSIDE_MASK">
+                    <feFuncA type="linear" slope="20" intercept="-17" />
                 </feComponentTransfer>
                 <feComposite
-                    in="SourceGraphic"
-                    in2="CLEAN_ALPHA"
-                    operator="in"
-                    result="CLEAN_GRAPHIC"
+                    in="RAW_CORE"
+                    in2="DEEP_INSIDE_MASK"
+                    operator="over"
+                    result="SOLID_CORE"
                 />
 
-                <feMorphology
-                    in="CLEAN_ALPHA"
-                    operator="dilate"
-                    radius="0.75"
-                    result="BORDER_BASE"
-                />
-
-                <feGaussianBlur
-                    in="BORDER_BASE"
-                    stdDeviation="2.0"
-                    result="BORDER_BLUR"
-                />
-
-                <feComponentTransfer in="BORDER_BLUR" result="PERFECT_BORDER">
-                    <feFuncA type="linear" slope="10" intercept="-1.4" />
+                <feComponentTransfer in="SOLID_CORE" result="SHARP_CORE">
+                    <feFuncA type="linear" slope="8" intercept="-3.5" />
                 </feComponentTransfer>
+
+                <feComposite
+                    in="SourceAlpha"
+                    in2="SHARP_CORE"
+                    operator="out"
+                    result="INSET_ALPHA"
+                />
 
                 <feFlood
                     floodColor="var(--default)"
@@ -82,18 +87,18 @@ function PngAntiBleedWithBorder() {
                 />
                 <feComposite
                     in="COLOR"
-                    in2="PERFECT_BORDER"
+                    in2="INSET_ALPHA"
                     operator="in"
-                    result="OUTLINE"
+                    result="INSET_BORDER"
                 />
 
                 <feMerge>
-                    <feMergeNode in="OUTLINE" />
-                    <feMergeNode in="CLEAN_GRAPHIC" />
+                    <feMergeNode in="SourceGraphic" />
+                    <feMergeNode in="INSET_BORDER" />
                 </feMerge>
             </filter>
         </svg>
     )
 }
 
-export { PngAntiBleed, PngAntiBleedWithBorder }
+export { PngAntiBleed, PngBorder }

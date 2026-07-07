@@ -153,8 +153,8 @@ function Image({
                 height={exactH}
                 className={cn(
                     "absolute size-full select-none object-cover",
-                    pngBorder && "[filter:url(#png-border)]",
-                    pngAntiBleed && "[filter:url(#png-anti-bleed)]",
+                    (pngAntiBleed || pngBorder) &&
+                        "[filter:url(#png-anti-bleed)]",
                     trimEdges && "[clip-path:inset(.375rem)]"
                 )}
                 style={{
@@ -178,7 +178,9 @@ function Image({
                         objectFit === "contain" &&
                             "size-auto max-h-full max-w-full",
                         objectFit === "cover" &&
-                            "size-auto min-h-full min-w-full"
+                            "size-auto min-h-full min-w-full",
+
+                        pngBorder && "[filter:url(#png-border)]"
                     )}
                     style={{
                         aspectRatio: `${exactW.toString()}/${exactH.toString()}`

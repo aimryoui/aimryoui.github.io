@@ -109,7 +109,7 @@ const TocItemRow = memo(
                         onClick(item)
                     }}
                     className={cn(
-                        "group/link relative flex-1 leading-6 will-change-[color,font-variation-settings]",
+                        "group/link relative flex-1 leading-6 will-change-[color,font-variation-settings] [contain:layout_paint]",
                         item.icon ? "flex gap-2 py-1" : "inline-block py-0.5",
                         isProject
                             ? "ps-3.75 text-foreground dark:text-muted-foreground"
