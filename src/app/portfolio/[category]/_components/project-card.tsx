@@ -44,6 +44,7 @@ function ProjectCard({
             href={href}
             className={cn(
                 "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
+                "[contain:layout_paint]",
                 {
                     hover: "bg-element-hover transition-none"
                 },
@@ -229,13 +230,12 @@ function ProjectCategory({
         >
             <Text
                 className={cn(
-                    "text-sm will-change-[color,font-variation-settings] font-slnt-0 transition-[color,font-variation-settings] ease-spring duration-500",
+                    "text-sm will-change-[color] transition-[color] duration-100",
                     projectNavigation
                         ? "w-full truncate"
                         : "line-clamp-1 w-fit",
                     {
-                        "group-hover":
-                            "text-foreground -font-slnt-10 transition-[font-variation-settings]"
+                        "group-hover": "text-foreground transition-none"
                     },
                     className
                 )}

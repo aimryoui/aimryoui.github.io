@@ -134,7 +134,7 @@ const googleSansFlex = Google_Sans_Flex({
 })
 
 const sfMono = localFont({
-    src: "../../public/fonts/SFMono.woff2",
+    src: "../../public/fonts/SFMono-Regular.woff2",
     weight: "400",
     style: "normal",
     display: "swap",
