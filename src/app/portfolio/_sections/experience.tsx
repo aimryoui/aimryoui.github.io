@@ -261,7 +261,7 @@ function Experience() {
                                 className={cn(
                                     "absolute left-6 whitespace-pre-line",
                                     {
-                                        xl: "static whitespace-normal font-bold"
+                                        xl: "static whitespace-normal font-wght-[600]"
                                     }
                                 )}
                             >
@@ -316,7 +316,7 @@ function Experience() {
 
                                         <TableCell
                                             className={cn(
-                                                "flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top font-bold text-foreground",
+                                                "flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top text-foreground font-wght-[600]",
                                                 {
                                                     xl: "mt-6 gap-x-2"
                                                 }

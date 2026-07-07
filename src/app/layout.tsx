@@ -1,7 +1,7 @@
 import "@/globals.css"
 
 import { type Metadata, type Viewport } from "next"
-import { Plus_Jakarta_Sans } from "next/font/google"
+import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
 import Script from "next/script"
 
@@ -125,15 +125,18 @@ export const viewport: Viewport = {
     colorScheme: "dark light"
 }
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-    subsets: ["latin"],
-    weight: ["500", "700", "800"],
+const googleSansFlex = Google_Sans_Flex({
+    subsets: ["latin", "vietnamese"],
+    axes: ["slnt"],
+    weight: "variable",
     display: "swap",
-    variable: "--font-plus-jakarta-sans"
+    variable: "--font-google-sans-flex"
 })
 
 const sfMono = localFont({
     src: "../../public/fonts/SFMono.woff2",
+    weight: "400",
+    style: "normal",
     display: "swap",
     variable: "--font-sf-mono"
 })
@@ -149,7 +152,7 @@ export default function RootLayout({
             dir="ltr"
             suppressHydrationWarning
             className={cn(
-                plusJakartaSans.variable,
+                googleSansFlex.variable,
                 sfMono.variable,
                 "antialiased scrollbar-colored scrollbar-thumb-default/40 scrollbar-track-pattern"
             )}
@@ -168,7 +171,7 @@ export default function RootLayout({
             </head>
             <body
                 className={cn(
-                    "relative flex bg-background px-6 -tracking-[.03em] text-muted-foreground scrollbar-gutter-stable",
+                    "relative flex bg-background px-6 text-muted-foreground scrollbar-gutter-stable",
                     // Fix tooltip viewport transition overflow bug
                     "overflow-x-hidden",
                     {

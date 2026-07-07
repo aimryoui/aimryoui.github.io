@@ -137,11 +137,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <Divider />
             <SectionLine />
 
-            <Space
-                className={cn("grid place-items-center", {
-                    md: "min-h-16"
-                })}
-            >
+            <Space className={cn("grid place-items-center")}>
                 <Highlight
                     className={cn(
                         "grid size-full place-items-center bg-highlighted/10 px-6 py-4.5"
@@ -180,10 +176,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         >
                             <ArrowLeft
                                 className={cn(
-                                    "m-1 will-change-[color] transition-[color] duration-100",
+                                    "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
                                     {
                                         "group-hover":
-                                            "text-highlighted transition-none"
+                                            "scale-125 text-highlighted transition-[transform]"
                                     }
                                 )}
                             />
@@ -206,10 +202,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 </Text>{" "}
                                 <Bold
                                     className={cn(
-                                        "will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                        "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                         {
                                             "group-hover":
-                                                "text-highlighted transition-none"
+                                                "text-highlighted font-wght-900 transition-[font-variation-settings]"
                                         }
                                     )}
                                 >
@@ -262,10 +258,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                         </Text>{" "}
                                         <Bold
                                             className={cn(
-                                                "will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                                "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                                 {
                                                     "group-hover":
-                                                        "text-highlighted transition-none"
+                                                        "text-highlighted font-wght-900 transition-[font-variation-settings]"
                                                 }
                                             )}
                                         >
@@ -288,10 +284,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                         </Text>{" "}
                                         <Bold
                                             className={cn(
-                                                "will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                                "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                                 {
                                                     "group-hover":
-                                                        "text-highlighted transition-none"
+                                                        "text-highlighted font-wght-900 transition-[font-variation-settings]"
                                                 }
                                             )}
                                         >
@@ -302,10 +298,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             </div>
                             <ArrowRight
                                 className={cn(
-                                    "m-1 will-change-[color] transition-[color] duration-100",
+                                    "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
                                     {
                                         "group-hover":
-                                            "text-highlighted transition-none"
+                                            "scale-125 text-highlighted transition-[transform]"
                                     }
                                 )}
                             />

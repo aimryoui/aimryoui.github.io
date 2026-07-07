@@ -60,7 +60,7 @@ const TocItemRow = memo(
                               }
                             : {
                                   hover: {
-                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground/30 dark:bg-muted-foreground"
+                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
                                   }
                               }
                     ]
@@ -109,19 +109,19 @@ const TocItemRow = memo(
                         onClick(item)
                     }}
                     className={cn(
-                        "group/link relative flex-1 leading-6 will-change-[color]",
+                        "group/link relative flex-1 leading-6 will-change-[color,font-variation-settings]",
                         item.icon ? "flex gap-2 py-1" : "inline-block py-0.5",
                         isProject
                             ? "ps-3.75 text-foreground dark:text-muted-foreground"
-                            : "font-bold",
+                            : "font-wght-600 font-slnt-0",
                         isActive
-                            ? "!text-highlighted"
+                            ? "!text-highlighted font-wght-[600]"
                             : {
                                   "group-hover":
-                                      "transition-[color] duration-100",
+                                      "transition-[color,font-variation-settings] ease-spring duration-500",
                                   hover: isProject
-                                      ? "text-muted-foreground !transition-none dark:text-foreground"
-                                      : "text-foreground !transition-none",
+                                      ? "text-muted-foreground font-wght-[600] !transition-[font-variation-settings] dark:text-foreground"
+                                      : "text-foreground -font-slnt-10 !transition-[font-variation-settings]",
                                   "focus-visible": "text-foreground"
                               }
                     )}

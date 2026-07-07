@@ -7,6 +7,7 @@ import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { SectionName } from "@/components/layout/media-frame"
 import { Space } from "@/components/layout/space"
+import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import { sections } from "@/portfolio/_sections/contact"
@@ -21,7 +22,7 @@ function Footer() {
                 <Space className={cn("grid place-items-center")}>
                     <Highlight
                         id="footer"
-                        className={cn("text-4xl font-extrabold")}
+                        className={cn("text-4xl font-wght-800")}
                     >
                         The end.
                     </Highlight>
@@ -44,14 +45,12 @@ function Footer() {
                             >
                                 <Highlight
                                     className={cn(
-                                        "col-span-full col-start-5 self-center text-4xl font-extrabold uppercase"
+                                        "col-span-full col-start-5 self-center text-4xl uppercase font-wght-800"
                                     )}
                                 >
                                     Thanks <br /> for scrolling
                                     <br />
-                                    <span
-                                        className={cn("font-mono font-normal")}
-                                    >
+                                    <span className={cn("font-mono")}>
                                         My <br /> Portfolio.
                                     </span>
                                 </Highlight>
@@ -96,7 +95,7 @@ function Footer() {
                                 >
                                     <span
                                         className={cn(
-                                            "text-xxs font-extrabold uppercase tracking-tight"
+                                            "text-xxs uppercase tracking-tight font-wght-800"
                                         )}
                                     >
                                         {item.label}
@@ -153,24 +152,33 @@ function Footer() {
                     .flatMap((section) => section.platforms)
                     .map((platform, index, arr) => (
                         <Fragment key={platform.title}>
-                            <NextLink
-                                href={platform.links.url}
-                                target="_blank"
-                                rel="noreferrer"
-                                className={cn(
-                                    "grid h-full flex-1 place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
-                                    {
-                                        hover: "bg-element-hover text-highlighted opacity-100 transition-none",
-                                        xl: "h-20 basis-[calc(20%-var(--px)*4)]",
-                                        lg: "opacity-100"
-                                    }
-                                )}
-                            >
-                                {platform.icon}
-                                <span className="sr-only">
-                                    {platform.title}
-                                </span>
-                            </NextLink>
+                            <TooltipTrigger
+                                payload={{
+                                    content: <span>{platform.title}</span>,
+                                    sideOffset: 8
+                                }}
+                                render={
+                                    <NextLink
+                                        href={platform.links.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className={cn(
+                                            "grid h-full flex-1 place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
+                                            {
+                                                hover: "bg-element-hover text-highlighted opacity-100 transition-none",
+                                                xl: "h-20 basis-[calc(20%-var(--px)*4)]",
+                                                lg: "opacity-100"
+                                            }
+                                        )}
+                                    >
+                                        {platform.icon}
+                                        <span className="sr-only">
+                                            {platform.title}
+                                        </span>
+                                    </NextLink>
+                                }
+                            />
+
                             {index < arr.length - 1 && (
                                 <ElementLine
                                     className={cn({

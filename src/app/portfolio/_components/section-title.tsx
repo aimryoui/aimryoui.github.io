@@ -26,7 +26,7 @@ function SectionTitle({
                 <span
                     id={noteId}
                     className={cn(
-                        "absolute inset-x-6 bottom-22 font-mono uppercase tracking-normal",
+                        "absolute inset-x-6 bottom-22 font-mono uppercase",
                         noteId &&
                             "scroll-mt-[calc(var(--spacing)*20*2+var(--px)-2.59375rem)]"
                     )}
@@ -55,9 +55,10 @@ function Title({
             <H2
                 id={id}
                 className={cn(
-                    "w-fit text-foreground will-change-[color] transition-[color] duration-100",
+                    "w-fit text-foreground will-change-[color,font-variation-settings] transition-[color,font-variation-settings] ease-spring duration-500",
                     {
-                        "group-hover": "text-highlighted transition-none"
+                        "group-hover":
+                            "text-highlighted font-wght-900 transition-[font-variation-settings]"
                     }
                 )}
             >

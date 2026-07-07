@@ -215,7 +215,7 @@ function TocList({
             }}
             ref={scrollContainerRef}
             className={cn(
-                "group overflow-y-scroll overscroll-contain scroll-auto py-3 text-sm will-change-[opacity] scrollbar-thin",
+                "group overflow-y-scroll overscroll-contain scroll-auto py-3 will-change-[opacity] scrollbar-thin",
                 "scroll-fade-y scroll-fade-24",
                 {
                     lg: "pb-[30vh]"

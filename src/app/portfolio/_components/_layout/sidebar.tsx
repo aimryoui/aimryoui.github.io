@@ -169,7 +169,7 @@ function Menu({ className }: { className?: string }) {
                                 )}
                             >
                                 <Bold className="text-sm">
-                                    <At className="font-bold text-current" />
+                                    <At className="text-current font-wght-[625]" />
                                     {siteConfig.username}
                                 </Bold>
                                 <p className="font-mono text-xs">

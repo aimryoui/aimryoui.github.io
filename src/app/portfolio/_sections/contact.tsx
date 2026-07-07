@@ -318,7 +318,7 @@ function Contact() {
                                     className={cn(
                                         "sr-only absolute left-6 whitespace-pre-line",
                                         {
-                                            lg: "font-bold"
+                                            lg: "font-wght-[625]"
                                         }
                                     )}
                                 >

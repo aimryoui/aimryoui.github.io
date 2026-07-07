@@ -13,6 +13,7 @@ import contentVisibility from "./src/lib/tailwindcss-plugins/utilities/content-v
 import cornerShape from "./src/lib/tailwindcss-plugins/utilities/corner-shape"
 import displayGridLanes from "./src/lib/tailwindcss-plugins/utilities/display-grid-lanes"
 import fieldSizing from "./src/lib/tailwindcss-plugins/utilities/field-sizing"
+import fontVariationSettings from "./src/lib/tailwindcss-plugins/utilities/font-variation-settings"
 import outline from "./src/lib/tailwindcss-plugins/utilities/outline"
 import overflowAnchor from "./src/lib/tailwindcss-plugins/utilities/overflow-anchor"
 import overflowWrap from "./src/lib/tailwindcss-plugins/utilities/overflow-wrap"
@@ -59,12 +60,13 @@ export default {
         },
         fontFamily: {
             sans: [
-                "var(--font-plus-jakarta-sans)",
+                "var(--font-google-sans-flex)",
                 "ui-sans-serif",
                 "system-ui"
             ],
             mono: ["var(--font-sf-mono)", "ui-monospace"]
         },
+        fontWeight: {},
         extend: {
             fontSize: {
                 xxs: "0.5rem",
@@ -72,10 +74,6 @@ export default {
                 base: ["1rem", "1.3"],
                 "2xl": ["1.5rem", "1.3"],
                 "4xl": ["2.25rem", "1.3"]
-            },
-            fontWeight: {
-                base: "400",
-                normal: "500"
             },
             spacing: {
                 px: "var(--px)",
@@ -97,7 +95,7 @@ export default {
                 56.25: "14.0625rem",
                 61.25: "15.3125rem",
                 75: "18.75rem",
-                sidebar: "20.5rem",
+                sidebar: "23.5rem",
                 120: "30rem",
                 125: "31.25rem",
                 200: "50rem",
@@ -266,6 +264,7 @@ export default {
         cornerShape,
         displayGridLanes,
         fieldSizing,
+        fontVariationSettings,
         outline,
         overflowAnchor,
         overflowWrap,

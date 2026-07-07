@@ -95,7 +95,7 @@ function Software() {
                                 className={cn(
                                     "absolute left-6 whitespace-pre-line",
                                     {
-                                        lg: "static font-bold"
+                                        lg: "static font-wght-[625]"
                                     }
                                 )}
                             >
@@ -138,7 +138,7 @@ function Software() {
                                             <TableCell
                                                 key={index}
                                                 className={cn(
-                                                    "col-span-2 p-0 align-top font-bold text-foreground",
+                                                    "col-span-2 p-0 align-top text-foreground font-wght-[625]",
                                                     index === arr.length - 1 &&
                                                         "pe-6",
                                                     frequency.hideOnMd &&

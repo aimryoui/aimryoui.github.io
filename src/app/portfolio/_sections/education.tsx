@@ -40,7 +40,7 @@ function Education() {
                 >
                     <TableCaption
                         className={cn("absolute left-6 whitespace-pre-line", {
-                            lg: "static font-bold"
+                            lg: "static font-wght-[625]"
                         })}
                     >
                         University
@@ -81,7 +81,7 @@ function Education() {
 
                             <TableCell
                                 className={cn(
-                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top font-bold text-foreground",
+                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top text-foreground font-wght-[625]",
                                     {
                                         xl: "col-span-1 mt-8"
                                     }
@@ -130,7 +130,7 @@ function Education() {
 
                             <TableCell
                                 className={cn(
-                                    "p-0 pe-6 align-top font-bold text-highlighted"
+                                    "p-0 pe-6 align-top text-highlighted font-wght-[625]"
                                 )}
                             >
                                 8.05
@@ -161,7 +161,7 @@ function Education() {
 
                             <TableCell
                                 className={cn(
-                                    "p-0 pe-6 align-top font-bold italic text-foreground"
+                                    "p-0 pe-6 align-top italic text-foreground font-wght-[625]"
                                 )}
                             >
                                 Very Good

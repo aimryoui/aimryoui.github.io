@@ -33,15 +33,23 @@ export default function Portfolio() {
                 <div className={cn("relative bg-background px-6 pb-4.5 pt-4")}>
                     <span
                         className={cn(
-                            "absolute -top-9.5 left-6 font-mono uppercase tracking-normal"
+                            "absolute -top-9.5 left-6 font-mono uppercase"
                         )}
                     >
                         About
                     </span>
                     <H1 id="about">
-                        Hello there! I&#39;m <Bold>Hoang Nhan</Bold>, <br />a{" "}
-                        <Bold>Creative Designer</Bold> majoring in{" "}
-                        <Highlight>UI & UX Design</Highlight>.
+                        Hello there! I&#39;m{" "}
+                        <Bold className="font-wght-[625]">Hoang Nhan</Bold>,{" "}
+                        <br />a{" "}
+                        <Bold className="font-wght-[625]">
+                            Creative Designer
+                        </Bold>{" "}
+                        majoring in{" "}
+                        <Highlight className="font-wght-[625]">
+                            UI & UX Design
+                        </Highlight>
+                        .
                     </H1>
                 </div>
                 <SectionLine />
@@ -117,7 +125,7 @@ export default function Portfolio() {
                                 )}
                             >
                                 <Highlight
-                                    className={cn("text-4xl font-extrabold", {
+                                    className={cn("text-4xl font-wght-[625]", {
                                         xl: "text-3xl"
                                     })}
                                 >
@@ -130,7 +138,7 @@ export default function Portfolio() {
                                 >
                                     <span
                                         className={cn(
-                                            "text-xxs font-extrabold uppercase tracking-tight"
+                                            "text-xxs uppercase font-wght-[625]"
                                         )}
                                     >
                                         {item.label}
@@ -181,7 +189,9 @@ export default function Portfolio() {
                                         xl: "text-3xl"
                                     })}
                                 >
-                                    <Highlight className={cn("font-extrabold")}>
+                                    <Highlight
+                                        className={cn("font-wght-[625]")}
+                                    >
                                         HCMC
                                     </Highlight>
                                 </Link>
@@ -194,7 +204,7 @@ export default function Portfolio() {
                         >
                             <span
                                 className={cn(
-                                    "text-xxs font-extrabold uppercase tracking-tight"
+                                    "text-xxs uppercase font-wght-[625]"
                                 )}
                             >
                                 Location
@@ -227,7 +237,7 @@ export default function Portfolio() {
                                 >
                                     <Highlight
                                         className={cn(
-                                            "sr-only text-4xl font-extrabold",
+                                            "sr-only text-4xl font-wght-[625]",
                                             {
                                                 md: "text-3xl"
                                             }
@@ -258,7 +268,7 @@ export default function Portfolio() {
                         >
                             <span
                                 className={cn(
-                                    "text-xxs font-extrabold uppercase tracking-tight"
+                                    "text-xxs uppercase font-wght-[625]"
                                 )}
                             >
                                 Native Land

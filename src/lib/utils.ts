@@ -1,7 +1,13 @@
 import { extendTailwindMerge, validators } from "tailwind-merge"
 import { type ClassValue, twg } from "twg"
 
-type AdditionalClassGroupIDs = "scrollbar-width"
+type AdditionalClassGroupIDs =
+    | "scrollbar-width"
+    | "font-wght"
+    | "font-slnt"
+    | "font-ital"
+    | "font-rond"
+    | "font-grad"
 type AdditionalThemeGroupIDs = "transitionBehavior"
 
 const twMerge = extendTailwindMerge<
@@ -12,6 +18,46 @@ const twMerge = extendTailwindMerge<
         classGroups: {
             /** @see https://github.com/dcastil/tailwind-merge/blob/v2.6.1/src/lib/default-config.ts */
             "font-size": ["text-xxs"],
+            "font-wght": [
+                {
+                    "font-wght": [
+                        validators.isNumber,
+                        validators.isArbitraryNumber
+                    ]
+                }
+            ],
+            "font-slnt": [
+                {
+                    "font-slnt": [
+                        validators.isInteger,
+                        validators.isArbitraryNumber
+                    ]
+                }
+            ],
+            "font-ital": [
+                {
+                    "font-ital": [
+                        validators.isNumber,
+                        validators.isArbitraryNumber
+                    ]
+                }
+            ],
+            "font-rond": [
+                {
+                    "font-rond": [
+                        validators.isInteger,
+                        validators.isArbitraryNumber
+                    ]
+                }
+            ],
+            "font-grad": [
+                {
+                    "font-grad": [
+                        validators.isInteger,
+                        validators.isArbitraryNumber
+                    ]
+                }
+            ],
             "outline-offset": ["outline-offset-px"],
             "scrollbar-width": [
                 "scrollbar-auto",

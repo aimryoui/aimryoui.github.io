@@ -23,10 +23,10 @@ function H1({
     return (
         <Comp
             className={cn(
-                "text-pretty text-4xl font-extrabold",
+                "text-pretty text-4xl",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
-                mono && "font-mono",
+                mono ? "font-mono" : "font-wght-[625]",
                 {
                     md: "text-3xl"
                 },
@@ -49,10 +49,10 @@ function H2({
     return (
         <Comp
             className={cn(
-                "text-pretty text-4xl font-extrabold",
+                "text-pretty text-4xl",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
-                mono && "font-mono",
+                mono ? "font-mono" : "font-wght-[625]",
                 {
                     md: "text-3xl"
                 },
@@ -75,10 +75,10 @@ function H3({
     return (
         <Comp
             className={cn(
-                "text-pretty text-4xl font-extrabold",
+                "text-pretty text-4xl",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
-                mono && "font-mono",
+                mono ? "font-mono" : "font-wght-[625]",
                 className
             )}
             {...props}
@@ -122,7 +122,7 @@ function Bold({
             className={cn(
                 "text-foreground",
                 italic && "italic",
-                mono && "font-mono",
+                mono ? "font-mono" : "font-wght-600",
                 className
             )}
             {...props}
@@ -143,7 +143,7 @@ function Highlight({
             className={cn(
                 "text-pretty text-highlighted",
                 italic && "italic",
-                mono && "font-mono",
+                mono ? "font-mono" : "font-wght-600",
                 className
             )}
             {...props}
@@ -167,14 +167,14 @@ function Link({
     return (
         <Comp
             className={cn(
-                "w-fit cursor-pointer text-pretty font-bold text-foreground underline",
+                "w-fit cursor-pointer text-pretty text-foreground underline",
                 {
                     hover: "decoration-current decoration-solid",
                     "focus-visible": "text-highlighted"
                 },
                 highlight && "text-highlighted",
                 italic && "italic",
-                mono && "font-mono",
+                mono ? "font-mono" : "font-wght-600",
                 className
             )}
             {...(openInNewTab && { target: "_blank", rel: "noreferrer" })}
@@ -216,7 +216,7 @@ function At({
                 aria-hidden="true"
                 role="presentation"
                 className={cn(
-                    "inline-block -translate-y-[0.125em] font-normal text-muted-foreground",
+                    "inline-block text-muted-foreground font-wght-400",
                     highlight && "text-highlighted",
                     italic && "italic",
                     mono && "font-mono",

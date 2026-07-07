@@ -66,13 +66,15 @@ function NoAIOverlay() {
         >
             <div
                 className={cn(
-                    "sticky top-0 flex h-dvh flex-col justify-center gap-8 tracking-normal text-default",
+                    "sticky top-0 flex h-dvh flex-col justify-center gap-8 text-default",
                     isActive && "text-white"
                 )}
             >
                 <hgroup className={cn("flex flex-col gap-2")}>
                     <h3 className={cn("text-4xl font-extrabold capitalize")}>
-                        <strong>No AI training allowed.</strong>
+                        <strong className="font-wght-[625]">
+                            No AI training allowed.
+                        </strong>
                     </h3>
                     <i translate="no" className={cn("text-sm opacity-80")}>
                         Không được phép huấn luyện AI.

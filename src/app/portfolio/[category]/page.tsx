@@ -184,22 +184,26 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     >
                         <ArrowLeft
                             className={cn(
-                                "m-1 will-change-[color] transition-[color] duration-100",
+                                "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
                                 {
                                     "group-hover":
-                                        "text-highlighted transition-none"
+                                        "scale-125 text-highlighted transition-[transform]"
                                 }
                             )}
                         />
-                        <div className={cn("flex flex-col gap-0.5 text-right")}>
+                        <div
+                            className={cn("text-right", {
+                                sm: "flex flex-col"
+                            })}
+                        >
                             {prev ? (
                                 <>
                                     <Bold
                                         className={cn(
-                                            "text-ellipsis will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                            "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                             {
                                                 "group-hover":
-                                                    "text-highlighted transition-none"
+                                                    "text-highlighted font-wght-900 transition-[font-variation-settings]"
                                             }
                                         )}
                                     >
@@ -221,10 +225,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 <>
                                     <Text
                                         className={cn(
-                                            "inline text-sm will-change-[color] transition-[color] duration-100",
+                                            "inline will-change-[color] transition-[color] duration-100",
                                             {
                                                 "group-hover":
-                                                    "text-foreground transition-none"
+                                                    "text-foreground transition-none",
+                                                sm: "text-sm"
                                             }
                                         )}
                                     >
@@ -232,10 +237,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     </Text>{" "}
                                     <Bold
                                         className={cn(
-                                            "will-change-[color] transition-[color] duration-100",
+                                            "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                             {
                                                 "group-hover":
-                                                    "text-highlighted transition-none"
+                                                    "text-highlighted font-wght-900 transition-[font-variation-settings]"
                                             }
                                         )}
                                     >
@@ -259,15 +264,19 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                             }
                         )}
                     >
-                        <div className={cn("flex flex-col")}>
+                        <div
+                            className={cn({
+                                sm: "flex flex-col"
+                            })}
+                        >
                             {next ? (
                                 <>
                                     <Bold
                                         className={cn(
-                                            "will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                            "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                             {
                                                 "group-hover":
-                                                    "text-highlighted transition-none"
+                                                    "text-highlighted font-wght-900 transition-[font-variation-settings]"
                                             }
                                         )}
                                     >
@@ -301,10 +310,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     </Text>{" "}
                                     <Bold
                                         className={cn(
-                                            "will-change-[color] transition-[color] duration-100",
+                                            "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                             {
                                                 "group-hover":
-                                                    "text-highlighted transition-none"
+                                                    "text-highlighted font-wght-900 transition-[font-variation-settings]"
                                             }
                                         )}
                                     >
@@ -315,10 +324,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         </div>
                         <ArrowRight
                             className={cn(
-                                "m-1 will-change-[color] transition-[color] duration-100",
+                                "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
                                 {
                                     "group-hover":
-                                        "text-highlighted transition-none"
+                                        "scale-125 text-highlighted transition-[transform]"
                                 }
                             )}
                         />

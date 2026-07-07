@@ -172,7 +172,7 @@ export function TableOfContents({ mode, items }: TocProps) {
             />
             <nav className={cn("flex flex-1 flex-col overflow-auto")}>
                 {filteredItems.length === 0 ? (
-                    <Text className={cn("px-6 py-4 text-sm")}>
+                    <Text className={cn("px-6 py-4")}>
                         No results found.{" "}
                         <Highlight
                             onClick={handleClearSearch}
