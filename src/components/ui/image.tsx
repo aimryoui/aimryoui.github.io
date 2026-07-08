@@ -20,9 +20,13 @@ type ImageProps = React.ComponentProps<"div"> & {
     imageRow?: "justified" | "proportional"
     limitHeight?: boolean
     noBorder?: boolean
-    rounded?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
 }
+
+type RoundedImageProps = XOR<
+    { rounded?: boolean },
+    { percentageRounded?: number }
+>
 
 type PngProps = { trimEdges?: boolean } & XOR<
     { pngAntiBleed?: boolean },
@@ -38,13 +42,14 @@ function Image({
     imageRow,
     limitHeight = false,
     rounded = false,
+    percentageRounded,
     noBorder = false,
     pngAntiBleed = false,
     pngBorder = false,
     trimEdges = false,
     objectFit = "cover",
     ...props
-}: ImageProps & PngProps) {
+}: ImageProps & RoundedImageProps & PngProps) {
     const containerRef = useRef<HTMLDivElement>(null)
 
     const [isNearViewport, setIsNearViewport] = useState(true)
@@ -116,7 +121,7 @@ function Image({
         cssVars[`--y${i.toString()}`] = `${(i * rowPct + padY).toString()}%`
     }
 
-    const aspect = `${exactW.toString()}/${exactH.toString()}`
+    const aspectRatio = `${exactW.toString()}/${exactH.toString()}`
 
     return (
         <div
@@ -134,12 +139,18 @@ function Image({
                 className
             )}
             style={{
-                flex: imageRow
-                    ? `${imageRow === "justified" ? `calc(${aspect})` : exactW.toString()} 1 0%`
-                    : undefined,
-                aspectRatio: asBackgroundImage ? undefined : aspect,
+                "--aspect-ratio": aspectRatio,
                 ...(limitHeight && {
-                    width: `calc(max(80vh, calc(var(--spacing) * 125)) * calc(${aspect}))`
+                    width: "calc(max(80vh, calc(var(--spacing) * 125)) * calc(var(--aspect-ratio)))"
+                }),
+                ...(percentageRounded && {
+                    borderRadius: `calc(${percentageRounded}% * var(--offset-factor)) / calc(${percentageRounded}% * var(--aspect-ratio) * var(--offset-factor))`
+                }),
+                ...(imageRow && {
+                    flex: `${imageRow === "justified" ? "calc(var(--aspect-ratio))" : exactW} 1 0%`
+                }),
+                ...(!asBackgroundImage && {
+                    aspectRatio: "var(--aspect-ratio)"
                 }),
                 ...cssVars
             }}
@@ -183,7 +194,7 @@ function Image({
                         pngBorder && "[filter:url(#png-border)]"
                     )}
                     style={{
-                        aspectRatio: `${exactW.toString()}/${exactH.toString()}`
+                        aspectRatio
                     }}
                     aria-hidden={true}
                 >
@@ -226,5 +237,5 @@ function Image({
     )
 }
 
-export type { ImageProps, PngProps }
+export type { ImageProps, PngProps, RoundedImageProps }
 export { Image }

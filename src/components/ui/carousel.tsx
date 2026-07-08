@@ -21,7 +21,12 @@ import WheelGestures from "embla-carousel-wheel-gestures"
 
 import { ArrowLeft, ArrowRight, Refresh } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
-import { Image, type ImageProps, type PngProps } from "@/components/ui/image"
+import {
+    Image,
+    type ImageProps,
+    type PngProps,
+    type RoundedImageProps
+} from "@/components/ui/image"
 import { Slider } from "@/components/ui/slider"
 import { Spinner } from "@/components/ui/spinner"
 import { TooltipTrigger } from "@/components/ui/tooltip"
@@ -707,6 +712,7 @@ function CarouselImage({
     gap,
     ...props
 }: Omit<ImageProps, "src"> &
+    RoundedImageProps &
     PngProps & {
         srcPattern: string
         gap?: number
