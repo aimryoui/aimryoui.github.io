@@ -37,7 +37,16 @@
     },
     "tailwindCSS.experimental.configFile": "tailwind.config.ts",
     "tailwindCSS.lint.suggestCanonicalClasses": "warning",
-    "tailwindCSS.classFunctions": ["cva", "cn", "twg", "twMerge"],
+    "tailwindCSS.classFunctions": [
+        ".*classList.add",
+        ".*classList.remove",
+        ".*classList.toggle",
+        ".*classList.replace",
+        "cva",
+        "cn",
+        "twg",
+        "twMerge"
+    ],
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.classAttributes": ["className", "containerClassName", "tw"],
     // CSS REM
@@ -51,7 +60,5 @@
         "typescript"
     ],
     "cssrem.vw": true,
-    "cssrem.vwDesign": 1707.33,
-    // TypeScript Version
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+    "cssrem.vwDesign": 1707.33
 }

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 
 import { ArrowLeft } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
@@ -95,19 +95,16 @@ function BackToPortfolio({ mode }: { mode: PortfolioMode }) {
                     side: "bottom"
                 }}
                 render={
-                    <Button
-                        size="icon"
-                        variant="outline"
-                        asChild
-                        className={cn({
-                            lg: "size-[36px]"
+                    <NextLink
+                        href="/portfolio#projects"
+                        className={buttonVariants({
+                            variant: "outline",
+                            size: "icon"
                         })}
                     >
-                        <NextLink href="/portfolio#projects">
-                            <ArrowLeft className="size-4 lg:size-5" />
-                            <span className="sr-only">Back to Portfolio</span>
-                        </NextLink>
-                    </Button>
+                        <ArrowLeft className="size-4 lg:size-5" />
+                        <span className="sr-only">Back to Portfolio</span>
+                    </NextLink>
                 }
             />
         )
@@ -170,7 +167,11 @@ export function TableOfContents({ mode, items }: TocProps) {
                 //     viewTransitionName: "toc-divider-search"
                 // }}
             />
-            <nav className={cn("flex flex-1 flex-col overflow-auto")}>
+            <nav
+                role="navigation"
+                aria-label="Table of contents"
+                className={cn("flex flex-1 flex-col overflow-auto")}
+            >
                 {filteredItems.length === 0 ? (
                     <Text className={cn("px-6 py-4")}>
                         No results found.{" "}

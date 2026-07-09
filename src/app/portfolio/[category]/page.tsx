@@ -1,11 +1,17 @@
 import { type Metadata } from "next"
-import NextLink from "next/link"
 import { notFound } from "next/navigation"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
+import {
+    Pagination,
+    PaginationContent,
+    PaginationItem,
+    PaginationNext,
+    PaginationPrevious
+} from "@/components/ui/pagination"
 import { Bold, Highlight, Text } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import {
@@ -125,13 +131,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 <SectionLine />
                 <Divider />
                 <SectionLine />
-                <div
+                <ul
                     className={cn(
                         "grid grid-cols-2 bg-background md:grid-cols-1"
                     )}
                 >
                     {group.projects.map((project, index) => (
-                        <div
+                        <li
                             key={project.slug}
                             className={cn({
                                 "[&:nth-child(odd)]":
@@ -146,9 +152,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                             {index < group.projects.length - 1 && (
                                 <SectionLine />
                             )}
-                        </div>
+                        </li>
                     ))}
-                </div>
+                </ul>
             </section>
             <SectionLine />
             <Divider />
@@ -164,175 +170,189 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </Space>
             <SectionLine />
             <section className={cn("bg-background")}>
-                <div
-                    className={cn(
-                        "grid grid-cols-[1fr_var(--px)_1fr] items-center"
-                    )}
-                >
-                    <NextLink
-                        href={
-                            prev
-                                ? getCategoryPath(prev.id)
-                                : "/portfolio#projects"
-                        }
+                <Pagination>
+                    <PaginationContent
                         className={cn(
-                            "group flex h-full items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
-                            {
-                                hover: "bg-element-hover transition-none"
-                            }
+                            "grid grid-cols-[1fr_var(--px)_1fr] items-center"
                         )}
                     >
-                        <ArrowLeft
-                            className={cn(
-                                "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
-                                {
-                                    "group-hover":
-                                        "scale-125 text-highlighted transition-[transform]"
+                        <PaginationItem>
+                            <PaginationPrevious
+                                href={
+                                    prev
+                                        ? getCategoryPath(prev.id)
+                                        : "/portfolio#projects"
                                 }
-                            )}
-                        />
-                        <div
-                            className={cn("text-right", {
-                                sm: "flex flex-col"
-                            })}
-                        >
-                            {prev ? (
-                                <>
-                                    <Bold
-                                        className={cn(
-                                            "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
-                                            {
-                                                "group-hover":
-                                                    "text-highlighted font-wght-900 transition-[font-variation-settings]"
-                                            }
-                                        )}
-                                    >
-                                        {prev.title}
-                                    </Bold>
-                                    <Text
-                                        className={cn(
-                                            "text-sm will-change-[color] wrap-anywhere transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-foreground transition-none"
-                                            }
-                                        )}
-                                    >
-                                        {prev.note}
-                                    </Text>
-                                </>
-                            ) : (
-                                <>
-                                    <Text
-                                        className={cn(
-                                            "inline will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-foreground transition-none",
-                                                sm: "text-sm"
-                                            }
-                                        )}
-                                    >
-                                        Back to
-                                    </Text>{" "}
-                                    <Bold
-                                        className={cn(
-                                            "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
-                                            {
-                                                "group-hover":
-                                                    "text-highlighted font-wght-900 transition-[font-variation-settings]"
-                                            }
-                                        )}
-                                    >
-                                        Projects
-                                    </Bold>
-                                </>
-                            )}
-                        </div>
-                    </NextLink>
-                    <ElementLine />
-                    <NextLink
-                        href={
-                            next
-                                ? getCategoryPath(next.id)
-                                : "/portfolio#contact"
-                        }
-                        className={cn(
-                            "group flex h-full items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
-                            {
-                                hover: "bg-element-hover transition-none"
-                            }
-                        )}
-                    >
-                        <div
-                            className={cn({
-                                sm: "flex flex-col"
-                            })}
-                        >
-                            {next ? (
-                                <>
-                                    <Bold
-                                        className={cn(
-                                            "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
-                                            {
-                                                "group-hover":
-                                                    "text-highlighted font-wght-900 transition-[font-variation-settings]"
-                                            }
-                                        )}
-                                    >
-                                        {next.title}
-                                    </Bold>
-                                    <Text
-                                        className={cn(
-                                            "text-sm will-change-[color] wrap-anywhere transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-foreground transition-none"
-                                            }
-                                        )}
-                                    >
-                                        {next.note}
-                                    </Text>
-                                </>
-                            ) : (
-                                <>
-                                    <Text
-                                        className={cn(
-                                            "inline will-change-[color] transition-[color] duration-100",
-                                            {
-                                                "group-hover":
-                                                    "text-foreground transition-none",
-                                                sm: "text-sm"
-                                            }
-                                        )}
-                                    >
-                                        End of portfolio.
-                                    </Text>{" "}
-                                    <Bold
-                                        className={cn(
-                                            "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
-                                            {
-                                                "group-hover":
-                                                    "text-highlighted font-wght-900 transition-[font-variation-settings]"
-                                            }
-                                        )}
-                                    >
-                                        Contact me
-                                    </Bold>
-                                </>
-                            )}
-                        </div>
-                        <ArrowRight
-                            className={cn(
-                                "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
-                                {
-                                    "group-hover":
-                                        "scale-125 text-highlighted transition-[transform]"
+                                {...(!prev && {
+                                    label: "Go back to Projects page"
+                                })}
+                                className={cn(
+                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
+                                    {
+                                        hover: "bg-element-hover transition-none"
+                                    }
+                                )}
+                            >
+                                <ArrowLeft
+                                    className={cn(
+                                        "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
+                                        {
+                                            "group-hover":
+                                                "scale-125 text-highlighted transition-[transform]"
+                                        }
+                                    )}
+                                />
+                                <div
+                                    className={cn("text-right", {
+                                        sm: "flex flex-col"
+                                    })}
+                                >
+                                    {prev ? (
+                                        <>
+                                            <Bold
+                                                className={cn(
+                                                    "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
+                                                    {
+                                                        "group-hover":
+                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                    }
+                                                )}
+                                            >
+                                                {prev.title}
+                                            </Bold>
+                                            <Text
+                                                className={cn(
+                                                    "text-sm will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                                    {
+                                                        "group-hover":
+                                                            "text-foreground transition-none"
+                                                    }
+                                                )}
+                                            >
+                                                {prev.note}
+                                            </Text>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Text
+                                                className={cn(
+                                                    "inline will-change-[color] transition-[color] duration-100",
+                                                    {
+                                                        "group-hover":
+                                                            "text-foreground transition-none",
+                                                        sm: "text-sm"
+                                                    }
+                                                )}
+                                            >
+                                                Back to
+                                            </Text>{" "}
+                                            <Bold
+                                                className={cn(
+                                                    "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
+                                                    {
+                                                        "group-hover":
+                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                    }
+                                                )}
+                                            >
+                                                Projects
+                                            </Bold>
+                                        </>
+                                    )}
+                                </div>
+                            </PaginationPrevious>
+                        </PaginationItem>
+                        <li className="h-full">
+                            <ElementLine />
+                        </li>
+                        <PaginationItem>
+                            <PaginationNext
+                                href={
+                                    next
+                                        ? getCategoryPath(next.id)
+                                        : "/portfolio#contact"
                                 }
-                            )}
-                        />
-                    </NextLink>
-                </div>
+                                {...(!next && {
+                                    label: "No more categories, contact me"
+                                })}
+                                className={cn(
+                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
+                                    {
+                                        hover: "bg-element-hover transition-none"
+                                    }
+                                )}
+                            >
+                                <div
+                                    className={cn({
+                                        sm: "flex flex-col"
+                                    })}
+                                >
+                                    {next ? (
+                                        <>
+                                            <Bold
+                                                className={cn(
+                                                    "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
+                                                    {
+                                                        "group-hover":
+                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                    }
+                                                )}
+                                            >
+                                                {next.title}
+                                            </Bold>
+                                            <Text
+                                                className={cn(
+                                                    "text-sm will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                                    {
+                                                        "group-hover":
+                                                            "text-foreground transition-none"
+                                                    }
+                                                )}
+                                            >
+                                                {next.note}
+                                            </Text>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Text
+                                                className={cn(
+                                                    "inline will-change-[color] transition-[color] duration-100",
+                                                    {
+                                                        "group-hover":
+                                                            "text-foreground transition-none",
+                                                        sm: "text-sm"
+                                                    }
+                                                )}
+                                            >
+                                                No more categories.
+                                            </Text>{" "}
+                                            <Bold
+                                                className={cn(
+                                                    "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
+                                                    {
+                                                        "group-hover":
+                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                    }
+                                                )}
+                                            >
+                                                Contact me
+                                            </Bold>
+                                        </>
+                                    )}
+                                </div>
+                                <ArrowRight
+                                    className={cn(
+                                        "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
+                                        {
+                                            "group-hover":
+                                                "scale-125 text-highlighted transition-[transform]"
+                                        }
+                                    )}
+                                />
+                            </PaginationNext>
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
             </section>
             <SectionLine />
             <Divider />

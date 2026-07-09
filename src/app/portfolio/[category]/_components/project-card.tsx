@@ -2,6 +2,7 @@ import { ViewTransition } from "react"
 import NextLink from "next/link"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
+import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Bold, Text } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
@@ -12,7 +13,7 @@ import { type Project } from "~/.velite"
 function ProjectCard({
     href,
     project,
-    navigation = "forward",
+    navigation,
     projectNavigation = false,
     projectName,
     category
@@ -39,8 +40,14 @@ function ProjectCard({
           })()
         : `/assets/media/${projectPath}/1/1_preview.webp`
 
+    const Comp = navigation
+        ? navigation === "forward"
+            ? PaginationNext
+            : PaginationPrevious
+        : NextLink
+
     return (
-        <NextLink
+        <Comp
             href={href}
             className={cn(
                 "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
@@ -113,7 +120,7 @@ function ProjectCard({
                     )}
                 />
             )}
-        </NextLink>
+        </Comp>
     )
 }
 

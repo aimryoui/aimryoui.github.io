@@ -73,13 +73,13 @@ function Projects() {
                                 />
                             </NextLink>
                             <SectionLine />
-                            <div
+                            <ul
                                 className={cn(
                                     "grid grid-cols-2 bg-background md:grid-cols-1"
                                 )}
                             >
                                 {group.projects.map((project, index) => (
-                                    <div
+                                    <li
                                         key={project.slug}
                                         className={cn({
                                             odd: "border-r border-dashed border-stroke",
@@ -93,9 +93,9 @@ function Projects() {
                                         {index < group.projects.length - 1 && (
                                             <SectionLine />
                                         )}
-                                    </div>
+                                    </li>
                                 ))}
-                            </div>
+                            </ul>
                         </section>
                         {groupIndex < projectGroups.length - 1 ? (
                             <>

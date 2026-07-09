@@ -1,11 +1,10 @@
 "use client"
 
 import { useState, ViewTransition } from "react"
-import Link from "next/link"
+import NextLink from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
 import { PanelTopClose, PanelTopOpen } from "lucide-react"
-import { domAnimation, LazyMotion, MotionConfig } from "motion/react"
 
 import { Ellipsis } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
@@ -53,12 +52,7 @@ function Sidebar({ className }: { className?: string }) {
                     className
                 )}
             >
-                <LazyMotion features={domAnimation} strict>
-                    {/* https://motion.dev/docs/react-accessibility */}
-                    <MotionConfig reducedMotion="user">
-                        <TableOfContents mode={mode} items={tocItems} />
-                    </MotionConfig>
-                </LazyMotion>
+                <TableOfContents mode={mode} items={tocItems} />
                 <Menu />
             </aside>
         </ViewTransition>
@@ -123,7 +117,7 @@ function Menu({ className }: { className?: string }) {
                     )}
                 >
                     <li className="me-auto">
-                        <Link
+                        <NextLink
                             href="/"
                             className={cn("group flex items-center gap-x-2", {
                                 lg: "gap-x-4"
@@ -176,7 +170,7 @@ function Menu({ className }: { className?: string }) {
                                     {`${projects.length} PROJECTS`}
                                 </p>
                             </div>
-                        </Link>
+                        </NextLink>
                     </li>
                     <li>
                         <ModeToggle

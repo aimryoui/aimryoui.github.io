@@ -5,6 +5,8 @@ import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
 import Script from "next/script"
 
+import { domAnimation, LazyMotion, MotionConfig } from "motion/react"
+
 import { MarginLine } from "@/components/layout/line"
 import { PngAntiBleed, PngBorder } from "@/components/ui/svg-filter"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -183,7 +185,12 @@ export default function RootLayout({
                             {/* <BackgroundPattern /> */}
                             <MarginLine />
                             <MarginLine className="order-last" />
-                            {children}
+                            <LazyMotion features={domAnimation} strict>
+                                {/* https://motion.dev/docs/react-accessibility */}
+                                <MotionConfig reducedMotion="user">
+                                    {children}
+                                </MotionConfig>
+                            </LazyMotion>
                             <PngAntiBleed />
                             <PngBorder />
                         </TooltipProvider>

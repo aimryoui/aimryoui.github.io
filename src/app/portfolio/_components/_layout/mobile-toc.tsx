@@ -3,12 +3,7 @@
 import { useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
 
-import {
-    AnimatePresence,
-    domAnimation,
-    LazyMotion,
-    MotionConfig
-} from "motion/react"
+import { AnimatePresence } from "motion/react"
 import * as m from "motion/react-m"
 
 import { cn } from "@/lib/utils"
@@ -43,50 +38,46 @@ function MobileTocPanel() {
     }
 
     return (
-        <LazyMotion features={domAnimation} strict>
-            <MotionConfig reducedMotion="user">
-                <AnimatePresence>
-                    {isOpen && (
-                        <>
-                            {/* Backdrop */}
-                            <m.div
-                                key="backdrop"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="fixed inset-0 -z-1 bg-black/80"
-                                onClick={close}
-                            />
-                            {/* TOC */}
-                            <m.aside
-                                key="toc-panel"
-                                initial={{ y: "150%", filter: "none" }}
-                                animate={{
-                                    y: 0,
-                                    filter: [
-                                        "drop-shadow(0px 0px 25px rgba(0,0,0,0.16)) drop-shadow(0px 0px 2px rgba(0,0,0,0.10))"
-                                    ]
-                                }}
-                                exit={{ y: "150%", filter: "none" }}
-                                transition={{
-                                    type: "spring",
-                                    bounce: 0,
-                                    duration: 0.7
-                                }}
-                                className={cn(
-                                    "flex h-[70dvh] flex-col overflow-hidden rounded-t-3xl !text-base",
-                                    "border border-transparent bg-[linear-gradient(var(--background),var(--background)),linear-gradient(to_bottom,var(--stroke)_0%,var(--background)_100%)] bg-origin-border bg-clip-[padding-box,border-box]"
-                                )}
-                                onClick={handleNavClick}
-                            >
-                                <TableOfContents mode={mode} items={tocItems} />
-                            </m.aside>
-                        </>
-                    )}
-                </AnimatePresence>
-            </MotionConfig>
-        </LazyMotion>
+        <AnimatePresence>
+            {isOpen && (
+                <>
+                    {/* Backdrop */}
+                    <m.div
+                        key="backdrop"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 -z-1 bg-black/80"
+                        onClick={close}
+                    />
+                    {/* TOC */}
+                    <m.aside
+                        key="toc-panel"
+                        initial={{ y: "150%", filter: "none" }}
+                        animate={{
+                            y: 0,
+                            filter: [
+                                "drop-shadow(0px 0px 25px rgba(0,0,0,0.16)) drop-shadow(0px 0px 2px rgba(0,0,0,0.10))"
+                            ]
+                        }}
+                        exit={{ y: "150%", filter: "none" }}
+                        transition={{
+                            type: "spring",
+                            bounce: 0,
+                            duration: 0.7
+                        }}
+                        className={cn(
+                            "flex h-[70dvh] flex-col overflow-hidden rounded-t-3xl !text-base",
+                            "border border-transparent bg-[linear-gradient(var(--background),var(--background)),linear-gradient(to_bottom,var(--stroke)_0%,var(--background)_100%)] bg-origin-border bg-clip-[padding-box,border-box]"
+                        )}
+                        onClick={handleNavClick}
+                    >
+                        <TableOfContents mode={mode} items={tocItems} />
+                    </m.aside>
+                </>
+            )}
+        </AnimatePresence>
     )
 }
 

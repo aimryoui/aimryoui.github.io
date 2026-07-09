@@ -1,12 +1,21 @@
-"use client"
-
-import { Slot } from "@radix-ui/react-slot"
+import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
+import * as m from "motion/react-m"
 
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-    "aria-invalid:ring-destructive/20 aria-invalid:border-destructive dark:aria-invalid:ring-destructive/40 inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium outline-none focus-visible:border-ring focus-visible:ring focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-default disabled:opacity-40 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+    cn(
+        "inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm will-change-transform outline-none",
+        {
+            "aria-invalid":
+                "border-destructive ring-destructive/20 dark:ring-destructive/40",
+            "focus-visible": "border-ring ring ring-ring/50",
+            disabled: "pointer-events-none cursor-default opacity-40",
+            "[&_svg:not([class*='size-'])]": "size-4",
+            "[&_svg]": "pointer-events-none shrink-0"
+        }
+    ),
     {
         variants: {
             variant: {
@@ -15,7 +24,7 @@ const buttonVariants = cva(
                 secondary:
                     "bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
                 outline:
-                    "border border-stroke bg-background hover:bg-element-hover hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+                    "border border-stroke bg-background hover:bg-element-hover hover:text-foreground active:bg-muted aria-expanded:bg-muted aria-expanded:text-foreground",
                 ghost: "hover:bg-accent hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
                 destructive:
                     "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40",
@@ -38,23 +47,27 @@ const buttonVariants = cva(
     }
 )
 
+const MotionButton = m.create(ButtonPrimitive)
+
+interface ButtonProps
+    extends
+        React.ComponentProps<typeof MotionButton>,
+        VariantProps<typeof buttonVariants> {}
+
 function Button({
     className,
     variant = "default",
     size = "default",
-    asChild = false,
     ...props
-}: React.ComponentProps<"button"> &
-    VariantProps<typeof buttonVariants> & {
-        asChild?: boolean
-    }) {
-    const Comp = asChild ? Slot : "button"
-
+}: ButtonProps) {
     return (
-        <Comp
+        <MotionButton
             data-slot="button"
-            data-variant={variant}
-            data-size={size}
+            whileHover={{
+                scale: 1.2,
+                transition: { duration: 0.25 }
+            }}
+            whileTap={{ scale: 0.9 }}
             className={cn(buttonVariants({ variant, size, className }))}
             {...props}
         />
