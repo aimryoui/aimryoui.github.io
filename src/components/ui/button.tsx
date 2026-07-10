@@ -1,6 +1,5 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
-import * as m from "motion/react-m"
 
 import { cn } from "@/lib/utils"
 
@@ -47,27 +46,22 @@ const buttonVariants = cva(
     }
 )
 
-const MotionButton = m.create(ButtonPrimitive)
+// const MotionButton = m.create(ButtonPrimitive)
 
-interface ButtonProps
-    extends
-        React.ComponentProps<typeof MotionButton>,
-        VariantProps<typeof buttonVariants> {}
+// interface ButtonProps
+//     extends
+//         React.ComponentProps<typeof MotionButton>,
+//         VariantProps<typeof buttonVariants> {}
 
 function Button({
     className,
     variant = "default",
     size = "default",
     ...props
-}: ButtonProps) {
+}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
     return (
-        <MotionButton
+        <ButtonPrimitive
             data-slot="button"
-            whileHover={{
-                scale: 1.2,
-                transition: { duration: 0.25 }
-            }}
-            whileTap={{ scale: 0.9 }}
             className={cn(buttonVariants({ variant, size, className }))}
             {...props}
         />
