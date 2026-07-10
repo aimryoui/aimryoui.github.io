@@ -60,5 +60,9 @@
         "typescript"
     ],
     "cssrem.vw": true,
-    "cssrem.vwDesign": 1707.33
+    "cssrem.vwDesign": 1707.33,
+    // TypeScript
+    "typescript.experimental.useTsgo": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }
