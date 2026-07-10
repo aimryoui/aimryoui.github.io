@@ -56,7 +56,7 @@ function ProjectCard({
                     hover: "bg-element-hover transition-none"
                 },
                 projectNavigation && {
-                    sm: "flex-wrap gap-2"
+                    sm: "flex-wrap gap-x-2"
                 }
             )}
         >

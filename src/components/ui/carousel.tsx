@@ -27,6 +27,7 @@ import {
     type PngProps,
     type RoundedImageProps
 } from "@/components/ui/image"
+import { Lightbox } from "@/components/ui/lightbox"
 import { Slider } from "@/components/ui/slider"
 import { Spinner } from "@/components/ui/spinner"
 import { TooltipTrigger } from "@/components/ui/tooltip"
@@ -390,7 +391,11 @@ function Carousel({
     )
 }
 
-function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselContent({
+    className,
+    children,
+    ...props
+}: React.ComponentProps<"div">) {
     const { emblaRef, orientation } = useCarousel()
 
     return (
@@ -406,7 +411,9 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
                     className
                 )}
                 {...props}
-            />
+            >
+                <Lightbox>{children}</Lightbox>
+            </div>
         </div>
     )
 }

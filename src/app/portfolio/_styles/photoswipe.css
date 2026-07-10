@@ -23,16 +23,8 @@
 */
 
 .pswp {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: var(--pswp-root-z-index);
-    display: none;
-    touch-action: none;
-    outline: 0;
-    opacity: 0.003;
+    @apply fixed left-0 top-0 z-[var(--pswp-root-z-index)] hidden size-full touch-none opacity-[0.003] outline-0;
+
     contain: layout style size;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -108,10 +100,7 @@
 .pswp__img.pswp__img--placeholder,
 .pswp__button,
 .pswp__counter {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    @apply select-none;
 }
 
 .pswp__item {
@@ -164,8 +153,7 @@ and show (for example fade in) when PhotoSwipe is opened
 
 /* class pswp--ui-visible is added when opening or closing transition starts */
 .pswp--ui-visible .pswp__hide-on-close {
-    opacity: 1;
-    pointer-events: auto;
+    @apply pointer-events-auto opacity-100;
 }
 
 /* <button> styles, including css reset */

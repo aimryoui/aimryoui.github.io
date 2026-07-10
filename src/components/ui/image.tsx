@@ -5,7 +5,7 @@ import NextImage from "next/image"
 
 import { mergeRefs } from "react-merge-refs"
 
-import { Lightbox, LightboxItem } from "@/components/ui/lightbox"
+import { LightboxItem } from "@/components/ui/lightbox"
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
 import imageManifestRaw from "@/lib/image-manifest.json"
 import { cn } from "@/lib/utils"
@@ -33,6 +33,8 @@ type PngProps = { trimEdges?: boolean } & XOR<
     { pngAntiBleed?: boolean },
     { pngBorder?: boolean }
 >
+
+type ImageCoreProps = ImageProps & RoundedImageProps & PngProps
 
 const imageManifest = imageManifestRaw as ImageManifest
 
@@ -79,9 +81,7 @@ function ImageCore({
     inLightbox = false,
     ref,
     ...props
-}: ImageProps &
-    RoundedImageProps &
-    PngProps & { parsedData: ParsedImageData }) {
+}: ImageCoreProps & { parsedData: ParsedImageData }) {
     const containerRef = useRef<HTMLDivElement>(null)
 
     const [isNearViewport, setIsNearViewport] = useState(true)
@@ -156,7 +156,17 @@ function ImageCore({
                 lightbox && !inLightbox && "cursor-zoom-in",
                 !noBorder &&
                     !pngBorder && {
-                        after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
+                        after: [
+                            "pointer-events-none absolute inset-0 z-2 rounded-inherit border",
+                            inLightbox
+                                ? "border-white/15"
+                                : [
+                                      "border-default/15 will-change-[border-color] transition-[border-color] duration-100",
+                                      {
+                                          hover: "border-default/30 mix-blend-difference transition-none"
+                                      }
+                                  ]
+                        ]
                     },
                 className
             )}
@@ -169,6 +179,11 @@ function ImageCore({
                 ...(percentageRounded &&
                     !rounded && {
                         borderRadius: `calc(${percentageRounded}% * var(--nhn-offset-factor)) / calc(${percentageRounded}% * var(--nhn-aspect-ratio) * var(--nhn-offset-factor))`
+                    }),
+                ...(inLightbox &&
+                    rounded && {
+                        borderRadius:
+                            "calc(var(--radius-media) / var(--nhn-wrap-scale))"
                     }),
                 ...(imageRow &&
                     !inLightbox && {
@@ -252,7 +267,7 @@ function ImageCore({
                                     transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
                                 }}
                                 decoding="async"
-                                loading="lazy"
+                                loading={inLightbox ? "eager" : "lazy"}
                                 draggable={false}
                             />
                         )
@@ -270,38 +285,38 @@ function ImageCore({
     )
 }
 
-function Image({
-    lightbox = true,
-    ref,
-    ...props
-}: ImageProps & RoundedImageProps & PngProps) {
+function Image({ className, lightbox = true, ref, ...props }: ImageCoreProps) {
     const parsedData = getParsedImageData(props.src)
 
     return lightbox ? (
-        <Lightbox {...props}>
-            <LightboxItem
-                thumbnail={`${parsedData.basePath}/${parsedData.fileName}_preview.webp`}
-                width={parsedData.exactW}
-                height={parsedData.exactH}
-                placeholderAspectRatio={parsedData.aspectRatio}
-                content={
-                    <ImageCore
-                        parsedData={parsedData}
-                        {...props}
-                        inLightbox={true}
-                    />
-                }
-            >
-                {({ ref: lightboxRef, open }) => (
-                    <ImageCore
-                        parsedData={parsedData}
-                        ref={mergeRefs([ref, lightboxRef])}
-                        onClick={open}
-                        {...props}
-                    />
-                )}
-            </LightboxItem>
-        </Lightbox>
+        <LightboxItem
+            thumbnail={`${parsedData.basePath}/${parsedData.fileName}_preview.webp`}
+            width={parsedData.exactW}
+            height={parsedData.exactH}
+            placeholderAspectRatio={parsedData.aspectRatio}
+            rounded={props.rounded}
+            percentageRounded={props.percentageRounded}
+            noBorder={props.noBorder}
+            pngBorder={props.pngBorder}
+            pngAntiBleed={props.pngAntiBleed}
+            content={
+                <ImageCore
+                    parsedData={parsedData}
+                    {...props}
+                    inLightbox={true}
+                />
+            }
+        >
+            {({ ref: lightboxRef, open }) => (
+                <ImageCore
+                    parsedData={parsedData}
+                    ref={mergeRefs([ref, lightboxRef])}
+                    onClick={open}
+                    className={cn(className)}
+                    {...props}
+                />
+            )}
+        </LightboxItem>
     ) : (
         <ImageCore parsedData={parsedData} {...props} lightbox={false} />
     )

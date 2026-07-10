@@ -1,4 +1,7 @@
+"use client"
+
 import { SectionLine } from "@/components/layout/line"
+import { Lightbox } from "@/components/ui/lightbox"
 import { Highlight } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { cn } from "@/lib/utils"
@@ -116,7 +119,7 @@ function MediaFrame({
                             className
                         )}
                     >
-                        {children}
+                        <Lightbox>{children}</Lightbox>
                     </div>
                 </div>
             </figure>

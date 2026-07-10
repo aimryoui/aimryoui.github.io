@@ -7,50 +7,122 @@ import {
     type ItemProps
 } from "react-photoswipe-gallery"
 
-import {
-    type ImageProps,
-    type PngProps,
-    type RoundedImageProps
-} from "@/components/ui/image"
-
-type ImageCoreProps = ImageProps & RoundedImageProps & PngProps
+interface CustomItemData {
+    placeholderAspectRatio: string
+    rounded?: boolean
+    percentageRounded?: number
+    noBorder?: boolean
+    pngBorder?: boolean
+    pngAntiBleed?: boolean
+}
 
 const SCALE_3D_REGEX = /scale3d\(([^,]+)/u
 const MATRIX_REGEX = /^matrix(?:3d)?\(([^,]+),\s*([^,]+)/u
 
-function Lightbox({ ...props }: GalleryProps & ImageCoreProps) {
+function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
     return (
         <Gallery
             data-slot="lightbox"
             options={{
                 showHideAnimationType: "zoom",
                 wheelToZoom: true,
-                secondaryZoomLevel: 2
+                secondaryZoomLevel: 2,
+                loop: false,
+                ...options
             }}
             onBeforeOpen={(lightbox) => {
                 // Force show/hide animation
                 lightbox.addFilter("useContentPlaceholder", () => true)
                 // Force zoomable
                 lightbox.addFilter("isContentZoomable", () => true)
+                // Force using image as placholder for all images in gallery
+                lightbox.addFilter(
+                    "placeholderSrc",
+                    (_, content) => content.data.msrc ?? false
+                )
 
-                let rAF_ID: number
+                // Force append heavy and isOpen state to keep Image during open animation
+                const forceAppendHeavy = (slide: typeof lightbox.currSlide) => {
+                    if (!slide || slide.heavyAppended) return
+                    const wasOpen = lightbox.opener.isOpen
 
-                const getElements = () => {
-                    const placeholder =
-                        lightbox.currSlide?.getPlaceholderElement()
-                    const zoomWrap = lightbox.currSlide?.container
+                    lightbox.opener.isOpen = true
+                    slide.appendHeavy()
+                    lightbox.opener.isOpen = wasOpen
+                }
+
+                // Force dispatch close event to keep Image during close animation
+                const originalDispatch = lightbox.dispatch.bind(lightbox)
+                lightbox.dispatch = (name, details) =>
+                    name === "close"
+                        ? ({
+                              type: "close",
+                              defaultPrevented: false,
+                              preventDefault: () => {}
+                          } as never)
+                        : originalDispatch(name, details)
+                // Restore original close event after destroy
+                lightbox.on("destroy", () => {
+                    originalDispatch("close")
+                    lightbox.dispatch = originalDispatch
+                })
+
+                const setPlaceholder = (slide: typeof lightbox.currSlide) => {
+                    if (!slide) return
+
+                    const placeholder = slide.getPlaceholderElement()
+                    const data = slide.data as CustomItemData
+
+                    if (!placeholder || placeholder.dataset.styled) return
+                    placeholder.dataset.styled = "true"
+
+                    placeholder.style.aspectRatio = data.placeholderAspectRatio
+
+                    if (data.rounded || data.percentageRounded) {
+                        placeholder.classList.add("corner-superellipse")
+                    }
+                    if (data.percentageRounded) {
+                        placeholder.style.borderRadius = `calc(${data.percentageRounded.toString()}% * var(--nhn-offset-factor)) / calc(${data.percentageRounded.toString()}% * ${data.placeholderAspectRatio} * var(--nhn-offset-factor))`
+                    }
+                    if (data.pngAntiBleed || data.pngBorder) {
+                        placeholder.classList.add(
+                            "[filter:url(#png-anti-bleed)]"
+                        )
+                    }
+
+                    if (data.rounded) {
+                        placeholder.style.borderRadius =
+                            "calc(var(--radius-media) / (var(--nhn-wrap-scale, 1) * var(--nhn-ph-scale, 1)))"
+                    }
+
+                    if (!data.noBorder && !data.pngBorder) {
+                        placeholder.classList.add(
+                            "outline-white/15",
+                            "outline-solid"
+                        )
+                        placeholder.style.outlineWidth =
+                            "calc(var(--px) / (var(--nhn-wrap-scale, 1) * var(--nhn-ph-scale, 1)))"
+                        placeholder.style.outlineOffset =
+                            "calc((var(--px) / (var(--nhn-wrap-scale, 1) * var(--nhn-ph-scale, 1))) * -1)"
+                    }
+                }
+
+                const getElements = (
+                    targetSlide?: typeof lightbox.currSlide
+                ) => {
+                    const slide = targetSlide ?? lightbox.currSlide
+                    const placeholder = slide?.getPlaceholderElement()
+                    const zoomWrap = slide?.container
                     return { placeholder, zoomWrap }
                 }
 
-                const getPhScale = (placeholder: HTMLElement) => {
-                    const match = SCALE_3D_REGEX.exec(
-                        placeholder.style.transform
-                    )
+                const getInlineScale = (el: HTMLElement) => {
+                    const match = SCALE_3D_REGEX.exec(el.style.transform)
                     return match ? parseFloat(match[1]) : 1
                 }
 
-                const getWrapScale = (zoomWrap: HTMLElement) => {
-                    const matrix = window.getComputedStyle(zoomWrap).transform
+                const getTransitionScale = (el: HTMLElement) => {
+                    const matrix = window.getComputedStyle(el).transform
 
                     if (matrix !== "none") {
                         const matrixMatch = MATRIX_REGEX.exec(matrix)
@@ -65,17 +137,18 @@ function Lightbox({ ...props }: GalleryProps & ImageCoreProps) {
                     return 1
                 }
 
+                let rAF_ID: number
                 const startAFSync = () => {
                     const { placeholder, zoomWrap } = getElements()
                     if (!placeholder || !zoomWrap) return
 
                     zoomWrap.style.setProperty(
                         "--nhn-wrap-scale",
-                        getWrapScale(zoomWrap).toString()
+                        getTransitionScale(zoomWrap).toString()
                     )
                     zoomWrap.style.setProperty(
                         "--nhn-ph-scale",
-                        getPhScale(placeholder).toString()
+                        getInlineScale(placeholder).toString()
                     )
 
                     rAF_ID = requestAnimationFrame(startAFSync)
@@ -84,43 +157,28 @@ function Lightbox({ ...props }: GalleryProps & ImageCoreProps) {
                     cancelAnimationFrame(rAF_ID)
                 }
 
-                lightbox.on("openingAnimationStart", () => {
-                    const { placeholder } = getElements()
+                lightbox.on("afterSetContent", (e) => {
+                    const slide = e.slide
+                    const { placeholder, zoomWrap } = getElements(slide)
 
-                    const aspectRatio = lightbox.currSlide?.data
-                        .placeholderAspectRatio as string
+                    if (placeholder && zoomWrap) {
+                        zoomWrap.style.setProperty(
+                            "--nhn-wrap-scale",
+                            getInlineScale(zoomWrap).toString()
+                        )
+                        zoomWrap.style.setProperty(
+                            "--nhn-ph-scale",
+                            getInlineScale(placeholder).toString()
+                        )
 
-                    if (placeholder) {
-                        placeholder.style.aspectRatio = aspectRatio
-
-                        if (props.rounded || props.percentageRounded) {
-                            placeholder.classList.add("corner-superellipse")
-                        }
-                        if (props.percentageRounded) {
-                            placeholder.style.borderRadius = `calc(${props.percentageRounded.toString()}% * var(--nhn-offset-factor)) / calc(${props.percentageRounded.toString()}% * ${aspectRatio} * var(--nhn-offset-factor))`
-                        }
-                        if (props.pngAntiBleed || props.pngBorder) {
-                            placeholder.classList.add(
-                                "[filter:url(#png-anti-bleed)]"
-                            )
-                        }
-
-                        if (props.rounded) {
-                            placeholder.style.borderRadius =
-                                "calc(var(--radius-media) / (var(--nhn-wrap-scale) * var(--nhn-ph-scale)))"
-                        }
-                        if (!props.noBorder) {
-                            placeholder.classList.add(
-                                "outline-default/15",
-                                "outline-solid"
-                            )
-                            placeholder.style.outlineWidth =
-                                "calc(var(--px) / (var(--nhn-wrap-scale) * var(--nhn-ph-scale)))"
-                            placeholder.style.outlineOffset =
-                                "calc((var(--px) / (var(--nhn-wrap-scale) * var(--nhn-ph-scale))) * -1)"
-                        }
+                        setPlaceholder(slide)
                     }
 
+                    forceAppendHeavy(slide)
+                })
+
+                lightbox.on("openingAnimationStart", () => {
+                    setPlaceholder(lightbox.currSlide)
                     startAFSync()
                 })
 
@@ -136,24 +194,24 @@ function Lightbox({ ...props }: GalleryProps & ImageCoreProps) {
                 lightbox.on("closingAnimationStart", startAFSync)
                 lightbox.on("closingAnimationEnd", stopAFSync)
 
-                lightbox.on("zoomPanUpdate", () => {
-                    const { placeholder } = getElements()
+                lightbox.on("zoomPanUpdate", (e) => {
+                    const { placeholder } = getElements(e.slide)
                     if (!placeholder) return
 
                     placeholder.style.setProperty(
                         "--nhn-ph-scale",
-                        getPhScale(placeholder).toString()
+                        getInlineScale(placeholder).toString()
                     )
                 })
+
+                onBeforeOpen?.(lightbox)
             }}
             {...props}
         />
     )
 }
 
-function LightboxItem({
-    ...props
-}: ItemProps<HTMLElement> & { placeholderAspectRatio?: string }) {
+function LightboxItem({ ...props }: ItemProps<HTMLElement> & CustomItemData) {
     return <Item data-slot="lightbox-item" {...props} />
 }
 
