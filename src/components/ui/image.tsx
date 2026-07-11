@@ -198,7 +198,7 @@ function ImageCore({
                     className={cn(
                         "absolute size-full select-none object-cover",
                         (pngAntiBleed || pngBorder) &&
-                            "[filter:url(#png-anti-bleed)]",
+                            "transform-gpu will-change-transform backface-hidden [filter:url(#png-anti-bleed)]",
                         trimEdges && "[clip-path:inset(.375rem)]"
                     )}
                     style={{
@@ -225,7 +225,8 @@ function ImageCore({
                         objectFit === "cover" &&
                             "size-auto min-h-full min-w-full",
 
-                        pngBorder && "[filter:url(#png-border)]"
+                        pngBorder &&
+                            "transform-gpu will-change-transform backface-hidden [filter:url(#png-border)]"
                     )}
                     style={{
                         aspectRatio

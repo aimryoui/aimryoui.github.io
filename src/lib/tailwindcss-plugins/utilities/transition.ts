@@ -1,5 +1,4 @@
 import plugin from "tailwindcss/plugin"
-import { type PluginAPI } from "tailwindcss/types/config"
 
 export default plugin(
     ({ addBase, matchUtilities, theme }) => {
@@ -26,10 +25,10 @@ export default plugin(
         matchUtilities(
             {
                 transition: (value: string) => ({
-                    transitionProperty: value,
-                    transitionTimingFunction:
+                    "transition-property": value,
+                    "transition-timing-function":
                         "var(--tw-ease, var(--default-transition-timing-function))",
-                    transitionDuration:
+                    "transition-duration":
                         "var(--tw-duration, var(--default-transition-duration))"
                 })
             },
@@ -43,7 +42,7 @@ export default plugin(
             {
                 ease: (value: string) => ({
                     "--tw-ease": value,
-                    transitionTimingFunction: value
+                    "transition-timing-function": value
                 })
             },
             {
@@ -57,7 +56,7 @@ export default plugin(
             {
                 duration: (value: string) => ({
                     "--tw-duration": value,
-                    transitionDuration: value
+                    "transition-duration": value
                 })
             },
             {
@@ -70,7 +69,7 @@ export default plugin(
         matchUtilities(
             {
                 delay: (value: string) => ({
-                    transitionDelay: value
+                    "transition-delay": value
                 })
             },
             {
@@ -120,8 +119,8 @@ export default plugin(
                 800: ".8s",
                 1000: "1s"
             },
-            transitionDelay: ({ theme }: { theme: PluginAPI["theme"] }) => ({
-                ...theme("transitionDuration")
+            transitionDelay: ({ theme }) => ({
+                ...(theme("transitionDuration") as Record<string, string>)
             })
         }
     }

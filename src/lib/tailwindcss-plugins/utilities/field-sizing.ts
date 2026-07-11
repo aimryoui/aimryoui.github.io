@@ -1,27 +1,19 @@
 import plugin from "tailwindcss/plugin"
 
-export default plugin(
-    ({ matchUtilities, theme }) => {
-        matchUtilities(
-            {
-                field: (value: string) => ({
-                    fieldSizing: value
-                })
-            },
-            {
-                values: theme("fieldSizing"),
-                /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/field-sizing#formal_syntax} */
-                type: ["lookup"]
-            }
-        )
-    },
-    {
-        theme: {
-            /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/field-sizing} */
-            fieldSizing: {
+export default plugin(({ matchUtilities }) => {
+    matchUtilities(
+        {
+            field: (value: string) => ({
+                "field-sizing": value
+            })
+        },
+        {
+            /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/field-sizing#formal_syntax} */
+            values: {
                 content: "content",
                 fixed: "fixed"
-            }
+            },
+            type: ["lookup"]
         }
-    }
-)
+    )
+})

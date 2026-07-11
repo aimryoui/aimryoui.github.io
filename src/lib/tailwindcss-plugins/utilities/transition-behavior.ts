@@ -7,7 +7,7 @@ export default plugin(
         const staticUtilities = Object.entries(behaviorValues).map(
             ([key, value]: [string, string]) => ({
                 [`.transition-${key}`]: {
-                    transitionBehavior: value
+                    "transition-behavior": value
                 }
             })
         )
@@ -17,7 +17,7 @@ export default plugin(
         matchUtilities(
             {
                 "transition-behavior": (value: string) => ({
-                    transitionBehavior: value
+                    "transition-behavior": value
                 })
             },
             {

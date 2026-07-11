@@ -16,14 +16,14 @@ export default plugin(
         matchUtilities(
             {
                 clip: (value: string) => ({
-                    clipPath: value
+                    "clip-path": value
                 })
             },
             { values: theme("clipPath"), type: ["url", "any"] }
         )
         addUtilities({
             ".clip-star": {
-                clipPath: /* css */ `polygon(
+                "clip-path": /* css */ `polygon(
                     50% 0,
                     calc(50% * (1 + sin(0.4turn))) calc(50% * (1 - cos(0.4turn))),
                     calc(50% * (1 - sin(0.2turn))) calc(50% * (1 - cos(0.2turn))),

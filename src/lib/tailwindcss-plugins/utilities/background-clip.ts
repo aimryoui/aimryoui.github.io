@@ -5,10 +5,10 @@ export default plugin(
         matchUtilities(
             {
                 "bg-clip": (value: string) => ({
-                    backgroundClip: value
+                    "background-clip": value
                 })
             },
-            { values: theme("backgroundClip"), type: ["any"] }
+            { values: theme("backgroundClip"), type: ["lookup"] }
         )
     },
     {

@@ -43,9 +43,7 @@ function Outlines() {
                                         "grid grid-cols-3 gap-6 gap-y-3 pb-4 pt-3.25"
                                     )}
                                 >
-                                    <Highlight
-                                        className={cn("ps-6 font-normal")}
-                                    >
+                                    <Highlight className={cn("ps-6")}>
                                         {String(index + 1).padStart(2, "0")}
                                     </Highlight>
                                     <Link
@@ -87,7 +85,7 @@ function Outlines() {
                         <div
                             className={cn(
                                 "grid size-full place-items-center rounded-2xl border border-highlighted bg-background px-14",
-                                "bg-[radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-position-[0_0,.375rem_.375rem] bg-size-[.75rem_.75rem]"
+                                "bg-[radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]"
                             )}
                         >
                             <svg

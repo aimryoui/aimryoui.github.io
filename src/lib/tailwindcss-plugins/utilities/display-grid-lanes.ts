@@ -18,7 +18,7 @@ export default plugin(({ addBase, addUtilities, matchUtilities, theme }) => {
             display: "grid-lanes",
             "--flow-tolerance":
                 "var(--tw-flow-tolerance, var(--default-flow-tolerance))",
-            flowTolerance:
+            "flow-tolerance":
                 "var(--tw-flow-tolerance, var(--default-flow-tolerance))"
         }
     })
@@ -26,7 +26,7 @@ export default plugin(({ addBase, addUtilities, matchUtilities, theme }) => {
         {
             tolerance: (value: string) => ({
                 "--tw-flow-tolerance": value,
-                flowTolerance: value
+                "flow-tolerance": value
             })
         },
         { values: theme("spacing") }

@@ -68,8 +68,6 @@ const twMerge = extendTailwindMerge<
             ease: ["spring"],
             /** @see {@link https://github.com/dcastil/tailwind-merge/blob/v2.6.1/docs/api-reference.md#validators} */
             "bg-clip": [{ "bg-clip": [validators.isArbitraryValue] }],
-            "bg-position": [{ "bg-position": [validators.isArbitraryValue] }],
-            "bg-size": [{ "bg-size": [validators.isArbitraryValue] }],
             duration: [{ duration: [validators.isNumber] }]
         },
         theme: {

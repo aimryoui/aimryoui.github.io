@@ -14,7 +14,7 @@ export default plugin(
     ({ addUtilities, matchUtilities, theme }) => {
         addUtilities({
             ".scrollbar-colored": {
-                scrollbarColor:
+                "scrollbar-color":
                     "var(--tw-scrollbar-thumb-color) var(--tw-scrollbar-track-color)"
             }
         })
@@ -34,11 +34,12 @@ export default plugin(
         matchUtilities(
             {
                 scrollbar: (value: string) => ({
-                    scrollbarWidth: value
+                    "scrollbar-width": value
                 })
             },
             {
-                values: theme("scrollBarWidth")
+                values: theme("scrollBarWidth"),
+                type: ["lookup"]
             }
         )
     },

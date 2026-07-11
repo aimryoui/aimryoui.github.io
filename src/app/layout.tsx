@@ -174,7 +174,7 @@ export default function RootLayout({
                     // Fix tooltip viewport transition overflow bug
                     "overflow-x-hidden",
                     {
-                        before: "absolute inset-0 -z-1 size-full bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]",
+                        before: "absolute inset-0 -z-1 size-full bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]",
                         selection: "bg-highlighted/20 dark:bg-highlighted/30"
                     }
                 )}
@@ -207,7 +207,7 @@ export default function RootLayout({
 //             <div
 //                 className={cn(
 //                     "fixed inset-0 -z-50 size-full",
-//                     "bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-size-[.625rem_.625rem]"
+//                     "bg-[repeating-linear-gradient(315deg,var(--pattern)_0,var(--pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]"
 //                 )}
 //             />
 //         </ViewTransition>

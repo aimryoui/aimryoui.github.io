@@ -5,9 +5,8 @@ import plugin from "tailwindcss/plugin"
 import { transformer } from "twg/transform"
 
 import animate from "./src/lib/tailwindcss-plugins/utilities/animate"
+import backfaceVisibility from "./src/lib/tailwindcss-plugins/utilities/backface-visibility"
 import backgroundClip from "./src/lib/tailwindcss-plugins/utilities/background-clip"
-import backgroundPosition from "./src/lib/tailwindcss-plugins/utilities/background-position"
-import backgroundSize from "./src/lib/tailwindcss-plugins/utilities/background-size"
 import clipPath from "./src/lib/tailwindcss-plugins/utilities/clip-path"
 import contentVisibility from "./src/lib/tailwindcss-plugins/utilities/content-visibility"
 import cornerShape from "./src/lib/tailwindcss-plugins/utilities/corner-shape"
@@ -257,9 +256,8 @@ export default {
         anchorsPlugin,
 
         animate,
+        backfaceVisibility,
         backgroundClip,
-        backgroundPosition,
-        backgroundSize,
         clipPath,
         contentVisibility,
         cornerShape,

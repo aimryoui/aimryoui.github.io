@@ -13,7 +13,7 @@ export default plugin(
             {
                 outline: (value: string) => ({
                     "--tw-outline-style": value,
-                    outlineStyle: value
+                    "outline-style": value
                 })
             },
             {
@@ -25,8 +25,8 @@ export default plugin(
         matchUtilities(
             {
                 outline: (value: string) => ({
-                    outlineStyle: "var(--tw-outline-style)",
-                    outlineWidth: value
+                    "outline-style": "var(--tw-outline-style)",
+                    "outline-width": value
                 })
             },
             {
