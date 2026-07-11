@@ -157,15 +157,7 @@ function ImageCore({
                 !noBorder &&
                     !pngBorder && {
                         after: [
-                            "pointer-events-none absolute inset-0 z-2 rounded-inherit border",
-                            inLightbox
-                                ? "border-white/15"
-                                : [
-                                      "border-default/15 will-change-[border-color] transition-[border-color] duration-100",
-                                      {
-                                          hover: "border-default/30 mix-blend-difference transition-none"
-                                      }
-                                  ]
+                            "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15 will-change-[border-color] transition-[border-color] duration-250"
                         ]
                     },
                 className

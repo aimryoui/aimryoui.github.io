@@ -7,6 +7,8 @@ import {
     type ItemProps
 } from "react-photoswipe-gallery"
 
+import { useMediaQuery } from "@/hooks/use-media-query"
+
 interface CustomItemData {
     placeholderAspectRatio: string
     rounded?: boolean
@@ -19,15 +21,60 @@ interface CustomItemData {
 const SCALE_3D_REGEX = /scale3d\(([^,]+)/u
 const MATRIX_REGEX = /^matrix(?:3d)?\(([^,]+),\s*([^,]+)/u
 
+const FPS = 24
+const FPS_INTERVAL = 1000 / FPS
+
+const getInlineScale = (el: HTMLElement) => {
+    const match = SCALE_3D_REGEX.exec(el.style.transform)
+    return match ? parseFloat(match[1]) : 1
+}
+
+const getTransitionScale = (el: HTMLElement) => {
+    const matrix = window.getComputedStyle(el).transform
+
+    if (matrix !== "none") {
+        const matrixMatch = MATRIX_REGEX.exec(matrix)
+        if (matrixMatch) {
+            const a = parseFloat(matrixMatch[1])
+            const b = parseFloat(matrixMatch[2])
+
+            return Math.sqrt(a * a + b * b)
+        }
+    }
+
+    return 1
+}
+
+const isOriginalInViewport = (el: Element) => {
+    const rect = el.getBoundingClientRect()
+    return (
+        rect.top < window.innerHeight &&
+        rect.bottom > 0 &&
+        rect.left < window.innerWidth &&
+        rect.right > 0
+    )
+}
+
 function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
+    const isMobilePortrait = useMediaQuery(
+        "(max-width: 48rem) and (orientation: portrait)"
+    )
+
     return (
         <Gallery
             data-slot="lightbox"
             options={{
                 showHideAnimationType: "zoom",
                 wheelToZoom: true,
-                secondaryZoomLevel: 2,
+                secondaryZoomLevel: isMobilePortrait ? 0.8 : 2,
                 loop: false,
+                preloaderDelay: 500,
+                bgOpacity: 1,
+                spacing: 0.05,
+                showAnimationDuration: 250,
+                hideAnimationDuration: 250,
+                imageClickAction: "zoom",
+                clickToCloseNonZoomable: false,
                 ...options
             }}
             onBeforeOpen={(lightbox) => {
@@ -41,6 +88,32 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     (_, content) => content.data.msrc ?? false
                 )
 
+                // Lift-off effect (hide original element)
+                let liftedOffEl: HTMLElement | null = null
+                const hideOriginal = (slide?: typeof lightbox.currSlide) => {
+                    if (!slide || !slide.data.element) return
+                    const currentEl = slide.data.element
+
+                    if (liftedOffEl && liftedOffEl !== currentEl) {
+                        liftedOffEl.style.removeProperty("opacity")
+                    }
+
+                    liftedOffEl = currentEl
+                    liftedOffEl.style.opacity = "0"
+                }
+                const showOriginal = () => {
+                    if (liftedOffEl) {
+                        liftedOffEl.style.removeProperty("opacity")
+                        liftedOffEl = null
+                    }
+                }
+                lightbox.on("change", () => {
+                    // Prevent `change` event during initialization
+                    // that will hide the original element too soon
+                    if (lightbox.opener.isOpening) return
+                    hideOriginal(lightbox.currSlide)
+                })
+
                 // Force append heavy and isOpen state to keep Image during open animation
                 const forceAppendHeavy = (slide: typeof lightbox.currSlide) => {
                     if (!slide || slide.heavyAppended) return
@@ -51,19 +124,37 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     lightbox.opener.isOpen = wasOpen
                 }
 
+                let isCloseHijacked = false
                 // Force dispatch close event to keep Image during close animation
                 const originalDispatch = lightbox.dispatch.bind(lightbox)
-                lightbox.dispatch = (name, details) =>
-                    name === "close"
-                        ? ({
-                              type: "close",
-                              defaultPrevented: false,
-                              preventDefault: () => {}
-                          } as never)
-                        : originalDispatch(name, details)
-                // Restore original close event after destroy
+                lightbox.dispatch = (name, details) => {
+                    if (name === "close") {
+                        const { original } = getElements()
+
+                        const isVisible = original
+                            ? isOriginalInViewport(original)
+                            : true
+
+                        if (isVisible) {
+                            isCloseHijacked = true
+                            return {
+                                type: "close",
+                                defaultPrevented: false,
+                                preventDefault: () => {}
+                            } as never
+                        }
+                        isCloseHijacked = false
+                        return originalDispatch(name, details)
+                    }
+                    return originalDispatch(name, details)
+                }
+
                 lightbox.on("destroy", () => {
-                    originalDispatch("close")
+                    showOriginal()
+                    // Restore original close event after destroy
+                    if (isCloseHijacked) {
+                        originalDispatch("close")
+                    }
                     lightbox.dispatch = originalDispatch
                 })
 
@@ -111,45 +202,44 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     targetSlide?: typeof lightbox.currSlide
                 ) => {
                     const slide = targetSlide ?? lightbox.currSlide
-                    const placeholder = slide?.getPlaceholderElement()
-                    const zoomWrap = slide?.container
-                    return { placeholder, zoomWrap }
-                }
 
-                const getInlineScale = (el: HTMLElement) => {
-                    const match = SCALE_3D_REGEX.exec(el.style.transform)
-                    return match ? parseFloat(match[1]) : 1
-                }
-
-                const getTransitionScale = (el: HTMLElement) => {
-                    const matrix = window.getComputedStyle(el).transform
-
-                    if (matrix !== "none") {
-                        const matrixMatch = MATRIX_REGEX.exec(matrix)
-                        if (matrixMatch) {
-                            const a = parseFloat(matrixMatch[1])
-                            const b = parseFloat(matrixMatch[2])
-
-                            return Math.sqrt(a * a + b * b)
+                    return {
+                        get placeholder() {
+                            return slide?.getPlaceholderElement()
+                        },
+                        get zoomWrap() {
+                            return slide?.container
+                        },
+                        get original() {
+                            return slide?.data.element
+                        },
+                        get content() {
+                            return slide?.content.element?.firstElementChild
                         }
                     }
-
-                    return 1
                 }
 
                 let rAF_ID: number
+                let lastTime = 0
                 const startAFSync = () => {
-                    const { placeholder, zoomWrap } = getElements()
-                    if (!placeholder || !zoomWrap) return
+                    const currentTime = performance.now()
+                    const deltaTime = currentTime - lastTime
 
-                    zoomWrap.style.setProperty(
-                        "--nhn-wrap-scale",
-                        getTransitionScale(zoomWrap).toString()
-                    )
-                    zoomWrap.style.setProperty(
-                        "--nhn-ph-scale",
-                        getInlineScale(placeholder).toString()
-                    )
+                    if (deltaTime >= FPS_INTERVAL) {
+                        lastTime = currentTime - (deltaTime % FPS_INTERVAL)
+
+                        const { placeholder, zoomWrap } = getElements()
+                        if (!placeholder || !zoomWrap) return
+
+                        zoomWrap.style.setProperty(
+                            "--nhn-wrap-scale",
+                            getTransitionScale(zoomWrap).toString()
+                        )
+                        zoomWrap.style.setProperty(
+                            "--nhn-ph-scale",
+                            getInlineScale(placeholder).toString()
+                        )
+                    }
 
                     rAF_ID = requestAnimationFrame(startAFSync)
                 }
@@ -178,8 +268,17 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 })
 
                 lightbox.on("openingAnimationStart", () => {
-                    setPlaceholder(lightbox.currSlide)
+                    const currentSlide = lightbox.currSlide
+                    setPlaceholder(currentSlide)
+                    hideOriginal(currentSlide)
+
                     startAFSync()
+
+                    const { content } = getElements()
+                    if (content) {
+                        content.classList.remove("after:border-default/15")
+                        content.classList.add("after:border-white/15")
+                    }
                 })
 
                 lightbox.on("openingAnimationEnd", () => {
@@ -191,7 +290,15 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     zoomWrap.style.setProperty("--nhn-wrap-scale", "1")
                 })
 
-                lightbox.on("closingAnimationStart", startAFSync)
+                lightbox.on("closingAnimationStart", () => {
+                    startAFSync()
+
+                    const { content } = getElements()
+                    if (content) {
+                        content.classList.remove("after:border-white/15")
+                        content.classList.add("after:border-default/15")
+                    }
+                })
                 lightbox.on("closingAnimationEnd", stopAFSync)
 
                 lightbox.on("zoomPanUpdate", (e) => {

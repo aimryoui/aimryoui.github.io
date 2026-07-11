@@ -12,7 +12,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
                 {
                     hover: "bg-element-hover",
                     dark: "bg-input/30",
-                    file: "inline-flex h-7 border-0 bg-transparent text-sm font-medium text-foreground",
+                    file: "inline-flex h-7 border-0 bg-transparent text-sm text-foreground",
                     placeholder: "text-muted-foreground",
                     disabled:
                         "pointer-events-none cursor-not-allowed opacity-50",

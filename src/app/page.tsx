@@ -32,7 +32,7 @@ export default function Home() {
                     asBackgroundImage
                     src="/hehe.jpg"
                     alt="hehe"
-                    className={cn("rounded-2xl")}
+                    rounded
                 />
                 <NextLink
                     href="/portfolio"
