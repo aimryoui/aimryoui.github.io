@@ -81,7 +81,7 @@ function PngBorder() {
                 />
 
                 <feFlood
-                    floodColor="var(--default)"
+                    floodColor="var(--color-svg-filter)"
                     floodOpacity="0.15"
                     result="COLOR"
                 />

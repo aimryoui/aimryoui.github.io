@@ -8,7 +8,7 @@ export default plugin(
                     "background-clip": value
                 })
             },
-            { values: theme("backgroundClip"), type: ["lookup"] }
+            { values: theme("backgroundClip"), type: ["any"] }
         )
     },
     {

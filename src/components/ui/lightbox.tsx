@@ -197,12 +197,12 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                         placeholder.style.borderRadius =
                             "calc(var(--radius-media) / (var(--nhn-wrap-scale, 1) * var(--nhn-ph-scale, 1)))"
                     } else if (data.percentageRounded) {
-                        placeholder.style.borderRadius = `calc(${data.percentageRounded.toString()}% * var(--nhn-offset-factor)) / calc(${data.percentageRounded.toString()}% * ${data.placeholderAspectRatio} * var(--nhn-offset-factor))`
+                        placeholder.style.borderRadius = `calc(${data.percentageRounded.toString()}% * var(--nhn-radius-offset-factor)) / calc(${data.percentageRounded.toString()}% * ${data.placeholderAspectRatio} * var(--nhn-radius-offset-factor))`
                     }
 
                     if (data.pngAntiBleed || data.pngBorder) {
                         placeholder.classList.add(
-                            "[filter:url(#png-anti-bleed)]"
+                            "blink:[filter:url(#png-anti-bleed)]"
                         )
                     }
 
@@ -263,6 +263,11 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                         setPlaceholder(slide)
                     }
 
+                    document.body.style.setProperty(
+                        "--color-svg-filter",
+                        "var(--color-white)"
+                    )
+
                     forceAppendHeavy(slide)
                 })
 
@@ -297,6 +302,8 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                         content.classList.remove("after:border-white/15")
                         content.classList.add("after:border-default/15")
                     }
+
+                    document.body.style.removeProperty("--color-svg-filter")
                 })
                 lightbox.on("closingAnimationEnd", stopAFSync)
 

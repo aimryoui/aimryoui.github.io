@@ -69,7 +69,7 @@ function MobileTocPanel() {
                         }}
                         className={cn(
                             "flex h-[70dvh] flex-col overflow-hidden rounded-t-3xl !text-base",
-                            "border border-transparent bg-[linear-gradient(var(--background),var(--background)),linear-gradient(to_bottom,var(--stroke)_0%,var(--background)_100%)] bg-origin-border bg-clip-[padding-box,border-box]"
+                            "border border-transparent bg-[linear-gradient(var(--background),var(--background)),linear-gradient(to_bottom,var(--color-stroke)_0%,var(--background)_100%)] bg-origin-border bg-clip-[padding-box,border-box]"
                         )}
                         onClick={handleNavClick}
                     >

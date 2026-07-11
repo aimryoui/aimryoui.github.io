@@ -173,7 +173,7 @@ function ImageCore({
                     }),
                 ...(percentageRounded &&
                     !rounded && {
-                        borderRadius: `calc(${percentageRounded}% * var(--nhn-offset-factor)) / calc(${percentageRounded}% * var(--nhn-aspect-ratio) * var(--nhn-offset-factor))`
+                        borderRadius: `calc(${percentageRounded}% * var(--nhn-radius-offset-factor)) / calc(${percentageRounded}% * var(--nhn-aspect-ratio) * var(--nhn-radius-offset-factor))`
                     }),
                 ...(isInLightbox &&
                     rounded && {
@@ -201,8 +201,8 @@ function ImageCore({
                     className={cn(
                         "absolute size-full select-none object-cover",
                         (pngAntiBleed || pngBorder) &&
-                            "[filter:url(#png-anti-bleed)]",
-                        trimEdges && "[clip-path:inset(.375rem)]"
+                            "blink:[filter:url(#png-anti-bleed)]",
+                        trimEdges && "blink:[clip-path:inset(.375rem)]"
                     )}
                     style={{
                         background: `url("${metadata.blurDataURL}") center / cover no-repeat`
@@ -227,7 +227,7 @@ function ImageCore({
                             "size-auto max-h-full max-w-full",
                         objectFit === "cover" &&
                             "size-auto min-h-full min-w-full",
-                        pngBorder && "[filter:url(#png-border)]"
+                        pngBorder && "blink:[filter:url(#png-border)]"
                     )}
                     style={{
                         aspectRatio

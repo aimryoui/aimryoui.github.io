@@ -128,6 +128,16 @@ const sections: Section[] = [
                 position: "Freelancer"
             },
             {
+                startDate: "04.2026",
+                endDate: "07.2026",
+                position: "Freelance Designer",
+                organization: {
+                    text: "Cường Khanh Advertising Co., Ltd",
+                    url: "https://cuongkhanhadv.com.vn",
+                    ariaLabel: "Go to the Cường Khanh Advertising website"
+                }
+            },
+            {
                 startDate: "05.2026",
                 endDate: "06.2026",
                 position: "Freelance UI/UX Designer",
@@ -135,16 +145,6 @@ const sections: Section[] = [
                     text: "FINA Care Studio",
                     url: "https://fina-studio.com",
                     ariaLabel: "Go to the FINA Care Studio website"
-                }
-            },
-            {
-                startDate: "04.2026",
-                endDate: "06.2026",
-                position: "Freelance Designer",
-                organization: {
-                    text: "Cường Khanh Advertising Co., Ltd",
-                    url: "https://cuongkhanhadv.com.vn",
-                    ariaLabel: "Go to the Cường Khanh Advertising website"
                 }
             },
             {

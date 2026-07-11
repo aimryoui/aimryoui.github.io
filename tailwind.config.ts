@@ -22,6 +22,7 @@ import scrollbarGutter from "./src/lib/tailwindcss-plugins/utilities/scrollbar-g
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
 import all from "./src/lib/tailwindcss-plugins/variants/all"
+import browserEngines from "./src/lib/tailwindcss-plugins/variants/browser-engines"
 import containerQueries from "./src/lib/tailwindcss-plugins/variants/container-queries"
 import has from "./src/lib/tailwindcss-plugins/variants/has"
 import not from "./src/lib/tailwindcss-plugins/variants/not"
@@ -199,58 +200,59 @@ export default {
             transparent: "transparent",
             current:
                 "color-mix(in oklab, currentColor calc(<alpha-value> * 100%), transparent)",
-            white: colorMix("--white"),
-            black: colorMix("--black"),
-            default: colorMix("--default"),
-            inverted: colorMix("--inverted"),
-            alert: colorMix("--alert"),
+            white: colorMix("--color-white"),
+            black: colorMix("--color-black"),
+            default: colorMix("--color-default"),
+            inverted: colorMix("--color-inverted"),
+            alert: colorMix("--color-alert"),
 
-            background: colorMix("--background"),
-            foreground: colorMix("--foreground"),
+            background: colorMix("--color-background"),
+            foreground: colorMix("--color-foreground"),
             card: {
-                DEFAULT: colorMix("--card"),
-                foreground: colorMix("--card-foreground")
+                DEFAULT: colorMix("--color-card"),
+                foreground: colorMix("--color-card-foreground")
             },
             popover: {
-                DEFAULT: colorMix("--popover"),
-                foreground: colorMix("--popover-foreground")
+                DEFAULT: colorMix("--color-popover"),
+                foreground: colorMix("--color-popover-foreground")
             },
             primary: {
-                DEFAULT: colorMix("--primary"),
-                foreground: colorMix("--primary-foreground")
+                DEFAULT: colorMix("--color-primary"),
+                foreground: colorMix("--color-primary-foreground")
             },
             secondary: {
-                DEFAULT: colorMix("--secondary"),
-                foreground: colorMix("--secondary-foreground")
+                DEFAULT: colorMix("--color-secondary"),
+                foreground: colorMix("--color-secondary-foreground")
             },
             muted: {
-                DEFAULT: colorMix("--muted"),
-                foreground: colorMix("--muted-foreground")
+                DEFAULT: colorMix("--color-muted"),
+                foreground: colorMix("--color-muted-foreground")
             },
             accent: {
-                DEFAULT: colorMix("--accent"),
-                foreground: colorMix("--accent-foreground")
+                DEFAULT: colorMix("--color-accent"),
+                foreground: colorMix("--color-accent-foreground")
             },
             destructive: {
-                DEFAULT: colorMix("--destructive"),
-                foreground: colorMix("--destructive-foreground")
+                DEFAULT: colorMix("--color-destructive"),
+                foreground: colorMix("--color-destructive-foreground")
             },
-            border: colorMix("--border"),
-            input: colorMix("--input"),
-            ring: colorMix("--ring"),
+            border: colorMix("--color-border"),
+            "svg-filter": colorMix("--color-svg-filter"),
+            input: colorMix("--color-input"),
+            ring: colorMix("--color-ring"),
             chart: {
-                1: colorMix("--chart-1"),
-                2: colorMix("--chart-2"),
-                3: colorMix("--chart-3"),
-                4: colorMix("--chart-4"),
-                5: colorMix("--chart-5")
+                1: colorMix("--color-chart-1"),
+                2: colorMix("--color-chart-2"),
+                3: colorMix("--color-chart-3"),
+                4: colorMix("--color-chart-4"),
+                5: colorMix("--color-chart-5")
             },
 
-            highlighted: colorMix("--highlighted"),
-            pattern: colorMix("--pattern"),
-            stroke: colorMix("--stroke"),
+            highlighted: colorMix("--color-highlighted"),
+            pattern: colorMix("--color-pattern"),
+            stroke: colorMix("--color-stroke"),
 
-            "element-hover": "var(--element-hover)"
+            "element-hover": "var(--color-element-hover)"
         }
     },
     plugins: [
@@ -275,6 +277,7 @@ export default {
         transitionBehavior,
 
         all,
+        browserEngines,
         containerQueries,
         has,
         not,
