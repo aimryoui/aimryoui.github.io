@@ -22,7 +22,7 @@ const PREFIX = `${BRAND_COLOR}[IMAGES]${RESET}`
 
 const BATCH_SIZE = 10
 
-const IGNORE_REGEX = /(^|[/\\])\..|.*-poster\.(png|jpg|jpeg|webp)$/i
+const IGNORE_REGEX = /(^|[/\\])\..|.*-poster\.(png|jpg|jpeg|webp)$/iu
 
 type ImageManifest = Record<
     string,
@@ -231,7 +231,7 @@ async function processImage(
             background: { r: 0, g: 0, b: 0, alpha: 0 }
         }
     })
-        .composite(composites as sharp.OverlayOptions[])
+        .composite(composites)
         .webp({ quality: 95, effort: 6 })
         .toFile(scrambledOutput)
 
@@ -389,9 +389,11 @@ async function build({ watch = false, skipInitial = false } = {}) {
     }
 }
 
+const WINDOWS_PATH_SEP_REGEX = /\\/gu
+
 void (async () => {
     const isMain = process.argv[1]
-        ?.replace(/\\/g, "/")
+        ?.replace(WINDOWS_PATH_SEP_REGEX, "/")
         .endsWith("process-images.ts")
     if (isMain) {
         const isWatch =

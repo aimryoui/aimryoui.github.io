@@ -91,7 +91,6 @@ function ProjectHeader({
                 >
                     <Highlight
                         className={cn(
-                            "font-normal",
                             !information.newest && "text-transparent md:hidden"
                         )}
                     >
@@ -176,9 +175,7 @@ function ProjectCategory({
                 `category-${projectName}-${category}`
             )}
         >
-            <Highlight className={cn("w-fit font-normal")}>
-                {category}
-            </Highlight>
+            <Highlight className={cn("w-fit")}>{category}</Highlight>
         </ViewTransition>
     )
 }

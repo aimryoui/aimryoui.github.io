@@ -92,6 +92,8 @@ function supportsGridLanes(): boolean {
     return CSS.supports("display", "grid-lanes")
 }
 
+const INNER_VAR_REGEX = /var\(\s*(--[\w-]+)\s*(?:,\s*([^()]+))?\s*\)/gu
+
 function resolveCSSVariables(
     value: string,
     computed: CSSStyleDeclaration
@@ -99,13 +101,12 @@ function resolveCSSVariables(
     if (!value.includes("var(")) return value
 
     let result = value
-    const innerVarRegex = /var\(\s*(--[\w-]+)\s*(?:,\s*([^()]+))?\s*\)/g
 
     let maxDepth = 10
     while (result.includes("var(") && maxDepth > 0) {
         const previous = result
         result = result.replace(
-            innerVarRegex,
+            INNER_VAR_REGEX,
             (_, varName: string, fallback: string | undefined) => {
                 const val = computed.getPropertyValue(varName).trim()
                 if (val) return val
@@ -150,7 +151,7 @@ function parseLengthToPixels(
     return null
 }
 
-const MIN_MAX_REGEX = /minmax\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/
+const MIN_MAX_REGEX = /minmax\(\s*([^,]+)\s*,\s*([^)]+)\s*\)/u
 
 function parseMinMax(value: string): MinMax | null {
     const match = MIN_MAX_REGEX.exec(value)
@@ -161,7 +162,7 @@ function parseMinMax(value: string): MinMax | null {
     }
 }
 
-const REPEAT_REGEX = /repeat\(\s*([^,]+)\s*,\s*(.+)\s*\)/
+const REPEAT_REGEX = /repeat\(\s*([^,]+)\s*,\s*(.+)\s*\)/u
 
 function parseRepeat(value: string): Repeat | null {
     const match = REPEAT_REGEX.exec(value)
@@ -225,6 +226,8 @@ function calculateLaneSizes(
             const { count, pattern } = repeatInfo
             const patternTokens = tokenizeTemplate(pattern)
 
+            let reps: number
+
             if (count === "auto-fill" || count === "auto-fit") {
                 let minSize = 0
 
@@ -264,104 +267,57 @@ function calculateLaneSizes(
                 const gapCount = patternCount - 1
                 const minPatternSize = minSize + gapCount * gap
 
-                const reps = Math.max(
+                reps = Math.max(
                     1,
                     Math.floor((availableSpace + gap) / (minPatternSize + gap))
                 )
-
-                for (let i = 0; i < reps; i++) {
-                    for (const pt of patternTokens) {
-                        const minmax = parseMinMax(pt)
-                        if (minmax) {
-                            const minVal = parseLengthToPixels(
-                                minmax.min,
-                                containerSize,
-                                fontSize,
-                                rootFontSize
-                            )
-                            const maxVal: LaneMax = minmax.max.endsWith("fr")
-                                ? { fr: parseFloat(minmax.max) }
-                                : (parseLengthToPixels(
-                                      minmax.max,
-                                      containerSize,
-                                      fontSize,
-                                      rootFontSize
-                                  ) ?? 0)
-
-                            lanes.push({
-                                min: minVal ?? 0,
-                                max: maxVal,
-                                size: 0
-                            })
-
-                            if (typeof maxVal === "object" && maxVal.fr) {
-                                totalFr += maxVal.fr
-                            }
-                            fixedSpace += minVal ?? 0
-                        } else if (pt.endsWith("fr")) {
-                            const fr = parseFloat(pt)
-                            lanes.push({ min: 0, max: { fr }, size: 0 })
-                            totalFr += fr
-                        } else {
-                            const size =
-                                parseLengthToPixels(
-                                    pt,
-                                    containerSize,
-                                    fontSize,
-                                    rootFontSize
-                                ) ?? 0
-                            lanes.push({ min: size, max: size, size })
-                            fixedSpace += size
-                        }
-                    }
-                }
             } else {
-                const reps = parseInt(count, 10)
-                for (let i = 0; i < reps; i++) {
-                    for (const pt of patternTokens) {
-                        const minmax = parseMinMax(pt)
+                reps = parseInt(count, 10)
+            }
 
-                        if (minmax) {
-                            const minVal = parseLengthToPixels(
-                                minmax.min,
+            for (let i = 0; i < reps; i++) {
+                for (const pt of patternTokens) {
+                    const minmax = parseMinMax(pt)
+                    if (minmax) {
+                        const minVal = parseLengthToPixels(
+                            minmax.min,
+                            containerSize,
+                            fontSize,
+                            rootFontSize
+                        )
+                        const maxVal: LaneMax = minmax.max.endsWith("fr")
+                            ? { fr: parseFloat(minmax.max) }
+                            : (parseLengthToPixels(
+                                  minmax.max,
+                                  containerSize,
+                                  fontSize,
+                                  rootFontSize
+                              ) ?? 0)
+
+                        lanes.push({
+                            min: minVal ?? 0,
+                            max: maxVal,
+                            size: 0
+                        })
+
+                        if (typeof maxVal === "object" && maxVal.fr) {
+                            totalFr += maxVal.fr
+                        }
+                        fixedSpace += minVal ?? 0
+                    } else if (pt.endsWith("fr")) {
+                        const fr = parseFloat(pt)
+                        lanes.push({ min: 0, max: { fr }, size: 0 })
+                        totalFr += fr
+                    } else {
+                        const size =
+                            parseLengthToPixels(
+                                pt,
                                 containerSize,
                                 fontSize,
                                 rootFontSize
-                            )
-                            const maxVal: LaneMax = minmax.max.endsWith("fr")
-                                ? { fr: parseFloat(minmax.max) }
-                                : (parseLengthToPixels(
-                                      minmax.max,
-                                      containerSize,
-                                      fontSize,
-                                      rootFontSize
-                                  ) ?? 0)
-
-                            lanes.push({
-                                min: minVal ?? 0,
-                                max: maxVal,
-                                size: 0
-                            })
-
-                            if (typeof maxVal === "object" && maxVal.fr) {
-                                totalFr += maxVal.fr
-                            }
-                            fixedSpace += minVal ?? 0
-                        } else if (pt.endsWith("fr")) {
-                            const fr = parseFloat(pt)
-                            lanes.push({ min: 0, max: { fr }, size: 0 })
-                            totalFr += fr
-                        } else {
-                            const size =
-                                parseLengthToPixels(
-                                    pt,
-                                    containerSize,
-                                    fontSize,
-                                    rootFontSize
-                                ) ?? 0
-                            lanes.push({ min: size, max: size, size })
-                            fixedSpace += size
-                        }
+                            ) ?? 0
+                        lanes.push({ min: size, max: size, size })
+                        fixedSpace += size
                     }
                 }
             }
@@ -429,6 +385,8 @@ function calculateLaneSizes(
     return lanes.map((l) => l.size)
 }
 
+const SPACE_SPLITTER_REGEX = /\s+/u
+
 function getGridLanesStyles(element: HTMLElement): ParsedStyles {
     const computed = window.getComputedStyle(element)
 
@@ -450,7 +408,7 @@ function getGridLanesStyles(element: HTMLElement): ParsedStyles {
     let rowGap = resolveCSSVariables(rowGapRaw, computed)
 
     if (gap.includes(" ")) {
-        const parts = gap.split(/\s+/)
+        const parts = gap.split(SPACE_SPLITTER_REGEX)
         if (parts[0]) rowGap = resolveCSSVariables(parts[0], computed)
         if (parts[1]) columnGap = resolveCSSVariables(parts[1], computed)
     }
@@ -504,7 +462,7 @@ function getGridLanesStyles(element: HTMLElement): ParsedStyles {
     }
 }
 
-const SPAN_REGEX = /span\s+(\d+)/
+const SPAN_REGEX = /span\s+(\d+)/u
 
 function getItemStyles(element: HTMLElement): ItemStyles {
     const computed = window.getComputedStyle(element)

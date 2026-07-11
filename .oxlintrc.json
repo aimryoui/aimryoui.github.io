@@ -219,7 +219,7 @@
             "version": "19.2.7"
         },
         "tailwindcss": {
-            "callees": ["cn", "twg", "twMerge"],
+            "callees": ["cn", "cva", "twg", "twMerge"],
             "config": "tailwind.config.ts",
             "cssFiles": [
                 "**/*.css",

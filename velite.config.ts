@@ -9,6 +9,7 @@ const projects = defineCollection({
     pattern: "projects/**/*.mdx",
     schema: s.object({
         slug: s.path(),
+        // oxlint-disable-next-line typescript/no-unnecessary-type-assertion
         link: s.string().optional() as Schema<
             Route<"/projects/${string}"> | undefined
         >,

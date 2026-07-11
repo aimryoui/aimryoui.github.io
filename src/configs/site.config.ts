@@ -3,12 +3,17 @@ const APP_BASE_URL =
     process.env.NEXT_PUBLIC_BASE_URL ?? "https://localhost:3000"
 const APP_BASE_PATH = process.env.PAGES_BASE_PATH ?? ""
 
+const URL_SCHEME_REGEX = /(.*)+:\/\//u
+const YEAR_REGEX = /\d{4}/u
+const PHONE_NUMBER_REGEX = /(\d{3})(\d{3})(\d{3})/u
+const LEADING_ZERO_REGEX = /^0?/u
+
 export const siteConfig = {
     // Base links
     url: APP_BASE_URL,
     fullUrl: APP_BASE_URL + APP_BASE_PATH,
     get domain() {
-        return this.url.replace(/(.*)+:\/\//, "")
+        return this.url.replace(URL_SCHEME_REGEX, "")
     },
 
     // Personal information
@@ -16,7 +21,7 @@ export const siteConfig = {
     shortName: "Hoàng Nhân",
     birthDay: "20/03/2003",
     get birthYear() {
-        return Number(/\d{4}/.exec(this.birthDay)?.[0])
+        return Number(YEAR_REGEX.exec(this.birthDay)?.[0])
     },
     get age() {
         return new Date().getFullYear() - this.birthYear
@@ -31,15 +36,15 @@ export const siteConfig = {
     tel: {
         phone: "0817818898",
         get spaced() {
-            return this.phone.replace(/(\d{3})(\d{3})(\d{3})/, "$1 $2 $3")
+            return this.phone.replace(PHONE_NUMBER_REGEX, "$1 $2 $3")
         },
         get full() {
             return (
                 "+84" +
                 " " +
                 this.phone
-                    .replace(/^0?/, "")
-                    .replace(/(\d{3})(\d{3})(\d{3})/, "$1 $2 $3")
+                    .replace(LEADING_ZERO_REGEX, "")
+                    .replace(PHONE_NUMBER_REGEX, "$1 $2 $3")
             )
         },
         get fullWithBrackets() {
@@ -47,12 +52,12 @@ export const siteConfig = {
                 "(+84)" +
                 " " +
                 this.phone
-                    .replace(/^0?/, "")
-                    .replace(/(\d{3})(\d{3})(\d{3})/, "$1 $2 $3")
+                    .replace(LEADING_ZERO_REGEX, "")
+                    .replace(PHONE_NUMBER_REGEX, "$1 $2 $3")
             )
         },
         get fullWithoutSpace() {
-            return `+84${this.phone.replace(/^0?/, "")}`
+            return `+84${this.phone.replace(LEADING_ZERO_REGEX, "")}`
         }
     },
 

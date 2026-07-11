@@ -26,7 +26,7 @@ const parseDate = (str: string) => {
     return new Date(year, month, 1)
 }
 
-const DASHES_REGEX = /[-–—]/g
+const DASHES_REGEX = /[-–—]/gu
 
 const getDurationDates = (duration: string) => {
     const parts = duration.split(DASHES_REGEX)

@@ -71,7 +71,7 @@ function NoAIOverlay() {
                 )}
             >
                 <hgroup className={cn("flex flex-col gap-2")}>
-                    <h3 className={cn("text-4xl font-extrabold capitalize")}>
+                    <h3 className={cn("text-4xl capitalize")}>
                         <strong className="font-wght-[625]">
                             No AI training allowed.
                         </strong>

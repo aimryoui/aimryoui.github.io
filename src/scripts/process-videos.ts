@@ -81,6 +81,8 @@ function getVideoDuration(filePath: string): number {
     }
 }
 
+const CHUNK_REGEX = /^chunk_\d+\.bin$/u
+
 function cleanVideoOutputFolder(folder: string, fileName: string) {
     if (!fs.existsSync(folder)) return
     const allowed = new Set([
@@ -90,7 +92,7 @@ function cleanVideoOutputFolder(folder: string, fileName: string) {
     ])
     const filesInDir = fs.readdirSync(folder)
     for (const file of filesInDir) {
-        if (!allowed.has(file) && !/^chunk_\d+\.bin$/.test(file)) {
+        if (!allowed.has(file) && !CHUNK_REGEX.test(file)) {
             fs.rmSync(path.join(folder, file), { recursive: true, force: true })
         }
     }
@@ -371,7 +373,7 @@ async function buildVideos(showProgress = false) {
     }
 }
 
-const IGNORE_REGEX = /(^|[/\\])\../i
+const IGNORE_REGEX = /(^|[/\\])\../iu
 
 async function build({ watch = false, skipInitial = false } = {}) {
     if (!skipInitial) {
@@ -412,9 +414,11 @@ async function build({ watch = false, skipInitial = false } = {}) {
     }
 }
 
+const WINDOWS_PATH_SEP_REGEX = /\\/gu
+
 void (async () => {
     const isMain = process.argv[1]
-        ?.replace(/\\/g, "/")
+        ?.replace(WINDOWS_PATH_SEP_REGEX, "/")
         .endsWith("process-videos.ts")
     if (isMain) {
         const isWatch =

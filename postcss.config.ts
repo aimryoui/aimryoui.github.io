@@ -7,8 +7,12 @@ import {
 } from "postcss"
 import { type Config } from "postcss-load-config"
 
-const REPLACE_PATTERN = /--(tw|toolwind)-/gi
+const REPLACE_PATTERN = /--(tw|toolwind)-/giu
 const REPLACE_WITH = "--nhn-"
+
+const NO_OPACITY_COLOR_MIX_REGEX =
+    /color-mix\(in oklab, (var\(--[^)]+\)|currentColor) calc\((?:var\(--nhn-[\w-]+-opacity, ?1\)|1) \* 100%\), transparent\)/gu
+const CALC_PERCENTAGE_REGEX = /calc\(([\d.]+) \* 100%\)/gu
 
 const optimizeAndReplacePlugin = (): Plugin => {
     return {
@@ -24,15 +28,14 @@ const optimizeAndReplacePlugin = (): Plugin => {
             }
 
             if (decl.value.includes("color-mix(in oklab")) {
-                const noOpacityRegex =
-                    /color-mix\(in oklab, (var\(--[^)]+\)|currentColor) calc\((?:var\(--nhn-[\w-]+-opacity, ?1\)|1) \* 100%\), transparent\)/g
-
-                if (noOpacityRegex.test(decl.value)) {
-                    decl.value = decl.value.replace(noOpacityRegex, "$1")
-                } else {
-                    const calcRegex = /calc\(([\d.]+) \* 100%\)/g
+                if (NO_OPACITY_COLOR_MIX_REGEX.test(decl.value)) {
                     decl.value = decl.value.replace(
-                        calcRegex,
+                        NO_OPACITY_COLOR_MIX_REGEX,
+                        "$1"
+                    )
+                } else {
+                    decl.value = decl.value.replace(
+                        CALC_PERCENTAGE_REGEX,
                         (_, numberStr: string) =>
                             `${(parseFloat(numberStr) * 100).toString()}%`
                     )
