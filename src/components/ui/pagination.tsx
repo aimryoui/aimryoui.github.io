@@ -29,8 +29,14 @@ function PaginationContent({
     )
 }
 
-function PaginationItem({ ...props }: React.ComponentProps<"li">) {
-    return <li data-slot="pagination-item" {...props} />
+function PaginationItem({ className, ...props }: React.ComponentProps<"li">) {
+    return (
+        <li
+            data-slot="pagination-item"
+            className={cn("min-w-0", className)}
+            {...props}
+        />
+    )
 }
 
 function PaginationLink({

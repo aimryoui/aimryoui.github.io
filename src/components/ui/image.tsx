@@ -20,7 +20,7 @@ type ImageProps = React.ComponentProps<"div"> & {
     limitHeight?: boolean
     noBorder?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
-    inLightbox?: boolean
+    isInLightbox?: boolean
     lightbox?: boolean
 }
 
@@ -78,7 +78,7 @@ function ImageCore({
     trimEdges = false,
     objectFit = "cover",
     lightbox = true,
-    inLightbox = false,
+    isInLightbox = false,
     ref,
     ...props
 }: ImageCoreProps & { parsedData: ParsedImageData }) {
@@ -87,7 +87,7 @@ function ImageCore({
     const [isNearViewport, setIsNearViewport] = useState(true)
 
     useEffect(() => {
-        if (inLightbox) return
+        if (isInLightbox) return
 
         const element = containerRef.current
         if (!element) return
@@ -107,7 +107,7 @@ function ImageCore({
         return () => {
             observer.unobserve(element)
         }
-    }, [inLightbox])
+    }, [isInLightbox])
 
     if (!parsedData.metadata) return null
 
@@ -153,11 +153,14 @@ function ImageCore({
                 "relative grid place-items-center",
                 !pngBorder && "overflow-hidden",
                 rounded && !percentageRounded && "rounded-media",
-                lightbox && !inLightbox && "cursor-zoom-in",
+                lightbox && !isInLightbox && "cursor-zoom-in",
                 !noBorder &&
                     !pngBorder && {
                         after: [
-                            "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15 will-change-[border-color] transition-[border-color] duration-250"
+                            "pointer-events-none absolute inset-0 z-2 rounded-inherit transition-[border-color] duration-250",
+                            isInLightbox
+                                ? "border-media border-white/15"
+                                : "border border-default/15"
                         ]
                     },
                 className
@@ -165,20 +168,20 @@ function ImageCore({
             style={{
                 "--nhn-aspect-ratio": aspectRatio,
                 ...(limitHeight &&
-                    !inLightbox && {
+                    !isInLightbox && {
                         width: "calc(max(80vh, calc(var(--spacing) * 125)) * calc(var(--nhn-aspect-ratio)))"
                     }),
                 ...(percentageRounded &&
                     !rounded && {
                         borderRadius: `calc(${percentageRounded}% * var(--nhn-offset-factor)) / calc(${percentageRounded}% * var(--nhn-aspect-ratio) * var(--nhn-offset-factor))`
                     }),
-                ...(inLightbox &&
+                ...(isInLightbox &&
                     rounded && {
                         borderRadius:
                             "calc(var(--radius-media) / var(--nhn-wrap-scale))"
                     }),
                 ...(imageRow &&
-                    !inLightbox && {
+                    !isInLightbox && {
                         flex: `${imageRow === "justified" ? "calc(var(--nhn-aspect-ratio))" : exactW} 1 0%`
                     }),
                 ...(!asBackgroundImage && {
@@ -189,7 +192,7 @@ function ImageCore({
             {...props}
         >
             {/* SEO & Preview Layer */}
-            {!inLightbox && (
+            {!isInLightbox && (
                 <NextImage
                     src={`${basePath}/${fileName}_preview.webp`}
                     alt={props.alt}
@@ -198,7 +201,7 @@ function ImageCore({
                     className={cn(
                         "absolute size-full select-none object-cover",
                         (pngAntiBleed || pngBorder) &&
-                            "transform-gpu will-change-transform backface-hidden [filter:url(#png-anti-bleed)]",
+                            "[filter:url(#png-anti-bleed)]",
                         trimEdges && "[clip-path:inset(.375rem)]"
                     )}
                     style={{
@@ -224,9 +227,7 @@ function ImageCore({
                             "size-auto max-h-full max-w-full",
                         objectFit === "cover" &&
                             "size-auto min-h-full min-w-full",
-
-                        pngBorder &&
-                            "transform-gpu will-change-transform backface-hidden [filter:url(#png-border)]"
+                        pngBorder && "[filter:url(#png-border)]"
                     )}
                     style={{
                         aspectRatio
@@ -253,14 +254,14 @@ function ImageCore({
                                 alt=""
                                 className={cn(
                                     "absolute h-[--h] w-[--w] max-w-none select-none",
-                                    inLightbox && "pswp__img"
+                                    isInLightbox && "pswp__img"
                                 )}
                                 style={{
                                     clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(Cols - 1 - sourceC).toString()}) var(--y${(Rows - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
                                     transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
                                 }}
                                 decoding="async"
-                                loading={inLightbox ? "eager" : "lazy"}
+                                loading={isInLightbox ? "eager" : "lazy"}
                                 draggable={false}
                             />
                         )
@@ -296,7 +297,7 @@ function Image({ className, lightbox = true, ref, ...props }: ImageCoreProps) {
                 <ImageCore
                     parsedData={parsedData}
                     {...props}
-                    inLightbox={true}
+                    isInLightbox={true}
                 />
             }
         >

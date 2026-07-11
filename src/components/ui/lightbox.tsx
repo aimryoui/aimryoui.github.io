@@ -66,7 +66,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
             options={{
                 showHideAnimationType: "zoom",
                 wheelToZoom: true,
-                secondaryZoomLevel: isMobilePortrait ? 0.8 : 2,
+                secondaryZoomLevel: isMobilePortrait ? 0.75 : 2,
                 loop: false,
                 preloaderDelay: 500,
                 bgOpacity: 1,
@@ -87,6 +87,27 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     "placeholderSrc",
                     (_, content) => content.data.msrc ?? false
                 )
+
+                const getElements = (
+                    targetSlide?: typeof lightbox.currSlide
+                ) => {
+                    const slide = targetSlide ?? lightbox.currSlide
+
+                    return {
+                        get placeholder() {
+                            return slide?.getPlaceholderElement()
+                        },
+                        get zoomWrap() {
+                            return slide?.container
+                        },
+                        get original() {
+                            return slide?.data.element
+                        },
+                        get content() {
+                            return slide?.content.element?.firstElementChild
+                        }
+                    }
+                }
 
                 // Lift-off effect (hide original element)
                 let liftedOffEl: HTMLElement | null = null
@@ -114,7 +135,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     hideOriginal(lightbox.currSlide)
                 })
 
-                // Force append heavy and isOpen state to keep Image during open animation
+                // Force append heavy and `isOpen` state to keep Image during open animation
                 const forceAppendHeavy = (slide: typeof lightbox.currSlide) => {
                     if (!slide || slide.heavyAppended) return
                     const wasOpen = lightbox.opener.isOpen
@@ -125,7 +146,8 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 }
 
                 let isCloseHijacked = false
-                // Force dispatch close event to keep Image during close animation
+                // Force dispatch `close` event to keep Image during close animation
+                // only when original element is in viewport
                 const originalDispatch = lightbox.dispatch.bind(lightbox)
                 lightbox.dispatch = (name, details) => {
                     if (name === "close") {
@@ -144,14 +166,13 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                             } as never
                         }
                         isCloseHijacked = false
-                        return originalDispatch(name, details)
                     }
                     return originalDispatch(name, details)
                 }
-
                 lightbox.on("destroy", () => {
                     showOriginal()
                     // Restore original close event after destroy
+                    // only when original element is in viewport
                     if (isCloseHijacked) {
                         originalDispatch("close")
                     }
@@ -161,7 +182,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 const setPlaceholder = (slide: typeof lightbox.currSlide) => {
                     if (!slide) return
 
-                    const placeholder = slide.getPlaceholderElement()
+                    const { placeholder } = getElements(slide)
                     const data = slide.data as CustomItemData
 
                     if (!placeholder || placeholder.dataset.styled) return
@@ -172,18 +193,17 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     if (data.rounded || data.percentageRounded) {
                         placeholder.classList.add("corner-superellipse")
                     }
-                    if (data.percentageRounded) {
+                    if (data.rounded) {
+                        placeholder.style.borderRadius =
+                            "calc(var(--radius-media) / (var(--nhn-wrap-scale, 1) * var(--nhn-ph-scale, 1)))"
+                    } else if (data.percentageRounded) {
                         placeholder.style.borderRadius = `calc(${data.percentageRounded.toString()}% * var(--nhn-offset-factor)) / calc(${data.percentageRounded.toString()}% * ${data.placeholderAspectRatio} * var(--nhn-offset-factor))`
                     }
+
                     if (data.pngAntiBleed || data.pngBorder) {
                         placeholder.classList.add(
                             "[filter:url(#png-anti-bleed)]"
                         )
-                    }
-
-                    if (data.rounded) {
-                        placeholder.style.borderRadius =
-                            "calc(var(--radius-media) / (var(--nhn-wrap-scale, 1) * var(--nhn-ph-scale, 1)))"
                     }
 
                     if (!data.noBorder && !data.pngBorder) {
@@ -195,27 +215,6 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                             "calc(var(--px) / (var(--nhn-wrap-scale, 1) * var(--nhn-ph-scale, 1)))"
                         placeholder.style.outlineOffset =
                             "calc((var(--px) / (var(--nhn-wrap-scale, 1) * var(--nhn-ph-scale, 1))) * -1)"
-                    }
-                }
-
-                const getElements = (
-                    targetSlide?: typeof lightbox.currSlide
-                ) => {
-                    const slide = targetSlide ?? lightbox.currSlide
-
-                    return {
-                        get placeholder() {
-                            return slide?.getPlaceholderElement()
-                        },
-                        get zoomWrap() {
-                            return slide?.container
-                        },
-                        get original() {
-                            return slide?.data.element
-                        },
-                        get content() {
-                            return slide?.content.element?.firstElementChild
-                        }
                     }
                 }
 

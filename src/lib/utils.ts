@@ -74,7 +74,8 @@ const twMerge = extendTailwindMerge<
             /** @see https://github.com/dcastil/tailwind-merge/blob/v2.6.1/docs/configuration.md#theme */
             spacing: ["inherit"],
             borderRadius: ["inherit"],
-            transitionBehavior: ["normal", "discrete"]
+            transitionBehavior: ["normal", "discrete"],
+            borderWidth: ["media"]
         }
     }
 })

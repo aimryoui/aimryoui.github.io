@@ -128,7 +128,8 @@ export default {
                 0: "0",
                 2: ".125rem",
                 3: ".1875rem",
-                6: ".375rem"
+                6: ".375rem",
+                media: "calc(var(--px) / var(--nhn-wrap-scale, 1))"
             },
             ringWidth: {
                 DEFAULT: "var(--px)"
