@@ -1,5 +1,2 @@
-allowBuilds:
-  "@toolwind/anchors": true
-  esbuild: true
-  sharp: true
+dangerouslyAllowAllBuilds: true
 minimumReleaseAge: 0

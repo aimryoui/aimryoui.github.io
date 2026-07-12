@@ -28,11 +28,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Enable Corepack and activate pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
-
       - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
