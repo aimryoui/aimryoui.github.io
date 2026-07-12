@@ -5,8 +5,6 @@ import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
 import Script from "next/script"
 
-import { domAnimation, LazyMotion, MotionConfig } from "motion/react"
-
 import { MarginLine } from "@/components/layout/line"
 import { PngAntiBleed, PngBorder } from "@/components/ui/svg-filter"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -16,6 +14,8 @@ import { ProgressProvider } from "@/providers/progress-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
 import AppData from "~/package.json"
+
+import { LazyMotionProvider } from "../providers/lazy-motion-provider"
 
 const lastModified = new Date().toLocaleString("en-US", {
     year: "numeric",
@@ -186,12 +186,7 @@ export default function RootLayout({
                             {/* <BackgroundPattern /> */}
                             <MarginLine />
                             <MarginLine className="order-last" />
-                            <LazyMotion features={domAnimation} strict>
-                                {/* https://motion.dev/docs/react-accessibility */}
-                                <MotionConfig reducedMotion="user">
-                                    {children}
-                                </MotionConfig>
-                            </LazyMotion>
+                            <LazyMotionProvider>{children}</LazyMotionProvider>
                             <PngAntiBleed />
                             <PngBorder />
                         </TooltipProvider>

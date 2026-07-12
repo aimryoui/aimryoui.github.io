@@ -2,5 +2,4 @@ allowBuilds:
   "@toolwind/anchors": true
   esbuild: true
   sharp: true
-minimumReleaseAgeExclude:
-  - postcss@8.5.17
+minimumReleaseAge: 0
