@@ -14,18 +14,18 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                 vectorEffect="non-scaling-stroke"
             >
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m530.66 230.732-210.561-121.57c-35.047-20.3-77.103-30.449-126.112-30.505-48.953-.112-90.897 9.925-125.775 30.056-34.88 20.131-52.206 44.355-52.094 72.617.056 10.093 2.41 19.738 6.953 28.822 4.766 9.589 12 18.617 21.757 27.028 6.841 5.944 14.916 11.552 24.168 16.935l12.785 7.402 4.935 2.86 18.617 10.766.392.224 3.814 2.187 113.158 65.327 56.86 32.804c35.103 20.299 77.159 30.449 126.112 30.561 40.318.056 75.869-6.785 106.654-20.355a197.697 197.697 0 0 0 6-2.804 173.969 173.969 0 0 0 13.178-6.953c8.916-5.159 16.766-10.599 23.383-16.262 9.7-8.411 16.934-17.327 21.7-26.86 4.655-9.14 6.954-18.897 6.954-29.103v-.392c-.169-28.262-17.776-52.542-52.878-72.785Zm-17.72 101.944h-.056c-5.608 6.953-13.458 13.345-23.551 19.121a137.972 137.972 0 0 1-14.412 7.178c-19.962 8.467-43.121 12.729-69.42 12.673-32.916-.056-60.897-6.785-84.056-20.131L269.8 321.685l-54.449-31.458-69.084-39.869-21.476-12.393-13.907-8.018a168.583 168.583 0 0 1-3.308-2.019 9.16 9.16 0 0 1-.785-.505c-.505-.28-1.009-.56-1.458-.897-7.346-4.766-13.346-9.925-17.888-15.42-.225-.225-.393-.505-.617-.729-7.178-8.804-10.767-18.449-10.823-28.991-.056-7.514 1.739-14.636 5.384-21.308 5.439-10.094 15.084-19.066 28.935-27.085 23.047-13.289 50.971-19.906 83.887-19.85 32.86 0 60.897 6.785 84.056 20.131l210.561 121.57c13.739 7.963 23.495 16.935 29.103 26.86 3.813 6.785 5.775 14.018 5.775 21.701.056 10.71-3.532 20.411-10.766 29.271Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -33,7 +33,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -41,7 +41,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -49,7 +49,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -66,16 +66,16 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M297.76 187.864v61.592c0 1.99-.643 3.796-1.928 5.388-1.286 1.591-3.092 3.061-5.419 4.408a32.374 32.374 0 0 1-7.622 3.122c-2.755.766-5.878 1.133-9.337 1.102H43.373c-6.398 0-12-1.408-16.807-4.194-4.806-2.755-7.346-6.091-7.683-9.949v-61.622c.337 3.857 2.877 7.194 7.683 9.949 4.806 2.786 10.409 4.194 16.807 4.194h230.081c3.459.061 6.582-.306 9.337-1.072a32.374 32.374 0 0 0 7.622-3.122c2.327-1.347 4.133-2.816 5.419-4.408.796-.98 1.347-2.051 1.622-3.215a7.323 7.323 0 0 0 .306-2.173Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -83,7 +83,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -100,25 +100,25 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M486.906 421.821c-5.459-28.525-16.77-57.492-33.885-87-15.049-25.918-31.967-47.853-50.853-65.656-12.836-12.246-26.557-22.525-41.164-30.984L144.513 113.214c-9.394-5.459-18.443-9.688-27.148-12.688-22.131-7.77-41.852-7.722-59.164.147l-5.705 2.853c-25.279 14.409-37.918 42.344-37.918 83.754 0 41.41 12.64 83.901 37.918 127.426 25.23 43.574 55.918 75.787 92.017 96.639l216.491 124.967c36.099 20.853 66.738 24.05 92.017 9.689 16.672-9.492 27.836-24.885 33.442-46.18 2.951-10.968 4.427-23.459 4.427-37.574 0-13.377-1.328-26.853-3.984-40.426Zm-72.689 39.246a30.823 30.823 0 0 1-7.18 5.557c-12.639 7.18-27.983 5.606-46.033-4.82-18.049-10.426-33.393-26.508-45.983-48.295-2.705-4.672-5.115-9.295-7.181-13.869-7.868-16.967-11.803-33.59-11.803-49.869 0-20.704 6.344-34.672 18.984-41.852 12.59-7.229 27.934-5.607 45.983 4.82 18.05 10.426 33.394 26.508 46.033 48.295 12.59 21.787 18.935 43.033 18.935 63.738 0 16.278-3.935 28.377-11.755 36.295Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M425.973 424.768c0 16.279-3.934 28.377-11.754 36.295a30.8 30.8 0 0 1-7.18 5.558c-12.639 7.18-27.984 5.606-46.033-4.82s-33.393-26.508-45.983-48.295c-2.705-4.672-5.115-9.295-7.181-13.869-7.869-16.967-11.803-33.59-11.803-49.869 0-20.705 6.344-34.672 18.984-41.852 12.59-7.23 27.934-5.607 45.983 4.819 18.049 10.427 33.394 26.509 46.033 48.296 12.59 21.786 18.934 43.032 18.934 63.737Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -139,9 +139,9 @@ function Events({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -149,7 +149,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -157,7 +157,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -173,16 +173,16 @@ function Events({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m127.525 289.235-50-25c-10.7-6.1-16.05-17.925-16.05-35.475v-21.075l50 25v21.075c0 3.125.175 6.05.525 8.8 1.55 12.775 6.725 21.65 15.525 26.675ZM239.95 158.535c-10.875 6.075-21.125 14.55-30.75 25.375s-17.75 22.6-24.325 35.35v-40.275c.725-.55 1.425-1.1 2.15-1.675 10.425-8.425 19.425-19 26.95-31.775l25.975 13Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -190,16 +190,16 @@ function Events({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M158.95 225.41c-4.925-2.075-10.5-3.025-16.725-2.825-9.65.3-19.9 3.675-30.75 10.1l-50-25c10.85-6.425 21.1-9.8 30.75-10.1 6.7-.2 12.65.9 17.875 3.35l1.875.95 4.55 2.275 42.425 21.25ZM134.874 188.159v.3l-18.35-9.225-26.325-13.225c-2.275-.9-4.424-2.125-6.474-3.675-8.726-6.625-13.076-17.85-13.076-33.65v-58.7l50 25v58.7c0 15.8 4.35 27.025 13.075 33.65.375.275.75.575 1.15.825Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -207,7 +207,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -215,7 +215,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -230,9 +230,9 @@ function Events({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -240,25 +240,25 @@ function Events({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M358.153 279.671a406.208 406.208 0 0 0-15.524-41.753c-6.011-13.712-12.847-27.136-20.423-40.271a298.603 298.603 0 0 0-2.882-4.818 397.187 397.187 0 0 0-50.524-67.241c-20.465-21.947-42.329-39.653-65.594-53.077-23.265-13.423-45.13-21-65.594-22.688-.577-.041-1.153-.082-1.688-.123-16.595-1.153-31.377 1.152-44.389 6.876l-7.33 3.665c-15.152 8.647-27.134 22.153-35.946 40.517C39.406 119.164 35 141.688 35 168.411c0 26.724 4.406 54.313 13.259 82.889 8.812 28.576 20.794 55.918 35.947 82.024 15.112 26.147 32.941 50.152 53.406 72.099 20.464 21.947 42.329 39.653 65.594 53.077 23.265 13.423 45.129 21 65.594 22.688 20.465 1.647 38.253-1.812 53.406-10.459 12.27-7 22.482-17.212 30.594-30.635 1.935-3.13 3.706-6.424 5.353-9.883 7.947-16.553 12.312-36.564 13.094-59.911v-.247a222.2 222.2 0 0 0 .124-7.453c0-26.682-4.406-54.312-13.218-82.929Zm-113.977-59.253c4.9-2.8 10.871-2.183 17.871 1.852 7.041 4.077 12.971 10.335 17.871 18.777 2.347 4.076 4.158 8.07 5.353 12.064 1.358 4.283 2.017 8.524 2.017 12.683 0 8.07-2.47 13.465-7.37 16.265-4.9 2.8-10.83 2.182-17.871-1.854-7-4.076-12.971-10.335-17.871-18.776-3.952-6.876-6.341-13.588-7.041-20.176a34.06 34.06 0 0 1-.288-4.571c0-8.071 2.429-13.464 7.329-16.264Zm-124.394-58.265c.989-4.53 3.253-7.742 6.671-9.718 4.9-2.8 10.871-2.182 17.871 1.894 7 4.036 12.97 10.295 17.87 18.736 4.9 8.482 7.371 16.717 7.371 24.746 0 8.03-2.471 13.465-7.371 16.265-4.9 2.8-10.87 2.182-17.87-1.853-7-4.035-12.971-10.294-17.871-18.776-.329-.577-.659-1.112-.947-1.689-4.282-7.864-6.424-15.564-6.424-23.058 0-2.43.206-4.612.7-6.547Zm118.053 219.841-120.4-69.506c7-16.223 18.283-26.024 33.847-29.441 3.13-.7 6.3-1.071 9.553-1.153 4.818-.165 9.8.288 14.906 1.441 8.688 1.853 17.871 5.6 27.465 11.117 19.065 10.995 36.359 27.177 51.923 48.548 15.565 21.37 26.847 44.224 33.847 68.518l-51.141-29.524Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m175.741 283.335-58.306 29.153c7-16.223 18.283-26.023 33.847-29.441 3.13-.7 6.3-1.071 9.553-1.153 4.818-.165 9.8.288 14.906 1.441ZM288.976 411.518l-51.141-29.523-120.4-69.506 58.306-29.153c8.688 1.853 17.871 5.6 27.465 11.118 19.065 10.994 36.359 27.176 51.923 48.546 15.565 21.371 26.847 44.224 33.847 68.518ZM287.288 265.794c0 8.071-2.47 13.465-7.37 16.265-4.9 2.8-10.83 2.182-17.871-1.853-7-4.076-12.97-10.335-17.87-18.776-3.953-6.877-6.342-13.589-7.042-20.177a34.204 34.204 0 0 1-.288-4.571c0-8.07 2.43-13.464 7.33-16.264 4.9-2.8 10.87-2.183 17.87 1.853 7.041 4.076 12.971 10.335 17.871 18.776 2.347 4.077 4.159 8.071 5.353 12.065 1.359 4.282 2.017 8.523 2.017 12.682ZM169.565 197.813c0 8.07-2.471 13.465-7.371 16.265-4.9 2.8-10.871 2.182-17.871-1.853-7-4.036-12.97-10.294-17.87-18.777-.33-.576-.659-1.112-.947-1.688-4.283-7.865-6.424-15.565-6.424-23.059 0-2.429.206-4.612.7-6.547.989-4.529 3.253-7.741 6.671-9.718 4.9-2.8 10.87-2.182 17.87 1.895 7 4.035 12.971 10.294 17.871 18.735 4.9 8.482 7.371 16.717 7.371 24.747Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -279,9 +279,9 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -289,16 +289,16 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M177.752 301.33c-2.957 1.099-6.04 2.493-9.251 4.182-3.21 1.69-6.59 3.549-10.054 5.576-12.038 6.928-22.641 14.7-31.85 23.275a142.5 142.5 0 0 0-14.615 15.798c-11.954 15.038-17.91 29.316-17.91 42.875v69.062L9.588 419.857v-69.062c0-13.559 5.956-27.837 17.91-42.875 11.912-15.08 27.415-28.091 46.466-39.073a245.5 245.5 0 0 1 8.321-4.647l7.35 3.675 18.629 9.336 50.182 25.091 4.774-8.237 14.531 7.265ZM319.259 83.999c-3.168-1.394-6.59-2.07-10.265-2.028-6.547.084-13.813 2.45-21.838 7.096-13.391 7.73-24.795 19.601-34.173 35.652-5.702 9.716-9.674 19.389-11.912 28.978-1.479 6.252-2.197 12.461-2.197 18.628 0 15.376 4.732 25.725 14.109 31.09l-56.561-28.26-25.936-13.01-1.986-.971c-9.377-5.365-14.109-15.714-14.109-31.09s4.732-31.554 14.109-47.606c9.378-16.052 20.782-27.922 34.173-35.652 13.686-7.899 25.134-9.208 34.385-3.928l72.992 36.496L319.259 84Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -306,7 +306,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -314,16 +314,16 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M407.84 210.934v70.034l-24.119-12.039v-44.055c0-15.165-5.112-25.176-15.292-30.034l-20.571-10.264-24.5-12.208v-3.675c0-2.619-.085-5.154-.296-7.561 2.999-5.534 5.491-11.068 7.392-16.517l45.198 22.599 3.295-1.9 1.225.591 17.235 8.617c3.464 4.14 6.082 9.251 7.814 15.292 1.774 6.082 2.619 13.137 2.619 21.12Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -331,7 +331,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -339,16 +339,16 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m158.447 209.075-37.13 64.038-3.505 6.041-84.483-42.242 40.636-70.078 80.301 40.129 4.181 2.112Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -356,7 +356,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -371,9 +371,9 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -381,7 +381,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -389,7 +389,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -397,7 +397,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -405,7 +405,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -421,16 +421,16 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M346.418 396.076v81.653l-71.153-41.094v-32.653l42.7 24.624v-49.001l2.8 1.606 25.653 14.865ZM132.918 321.793v32.653l-71.153-41.053V231.74l28.494 16.43v49l42.659 24.623ZM289.471 248.87v130.653l-95.9-55.382-30.306-17.5-42.659-24.624-1.894-1.111V150.294l82.353 47.559 88.406 51.017ZM132.918 93.182v32.653l-42.66-24.665v49l-28.493-16.429V52.088l71.153 41.094Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -438,16 +438,16 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m428.771 175.246-30.306 15.153-30.347 15.153-21.7 10.871-71.153-41.094 21.7-10.871 60.653-30.306 71.153 41.094Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -455,16 +455,16 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m215.271 52.005-30.265 15.153-12.394 6.177-28.494 14.247-11.2 5.6-71.153-41.094 82.353-41.177 71.153 41.094Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -472,16 +472,16 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M346.418 216.422v81.653l-28.453-16.429v-49l-42.7-24.665v-32.653l71.153 41.094ZM118.712 203.288v30.677L90.259 248.17l-28.494-16.429 56.947-28.453Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -489,16 +489,16 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m163.264 306.641-30.347 15.153-42.659-24.623 30.348-15.153 42.658 24.623Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -506,7 +506,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -528,43 +528,43 @@ function Branding({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m333.731 288.572-6.411-40.466-182.158-105.187-66.354-38.302-15.517 80.156v35.648l15.517 8.942v106.983l155.33 89.67V319.074l62.149 35.852v106.942l31.033 17.966V372.892l15.557 8.943v-35.647l-9.146-57.616Zm-130.667 83.871-93.182-53.818V247.33l50.593 29.237 15.557 8.983 27.032 15.598v71.295Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M408.987 348.797v90.201l-81.666 40.833V372.889l15.557 8.942 35.076-17.517 31.033-15.517Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M424.543 305.352v35.647l-15.557 7.799-31.034 15.517-35.076 17.517v-35.647l35.076-17.517 46.591-23.316Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m424.545 305.351-46.591 23.316-35.076 17.518-9.146-57.616-6.411-40.466 81.666-40.833 15.558 98.081ZM176.033 285.548l-15.557 7.799-50.593 25.276v-71.295l50.593 29.237 15.557 8.983Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -572,34 +572,34 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M327.319 194.613v35.648l-179.054-103.39-52.879-30.543-16.578-9.556V51.125L128.46 79.79l26.011 15.027 172.847 99.796Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M408.987 153.777v35.647l-16.578 8.29-65.088 32.544v-35.647l32.013-16.007 16.578-8.29 33.075-16.537Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m408.986 153.777-33.075 16.538-16.578 8.289-32.014 16.007-172.847-99.797-26.011-15.027-49.653-28.665 81.666-40.833 248.512 143.488ZM296.286 354.922v40.017l-62.148 31.073V319.07l62.148 35.852Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -614,9 +614,9 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -624,25 +624,25 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m341.216 279.006-15.831-67.386-5.487-23.369-19.139-11.056-27.934-16.124-35.096-20.27-27.976-16.124-34.551-19.977-28.521-16.46-60.517-34.927-21.275 66.17c-2.806 8.795-2.764 18.47.168 28.94 2.89 10.47 7.035 20.06 12.396 28.772v159.312l251.198 145.032V322.226c5.319-3.057 9.465-7.999 12.355-14.867 2.932-6.869 2.974-16.334.21-28.353ZM125.574 169.74c-.67 4.942-2.597 8.25-5.738 9.884-3.141 1.675-6.826 1.298-11.014-1.131-6.743-3.895-11.56-9.758-14.45-17.548-2.93-7.832-3.685-13.988-2.26-18.553l13.945-45.566 27.223 15.705-7.706 57.209Zm63.49 34.258c0 5.612-1.675 9.507-5.025 11.726-3.393 2.178-7.748 1.718-13.109-1.382-3.727-2.135-6.952-5.151-9.716-9.088a41.106 41.106 0 0 1-3.351-5.653c-3.392-6.743-4.606-13.067-3.685-18.93l6.826-45.734.88-5.905 27.18 15.747v59.219Zm58.968 47.45c-3.225 3.058-7.999 2.806-14.281-.837-4.649-2.681-8.628-7.036-11.894-13.067-3.225-5.989-4.859-11.81-4.859-17.422v-59.261l27.223 15.747 7.664 60.475c.712 6.534-.587 11.308-3.853 14.365Zm63.867 35.096c-3.015 4.356-7.915 4.607-14.658.712-4.188-2.387-7.873-6.24-11.014-11.517-3.141-5.277-5.026-10.805-5.738-16.543l-7.664-66.087 26.51 15.286 14.658 62.109c1.634 6.282.922 11.643-2.094 16.04Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m133.28 112.533-7.706 57.209c-.67 4.942-2.597 8.25-5.738 9.884-3.141 1.675-6.827 1.298-11.015-1.131-6.742-3.895-11.558-9.758-14.448-17.548-2.932-7.832-3.686-13.988-2.262-18.553l13.946-45.566 27.223 15.705ZM403.66 146.372l-83.76 41.88-19.14-11.056-27.934-16.124-35.096-20.27-27.976-16.124-34.551-19.977-28.52-16.459-60.517-34.928 83.76-41.88L403.66 146.372Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -658,7 +658,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -666,79 +666,79 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m336.709 258.674-15.102-8.703-12.141-7.02-15.103-8.703-27.242-15.724-58.031-33.496v-62.53l-50.939-29.4-12.103-6.984-73.135-42.235V325.19l272.389 157.276V263.648l-8.593-4.974Zm-209.311 66.699-27.242-15.724v-31.265l27.242 15.724v31.265Zm0-62.493-27.242-15.724v-31.265l27.242 15.724v31.265Zm0-62.53-27.242-15.724v-31.265l27.242 15.724v31.265Zm0-62.493-27.242-15.761V90.868l27.242 15.724v31.265Zm54.448 218.964-27.206-15.724v-31.229l27.206 15.724v31.229Zm0-62.494-23.695-13.676-3.511-2.047v-31.265l18.65 10.787 8.556 4.937v31.264Zm0-62.529-23.659-13.677-3.547-2.047v-31.265l18.65 10.787 8.556 4.937v31.265Zm0-62.494-23.695-13.676-3.474-2.048h-.037v-31.265l18.65 10.788 8.556 4.936v31.265Zm136.213 266.173L209.09 372.581v-31.265l27.242 15.724v-31.265l-23.696-13.676-3.546-2.048v-31.265l18.685 10.788 8.557 4.936v-31.265l-27.242-15.724v-31.228l18.685 10.787 10.312 5.961 16.894 9.727 10.348 5.997 16.895 9.727 10.384 5.997 1.755 1.024 23.696 13.676v156.288Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M127.399 108.496v29.364l-27.243-15.761 27.243-13.603Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M127.399 106.595v1.901l-27.243 13.603V90.871l27.243 15.724ZM127.399 169.087v1.902l-27.243 13.639v-31.265l27.243 15.724Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M127.399 170.988v29.364l-27.243-15.724 27.243-13.64ZM127.399 231.615v1.938l-27.243 13.603v-31.265l27.243 15.724ZM127.399 233.555v29.327l-27.243-15.724 27.243-13.603ZM181.847 327.496v29.327l-27.206-15.724 27.206-13.603Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M181.847 325.595v1.901l-27.206 13.603v-31.228l27.206 15.724ZM127.399 296.047v29.327l-27.243-15.724 27.243-13.603Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M127.399 294.111v1.938l-27.243 13.603v-31.265l27.243 15.724ZM181.847 264.855v29.474l-23.696-13.677-3.51-2.047v-.147l18.649-9.324 8.557-4.279Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M181.847 263.064v1.792l-8.557 4.278-18.649 9.325V247.34l18.649 10.787 8.557 4.937ZM181.847 200.532v1.939l-1.353.694-7.204 3.584-18.649 9.325v-31.265l18.649 10.787 8.557 4.936ZM181.846 139.977v29.326l-23.696-13.676-3.473-2.047 18.613-9.325 8.556-4.278Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M181.847 138.04v1.938l-8.557 4.279-18.612 9.324h-.037v-31.265l18.649 10.788 8.557 4.936ZM263.575 343.437v1.902l-10.349 5.156-44.136 22.087v-31.266l27.242 15.724 15.102-7.569 12.141-6.034Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -746,61 +746,61 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M290.817 357.224v31.264l-27.242-15.723V341.5l1.791 1.024 1.756 1.024 23.695 13.676Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M318.059 314.258v29.363l-12.139 6.07-15.103 7.533-23.695-13.676-1.756-1.024-1.791-1.024 18.649-9.324 25.451-12.726 1.791-.877 8.593-4.315ZM318.059 279.192v1.938l-12.139 6.034-15.103 7.569-23.695-13.676-1.792-1.024-1.755-1.024 18.649-9.324 10.385-5.193 1.755 1.024 23.695 13.676ZM263.575 280.91v1.901l-10.386 5.193-25.414 12.725-18.685 9.325v-31.265l18.685 10.787 8.557 4.937 15.102-7.533 12.141-6.07Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m265.366 311.258-10.385 5.192-18.649 9.325-23.695-13.676-3.547-2.048 18.685-9.324 25.414-12.726 10.386-5.192v27.425l1.791 1.024ZM238.087 233.041l-10.312 5.156-18.685 9.324v-31.228l18.685 10.787 10.312 5.961Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m265.33 248.767-10.349 5.156-3.547 1.792-15.102 7.532-27.242-15.723 18.685-9.325 10.312-5.156 16.894 9.727 10.349 5.997Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M282.223 258.492v11.19l-18.65 9.325v1.901l-12.14 6.07-15.102 7.533v-31.265l15.102-7.533 3.547-1.791 10.349-5.156 16.894 9.726ZM282.223 320.989v11.189l-18.65 9.325v1.938l-12.14 6.033-15.102 7.57v-31.265l18.649-9.325 10.385-5.192 16.858 9.727ZM418.437 227.082V445.9l-73.134 36.567V263.649l15.102-7.533 28.997-14.517 29.035-14.517Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m418.437 227.084-29.035 14.517-28.998 14.518-15.101 7.532-8.594-4.973-15.102-8.703-12.141-7.021-15.102-8.703-27.242-15.723-58.032-33.496 18.685-9.325 25.451-12.762 28.998-14.48 136.213 78.619ZM282.224 85.932l-29.035 14.517-25.414 12.725-18.685 9.325-50.939-29.4-12.103-6.984L72.913 43.88l73.135-36.568 136.176 78.62Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -821,9 +821,9 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -831,16 +831,16 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m293.243 372.934-95.015 54.167-89.091 50.783V55.37l89.091 153.681 95.015 163.883Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -855,9 +855,9 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeMiterlimit="10"
@@ -866,7 +866,7 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeMiterlimit="10"
@@ -874,9 +874,9 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                     d="M387.967 179.478 278.866 368.323l-46.745-23.372 65.825-113.524-5.377-3.079-33.563-19.123 42.235-73.11 34.734 17.346 51.992 26.017ZM230.604 270.323l-33.129 57.326-.13.26-75.842 131.26-52.296-26.149-34.43-17.215L143.878 226.96l34.734 17.345 46.658 23.33 5.334 2.688ZM154.892 149.904l-2.645 4.553-30.744 52.99-86.726-43.363 33.39-57.542 86.725 43.362Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeMiterlimit="10"
@@ -885,7 +885,7 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeMiterlimit="10"
@@ -893,12 +893,12 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                     d="m312.257 59.016-2.645 4.553-30.745 53.033-86.725-43.363 33.389-57.586 86.726 43.363Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
                     d="m312.255 387.317-81.175-40.588Z"
                 />
                 <path
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeMiterlimit="10"
@@ -906,9 +906,9 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                     d="m312.255 387.317-81.175-40.588"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeMiterlimit="10"
@@ -925,25 +925,25 @@ function Animations({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M339.561 185.844v295.897l-42.994-24.816V161.028l42.994 24.816ZM232.117 271.753l-52.319 29.834-76.622 43.705-30.072-51.924 98.83-56.35-98.83-170.473 30.072-17.15 101.28 174.622 27.661 47.736Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m418.593 146.328-79.032 39.516-42.994-24.816 79.033-39.516 42.993 24.816ZM296.568 239.547v.988l-114.36 65.241-79.032 39.516 76.622-43.705 52.319-29.834 64.451-32.206Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -965,25 +965,25 @@ function Photography({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M185.167 106.707 157.35 90.65 81.966 47.115v287.216L332.28 478.843V191.628l-147.113-84.921Zm119.297 212.471-147.114-84.92-47.568-27.478V95.06l47.568 27.478 27.817 16.056 119.297 68.902v111.682Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M185.163 138.595v30.493l-75.384 37.692V95.06l47.568 27.478 27.816 16.057Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -999,34 +999,34 @@ function Photography({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m188.512 110.149-27.727-16.015L81.11 48.122v286.072l249.303 143.935V192.055l-141.901-81.906Zm114.214 256.632-141.941-81.945-51.948-29.998V95.888l51.948 29.997 27.727 16.014 114.214 65.931v158.951Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M302.726 280.931v85.85l-141.941-81.946-51.948-29.997 51.948-25.974L188.512 215l114.214 65.931Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M188.512 141.899v73.102l-27.727 13.863-51.948 25.974V95.888l51.948 29.997 27.727 16.014ZM410.088 152.217l-79.675 39.838-141.901-81.906-27.727-16.015L81.11 48.122l79.675-39.837 249.303 143.932Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1042,34 +1042,34 @@ function Photography({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m188.298 111.445-27.715-15.993-78.4-45.276v286.043l249.273 143.902V194.079l-143.158-82.634Zm115.483 320.892L109.898 320.421v-222.5l50.685 29.283 27.715 15.993 115.483 66.68v222.46Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M188.297 143.197v138.024l-27.714 13.876-50.686 25.324v-222.5l50.686 29.283 27.714 15.993Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M303.78 347.9v84.437L109.897 320.421l50.686-25.323 27.714-13.877L303.78 347.9ZM409.856 154.879v286.042l-78.4 39.2V194.079l78.4-39.2Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1090,23 +1090,23 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m368.594 304.765-43.497 25.102v99.808l-86.955 50.205v-99.808l-43.457 25.103 51.61-188.851c2.691-9.118 6.788-17.793 12.291-25.986.522-.764 1.044-1.487 1.566-2.25 6.346-8.876 13.535-15.583 21.488-20.202 7.952-4.619 15.141-6.145 21.447-4.619 1.486.361 2.852.843 4.137 1.526l.161.081c4.177 2.088 7.39 5.623 9.599 10.683l51.61 129.208ZM319.674 77.347c0 12.049-3.695 24.499-11.125 37.312-7.431 12.812-16.387 22.251-26.91 28.316-3.374 1.927-6.547 3.333-9.599 4.217-6.507 1.928-12.251 1.405-17.312-1.486-4.458-2.531-7.55-6.467-9.317-11.809-1.205-3.574-1.808-7.791-1.808-12.611 0-12.049 3.695-24.5 11.125-37.312 7.431-12.813 16.388-22.252 26.911-28.316 9.438-5.422 17.632-6.747 24.58-3.896l2.33 1.165c7.43 4.217 11.125 12.37 11.125 24.42Z"
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M238.143 380.083v99.808l-80.328-40.164V386.75l36.871 18.436 43.457-25.103ZM306.219 51.761c-6.948-2.851-15.142-1.526-24.58 3.896-10.523 6.065-19.48 15.503-26.91 28.315-7.431 12.813-11.126 25.263-11.126 37.313 0 4.819.603 9.037 1.808 12.611 1.767 5.342 4.859 9.278 9.318 11.808l-17.471-8.715-26.629-13.335-33.898-16.949-2.33-1.165c-7.431-4.217-11.126-12.37-11.126-24.42 0-12.049 3.695-24.5 11.126-37.312 7.43-12.812 16.387-22.25 26.91-28.315 10.523-6.065 19.48-6.989 26.91-2.731l77.998 39Z"
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M307.224 164.797c-1.285-.682-2.651-1.164-4.137-1.526-6.306-1.526-13.495 0-21.447 4.619s-15.142 11.326-21.488 20.203c-.522.763-1.044 1.486-1.566 2.249-5.503 8.193-9.6 16.869-12.291 25.986l-51.61 188.852-36.871-18.437-43.457-21.728 51.61-188.851c2.932-9.961 7.551-19.399 13.857-28.235 6.346-8.877 13.536-15.584 21.488-20.203 3.253-1.888 6.346-3.253 9.318-4.097l26.628 13.335 17.472 8.715c5.06 2.892 10.804 3.414 17.31 1.486l35.184 17.632Z"
@@ -1121,16 +1121,16 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M262.912 48.831 138.689 227.432l-75.63-37.815 124.222-178.6 75.631 37.814ZM387.096 84l-64.55-18.265-11.08-3.139-48.554-13.765-75.631-37.815 59.635 16.904 64.55 18.264L387.096 84Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1138,7 +1138,7 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1153,9 +1153,9 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1163,25 +1163,25 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M269.217 255.448v113.186l-21.95-12.675v125.78l-87.673-50.62v-125.78l-21.908-12.635V179.518c0-13.85 4.292-23.204 12.877-28.104l2.713-1.336c8.019-3.281 17.454-1.782 28.226 4.454l37.176 21.463 6.681 3.847c12.068 6.965 22.394 17.818 30.979 32.64 8.585 14.821 12.879 29.116 12.879 42.966ZM241.801 120.151c0 12.148-3.726 20.369-11.218 24.662-3.604 2.024-7.572 2.875-11.905 2.551-4.657-.365-9.719-2.187-15.227-5.346-4.778-2.753-9.233-6.195-13.364-10.367-5.062-5.021-9.637-11.095-13.768-18.182-7.491-12.918-11.217-25.432-11.217-37.62 0-12.19 3.726-20.37 11.217-24.622l1.579-.77c7.168-3.32 15.672-2.187 25.553 3.523 10.57 6.115 19.64 15.632 27.132 28.55 5.022 8.666 8.342 17.17 10.003 25.512.81 4.09 1.215 8.1 1.215 12.109Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M350.208 214.951v113.186l-21.949 10.974-59.042 29.522V255.447c0-13.85-4.294-28.145-12.879-42.967-8.585-14.821-18.911-25.674-30.979-32.639l-6.681-3.847-37.176-21.463c-10.772-6.237-20.207-7.735-28.226-4.455l36.811-18.425c4.131 4.171 8.586 7.613 13.364 10.367 5.508 3.158 10.57 4.981 15.227 5.345 4.333.324 8.301-.526 11.905-2.551l45.68-22.84 30.088 17.373c12.068 6.965 22.394 17.818 30.979 32.64 8.585 14.821 12.878 29.116 12.878 42.966Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1203,52 +1203,52 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m58.437 49.217-27.753-.523 106.314 305.367 27.753-.362L58.437 49.216ZM308.418 436.678l-27.353.562-19.118-54.944-22.893-65.749-1.004-2.932-63.298-181.782 6.868-.04 20.484-.08 83.259 238.855 23.055 66.11Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m354.485 133.161-23.336 11.688-25.664 12.812-23.376 11.688-7.952 3.976-20.524.08-6.828.041 5.824-2.892 25.464-12.772 23.375-11.648 25.665-12.852 27.352-.121Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m333.88 423.946-25.465 12.732-23.054-66.11-83.259-238.855 7.992-3.976 23.536-11.809 25.464-12.732 23.335-11.647 19.038 54.583-23.375 11.647-25.464 12.772-5.824 2.892 63.137 181.581.965 2.812 22.974 66.11Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m282.431 91.549-23.335 11.647-25.464 12.732-23.536 11.809-7.992 3.976-20.484.08-6.868.04 5.863-2.932 25.465-12.732 23.535-11.768 25.465-12.732 27.351-.12Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m261.948 382.296-25.544 12.772-22.854-65.748-83.099-238.935 7.712-3.856 23.536-11.768 25.504-12.772 23.576-11.768 18.837 54.181-23.536 11.768-25.464 12.732-5.864 2.932 63.298 181.782 1.004 2.932 22.894 65.748Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1256,16 +1256,16 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m380.47 478.689-27.753-.522-18.836-54.221-22.974-66.109-.965-2.811-63.137-181.581 6.828-.04 20.524-.081 83.179 238.894 23.134 66.471Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1273,7 +1273,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1289,97 +1289,97 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m165.205 354.757-27.629.565L92.873 225.51l27.214-.339 45.118 129.586ZM111.152 198.562l-28.006.377-52.92-152.39 28.006.075 52.92 151.938ZM312.617 439.413l-27.628.603-19.299-55.483-29.174-83.789-.037-.151-4.146-11.873-6.672-19.11-9.122-26.234 27.101-.15h.528l1.244 3.58 3.844 11.007 6.672 19.11 4.146 11.835v.038l.038.113 29.211 83.79 23.294 66.714ZM230.939 214.206l-26.121.113h-1.507l-9.122-26.196-.226-.641-8.971-25.819-.264-.754-10.968-31.511 1.809.038 25.819.302 29.551 84.468ZM336.741 346.692l-25.932.301-2.074.038-24.273-70.258-.038-.076-.264-.791-15.529-44.93-4.033-11.647-6.445-18.733-9.725-28.08 27.629.339 5.578 15.981 6.52 18.733 4.071 11.61 44.515 127.513Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M235.085 301.311c-1.96.98-3.882 1.959-5.729 2.864-.905.452-1.809.942-2.676 1.357.565-.302 1.168-.565 1.771-.867l6.672-3.241v-.113h-.038ZM421.471 336.249l-23.482 11.723-24.462 12.25-23.671 11.835-3.769 1.885-27.628-.34 27.176-13.606 23.671-11.836 24.538-12.25 27.627.339Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m458.787 443.073-.49.226-.566.264c-.263.113-.603.301-.98.452-.339.151-.678.339-1.093.528-4.334 2.111-12.551 6.219-21.974 10.931-1.508.754-3.016 1.507-4.561 2.299a267.821 267.821 0 0 0-4.674 2.337c-1.357.678-2.676 1.357-4.033 2.035a5127 5127 0 0 0-14.474 7.275c-.716.377-1.432.716-2.148 1.093-1.433.716-2.79 1.395-4.109 2.073l-4.069 2.035c-1.357.679-2.677 1.32-3.845 1.923l-1.696.867c-.678.339-1.319.678-1.922.98l-4.749 2.374-22.805-65.321-14.511-41.499 3.769-1.884 23.671-11.836 24.463-12.25 23.48-11.722 37.316 106.82Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m345.636 359.996-27.176 13.607 18.431 53.673-24.274 12.137-23.293-66.714-29.212-83.79-.037-.113v-.038l-4.147-11.835-6.671-19.11-3.845-11.007-1.244-3.58 23.218-11.61 1.245-.64 15.529 44.929.264.791.037.076 24.274 70.258 2.073-.037 25.933-.302 27.289-13.645 5.277 15.115-23.671 11.835Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m268.63 230.977-1.244.64-23.218 11.61h-.528l-27.101.151 23.143-11.572 23.671-11.835 1.244-.641 4.033 11.647Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m239.684 231.804-23.143 11.572 9.122 26.234-24.953 12.476-3.619 1.809-28.834-82.81-3.92-11.308-5.277-15.152-30.417-87.333 3.58-1.81 23.897-11.948 24.35-12.137L204.027 49.6l19.185 55.068-23.633 11.798-24.273 12.137-1.546.791 10.969 31.511.263.754 8.971 25.819.227.641 9.121 26.196h1.507l26.122-.113 2.223-1.131 23.671-11.798 6.521 18.696-23.671 11.835Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m276.773 92.045-75.385 37.693-25.819-.302-1.809-.038 1.545-.791 24.274-12.137 23.633-11.798 25.932-12.966 27.629.34Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m248.429 172.517 9.724 28.081-1.319.678-23.671 11.798-2.223 1.131-29.551-84.469 75.384-37.692 19.751 56.425-48.095 24.048Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m351.441 135.162-23.444 11.723-27.252 13.644-23.558 11.76-1.13.566-27.629-.339 75.384-37.693 27.629.339Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m412.125 308.999-75.384 37.692-44.515-127.513-4.071-11.609-6.52-18.733-5.578-15.982 1.13-.565 23.558-11.76 27.252-13.645 23.444-11.722 60.684 173.837ZM101.013 87.405l34.413 99.018-24.273 12.137-52.92-151.938 51.563-25.782 23.821-11.91 18.431 52.957-23.858 11.949-27.177 13.569Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1387,16 +1387,16 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m197.091 283.895-27.59.603-24.877-71.578-3.92-11.307-5.277-15.19-34.413-99.018 27.629-.113 30.417 87.333 5.277 15.152 3.92 11.308 28.834 82.81Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1404,43 +1404,43 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m383.402 480.761-28.005.34-18.506-53.825-18.432-53.673 27.628.339 14.512 41.499 22.803 65.32Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m458.296 443.296-68.222 34.111c17.262-8.707 62.38-31.435 68.222-34.111ZM236.517 300.746l-1.394.679-6.672 3.241c-.603.302-1.206.566-1.771.867.867-.414 1.771-.904 2.676-1.357 1.847-.904 3.769-1.884 5.729-2.864.452-.226.942-.452 1.395-.716v.15h.037Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m265.69 384.537-25.819 12.891-23.708-68.148-5.466-15.642.754-.377 2.299-1.169 3.543-1.771c1.131-.565 2.337-1.206 3.657-1.847.49-.264 1.017-.528 1.545-.792a5445.07 5445.07 0 0 1 4.184-2.148c.565-.302 1.168-.565 1.771-.867l6.672-3.241 1.395-.679 29.173 83.79Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M236.478 300.595c-.453.264-.943.49-1.395.716-1.96.98-3.882 1.96-5.729 2.865-.905.452-1.809.942-2.676 1.356-1.47.754-2.865 1.47-4.184 2.149-.528.264-1.055.528-1.545.791-1.32.641-2.525 1.282-3.656 1.847l-3.544 1.772-2.299 1.168-.753.377-27.592-.301 24.199-12.099 25.028-12.514 4.146 11.873Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1448,25 +1448,25 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m239.87 397.428-27.214.791-19.939-57.217-9.612-27.666 27.592.301 5.465 15.643 23.708 68.148Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m144.625 212.921-24.538 12.25-27.214.339 47.832-23.897 3.92 11.308Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1482,79 +1482,79 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
             >
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M226.91 370.347c-2.94-5.063-6.574-8.86-10.943-11.392-3.879-2.246-7.228-2.777-10.005-1.674l-.898.449c-2.94 1.674-4.41 4.981-4.41 9.963 0 4.982 1.47 10.045 4.41 15.108 2.94 5.064 6.574 8.862 10.903 11.352 4.369 2.491 8.003 2.94 10.943 1.266 2.94-1.674 4.411-5.022 4.411-10.004 0-4.982-1.471-10.004-4.411-15.068ZM94.489 156.012l-27.196.123L30.502 50.499l27.603.53L94.49 156.013ZM163.861 353.93l-27.603.368-36.791-105.677 27.603.082 36.791 105.227ZM112.496 211.302c0 4.982-1.47 8.29-4.41 9.964-2.94 1.674-6.574 1.266-10.903-1.225-4.369-2.532-8.003-6.329-10.943-11.393-2.94-5.063-4.41-10.086-4.41-15.067 0-4.982 1.47-8.289 4.41-9.964l.899-.449c2.776-1.102 6.124-.571 10.044 1.674 4.329 2.532 7.963 6.288 10.903 11.352 2.94 5.063 4.41 10.127 4.41 15.108ZM324.419 323.959l-19.722.082-7.472.041-2.572-7.35-9.311-26.705-.98-2.859-36.668-105.227-2.614-7.554h6.901l10.699.041h.04l9.963.041 51.736 149.49ZM301.799 433.597l-27.563.326-18.415-52.961-14.456-41.404-7.227-20.785-.94-2.695-.98-2.817-34.708-99.756-2.001-5.676-4.042-11.638 27.562.082 37.689 108.086 8.167 23.439 14.456 41.405 22.458 64.394ZM208.33 161.076c0 4.982-1.471 8.29-4.411 9.964-2.654 1.511-5.92 1.306-9.758-.613a10.861 10.861 0 0 1-1.184-.612c-4.329-2.532-7.963-6.33-10.903-11.393-2.94-5.063-4.41-10.045-4.41-15.026 0-5.023 1.47-8.33 4.41-10.004l.898-.45c2.777-1.143 6.125-.571 10.005 1.674 4.328 2.532 8.002 6.289 10.942 11.352 2.94 5.063 4.411 10.127 4.411 15.108ZM342.428 379.208c0 4.982-1.471 8.33-4.411 10.004-2.94 1.674-6.574 1.266-10.902-1.265-4.369-2.491-8.004-6.289-10.944-11.352-2.94-5.064-4.409-10.086-4.409-15.067 0-4.982 1.469-8.331 4.409-10.005l.899-.449c2.777-1.103 6.125-.571 10.045 1.715 4.328 2.491 7.962 6.288 10.902 11.352 2.94 5.063 4.411 10.086 4.411 15.067ZM378.077 478.064l-27.196.123-20.497-58.882-.982-2.777 6.452.041h.041l21.111.082 21.071 61.413Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m406.084 283.129-51.817 25.929-23.52 11.76-6.33 3.144-51.735-149.491 6.043-3.022 23.479-11.718 28.665-14.333 23.479-11.76 51.736 149.491ZM139.772 10.197l-23.356 11.678-58.31 29.155-27.604-.53 81.666-40.834 27.604.53Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M134.217 72.957 99.468 90.311l18.742 53.859-23.723 11.842L58.104 51.03l58.31-29.155 23.356-11.679 17.722 51.124-23.275 11.637Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M208.737 50.01 185.38 61.687l-23.683 11.841-23.234 11.638-11.393 5.676-27.603-.531 34.749-17.354 23.275-11.638 23.642-11.842 27.604.531Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m232.22 313.261.98 2.818-23.725 11.882-35.647-102.614-4.124-11.842-6.819-19.64-14.373-41.365-6.982-20.008-14.456-41.65 11.393-5.676 23.234-11.637 23.683-11.842 23.357-11.678 20.743 59.698-23.316 11.637-23.193 11.597-.898.449c-2.94 1.675-4.411 4.982-4.411 9.964 0 5.022 1.471 10.004 4.411 15.067 2.94 5.063 6.573 8.861 10.902 11.392.408.245.816.45 1.184.613 3.838 1.919 7.105 2.124 9.759.613l16.619-8.331 23.316-11.637 5.595 16.129-23.275 11.638-34.709 17.354 4.043 11.638 2.001 5.675 34.708 99.756Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m283.056 155.399-8.453 4.206-23.642 11.842-5.88 2.94 2.614 7.554-17.437 8.697-11.229 5.635-27.562-.081 34.708-17.354L249.45 167.2l23.683-11.842 9.923.041Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m329.401 416.529.981 2.776-28.583 14.292-22.458-64.395-14.456-41.405-8.167-23.439-37.689-108.086 11.229-5.635 17.437-8.698 36.668 105.228.98 2.859 9.31 26.705 2.572 7.35h7.473l19.722-.123 6.329-3.144 23.52-11.76 6.942 19.927-23.52 11.801-20.62 10.29-.9.449c-2.94 1.674-4.409 5.022-4.409 10.004 0 4.982 1.469 10.004 4.409 15.067 2.94 5.064 6.575 8.861 10.944 11.352 4.328 2.532 7.962 2.94 10.902 1.266l14.088-7.023 23.561-11.801 6.818 19.6-53.083 26.543Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m438.673 375.817-23.48 11.719-58.187 29.115-21.111-.082h-.041l-6.452-.04 81.667-40.835 27.604.123Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1562,37 +1562,37 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                 />
                 <path
                     fill="var(--color-background)"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m209.471 327.961-27.235.123-31.728-91.099-4.083-11.842-6.861-19.641-14.413-41.364-6.943-19.968-18.741-53.858 27.603.53 14.455 41.65 6.983 20.009 14.373 41.364 6.819 19.641 4.124 11.841 35.647 102.614Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M112.494 211.301c0-4.981-1.47-10.045-4.41-15.109-2.94-5.063-6.574-8.819-10.902-11.351-3.92-2.246-7.269-2.776-10.045-1.674l38.016-19.028 14.413 41.364-31.482 15.762c2.94-1.675 4.41-4.982 4.41-9.964ZM150.508 236.983l-23.438 11.719-27.603-.081 46.958-23.479 4.083 11.841ZM234.139 318.773l-70.274 35.158-36.791-105.227 23.439-11.72 31.727 91.099 27.235-.122 23.725-11.882.939 2.694ZM289.996 120.244c0 4.982-1.47 8.289-4.41 9.963l-.898.449-40.833 20.417-23.316 11.638-16.619 8.33c2.94-1.674 4.41-4.982 4.41-9.964 0-4.981-1.47-10.045-4.41-15.108-2.94-5.063-6.615-8.82-10.944-11.352-3.879-2.246-7.227-2.817-10.003-1.674l23.193-11.596 23.315-11.638 34.26-17.15c2.94-1.715 6.574-1.266 10.902 1.225 4.328 2.532 8.003 6.288 10.943 11.352 2.94 5.063 4.41 10.126 4.41 15.108ZM231.319 385.414c0-4.981-1.47-10.004-4.41-15.068-2.94-5.063-6.574-8.86-10.943-11.392-3.88-2.245-7.228-2.776-10.005-1.674l35.403-17.721 14.455 41.404-28.91 14.456c2.94-1.675 4.41-5.023 4.41-10.005Z"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
                     d="m205.963 357.28-.899.449Z"
                 />
                 <path
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="m205.963 357.28-.899.449"
                 />
                 <path
-                    fill="var(--highlighted)"
+                    fill="var(--color-highlighted)"
                     fillOpacity=".1"
-                    stroke="var(--highlighted)"
+                    stroke="var(--color-highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1612,18 +1612,18 @@ function Miscellaneous({ className }: React.ComponentProps<"svg">) {
             shapeRendering="optimizeSpeed"
         >
             <path
-                fill="var(--highlighted)"
+                fill="var(--color-highlighted)"
                 fillOpacity=".1"
-                stroke="var(--highlighted)"
+                stroke="var(--color-highlighted)"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="3"
                 d="m236.956 263.396-124.349 71.789v92.453l124.349-71.789 25.008 14.422v-92.453l-25.008-14.422Z"
             />
             <path
-                fill="var(--highlighted)"
+                fill="var(--color-highlighted)"
                 fillOpacity=".1"
-                stroke="var(--highlighted)"
+                stroke="var(--color-highlighted)"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="3"
@@ -1631,46 +1631,46 @@ function Miscellaneous({ className }: React.ComponentProps<"svg">) {
             />
             <path
                 fill="var(--color-background)"
-                stroke="var(--highlighted)"
+                stroke="var(--color-highlighted)"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="3"
                 d="M478.628 101.834v.093c0 9.8-5.963 18.167-17.936 25.055-12.019 6.934-26.533 10.401-43.591 10.354-17.057 0-31.619-3.513-43.73-10.493-12.065-6.98-18.168-15.393-18.214-25.24 0-9.846 5.918-18.213 17.936-25.193 12.019-6.934 26.58-10.355 43.592-10.355 17.057.047 31.618 3.56 43.73 10.54 12.112 6.98 18.167 15.394 18.213 25.239ZM394.265 184.488v.231c0 11.187-6.842 20.664-20.432 28.522l-5.223 3.005-25.102 14.515-81.543 47.058-25.008-14.422-124.35 71.789-20.015-11.556-80.065-46.227 99.294-57.32 25.055-14.469-25.055-14.469 111.915-64.578c13.683-7.905 30.278-11.834 49.832-11.788 19.507.046 36.149 4.021 49.925 11.972l31.664 18.26 18.398 10.632c4.345 2.496 7.951 5.177 10.91 7.997 6.518 6.148 9.754 13.128 9.8 20.848Z"
             />
             <path
-                fill="var(--highlighted)"
+                fill="var(--color-highlighted)"
                 fillOpacity=".1"
-                stroke="var(--highlighted)"
+                stroke="var(--color-highlighted)"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="3"
                 d="m136.876 205.613-25.055 14.469v-28.938l25.055 14.469Z"
             />
             <path
-                fill="var(--highlighted)"
+                fill="var(--color-highlighted)"
                 fillOpacity=".1"
                 d="M236.957 263.396v92.453Z"
             />
             <path
-                stroke="var(--highlighted)"
+                stroke="var(--color-highlighted)"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="3"
                 d="M236.957 263.396v92.453"
             />
             <path
-                fill="var(--highlighted)"
+                fill="var(--color-highlighted)"
                 fillOpacity=".1"
-                stroke="var(--highlighted)"
+                stroke="var(--color-highlighted)"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="3"
                 d="M394.265 184.718v92.222c.093 11.279-6.749 20.848-20.432 28.753l-111.868 64.578v-92.453l81.543-47.058 25.102-14.515 5.223-3.005c13.59-7.858 20.432-17.335 20.432-28.522Z"
             />
             <path
-                fill="var(--highlighted)"
+                fill="var(--color-highlighted)"
                 fillOpacity=".1"
-                stroke="var(--highlighted)"
+                stroke="var(--color-highlighted)"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="3"
