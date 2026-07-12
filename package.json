@@ -118,7 +118,7 @@
         "babel-plugin-react-compiler": "^1.0.0",
         "chokidar": "^5.0.0",
         "cross-env": "^10.1.0",
-        "eslint": "9.39.4",
+        "eslint": "9.39.5",
         "eslint-plugin-react": "^7.37.5",
         "eslint-plugin-react-hooks": "^7.1.1",
         "eslint-plugin-simple-import-sort": "12.1.1",
@@ -128,7 +128,7 @@
         "oxfmt": "^0.58.0",
         "oxlint": "^1.73.0",
         "oxlint-tsgolint": "^0.24.0",
-        "postcss": "^8.5.16",
+        "postcss": "^8.5.17",
         "postcss-load-config": "^6.0.1",
         "sharp": "^0.35.3",
         "tailwindcss": "3.4.19",
@@ -140,5 +140,5 @@
     "engines": {
         "node": ">=22.18.0"
     },
-    "packageManager": "pnpm@11.11.0"
+    "packageManager": "pnpm@11.12.0"
 }

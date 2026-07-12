@@ -32,7 +32,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                     d="M283.758 181.834v.169c0 4.037-.729 7.906-2.131 11.607-1.177 3.028-2.86 6-5.047 8.804-2.243 3.028-5.103 5.888-8.523 8.635-2.972 2.468-6.448 4.823-10.317 7.066-7.907 4.598-16.599 8.131-26.02 10.598h-.056c-11.215 2.972-23.494 4.486-36.84 4.43-13.514-.056-25.963-1.57-37.403-4.71h-.056c-9.252-2.523-17.775-6.001-25.569-10.543a87.057 87.057 0 0 1-10.711-7.345c-3.364-2.748-6.224-5.664-8.467-8.692h-.057c-2.13-2.804-3.813-5.776-4.99-8.804-1.458-3.701-2.187-7.514-2.243-11.551-.056-14.187 8.635-26.243 26.075-36.337a86.85 86.85 0 0 1 6-3.196c16.206-7.906 35.159-11.888 56.86-11.832 21.925.056 41.047 4.094 57.364 12.225 1.963.953 3.814 1.962 5.72 3.028 17.551 10.093 26.355 22.261 26.411 36.448Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -40,7 +40,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                     d="M283.757 181.997v112.149c0 4.038-.729 7.907-2.13 11.608-2.243 5.719-6.169 11.047-11.832 15.925l-54.448-31.458-69.085-39.869-21.476-12.393-13.906-8.018c-1.122-.673-2.244-1.346-3.309-2.019a9.16 9.16 0 0 1-.785-.505c-.505-.28-1.009-.56-1.458-.897v-45.028c.056 4.038.785 7.851 2.243 11.552 1.177 3.028 2.859 6 4.99 8.803h.056c2.243 3.028 5.103 5.944 8.468 8.692a87.044 87.044 0 0 0 10.71 7.346c7.795 4.542 16.318 8.018 25.57 10.542h.056c11.439 3.14 23.888 4.654 37.402 4.71 13.346.056 25.626-1.458 36.841-4.43h.056c9.421-2.467 18.112-6 26.019-10.598 3.869-2.243 7.346-4.598 10.318-7.065 3.42-2.748 6.28-5.608 8.523-8.636 2.187-2.804 3.869-5.776 5.047-8.804a32.535 32.535 0 0 0 2.13-11.607Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -48,7 +48,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                     d="M523.703 303.403c.056 10.71-3.533 20.411-10.767 29.271h-.056c-5.607 6.953-13.458 13.346-23.551 19.121a137.956 137.956 0 0 1-14.411 7.178L283.759 248.618v-66.785c-.056-14.187-8.86-26.355-26.411-36.449-1.907-1.065-3.757-2.075-5.72-3.028-16.318-8.131-35.439-12.168-57.364-12.224-21.701-.056-40.655 3.925-56.86 11.832a86.247 86.247 0 0 0-6.001 3.196c-17.439 10.093-26.13 22.149-26.074 36.336v45.028c-7.346-4.766-13.346-9.925-17.888-15.42-.224-.225-.392-.505-.617-.729-7.177-8.804-10.767-18.449-10.823-28.991-.056-7.514 1.74-14.635 5.384-21.308 5.44-10.094 15.085-19.066 28.935-27.084 23.047-13.29 50.972-19.907 83.887-19.851 32.86 0 60.898 6.785 84.057 20.131l210.561 121.57c13.738 7.963 23.495 16.935 29.102 26.86 3.813 6.785 5.776 14.019 5.776 21.701Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -65,7 +65,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                 vectorEffect="non-scaling-stroke"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -82,7 +82,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                     d="M297.763 188.238c0 .766-.092 1.47-.306 2.174-.276 1.163-.827 2.235-1.623 3.214-1.285 1.592-3.092 3.061-5.418 4.408a32.384 32.384 0 0 1-7.623 3.123c-2.755.765-5.877 1.132-9.336 1.102h-25.164l-21.979-.092-69.704-.123-113.235-.183c-6.398 0-12-1.408-16.806-4.194-4.806-2.755-7.347-6.092-7.684-9.949 0-4.01 2.357-7.408 7.133-10.163s10.653-4.133 17.633-4.133l63.551.122 69.734.123 36.643.061L18.212 60.922c-4.96-2.847-7.439-6.214-7.47-10.071-.03-3.858 2.45-7.194 7.348-10.041 4.928-2.847 10.744-4.255 17.418-4.255 6.673 0 12.49 1.47 17.449 4.316l195.788 112.581V55.045c-.031-4.01 2.357-7.317 7.133-9.919 4.775-2.571 10.415-3.857 17.395-3.857 6.674.184 12.429 1.561 17.235 4.194 4.806 2.602 7.224 5.908 7.255 9.949v132.826Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -99,7 +99,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
                 vectorEffect="non-scaling-stroke"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -148,7 +148,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                     d="M442.617 106.909c-8.563-17.84-20.217-30.922-34.869-39.295l-6.709-3.378c-13.178-5.899-28.21-8.135-45.099-6.708-2.902.238-5.851.619-8.848 1.095-17.269 2.806-35.537 9.752-54.804 20.884-22.549 13.035-43.767 30.161-63.605 51.474-19.838 21.265-37.106 44.576-51.806 69.932a383.592 383.592 0 0 0-34.872 79.542c-.999 3.187-1.903 6.422-2.807 9.562-3.425 12.464-5.946 24.738-7.611 36.821a237.722 237.722 0 0 0-2.426 34.062c0 25.88 4.281 47.763 12.844 65.603.095.238.239.476.334.714 8.563 17.459 20.028 30.304 34.538 38.581 14.7 8.373 31.968 11.753 51.806 10.135 19.838-1.667 41.056-8.993 63.605-22.028 22.597-13.035 43.814-30.161 63.652-51.474 19.838-21.265 37.108-44.575 51.808-69.932 14.652-25.308 26.306-51.807 34.869-79.541 8.564-27.735 12.845-54.567 12.845-80.446 0-25.88-4.281-47.763-12.845-65.603Zm-110.511 70.17c4.758-8.23 10.562-14.32 17.365-18.221 3.187-1.855 6.184-2.949 8.943-3.33 3.092-.428 5.852.096 8.373 1.523 4.757 2.711 7.136 7.944 7.136 15.746 0 7.802-2.379 15.794-7.136 24.025-4.757 8.23-10.513 14.271-17.316 18.22a27.313 27.313 0 0 1-6.042 2.664c-4.234 1.285-8.04.999-11.323-.856-4.757-2.712-7.136-7.993-7.136-15.794 0-7.802 2.379-15.795 7.136-23.977Zm-115.459 68.267c.38-.761.809-1.57 1.285-2.331 4.757-8.23 10.514-14.32 17.316-18.221 6.803-3.948 12.559-4.519 17.317-1.807.428.238.856.523 1.284.856 3.901 2.854 5.851 7.802 5.851 14.89 0 7.802-2.378 15.794-7.135 24.025-4.758 8.23-10.514 14.271-17.317 18.22-6.802 3.901-12.559 4.519-17.316 1.808-4.758-2.712-7.136-7.993-7.136-15.795 0-7.04 1.95-14.271 5.851-21.645Zm126.068 77.211c-15.081 20.741-31.873 36.44-50.379 47.097-18.458 10.704-35.252 14.367-50.333 11.084a49.901 49.901 0 0 1-6.232-1.808c-11.94-4.329-20.789-13.225-26.64-26.736l96.572-55.755 69.838-40.342c-6.756 23.596-17.746 45.765-32.826 66.46Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -156,7 +156,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                     d="M259.653 238.732c0 7.802-2.379 15.795-7.136 24.025-4.757 8.23-10.513 14.272-17.316 18.22-6.803 3.901-12.56 4.52-17.318 1.808-4.757-2.712-7.135-7.992-7.135-15.794 0-7.041 1.95-14.272 5.851-21.646.381-.761.809-1.57 1.284-2.331 4.758-8.23 10.515-14.319 17.318-18.22 6.803-3.949 12.559-4.52 17.316-1.808.428.238.856.523 1.284.856 3.901 2.855 5.852 7.802 5.852 14.89ZM373.923 172.797c0 7.802-2.379 15.794-7.136 24.024s-10.513 14.272-17.316 18.22a27.32 27.32 0 0 1-6.042 2.665c-4.234 1.284-8.04.999-11.323-.856-4.757-2.712-7.136-7.993-7.136-15.795s2.379-15.794 7.136-23.976c4.758-8.23 10.562-14.32 17.365-18.221 3.187-1.855 6.184-2.95 8.943-3.33 3.092-.428 5.851.095 8.373 1.522 4.757 2.712 7.136 7.945 7.136 15.747ZM375.541 256.097c-6.756 23.596-17.746 45.765-32.826 66.459-15.081 20.742-31.873 36.441-50.379 47.097-18.458 10.704-35.252 14.367-50.333 11.084-2.188-.475-4.234-1.094-6.232-1.807-11.94-4.329-20.788-13.226-26.64-26.736l96.572-55.756 69.838-40.341Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -172,7 +172,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -189,7 +189,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                     d="M239.949 158.535v21.05c0 17.55-5.374 35.55-16.074 54.025-10.7 18.45-23.701 32.1-39.001 40.925l-18.35 10.6c-15.275 8.825-28.275 10.2-39 4.1-8.8-5.025-13.974-13.9-15.524-26.675-.35-2.75-.526-5.675-.526-8.8v-21.075c10.85-6.425 21.1-9.8 30.75-10.1 6.225-.2 11.8.75 16.725 2.825l.525.25c.675.275 1.35.6 2 .95 1.775.925 3.45 2 5.05 3.25v-40.275c-10.675 4.175-19.899 4.475-27.649.875l-1.325-.675-.201-.1c-.85-.45-1.675-.975-2.475-1.525-.4-.25-.774-.55-1.149-.825-8.725-6.625-13.076-17.85-13.076-33.65v-58.7l32.125 13.325 22.925-45.1 5.051 4.075 17.9 14.525 32.124-50.4v58.7c0 15.8-4.374 32.05-13.074 48.75a140.56 140.56 0 0 1-3.726 6.675c-7.525 12.775-16.525 23.35-26.95 31.775-.725.575-1.425 1.125-2.15 1.675v40.275c6.575-12.75 14.7-24.525 24.325-35.35 9.625-10.825 19.876-19.3 30.75-25.375Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -206,7 +206,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                     d="m152.774 108.309-32.125-13.325-50-25 32.125 13.325 50 25Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -214,7 +214,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                     d="m175.698 63.21-22.925 45.1-50-25 22.925-45.1 26.4 13.2 23.6 11.8Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -239,7 +239,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
                     d="m84.206 60.242 7.33-3.665c-2.513 1.07-4.942 2.306-7.33 3.665Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -288,7 +288,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="m456.122 120.749-20.571 11.87-39.793 22.979-16.812 9.715-3.295 1.901 1.225-2.957 18.165-43.804 2.787-6.674 18.079-43.635 40.215 50.605ZM480.242 170.044v69.104l-72.402 41.819v-70.033c0-7.984-.845-15.038-2.619-21.121-1.732-6.04-4.35-11.152-7.814-15.291 2.915-2.324 5.956-4.436 9.039-6.379a294.108 294.108 0 0 1 9.463-5.702c19.304-11.152 34.849-16.052 46.634-14.7 2.154.253 4.14.718 5.914 1.351h.127c7.772 3 11.658 9.969 11.658 20.952Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -305,7 +305,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="M383.72 224.873v69.991L190.635 406.382v-70.034c0-19.98 8.912-41.312 26.738-63.911 7.73-9.8 16.474-19.009 26.274-27.711h.042c12.757-11.32 27.246-21.669 43.467-31.047a234.246 234.246 0 0 1 12.081-6.59c8.575-4.435 16.643-7.899 24.12-10.433a99.81 99.81 0 0 1 7.519-2.281h.042c9.8-2.662 18.544-3.549 26.232-2.619 4.266.507 8.026 1.52 11.278 3.083 10.18 4.858 15.292 14.869 15.292 30.034ZM335.437 116.566v1.394c-.169 7.773-1.478 15.63-3.97 23.571a44.038 44.038 0 0 1-1.014 3.084c-1.901 5.449-4.393 10.982-7.392 16.516a125.636 125.636 0 0 1-5.111 8.533c-5.534 8.532-11.743 15.714-18.713 21.627a79.085 79.085 0 0 1-12.082 8.533c-13.39 7.772-24.794 8.955-34.172 3.591-9.378-5.365-14.109-15.714-14.109-31.09 0-6.167.718-12.377 2.197-18.629 2.238-9.588 6.209-19.262 11.912-28.977 9.378-16.052 20.782-27.922 34.172-35.652 8.026-4.646 15.292-7.012 21.839-7.096 3.675-.043 7.097.633 10.265 2.027l2.282 1.14c5.702 3.211 9.63 8.364 11.784 15.503 1.437 4.52 2.112 9.843 2.112 15.925Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -313,7 +313,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="m415.909 70.144-18.08 43.635-2.788 6.674-18.163 43.805-1.226 2.956-45.198-22.599c.38-1.014.718-2.07 1.014-3.083 2.492-7.942 3.801-15.799 3.97-23.571v-1.394c0-6.083-.676-11.405-2.112-15.925-2.154-7.139-6.082-12.292-11.784-15.503L319.261 84l-9.21-4.604 21.375-51.493 84.483 42.242ZM368.429 194.839c-3.252-1.563-7.012-2.577-11.278-3.084-7.688-.929-16.431-.042-26.231 2.619h-.043c-2.45.634-4.942 1.394-7.519 2.281-7.477 2.535-15.545 5.999-24.12 10.434-3.928 1.985-7.941 4.182-12.081 6.59-16.221 9.377-30.71 19.726-43.467 31.005h-.042c-9.8 8.744-18.544 17.952-26.274 27.752-17.826 22.599-26.738 43.932-26.738 63.912v70.033l-24.163-12.08v-44.014c0-7.983.93-16.093 2.831-24.246 1.859-8.153 4.689-16.39 8.448-24.712l-14.531-7.265 2.534-4.351 33.329-57.49-40.636-23.149-4.182-2.112c12.292-11.574 26.358-22.177 42.157-31.808l56.561 28.26c9.378 5.365 20.782 4.182 34.173-3.591a79.07 79.07 0 0 0 12.081-8.532c6.97-5.914 13.179-13.095 18.713-21.628l5.407 2.704 24.5 12.207 20.571 10.265Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -330,7 +330,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="m199.084 232.223-33.329 57.491-2.534 4.351-4.774 8.237-7.307-4.14-33.328-19.008 3.505-6.041 37.13-64.038 40.637 23.148Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -338,7 +338,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="m158.447 302.302-50.182-25.092-18.629-9.335-7.35-3.675-8.321-4.14-40.636-23.148 84.483 42.241 33.328 19.009 7.307 4.14Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -355,7 +355,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="M177.752 301.33c-3.759 8.322-6.59 16.559-8.448 24.711-1.901 8.153-2.831 16.263-2.831 24.247v69.991l-72.402 41.819v-69.062c0-13.559 5.957-27.837 17.911-42.875a142.412 142.412 0 0 1 14.615-15.798c9.209-8.575 19.812-16.348 31.85-23.275a255.44 255.44 0 0 1 10.054-5.576c3.211-1.69 6.294-3.084 9.251-4.182Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -380,7 +380,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="M181.738 227.19v18.739l-81.643 47.143v-18.738l81.643-47.144ZM238.88 100.524l8.167-23.452 16.333-9.428v92.312l-16.333 9.428-8.167-19.207-40.809 28.252v29.976l-25.024 14.453L91.404 270l-7.643 4.405V143.244l114.31-66.005v46.833l40.809-23.548Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -388,7 +388,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="m226.195 158.959 20.852 10.426-8.167-19.208-12.685 8.782ZM150.465 53.43 36.142 119.434l47.62 23.809L198.07 77.239l-47.606-23.81ZM83.761 274.404V143.243l-47.619-23.809v131.161l47.62 23.809ZM149.071 180.477l-48.976 28.286c0-15.024 4.405-30.405 13.214-46.167l35.762 17.881Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -396,7 +396,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="M149.071 124.263v56.214l-35.762-17.881a38.08 38.08 0 0 1 1.072-1.905c9.523-16.428 21.095-28.571 34.69-36.428ZM263.379 67.642l-16.333 9.429-47.619-23.81 16.333-9.428 47.619 23.81ZM238.88 100.522l-40.81 23.548V80.117l17.69 8.857 23.12 11.548Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -404,7 +404,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="m247.046 77.07-8.166 23.452-23.119-11.547-17.691-8.857v-2.881l-5.952-2.976 1.286-3.691 6.023-17.308 16.334 8.165 31.285 15.643ZM181.737 227.19l-81.643 47.144-8.69-4.334 81.643-47.144 8.69 4.334Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -420,7 +420,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -437,7 +437,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="M371.823 285.394v52.953l-82.353 41.176V248.87l28.494-14.247v47.024l28.453 16.429 25.406-12.682Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -454,7 +454,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="M428.77 175.246v81.653l-56.947 28.494-25.406 12.683v-81.653l21.7-10.871 30.347-15.153 30.306-15.153ZM172.611 105.988v3.005L90.259 150.17v-49l42.658 24.665 36.894-18.447 2.8-1.4Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -471,7 +471,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="M215.27 52.006v32.653l-42.659 21.329-2.8 1.4-36.894 18.447V93.182l11.2-5.6 28.494-14.247 12.394-6.176 30.265-15.153ZM317.965 232.647v1.976l-28.494 14.247-88.406-51.018-82.353-47.558 82.353-41.177 95.9 55.341-21.7 10.871v32.653l42.7 24.665Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -488,7 +488,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="M120.606 282.017 90.259 297.17v-49l28.452-14.206v46.941l1.895 1.112Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -505,7 +505,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
                     d="m193.57 324.142-60.653 30.305v-32.652l30.347-15.153 30.306 17.5ZM428.77 354.899v81.654l-82.353 41.176v-81.653l11.2-5.6 25.694-12.847 17.006-8.483 28.453-14.247Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -527,7 +527,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -571,7 +571,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                     d="M203.065 301.145v71.295l-93.182-53.818 50.593-25.276 15.557-7.799 27.032 15.598Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -623,7 +623,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                     d="m251.887 237.086-7.664-60.476-27.222-15.747v59.261c0 5.612 1.633 11.433 4.858 17.422 3.267 6.031 7.245 10.387 11.894 13.067 6.282 3.643 11.057 3.895 14.281.837 3.267-3.057 4.565-7.831 3.853-14.364Zm62.109 33.42-14.658-62.109-26.511-15.286 7.665 66.087c.712 5.738 2.596 11.266 5.737 16.543 3.141 5.277 6.827 9.13 11.015 11.517 6.742 3.895 11.642 3.644 14.658-.712 3.015-4.397 3.727-9.758 2.094-16.04ZM189.065 144.782v59.219c0 5.612-1.675 9.506-5.025 11.726-3.393 2.178-7.748 1.718-13.109-1.382-3.727-2.135-6.952-5.151-9.716-9.088a41.118 41.118 0 0 1-3.351-5.654c-3.392-6.743-4.606-13.067-3.685-18.93l6.827-45.733.879-5.905 27.18 15.747ZM412.415 280.348v159.313l-83.761 41.88V322.228l83.761-41.88Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -657,7 +657,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -665,7 +665,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                     d="M290.817 294.732v31.228l-8.593-4.973-16.858-9.727-1.791-1.024v-31.228l1.755 1.024 1.792 1.024 23.695 13.676Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -745,7 +745,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
                     d="M318.059 387.94v47.538L209.09 372.582l44.136-22.086 10.349 5.997v16.272l27.242 15.724 15.103-7.569 12.139 7.02Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -830,7 +830,7 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                     d="m382.334 328.389-89.091 44.545-95.015-163.883L109.137 55.37l89.091-44.546L382.334 328.39Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -865,7 +865,7 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                     d="M455.31 140.582 312.257 387.316l-33.39-18.993 109.101-188.845-50.257-28.966-58.844-33.91 30.744-53.033 2.646-4.553 143.053 81.566Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -884,7 +884,7 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                     d="m297.946 231.427-65.825 113.524-1.04 1.777-76.189 131.477-33.389-19.036 75.842-131.26.13-.26 33.129-57.326-5.16-2.992-45.098-25.974-58.843-33.91 30.744-52.989 2.645-4.553 104.114 59.32 33.563 19.123 5.377 3.079ZM387.968 179.478l-51.992-26.017-34.734-17.345-109.1-62.877 86.725 43.363 58.844 33.91 50.257 28.966Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -924,7 +924,7 @@ function Animations({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -964,7 +964,7 @@ function Photography({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -998,7 +998,7 @@ function Photography({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1041,7 +1041,7 @@ function Photography({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1098,14 +1098,14 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
                     d="m368.594 304.765-43.497 25.102v99.808l-86.955 50.205v-99.808l-43.457 25.103 51.61-188.851c2.691-9.118 6.788-17.793 12.291-25.986.522-.764 1.044-1.487 1.566-2.25 6.346-8.876 13.535-15.583 21.488-20.202 7.952-4.619 15.141-6.145 21.447-4.619 1.486.361 2.852.843 4.137 1.526l.161.081c4.177 2.088 7.39 5.623 9.599 10.683l51.61 129.208ZM319.674 77.347c0 12.049-3.695 24.499-11.125 37.312-7.431 12.812-16.387 22.251-26.91 28.316-3.374 1.927-6.547 3.333-9.599 4.217-6.507 1.928-12.251 1.405-17.312-1.486-4.458-2.531-7.55-6.467-9.317-11.809-1.205-3.574-1.808-7.791-1.808-12.611 0-12.049 3.695-24.5 11.125-37.312 7.431-12.813 16.388-22.252 26.911-28.316 9.438-5.422 17.632-6.747 24.58-3.896l2.33 1.165c7.43 4.217 11.125 12.37 11.125 24.42Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M238.143 380.083v99.808l-80.328-40.164V386.75l36.871 18.436 43.457-25.103ZM306.219 51.761c-6.948-2.851-15.142-1.526-24.58 3.896-10.523 6.065-19.48 15.503-26.91 28.315-7.431 12.813-11.126 25.263-11.126 37.313 0 4.819.603 9.037 1.808 12.611 1.767 5.342 4.859 9.278 9.318 11.808l-17.471-8.715-26.629-13.335-33.898-16.949-2.33-1.165c-7.431-4.217-11.126-12.37-11.126-24.42 0-12.049 3.695-24.5 11.126-37.312 7.43-12.812 16.387-22.25 26.91-28.315 10.523-6.065 19.48-6.989 26.91-2.731l77.998 39Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinejoin="round"
                     strokeWidth="3"
@@ -1120,7 +1120,7 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1137,7 +1137,7 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
                     d="M387.097 84v213.768l-93.215 53.773V226.827l-62.017 35.849v124.713l-93.176 53.774V227.432l124.223-178.6 48.554 13.764 11.08 3.138L387.097 84Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1162,7 +1162,7 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
                     d="M328.259 339.111v102.132l-80.992 40.496V355.958l21.95 12.675 59.042-29.522Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1202,7 +1202,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1255,7 +1255,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                     d="m210.781 50.22-23.576 11.767L161.7 74.76l-23.535 11.768-7.712 3.856-27.713-.12 31.288-15.624 23.536-11.768 25.504-12.772 27.713.12ZM138.765 9.053l-23.496 11.728-56.832 28.436-27.753-.522 80.328-40.164 27.753.522ZM460.801 438.526l-80.329 40.164-23.135-66.471-83.179-238.894 7.952-3.976 23.376-11.688 25.664-12.812 23.336-11.688 106.315 305.365Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1272,7 +1272,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                     d="m190.055 341.048-25.304 12.651L58.437 49.217 115.27 20.78l23.496-11.728 18.797 53.82-23.536 11.767-31.288 15.624 87.317 250.784Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1288,7 +1288,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1386,7 +1386,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                     d="m133.616 8.932-23.821 11.91-51.563 25.782-28.005-.075L105.61 8.856l28.005.076Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1403,7 +1403,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                     d="m204.027 49.6-23.558 11.797-24.349 12.137-23.897 11.949-3.58 1.809-27.629.113 27.176-13.57 23.859-11.948 24.349-12.174 27.629-.113Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1447,7 +1447,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                     d="M229.356 304.174c-.302.151-.603.339-.905.49-.603.301-1.206.565-1.771.867.867-.415 1.771-.905 2.676-1.357Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1481,7 +1481,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                 shapeRendering="optimizeSpeed"
             >
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1561,7 +1561,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
                     d="m459.743 437.231-81.668 40.834-21.07-61.414 58.187-29.113 23.481-11.72 21.07 61.413Z"
                 />
                 <path
-                    fill="var(--background)"
+                    fill="var(--color-background)"
                     stroke="var(--highlighted)"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -1630,7 +1630,7 @@ function Miscellaneous({ className }: React.ComponentProps<"svg">) {
                 d="M112.607 335.185v92.452l-100.08-57.783v-92.453l80.065 46.227 20.015 11.557Z"
             />
             <path
-                fill="var(--background)"
+                fill="var(--color-background)"
                 stroke="var(--highlighted)"
                 strokeLinecap="round"
                 strokeLinejoin="round"
