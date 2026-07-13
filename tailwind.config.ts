@@ -92,12 +92,14 @@ export default {
                 11.5: "2.875rem",
                 13: "3.25rem",
                 16.5: "4.125rem",
+                18: "4.5rem",
                 22: "5.5rem",
+                25: "6.25rem",
                 37.5: "9.375rem",
                 56.25: "14.0625rem",
                 61.25: "15.3125rem",
                 75: "18.75rem",
-                sidebar: "27.0625rem",
+                sidebar: "26.25rem",
                 120: "30rem",
                 125: "31.25rem",
                 200: "50rem",
@@ -107,6 +109,9 @@ export default {
                 inherit: "inherit",
                 unset: "unset"
             },
+            inset: ({ theme }) => ({
+                ...(theme("spacing") as Record<string, string>)
+            }),
             rotate: {
                 360: "360deg"
             },
@@ -170,7 +175,8 @@ export default {
             animation: {
                 spinner: "spinner",
                 focus: ".2s ease-out focus forwards",
-                inert: "inert forwards"
+                inert: "inert forwards",
+                "nav-reveal": "nav-reveal 1s cubic-bezier(.4,0,.6,1) forwards"
             },
             keyframes: ({ theme }) => ({
                 spinner: {
@@ -197,6 +203,14 @@ export default {
                     },
                     "100%": {
                         pointerEvent: "auto"
+                    }
+                },
+                "nav-reveal": {
+                    "0%": {
+                        maskPosition: "0 100%"
+                    },
+                    "100%": {
+                        maskPosition: "0 0"
                     }
                 }
             })

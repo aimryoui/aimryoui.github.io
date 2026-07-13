@@ -11,8 +11,6 @@ import {
 } from "react"
 import { usePathname } from "next/navigation"
 
-import { stagger } from "motion/react"
-
 import { LineSidebar } from "@/components/animations/line-sidebar"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
@@ -27,69 +25,27 @@ interface TocListProps {
     mode: PortfolioMode
     items: TocItemProps[]
     filteredItems: TocItemProps[]
-    hasPageMounted: boolean
-    setHasPageMounted: (value: boolean) => void
-}
-
-function getUlVariants(fromIndex: number) {
-    return {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                duration: 1,
-                delayChildren: stagger(0.025, {
-                    startDelay: -0.1,
-                    ease: "easeOut",
-                    from: fromIndex
-                })
-            }
-        }
-    }
+    onActiveReady?: () => void
 }
 
 const _DELAY = 400
 
-function TocList({
-    mode,
-    items,
-    filteredItems,
-    hasPageMounted,
-    setHasPageMounted
-}: TocListProps) {
+function TocList({ mode, items, filteredItems, onActiveReady }: TocListProps) {
     const pathname = usePathname()
 
     const scrollContainerRef = useRef<HTMLUListElement>(null)
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
+    const hasNotifiedActiveRef = useRef(false)
 
     const allIds = useMemo(() => items.map((item) => item.id), [items])
     const rawActiveId = useScrollSpy(allIds)
     const [activeId, setActiveId] = useState(rawActiveId)
     const lastUpdateTimestamp = useRef(0)
 
-    // Stagger "from" index & animation gate, computed once before first paint.
-    // null = waiting for useLayoutEffect to compute, number = ready to animate.
-    const [staggerFrom, setStaggerFrom] = useState<number | null>(
-        hasPageMounted ? 0 : null
-    )
-
-    const ulVariants = useMemo(
-        () => getUlVariants(staggerFrom ?? 0),
-        [staggerFrom]
-    )
-
-    // Before the first paint: figure out which TOC section is initially active
-    // (useScrollSpy hasn't fired yet), scroll the TOC container to center it,
-    // then find which <li> is at the top of the visible area to start stagger.
     useLayoutEffect(() => {
-        if (hasPageMounted) return
-
         const container = scrollContainerRef.current
-        if (!container) {
-            setStaggerFrom(0)
-            return
-        }
+        if (!container) return
 
         // Compute initial active ID independently (useScrollSpy hasn't fired)
         const hash = window.location.hash.slice(1)
@@ -109,8 +65,9 @@ function TocList({
             }
         }
 
-        // Scroll TOC to center the active element (instant, before paint)
+        // Set active ID and scroll TOC to center the active element (instant, before paint)
         if (initialActiveId) {
+            setActiveId(initialActiveId)
             const activeEl = container.querySelector(
                 `[data-toc-id="${initialActiveId}"]`
             )
@@ -120,19 +77,6 @@ function TocList({
             }
         }
 
-        // Find the stagger index of the first visible <li>
-        const containerRect = container.getBoundingClientRect()
-        const listItems = container.querySelectorAll(":scope > li")
-        let firstVisibleIdx = 0
-        for (let i = 0; i < listItems.length; i++) {
-            const rect = listItems[i].getBoundingClientRect()
-            if (rect.bottom > containerRect.top) {
-                firstVisibleIdx = i
-                break
-            }
-        }
-
-        setStaggerFrom(firstVisibleIdx)
         // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -159,6 +103,14 @@ function TocList({
             clearTimeout(timer)
         }
     }, [rawActiveId, activeId, pathname])
+
+    // Notify parent when activeId first becomes truthy (initial scroll is done)
+    useEffect(() => {
+        if (activeId && !hasNotifiedActiveRef.current) {
+            hasNotifiedActiveRef.current = true
+            onActiveReady?.()
+        }
+    }, [activeId, onActiveReady])
 
     const handleItemClick = useCallback((item: TocItemProps) => {
         const targetId = item.id
@@ -208,16 +160,10 @@ function TocList({
     return (
         <LineSidebar
             ref={scrollContainerRef}
-            variants={ulVariants}
-            initial={hasPageMounted ? false : "hidden"}
-            animate={staggerFrom === null ? "hidden" : "visible"}
-            onAnimationComplete={() => {
-                if (!hasPageMounted) setHasPageMounted(true)
-            }}
             itemSelector="li:not([role='separator'])"
             className={cn(
                 "group block overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-3",
-                "scroll-fade-y scroll-fade-24"
+                "scroll-fade-y scroll-fade-18"
             )}
         >
             {filteredItems.map((item) => {

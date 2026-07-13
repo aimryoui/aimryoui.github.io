@@ -174,7 +174,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 <Pagination>
                     <PaginationContent
                         className={cn(
-                            "grid grid-cols-[1fr_var(--px)_1fr] items-center"
+                            "grid grid-cols-[1fr_0_1fr] items-center"
                         )}
                     >
                         <PaginationItem>
@@ -196,10 +196,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                             >
                                 <ArrowLeft
                                     className={cn(
-                                        "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
+                                        "m-1 will-change-[color] transition-[color] duration-100",
                                         {
                                             "group-hover":
-                                                "scale-125 text-highlighted transition-[transform]"
+                                                "text-highlighted transition-none",
+                                            "group-active":
+                                                "text-highlighted transition-none"
                                         }
                                     )}
                                 />
@@ -263,7 +265,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 </div>
                             </PaginationPrevious>
                         </PaginationItem>
-                        <li className="h-full">
+                        <li className="h-full w-0">
                             <ElementLine />
                         </li>
                         <PaginationItem>
@@ -343,10 +345,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 </div>
                                 <ArrowRight
                                     className={cn(
-                                        "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
+                                        "m-1 will-change-[color] transition-[color] duration-100",
                                         {
                                             "group-hover":
-                                                "scale-125 text-highlighted transition-[transform]"
+                                                "text-highlighted transition-none",
+                                            "group-active":
+                                                "text-highlighted transition-none"
                                         }
                                     )}
                                 />

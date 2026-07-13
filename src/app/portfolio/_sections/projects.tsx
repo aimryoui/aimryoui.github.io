@@ -126,12 +126,12 @@ function Projects() {
                             />
                             <ArrowRight
                                 className={cn(
-                                    "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
+                                    "m-1 will-change-[color] transition-[color] duration-100",
                                     {
                                         "group-hover":
-                                            "scale-125 text-highlighted transition-[transform]",
+                                            "text-highlighted transition-none",
                                         "group-active":
-                                            "scale-125 text-highlighted transition-[transform]"
+                                            "text-highlighted transition-none"
                                     }
                                 )}
                             />

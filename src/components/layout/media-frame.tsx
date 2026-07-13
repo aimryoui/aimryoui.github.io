@@ -1,9 +1,14 @@
 "use client"
 
+import React from "react"
+import NextLink from "next/link"
+
+import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Lightbox } from "@/components/ui/lightbox"
 import { Highlight } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
+import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 
 interface SectionNameProps extends React.ComponentProps<"div"> {
@@ -15,7 +20,7 @@ interface SectionNameProps extends React.ComponentProps<"div"> {
 }
 
 export function SectionName({
-    as = "h4",
+    as = NextLink,
     lowercase = false,
     sectionName,
     author,
@@ -23,21 +28,32 @@ export function SectionName({
     containerClassName,
     ...props
 }: SectionNameProps) {
+    const isAnchorTag = as === NextLink
+
     const Comp = as
-    const ContainerComp = as === "h4" ? "figcaption" : "div"
+    const ContainerComp = isAnchorTag ? "figcaption" : "div"
+    const TextComp = isAnchorTag ? "h4" : React.Fragment
+
     return (
         <ContainerComp
+            id={isAnchorTag ? slugify(sectionName) : undefined}
             className={cn(
-                as === "h4" && "pointer-events-none sticky top-3.5 z-30",
-                "grid h-13 place-items-center",
+                isAnchorTag && "sticky top-3.5 z-30",
+                "pointer-events-none grid h-13 place-items-center",
                 containerClassName
             )}
             {...props}
         >
             <Comp
-                aria-hidden={as === "h4" ? undefined : "true"}
+                aria-hidden={isAnchorTag ? undefined : "true"}
+                href={isAnchorTag ? `#${slugify(sectionName)}` : undefined}
+                {...(isAnchorTag && {
+                    "data-cursor": "ignore"
+                })}
                 className={cn(
-                    "pointer-events-auto mx-4 text-pretty rounded-full bg-background px-3.5 py-1.5 text-center font-mono",
+                    isAnchorTag &&
+                        "pointer-events-auto hover:underline hover:decoration-foreground",
+                    "mx-4 text-pretty rounded-full bg-background px-3.5 py-1.5 text-center font-mono",
                     !lowercase && "uppercase",
                     {
                         md: "py-2 text-sm"
@@ -45,7 +61,13 @@ export function SectionName({
                     className
                 )}
             >
-                {formatOrdinal(sectionName)}{" "}
+                <TextComp
+                    {...(isAnchorTag && {
+                        className: "inline cursor-pointer"
+                    })}
+                >
+                    {formatOrdinal(sectionName)}
+                </TextComp>{" "}
                 {author && (
                     <Highlight className="font-mono normal-case" italic>
                         ({author})
@@ -75,7 +97,6 @@ function MediaFrame({
 }) {
     return (
         <>
-            {sectionName && <SectionLine />}
             <figure
                 className={cn("w-full bg-background", flex && "h-full flex-1")}
             >
@@ -124,6 +145,9 @@ function MediaFrame({
                     </div>
                 </div>
             </figure>
+            <SectionLine />
+            <Divider />
+            <SectionLine />
         </>
     )
 }

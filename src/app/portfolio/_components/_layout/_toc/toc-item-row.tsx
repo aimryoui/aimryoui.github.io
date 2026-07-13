@@ -4,8 +4,6 @@ import { memo } from "react"
 import NextLink from "next/link"
 
 import { ChevronDown } from "lucide-react"
-import { type Variants } from "motion/react"
-import * as m from "motion/react-m"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
 import { formatOrdinal } from "@/helpers/format-ordinal"
@@ -31,31 +29,23 @@ interface TocItemRowProps {
     onSameLinkClick: () => void
 }
 
-const liVariants: Variants = {
-    hidden: { x: 10, opacity: 0 },
-    visible: {
-        x: 0,
-        opacity: 1,
-        transition: { duration: 0.3, bounce: 0 }
-    }
-}
 
 const TocItemRow = memo(
     ({ mode, item, isActive, onClick, onSameLinkClick }: TocItemRowProps) => {
         const href = item.href ?? `#${item.id}`
 
         const isProject = item.depth === 3 && !item.icon
+        const isCollapsible = item.depth === 2 && item.id !== "outlines"
 
         return (
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
-            <m.li
-                variants={liVariants}
+            <li
                 className={cn(
-                    "relative mx-6 box-content flex h-fit list-inside items-center gap-4 will-change-[transform,opacity]",
+                    "relative box-content flex h-fit list-inside items-center gap-4 will-change-[transform,opacity] [transform:translateZ(0)]",
                     {
                         // Tick
                         after: [
-                            "absolute left-0 top-[calc(100%+var(--item-gap)/2)] h-[1px] origin-left -translate-y-1/2 bg-[var(--marker-color)] opacity-50",
+                            "absolute left-6 top-[calc(100%+var(--item-gap)/2)] h-[.0625rem] origin-left -translate-y-1/2 bg-[var(--marker-color)] opacity-60",
                             "last:hidden has-[+[role=separator]]:hidden",
                             isProject
                                 ? "w-[calc(var(--marker-length)*var(--tick-scale))] scale-x-[calc(1+var(--effect,0)*1.5)]"
@@ -68,7 +58,7 @@ const TocItemRow = memo(
                 <span
                     aria-hidden="true"
                     className={cn(
-                        "absolute left-0 top-1/2 h-[1px] origin-left -translate-y-1/2",
+                        "absolute left-6 top-1/2 h-[.0625rem] origin-left -translate-y-1/2",
                         isActive
                             ? "bg-highlighted"
                             : "bg-[color-mix(in_srgb,var(--accent-color)_calc(var(--effect,0)*100%),var(--marker-color))]",
@@ -126,8 +116,8 @@ const TocItemRow = memo(
                             ? "flex items-center gap-2 py-1.5"
                             : "inline-block py-1",
                         isProject
-                            ? "ps-8 text-foreground dark:text-muted-foreground"
-                            : "font-wght-600",
+                            ? "ps-14 text-foreground dark:text-muted-foreground"
+                            : "ps-6 font-wght-600",
                         isActive
                             ? "!text-highlighted font-wght-600"
                             : {
@@ -177,7 +167,8 @@ const TocItemRow = memo(
                     {isActive && (
                         <div
                             className={cn(
-                                "absolute right-0 top-1/2 hidden size-5 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                "absolute top-1/2 hidden size-5 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                isCollapsible ? "right-0" : "right-5.5",
                                 "group-hover:grid group-focus-visible/link:hidden dark:bg-highlighted/20"
                             )}
                         >
@@ -189,17 +180,17 @@ const TocItemRow = memo(
                         </div>
                     )}
                 </NextLink>
-                {item.depth === 2 && item.id !== "outlines" && (
+                {isCollapsible && (
                     <div
                         className={cn(
-                            "grid size-5 place-items-center rounded-full bg-default/5",
+                            "me-5.5 grid size-5 place-items-center rounded-full bg-default/5",
                             "group-has-[input:not(:placeholder-shown)]/sidebar:hidden dark:bg-default/10"
                         )}
                     >
                         <ChevronDown className="size-4" />
                     </div>
                 )}
-            </m.li>
+            </li>
             // </ViewTransition>
         )
     }

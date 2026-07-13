@@ -124,8 +124,30 @@ export function TableOfContents({ mode, items, mobile = false }: TocProps) {
     const [query, setQuery] = useState("")
     // const [_, startTransition] = useTransition()
     const [debouncedQuery, setDebouncedQuery] = useState("")
-    const [hasPageMounted, setHasPageMounted] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
+
+    // 'waiting' = mask on, no animation (TOC hidden)
+    // 'animating' = mask + animate-nav-reveal (revealing)
+    // 'done' = all mask/animation classes removed
+    const [navRevealPhase, setNavRevealPhase] = useState<
+        "waiting" | "animating" | "done"
+    >("waiting")
+
+    const handleActiveReady = useCallback(() => {
+        setNavRevealPhase("animating")
+    }, [])
+
+    useEffect(() => {
+        if (navRevealPhase !== "animating") return
+
+        const timer = setTimeout(() => {
+            setNavRevealPhase("done")
+        }, 1000) // matches nav-reveal animation duration
+
+        return () => {
+            clearTimeout(timer)
+        }
+    }, [navRevealPhase])
 
     useEffect(() => {
         // if (!isPending) {
@@ -177,7 +199,13 @@ export function TableOfContents({ mode, items, mobile = false }: TocProps) {
             <nav
                 role="navigation"
                 aria-label="Table of contents"
-                className={cn("flex flex-1 flex-col overflow-auto")}
+                className={cn(
+                    "flex flex-1 flex-col overflow-auto",
+                    navRevealPhase !== "done" && [
+                        "will-change-[mask-position] [mask-image:linear-gradient(black_33.333%,black_35%,transparent_65%,transparent_100%)] [mask-position:0_100%] [mask-size:100%_300%]"
+                    ],
+                    navRevealPhase === "animating" && "animate-nav-reveal"
+                )}
             >
                 {filteredItems.length === 0 ? (
                     <Text className={cn("px-6 py-4")}>
@@ -202,8 +230,7 @@ export function TableOfContents({ mode, items, mobile = false }: TocProps) {
                         mode={mode}
                         items={items}
                         filteredItems={filteredItems}
-                        hasPageMounted={hasPageMounted}
-                        setHasPageMounted={setHasPageMounted}
+                        onActiveReady={handleActiveReady}
                     />
                 )}
             </nav>

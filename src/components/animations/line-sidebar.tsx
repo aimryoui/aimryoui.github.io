@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useRef } from "react"
 
-import { type HTMLMotionProps } from "motion/react"
-import * as m from "motion/react-m"
 
 import { pxToRem } from "@/helpers/px-to-rem"
 import { cn } from "@/lib/utils"
@@ -51,7 +49,7 @@ function LineSidebar({
     className,
     ref,
     ...props
-}: HTMLMotionProps<"ul"> & LineSidebarProps) {
+}: React.ComponentProps<"ul"> & LineSidebarProps) {
     const internalListRef = useRef<HTMLUListElement>(null)
     const setListRef = useCallback(
         (el: HTMLUListElement | null) => {
@@ -164,7 +162,7 @@ function LineSidebar({
     }, [startLoop])
 
     return (
-        <m.ul
+        <ul
             ref={setListRef}
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}

@@ -139,10 +139,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </article>
             </section>
 
-            <SectionLine />
-            <Divider />
-            <SectionLine />
-
             <Space className={cn("grid place-items-center")}>
                 <Highlight
                     className={cn(
@@ -159,7 +155,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <Pagination>
                     <PaginationContent
                         className={cn(
-                            "grid grid-cols-[1fr_var(--px)_1fr] items-center"
+                            "grid grid-cols-[1fr_0_1fr] items-center"
                         )}
                     >
                         <PaginationItem>
@@ -185,10 +181,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 >
                                     <ArrowLeft
                                         className={cn(
-                                            "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
+                                            "m-1 will-change-[color] transition-[color] duration-100",
                                             {
                                                 "group-hover":
-                                                    "scale-125 text-highlighted transition-[transform]"
+                                                    "text-highlighted transition-none",
+                                                "group-active":
+                                                    "text-highlighted transition-none"
                                             }
                                         )}
                                     />
@@ -224,7 +222,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 </PaginationPrevious>
                             )}
                         </PaginationItem>
-                        <li className="h-full">
+                        <li className="h-full w-0">
                             <ElementLine />
                         </li>
                         <PaginationItem>
@@ -317,10 +315,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     </div>
                                     <ArrowRight
                                         className={cn(
-                                            "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
+                                            "m-1 will-change-[color] transition-[color] duration-100",
                                             {
                                                 "group-hover":
-                                                    "scale-125 text-highlighted transition-[transform]"
+                                                    "text-highlighted transition-none",
+                                                "group-active":
+                                                    "text-highlighted transition-none"
                                             }
                                         )}
                                     />

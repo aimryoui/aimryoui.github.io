@@ -64,10 +64,10 @@ function ProjectCard({
             {navigation === "backward" && (
                 <ArrowLeft
                     className={cn(
-                        "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
+                        "m-1 will-change-[color] transition-[color] duration-100",
                         {
-                            "group-hover": "text-highlighted",
-                            "group-active": "text-highlighted"
+                            "group-hover": "text-highlighted transition-none",
+                            "group-active": "text-highlighted transition-none"
                         }
                     )}
                 />
@@ -110,10 +110,10 @@ function ProjectCard({
             {navigation !== "backward" && (
                 <ArrowRight
                     className={cn(
-                        "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
+                        "m-1 will-change-[color] transition-[color] duration-100",
                         {
-                            "group-hover": "text-highlighted",
-                            "group-active": "text-highlighted"
+                            "group-hover": "text-highlighted transition-none",
+                            "group-active": "text-highlighted transition-none"
                         },
                         projectNavigation && {
                             sm: "order-2"

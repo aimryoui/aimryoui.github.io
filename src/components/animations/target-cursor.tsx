@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react"
 
 import { gsap } from "gsap"
 
+import { pxToRem } from "@/helpers/px-to-rem"
 import { cn } from "@/lib/utils"
 
 const CONTAIN_STYLE_REGEX = /paint|layout|strict|content/u
@@ -56,22 +57,27 @@ function computeTargetPositions(
     offsetX: number,
     offsetY: number
 ): { x: number; y: number }[] {
+    const remSize =
+        parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
+    const border = BORDER_WIDTH * remSize
+    const expand = EXPANDED_CORNER_SIZE * remSize
+
     return [
         {
-            x: rect.left - BORDER_WIDTH - offsetX,
-            y: rect.top - BORDER_WIDTH - offsetY
+            x: rect.left - border - offsetX,
+            y: rect.top - border - offsetY
         },
         {
-            x: rect.right + BORDER_WIDTH - EXPANDED_CORNER_SIZE - offsetX,
-            y: rect.top - BORDER_WIDTH - offsetY
+            x: rect.right + border - expand - offsetX,
+            y: rect.top - border - offsetY
         },
         {
-            x: rect.right + BORDER_WIDTH - EXPANDED_CORNER_SIZE - offsetX,
-            y: rect.bottom + BORDER_WIDTH - EXPANDED_CORNER_SIZE - offsetY
+            x: rect.right + border - expand - offsetX,
+            y: rect.bottom + border - expand - offsetY
         },
         {
-            x: rect.left - BORDER_WIDTH - offsetX,
-            y: rect.bottom + BORDER_WIDTH - EXPANDED_CORNER_SIZE - offsetY
+            x: rect.left - border - offsetX,
+            y: rect.bottom + border - expand - offsetY
         }
     ]
 }
@@ -86,10 +92,10 @@ interface TargetCursorProps {
 }
 
 const HOVER_DURATION = 0.25
-const BORDER_WIDTH = 3
-const EXPANDED_CORNER_SIZE = 12
-const REST_CORNER_SIZE = 6
-const REST_OFFSET = 9
+const BORDER_WIDTH = pxToRem(3)
+const EXPANDED_CORNER_SIZE = pxToRem(12)
+const REST_CORNER_SIZE = pxToRem(6)
+const REST_OFFSET = pxToRem(9)
 
 // Precomputed rest positions (corners collapsed near center)
 const REST_POSITIONS = [
@@ -189,10 +195,10 @@ function TargetCursor({
                     tl.to(
                         corner,
                         {
-                            x: REST_POSITIONS[index].x,
-                            y: REST_POSITIONS[index].y,
-                            width: REST_CORNER_SIZE,
-                            height: REST_CORNER_SIZE,
+                            x: `${REST_POSITIONS[index].x}rem`,
+                            y: `${REST_POSITIONS[index].y}rem`,
+                            width: `${REST_CORNER_SIZE}rem`,
+                            height: `${REST_CORNER_SIZE}rem`,
                             duration: 0.3,
                             ease: "power3.out"
                         },
@@ -279,8 +285,8 @@ function TargetCursor({
                 gsap.set(corners[i], {
                     x: sx + (tx - sx) * posStrength - cursorX,
                     y: sy + (ty - sy) * posStrength - cursorY,
-                    width: currentCornerSize,
-                    height: currentCornerSize
+                    width: `${currentCornerSize}rem`,
+                    height: `${currentCornerSize}rem`
                 })
             }
         }
@@ -501,9 +507,9 @@ function TargetCursor({
                 className="absolute left-1/2 top-1/2 border-3 border-b-0 border-r-0 will-change-transform"
                 style={{
                     borderColor: cursorColor,
-                    width: REST_CORNER_SIZE,
-                    height: REST_CORNER_SIZE,
-                    transform: `translate(${REST_POSITIONS[0].x}px, ${REST_POSITIONS[0].y}px)`
+                    width: `${REST_CORNER_SIZE}rem`,
+                    height: `${REST_CORNER_SIZE}rem`,
+                    transform: `translate(${REST_POSITIONS[0].x}rem, ${REST_POSITIONS[0].y}rem)`
                 }}
             />
             <div
@@ -511,9 +517,9 @@ function TargetCursor({
                 className="absolute left-1/2 top-1/2 border-3 border-b-0 border-l-0 will-change-transform"
                 style={{
                     borderColor: cursorColor,
-                    width: REST_CORNER_SIZE,
-                    height: REST_CORNER_SIZE,
-                    transform: `translate(${REST_POSITIONS[1].x}px, ${REST_POSITIONS[1].y}px)`
+                    width: `${REST_CORNER_SIZE}rem`,
+                    height: `${REST_CORNER_SIZE}rem`,
+                    transform: `translate(${REST_POSITIONS[1].x}rem, ${REST_POSITIONS[1].y}rem)`
                 }}
             />
             <div
@@ -521,9 +527,9 @@ function TargetCursor({
                 className="absolute left-1/2 top-1/2 border-3 border-l-0 border-t-0 will-change-transform"
                 style={{
                     borderColor: cursorColor,
-                    width: REST_CORNER_SIZE,
-                    height: REST_CORNER_SIZE,
-                    transform: `translate(${REST_POSITIONS[2].x}px, ${REST_POSITIONS[2].y}px)`
+                    width: `${REST_CORNER_SIZE}rem`,
+                    height: `${REST_CORNER_SIZE}rem`,
+                    transform: `translate(${REST_POSITIONS[2].x}rem, ${REST_POSITIONS[2].y}rem)`
                 }}
             />
             <div
@@ -531,9 +537,9 @@ function TargetCursor({
                 className="absolute left-1/2 top-1/2 border-3 border-r-0 border-t-0 will-change-transform"
                 style={{
                     borderColor: cursorColor,
-                    width: REST_CORNER_SIZE,
-                    height: REST_CORNER_SIZE,
-                    transform: `translate(${REST_POSITIONS[3].x}px, ${REST_POSITIONS[3].y}px)`
+                    width: `${REST_CORNER_SIZE}rem`,
+                    height: `${REST_CORNER_SIZE}rem`,
+                    transform: `translate(${REST_POSITIONS[3].x}rem, ${REST_POSITIONS[3].y}rem)`
                 }}
             />
         </div>

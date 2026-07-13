@@ -39,7 +39,7 @@ export default function Home() {
                     className={cn(
                         buttonVariants({ variant: "outline" }),
                         "z-10 light:bg-white dark:text-white",
-                        "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                        "absolute left-1/2 top-1/2 !-translate-y-1/2 -translate-x-1/2"
                     )}
                 >
                     Portfolio

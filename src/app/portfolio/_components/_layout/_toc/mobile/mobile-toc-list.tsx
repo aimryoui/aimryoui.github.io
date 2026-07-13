@@ -12,11 +12,7 @@ import { type TocListProps } from "@/portfolio/_components/_layout/_toc/toc-list
 
 const _DELAY = 400
 
-function MobileTocList({
-    mode,
-    items,
-    filteredItems
-}: Omit<TocListProps, "hasPageMounted" | "setHasPageMounted">) {
+function MobileTocList({ mode, items, filteredItems }: TocListProps) {
     const pathname = usePathname()
 
     const scrollContainerRef = useRef<HTMLUListElement>(null)
