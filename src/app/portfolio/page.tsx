@@ -117,6 +117,7 @@ export default function Portfolio() {
                     ].map((item, index, array) => (
                         <Fragment key={item.label}>
                             <div
+                                data-cursor="target"
                                 className={cn(
                                     "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                                     {
@@ -171,6 +172,7 @@ export default function Portfolio() {
                         })}
                     />
                     <div
+                        data-cursor="target"
                         className={cn(
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {
@@ -215,6 +217,7 @@ export default function Portfolio() {
                     <Divider dir="vertical" className="h-24" />
                     <ElementLine className="h-24" />
                     <div
+                        data-cursor="target"
                         className={cn(
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {

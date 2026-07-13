@@ -434,6 +434,7 @@ function CarouselItem({
             data-slot="carousel-item"
             className={cn(
                 "min-w-0 shrink-0 grow-0 basis-3/4 will-change-[opacity]",
+                "[&>div:active]:cursor-grabbing",
                 orientation === "horizontal"
                     ? "first-of-type:!pl-2"
                     : "first-of-type:!pt-2",

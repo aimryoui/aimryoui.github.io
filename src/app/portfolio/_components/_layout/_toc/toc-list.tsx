@@ -12,8 +12,8 @@ import {
 import { usePathname } from "next/navigation"
 
 import { stagger } from "motion/react"
-import * as m from "motion/react-m"
 
+import { LineSidebar } from "@/components/animations/line-sidebar"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
 import { TocDivider } from "@/portfolio/_components/_layout/_toc/toc-divider"
@@ -206,20 +206,18 @@ function TocList({
     }, [activeId])
 
     return (
-        <m.ul
+        <LineSidebar
+            ref={scrollContainerRef}
             variants={ulVariants}
             initial={hasPageMounted ? false : "hidden"}
             animate={staggerFrom === null ? "hidden" : "visible"}
             onAnimationComplete={() => {
                 if (!hasPageMounted) setHasPageMounted(true)
             }}
-            ref={scrollContainerRef}
+            itemSelector="li:not([role='separator'])"
             className={cn(
-                "group overflow-y-scroll overscroll-contain scroll-auto py-3 will-change-[opacity] scrollbar-thin",
-                "scroll-fade-y scroll-fade-24",
-                {
-                    lg: "pb-[30vh]"
-                }
+                "group block overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-3",
+                "scroll-fade-y scroll-fade-24"
             )}
         >
             {filteredItems.map((item) => {
@@ -230,7 +228,6 @@ function TocList({
                         {(item.depth === 2 || item.depth === 4) && (
                             <TocDivider id={item.id} />
                         )}
-
                         <TocItemRow
                             mode={mode}
                             item={item}
@@ -241,7 +238,7 @@ function TocList({
                     </Fragment>
                 )
             })}
-        </m.ul>
+        </LineSidebar>
     )
 }
 

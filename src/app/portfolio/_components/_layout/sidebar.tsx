@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, ViewTransition } from "react"
+import { useState } from "react"
 import NextLink from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
@@ -45,17 +45,17 @@ function Sidebar({ className }: { className?: string }) {
     const tocItems = useTocItems(mode)
 
     return (
-        <ViewTransition name="sidebar">
-            <aside
-                className={cn(
-                    "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-sidebar flex-col justify-end bg-background lg:hidden",
-                    className
-                )}
-            >
-                <TableOfContents mode={mode} items={tocItems} />
-                <Menu />
-            </aside>
-        </ViewTransition>
+        // <ViewTransition name="sidebar">
+        <aside
+            className={cn(
+                "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-sidebar flex-col justify-end bg-background lg:hidden",
+                className
+            )}
+        >
+            <TableOfContents mode={mode} items={tocItems} />
+            <Menu />
+        </aside>
+        // </ViewTransition>
     )
 }
 
@@ -159,7 +159,7 @@ function Menu({ className }: { className?: string }) {
                             </svg>
                             <div
                                 className={cn(
-                                    "flex flex-col sm:@[19.75rem]:hidden"
+                                    "flex flex-col sm:@[20.5rem]:hidden"
                                 )}
                             >
                                 <Bold className="text-sm">

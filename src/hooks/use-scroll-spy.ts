@@ -34,7 +34,7 @@ export function useScrollSpy(ids: string[], offsetPercent = 40) {
                         return { el, rect }
                     })
                     .filter(
-                        (item) =>
+                        (item): item is { el: HTMLElement; rect: DOMRect } =>
                             item !== null &&
                             (item.rect.width > 0 || item.rect.height > 0)
                     )

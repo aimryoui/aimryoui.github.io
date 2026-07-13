@@ -2,7 +2,13 @@ import { cn } from "@/lib/utils"
 
 function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
     return (
-        <div className={cn("sticky top-0 h-dvh w-px", className)} {...props}>
+        <div
+            className={cn(
+                "pointer-events-none sticky top-0 h-dvh w-px",
+                className
+            )}
+            {...props}
+        >
             <hr
                 className={cn(
                     "sticky top-0 h-full border-r border-dashed border-stroke",
@@ -19,7 +25,7 @@ function Plus({ position }: { position?: "left" | "right" }) {
     return (
         <div
             className={cn(
-                "relative z-1 size-1",
+                "pointer-events-none relative z-1 size-1",
                 {
                     before: "absolute left-1/2 top-1/2 h-6 w-1 -translate-x-1/2 -translate-y-1/2 bg-highlighted",
                     after: "absolute left-1/2 top-1/2 h-1 w-6 -translate-x-1/2 -translate-y-1/2 bg-highlighted"
@@ -44,7 +50,7 @@ function SectionLine({
     return (
         <div
             className={cn(
-                "relative z-10 h-0 w-full",
+                "pointer-events-none relative z-10 h-0 w-full",
                 showDecoration && "flex items-center justify-between"
             )}
         >
@@ -71,6 +77,7 @@ function ElementLine({
     return (
         <hr
             className={cn(
+                "pointer-events-none",
                 dir === "vertical"
                     ? "h-full border-r border-dashed border-stroke md:border-r-[1px]"
                     : "w-full border-b border-dashed border-stroke",

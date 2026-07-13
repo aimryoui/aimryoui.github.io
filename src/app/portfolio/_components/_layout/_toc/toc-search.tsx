@@ -1,7 +1,6 @@
 "use client"
 
 import { memo } from "react"
-import { usePathname } from "next/navigation"
 
 import { Search, XCircle } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
@@ -13,7 +12,6 @@ import {
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePlatform } from "@/hooks/use-platform"
 import { cn } from "@/lib/utils"
 
@@ -34,8 +32,6 @@ function TocSearch({
     ref,
     ...props
 }: TocSearchProps) {
-    const isMobile = useMediaQuery("lg")
-    const pathname = usePathname()
     const platform = usePlatform()
 
     useHotkeys([
@@ -54,6 +50,7 @@ function TocSearch({
     return (
         <InputGroup
             as="search"
+            data-cursor="ignore"
             className={cn({
                 lg: "h-[36px]"
             })}
@@ -65,11 +62,7 @@ function TocSearch({
                 type="search"
                 role="searchbox"
                 tabIndex={0}
-                placeholder={
-                    pathname === "/portfolio" || isMobile
-                        ? "Search for sections..."
-                        : "Search for..."
-                }
+                placeholder="Search for sections..."
                 autoComplete="off"
                 value={value}
                 onChange={(e) => {
@@ -84,7 +77,7 @@ function TocSearch({
                         }
                     }
                 }}
-                className={cn("text-sm", className)}
+                className={cn("text-md", className)}
                 {...props}
             />
             <RightAddon

@@ -24,12 +24,12 @@ const MATRIX_REGEX = /^matrix(?:3d)?\(([^,]+),\s*([^,]+)/u
 const FPS = 24
 const FPS_INTERVAL = 1000 / FPS
 
-const getInlineScale = (el: HTMLElement) => {
+function getInlineScale(el: HTMLElement) {
     const match = SCALE_3D_REGEX.exec(el.style.transform)
     return match ? parseFloat(match[1]) : 1
 }
 
-const getTransitionScale = (el: HTMLElement) => {
+function getTransitionScale(el: HTMLElement) {
     const matrix = window.getComputedStyle(el).transform
 
     if (matrix !== "none") {
@@ -45,7 +45,7 @@ const getTransitionScale = (el: HTMLElement) => {
     return 1
 }
 
-const isOriginalInViewport = (el: Element) => {
+function isOriginalInViewport(el: Element) {
     const rect = el.getBoundingClientRect()
     return (
         rect.top < window.innerHeight &&
@@ -63,6 +63,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
     return (
         <Gallery
             data-slot="lightbox"
+            data-cursor="ignore"
             options={{
                 showHideAnimationType: "zoom",
                 wheelToZoom: true,
@@ -78,6 +79,21 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 ...options
             }}
             onBeforeOpen={(lightbox) => {
+                lightbox.on("afterInit", () => {
+                    const pswpElement = document.querySelector(".pswp")
+                    const pswpItemElement =
+                        document.querySelector(".pswp__item")
+                    if (pswpElement) {
+                        pswpElement.setAttribute("data-slot", "lightbox")
+                        pswpElement.setAttribute("data-cursor", "ignore")
+                    }
+                    if (pswpItemElement) {
+                        pswpItemElement.setAttribute(
+                            "data-slot",
+                            "lightbox-item"
+                        )
+                    }
+                })
                 // Force show/hide animation
                 lightbox.addFilter("useContentPlaceholder", () => true)
                 // Force zoomable

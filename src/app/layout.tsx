@@ -5,17 +5,17 @@ import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
 import Script from "next/script"
 
+import { TargetCursor } from "@/components/animations/target-cursor"
 import { MarginLine } from "@/components/layout/line"
 import { PngAntiBleed, PngBorder } from "@/components/ui/svg-filter"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
+import { LazyMotionProvider } from "@/providers/lazy-motion-provider"
 import { ProgressProvider } from "@/providers/progress-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
 import AppData from "~/package.json"
-
-import { LazyMotionProvider } from "../providers/lazy-motion-provider"
 
 const lastModified = new Date().toLocaleString("en-US", {
     year: "numeric",
@@ -184,6 +184,7 @@ export default function RootLayout({
                     <ProgressProvider>
                         <TooltipProvider>
                             {/* <BackgroundPattern /> */}
+                            <TargetCursor />
                             <MarginLine />
                             <MarginLine className="order-last" />
                             <LazyMotionProvider>{children}</LazyMotionProvider>

@@ -1,8 +1,19 @@
 import { cn } from "@/lib/utils"
 
-function Space({ className, ...props }: React.ComponentProps<"div">) {
+type SpaceProps<T extends React.ElementType> = {
+    as?: T
+    className?: string
+} & Omit<React.ComponentPropsWithRef<T>, "as" | "className">
+
+function Space<T extends React.ElementType = "div">({
+    className,
+    as,
+    ...props
+}: SpaceProps<T>) {
+    const Comp = as ?? "div"
+
     return (
-        <div
+        <Comp
             className={cn("h-20 w-full bg-background", className)}
             {...props}
         />

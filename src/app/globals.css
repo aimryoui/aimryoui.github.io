@@ -75,6 +75,10 @@
             oklch(0.928 0.006 264.531),
             oklch(1 0 0 / 10%)
         );
+        --color-marker: light-dark(
+            oklch(0.5655 0.01472 266.647 / 0.5),
+            oklch(0.7173 0.01743 262.779 / 0.4)
+        ); /* NHN */
         --color-svg-filter: var(--color-default); /* NHN */
         --color-input: var(--color-stroke); /* NHN */
         --color-ring: light-dark(
@@ -245,12 +249,6 @@
         ::view-transition-group(*) {
             @apply !animation-duration-0 !animation-delay-0;
         }
-    }
-}
-
-@screen lg {
-    aside *:is(li > a, li > div) {
-        zoom: 1.2858;
     }
 }
 

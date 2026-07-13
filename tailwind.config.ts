@@ -54,7 +54,7 @@ export default {
         screens: {
             "2xl": { max: "96rem" },
             xl: { max: "80rem" },
-            lg: { max: "64rem" },
+            lg: { max: "72rem" },
             md: { max: "48rem" },
             sm: { max: "40rem" }
         },
@@ -69,8 +69,9 @@ export default {
         fontWeight: {},
         extend: {
             fontSize: {
-                xxs: "0.5rem",
-                sm: ["0.875rem", "1.3"],
+                xxs: ".5rem",
+                sm: [".875rem", "1.3"],
+                md: [".9375rem", "1.3"],
                 base: ["1rem", "1.3"],
                 "2xl": ["1.5rem", "1.3"],
                 "4xl": ["2.25rem", "1.3"]
@@ -86,6 +87,7 @@ export default {
                 5.5: "1.375rem",
                 5.25: "1.3125rem",
                 6.5: "1.75rem",
+                7.5: "1.875rem",
                 9.5: "2.375rem",
                 11.5: "2.875rem",
                 13: "3.25rem",
@@ -95,7 +97,7 @@ export default {
                 56.25: "14.0625rem",
                 61.25: "15.3125rem",
                 75: "18.75rem",
-                sidebar: "23.5rem",
+                sidebar: "27.0625rem",
                 120: "30rem",
                 125: "31.25rem",
                 200: "50rem",
@@ -104,6 +106,9 @@ export default {
                 auto: "auto",
                 inherit: "inherit",
                 unset: "unset"
+            },
+            rotate: {
+                360: "360deg"
             },
             transitionDuration: {
                 50: "50ms",

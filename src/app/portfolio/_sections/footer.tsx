@@ -144,6 +144,7 @@ function Footer() {
             </Divider>
             <SectionLine />
             <Space
+                as="ul"
                 className={cn("flex items-center bg-transparent", {
                     xl: "h-fit min-h-20 flex-wrap"
                 })}
@@ -158,39 +159,51 @@ function Footer() {
                                     sideOffset: 8
                                 }}
                                 render={
-                                    <NextLink
-                                        href={platform.links.url}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        className={cn(
-                                            "grid h-full flex-1 place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
-                                            {
-                                                hover: "bg-element-hover text-highlighted opacity-100 transition-none",
-                                                xl: "h-20 basis-[calc(20%-var(--px)*4)]",
-                                                lg: "opacity-100"
-                                            }
-                                        )}
+                                    <li
+                                        className={cn("h-full flex-1", {
+                                            xl: "h-20 basis-[calc(20%-var(--px)*4)]"
+                                        })}
                                     >
-                                        {platform.icon}
-                                        <span className="sr-only">
-                                            {platform.title}
-                                        </span>
-                                    </NextLink>
+                                        <NextLink
+                                            href={platform.links.url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            data-cursor="target"
+                                            className={cn(
+                                                "grid h-full place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
+                                                {
+                                                    hover: "bg-highlighted/5 text-highlighted opacity-100 transition-none",
+                                                    active: "bg-highlighted/10 text-highlighted opacity-100 transition-none",
+                                                    lg: "opacity-100"
+                                                }
+                                            )}
+                                        >
+                                            {platform.icon}
+                                            <span className="sr-only">
+                                                {platform.title}
+                                            </span>
+                                        </NextLink>
+                                    </li>
                                 }
                             />
 
                             {index < arr.length - 1 && (
-                                <ElementLine
-                                    className={cn({
+                                <li
+                                    role="separator"
+                                    className={cn("h-full", {
                                         xl: [
                                             "h-20",
                                             {
-                                                "nth-of-type-5":
+                                                "nth-of-type-10":
+                                                    "h-auto w-full",
+                                                "[&>hr]:nth-of-type-10":
                                                     "h-auto w-full border-b border-r-0"
                                             }
                                         ]
                                     })}
-                                />
+                                >
+                                    <ElementLine />
+                                </li>
                             )}
                         </Fragment>
                     ))}

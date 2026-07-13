@@ -139,6 +139,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     {group.projects.map((project, index) => (
                         <li
                             key={project.slug}
+                            data-cursor="target"
                             className={cn({
                                 "[&:nth-child(odd)]":
                                     "border-r border-dashed border-stroke",

@@ -10,6 +10,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
+import { MobileTocList } from "@/portfolio/_components/_layout/_toc/mobile/mobile-toc-list"
 import { type TocItemProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
 import { TocList } from "@/portfolio/_components/_layout/_toc/toc-list"
 import { TocSearch } from "@/portfolio/_components/_layout/_toc/toc-search"
@@ -18,6 +19,7 @@ import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 interface TocProps {
     mode: PortfolioMode
     items: TocItemProps[]
+    mobile?: boolean
 }
 
 function removeAccents(str: string): string {
@@ -97,10 +99,15 @@ function BackToPortfolio({ mode }: { mode: PortfolioMode }) {
                 render={
                     <NextLink
                         href="/portfolio#projects"
-                        className={buttonVariants({
-                            variant: "outline",
-                            size: "icon"
-                        })}
+                        className={cn(
+                            buttonVariants({
+                                variant: "outline",
+                                size: "icon"
+                            }),
+                            {
+                                lg: "size-[36px]"
+                            }
+                        )}
                     >
                         <ArrowLeft className="size-4 lg:size-5" />
                         <span className="sr-only">Back to Portfolio</span>
@@ -113,7 +120,7 @@ function BackToPortfolio({ mode }: { mode: PortfolioMode }) {
 
 const SEARCH_DELAY = 500
 
-export function TableOfContents({ mode, items }: TocProps) {
+export function TableOfContents({ mode, items, mobile = false }: TocProps) {
     const [query, setQuery] = useState("")
     // const [_, startTransition] = useTransition()
     const [debouncedQuery, setDebouncedQuery] = useState("")
@@ -184,6 +191,12 @@ export function TableOfContents({ mode, items }: TocProps) {
                             Clear search
                         </Highlight>
                     </Text>
+                ) : mobile ? (
+                    <MobileTocList
+                        mode={mode}
+                        items={items}
+                        filteredItems={filteredItems}
+                    />
                 ) : (
                     <TocList
                         mode={mode}

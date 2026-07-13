@@ -53,7 +53,8 @@ function ProjectCard({
                 "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
                 "[contain:layout_paint]",
                 {
-                    hover: "bg-element-hover transition-none"
+                    hover: "bg-highlighted/5 transition-none",
+                    active: "bg-highlighted/10 transition-none"
                 },
                 projectNavigation && {
                     sm: "flex-wrap gap-x-2"
@@ -65,8 +66,8 @@ function ProjectCard({
                     className={cn(
                         "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
                         {
-                            "group-hover":
-                                "scale-125 text-highlighted transition-[transform]"
+                            "group-hover": "text-highlighted",
+                            "group-active": "text-highlighted"
                         }
                     )}
                 />
@@ -106,13 +107,13 @@ function ProjectCard({
                     className={cn(navigation === "backward" && "text-right")}
                 />
             </div>
-            {navigation === "forward" && (
+            {navigation !== "backward" && (
                 <ArrowRight
                     className={cn(
                         "m-1 will-change-[transform,color] transition-[transform,color] ease-spring duration-500",
                         {
-                            "group-hover":
-                                "scale-125 text-highlighted transition-[transform]"
+                            "group-hover": "text-highlighted",
+                            "group-active": "text-highlighted"
                         },
                         projectNavigation && {
                             sm: "order-2"
@@ -151,7 +152,8 @@ function ProjectCover({
                     className={cn(
                         "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40 will-change-[height,transform] transition-[height,transform] ease-spring duration-300",
                         {
-                            "group-hover": "-translate-y-0.5 scale-y-150"
+                            "group-hover": "-translate-y-0.5 scale-y-150",
+                            "group-active": "-translate-y-0.5 scale-y-150"
                         }
                     )}
                 />
@@ -159,7 +161,8 @@ function ProjectCover({
                     className={cn(
                         "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70 will-change-[height] transition-[height] ease-spring duration-300",
                         {
-                            "group-hover": "scale-y-150"
+                            "group-hover": "scale-y-150",
+                            "group-active": "scale-y-150"
                         }
                     )}
                 />
@@ -170,6 +173,8 @@ function ProjectCover({
                         "aspect-video w-14 rounded-lg object-cover -outline-offset-2 outline-muted-foreground/80 will-change-[height,transform,outline] outline-2 transition-[height,transform]",
                         {
                             "group-hover":
+                                "translate-y-0.5 -outline-offset-3 outline-3",
+                            "group-active":
                                 "translate-y-0.5 -outline-offset-3 outline-3"
                         }
                     )}
@@ -198,13 +203,12 @@ function ProjectName({
         >
             <Bold
                 className={cn(
-                    "will-change-[color,font-variation-settings] transition-[color,font-variation-settings] ease-spring duration-500",
                     projectNavigation
                         ? "w-full truncate"
                         : "line-clamp-1 w-fit",
                     {
-                        "group-hover":
-                            "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                        "group-hover": "text-highlighted",
+                        "group-active": "text-highlighted"
                     },
                     className
                 )}
@@ -242,7 +246,8 @@ function ProjectCategory({
                         ? "w-full truncate"
                         : "line-clamp-1 w-fit",
                     {
-                        "group-hover": "text-foreground transition-none"
+                        "group-hover": "text-foreground transition-none",
+                        "group-active": "text-foreground transition-none"
                     },
                     className
                 )}

@@ -4,83 +4,39 @@ import { memo } from "react"
 import NextLink from "next/link"
 
 import { ChevronDown } from "lucide-react"
-import { type Variants } from "motion/react"
-import * as m from "motion/react-m"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { cn } from "@/lib/utils"
-import { type PortfolioMode } from "@/stores/portfolio-mode-store"
+import { type TocItemRowProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
 
-interface TocItemProps {
-    id: string
-    label: string
-    depth: number
-    href?: string
-    mode?: "anchor" | "route"
-    kind?: "static" | "project"
-    icon?: React.ReactNode
-    hidden?: boolean
-}
-
-interface TocItemRowProps {
-    mode: PortfolioMode
-    item: TocItemProps
-    isActive: boolean
-    onClick: (item: TocItemProps) => void
-    onSameLinkClick: () => void
-}
-
-const liVariants: Variants = {
-    hidden: { x: 10, opacity: 0 },
-    visible: {
-        x: 0,
-        opacity: 1,
-        transition: { duration: 0.3, bounce: 0 }
-    }
-}
-
-const TocItemRow = memo(
+const MobileTocItemRow = memo(
     ({ mode, item, isActive, onClick, onSameLinkClick }: TocItemRowProps) => {
         const href = item.href ?? `#${item.id}`
 
         const isProject = item.depth === 3 && !item.icon
 
         return (
-            // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
-            <m.li
-                variants={liVariants}
+            <li
                 className={cn(
                     "relative mx-6 box-content flex h-fit list-inside items-center gap-4 will-change-[transform,opacity]",
-                    {
-                        // Tick
-                        after: [
-                            "absolute left-0 top-[calc(100%+var(--item-gap)/2)] h-[1px] origin-left -translate-y-1/2 bg-[var(--marker-color)] opacity-50",
-                            "last:hidden has-[+[role=separator]]:hidden",
-                            isProject
-                                ? "w-[calc(var(--marker-length)*var(--tick-scale))] scale-x-[calc(1+var(--effect,0)*1.5)]"
-                                : "w-1.25 scale-x-[var(--effect,0)]"
-                        ]
-                    }
+                    isProject && [
+                        "border-s-[.0625rem] border-muted-foreground/20",
+                        isActive
+                            ? {
+                                  before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-highlighted"
+                              }
+                            : {
+                                  hover: {
+                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
+                                  }
+                              }
+                    ]
                 )}
             >
-                {/* Marker */}
-                <span
-                    aria-hidden="true"
-                    className={cn(
-                        "absolute left-0 top-1/2 h-[1px] origin-left -translate-y-1/2",
-                        isActive
-                            ? "bg-highlighted"
-                            : "bg-[color-mix(in_srgb,var(--accent-color)_calc(var(--effect,0)*100%),var(--marker-color))]",
-                        isProject
-                            ? "w-[var(--marker-length)] scale-x-[calc(1+var(--effect,0))]"
-                            : "w-2.5 scale-x-[var(--effect,0)]"
-                    )}
-                />
                 <NextLink
                     href={href}
                     data-toc-id={item.id}
-                    data-cursor="target"
                     onClick={(e) => {
                         const isSameUrl = (() => {
                             try {
@@ -121,24 +77,22 @@ const TocItemRow = memo(
                         onClick(item)
                     }}
                     className={cn(
-                        "group/link relative flex-1 truncate leading-6 will-change-[color]",
+                        "group/link relative flex-1 leading-6 will-change-[color,font-variation-settings] [contain:layout_paint]",
                         item.icon
-                            ? "flex items-center gap-2 py-1.5"
-                            : "inline-block py-1",
+                            ? "flex items-center gap-4 py-2.5"
+                            : "inline-block py-3",
                         isProject
-                            ? "ps-8 text-foreground dark:text-muted-foreground"
-                            : "font-wght-600",
+                            ? "ps-6.5 text-foreground dark:text-muted-foreground"
+                            : "font-wght-600 font-slnt-0",
                         isActive
-                            ? "!text-highlighted font-wght-600"
+                            ? "!text-highlighted font-wght-[600]"
                             : {
                                   "group-hover":
-                                      "transition-[color] duration-100",
-                                  hover: [
-                                      "!transition-none",
-                                      isProject
-                                          ? "text-muted-foreground dark:text-foreground"
-                                          : "text-foreground"
-                                  ],
+                                      "transition-[color,font-variation-settings] ease-spring duration-500",
+                                  hover: isProject
+                                      ? "text-muted-foreground font-wght-[600] !transition-[font-variation-settings] dark:text-foreground"
+                                      : "text-foreground -font-slnt-10 !transition-[font-variation-settings]",
+                                  active: "text-highlighted font-wght-[600]",
                                   "focus-visible": "text-foreground"
                               }
                     )}
@@ -146,7 +100,7 @@ const TocItemRow = memo(
                     {item.icon && (
                         <div
                             className={cn(
-                                "grid size-6 place-items-center rounded-md will-change-[transform,background-color,color]",
+                                "grid size-9 place-items-center rounded-lg will-change-[background-color,color]",
                                 isActive
                                     ? "bg-highlighted text-white dark:bg-highlighted/70"
                                     : [
@@ -158,22 +112,13 @@ const TocItemRow = memo(
                                                   "bg-muted-foreground/30 text-default !transition-none dark:bg-muted-foreground/40"
                                           }
                                       ],
-                                "translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem)*0.9)]"
+                                "[&>svg]:[zoom:1.5]"
                             )}
                         >
                             {item.icon}
                         </div>
                     )}
-                    <span
-                        data-cursor="lock"
-                        className={cn(
-                            "block w-fit max-w-full px-1.25 will-change-transform",
-                            !isProject && !item.icon && "-ms-1.25",
-                            "translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
-                        )}
-                    >
-                        {formatOrdinal(item.label)}
-                    </span>
+                    {formatOrdinal(item.label)}
                     {isActive && (
                         <div
                             className={cn(
@@ -192,19 +137,17 @@ const TocItemRow = memo(
                 {item.depth === 2 && item.id !== "outlines" && (
                     <div
                         className={cn(
-                            "grid size-5 place-items-center rounded-full bg-default/5",
+                            "grid size-8 place-items-center rounded-full bg-default/5",
                             "group-has-[input:not(:placeholder-shown)]/sidebar:hidden dark:bg-default/10"
                         )}
                     >
-                        <ChevronDown className="size-4" />
+                        <ChevronDown className="mt-0.5 size-6" />
                     </div>
                 )}
-            </m.li>
-            // </ViewTransition>
+            </li>
         )
     }
 )
-TocItemRow.displayName = "TocItemRow"
+MobileTocItemRow.displayName = "MobileTocItemRow"
 
-export type { TocItemProps, TocItemRowProps }
-export { TocItemRow }
+export { MobileTocItemRow }
