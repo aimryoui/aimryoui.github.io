@@ -82,7 +82,10 @@ function LineSidebar({
     const runFrame = useCallback(
         function frame(now: number) {
             const list = internalListRef.current
-            if (!list) return
+            if (!list) {
+                rafRef.current = null
+                return
+            }
 
             const elapsed = now - lastRef.current
             if (elapsed < FPS_INTERVAL) {
@@ -152,14 +155,13 @@ function LineSidebar({
 
     useEffect(() => {
         startLoop()
+        return () => {
+            if (rafRef.current !== null) {
+                cancelAnimationFrame(rafRef.current)
+                rafRef.current = null
+            }
+        }
     }, [startLoop])
-
-    useEffect(
-        () => () => {
-            if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
-        },
-        []
-    )
 
     return (
         <m.ul
