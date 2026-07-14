@@ -1,4 +1,6 @@
-import { ViewTransition } from "react"
+"use client"
+
+import { useRef, useState, ViewTransition } from "react"
 import NextLink from "next/link"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
@@ -9,6 +11,8 @@ import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { cn } from "@/lib/utils"
 
 import { type Project } from "~/.velite"
+
+const DURATION = 500
 
 function ProjectCard({
     href,
@@ -25,6 +29,10 @@ function ProjectCard({
     projectName?: string
     category?: string
 }) {
+    const [isHovered, setIsHovered] = useState(false)
+    const startTimeRef = useRef<number>(0)
+    const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
+
     const projectPath = href.replace("/portfolio/", "")
 
     const coverImageSrc = project.coverImage
@@ -40,6 +48,21 @@ function ProjectCard({
           })()
         : `/assets/media/${projectPath}/1/1_preview.webp`
 
+    const handleMouseEnter = () => {
+        setIsHovered(true)
+        startTimeRef.current = Date.now()
+        clearTimeout(timeoutRef.current)
+    }
+
+    const handleMouseLeave = () => {
+        const elapsed = Date.now() - startTimeRef.current
+        const remaining = Math.max(DURATION - elapsed, 0)
+
+        timeoutRef.current = setTimeout(() => {
+            setIsHovered(false)
+        }, remaining)
+    }
+
     const Comp = navigation
         ? navigation === "forward"
             ? PaginationNext
@@ -48,6 +71,9 @@ function ProjectCard({
 
     return (
         <Comp
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            data-hover={isHovered}
             href={href}
             className={cn(
                 "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
@@ -202,21 +228,48 @@ function ProjectName({
             name={formatViewTransitionName(`project-${projectName}`)}
         >
             <Bold
-                className={cn(
-                    projectNavigation
-                        ? "w-full truncate"
-                        : "line-clamp-1 w-fit",
-                    {
-                        "group-hover": "text-highlighted",
-                        "group-active": "text-highlighted"
-                    },
-                    className
-                )}
+                className="relative inline-flex overflow-hidden"
                 style={{
                     viewTransitionName: "none !important"
                 }}
             >
-                {formatOrdinal(projectName)}
+                <span
+                    className={cn(
+                        "translate-y-0 skew-y-0 transform-gpu will-change-transform transition-[transform,opacity] ease-in-out",
+                        projectNavigation
+                            ? "w-full truncate"
+                            : "line-clamp-1 w-fit",
+                        {
+                            "group-data-[hover=true]":
+                                "-translate-y-full skew-y-12 opacity-0",
+                            "group-active": "text-highlighted"
+                        },
+                        className
+                    )}
+                    style={{
+                        transitionDuration: `${DURATION}ms`
+                    }}
+                >
+                    {formatOrdinal(projectName)}
+                </span>
+                <span
+                    aria-hidden={true}
+                    className={cn(
+                        "absolute origin-left translate-y-full skew-y-12 transform-gpu text-highlighted will-change-transform transition-transform ease-in-out",
+                        projectNavigation
+                            ? "w-full truncate"
+                            : "line-clamp-1 w-fit",
+                        {
+                            "group-data-[hover=true]": "translate-y-0 skew-y-0"
+                        },
+                        className
+                    )}
+                    style={{
+                        transitionDuration: `${DURATION}ms`
+                    }}
+                >
+                    {formatOrdinal(projectName)}
+                </span>
             </Bold>
         </ViewTransition>
     )

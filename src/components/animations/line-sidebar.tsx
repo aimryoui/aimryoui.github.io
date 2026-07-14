@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef } from "react"
 
-
 import { pxToRem } from "@/helpers/px-to-rem"
 import { cn } from "@/lib/utils"
 
@@ -29,7 +28,7 @@ const FALLOFF_CURVES: Record<Falloff, (p: number) => number> = {
     sharp: (p) => p * p * p
 }
 
-const FPS = 120
+const FPS = 90
 const FPS_INTERVAL = 1000 / FPS
 
 function LineSidebar({

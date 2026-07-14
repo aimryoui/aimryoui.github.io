@@ -29,7 +29,6 @@ interface TocItemRowProps {
     onSameLinkClick: () => void
 }
 
-
 const TocItemRow = memo(
     ({ mode, item, isActive, onClick, onSameLinkClick }: TocItemRowProps) => {
         const href = item.href ?? `#${item.id}`
