@@ -67,6 +67,7 @@ const TocItemRow = memo(
                     )}
                 />
                 <NextLink
+                    prefetch={false}
                     href={href}
                     data-toc-id={item.id}
                     data-cursor="target"

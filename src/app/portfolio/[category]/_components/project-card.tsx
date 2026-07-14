@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, ViewTransition } from "react"
+import { useEffect, useRef, useState, ViewTransition } from "react"
 import NextLink from "next/link"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
@@ -35,6 +35,12 @@ function ProjectCard({
 
     const projectPath = href.replace("/portfolio/", "")
 
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeoutRef.current)
+        }
+    }, [])
+
     const coverImageSrc = project.coverImage
         ? (() => {
               const lastDotIndex = project.coverImage.lastIndexOf(".")
@@ -55,6 +61,8 @@ function ProjectCard({
     }
 
     const handleMouseLeave = () => {
+        clearTimeout(timeoutRef.current)
+
         const elapsed = Date.now() - startTimeRef.current
         const remaining = Math.max(DURATION - elapsed, 0)
 
@@ -75,9 +83,9 @@ function ProjectCard({
             onMouseLeave={handleMouseLeave}
             data-hover={isHovered}
             href={href}
+            prefetch={false}
             className={cn(
-                "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 will-change-[background-color] transition-[background-color] duration-100",
-                "[contain:layout_paint]",
+                "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 transition-[background-color] duration-100",
                 {
                     hover: "bg-highlighted/5 transition-none",
                     active: "bg-highlighted/10 transition-none"
@@ -89,13 +97,10 @@ function ProjectCard({
         >
             {navigation === "backward" && (
                 <ArrowLeft
-                    className={cn(
-                        "m-1 will-change-[color] transition-[color] duration-100",
-                        {
-                            "group-hover": "text-highlighted transition-none",
-                            "group-active": "text-highlighted transition-none"
-                        }
-                    )}
+                    className={cn("m-1 transition-[color] duration-100", {
+                        "group-hover": "text-highlighted transition-none",
+                        "group-active": "text-highlighted transition-none"
+                    })}
                 />
             )}
             <ProjectCover
@@ -136,7 +141,7 @@ function ProjectCard({
             {navigation !== "backward" && (
                 <ArrowRight
                     className={cn(
-                        "m-1 will-change-[color] transition-[color] duration-100",
+                        "m-1 transition-[color] duration-100",
                         {
                             "group-hover": "text-highlighted transition-none",
                             "group-active": "text-highlighted transition-none"
@@ -166,7 +171,7 @@ function ProjectCover({
         <ViewTransition name={formatViewTransitionName(`cover-${projectName}`)}>
             <div
                 className={cn(
-                    "mb-1 flex h-11 flex-col items-center justify-center gap-0.5 will-change-transform transition-[transform] ease-spring duration-300",
+                    "mb-1 flex h-11 flex-col items-center justify-center gap-0.5",
                     navigation === "backward" && "order-last sm:order-none",
                     className
                 )}
@@ -176,7 +181,7 @@ function ProjectCover({
             >
                 <div
                     className={cn(
-                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40 will-change-[height,transform] transition-[height,transform] ease-spring duration-300",
+                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40 will-change-transform transition-transform duration-150",
                         {
                             "group-hover": "-translate-y-0.5 scale-y-150",
                             "group-active": "-translate-y-0.5 scale-y-150"
@@ -185,7 +190,7 @@ function ProjectCover({
                 />
                 <div
                     className={cn(
-                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70 will-change-[height] transition-[height] ease-spring duration-300",
+                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70 will-change-transform transition-transform duration-150",
                         {
                             "group-hover": "scale-y-150",
                             "group-active": "scale-y-150"
@@ -195,8 +200,10 @@ function ProjectCover({
                 <img
                     src={src}
                     alt=""
+                    width={56}
+                    height={31.5}
                     className={cn(
-                        "aspect-video w-14 rounded-lg object-cover -outline-offset-2 outline-muted-foreground/80 will-change-[height,transform,outline] outline-2 transition-[height,transform]",
+                        "aspect-video h-auto w-14 rounded-lg object-cover -outline-offset-2 outline-muted-foreground/80 will-change-transform outline-2 transition-transform duration-150",
                         {
                             "group-hover":
                                 "translate-y-0.5 -outline-offset-3 outline-3",
@@ -204,7 +211,6 @@ function ProjectCover({
                                 "translate-y-0.5 -outline-offset-3 outline-3"
                         }
                     )}
-                    fetchPriority="high"
                     loading="lazy"
                     decoding="async"
                     draggable={false}
@@ -235,10 +241,7 @@ function ProjectName({
             >
                 <span
                     className={cn(
-                        "translate-y-0 skew-y-0 transform-gpu will-change-transform transition-[transform,opacity] ease-in-out",
-                        projectNavigation
-                            ? "w-full truncate"
-                            : "line-clamp-1 w-fit",
+                        "w-full translate-y-0 skew-y-0 truncate backface-hidden transition-[transform,opacity] ease-in-out",
                         {
                             "group-data-[hover=true]":
                                 "-translate-y-full skew-y-12 opacity-0",
@@ -255,10 +258,7 @@ function ProjectName({
                 <span
                     aria-hidden={true}
                     className={cn(
-                        "absolute origin-left translate-y-full skew-y-12 transform-gpu text-highlighted will-change-transform transition-transform ease-in-out",
-                        projectNavigation
-                            ? "w-full truncate"
-                            : "line-clamp-1 w-fit",
+                        "absolute w-full origin-left translate-y-full skew-y-12 truncate text-highlighted backface-hidden transition-transform ease-in-out",
                         {
                             "group-data-[hover=true]": "translate-y-0 skew-y-0"
                         },
@@ -294,7 +294,7 @@ function ProjectCategory({
         >
             <Text
                 className={cn(
-                    "text-sm will-change-[color] transition-[color] duration-100",
+                    "text-sm transition-[color] duration-100",
                     projectNavigation
                         ? "w-full truncate"
                         : "line-clamp-1 w-fit",

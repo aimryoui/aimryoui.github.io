@@ -201,11 +201,17 @@ export function TableOfContents({ mode, items, mobile = false }: TocProps) {
                 aria-label="Table of contents"
                 className={cn(
                     "flex flex-1 flex-col overflow-auto",
-                    navRevealPhase !== "done" && [
-                        "will-change-[mask-position] [mask-image:linear-gradient(black_33.333%,black_35%,transparent_65%,transparent_100%)] [mask-position:0_100%] [mask-size:100%_300%]"
-                    ],
                     navRevealPhase === "animating" && "animate-nav-reveal"
                 )}
+                {...(navRevealPhase !== "done" && {
+                    style: {
+                        maskImage:
+                            "linear-gradient(black 33.333%, black 35%, transparent 65%, transparent 100%)",
+                        maskPosition: "0 100%",
+                        maskSize: "100% 300%",
+                        willChange: "mask-position"
+                    }
+                })}
             >
                 {filteredItems.length === 0 ? (
                     <Text className={cn("px-6 py-4")}>

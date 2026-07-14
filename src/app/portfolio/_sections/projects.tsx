@@ -105,6 +105,7 @@ function Projects() {
                 <Fragment key={group.id}>
                     <section className={cn("bg-background")}>
                         <NextLink
+                            prefetch={false}
                             href={getCategoryPath(group.id)}
                             data-cursor="target"
                             className={cn(

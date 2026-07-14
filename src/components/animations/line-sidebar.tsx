@@ -28,7 +28,7 @@ const FALLOFF_CURVES: Record<Falloff, (p: number) => number> = {
     sharp: (p) => p * p * p
 }
 
-const FPS = 90
+const FPS = 120
 const FPS_INTERVAL = 1000 / FPS
 
 function LineSidebar({
