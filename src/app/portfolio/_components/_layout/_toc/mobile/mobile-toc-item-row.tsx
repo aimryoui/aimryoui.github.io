@@ -19,7 +19,7 @@ const MobileTocItemRow = memo(
         return (
             <li
                 className={cn(
-                    "relative mx-6 box-content flex h-fit list-inside items-center gap-4 will-change-[transform,opacity]",
+                    "relative mx-6 box-content flex h-fit list-inside items-center gap-4",
                     isProject && [
                         "border-s-[.0625rem] border-muted-foreground/20",
                         isActive
@@ -77,7 +77,7 @@ const MobileTocItemRow = memo(
                         onClick(item)
                     }}
                     className={cn(
-                        "group/link relative flex-1 leading-6 will-change-[color,font-variation-settings] [contain:layout_paint]",
+                        "group/link relative flex-1 truncate leading-6 will-change-[color,font-variation-settings] [contain:layout_paint]",
                         item.icon
                             ? "flex items-center gap-4 py-2.5"
                             : "inline-block py-3",
@@ -112,7 +112,7 @@ const MobileTocItemRow = memo(
                                                   "bg-muted-foreground/30 text-default !transition-none dark:bg-muted-foreground/40"
                                           }
                                       ],
-                                "[&>svg]:[zoom:1.5]"
+                                "[&>svg]:size-6"
                             )}
                         >
                             {item.icon}
@@ -141,7 +141,7 @@ const MobileTocItemRow = memo(
                             "group-has-[input:not(:placeholder-shown)]/sidebar:hidden dark:bg-default/10"
                         )}
                     >
-                        <ChevronDown className="mt-0.5 size-6" />
+                        <ChevronDown className="mt-[1px] size-6" />
                     </div>
                 )}
             </li>

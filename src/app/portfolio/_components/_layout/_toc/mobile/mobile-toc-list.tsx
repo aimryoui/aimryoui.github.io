@@ -1,7 +1,6 @@
 "use client"
 
-import { Fragment, useCallback, useEffect, useRef, useState } from "react"
-import { usePathname } from "next/navigation"
+import { Fragment, useCallback, useEffect, useRef } from "react"
 
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
@@ -10,43 +9,13 @@ import { TocDivider } from "@/portfolio/_components/_layout/_toc/toc-divider"
 import { type TocItemProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
 import { type TocListProps } from "@/portfolio/_components/_layout/_toc/toc-list"
 
-const _DELAY = 400
-
 function MobileTocList({ mode, items, filteredItems }: TocListProps) {
-    const pathname = usePathname()
-
     const scrollContainerRef = useRef<HTMLUListElement>(null)
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
 
     const allIds = items.map((item) => item.id)
-    const rawActiveId = useScrollSpy(allIds)
-    const [activeId, setActiveId] = useState(rawActiveId)
-    const lastUpdateTimestamp = useRef(0)
-
-    // Make sure the scrollIntoView animation is finished
-    // before setting the other activeIds
-    useEffect(() => {
-        if (activeId === rawActiveId) return
-
-        let delay = 0
-
-        if (pathname === "/portfolio" && activeId) {
-            const elapsed = Date.now() - lastUpdateTimestamp.current
-            if (elapsed < _DELAY) {
-                delay = _DELAY - elapsed
-            }
-        }
-
-        const timer = setTimeout(() => {
-            lastUpdateTimestamp.current = Date.now()
-            setActiveId(rawActiveId)
-        }, delay)
-
-        return () => {
-            clearTimeout(timer)
-        }
-    }, [rawActiveId, activeId, pathname])
+    const activeId = useScrollSpy(allIds)
 
     const handleItemClick = useCallback((item: TocItemProps) => {
         const targetId = item.id
@@ -97,7 +66,7 @@ function MobileTocList({ mode, items, filteredItems }: TocListProps) {
         <ul
             ref={scrollContainerRef}
             className={cn(
-                "group overflow-y-scroll overscroll-contain scroll-auto py-3 pb-[30vh] will-change-[opacity] scrollbar-thin"
+                "group overflow-y-scroll overscroll-contain scroll-auto py-3 pb-[30vh] scrollbar-thin"
             )}
         >
             {filteredItems.map((item) => {

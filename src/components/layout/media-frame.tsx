@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react"
+import { Fragment } from "react"
 import NextLink from "next/link"
 
 import { Divider } from "@/components/layout/divider"
@@ -32,7 +32,7 @@ export function SectionName({
 
     const Comp = as
     const ContainerComp = isAnchorTag ? "figcaption" : "div"
-    const TextComp = isAnchorTag ? "h4" : React.Fragment
+    const TextComp = isAnchorTag ? "h4" : Fragment
 
     return (
         <ContainerComp

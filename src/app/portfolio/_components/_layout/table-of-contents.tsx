@@ -131,7 +131,7 @@ export function TableOfContents({ mode, items, mobile = false }: TocProps) {
     // 'done' = all mask/animation classes removed
     const [navRevealPhase, setNavRevealPhase] = useState<
         "waiting" | "animating" | "done"
-    >("waiting")
+    >(mobile ? "done" : "waiting")
 
     const handleActiveReady = useCallback(() => {
         setNavRevealPhase("animating")
