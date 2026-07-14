@@ -291,9 +291,9 @@ function Experience() {
                                     xl: "gap-y-4"
                                 })}
                             >
-                                {section.items.map((place, index) => (
+                                {section.items.map((place) => (
                                     <TableRow
-                                        key={index}
+                                        key={`${place.startDate}-${place.position}`}
                                         className={cn(
                                             "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                             {

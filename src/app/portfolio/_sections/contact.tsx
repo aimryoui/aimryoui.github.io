@@ -349,9 +349,9 @@ function Contact() {
                                     })}
                                 >
                                     {section.platforms.map(
-                                        (platform, index) => (
+                                        (platform) => (
                                             <TableRow
-                                                key={index}
+                                                key={platform.title}
                                                 className={cn(
                                                     "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                                     {

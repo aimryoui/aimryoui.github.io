@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment, useCallback, useEffect, useRef } from "react"
+import { Fragment, useEffect, useRef } from "react"
 
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
@@ -17,7 +17,7 @@ function MobileTocList({ mode, items, filteredItems }: TocListProps) {
     const allIds = items.map((item) => item.id)
     const activeId = useScrollSpy(allIds)
 
-    const handleItemClick = useCallback((item: TocItemProps) => {
+    const handleItemClick = (item: TocItemProps) => {
         const targetId = item.id
 
         if (item.mode === "route") return
@@ -28,11 +28,11 @@ function MobileTocList({ mode, items, filteredItems }: TocListProps) {
             el.scrollIntoView({ behavior: "smooth", block: "start" })
         }
         window.history.pushState(null, "", `#${targetId}`)
-    }, [])
+    }
 
-    const handleSameLinkClick = useCallback(() => {
+    const handleSameLinkClick = () => {
         window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
-    }, [])
+    }
 
     useEffect(() => {
         if (activeId && scrollContainerRef.current) {

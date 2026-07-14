@@ -1,7 +1,5 @@
 "use client"
 
-import { memo } from "react"
-
 import { Search, XCircle } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -97,7 +95,7 @@ function LeftAddon() {
     )
 }
 
-const RightAddon = memo(function SearchRightAddon({
+function RightAddon({
     hasValue,
     platform,
     onClear
@@ -149,7 +147,7 @@ const RightAddon = memo(function SearchRightAddon({
             )}
         </InputGroupAddon>
     )
-})
+}
 
 function Command({ className, ...props }: React.ComponentProps<"svg">) {
     return (

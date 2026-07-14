@@ -3,11 +3,9 @@
 import {
     createContext,
     type KeyboardEvent,
-    useCallback,
     useContext,
     useEffect,
     useId,
-    useMemo,
     useRef,
     useState
 } from "react"
@@ -202,12 +200,12 @@ function Carousel({
 
     const tweenFactor = useRef(0)
 
-    const setTweenFactor = useCallback((emblaApi: CarouselApi) => {
+    const setTweenFactor = (emblaApi: CarouselApi) => {
         if (!emblaApi) return
         tweenFactor.current = TWEEN_FACTOR_BASE * emblaApi.snapList().length
-    }, [])
+    }
 
-    const tweenOpacity = useCallback((emblaApi: CarouselApi) => {
+    const tweenOpacity = (emblaApi: CarouselApi) => {
         if (!emblaApi) return
         const engine = emblaApi.internalEngine()
 
@@ -245,35 +243,33 @@ function Carousel({
                 emblaApi.slideNodes()[slideIndex].style.opacity = opacity
             })
         })
-    }, [])
+    }
 
-    const goToPrev = useCallback(() => {
+    const goToPrev = () => {
         emblaApi?.goToPrev()
-    }, [emblaApi])
+    }
 
-    const goToNext = useCallback(() => {
+    const goToNext = () => {
         emblaApi?.goToNext()
-    }, [emblaApi])
+    }
 
-    const handleKeyDown = useCallback(
-        (event: KeyboardEvent<HTMLDivElement>) => {
-            if (event.key === "ArrowLeft") {
-                event.preventDefault()
-                goToPrev()
-            } else if (event.key === "ArrowRight") {
-                event.preventDefault()
-                goToNext()
-            }
-        },
-        [goToPrev, goToNext]
-    )
-
-    useEffect(() => {
-        if (!emblaApi || !setEmblaApi) {
-            return
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "ArrowLeft") {
+            event.preventDefault()
+            goToPrev()
+        } else if (event.key === "ArrowRight") {
+            event.preventDefault()
+            goToNext()
         }
+    }
 
-        setEmblaApi(emblaApi)
+    // Sync emblaApi to the parent-provided setter whenever it changes.
+    // This is intentional: we call the prop setter as a side-effect of
+    // the API becoming available, not as a state synchronisation loop.
+    useEffect(() => {
+        if (emblaApi && setEmblaApi) {
+            setEmblaApi(emblaApi)
+        }
     }, [emblaApi, setEmblaApi])
 
     useEffect(() => {
@@ -297,28 +293,16 @@ function Carousel({
         }
     }, [emblaApi, setTweenFactor, tweenOpacity])
 
-    const contextValue = useMemo(
-        () => ({
-            emblaRef,
-            emblaApi,
-            setEmblaApi,
-            opts,
-            slideCount,
-            orientation,
-            goToPrev,
-            goToNext
-        }),
-        [
-            emblaRef,
-            emblaApi,
-            setEmblaApi,
-            opts,
-            slideCount,
-            orientation,
-            goToPrev,
-            goToNext
-        ]
-    )
+    const contextValue = {
+        emblaRef,
+        emblaApi,
+        setEmblaApi,
+        opts,
+        slideCount,
+        orientation,
+        goToPrev,
+        goToNext
+    }
 
     return (
         <>
@@ -467,9 +451,9 @@ function CarouselReplay({
 
     const [canGoToPrev, setCanGoToPrev] = useState(false)
 
-    const scrollStart = useCallback(() => {
+    const scrollStart = () => {
         emblaApi?.goTo(0)
-    }, [emblaApi])
+    }
 
     useEffect(() => {
         if (!emblaApi) return
@@ -628,8 +612,7 @@ function CarouselScrollbar({
     const isDragging = useRef(false)
     const latestValue = useRef(0)
 
-    const onScrollBarChange = useCallback(
-        (val: number | readonly number[]) => {
+    const onScrollBarChange = (val: number | readonly number[]) => {
             if (!emblaApi) return
             isDragging.current = true
 
@@ -647,12 +630,9 @@ function CarouselScrollbar({
             engine.translate.to(targetPosition)
 
             emblaApi.createEvent("scroll", { isDragging: true }).emit()
-        },
-        [emblaApi]
-    )
+    }
 
-    const onScrollBarRelease = useCallback(
-        (val: number | readonly number[]) => {
+    const onScrollBarRelease = (val: number | readonly number[]) => {
             if (!emblaApi) return
             isDragging.current = false
 
@@ -661,9 +641,7 @@ function CarouselScrollbar({
             const closestIndex = Math.round(finalValue * (count - 1))
 
             emblaApi.goTo(closestIndex)
-        },
-        [emblaApi]
-    )
+    }
 
     useEffect(() => {
         if (!emblaApi) return

@@ -76,79 +76,73 @@ function LineSidebar({
     // Single rAF loop that eases every item's --effect toward its target using
     // frame-rate independent exponential smoothing, so color, shift and scale
     // all move together without staggering CSS transitions.
-    const runFrame = useCallback(
-        function frame(now: number) {
-            const list = internalListRef.current
-            if (!list) {
-                rafRef.current = null
-                return
-            }
+    const runFrame = function frame(now: number) {
+        const list = internalListRef.current
+        if (!list) {
+            rafRef.current = null
+            return
+        }
 
-            const elapsed = now - lastRef.current
-            if (elapsed < FPS_INTERVAL) {
-                rafRef.current = requestAnimationFrame(frame)
-                return
-            }
+        const elapsed = now - lastRef.current
+        if (elapsed < FPS_INTERVAL) {
+            rafRef.current = requestAnimationFrame(frame)
+            return
+        }
 
-            const dt = Math.min(elapsed / 1000, 0.05)
-            lastRef.current = now - (elapsed % FPS_INTERVAL)
-            const tau = Math.max(smoothingRef.current, 1) / 1000
-            const k = 1 - Math.exp(-dt / tau)
+        const dt = Math.min(elapsed / 1000, 0.05)
+        lastRef.current = now - (elapsed % FPS_INTERVAL)
+        const tau = Math.max(smoothingRef.current, 1) / 1000
+        const k = 1 - Math.exp(-dt / tau)
 
-            let moving = false
-            const listItems = Array.from(
-                list.querySelectorAll(itemSelector)
-            ) as HTMLLIElement[]
-            for (let i = 0; i < listItems.length; i++) {
-                const el = listItems[i]
-                const target = Math.max(targetsRef.current[i] || 0)
-                const cur = currentRef.current[i] || 0
-                const next = cur + (target - cur) * k
-                const settled = Math.abs(target - next) < 0.0015
-                const value = settled ? target : next
-                currentRef.current[i] = value
-                el.style.setProperty("--effect", value.toFixed(4))
-                if (!settled) moving = true
-            }
+        let moving = false
+        const listItems = Array.from(
+            list.querySelectorAll(itemSelector)
+        ) as HTMLLIElement[]
+        for (let i = 0; i < listItems.length; i++) {
+            const el = listItems[i]
+            const target = Math.max(targetsRef.current[i] || 0)
+            const cur = currentRef.current[i] || 0
+            const next = cur + (target - cur) * k
+            const settled = Math.abs(target - next) < 0.0015
+            const value = settled ? target : next
+            currentRef.current[i] = value
+            el.style.setProperty("--effect", value.toFixed(4))
+            if (!settled) moving = true
+        }
 
-            rafRef.current = moving ? requestAnimationFrame(frame) : null
-        },
-        [itemSelector]
-    )
+        rafRef.current = moving ? requestAnimationFrame(frame) : null
+    }
 
-    const startLoop = useCallback(() => {
+    const startLoop = () => {
         if (rafRef.current !== null) return
         lastRef.current = performance.now()
         rafRef.current = requestAnimationFrame(runFrame)
-    }, [runFrame])
+    }
 
-    const handlePointerMove = useCallback(
-        (e: React.PointerEvent<HTMLUListElement>) => {
-            const list = internalListRef.current
-            if (!list) return
-            const pointerY = e.clientY
-            const ease = FALLOFF_CURVES[falloff]
-            const listItems = Array.from(
-                list.querySelectorAll(itemSelector)
-            ) as HTMLLIElement[]
-            for (let i = 0; i < listItems.length; i++) {
-                const el = listItems[i]
-                const itemRect = el.getBoundingClientRect()
-                const center = itemRect.top + itemRect.height / 2
-                const distance = Math.abs(pointerY - center)
-                targetsRef.current[i] = ease(
-                    Math.max(0, 1 - distance / proximityRadius)
-                )
-            }
-            startLoop()
-        },
-        [falloff, proximityRadius, startLoop, itemSelector]
-    )
+    const handlePointerMove = (e: React.PointerEvent<HTMLUListElement>) => {
+        const list = internalListRef.current
+        if (!list) return
+        const pointerY = e.clientY
+        const ease = FALLOFF_CURVES[falloff]
+        const listItems = Array.from(
+            list.querySelectorAll(itemSelector)
+        ) as HTMLLIElement[]
+        for (let i = 0; i < listItems.length; i++) {
+            const el = listItems[i]
+            const itemRect = el.getBoundingClientRect()
+            const center = itemRect.top + itemRect.height / 2
+            const distance = Math.abs(pointerY - center)
+            targetsRef.current[i] = ease(
+                Math.max(0, 1 - distance / proximityRadius)
+            )
+        }
+        startLoop()
+    }
 
-    const handlePointerLeave = useCallback(() => {
+    const handlePointerLeave = () => {
         targetsRef.current = targetsRef.current.map(() => 0)
         startLoop()
-    }, [startLoop])
+    }
 
     useEffect(() => {
         startLoop()

@@ -1,7 +1,5 @@
 "use client"
 
-import { useMemo } from "react"
-
 import {
     getCategoryPath,
     getProjectPath,
@@ -25,8 +23,7 @@ import { projects } from "~/.velite"
 function useTocItems(mode: PortfolioMode) {
     const projectGroups = groupProjectsByCategory(projects)
 
-    const projectItems = useMemo<TocItemProps[]>(() => {
-        return projectGroups.flatMap((group) => {
+    const projectItems = projectGroups.flatMap((group) => {
             const items: TocItemProps[] = [
                 {
                     id: group.id,
@@ -56,8 +53,7 @@ function useTocItems(mode: PortfolioMode) {
             }
 
             return items
-        })
-    }, [mode, projectGroups])
+    })
 
     const staticItemMode = mode === "pages" ? "route" : "anchor"
 

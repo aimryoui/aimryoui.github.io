@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import NextLink from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -133,9 +133,9 @@ export function TableOfContents({ mode, items, mobile = false }: TocProps) {
         "waiting" | "animating" | "done"
     >(mobile ? "done" : "waiting")
 
-    const handleActiveReady = useCallback(() => {
+    const handleActiveReady = () => {
         setNavRevealPhase("animating")
-    }, [])
+    }
 
     useEffect(() => {
         if (navRevealPhase !== "animating") return
@@ -163,10 +163,10 @@ export function TableOfContents({ mode, items, mobile = false }: TocProps) {
         // }
     }, [query])
 
-    const handleClearSearch = useCallback(() => {
+    const handleClearSearch = () => {
         setQuery("")
         inputRef.current?.focus()
-    }, [])
+    }
 
     const filteredItems = getFilteredItems(items, debouncedQuery)
 

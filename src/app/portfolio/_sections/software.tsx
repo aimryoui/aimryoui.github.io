@@ -109,12 +109,12 @@ function Software() {
                                     )}
                                 >
                                     {section.frequencies.map(
-                                        (frequency, index, arr) => (
+                                        (frequency, _index, arr) => (
                                             <TableHead
-                                                key={index}
+                                                key={frequency.title}
                                                 className={cn(
                                                     "col-span-2 px-0",
-                                                    index === arr.length - 1 &&
+                                                    _index === arr.length - 1 &&
                                                         "pe-6",
                                                     frequency.hideOnMd &&
                                                         "md:hidden"
@@ -134,12 +134,12 @@ function Software() {
                                     )}
                                 >
                                     {section.frequencies.map(
-                                        (frequency, index, arr) => (
+                                        (frequency, _index, arr) => (
                                             <TableCell
-                                                key={index}
+                                                key={frequency.title}
                                                 className={cn(
                                                     "col-span-2 p-0 align-top text-foreground font-wght-[625]",
-                                                    index === arr.length - 1 &&
+                                                    _index === arr.length - 1 &&
                                                         "pe-6",
                                                     frequency.hideOnMd &&
                                                         "md:hidden"

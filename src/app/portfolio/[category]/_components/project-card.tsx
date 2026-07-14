@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState, ViewTransition } from "react"
-import NextLink from "next/link"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
@@ -75,7 +74,7 @@ function ProjectCard({
         ? navigation === "forward"
             ? PaginationNext
             : PaginationPrevious
-        : NextLink
+        : "a"
 
     return (
         <Comp
@@ -83,7 +82,6 @@ function ProjectCard({
             onMouseLeave={handleMouseLeave}
             data-hover={isHovered}
             href={href}
-            prefetch={false}
             className={cn(
                 "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 transition-[background-color] duration-100",
                 {
@@ -230,14 +228,14 @@ function ProjectName({
             name={formatViewTransitionName(`project-${projectName}`)}
         >
             <Bold
-                className="relative inline-flex overflow-hidden"
+                className="relative inline-flex overflow-clip"
                 style={{
                     viewTransitionName: "none !important"
                 }}
             >
                 <span
                     className={cn(
-                        "w-full translate-y-0 skew-y-0 truncate backface-hidden transition-[transform,opacity] ease-in-out",
+                        "w-full translate-y-0 skew-y-0 truncate transition-[transform,opacity] ease-in-out duration-500",
                         {
                             "group-data-[hover=true]":
                                 "-translate-y-full skew-y-12 opacity-0",
@@ -245,24 +243,19 @@ function ProjectName({
                         },
                         className
                     )}
-                    style={{
-                        transitionDuration: `${DURATION}ms`
-                    }}
                 >
                     {formatOrdinal(projectName)}
                 </span>
                 <span
                     aria-hidden={true}
                     className={cn(
-                        "absolute w-full origin-left translate-y-full skew-y-12 truncate text-highlighted backface-hidden transition-transform ease-in-out",
+                        "pointer-events-none absolute w-full origin-left translate-y-full skew-y-12 truncate text-highlighted opacity-0 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
                         {
-                            "group-data-[hover=true]": "translate-y-0 skew-y-0"
+                            "group-data-[hover=true]":
+                                "translate-y-0 skew-y-0 opacity-100 delay-0"
                         },
                         className
                     )}
-                    style={{
-                        transitionDuration: `${DURATION}ms`
-                    }}
                 >
                     {formatOrdinal(projectName)}
                 </span>

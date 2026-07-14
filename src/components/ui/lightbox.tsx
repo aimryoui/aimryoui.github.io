@@ -110,18 +110,10 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     const slide = targetSlide ?? lightbox.currSlide
 
                     return {
-                        get placeholder() {
-                            return slide?.getPlaceholderElement()
-                        },
-                        get zoomWrap() {
-                            return slide?.container
-                        },
-                        get original() {
-                            return slide?.data.element
-                        },
-                        get content() {
-                            return slide?.content.element?.firstElementChild
-                        }
+                        placeholder: () => slide?.getPlaceholderElement(),
+                        zoomWrap: () => slide?.container,
+                        original: () => slide?.data.element,
+                        content: () => slide?.content.element?.firstElementChild
                     }
                 }
 
@@ -167,7 +159,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 const originalDispatch = lightbox.dispatch.bind(lightbox)
                 lightbox.dispatch = (name, details) => {
                     if (name === "close") {
-                        const { original } = getElements()
+                        const original = getElements().original()
 
                         const isVisible = original
                             ? isOriginalInViewport(original)
@@ -198,7 +190,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 const setPlaceholder = (slide: typeof lightbox.currSlide) => {
                     if (!slide) return
 
-                    const { placeholder } = getElements(slide)
+                    const placeholder = getElements(slide).placeholder()
                     const data = slide.data as CustomItemData
 
                     if (!placeholder || placeholder.dataset.styled) return
@@ -243,7 +235,9 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     if (deltaTime >= FPS_INTERVAL) {
                         lastTime = currentTime - (deltaTime % FPS_INTERVAL)
 
-                        const { placeholder, zoomWrap } = getElements()
+                        const el = getElements()
+                        const placeholder = el.placeholder()
+                        const zoomWrap = el.zoomWrap()
                         if (!placeholder || !zoomWrap) return
 
                         zoomWrap.style.setProperty(
@@ -264,7 +258,9 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
 
                 lightbox.on("afterSetContent", (e) => {
                     const slide = e.slide
-                    const { placeholder, zoomWrap } = getElements(slide)
+                    const el = getElements(slide)
+                    const placeholder = el.placeholder()
+                    const zoomWrap = el.zoomWrap()
 
                     if (placeholder && zoomWrap) {
                         zoomWrap.style.setProperty(
@@ -294,7 +290,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
 
                     startAFSync()
 
-                    const { content } = getElements()
+                    const content = getElements().content()
                     if (content) {
                         content.classList.remove("after:border-default/15")
                         content.classList.add("after:border-white/15")
@@ -304,7 +300,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 lightbox.on("openingAnimationEnd", () => {
                     stopAFSync()
 
-                    const { zoomWrap } = getElements()
+                    const zoomWrap = getElements().zoomWrap()
                     if (!zoomWrap) return
 
                     zoomWrap.style.setProperty("--nhn-wrap-scale", "1")
@@ -313,7 +309,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 lightbox.on("closingAnimationStart", () => {
                     startAFSync()
 
-                    const { content } = getElements()
+                    const content = getElements().content()
                     if (content) {
                         content.classList.remove("after:border-white/15")
                         content.classList.add("after:border-default/15")
@@ -324,7 +320,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 lightbox.on("closingAnimationEnd", stopAFSync)
 
                 lightbox.on("zoomPanUpdate", (e) => {
-                    const { placeholder } = getElements(e.slide)
+                    const placeholder = getElements(e.slide).placeholder()
                     if (!placeholder) return
 
                     placeholder.style.setProperty(

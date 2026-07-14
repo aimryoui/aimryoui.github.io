@@ -1,4 +1,4 @@
-import { useCallback, useSyncExternalStore } from "react"
+import { useSyncExternalStore } from "react"
 
 interface UseMediaQueryOptions {
     getInitialValueInEffect: boolean
@@ -68,28 +68,19 @@ export function useMediaQuery(
     const mediaQueryString =
         query in BREAKPOINTS ? BREAKPOINTS[query as BreakpointKey] : query
 
-    const subscribe = useCallback(
-        (callback: () => void) => {
-            try {
-                const mediaQuery = window.matchMedia(mediaQueryString)
-                return attachMediaListener(mediaQuery, callback)
-            } catch (_e) {
-                // Safari iframe compatibility issue
-                return () => {}
-            }
-        },
-        [mediaQueryString]
-    )
+    const subscribe = (callback: () => void) => {
+        try {
+            const mediaQuery = window.matchMedia(mediaQueryString)
+            return attachMediaListener(mediaQuery, callback)
+        } catch (_e) {
+            // Safari iframe compatibility issue
+            return () => {}
+        }
+    }
 
-    const getSnapshot = useCallback(
-        () => getInitialValue(mediaQueryString),
-        [mediaQueryString]
-    )
+    const getSnapshot = () => getInitialValue(mediaQueryString)
 
-    const getServerSnapshot = useCallback(
-        () => initialValue ?? false,
-        [initialValue]
-    )
+    const getServerSnapshot = () => initialValue ?? false
 
     const matches = useSyncExternalStore(
         subscribe,

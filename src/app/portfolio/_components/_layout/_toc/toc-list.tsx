@@ -2,10 +2,8 @@
 
 import {
     Fragment,
-    useCallback,
     useEffect,
     useLayoutEffect,
-    useMemo,
     useRef,
     useState
 } from "react"
@@ -38,7 +36,7 @@ function TocList({ mode, items, filteredItems, onActiveReady }: TocListProps) {
     const isFirstRenderRef = useRef(true)
     const hasNotifiedActiveRef = useRef(false)
 
-    const allIds = useMemo(() => items.map((item) => item.id), [items])
+    const allIds = items.map((item) => item.id)
     const rawActiveId = useScrollSpy(allIds)
     const [activeId, setActiveId] = useState(rawActiveId)
     const lastUpdateTimestamp = useRef(0)
@@ -112,7 +110,7 @@ function TocList({ mode, items, filteredItems, onActiveReady }: TocListProps) {
         }
     }, [activeId, onActiveReady])
 
-    const handleItemClick = useCallback((item: TocItemProps) => {
+    const handleItemClick = (item: TocItemProps) => {
         const targetId = item.id
 
         if (item.mode === "route") return
@@ -123,11 +121,11 @@ function TocList({ mode, items, filteredItems, onActiveReady }: TocListProps) {
             el.scrollIntoView({ behavior: "smooth", block: "start" })
         }
         window.history.pushState(null, "", `#${targetId}`)
-    }, [])
+    }
 
-    const handleSameLinkClick = useCallback(() => {
+    const handleSameLinkClick = () => {
         window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
-    }, [])
+    }
 
     useEffect(() => {
         if (activeId && scrollContainerRef.current) {
