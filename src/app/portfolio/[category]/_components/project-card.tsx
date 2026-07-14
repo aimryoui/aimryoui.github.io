@@ -128,12 +128,10 @@ function ProjectCard({
             >
                 <ProjectName
                     projectName={projectName ?? project.projectName}
-                    projectNavigation={projectNavigation}
                     className={cn(navigation === "backward" && "text-right")}
                 />
                 <ProjectCategory
                     projectName={projectName ?? project.projectName}
-                    projectNavigation={projectNavigation}
                     category={category ?? project.category}
                     className={cn(navigation === "backward" && "text-right")}
                 />
@@ -222,11 +220,9 @@ function ProjectCover({
 
 function ProjectName({
     projectName,
-    projectNavigation,
     className
 }: {
     projectName: string
-    projectNavigation: boolean
     className?: string
 }) {
     return (
@@ -277,12 +273,10 @@ function ProjectName({
 
 function ProjectCategory({
     projectName,
-    projectNavigation,
     category,
     className
 }: {
     projectName: string
-    projectNavigation: boolean
     category: string
     className?: string
 }) {
@@ -294,10 +288,7 @@ function ProjectCategory({
         >
             <Text
                 className={cn(
-                    "text-sm transition-[color] duration-100",
-                    projectNavigation
-                        ? "w-full truncate"
-                        : "line-clamp-1 w-fit",
+                    "w-full truncate text-sm transition-[color] duration-100",
                     {
                         "group-hover": "text-foreground transition-none",
                         "group-active": "text-foreground transition-none"
