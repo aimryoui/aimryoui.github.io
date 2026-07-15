@@ -129,7 +129,6 @@ const googleSansFlex = Google_Sans_Flex({
     axes: ["slnt"],
     weight: "variable",
     display: "swap",
-    adjustFontFallback: false,
     variable: "--font-google-sans-flex"
 })
 

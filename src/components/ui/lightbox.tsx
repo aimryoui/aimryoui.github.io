@@ -68,6 +68,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 showHideAnimationType: "zoom",
                 wheelToZoom: true,
                 secondaryZoomLevel: isMobilePortrait ? 0.75 : 2,
+                easing: "cubic-bezier(0.25, 0.1, 0.25, 1)",
                 loop: false,
                 preloaderDelay: 500,
                 bgOpacity: 1,
