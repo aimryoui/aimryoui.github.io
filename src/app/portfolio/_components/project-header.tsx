@@ -2,7 +2,7 @@ import { ViewTransition } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
-import { TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
@@ -110,24 +110,26 @@ function ProjectHeader({
                     <div
                         className={cn("absolute -top-10 right-4.5 flex gap-2")}
                     >
-                        {tools.map((key) => {
-                            const tool = ICON[key]
+                        <Tooltip>
+                            {tools.map((key) => {
+                                const tool = ICON[key]
 
-                            return (
-                                <TooltipTrigger
-                                    key={key}
-                                    payload={tool.label}
-                                    render={
-                                        <Link openInNewTab href={tool.url}>
-                                            {tool.icon}
-                                            <span className="sr-only">
-                                                {tool.label}
-                                            </span>
-                                        </Link>
-                                    }
-                                />
-                            )
-                        })}
+                                return (
+                                    <TooltipTrigger
+                                        key={key}
+                                        payload={tool.label}
+                                        render={
+                                            <Link openInNewTab href={tool.url}>
+                                                {tool.icon}
+                                                <span className="sr-only">
+                                                    {tool.label}
+                                                </span>
+                                            </Link>
+                                        }
+                                    />
+                                )
+                            })}
+                        </Tooltip>
                     </div>
                 )}
             </div>

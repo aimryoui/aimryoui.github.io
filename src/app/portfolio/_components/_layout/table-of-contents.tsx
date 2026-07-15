@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 import { ArrowLeft } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
 import { buttonVariants } from "@/components/ui/button"
-import { TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import { MobileTocList } from "@/portfolio/_components/_layout/_toc/mobile/mobile-toc-list"
@@ -184,13 +184,15 @@ export function TableOfContents({ mode, items, mobile = false }: TocProps) {
                 //     viewTransitionName: "header"
                 // }}
             >
-                <BackToPortfolio mode={mode} />
-                <TocSearch
-                    ref={inputRef}
-                    value={query}
-                    onChange={setQuery}
-                    onClear={handleClearSearch}
-                />
+                <Tooltip>
+                    <BackToPortfolio mode={mode} />
+                    <TocSearch
+                        ref={inputRef}
+                        value={query}
+                        onChange={setQuery}
+                        onClear={handleClearSearch}
+                    />
+                </Tooltip>
             </div>
             <SectionLine
                 fit

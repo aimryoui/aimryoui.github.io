@@ -7,7 +7,7 @@ import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { SectionName } from "@/components/layout/media-frame"
 import { Space } from "@/components/layout/space"
-import { TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import { sections } from "@/portfolio/_sections/contact"
@@ -155,61 +155,64 @@ function Footer() {
                     xl: "h-fit min-h-20 flex-wrap"
                 })}
             >
-                {ALL_PLATFORMS.map((platform, index, arr) => (
-                    <Fragment key={platform.title}>
-                        <TooltipTrigger
-                            payload={{
-                                content: <span>{platform.title}</span>,
-                                sideOffset: 8
-                            }}
-                            render={
+                <Tooltip>
+                    {ALL_PLATFORMS.map((platform, index, arr) => (
+                        <Fragment key={platform.title}>
+                            <TooltipTrigger
+                                payload={{
+                                    content: <span>{platform.title}</span>,
+                                    sideOffset: 8
+                                }}
+                                render={
+                                    <li
+                                        className={cn("h-full flex-1", {
+                                            xl: "h-20 basis-[calc(20%-var(--px)*4)]"
+                                        })}
+                                    >
+                                        <NextLink
+                                            href={platform.links.url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            data-cursor="target"
+                                            className={cn(
+                                                "grid h-full place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
+                                                {
+                                                    hover: "bg-highlighted/5 text-highlighted opacity-100 transition-none",
+                                                    active: "bg-highlighted/10 text-highlighted opacity-100 transition-none",
+                                                    lg: "opacity-100"
+                                                }
+                                            )}
+                                        >
+                                            {platform.icon}
+                                            <span className="sr-only">
+                                                {platform.title}
+                                            </span>
+                                        </NextLink>
+                                    </li>
+                                }
+                            />
+
+                            {index < arr.length - 1 && (
                                 <li
-                                    className={cn("h-full flex-1", {
-                                        xl: "h-20 basis-[calc(20%-var(--px)*4)]"
+                                    role="separator"
+                                    className={cn("h-full", {
+                                        xl: [
+                                            "h-20",
+                                            {
+                                                "nth-of-type-10":
+                                                    "h-auto w-full",
+                                                "[&>hr]:nth-of-type-10":
+                                                    "h-auto w-full border-b border-r-0"
+                                            }
+                                        ]
                                     })}
                                 >
-                                    <NextLink
-                                        href={platform.links.url}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        data-cursor="target"
-                                        className={cn(
-                                            "grid h-full place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
-                                            {
-                                                hover: "bg-highlighted/5 text-highlighted opacity-100 transition-none",
-                                                active: "bg-highlighted/10 text-highlighted opacity-100 transition-none",
-                                                lg: "opacity-100"
-                                            }
-                                        )}
-                                    >
-                                        {platform.icon}
-                                        <span className="sr-only">
-                                            {platform.title}
-                                        </span>
-                                    </NextLink>
+                                    <ElementLine />
                                 </li>
-                            }
-                        />
-
-                        {index < arr.length - 1 && (
-                            <li
-                                role="separator"
-                                className={cn("h-full", {
-                                    xl: [
-                                        "h-20",
-                                        {
-                                            "nth-of-type-10": "h-auto w-full",
-                                            "[&>hr]:nth-of-type-10":
-                                                "h-auto w-full border-b border-r-0"
-                                        }
-                                    ]
-                                })}
-                            >
-                                <ElementLine />
-                            </li>
-                        )}
-                    </Fragment>
-                ))}
+                            )}
+                        </Fragment>
+                    ))}
+                </Tooltip>
             </Space>
         </footer>
     )

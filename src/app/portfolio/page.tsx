@@ -3,7 +3,7 @@ import { Fragment } from "react"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
@@ -107,174 +107,175 @@ export default function Portfolio() {
                 <Divider />
                 <SectionLine />
                 <div className={cn("flex flex-wrap bg-background")}>
-                    {[
-                        { value: "2003", label: "Year of birth" },
-                        { value: "45+", label: "Projects" },
-                        { value: "4+", label: "Years as Designer" }
-                    ].map((item, index, array) => (
-                        <Fragment key={item.label}>
-                            <div
-                                data-cursor="target"
-                                className={cn(
-                                    "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
-                                    {
-                                        md: "min-w-[20%]"
-                                    }
-                                )}
-                            >
-                                <Highlight
-                                    className={cn("text-4xl font-wght-[625]", {
-                                        xl: "text-3xl"
-                                    })}
-                                >
-                                    {item.value}
-                                </Highlight>
+                    <Tooltip>
+                        {[
+                            { value: "2003", label: "Year of birth" },
+                            { value: "45+", label: "Projects" },
+                            { value: "4+", label: "Years as Designer" }
+                        ].map((item, index, array) => (
+                            <Fragment key={item.label}>
                                 <div
+                                    data-cursor="target"
                                     className={cn(
-                                        "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
-                                    )}
-                                >
-                                    <span
-                                        className={cn(
-                                            "text-xxs uppercase font-wght-[625]"
-                                        )}
-                                    >
-                                        {item.label}
-                                    </span>
-                                </div>
-                            </div>
-                            {index < array.length - 1 && (
-                                <>
-                                    <ElementLine className="h-24" />
-                                    <Divider dir="vertical" className="h-24" />
-                                    <ElementLine className="h-24" />
-                                </>
-                            )}
-                        </Fragment>
-                    ))}
-                    <ElementLine
-                        className={cn("h-24", {
-                            md: "h-0 w-full border-b border-r-0"
-                        })}
-                    />
-                    <Divider
-                        dir="vertical"
-                        className={cn("h-24", {
-                            md: "h-6 w-full"
-                        })}
-                    />
-                    <ElementLine
-                        className={cn("h-24", {
-                            md: "h-0 w-full border-b border-r-0"
-                        })}
-                    />
-                    <div
-                        data-cursor="target"
-                        className={cn(
-                            "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
-                            {
-                                md: "min-w-[40%]"
-                            }
-                        )}
-                    >
-                        <TooltipTrigger
-                            payload="Hồ Chí Minh City"
-                            render={
-                                <Link
-                                    href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
-                                    openInNewTab
-                                    highlight
-                                    className={cn("text-4xl", {
-                                        xl: "text-3xl"
-                                    })}
-                                >
-                                    <Highlight
-                                        className={cn("font-wght-[625]")}
-                                    >
-                                        HCMC
-                                    </Highlight>
-                                </Link>
-                            }
-                        />
-                        <div
-                            className={cn(
-                                "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
-                            )}
-                        >
-                            <span
-                                className={cn(
-                                    "text-xxs uppercase font-wght-[625]"
-                                )}
-                            >
-                                Location
-                            </span>
-                        </div>
-                    </div>
-                    <ElementLine className="h-24" />
-                    <Divider dir="vertical" className="h-24" />
-                    <ElementLine className="h-24" />
-                    <div
-                        data-cursor="target"
-                        className={cn(
-                            "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
-                            {
-                                md: "min-w-[40%]"
-                            }
-                        )}
-                    >
-                        <TooltipTrigger
-                            payload={{
-                                content: "Việt Nam",
-                                sideOffset: 19
-                            }}
-                            render={
-                                <Link
-                                    href="https://wikipedia.org/wiki/Vietnam"
-                                    openInNewTab
-                                    className={cn(
-                                        "grid aspect-3/2 w-[--w] place-items-center bg-[#da251d] [--w:calc(var(--spacing)*12)]"
+                                        "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
+                                        {
+                                            md: "min-w-[20%]"
+                                        }
                                     )}
                                 >
                                     <Highlight
                                         className={cn(
-                                            "sr-only text-4xl font-wght-[625]",
+                                            "text-4xl font-wght-[625]",
                                             {
-                                                md: "text-3xl"
+                                                xl: "text-3xl"
                                             }
                                         )}
                                     >
-                                        Vietnam
+                                        {item.value}
                                     </Highlight>
-                                    {/* https://css-shape.com/star/ */}
                                     <div
                                         className={cn(
-                                            "aspect-square w-[calc(var(--w)/5*2)] bg-[#ffff00] clip-star"
+                                            "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
                                         )}
-                                    />
-                                </Link>
-                            }
+                                    >
+                                        <span
+                                            className={cn(
+                                                "text-xxs uppercase font-wght-[625]"
+                                            )}
+                                        >
+                                            {item.label}
+                                        </span>
+                                    </div>
+                                </div>
+                                {index < array.length - 1 && (
+                                    <>
+                                        <ElementLine className="h-24" />
+                                        <Divider
+                                            dir="vertical"
+                                            className="h-24"
+                                        />
+                                        <ElementLine className="h-24" />
+                                    </>
+                                )}
+                            </Fragment>
+                        ))}
+                        <ElementLine
+                            className={cn("h-24", {
+                                md: "h-0 w-full border-b border-r-0"
+                            })}
                         />
-                        {/* <TooltipContent
-                                translate="no"
-                                lang="vi-VN"
-                                sideOffset={19}
-                            >
-                                Việt Nam
-                            </TooltipContent> */}
+                        <Divider
+                            dir="vertical"
+                            className={cn("h-24", {
+                                md: "h-6 w-full"
+                            })}
+                        />
+                        <ElementLine
+                            className={cn("h-24", {
+                                md: "h-0 w-full border-b border-r-0"
+                            })}
+                        />
                         <div
+                            data-cursor="target"
                             className={cn(
-                                "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
+                                "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
+                                {
+                                    md: "min-w-[40%]"
+                                }
                             )}
                         >
-                            <span
+                            <TooltipTrigger
+                                payload="Hồ Chí Minh City"
+                                render={
+                                    <Link
+                                        href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
+                                        openInNewTab
+                                        highlight
+                                        className={cn("text-4xl", {
+                                            xl: "text-3xl"
+                                        })}
+                                    >
+                                        <Highlight
+                                            className={cn("font-wght-[625]")}
+                                        >
+                                            HCMC
+                                        </Highlight>
+                                    </Link>
+                                }
+                            />
+                            <div
                                 className={cn(
-                                    "text-xxs uppercase font-wght-[625]"
+                                    "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
                                 )}
                             >
-                                Native Land
-                            </span>
+                                <span
+                                    className={cn(
+                                        "text-xxs uppercase font-wght-[625]"
+                                    )}
+                                >
+                                    Location
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                        <ElementLine className="h-24" />
+                        <Divider dir="vertical" className="h-24" />
+                        <ElementLine className="h-24" />
+                        <div
+                            data-cursor="target"
+                            className={cn(
+                                "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
+                                {
+                                    md: "min-w-[40%]"
+                                }
+                            )}
+                        >
+                            <TooltipTrigger
+                                payload={{
+                                    content: "Việt Nam",
+                                    sideOffset: 19
+                                }}
+                                render={
+                                    <Link
+                                        href="https://wikipedia.org/wiki/Vietnam"
+                                        openInNewTab
+                                        className={cn(
+                                            "grid aspect-3/2 w-[--w] place-items-center bg-[#da251d] [--w:calc(var(--spacing)*12)]"
+                                        )}
+                                    >
+                                        <Highlight
+                                            className={cn(
+                                                "sr-only text-4xl font-wght-[625]",
+                                                {
+                                                    md: "text-3xl"
+                                                }
+                                            )}
+                                        >
+                                            Vietnam
+                                        </Highlight>
+                                        {/* https://css-shape.com/star/ */}
+                                        <div
+                                            className={cn(
+                                                "aspect-square w-[calc(var(--w)/5*2)] bg-[#ffff00] clip-star"
+                                            )}
+                                        />
+                                    </Link>
+                                }
+                            />
+                            <div
+                                className={cn(
+                                    "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
+                                )}
+                            >
+                                <span
+                                    className={cn(
+                                        "text-xxs uppercase font-wght-[625]"
+                                    )}
+                                >
+                                    Native Land
+                                </span>
+                            </div>
+                        </div>
+                    </Tooltip>
                 </div>
                 <SectionLine />
                 <Divider />

@@ -202,7 +202,13 @@
                         "isAllowBaseUrlResolvedImport": false,
                         "aliasConfigPath": "./tsconfig.json"
                     }
-                ]
+                ],
+
+                //* Re-render
+                "unicorn/consistent-function-scoping": "error",
+                "react/no-unstable-nested-components": "error",
+                "react-perf/jsx-no-new-object-as-prop": "error",
+                "react-perf/jsx-no-new-array-as-prop": "error"
             }
         },
         {

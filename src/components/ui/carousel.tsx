@@ -28,7 +28,7 @@ import {
 import { Lightbox } from "@/components/ui/lightbox"
 import { Slider } from "@/components/ui/slider"
 import { Spinner } from "@/components/ui/spinner"
-import { TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { useAccessibility } from "@/hooks/use-accessibility"
 import { cn } from "@/lib/utils"
 
@@ -326,6 +326,7 @@ function Carousel({
                         )}
                 </style>
             )}
+            {/* oxlint-disable-next-line react/jsx-no-constructed-context-values */}
             <CarouselContext.Provider value={contextValue}>
                 <div
                     onKeyDownCapture={handleKeyDown}
@@ -353,30 +354,32 @@ function Carousel({
                             }
                         )}
                     >
-                        <div className="flex w-full justify-start gap-2">
-                            <CarouselReplay />
-                            <CarouselIndicator className="flex-1" />
-                        </div>
+                        <Tooltip>
+                            <div className="flex w-full justify-start gap-2">
+                                <CarouselReplay />
+                                <CarouselIndicator className="flex-1" />
+                            </div>
 
-                        <CarouselScrollbar
-                            className={cn("flex-1", {
-                                "2xl": "col-span-4",
-                                xl: "order-first col-span-4 my-2",
-                                md: "col-span-3",
-                                sm: "col-span-2"
-                            })}
-                        />
+                            <CarouselScrollbar
+                                className={cn("flex-1", {
+                                    "2xl": "col-span-4",
+                                    xl: "order-first col-span-4 my-2",
+                                    md: "col-span-3",
+                                    sm: "col-span-2"
+                                })}
+                            />
 
-                        <div
-                            className={cn("flex w-full justify-end gap-2", {
-                                xl: "col-start-4",
-                                md: "col-start-3",
-                                sm: "col-start-2"
-                            })}
-                        >
-                            <CarouselPrevious className="flex-1" />
-                            <CarouselNext className="flex-1" />
-                        </div>
+                            <div
+                                className={cn("flex w-full justify-end gap-2", {
+                                    xl: "col-start-4",
+                                    md: "col-start-3",
+                                    sm: "col-start-2"
+                                })}
+                            >
+                                <CarouselPrevious className="flex-1" />
+                                <CarouselNext className="flex-1" />
+                            </div>
+                        </Tooltip>
                     </div>
                     <div data-slot="carousel-live-region" className="sr-only" />
                 </div>
