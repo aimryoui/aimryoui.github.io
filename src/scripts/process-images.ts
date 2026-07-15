@@ -26,14 +26,15 @@ const IGNORE_REGEX = /(^|[/\\])\..|.*-poster\.(png|jpg|jpeg|webp)$/iu
 
 type ImageManifest = Record<
     string,
-    {
-        hash: string
-        version: string
-        width: number
-        height: number
-        mapping: number[]
-        blurDataURL: string
-    }
+    | {
+          hash: string
+          version: string
+          width: number
+          height: number
+          mapping: number[]
+          blurDataURL: string
+      }
+    | undefined
 >
 
 const chunkArray = <T>(arr: T[], size: number): T[][] =>
@@ -97,7 +98,7 @@ async function processImage(
     if (Object.hasOwn(oldManifest, manifestKey)) {
         const cachedData = oldManifest[manifestKey]
         if (
-            cachedData.hash === currentHash &&
+            cachedData?.hash === currentHash &&
             cachedData.version === SCRIPT_VERSION &&
             fs.existsSync(previewOutput) &&
             fs.existsSync(scrambledOutput)

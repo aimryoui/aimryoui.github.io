@@ -47,6 +47,7 @@ function getParsedImageData(src: string) {
 
     if (!metadata) {
         console.error(`[Image]: No metadata for "${src}" in manifest.`)
+        return null
     }
 
     const exactW = metadata.width
@@ -61,7 +62,7 @@ function getParsedImageData(src: string) {
     return { metadata, exactW, exactH, aspectRatio, basePath, fileName }
 }
 
-type ParsedImageData = ReturnType<typeof getParsedImageData>
+type ParsedImageData = NonNullable<ReturnType<typeof getParsedImageData>>
 
 function ImageCore({
     className,
@@ -108,8 +109,6 @@ function ImageCore({
             observer.unobserve(element)
         }
     }, [isInLightbox])
-
-    if (!parsedData.metadata) return null
 
     const { metadata, exactW, exactH, aspectRatio, basePath, fileName } =
         parsedData
@@ -281,6 +280,8 @@ function ImageCore({
 
 function Image({ className, lightbox = true, ref, ...props }: ImageCoreProps) {
     const parsedData = getParsedImageData(props.src)
+
+    if (!parsedData) return null
 
     return lightbox ? (
         <LightboxItem

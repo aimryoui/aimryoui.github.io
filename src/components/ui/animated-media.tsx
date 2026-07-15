@@ -268,6 +268,8 @@ export function AnimatedMedia({
     //     videoEl.setAttribute("muted", "")
     // }, [shadowRoot])
 
+    if (!metadata) return null
+
     const exactW = metadata.width
     const exactH = metadata.height
 

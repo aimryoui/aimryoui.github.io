@@ -22,16 +22,17 @@ const SHORT_VIDEO_THRESHOLD = 30 * 1024 * 1024
 
 type VideoManifest = Record<
     string,
-    {
-        hash: string
-        posterHash: string
-        version: string
-        type: "short" | "long"
-        duration: number
-        width: number
-        height: number
-        blurDataURL: string
-    }
+    | {
+          hash: string
+          posterHash: string
+          version: string
+          type: "short" | "long"
+          duration: number
+          width: number
+          height: number
+          blurDataURL: string
+      }
+    | undefined
 >
 
 function getFileHash(filePath: string) {
@@ -141,7 +142,7 @@ async function processVideo(
 
     if (Object.hasOwn(oldManifest, manifestKey)) {
         const cachedData = oldManifest[manifestKey]
-        if (cachedData.version === SCRIPT_VERSION) {
+        if (cachedData?.version === SCRIPT_VERSION) {
             if (
                 cachedData.hash === currentVideoHash &&
                 fs.existsSync(indexOutput) &&
@@ -202,9 +203,12 @@ async function processVideo(
 
         fs.writeFileSync(posterOutput, resizedBuffer)
     } else {
-        width = oldManifest[manifestKey].width
-        height = oldManifest[manifestKey].height
-        blurDataURL = oldManifest[manifestKey].blurDataURL
+        const cachedData = oldManifest[manifestKey]
+        if (cachedData) {
+            width = cachedData.width
+            height = cachedData.height
+            blurDataURL = cachedData.blurDataURL
+        }
     }
 
     let type: "short" | "long" = "long"
@@ -244,8 +248,11 @@ async function processVideo(
             return false
         }
     } else {
-        type = oldManifest[manifestKey].type
-        duration = oldManifest[manifestKey].duration
+        const cachedData = oldManifest[manifestKey]
+        if (cachedData) {
+            type = cachedData.type
+            duration = cachedData.duration
+        }
     }
 
     newManifest[manifestKey] = {
