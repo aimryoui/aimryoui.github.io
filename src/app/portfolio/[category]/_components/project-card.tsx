@@ -1,6 +1,8 @@
 "use client"
 
+import type React from "react"
 import { useEffect, useRef, useState, ViewTransition } from "react"
+import NextLink from "next/link"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
@@ -11,23 +13,21 @@ import { cn } from "@/lib/utils"
 
 import { type Project } from "~/.velite"
 
+interface ProjectCardProps {
+    href: string
+    project: Project
+    navigation?: "forward" | "backward"
+    projectNavigation?: boolean
+}
+
 const DURATION = 500
 
 function ProjectCard({
     href,
     project,
     navigation,
-    projectNavigation = false,
-    projectName,
-    category
-}: {
-    href: string
-    project: Project
-    navigation?: "forward" | "backward"
-    projectNavigation?: boolean
-    projectName?: string
-    category?: string
-}) {
+    projectNavigation = false
+}: ProjectCardProps) {
     const [isHovered, setIsHovered] = useState(false)
     const startTimeRef = useRef<number>(0)
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
@@ -74,7 +74,7 @@ function ProjectCard({
         ? navigation === "forward"
             ? PaginationNext
             : PaginationPrevious
-        : "a"
+        : NextLink
 
     return (
         <Comp
@@ -102,7 +102,7 @@ function ProjectCard({
                 />
             )}
             <ProjectCover
-                projectName={projectName ?? project.projectName}
+                projectName={project.projectName}
                 navigation={navigation}
                 src={coverImageSrc}
                 className={cn(
@@ -125,12 +125,13 @@ function ProjectCard({
                 )}
             >
                 <ProjectName
-                    projectName={projectName ?? project.projectName}
-                    className={cn(navigation === "backward" && "text-right")}
+                    projectName={project.projectName}
+                    navigation={navigation}
+                    className={cn(navigation === "backward" && "justify-end")}
                 />
                 <ProjectCategory
-                    projectName={projectName ?? project.projectName}
-                    category={category ?? project.category}
+                    projectName={project.projectName}
+                    category={project.category}
                     className={cn(navigation === "backward" && "text-right")}
                 />
             </div>
@@ -153,16 +154,16 @@ function ProjectCard({
 }
 
 function ProjectCover({
+    className,
     projectName,
     navigation,
     src,
-    className
-}: {
-    projectName: string
-    navigation?: "forward" | "backward"
-    src: string
-    className?: string
-}) {
+    ...props
+}: React.ComponentProps<"div"> &
+    Pick<ProjectCardProps, "navigation"> & {
+        projectName: string
+        src: string
+    }) {
     return (
         <ViewTransition name={formatViewTransitionName(`cover-${projectName}`)}>
             <div
@@ -174,6 +175,7 @@ function ProjectCover({
                 style={{
                     viewTransitionName: "none !important"
                 }}
+                {...props}
             >
                 <div
                     className={cn(
@@ -193,6 +195,7 @@ function ProjectCover({
                         }
                     )}
                 />
+                {/* oxlint-disable-next-line next/no-img-element */}
                 <img
                     src={src}
                     alt=""
@@ -217,61 +220,73 @@ function ProjectCover({
 }
 
 function ProjectName({
+    className,
     projectName,
-    className
-}: {
-    projectName: string
-    className?: string
-}) {
+    navigation,
+    ...props
+}: React.ComponentProps<typeof Bold> &
+    Pick<ProjectCardProps, "navigation"> & {
+        projectName: string
+    }) {
     return (
-        <ViewTransition
-            name={formatViewTransitionName(`project-${projectName}`)}
+        <Bold
+            className={cn(
+                "relative inline-flex w-full overflow-clip",
+                className
+            )}
+            {...props}
         >
-            <Bold
-                className="relative inline-flex overflow-clip"
-                style={{
-                    viewTransitionName: "none !important"
-                }}
+            <ViewTransition
+                name={formatViewTransitionName(`project-${projectName}`)}
             >
                 <span
                     className={cn(
-                        "w-full translate-y-0 skew-y-0 truncate transition-[transform,opacity] ease-in-out duration-500",
+                        "w-fit max-w-full translate-y-0 skew-y-0 truncate transition-[transform,opacity] ease-in-out duration-500",
                         {
-                            "group-data-[hover=true]":
-                                "-translate-y-full skew-y-12 opacity-0",
+                            "group-data-[hover=true]": [
+                                "-translate-y-full opacity-0",
+                                navigation === "forward"
+                                    ? "skew-y-12"
+                                    : "-skew-y-12"
+                            ],
                             "group-active": "text-highlighted"
-                        },
-                        className
+                        }
                     )}
+                    style={{
+                        viewTransitionName: "none !important"
+                    }}
                 >
                     {formatOrdinal(projectName)}
                 </span>
-                <span
-                    aria-hidden={true}
-                    className={cn(
-                        "pointer-events-none absolute w-full origin-left translate-y-full skew-y-12 truncate text-highlighted opacity-0 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
-                        {
-                            "group-data-[hover=true]":
-                                "translate-y-0 skew-y-0 opacity-100 delay-0"
-                        },
-                        className
-                    )}
-                >
-                    {formatOrdinal(projectName)}
-                </span>
-            </Bold>
-        </ViewTransition>
+            </ViewTransition>
+            <span
+                aria-hidden={true}
+                role="presentation"
+                className={cn(
+                    "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
+                    navigation === "forward"
+                        ? "origin-left skew-y-12"
+                        : "origin-right -skew-y-12",
+                    {
+                        "group-data-[hover=true]":
+                            "translate-y-0 skew-y-0 opacity-100 delay-0"
+                    }
+                )}
+            >
+                {formatOrdinal(projectName)}
+            </span>
+        </Bold>
     )
 }
 
 function ProjectCategory({
+    className,
     projectName,
     category,
-    className
-}: {
+    ...props
+}: React.ComponentProps<typeof Text> & {
     projectName: string
     category: string
-    className?: string
 }) {
     return (
         <ViewTransition
@@ -281,7 +296,7 @@ function ProjectCategory({
         >
             <Text
                 className={cn(
-                    "w-full truncate text-sm transition-[color] duration-100",
+                    "w-fit max-w-full truncate text-sm transition-[color] duration-100",
                     {
                         "group-hover": "text-foreground transition-none",
                         "group-active": "text-foreground transition-none"
@@ -291,6 +306,7 @@ function ProjectCategory({
                 style={{
                     viewTransitionName: "none !important"
                 }}
+                {...props}
             >
                 {category}
             </Text>

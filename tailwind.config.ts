@@ -21,6 +21,7 @@ import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
 import scrollbarGutter from "./src/lib/tailwindcss-plugins/utilities/scrollbar-gutter"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
+import viewTransition from "./src/lib/tailwindcss-plugins/utilities/view-transition"
 import all from "./src/lib/tailwindcss-plugins/variants/all"
 import browserEngines from "./src/lib/tailwindcss-plugins/variants/browser-engines"
 import containerQueries from "./src/lib/tailwindcss-plugins/variants/container-queries"
@@ -303,6 +304,7 @@ export default {
         scrollbarGutter,
         transition,
         transitionBehavior,
+        viewTransition,
 
         all,
         browserEngines,

@@ -188,9 +188,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     label: "Go back to Projects page"
                                 })}
                                 className={cn(
-                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
+                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
                                     {
-                                        hover: "bg-element-hover transition-none"
+                                        hover: "bg-highlighted/5 transition-none",
+                                        active: "bg-highlighted/10 transition-none"
                                     }
                                 )}
                             >
@@ -217,7 +218,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                     "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                                     {
                                                         "group-hover":
-                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]",
+                                                        "group-active":
+                                                            "text-highlighted transition-none"
                                                     }
                                                 )}
                                             >
@@ -228,6 +231,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                     "text-sm will-change-[color] wrap-anywhere transition-[color] duration-100",
                                                     {
                                                         "group-hover":
+                                                            "text-foreground transition-none",
+                                                        "group-active":
                                                             "text-foreground transition-none"
                                                     }
                                                 )}
@@ -243,6 +248,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                     {
                                                         "group-hover":
                                                             "text-foreground transition-none",
+                                                        "group-active":
+                                                            "text-foreground transition-none",
                                                         sm: "text-sm"
                                                     }
                                                 )}
@@ -254,7 +261,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                     "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                                     {
                                                         "group-hover":
-                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]",
+                                                        "group-active":
+                                                            "text-highlighted transition-none"
                                                     }
                                                 )}
                                             >
@@ -279,9 +288,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     label: "No more categories, contact me"
                                 })}
                                 className={cn(
-                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
+                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
                                     {
-                                        hover: "bg-element-hover transition-none"
+                                        hover: "bg-highlighted/5 transition-none",
+                                        active: "bg-highlighted/10 transition-none"
                                     }
                                 )}
                             >
@@ -297,7 +307,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                     "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                                     {
                                                         "group-hover":
-                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]",
+                                                        "group-active":
+                                                            "text-highlighted transition-none"
                                                     }
                                                 )}
                                             >
@@ -308,6 +320,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                     "text-sm will-change-[color] wrap-anywhere transition-[color] duration-100",
                                                     {
                                                         "group-hover":
+                                                            "text-foreground transition-none",
+                                                        "group-active":
                                                             "text-foreground transition-none"
                                                     }
                                                 )}
@@ -323,6 +337,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                     {
                                                         "group-hover":
                                                             "text-foreground transition-none",
+                                                        "group-active":
+                                                            "text-foreground transition-none",
                                                         sm: "text-sm"
                                                     }
                                                 )}
@@ -334,7 +350,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                     "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                                     {
                                                         "group-hover":
-                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                            "text-highlighted font-wght-900 transition-[font-variation-settings]",
+                                                        "group-active":
+                                                            "text-highlighted transition-none"
                                                     }
                                                 )}
                                             >

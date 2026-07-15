@@ -162,11 +162,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             {prev ? (
                                 <ProjectCard
                                     href={getProjectPath(prev)}
-                                    navigation="backward"
-                                    projectNavigation
                                     project={prev}
-                                    projectName={prev.projectName}
-                                    category={prev.category}
+                                    projectNavigation
+                                    navigation="backward"
                                 />
                             ) : (
                                 <PaginationPrevious
@@ -175,7 +173,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     className={cn(
                                         "group flex h-full min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
                                         {
-                                            hover: "bg-element-hover transition-none"
+                                            hover: "bg-highlighted/5 transition-none",
+                                            active: "bg-highlighted/10 transition-none"
                                         }
                                     )}
                                 >
@@ -201,6 +200,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                                 {
                                                     "group-hover":
                                                         "text-foreground transition-none",
+                                                    "group-active":
+                                                        "text-foreground transition-none",
                                                     sm: "text-sm"
                                                 }
                                             )}
@@ -212,7 +213,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                                 "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                                 {
                                                     "group-hover":
-                                                        "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                        "text-highlighted font-wght-900 transition-[font-variation-settings]",
+                                                    "group-active":
+                                                        "text-highlighted transition-none"
                                                 }
                                             )}
                                         >
@@ -229,9 +232,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             {next ? (
                                 <ProjectCard
                                     href={getProjectPath(next)}
-                                    navigation="forward"
-                                    projectNavigation
                                     project={next}
+                                    projectNavigation
+                                    navigation="forward"
                                     projectName={next.projectName}
                                     category={next.category}
                                 />
@@ -250,7 +253,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     className={cn(
                                         "group flex min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
                                         {
-                                            hover: "bg-element-hover transition-none"
+                                            hover: "bg-highlighted/5 transition-none",
+                                            active: "bg-highlighted/10 transition-none"
                                         }
                                     )}
                                 >
@@ -267,6 +271,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                                         {
                                                             "group-hover":
                                                                 "text-foreground transition-none",
+                                                            "group-active":
+                                                                "text-foreground transition-none",
                                                             sm: "text-sm"
                                                         }
                                                     )}
@@ -278,7 +284,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                                         "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                                         {
                                                             "group-hover":
-                                                                "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                                "text-highlighted font-wght-900 transition-[font-variation-settings]",
+                                                            "group-active":
+                                                                "text-highlighted transition-none"
                                                         }
                                                     )}
                                                 >
@@ -293,6 +301,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                                         {
                                                             "group-hover":
                                                                 "text-foreground transition-none",
+                                                            "group-active":
+                                                                "text-foreground transition-none",
                                                             sm: "text-sm"
                                                         }
                                                     )}
@@ -304,7 +314,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                                         "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                                                         {
                                                             "group-hover":
-                                                                "text-highlighted font-wght-900 transition-[font-variation-settings]"
+                                                                "text-highlighted font-wght-900 transition-[font-variation-settings]",
+                                                            "group-active":
+                                                                "text-highlighted transition-none"
                                                         }
                                                     )}
                                                 >
