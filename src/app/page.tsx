@@ -7,6 +7,7 @@ import { Space } from "@/components/layout/space"
 import { ModeToggle } from "@/components/mode-toggle"
 import { buttonVariants } from "@/components/ui/button"
 import { Image } from "@/components/ui/image"
+import { Tooltip } from "@/components/ui/tooltip"
 import { H1, Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
@@ -47,7 +48,9 @@ export default function Home() {
             </MediaFrame>
             <SectionLine />
             <Space className="grid place-items-center">
-                <ModeToggle />
+                <Tooltip>
+                    <ModeToggle />
+                </Tooltip>
             </Space>
             <SectionLine showDecoration />
             <Space />
