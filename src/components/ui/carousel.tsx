@@ -430,7 +430,7 @@ function CarouselItem({
             aria-roledescription="slide"
             data-slot="carousel-item"
             className={cn(
-                "min-w-0 shrink-0 grow-0 basis-3/4 will-change-[opacity]",
+                "min-w-0 shrink-0 grow-0 basis-3/4",
                 "[&>div:active]:cursor-grabbing",
                 orientation === "horizontal"
                     ? "first-of-type:!pl-2"

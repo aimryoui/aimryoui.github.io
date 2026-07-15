@@ -40,7 +40,7 @@ const TocItemRow = memo(
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
             <li
                 className={cn(
-                    "relative box-content flex h-fit list-inside items-center gap-4 will-change-[transform,opacity] [transform:translateZ(0)]",
+                    "relative box-content flex h-fit list-inside items-center gap-4",
                     {
                         // Tick
                         after: [
@@ -111,7 +111,7 @@ const TocItemRow = memo(
                         onClick(item)
                     }}
                     className={cn(
-                        "group/link relative flex-1 truncate leading-6 will-change-[color]",
+                        "group/link relative flex-1 truncate leading-6",
                         item.icon
                             ? "flex items-center gap-2 py-1.5"
                             : "inline-block py-1",
@@ -136,7 +136,7 @@ const TocItemRow = memo(
                     {item.icon && (
                         <div
                             className={cn(
-                                "grid size-6 place-items-center rounded-md will-change-[transform,background-color,color]",
+                                "grid size-6 place-items-center rounded-md",
                                 isActive
                                     ? "bg-highlighted text-white dark:bg-highlighted/70"
                                     : [
@@ -157,7 +157,7 @@ const TocItemRow = memo(
                     <span
                         data-cursor="lock"
                         className={cn(
-                            "block w-fit max-w-full px-1.25 will-change-transform",
+                            "block w-fit max-w-full px-1.25",
                             !isProject && !item.icon && "-ms-1.25",
                             "translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
                         )}

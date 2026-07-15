@@ -188,7 +188,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     label: "Go back to Projects page"
                                 })}
                                 className={cn(
-                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
+                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 transition-[background-color] duration-100",
                                     {
                                         hover: "bg-highlighted/5 transition-none",
                                         active: "bg-highlighted/10 transition-none"
@@ -197,7 +197,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                             >
                                 <ArrowLeft
                                     className={cn(
-                                        "m-1 will-change-[color] transition-[color] duration-100",
+                                        "m-1 transition-[color] duration-100",
                                         {
                                             "group-hover":
                                                 "text-highlighted transition-none",
@@ -228,7 +228,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                             </Bold>
                                             <Text
                                                 className={cn(
-                                                    "text-sm will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                                    "text-sm wrap-anywhere transition-[color] duration-100",
                                                     {
                                                         "group-hover":
                                                             "text-foreground transition-none",
@@ -244,7 +244,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                         <>
                                             <Text
                                                 className={cn(
-                                                    "inline will-change-[color] transition-[color] duration-100",
+                                                    "inline transition-[color] duration-100",
                                                     {
                                                         "group-hover":
                                                             "text-foreground transition-none",
@@ -288,7 +288,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     label: "No more categories, contact me"
                                 })}
                                 className={cn(
-                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
+                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 transition-[background-color] duration-100",
                                     {
                                         hover: "bg-highlighted/5 transition-none",
                                         active: "bg-highlighted/10 transition-none"
@@ -317,7 +317,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                             </Bold>
                                             <Text
                                                 className={cn(
-                                                    "text-sm will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                                    "text-sm wrap-anywhere transition-[color] duration-100",
                                                     {
                                                         "group-hover":
                                                             "text-foreground transition-none",
@@ -333,7 +333,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                         <>
                                             <Text
                                                 className={cn(
-                                                    "inline will-change-[color] transition-[color] duration-100",
+                                                    "inline transition-[color] duration-100",
                                                     {
                                                         "group-hover":
                                                             "text-foreground transition-none",
@@ -363,7 +363,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 </div>
                                 <ArrowRight
                                     className={cn(
-                                        "m-1 will-change-[color] transition-[color] duration-100",
+                                        "m-1 transition-[color] duration-100",
                                         {
                                             "group-hover":
                                                 "text-highlighted transition-none",

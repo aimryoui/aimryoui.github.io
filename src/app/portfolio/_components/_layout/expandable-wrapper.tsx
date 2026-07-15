@@ -102,7 +102,7 @@ export function ExpandableWrapper({
                         <SectionLine />
                         <div
                             className={cn(
-                                "sticky bottom-0 z-40 grid w-full place-items-center will-change-[transform,opacity] transition-[transform,opacity] ease-out duration-250 delay-100",
+                                "sticky bottom-0 z-40 grid w-full place-items-center will-change-transform transition-[transform,opacity] ease-out duration-250 delay-100",
                                 {
                                     starting: "translate-y-12 opacity-0"
                                 }

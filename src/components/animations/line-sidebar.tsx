@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from "react"
+import { useCallback, useEffect, useLayoutEffect, useRef } from "react"
 
 import { pxToRem } from "@/helpers/px-to-rem"
 import { cn } from "@/lib/utils"
@@ -10,7 +10,6 @@ interface LineSidebarProps {
     accentColor?: string
     textColor?: string
     markerColor?: string
-    // showMarker?: boolean
     proximityRadius?: number
     maxShift?: number
     falloff?: Falloff
@@ -28,7 +27,7 @@ const FALLOFF_CURVES: Record<Falloff, (p: number) => number> = {
     sharp: (p) => p * p * p
 }
 
-const FPS = 120
+const FPS = 60
 const FPS_INTERVAL = 1000 / FPS
 
 function LineSidebar({
@@ -36,7 +35,6 @@ function LineSidebar({
     accentColor = "var(--color-default)",
     textColor = "#c4c4c4",
     markerColor = "var(--color-marker)",
-    // showMarker = true,
     proximityRadius = 120,
     maxShift = 25,
     falloff = "smooth",
@@ -50,20 +48,26 @@ function LineSidebar({
     ...props
 }: React.ComponentProps<"ul"> & LineSidebarProps) {
     const internalListRef = useRef<HTMLUListElement>(null)
-    const setListRef = (el: HTMLUListElement | null) => {
-        internalListRef.current = el
-        if (typeof ref === "function") {
-            ref(el)
-        } else if (ref) {
-            ref.current = el
-        }
-    }
+
+    const listItemsRef = useRef<HTMLElement[]>([])
+    const itemCentersRef = useRef<number[]>([])
+
+    const setListRef = useCallback(
+        (el: HTMLUListElement | null) => {
+            internalListRef.current = el
+            if (typeof ref === "function") {
+                ref(el)
+            } else if (ref) {
+                ref.current = el
+            }
+        },
+        [ref]
+    )
 
     const targetsRef = useRef<number[]>([])
     const currentRef = useRef<number[]>([])
     const rafRef = useRef<number | null>(null)
     const lastRef = useRef(0)
-
     const smoothingRef = useRef(smoothing)
 
     useEffect(() => {
@@ -72,12 +76,41 @@ function LineSidebar({
 
     const runFrameRef = useRef<FrameRequestCallback>(() => {})
 
-    // Single rAF loop that eases every item's --effect toward its target using
-    // frame-rate independent exponential smoothing, so color, shift and scale
-    // all move together without staggering CSS transitions.
-    const runFrame = function frame(now: number) {
+    const updateCache = useCallback(() => {
         const list = internalListRef.current
-        if (!list) {
+        if (!list) return
+
+        const items = Array.from(
+            list.querySelectorAll<HTMLElement>(itemSelector)
+        )
+        listItemsRef.current = items
+        itemCentersRef.current = items.map(
+            (el) => el.offsetTop + el.offsetHeight / 2
+        )
+
+        if (targetsRef.current.length !== items.length) {
+            targetsRef.current = new Array<number>(items.length).fill(0)
+            currentRef.current = new Array<number>(items.length).fill(0)
+        }
+    }, [itemSelector])
+
+    useEffect(() => {
+        const list = internalListRef.current
+        if (!list) return
+
+        updateCache()
+        const observer = new MutationObserver(() => {
+            updateCache()
+        })
+        observer.observe(list, { childList: true, subtree: true })
+
+        return () => {
+            observer.disconnect()
+        }
+    }, [updateCache])
+
+    const runFrame = function frame(now: number) {
+        if (!internalListRef.current) {
             rafRef.current = null
             return
         }
@@ -94,59 +127,79 @@ function LineSidebar({
         const k = 1 - Math.exp(-dt / tau)
 
         let moving = false
-        const listItems = Array.from(
-            list.querySelectorAll<HTMLElement>(itemSelector)
-        )
+        const listItems = listItemsRef.current
+
         for (let i = 0; i < listItems.length; i++) {
             const el = listItems[i]
             const target = Math.max(targetsRef.current[i] || 0)
             const cur = currentRef.current[i] || 0
+
+            if (cur === 0 && target === 0) continue
+
             const next = cur + (target - cur) * k
             const settled = Math.abs(target - next) < 0.0015
             const value = settled ? target : next
-            currentRef.current[i] = value
-            el.style.setProperty("--effect", value.toFixed(4))
+
+            if (currentRef.current[i] !== value) {
+                currentRef.current[i] = value
+                el.style.setProperty("--effect", value.toFixed(2))
+            }
             if (!settled) moving = true
         }
 
         rafRef.current = moving ? requestAnimationFrame(frame) : null
     }
+
     useLayoutEffect(() => {
         runFrameRef.current = runFrame
     })
 
-    const startLoop = () => {
+    const startLoop = useCallback(() => {
         if (rafRef.current !== null) return
         lastRef.current = performance.now()
         rafRef.current = requestAnimationFrame((time) => {
             runFrameRef.current(time)
         })
-    }
+    }, [])
 
-    const handlePointerMove = (e: React.PointerEvent<HTMLUListElement>) => {
+    useEffect(() => {
         const list = internalListRef.current
         if (!list) return
-        const pointerY = e.clientY
-        const ease = FALLOFF_CURVES[falloff]
-        const listItems = Array.from(
-            list.querySelectorAll<HTMLElement>(itemSelector)
-        )
-        for (let i = 0; i < listItems.length; i++) {
-            const el = listItems[i]
-            const itemRect = el.getBoundingClientRect()
-            const center = itemRect.top + itemRect.height / 2
-            const distance = Math.abs(pointerY - center)
-            targetsRef.current[i] = ease(
-                Math.max(0, 1 - distance / proximityRadius)
-            )
-        }
-        startLoop()
-    }
 
-    const handlePointerLeave = () => {
-        targetsRef.current = targetsRef.current.map(() => 0)
-        startLoop()
-    }
+        const handlePointerMove = (e: PointerEvent) => {
+            const listRect = list.getBoundingClientRect()
+            const pointerYLocal = e.clientY - listRect.top + list.scrollTop
+            const ease = FALLOFF_CURVES[falloff]
+
+            const items = listItemsRef.current
+            const centers = itemCentersRef.current
+
+            for (let i = 0; i < items.length; i++) {
+                const distance = Math.abs(pointerYLocal - centers[i])
+                targetsRef.current[i] = ease(
+                    Math.max(0, 1 - distance / proximityRadius)
+                )
+            }
+            startLoop()
+        }
+
+        const handlePointerLeave = () => {
+            targetsRef.current = targetsRef.current.map(() => 0)
+            startLoop()
+        }
+
+        list.addEventListener("pointermove", handlePointerMove, {
+            passive: true
+        })
+        list.addEventListener("pointerleave", handlePointerLeave, {
+            passive: true
+        })
+
+        return () => {
+            list.removeEventListener("pointermove", handlePointerMove)
+            list.removeEventListener("pointerleave", handlePointerLeave)
+        }
+    }, [falloff, proximityRadius, startLoop])
 
     useEffect(() => {
         if (rafRef.current === null) {
@@ -166,10 +219,8 @@ function LineSidebar({
     return (
         <ul
             ref={setListRef}
-            onPointerMove={handlePointerMove}
-            onPointerLeave={handlePointerLeave}
             className={cn(
-                "flex w-full flex-col gap-[var(--item-gap)] will-change-[opacity] scrollbar-thin",
+                "relative flex w-full flex-col gap-[var(--item-gap)] scrollbar-thin",
                 className
             )}
             style={{

@@ -175,7 +175,7 @@ function Footer() {
                                             rel="noreferrer"
                                             data-cursor="target"
                                             className={cn(
-                                                "grid h-full place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
+                                                "grid h-full place-items-center bg-background opacity-40 transition-[color,background-color,opacity] duration-100",
                                                 {
                                                     hover: "bg-highlighted/5 text-highlighted opacity-100 transition-none",
                                                     active: "bg-highlighted/10 text-highlighted opacity-100 transition-none",

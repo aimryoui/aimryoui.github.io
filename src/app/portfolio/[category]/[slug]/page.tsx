@@ -171,7 +171,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     href={getCategoryPath(category)}
                                     label={`Go back to ${group.title} category page`}
                                     className={cn(
-                                        "group flex h-full min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
+                                        "group flex h-full min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 transition-[background-color] duration-100",
                                         {
                                             hover: "bg-highlighted/5 transition-none",
                                             active: "bg-highlighted/10 transition-none"
@@ -180,7 +180,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 >
                                     <ArrowLeft
                                         className={cn(
-                                            "m-1 will-change-[color] transition-[color] duration-100",
+                                            "m-1 transition-[color] duration-100",
                                             {
                                                 "group-hover":
                                                     "text-highlighted transition-none",
@@ -196,7 +196,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     >
                                         <Text
                                             className={cn(
-                                                "inline will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                                "inline wrap-anywhere transition-[color] duration-100",
                                                 {
                                                     "group-hover":
                                                         "text-foreground transition-none",
@@ -249,7 +249,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             : "No more projects, contact me"
                                     }
                                     className={cn(
-                                        "group flex min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 will-change-[background-color] transition-[background-color] duration-100",
+                                        "group flex min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 transition-[background-color] duration-100",
                                         {
                                             hover: "bg-highlighted/5 transition-none",
                                             active: "bg-highlighted/10 transition-none"
@@ -265,7 +265,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             <>
                                                 <Text
                                                     className={cn(
-                                                        "inline will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                                        "inline wrap-anywhere transition-[color] duration-100",
                                                         {
                                                             "group-hover":
                                                                 "text-foreground transition-none",
@@ -295,7 +295,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             <>
                                                 <Text
                                                     className={cn(
-                                                        "inline will-change-[color] wrap-anywhere transition-[color] duration-100",
+                                                        "inline wrap-anywhere transition-[color] duration-100",
                                                         {
                                                             "group-hover":
                                                                 "text-foreground transition-none",
@@ -325,7 +325,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     </div>
                                     <ArrowRight
                                         className={cn(
-                                            "m-1 will-change-[color] transition-[color] duration-100",
+                                            "m-1 transition-[color] duration-100",
                                             {
                                                 "group-hover":
                                                     "text-highlighted transition-none",

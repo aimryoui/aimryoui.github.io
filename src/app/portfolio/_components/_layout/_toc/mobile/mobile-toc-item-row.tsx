@@ -77,7 +77,7 @@ const MobileTocItemRow = memo(
                         onClick(item)
                     }}
                     className={cn(
-                        "group/link relative flex-1 truncate leading-6 will-change-[color,font-variation-settings] [contain:layout_paint]",
+                        "group/link relative flex-1 truncate leading-6",
                         item.icon
                             ? "flex items-center gap-4 py-2.5"
                             : "inline-block py-3",
@@ -100,7 +100,7 @@ const MobileTocItemRow = memo(
                     {item.icon && (
                         <div
                             className={cn(
-                                "grid size-9 place-items-center rounded-lg will-change-[background-color,color]",
+                                "grid size-9 place-items-center rounded-lg",
                                 isActive
                                     ? "bg-highlighted text-white dark:bg-highlighted/70"
                                     : [

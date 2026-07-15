@@ -109,7 +109,7 @@ function Projects() {
                             prefetch={false}
                             data-cursor="target"
                             className={cn(
-                                "group flex min-h-20 items-center justify-between gap-4 pe-6 will-change-[background-color] transition-[background-color] duration-100",
+                                "group flex min-h-20 items-center justify-between gap-4 pe-6 transition-[background-color] duration-100",
                                 {
                                     hover: "bg-highlighted/5 transition-none",
                                     active: "bg-highlighted/10 transition-none"
@@ -127,7 +127,7 @@ function Projects() {
                             />
                             <ArrowRight
                                 className={cn(
-                                    "m-1 will-change-[color] transition-[color] duration-100",
+                                    "m-1 transition-[color] duration-100",
                                     {
                                         "group-hover":
                                             "text-highlighted transition-none",

@@ -108,7 +108,7 @@ function Slider({
                                 aria-label={label}
                                 data-slot="slider-thumb"
                                 className={cn(
-                                    "relative block size-5 shrink-0 select-none rounded-md border border-muted-foreground/60 bg-background ring-ring/50 will-change-[color,box-shadow] transition-[color,box-shadow]",
+                                    "relative block size-5 shrink-0 select-none rounded-md border border-muted-foreground/60 bg-background ring-ring/50 transition-[color,box-shadow]",
                                     {
                                         after: "absolute -inset-2",
                                         hover: "bg-element-hover ring-2",
