@@ -1,12 +1,6 @@
 "use client"
 
-import {
-    Fragment,
-    useEffect,
-    useLayoutEffect,
-    useRef,
-    useState
-} from "react"
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
 
 import { LineSidebar } from "@/components/animations/line-sidebar"
@@ -24,6 +18,10 @@ interface TocListProps {
     items: TocItemProps[]
     filteredItems: TocItemProps[]
     onActiveReady?: () => void
+}
+
+function handleSameLinkClick() {
+    window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
 }
 
 const _DELAY = 400
@@ -121,10 +119,6 @@ function TocList({ mode, items, filteredItems, onActiveReady }: TocListProps) {
             el.scrollIntoView({ behavior: "smooth", block: "start" })
         }
         window.history.pushState(null, "", `#${targetId}`)
-    }
-
-    const handleSameLinkClick = () => {
-        window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
     }
 
     useEffect(() => {

@@ -9,6 +9,10 @@ import { TocDivider } from "@/portfolio/_components/_layout/_toc/toc-divider"
 import { type TocItemProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
 import { type TocListProps } from "@/portfolio/_components/_layout/_toc/toc-list"
 
+function handleSameLinkClick() {
+    window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
+}
+
 function MobileTocList({ mode, items, filteredItems }: TocListProps) {
     const scrollContainerRef = useRef<HTMLUListElement>(null)
     const clickedTargetRef = useRef<string | null>(null)
@@ -28,10 +32,6 @@ function MobileTocList({ mode, items, filteredItems }: TocListProps) {
             el.scrollIntoView({ behavior: "smooth", block: "start" })
         }
         window.history.pushState(null, "", `#${targetId}`)
-    }
-
-    const handleSameLinkClick = () => {
-        window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
     }
 
     useEffect(() => {

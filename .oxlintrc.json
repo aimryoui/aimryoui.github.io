@@ -124,13 +124,13 @@
         "typescript/prefer-find": "warn",
         "typescript/prefer-for-of": "warn",
         "typescript/prefer-function-type": "warn",
-        "typescript/prefer-includes": "warn",
         "typescript/prefer-nullish-coalescing": "warn",
         "typescript/prefer-optional-chain": "warn",
         "typescript/prefer-regexp-exec": "warn",
 
         "typescript/consistent-type-exports": "warn",
         "typescript/prefer-readonly-parameter-types": "off",
+        "typescript/prefer-includes": "off",
 
         //* Stylistic
         "@stylistic/quotes": [

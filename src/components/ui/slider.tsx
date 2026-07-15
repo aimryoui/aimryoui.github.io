@@ -1,7 +1,5 @@
 "use client"
 
-import { useMemo } from "react"
-
 import { Slider as SliderPrimitive } from "@base-ui/react/slider"
 
 import { cn } from "@/lib/utils"
@@ -16,11 +14,14 @@ function Slider({
     snapCount = 0,
     ...props
 }: SliderPrimitive.Root.Props & { label?: string; snapCount?: number }) {
-    const _values = useMemo<readonly number[]>(() => {
-        const val = value ?? defaultValue ?? [min, max]
+    const val = value ?? defaultValue ?? [min, max]
+    const _values = (Array.isArray(val) ? val : [val]) as readonly number[]
 
-        return (Array.isArray(val) ? val : [val]) as readonly number[]
-    }, [value, defaultValue, min, max])
+    const currentProgress = Array.isArray(value)
+        ? (value[0] as number)
+        : typeof value === "number"
+          ? value
+          : 0
 
     return (
         <SliderPrimitive.Root
@@ -82,11 +83,6 @@ function Slider({
                             {Array.from({ length: snapCount }).map(
                                 (_, index) => {
                                     const fraction = index / (snapCount - 1)
-                                    const currentProgress = Array.isArray(value)
-                                        ? (value[0] as number)
-                                        : typeof value === "number"
-                                          ? value
-                                          : 0
 
                                     const isActive =
                                         currentProgress >= fraction - 0.001

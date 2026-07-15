@@ -713,7 +713,10 @@ class GridLanesLayout {
             }
         }
 
-        for (const record of [...explicitItems, ...autoItems]) {
+        const allItems = [...explicitItems, ...autoItems]
+
+        // Pass 1: Write all layout styles
+        for (const record of allItems) {
             const span = this.isVertical
                 ? record.styles.columnSpan
                 : record.styles.rowSpan
@@ -728,10 +731,17 @@ class GridLanesLayout {
             if (this.isVertical) {
                 record.element.style.width = `${size.toString()}px`
                 record.element.style.height = ""
-                record.cachedCrossSize = record.element.offsetHeight
             } else {
                 record.element.style.height = `${size.toString()}px`
                 record.element.style.width = ""
+            }
+        }
+
+        // Pass 2: Read all cross sizes
+        for (const record of allItems) {
+            if (this.isVertical) {
+                record.cachedCrossSize = record.element.offsetHeight
+            } else {
                 record.cachedCrossSize = record.element.offsetWidth
             }
         }

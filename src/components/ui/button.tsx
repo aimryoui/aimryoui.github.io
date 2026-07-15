@@ -47,13 +47,6 @@ const buttonVariants = cva(
     }
 )
 
-// const MotionButton = m.create(ButtonPrimitive)
-
-// interface ButtonProps
-//     extends
-//         React.ComponentProps<typeof MotionButton>,
-//         VariantProps<typeof buttonVariants> {}
-
 function Button({
     className,
     variant = "default",

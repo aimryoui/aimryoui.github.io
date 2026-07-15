@@ -46,18 +46,27 @@ const getDurationDates = (duration: string) => {
  * @returns {Project[]} Sorted Projects
  */
 function sortProjects(projects: Project[]): Project[] {
-    return [...projects].sort((a, b) => {
-        const timeA = getDurationDates(a.information.duration)
-        const timeB = getDurationDates(b.information.duration)
+    const mapped = projects.map((project) => {
+        const { start, end } = getDurationDates(project.information.duration)
+        return {
+            originalProject: project,
+            startTime: start.getTime(),
+            endTime: end.getTime(),
+            name: project.projectName
+        }
+    })
 
-        const startDiff = timeB.start.getTime() - timeA.start.getTime()
+    mapped.sort((a, b) => {
+        const startDiff = b.startTime - a.startTime
         if (startDiff !== 0) return startDiff
 
-        const endDiff = timeB.end.getTime() - timeA.end.getTime()
+        const endDiff = b.endTime - a.endTime
         if (endDiff !== 0) return endDiff
 
-        return a.projectName.localeCompare(b.projectName)
+        return a.name.localeCompare(b.name)
     })
+
+    return mapped.map((item) => item.originalProject)
 }
 
 interface ProjectGroup {
@@ -84,18 +93,22 @@ function groupProjectsByCategory(allProjects: Project[]): ProjectGroup[] {
         groups[categorySlug].push(project)
     })
 
-    return Object.keys(PROJECT_CATEGORIES)
-        .filter((cat) => groups[cat] && groups[cat].length > 0)
-        .map((cat) => {
-            const config = PROJECT_CATEGORIES[cat]
-            return {
-                id: cat,
-                title: config.title,
-                note: config.note,
-                icons: config.icons,
-                projects: groups[cat] ?? []
+    return Object.keys(PROJECT_CATEGORIES).reduce<ProjectGroup[]>(
+        (acc, cat) => {
+            if (groups[cat] && groups[cat].length > 0) {
+                const config = PROJECT_CATEGORIES[cat]
+                acc.push({
+                    id: cat,
+                    title: config.title,
+                    note: config.note,
+                    icons: config.icons,
+                    projects: groups[cat] ?? []
+                })
             }
-        })
+            return acc
+        },
+        []
+    )
 }
 
 function getProjectRouteSlug(project: Project): string {

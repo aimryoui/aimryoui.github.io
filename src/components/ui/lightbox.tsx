@@ -79,7 +79,9 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 ...options
             }}
             onBeforeOpen={(lightbox) => {
-                lightbox.on("afterInit", () => {
+                const onEvent = lightbox.on.bind(lightbox)
+
+                onEvent("afterInit", () => {
                     const pswpElement = document.querySelector(".pswp")
                     const pswpItemElement =
                         document.querySelector(".pswp__item")
@@ -136,7 +138,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                         liftedOffEl = null
                     }
                 }
-                lightbox.on("change", () => {
+                onEvent("change", () => {
                     // Prevent `change` event during initialization
                     // that will hide the original element too soon
                     if (lightbox.opener.isOpening) return
@@ -177,7 +179,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     }
                     return originalDispatch(name, details)
                 }
-                lightbox.on("destroy", () => {
+                onEvent("destroy", () => {
                     showOriginal()
                     // Restore original close event after destroy
                     // only when original element is in viewport
@@ -256,7 +258,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     cancelAnimationFrame(rAF_ID)
                 }
 
-                lightbox.on("afterSetContent", (e) => {
+                onEvent("afterSetContent", (e) => {
                     const slide = e.slide
                     const el = getElements(slide)
                     const placeholder = el.placeholder()
@@ -283,7 +285,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     forceAppendHeavy(slide)
                 })
 
-                lightbox.on("openingAnimationStart", () => {
+                onEvent("openingAnimationStart", () => {
                     const currentSlide = lightbox.currSlide
                     setPlaceholder(currentSlide)
                     hideOriginal(currentSlide)
@@ -297,7 +299,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     }
                 })
 
-                lightbox.on("openingAnimationEnd", () => {
+                onEvent("openingAnimationEnd", () => {
                     stopAFSync()
 
                     const zoomWrap = getElements().zoomWrap()
@@ -306,7 +308,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     zoomWrap.style.setProperty("--nhn-wrap-scale", "1")
                 })
 
-                lightbox.on("closingAnimationStart", () => {
+                onEvent("closingAnimationStart", () => {
                     startAFSync()
 
                     const content = getElements().content()
@@ -317,9 +319,9 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
 
                     document.body.style.removeProperty("--color-svg-filter")
                 })
-                lightbox.on("closingAnimationEnd", stopAFSync)
+                onEvent("closingAnimationEnd", stopAFSync)
 
-                lightbox.on("zoomPanUpdate", (e) => {
+                onEvent("zoomPanUpdate", (e) => {
                     const placeholder = getElements(e.slide).placeholder()
                     if (!placeholder) return
 

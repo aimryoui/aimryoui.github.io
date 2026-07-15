@@ -22,9 +22,11 @@ export function ExpandableWrapper({
     projectName,
     forceExpand
 }: ExpandableWrapperProps) {
-    const [isExpanded, setIsExpanded] = useState(forceExpand)
+    const [userExpanded, setUserExpanded] = useState(false)
     const [isOverflowing, setIsOverflowing] = useState(true)
     const contentRef = useRef<HTMLDivElement>(null)
+
+    const isExpanded = forceExpand || userExpanded
 
     useEffect(() => {
         if (forceExpand) return
@@ -45,7 +47,7 @@ export function ExpandableWrapper({
     }, [forceExpand])
 
     const handleShowLess = () => {
-        setIsExpanded(false)
+        setUserExpanded(false)
 
         requestAnimationFrame(() => {
             if (contentRef.current) {
@@ -84,7 +86,7 @@ export function ExpandableWrapper({
                                 "pointer-events-auto gap-2 rounded-full shadow-sm"
                             )}
                             onClick={() => {
-                                setIsExpanded(true)
+                                setUserExpanded(true)
                             }}
                         >
                             <span>

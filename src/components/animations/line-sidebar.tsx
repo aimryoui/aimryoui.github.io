@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react"
+import { useEffect, useLayoutEffect, useRef } from "react"
 
 import { pxToRem } from "@/helpers/px-to-rem"
 import { cn } from "@/lib/utils"
@@ -10,7 +10,7 @@ interface LineSidebarProps {
     accentColor?: string
     textColor?: string
     markerColor?: string
-    showMarker?: boolean
+    // showMarker?: boolean
     proximityRadius?: number
     maxShift?: number
     falloff?: Falloff
@@ -36,7 +36,7 @@ function LineSidebar({
     accentColor = "var(--color-default)",
     textColor = "#c4c4c4",
     markerColor = "var(--color-marker)",
-    showMarker = true,
+    // showMarker = true,
     proximityRadius = 120,
     maxShift = 25,
     falloff = "smooth",
@@ -50,17 +50,14 @@ function LineSidebar({
     ...props
 }: React.ComponentProps<"ul"> & LineSidebarProps) {
     const internalListRef = useRef<HTMLUListElement>(null)
-    const setListRef = useCallback(
-        (el: HTMLUListElement | null) => {
-            internalListRef.current = el
-            if (typeof ref === "function") {
-                ref(el)
-            } else if (ref) {
-                ref.current = el
-            }
-        },
-        [ref]
-    )
+    const setListRef = (el: HTMLUListElement | null) => {
+        internalListRef.current = el
+        if (typeof ref === "function") {
+            ref(el)
+        } else if (ref) {
+            ref.current = el
+        }
+    }
 
     const targetsRef = useRef<number[]>([])
     const currentRef = useRef<number[]>([])
@@ -72,6 +69,8 @@ function LineSidebar({
     useEffect(() => {
         smoothingRef.current = smoothing
     }, [smoothing])
+
+    const runFrameRef = useRef<FrameRequestCallback>(() => {})
 
     // Single rAF loop that eases every item's --effect toward its target using
     // frame-rate independent exponential smoothing, so color, shift and scale
@@ -96,8 +95,8 @@ function LineSidebar({
 
         let moving = false
         const listItems = Array.from(
-            list.querySelectorAll(itemSelector)
-        ) as HTMLLIElement[]
+            list.querySelectorAll<HTMLElement>(itemSelector)
+        )
         for (let i = 0; i < listItems.length; i++) {
             const el = listItems[i]
             const target = Math.max(targetsRef.current[i] || 0)
@@ -112,11 +111,16 @@ function LineSidebar({
 
         rafRef.current = moving ? requestAnimationFrame(frame) : null
     }
+    useLayoutEffect(() => {
+        runFrameRef.current = runFrame
+    })
 
     const startLoop = () => {
         if (rafRef.current !== null) return
         lastRef.current = performance.now()
-        rafRef.current = requestAnimationFrame(runFrame)
+        rafRef.current = requestAnimationFrame((time) => {
+            runFrameRef.current(time)
+        })
     }
 
     const handlePointerMove = (e: React.PointerEvent<HTMLUListElement>) => {
@@ -125,8 +129,8 @@ function LineSidebar({
         const pointerY = e.clientY
         const ease = FALLOFF_CURVES[falloff]
         const listItems = Array.from(
-            list.querySelectorAll(itemSelector)
-        ) as HTMLLIElement[]
+            list.querySelectorAll<HTMLElement>(itemSelector)
+        )
         for (let i = 0; i < listItems.length; i++) {
             const el = listItems[i]
             const itemRect = el.getBoundingClientRect()
@@ -145,14 +149,19 @@ function LineSidebar({
     }
 
     useEffect(() => {
-        startLoop()
+        if (rafRef.current === null) {
+            lastRef.current = performance.now()
+            rafRef.current = requestAnimationFrame((time) => {
+                runFrameRef.current(time)
+            })
+        }
         return () => {
             if (rafRef.current !== null) {
                 cancelAnimationFrame(rafRef.current)
                 rafRef.current = null
             }
         }
-    }, [startLoop])
+    }, [])
 
     return (
         <ul

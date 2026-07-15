@@ -29,23 +29,24 @@ function removeAccents(str: string): string {
         .replaceAll(/[đĐ]/gu, "d")
 }
 
-function getFilteredItems(items: TocItemProps[], query: string) {
-    if (!query.trim()) return items
+interface NormalizedTocItem extends TocItemProps {
+    _normalizedLabel: string
+}
+
+function getFilteredItems(normalizedItems: NormalizedTocItem[], query: string) {
+    if (!query.trim()) return normalizedItems
 
     const normalizedQuery = removeAccents(query.toLowerCase().trim())
     const result: TocItemProps[] = []
-    let currentCategory: TocItemProps | null = null
-    let currentChildren: TocItemProps[] = []
+    let currentCategory: NormalizedTocItem | null = null
+    let currentChildren: NormalizedTocItem[] = []
 
     const flushGroup = () => {
         if (currentCategory) {
-            const isCategoryMatch = removeAccents(
-                currentCategory.label.toLowerCase()
-            ).includes(normalizedQuery)
+            const isCategoryMatch =
+                currentCategory._normalizedLabel.includes(normalizedQuery)
             const matchingChildren = currentChildren.filter((child) =>
-                removeAccents(child.label.toLowerCase()).includes(
-                    normalizedQuery
-                )
+                child._normalizedLabel.includes(normalizedQuery)
             )
 
             if (isCategoryMatch || matchingChildren.length > 0) {
@@ -57,7 +58,7 @@ function getFilteredItems(items: TocItemProps[], query: string) {
         currentChildren = []
     }
 
-    for (const item of items) {
+    for (const item of normalizedItems) {
         if (item.hidden) continue
 
         if (item.depth === 1 || item.depth === 2) {
@@ -67,11 +68,7 @@ function getFilteredItems(items: TocItemProps[], query: string) {
             currentChildren.push(item)
         } else {
             flushGroup()
-            if (
-                removeAccents(item.label.toLowerCase()).includes(
-                    normalizedQuery
-                )
-            ) {
+            if (item._normalizedLabel.includes(normalizedQuery)) {
                 result.push(item)
             }
         }
@@ -168,7 +165,12 @@ export function TableOfContents({ mode, items, mobile = false }: TocProps) {
         inputRef.current?.focus()
     }
 
-    const filteredItems = getFilteredItems(items, debouncedQuery)
+    const normalizedItems = items.map((item) => ({
+        ...item,
+        _normalizedLabel: removeAccents(item.label.toLowerCase())
+    }))
+
+    const filteredItems = getFilteredItems(normalizedItems, debouncedQuery)
 
     if (items.length === 0) return null
 
@@ -197,7 +199,6 @@ export function TableOfContents({ mode, items, mobile = false }: TocProps) {
                 // }}
             />
             <nav
-                role="navigation"
                 aria-label="Table of contents"
                 className={cn(
                     "flex flex-1 flex-col overflow-auto",

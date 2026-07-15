@@ -7,7 +7,8 @@ import { gsap } from "gsap"
 import { pxToRem } from "@/helpers/px-to-rem"
 import { cn } from "@/lib/utils"
 
-const CONTAIN_STYLE_REGEX = /paint|layout|strict|content/u
+const CONTAIN_STYLE_REGEX = /\b(paint|layout|strict|content)\b/u
+const WILL_CHANGE_REGEX = /\b(transform|perspective|filter)\b/u
 
 // A position: fixed element is positioned relative to the viewport UNLESS an
 // ancestor establishes a containing block (transform, perspective, filter,
@@ -21,9 +22,7 @@ function getContainingBlock(element: HTMLElement | null): HTMLElement | null {
             style.transform !== "none" ||
             style.perspective !== "none" ||
             style.filter !== "none" ||
-            style.willChange.includes("transform") ||
-            style.willChange.includes("perspective") ||
-            style.willChange.includes("filter") ||
+            WILL_CHANGE_REGEX.test(style.willChange) ||
             CONTAIN_STYLE_REGEX.test(style.contain)
         ) {
             return node

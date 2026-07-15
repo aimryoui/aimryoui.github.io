@@ -13,6 +13,16 @@ import { cn } from "@/lib/utils"
 import { sections } from "@/portfolio/_sections/contact"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
+const ALL_PLATFORMS = sections.flatMap((section) => section.platforms)
+
+const QR_ITEMS = [
+    { qrSrc: "/qr/email.webp", label: "Email" },
+    { qrSrc: "/qr/zalo.webp", label: "Zalo" },
+    { qrSrc: "/qr/facebook.webp", label: "Facebook" }
+]
+
+const CURRENT_YEAR = new Date().getFullYear()
+
 function Footer() {
     const mode = usePortfolioModeStore((state) => state.mode)
 
@@ -70,11 +80,7 @@ function Footer() {
                         "grid w-full grid-cols-[1fr_var(--px)_1fr_var(--px)_1fr_var(--px)_1fr_var(--px)_1fr] bg-background"
                     )}
                 >
-                    {[
-                        { qrSrc: "/qr/email.webp", label: "Email" },
-                        { qrSrc: "/qr/zalo.webp", label: "Zalo" },
-                        { qrSrc: "/qr/facebook.webp", label: "Facebook" }
-                    ].map((item, index, arr) => (
+                    {QR_ITEMS.map((item, index, arr) => (
                         <Fragment key={item.label}>
                             <div
                                 className={cn(
@@ -138,7 +144,7 @@ function Footer() {
                 )}
             >
                 <p className="flex flex-wrap justify-center gap-x-0.5 text-balance text-center">
-                    {`© ${new Date().getFullYear()} aimryoui. NO AI training allowed.`}
+                    {`© ${CURRENT_YEAR} aimryoui. NO AI training allowed.`}
                     <span>All Rights Reserved.</span>
                 </p>
             </Divider>
@@ -149,64 +155,61 @@ function Footer() {
                     xl: "h-fit min-h-20 flex-wrap"
                 })}
             >
-                {sections
-                    .flatMap((section) => section.platforms)
-                    .map((platform, index, arr) => (
-                        <Fragment key={platform.title}>
-                            <TooltipTrigger
-                                payload={{
-                                    content: <span>{platform.title}</span>,
-                                    sideOffset: 8
-                                }}
-                                render={
-                                    <li
-                                        className={cn("h-full flex-1", {
-                                            xl: "h-20 basis-[calc(20%-var(--px)*4)]"
-                                        })}
-                                    >
-                                        <NextLink
-                                            href={platform.links.url}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            data-cursor="target"
-                                            className={cn(
-                                                "grid h-full place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
-                                                {
-                                                    hover: "bg-highlighted/5 text-highlighted opacity-100 transition-none",
-                                                    active: "bg-highlighted/10 text-highlighted opacity-100 transition-none",
-                                                    lg: "opacity-100"
-                                                }
-                                            )}
-                                        >
-                                            {platform.icon}
-                                            <span className="sr-only">
-                                                {platform.title}
-                                            </span>
-                                        </NextLink>
-                                    </li>
-                                }
-                            />
-
-                            {index < arr.length - 1 && (
+                {ALL_PLATFORMS.map((platform, index, arr) => (
+                    <Fragment key={platform.title}>
+                        <TooltipTrigger
+                            payload={{
+                                content: <span>{platform.title}</span>,
+                                sideOffset: 8
+                            }}
+                            render={
                                 <li
-                                    role="separator"
-                                    className={cn("h-full", {
-                                        xl: [
-                                            "h-20",
-                                            {
-                                                "nth-of-type-10":
-                                                    "h-auto w-full",
-                                                "[&>hr]:nth-of-type-10":
-                                                    "h-auto w-full border-b border-r-0"
-                                            }
-                                        ]
+                                    className={cn("h-full flex-1", {
+                                        xl: "h-20 basis-[calc(20%-var(--px)*4)]"
                                     })}
                                 >
-                                    <ElementLine />
+                                    <NextLink
+                                        href={platform.links.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        data-cursor="target"
+                                        className={cn(
+                                            "grid h-full place-items-center bg-background opacity-40 will-change-[color,background-color,opacity] transition-[color,background-color,opacity] duration-100",
+                                            {
+                                                hover: "bg-highlighted/5 text-highlighted opacity-100 transition-none",
+                                                active: "bg-highlighted/10 text-highlighted opacity-100 transition-none",
+                                                lg: "opacity-100"
+                                            }
+                                        )}
+                                    >
+                                        {platform.icon}
+                                        <span className="sr-only">
+                                            {platform.title}
+                                        </span>
+                                    </NextLink>
                                 </li>
-                            )}
-                        </Fragment>
-                    ))}
+                            }
+                        />
+
+                        {index < arr.length - 1 && (
+                            <li
+                                role="separator"
+                                className={cn("h-full", {
+                                    xl: [
+                                        "h-20",
+                                        {
+                                            "nth-of-type-10": "h-auto w-full",
+                                            "[&>hr]:nth-of-type-10":
+                                                "h-auto w-full border-b border-r-0"
+                                        }
+                                    ]
+                                })}
+                            >
+                                <ElementLine />
+                            </li>
+                        )}
+                    </Fragment>
+                ))}
             </Space>
         </footer>
     )

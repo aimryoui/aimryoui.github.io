@@ -69,15 +69,18 @@ function CarouselIndicator({
     ...props
 }: React.ComponentProps<"div">) {
     const { emblaApi } = useCarousel()
-    const [current, setCurrent] = useState(0)
     const [count, setCount] = useState(0)
+
+    const currentRef = useRef<HTMLSpanElement>(null)
 
     useEffect(() => {
         if (!emblaApi) return
 
         const updateCarouselState = () => {
             const snapList = emblaApi.snapList()
-            setCount(snapList.length)
+            const total = snapList.length
+
+            setCount((prev) => (prev === total ? prev : total))
 
             const engine = emblaApi.internalEngine()
             const currentLocation = engine.location.get()
@@ -95,7 +98,14 @@ function CarouselIndicator({
                 }
             }
 
-            setCurrent(closestIndex + 1)
+            if (currentRef.current) {
+                const padLength = String(total).length
+                const displayCurrent = String(closestIndex + 1).padStart(
+                    padLength,
+                    "0"
+                )
+                currentRef.current.textContent = displayCurrent
+            }
         }
 
         updateCarouselState()
@@ -110,9 +120,6 @@ function CarouselIndicator({
         }
     }, [emblaApi])
 
-    const padLength = String(count).length
-    const displayCurrent = String(current).padStart(padLength, "0")
-
     return (
         <div
             data-slot="carousel-indicator"
@@ -126,9 +133,9 @@ function CarouselIndicator({
             {!emblaApi || count === 0 ? (
                 <Spinner />
             ) : (
-                <span className="line-clamp-1">
-                    {`${displayCurrent} / ${count}`}
-                </span>
+                <p className="truncate">
+                    <span ref={currentRef}>01</span> / {count}
+                </p>
             )}
         </div>
     )
@@ -200,51 +207,6 @@ function Carousel({
 
     const tweenFactor = useRef(0)
 
-    const setTweenFactor = (emblaApi: CarouselApi) => {
-        if (!emblaApi) return
-        tweenFactor.current = TWEEN_FACTOR_BASE * emblaApi.snapList().length
-    }
-
-    const tweenOpacity = (emblaApi: CarouselApi) => {
-        if (!emblaApi) return
-        const engine = emblaApi.internalEngine()
-
-        const currentLocation = engine.location.get()
-        const realtimeProgress = engine.scrollProgress.get(currentLocation)
-
-        emblaApi.snapList().forEach((scrollSnap, snapIndex) => {
-            let diffToTarget = scrollSnap - realtimeProgress
-            const slidesInSnap = engine.scrollSnapList.slidesBySnap[snapIndex]
-
-            slidesInSnap.forEach((slideIndex) => {
-                if (engine.options.loop) {
-                    engine.slideLooper.loopPoints.forEach((loopItem) => {
-                        const target = loopItem.target()
-                        if (slideIndex === loopItem.index && target !== 0) {
-                            const sign = Math.sign(target)
-                            if (sign === -1)
-                                diffToTarget =
-                                    scrollSnap - (1 + realtimeProgress)
-                            if (sign === 1)
-                                diffToTarget =
-                                    scrollSnap + (1 - realtimeProgress)
-                        }
-                    })
-                }
-
-                if (Math.abs(diffToTarget) > 2) {
-                    emblaApi.slideNodes()[slideIndex].style.opacity = "0.4"
-                    return
-                }
-
-                const tweenValue =
-                    1 - Math.abs(diffToTarget * tweenFactor.current)
-                const opacity = numberWithinRange(tweenValue, 0.4, 1).toString()
-                emblaApi.slideNodes()[slideIndex].style.opacity = opacity
-            })
-        })
-    }
-
     const goToPrev = () => {
         emblaApi?.goToPrev()
     }
@@ -275,23 +237,71 @@ function Carousel({
     useEffect(() => {
         if (!emblaApi) return
 
+        const setTweenFactor = (emblaApi: CarouselApi) => {
+            if (!emblaApi) return
+            tweenFactor.current = TWEEN_FACTOR_BASE * emblaApi.snapList().length
+        }
+
+        const tweenOpacity = (emblaApi: CarouselApi) => {
+            if (!emblaApi) return
+            const engine = emblaApi.internalEngine()
+
+            const currentLocation = engine.location.get()
+            const realtimeProgress = engine.scrollProgress.get(currentLocation)
+
+            emblaApi.snapList().forEach((scrollSnap, snapIndex) => {
+                let diffToTarget = scrollSnap - realtimeProgress
+                const slidesInSnap =
+                    engine.scrollSnapList.slidesBySnap[snapIndex]
+
+                slidesInSnap.forEach((slideIndex) => {
+                    if (engine.options.loop) {
+                        engine.slideLooper.loopPoints.forEach((loopItem) => {
+                            const target = loopItem.target()
+                            if (slideIndex === loopItem.index && target !== 0) {
+                                const sign = Math.sign(target)
+                                if (sign === -1)
+                                    diffToTarget =
+                                        scrollSnap - (1 + realtimeProgress)
+                                if (sign === 1)
+                                    diffToTarget =
+                                        scrollSnap + (1 - realtimeProgress)
+                            }
+                        })
+                    }
+
+                    if (Math.abs(diffToTarget) > 2) {
+                        emblaApi.slideNodes()[slideIndex].style.opacity = "0.4"
+                        return
+                    }
+
+                    const tweenValue =
+                        1 - Math.abs(diffToTarget * tweenFactor.current)
+                    const opacity = numberWithinRange(
+                        tweenValue,
+                        0.4,
+                        1
+                    ).toString()
+                    emblaApi.slideNodes()[slideIndex].style.opacity = opacity
+                })
+            })
+        }
+
         setTweenFactor(emblaApi)
         tweenOpacity(emblaApi)
 
-        emblaApi
-            .on("reinit", setTweenFactor)
-            .on("reinit", tweenOpacity)
-            .on("scroll", tweenOpacity)
-            .on("slidefocus", tweenOpacity)
+        emblaApi.on("reinit", setTweenFactor)
+        emblaApi.on("reinit", tweenOpacity)
+        emblaApi.on("scroll", tweenOpacity)
+        emblaApi.on("slidefocus", tweenOpacity)
 
         return () => {
-            emblaApi
-                .off("reinit", setTweenFactor)
-                .off("reinit", tweenOpacity)
-                .off("scroll", tweenOpacity)
-                .off("slidefocus", tweenOpacity)
+            emblaApi.off("reinit", setTweenFactor)
+            emblaApi.off("reinit", tweenOpacity)
+            emblaApi.off("scroll", tweenOpacity)
+            emblaApi.off("slidefocus", tweenOpacity)
         }
-    }, [emblaApi, setTweenFactor, tweenOpacity])
+    }, [emblaApi])
 
     const contextValue = {
         emblaRef,
@@ -613,34 +623,34 @@ function CarouselScrollbar({
     const latestValue = useRef(0)
 
     const onScrollBarChange = (val: number | readonly number[]) => {
-            if (!emblaApi) return
-            isDragging.current = true
+        if (!emblaApi) return
+        isDragging.current = true
 
-            const newProgress = val as number
-            latestValue.current = newProgress
-            setValue(newProgress)
+        const newProgress = val as number
+        latestValue.current = newProgress
+        setValue(newProgress)
 
-            const engine = emblaApi.internalEngine()
-            engine.animation.stop()
+        const engine = emblaApi.internalEngine()
+        engine.animation.stop()
 
-            const targetPosition =
-                engine.limit.max - newProgress * engine.limit.length
-            engine.location.set(targetPosition)
-            engine.target.set(targetPosition)
-            engine.translate.to(targetPosition)
+        const targetPosition =
+            engine.limit.max - newProgress * engine.limit.length
+        engine.location.set(targetPosition)
+        engine.target.set(targetPosition)
+        engine.translate.to(targetPosition)
 
-            emblaApi.createEvent("scroll", { isDragging: true }).emit()
+        emblaApi.createEvent("scroll", { isDragging: true }).emit()
     }
 
     const onScrollBarRelease = (val: number | readonly number[]) => {
-            if (!emblaApi) return
-            isDragging.current = false
+        if (!emblaApi) return
+        isDragging.current = false
 
-            const finalValue = val as number
-            const count = emblaApi.snapList().length
-            const closestIndex = Math.round(finalValue * (count - 1))
+        const finalValue = val as number
+        const count = emblaApi.snapList().length
+        const closestIndex = Math.round(finalValue * (count - 1))
 
-            emblaApi.goTo(closestIndex)
+        emblaApi.goTo(closestIndex)
     }
 
     useEffect(() => {

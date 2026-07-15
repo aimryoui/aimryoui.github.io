@@ -7,14 +7,11 @@ import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
-import {
-    AnchorPlaceholder,
-    AnchorSections
-} from "@/portfolio/_providers/anchor-polyfill"
 import Contact from "@/portfolio/_sections/contact"
 import Education from "@/portfolio/_sections/education"
 import Experience from "@/portfolio/_sections/experience"
 import Footer from "@/portfolio/_sections/footer"
+import { NoAIOverlay, NoAIPlaceholder } from "@/portfolio/_sections/no-ai"
 import Outlines from "@/portfolio/_sections/outlines"
 import Projects from "@/portfolio/_sections/projects"
 import Software from "@/portfolio/_sections/software"
@@ -22,7 +19,7 @@ import Software from "@/portfolio/_sections/software"
 export default function Portfolio() {
     return (
         <>
-            <AnchorSections />
+            <NoAIOverlay />
             {/* <ViewTransition name="main"> */}
             <main className={cn("relative flex-1")}>
                 <FlashOverlay />
@@ -298,7 +295,7 @@ export default function Portfolio() {
                 <SectionLine />
                 <Divider />
 
-                <AnchorPlaceholder />
+                <NoAIPlaceholder />
                 <SectionLine />
 
                 <Outlines />

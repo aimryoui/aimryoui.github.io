@@ -1,21 +1,44 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 
+import { Divider } from "@/components/layout/divider"
 import { cn } from "@/lib/utils"
 
+// useSyncExternalStore requires a subscribe function; since CSS feature support
+// never changes at runtime, we return a no-op unsubscribe.
+const subscribe = (_: () => void) => () => {}
+const getSnapshot = () => "anchorName" in document.documentElement.style
+const getServerSnapshot = () => true
+
 function NoAIPlaceholder() {
+    const supported = useSyncExternalStore(
+        subscribe,
+        getSnapshot,
+        getServerSnapshot
+    )
+
+    if (!supported) return null
+
     return (
-        <div
-            id="alert"
-            className={cn("h-[250dvh] min-h-375 anchor/no-ai-placeholder", {
-                lg: "hidden"
-            })}
-        />
+        <>
+            <div
+                id="alert"
+                className={cn("h-[250dvh] min-h-375 anchor/no-ai-placeholder", {
+                    lg: "hidden"
+                })}
+            />
+            <Divider className="lg:hidden" />
+        </>
     )
 }
 
 function NoAIOverlay() {
+    const supported = useSyncExternalStore(
+        subscribe,
+        getSnapshot,
+        getServerSnapshot
+    )
     const [isActive, setIsActive] = useState(false)
     const isScrollPending = useRef(false)
 
@@ -51,6 +74,8 @@ function NoAIOverlay() {
             window.removeEventListener("resize", handleScroll)
         }
     }, [])
+
+    if (!supported) return null
 
     return (
         <div

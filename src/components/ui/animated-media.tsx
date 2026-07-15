@@ -288,7 +288,7 @@ export function AnimatedMedia({
         >
             {shadowRoot &&
                 createPortal(
-                    // oxlint-disable-next-line jsx-a11y/media-has-caption
+                    // oxlint-disable-next-line jsx-a11y/media-has-caption, react-doctor/media-has-caption
                     <video
                         ref={videoRef}
                         poster={posterPath ?? defaultPoster}

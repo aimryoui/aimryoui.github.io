@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 interface KeyboardModifiers {
     alt: boolean
@@ -163,14 +163,22 @@ function shouldFireEvent(
     return true
 }
 
+const DEFAULT_TAGS_TO_IGNORE = ["INPUT", "TEXTAREA", "SELECT"]
+
 function useHotkeys(
     hotkeys: HotkeyItem[],
-    tagsToIgnore: string[] = ["INPUT", "TEXTAREA", "SELECT"],
+    tagsToIgnore: string[] = DEFAULT_TAGS_TO_IGNORE,
     triggerOnContentEditable = false
 ) {
+    const hotkeysRef = useRef(hotkeys)
+
+    useEffect(() => {
+        hotkeysRef.current = hotkeys
+    }, [hotkeys])
+
     useEffect(() => {
         const keydownListener = (event: KeyboardEvent) => {
-            hotkeys.forEach(
+            hotkeysRef.current.forEach(
                 ([
                     hotkey,
                     handler,
@@ -204,7 +212,7 @@ function useHotkeys(
                 keydownListener
             )
         }
-    }, [hotkeys, tagsToIgnore, triggerOnContentEditable])
+    }, [tagsToIgnore, triggerOnContentEditable])
 }
 
 export type { HotkeyItem, HotkeyItemOptions }

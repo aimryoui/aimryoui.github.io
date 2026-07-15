@@ -24,10 +24,15 @@ export default plugin(function containerQueries({
             }
         },
         {
+            /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/container-type#syntax} */
             values: {
                 DEFAULT: "inline-size",
-                normal: "normal"
+                size: "size",
+                normal: "normal",
+                "scroll-state": "scroll-state",
+                anchored: "anchored"
             },
+            type: ["lookup", "any"],
             modifiers: "any"
         }
     )
