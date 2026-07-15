@@ -246,13 +246,13 @@ function ProjectName({
             >
                 <span
                     className={cn(
-                        "w-fit max-w-full translate-y-0 skew-y-0 truncate transition-[transform,opacity] ease-in-out duration-500",
+                        "w-fit max-w-full translate-y-0 skew-y-0 truncate will-change-transform transition-[transform,opacity] ease-in-out duration-500",
                         {
                             "group-data-[hover=true]": [
                                 "-translate-y-full opacity-0",
-                                navigation === "forward"
-                                    ? "skew-y-12"
-                                    : "-skew-y-12"
+                                navigation === "backward"
+                                    ? "-skew-y-12"
+                                    : "skew-y-12"
                             ],
                             "group-active": "text-highlighted"
                         }
@@ -268,10 +268,10 @@ function ProjectName({
                 aria-hidden={true}
                 role="presentation"
                 className={cn(
-                    "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
-                    navigation === "forward"
-                        ? "origin-left skew-y-12"
-                        : "origin-right -skew-y-12",
+                    "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0 will-change-transform transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
+                    navigation === "backward"
+                        ? "origin-right -skew-y-12"
+                        : "origin-left skew-y-12",
                     {
                         "group-data-[hover=true]":
                             "translate-y-0 skew-y-0 opacity-100 delay-0"
