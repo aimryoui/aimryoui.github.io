@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils"
 import { type Project } from "~/.velite"
 
 interface ProjectCardProps {
-    href: string
     project: Project
     navigation?: "forward" | "backward"
     projectNavigation?: boolean
@@ -23,16 +22,19 @@ interface ProjectCardProps {
 const DURATION = 500
 
 function ProjectCard({
+    className,
     href,
     project,
     navigation,
-    projectNavigation = false
-}: ProjectCardProps) {
+    projectNavigation = false,
+    ...props
+}: React.ComponentProps<typeof NextLink> & ProjectCardProps) {
     const [isHovered, setIsHovered] = useState(false)
     const startTimeRef = useRef<number>(0)
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
-    const projectPath = href.replace("/portfolio/", "")
+    const hrefPath = typeof href === "string" ? href : (href.pathname ?? "")
+    const projectPath = hrefPath.replace("/portfolio/", "")
 
     useEffect(() => {
         return () => {
@@ -82,6 +84,7 @@ function ProjectCard({
             onMouseLeave={handleMouseLeave}
             data-hover={isHovered}
             href={href}
+            prefetch={false}
             className={cn(
                 "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 transition-[background-color] duration-100",
                 {
@@ -90,8 +93,10 @@ function ProjectCard({
                 },
                 projectNavigation && {
                     sm: "flex-wrap gap-x-2"
-                }
+                },
+                className
             )}
+            {...props}
         >
             {navigation === "backward" && (
                 <ArrowLeft

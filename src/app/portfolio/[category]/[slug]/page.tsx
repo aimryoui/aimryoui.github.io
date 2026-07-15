@@ -235,8 +235,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     project={next}
                                     projectNavigation
                                     navigation="forward"
-                                    projectName={next.projectName}
-                                    category={next.category}
                                 />
                             ) : (
                                 <PaginationNext

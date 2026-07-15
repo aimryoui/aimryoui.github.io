@@ -105,8 +105,8 @@ function Projects() {
                 <Fragment key={group.id}>
                     <section className={cn("bg-background")}>
                         <NextLink
-                            prefetch={false}
                             href={getCategoryPath(group.id)}
+                            prefetch={false}
                             data-cursor="target"
                             className={cn(
                                 "group flex min-h-20 items-center justify-between gap-4 pe-6 will-change-[background-color] transition-[background-color] duration-100",

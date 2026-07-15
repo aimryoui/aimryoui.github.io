@@ -51,6 +51,7 @@ function PaginationLink({
             aria-current={isActive ? "page" : undefined}
             data-slot="pagination-link"
             data-active={isActive}
+            prefetch={false}
             className={cn(className)}
             {...props}
         />
