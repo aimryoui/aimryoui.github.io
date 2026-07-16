@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useId, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import NextImage from "next/image"
 
 import { mergeRefs } from "react-merge-refs"
@@ -86,7 +86,6 @@ function ImageCore({
     ...props
 }: ImageCoreProps & { parsedData: ParsedImageData }) {
     const containerRef = useRef<HTMLDivElement>(null)
-    const uniqueId = useId()
 
     const [isNearViewport, setIsNearViewport] = useState(
         isInLightbox || placeholderPriority
@@ -103,7 +102,7 @@ function ImageCore({
                 setIsNearViewport(entry.isIntersecting)
             },
             {
-                rootMargin: isInCarousel ? "200%" : "200% 0px 200% 0px",
+                rootMargin: "200% 0px 200% 0px",
                 threshold: 0
             }
         )

@@ -7,6 +7,7 @@ import {
     type ItemProps
 } from "react-photoswipe-gallery"
 
+import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useMediaQuery } from "@/hooks/use-media-query"
 
 interface CustomItemData {
@@ -62,6 +63,8 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
         "(max-width: 48rem) and (orientation: portrait)"
     )
 
+    const { isWebkit } = useBrowserEngine()
+
     return (
         <Gallery
             data-slot="lightbox"
@@ -70,13 +73,14 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 showHideAnimationType: "zoom",
                 wheelToZoom: true,
                 secondaryZoomLevel: isMobilePortrait ? 0.75 : 2,
-                easing: "cubic-bezier(0.20, 1, 0.36, 1)",
-                loop: false,
+                easing: isWebkit
+                    ? "cubic-bezier(0.25, 0.1, 0.25, 1)"
+                    : "cubic-bezier(0.20, 1, 0.36, 1)",
                 preloaderDelay: 500,
                 bgOpacity: 1,
                 spacing: isMobilePortrait ? 0.1 : 0.05,
-                showAnimationDuration: ANIMATION_DURATION,
-                hideAnimationDuration: ANIMATION_DURATION,
+                showAnimationDuration: isWebkit ? 250 : ANIMATION_DURATION,
+                hideAnimationDuration: isWebkit ? 250 : ANIMATION_DURATION,
                 imageClickAction: "zoom",
                 clickToCloseNonZoomable: false,
                 ...options
