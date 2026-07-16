@@ -122,6 +122,7 @@ function TargetCursor({
     const stateRef = useRef({
         corners: null as HTMLDivElement[] | null,
         spinTl: null as gsap.core.Timeline | null,
+        resumeTween: null as gsap.core.Tween | null,
         isActive: false,
         targetPositions: null as { x: number; y: number }[] | null,
         startPositions: null as { x: number; y: number }[] | null,
@@ -168,6 +169,31 @@ function TargetCursor({
         let activeTarget: Element | null = null
         let activeLockEl: Element | null = null
         let resumeTimeout: ReturnType<typeof setTimeout> | null = null
+
+        let hasMoved = false
+        let isHiddenByIgnore = false
+        let isHiddenByLeave = false
+
+        const updateVisibility = () => {
+            const isHidden = !hasMoved || isHiddenByIgnore || isHiddenByLeave
+
+            gsap.to(cursor, {
+                autoAlpha: isHidden ? 0 : 1,
+                duration: 0,
+                overwrite: "auto"
+            })
+
+            if (isHidden) {
+                state.resumeTween?.pause()
+                state.spinTl?.pause()
+            } else if (!activeTarget) {
+                if (state.resumeTween && state.resumeTween.progress() < 1) {
+                    state.resumeTween.play()
+                } else {
+                    state.spinTl?.play()
+                }
+            }
+        }
 
         const doLeave = () => {
             gsap.ticker.remove(tickerFn)
@@ -220,12 +246,27 @@ function TargetCursor({
                             duration: spinDuration,
                             ease: "none"
                         })
-                    gsap.to(cursorRef.current, {
-                        rotation: normalizedRotation + 360,
+                    state.spinTl.pause()
+
+                    if (state.resumeTween) state.resumeTween.kill()
+                    const isHidden =
+                        !hasMoved || isHiddenByIgnore || isHiddenByLeave
+                    gsap.set(cursorRef.current, {
+                        rotation: normalizedRotation
+                    })
+                    state.resumeTween = gsap.to(cursorRef.current, {
+                        rotation: 360,
                         duration: spinDuration * (1 - normalizedRotation / 360),
                         ease: "none",
+                        paused: isHidden,
                         onComplete: () => {
-                            state.spinTl?.restart()
+                            if (
+                                hasMoved &&
+                                !isHiddenByIgnore &&
+                                !isHiddenByLeave
+                            ) {
+                                state.spinTl?.restart()
+                            }
                         }
                     })
                 }
@@ -235,7 +276,8 @@ function TargetCursor({
 
         // Spin timeline
         if (state.spinTl) state.spinTl.kill()
-        state.spinTl = gsap.timeline({ repeat: -1 }).to(cursor, {
+        if (state.resumeTween) state.resumeTween.kill()
+        state.spinTl = gsap.timeline({ repeat: -1, paused: true }).to(cursor, {
             rotation: "+=360",
             duration: spinDuration,
             ease: "none"
@@ -291,10 +333,6 @@ function TargetCursor({
         }
 
         // Event handlers
-        let hasMoved = false
-        let isHiddenByIgnore = false
-        let isHiddenByLeave = false
-
         const moveHandler = (e: MouseEvent) => {
             const { x: offsetX, y: offsetY } = getOffset()
             gsap.set(cursor, { x: e.clientX - offsetX, y: e.clientY - offsetY })
@@ -303,31 +341,30 @@ function TargetCursor({
                 ? (e.target as Element).closest(ignoreSelector) !== null
                 : false
 
-            if (isIgnored) {
-                if (!isHiddenByIgnore) {
-                    isHiddenByIgnore = true
-                    gsap.to(cursor, {
-                        autoAlpha: 0,
-                        duration: 0,
-                        overwrite: "auto"
-                    })
-                }
-            } else if (!hasMoved) {
-                // Reveal cursor and lock in cursor hiding on first real movement
+            let visibilityChanged = false
+
+            if (!hasMoved) {
                 hasMoved = true
                 gsap.set(cursor, {
                     xPercent: -50,
-                    yPercent: -50,
-                    autoAlpha: 1
+                    yPercent: -50
                 })
+                visibilityChanged = true
+            }
+
+            if (isIgnored) {
+                if (!isHiddenByIgnore) {
+                    isHiddenByIgnore = true
+                    visibilityChanged = true
+                }
             } else if (isHiddenByIgnore || isHiddenByLeave) {
                 isHiddenByIgnore = false
                 isHiddenByLeave = false
-                gsap.to(cursor, {
-                    autoAlpha: 1,
-                    duration: 0,
-                    overwrite: "auto"
-                })
+                visibilityChanged = true
+            }
+
+            if (visibilityChanged) {
+                updateVisibility()
             }
         }
         window.addEventListener("mousemove", moveHandler)
@@ -335,24 +372,14 @@ function TargetCursor({
         const documentLeaveHandler = () => {
             if (!hasMoved) return
             isHiddenByLeave = true
-            gsap.to(cursor, {
-                autoAlpha: 0,
-                duration: 0,
-                overwrite: "auto"
-            })
+            updateVisibility()
         }
         document.addEventListener("mouseleave", documentLeaveHandler)
 
         const documentEnterHandler = () => {
             if (!isHiddenByLeave) return
             isHiddenByLeave = false
-            if (!isHiddenByIgnore) {
-                gsap.to(cursor, {
-                    autoAlpha: 1,
-                    duration: 0,
-                    overwrite: "auto"
-                })
-            }
+            updateVisibility()
         }
         document.addEventListener("mouseenter", documentEnterHandler)
 
@@ -430,6 +457,7 @@ function TargetCursor({
             // Only stop spin/reset rotation when first entering from no-target state
             if (!wasActive) {
                 gsap.killTweensOf(cursorRef.current, "rotation")
+                state.resumeTween?.kill()
                 state.spinTl?.pause()
                 gsap.set(cursorRef.current, { rotation: 0 })
             }
@@ -498,6 +526,7 @@ function TargetCursor({
             document.removeEventListener("mouseleave", documentLeaveHandler)
             document.removeEventListener("mouseenter", documentEnterHandler)
             state.spinTl?.kill()
+            state.resumeTween?.kill()
             document.body.style.cursor = originalCursor
             state.isActive = false
             state.targetPositions = null

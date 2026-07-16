@@ -33,7 +33,7 @@ function PaginationItem({ className, ...props }: React.ComponentProps<"li">) {
         <li
             data-slot="pagination-item"
             data-cursor="target"
-            className={cn("min-w-0", className)}
+            className={cn("h-full min-w-0", className)}
             {...props}
         />
     )
@@ -68,7 +68,7 @@ function PaginationPrevious({
     return (
         <PaginationLink
             aria-label={label}
-            className={cn(className)}
+            className={cn("h-full", className)}
             {...props}
         />
     )
@@ -84,7 +84,7 @@ function PaginationNext({
     return (
         <PaginationLink
             aria-label={label}
-            className={cn(className)}
+            className={cn("h-full", className)}
             {...props}
         />
     )

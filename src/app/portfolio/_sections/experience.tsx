@@ -169,6 +169,16 @@ const sections: Section[] = [
             },
             {
                 startDate: "02.2025",
+                endDate: "10.2025",
+                position: "Freelance UI/UX Designer",
+                organization: {
+                    text: "Nalee Viet Nam JSC",
+                    url: "http://naleegroup.com",
+                    ariaLabel: "Go to the Nalee Viet Nam JSC website"
+                }
+            },
+            {
+                startDate: "02.2025",
                 endDate: "04.2025",
                 position: "Visual Designer",
                 organization: {
