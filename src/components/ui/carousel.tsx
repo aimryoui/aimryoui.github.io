@@ -99,12 +99,15 @@ function CarouselIndicator({
             }
 
             if (currentRef.current) {
-                const padLength = String(total).length
-                const displayCurrent = String(closestIndex + 1).padStart(
-                    padLength,
-                    "0"
-                )
-                currentRef.current.textContent = displayCurrent
+                const current = closestIndex + 1
+                const displayCurrent =
+                    total >= 10 && current < 10
+                        ? `0${current}`
+                        : String(current)
+
+                if (currentRef.current.textContent !== displayCurrent) {
+                    currentRef.current.textContent = displayCurrent
+                }
             }
         }
 
@@ -134,7 +137,8 @@ function CarouselIndicator({
                 <Spinner />
             ) : (
                 <p className="truncate">
-                    <span ref={currentRef}>01</span> / {count}
+                    <span ref={currentRef}>{count < 10 ? "1" : "01"}</span> /{" "}
+                    {count}
                 </p>
             )}
         </div>
@@ -706,6 +710,8 @@ function CarouselScrollbar({
     )
 }
 
+const PATTERN_SRC_REGEX = /\{(\d+)(?:-(\d+))?\}/u
+
 function CarouselImage({
     srcPattern,
     gap,
@@ -716,7 +722,9 @@ function CarouselImage({
         srcPattern: string
         gap?: number
     }) {
-    const isPatternSrc = /\{(\d+)(?:-(\d+))?\}/u.exec(srcPattern)
+    const { emblaApi } = useCarousel()
+
+    const isPatternSrc = PATTERN_SRC_REGEX.exec(srcPattern)
 
     let spreadImages = [srcPattern]
 
@@ -733,11 +741,15 @@ function CarouselImage({
         spreadImages = result
     }
 
-    return spreadImages.map((src) => (
-        <CarouselItem key={src} gap={gap}>
-            <Image {...props} src={src} />
-        </CarouselItem>
-    ))
+    return spreadImages.map((src, index) => {
+        const isInView = emblaApi?.slidesInView().includes(index)
+
+        return (
+            <CarouselItem key={src} gap={gap}>
+                <Image {...props} src={src} isInCarousel={true} />
+            </CarouselItem>
+        )
+    })
 }
 
 export {

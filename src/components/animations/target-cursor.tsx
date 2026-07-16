@@ -293,6 +293,8 @@ function TargetCursor({
         // Event handlers
         let hasMoved = false
         let isHiddenByIgnore = false
+        let isHiddenByLeave = false
+
         const moveHandler = (e: MouseEvent) => {
             const { x: offsetX, y: offsetY } = getOffset()
             gsap.set(cursor, { x: e.clientX - offsetX, y: e.clientY - offsetY })
@@ -318,8 +320,9 @@ function TargetCursor({
                     yPercent: -50,
                     autoAlpha: 1
                 })
-            } else if (isHiddenByIgnore) {
+            } else if (isHiddenByIgnore || isHiddenByLeave) {
                 isHiddenByIgnore = false
+                isHiddenByLeave = false
                 gsap.to(cursor, {
                     autoAlpha: 1,
                     duration: 0,
@@ -328,6 +331,30 @@ function TargetCursor({
             }
         }
         window.addEventListener("mousemove", moveHandler)
+
+        const documentLeaveHandler = () => {
+            if (!hasMoved) return
+            isHiddenByLeave = true
+            gsap.to(cursor, {
+                autoAlpha: 0,
+                duration: 0,
+                overwrite: "auto"
+            })
+        }
+        document.addEventListener("mouseleave", documentLeaveHandler)
+
+        const documentEnterHandler = () => {
+            if (!isHiddenByLeave) return
+            isHiddenByLeave = false
+            if (!isHiddenByIgnore) {
+                gsap.to(cursor, {
+                    autoAlpha: 1,
+                    duration: 0,
+                    overwrite: "auto"
+                })
+            }
+        }
+        document.addEventListener("mouseenter", documentEnterHandler)
 
         const scrollHandler = () => {
             if (!activeTarget || !cursorRef.current) return
@@ -468,6 +495,8 @@ function TargetCursor({
             window.removeEventListener("mousedown", mouseDownHandler)
             window.removeEventListener("mouseup", mouseUpHandler)
             window.removeEventListener("dragend", mouseUpHandler)
+            document.removeEventListener("mouseleave", documentLeaveHandler)
+            document.removeEventListener("mouseenter", documentEnterHandler)
             state.spinTl?.kill()
             document.body.style.cursor = originalCursor
             state.isActive = false

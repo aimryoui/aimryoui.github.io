@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import NextImage from "next/image"
 
 import { mergeRefs } from "react-merge-refs"
@@ -20,8 +20,9 @@ type ImageProps = React.ComponentProps<"div"> & {
     limitHeight?: boolean
     noBorder?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
-    isInLightbox?: boolean
+    isInCarousel?: boolean
     lightbox?: boolean
+    isInLightbox?: boolean
 }
 
 type RoundedImageProps = XOR<
@@ -78,14 +79,18 @@ function ImageCore({
     pngBorder = false,
     trimEdges = false,
     objectFit = "cover",
+    isInCarousel = false,
     lightbox = true,
     isInLightbox = false,
     ref,
     ...props
 }: ImageCoreProps & { parsedData: ParsedImageData }) {
     const containerRef = useRef<HTMLDivElement>(null)
+    const uniqueId = useId()
 
-    const [isNearViewport, setIsNearViewport] = useState(true)
+    const [isNearViewport, setIsNearViewport] = useState(
+        isInLightbox || placeholderPriority
+    )
 
     useEffect(() => {
         if (isInLightbox) return
@@ -98,7 +103,7 @@ function ImageCore({
                 setIsNearViewport(entry.isIntersecting)
             },
             {
-                rootMargin: "200% 0px 200% 0px",
+                rootMargin: isInCarousel ? "200%" : "200% 0px 200% 0px",
                 threshold: 0
             }
         )
@@ -108,7 +113,7 @@ function ImageCore({
         return () => {
             observer.unobserve(element)
         }
-    }, [isInLightbox])
+    }, [isInLightbox, isInCarousel])
 
     const { metadata, exactW, exactH, aspectRatio, basePath, fileName } =
         parsedData
@@ -215,58 +220,142 @@ function ImageCore({
                 />
             )}
 
-            {isNearViewport && (
+            {isNearViewport &&
                 // Represent image from `src` attribute or url() function
-                <div
-                    className={cn(
-                        "z-1 max-h-inherit max-w-inherit",
-                        asBackgroundImage && "absolute",
-                        objectFit === "fill" && "size-full",
-                        objectFit === "contain" &&
-                            "size-auto max-h-full max-w-full",
-                        objectFit === "cover" &&
-                            "size-auto min-h-full min-w-full",
-                        pngBorder && "blink:[filter:url(#png-border)]"
-                    )}
-                    style={{
-                        aspectRatio
-                    }}
-                    aria-hidden={true}
-                >
-                    {Array.from({ length: Rows * Cols }).map((_, index) => {
-                        const targetC = index % Cols
-                        const targetR = Math.floor(index / Cols)
+                (pngBorder ? (
+                    <div
+                        className={cn(
+                            "z-1 max-h-inherit max-w-inherit",
+                            asBackgroundImage && "absolute",
+                            objectFit === "fill" && "size-full",
+                            objectFit === "contain" &&
+                                "size-auto max-h-full max-w-full",
+                            objectFit === "cover" &&
+                                "size-auto min-h-full min-w-full",
+                            pngBorder && "blink:[filter:url(#png-border)]"
+                        )}
+                        style={{
+                            aspectRatio
+                        }}
+                        aria-hidden={true}
+                    >
+                        {Array.from({ length: Rows * Cols }).map((_, index) => {
+                            const targetC = index % Cols
+                            const targetR = Math.floor(index / Cols)
 
-                        const scrambledIndex = metadata.mapping[index]
-                        const sourceC = scrambledIndex % Cols
-                        const sourceR = Math.floor(scrambledIndex / Cols)
+                            const scrambledIndex = metadata.mapping[index]
+                            const sourceC = scrambledIndex % Cols
+                            const sourceR = Math.floor(scrambledIndex / Cols)
 
-                        const translateX =
-                            targetC * targetColPct - sourceC * colPct - padX
-                        const translateY =
-                            targetR * targetRowPct - sourceR * rowPct - padY
+                            const translateX =
+                                targetC * targetColPct - sourceC * colPct - padX
+                            const translateY =
+                                targetR * targetRowPct - sourceR * rowPct - padY
 
-                        return (
-                            <img
-                                key={index}
-                                src={`${basePath}/${fileName}_scrambled.webp`}
-                                alt=""
-                                className={cn(
-                                    "absolute h-[--h] w-[--w] max-w-none select-none",
-                                    isInLightbox && "pswp__img"
-                                )}
-                                style={{
-                                    clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(Cols - 1 - sourceC).toString()}) var(--y${(Rows - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
-                                    transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
-                                }}
+                            return (
+                                <img
+                                    key={index}
+                                    src={`${basePath}/${fileName}_scrambled.webp`}
+                                    alt=""
+                                    className={cn(
+                                        "absolute h-[--h] w-[--w] max-w-none select-none",
+                                        isInLightbox && "pswp__img"
+                                    )}
+                                    style={{
+                                        clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(Cols - 1 - sourceC).toString()}) var(--y${(Rows - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
+                                        transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
+                                    }}
+                                    decoding="async"
+                                    loading={isInLightbox ? "eager" : "lazy"}
+                                    draggable={false}
+                                />
+                            )
+                        })}
+                    </div>
+                ) : (
+                    <svg
+                        viewBox={`0 0 ${exactW.toString()} ${exactH.toString()}`}
+                        className={cn(
+                            "z-1 block max-h-inherit max-w-inherit",
+                            asBackgroundImage && "absolute inset-0",
+                            objectFit === "fill" && "size-full",
+                            objectFit === "contain" &&
+                                "size-auto max-h-full max-w-full",
+                            objectFit === "cover" &&
+                                "size-auto min-h-full min-w-full"
+                        )}
+                        style={{ aspectRatio }}
+                        aria-hidden={true}
+                    >
+                        <defs>
+                            <image
+                                id={`src-${uniqueId}`}
+                                href={`${basePath}/${fileName}_scrambled.webp`}
+                                width={spriteW}
+                                height={spriteH}
+                                preserveAspectRatio="none"
+                                className="select-none"
+                                // @ts-expect-error: React SVG missing decoding
                                 decoding="async"
-                                loading={isInLightbox ? "eager" : "lazy"}
-                                draggable={false}
                             />
-                        )
-                    })}
-                </div>
-            )}
+                            {Array.from({ length: Rows * Cols }).map(
+                                (_, index) => {
+                                    const targetC = index % Cols
+                                    const targetR = Math.floor(index / Cols)
+                                    const cellW = exactW / Cols
+                                    const cellH = exactH / Rows
+
+                                    return (
+                                        <clipPath
+                                            id={`clip-${uniqueId}-${index.toString()}`}
+                                            key={`def-${index.toString()}`}
+                                        >
+                                            <rect
+                                                x={targetC * cellW}
+                                                y={targetR * cellH}
+                                                width={cellW}
+                                                height={cellH}
+                                            />
+                                        </clipPath>
+                                    )
+                                }
+                            )}
+                        </defs>
+
+                        {Array.from({ length: Rows * Cols }).map((_, index) => {
+                            const targetC = index % Cols
+                            const targetR = Math.floor(index / Cols)
+                            const scrambledIndex = metadata.mapping[index]
+                            const sourceC = scrambledIndex % Cols
+                            const sourceR = Math.floor(scrambledIndex / Cols)
+
+                            const cellW = exactW / Cols
+                            const cellH = exactH / Rows
+                            const paddedCellW = cellW + 2 * EDGE_PAD
+                            const paddedCellH = cellH + 2 * EDGE_PAD
+
+                            const targetX = targetC * cellW
+                            const targetY = targetR * cellH
+                            const shiftX =
+                                targetX - (sourceC * paddedCellW + EDGE_PAD)
+                            const shiftY =
+                                targetY - (sourceR * paddedCellH + EDGE_PAD)
+
+                            return (
+                                <g
+                                    key={`g-${index.toString()}`}
+                                    clipPath={`url(#clip-${uniqueId}-${index.toString()})`}
+                                >
+                                    <use
+                                        href={`#src-${uniqueId}`}
+                                        x={shiftX}
+                                        y={shiftY}
+                                    />
+                                </g>
+                            )
+                        })}
+                    </svg>
+                ))}
 
             <noscript>
                 <img

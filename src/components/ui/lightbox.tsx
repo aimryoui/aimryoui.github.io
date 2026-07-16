@@ -55,6 +55,8 @@ function isOriginalInViewport(el: Element) {
     )
 }
 
+const ANIMATION_DURATION = 350
+
 function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
     const isMobilePortrait = useMediaQuery(
         "(max-width: 48rem) and (orientation: portrait)"
@@ -68,13 +70,13 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 showHideAnimationType: "zoom",
                 wheelToZoom: true,
                 secondaryZoomLevel: isMobilePortrait ? 0.75 : 2,
-                easing: "cubic-bezier(0.25, 0.1, 0.25, 1)",
+                easing: "cubic-bezier(0.20, 1, 0.36, 1)",
                 loop: false,
                 preloaderDelay: 500,
                 bgOpacity: 1,
-                spacing: 0.05,
-                showAnimationDuration: 250,
-                hideAnimationDuration: 250,
+                spacing: isMobilePortrait ? 0.1 : 0.05,
+                showAnimationDuration: ANIMATION_DURATION,
+                hideAnimationDuration: ANIMATION_DURATION,
                 imageClickAction: "zoom",
                 clickToCloseNonZoomable: false,
                 ...options
