@@ -722,8 +722,6 @@ function CarouselImage({
         srcPattern: string
         gap?: number
     }) {
-    const { emblaApi } = useCarousel()
-
     const isPatternSrc = PATTERN_SRC_REGEX.exec(srcPattern)
 
     let spreadImages = [srcPattern]
@@ -741,15 +739,11 @@ function CarouselImage({
         spreadImages = result
     }
 
-    return spreadImages.map((src, index) => {
-        const isInView = emblaApi?.slidesInView().includes(index)
-
-        return (
-            <CarouselItem key={src} gap={gap}>
-                <Image {...props} src={src} isInCarousel={true} />
-            </CarouselItem>
-        )
-    })
+    return spreadImages.map((src) => (
+        <CarouselItem key={src} gap={gap}>
+            <Image {...props} src={src} isInCarousel={true} />
+        </CarouselItem>
+    ))
 }
 
 export {
