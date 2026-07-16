@@ -76,6 +76,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 easing: isWebkit
                     ? "cubic-bezier(0.25, 0.1, 0.25, 1)"
                     : "cubic-bezier(0.20, 1, 0.36, 1)",
+                loop: false,
                 preloaderDelay: 500,
                 bgOpacity: 1,
                 spacing: isMobilePortrait ? 0.1 : 0.05,
