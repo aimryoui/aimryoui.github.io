@@ -55,7 +55,7 @@ const TocItemRow = memo(
             >
                 {/* Marker */}
                 <span
-                    aria-hidden="true"
+                    aria-hidden={true}
                     className={cn(
                         "absolute left-6 top-1/2 h-px origin-left -translate-y-1/2",
                         isActive

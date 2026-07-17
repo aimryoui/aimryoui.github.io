@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 function Progress({ className, ...props }: ProgressProps) {
     return (
         <BProgress
+            data-slot="progress"
             className={cn(
                 "absolute inset-x-0 -top-px z-20 h-0.75 w-full overflow-hidden",
                 className
@@ -14,6 +15,7 @@ function Progress({ className, ...props }: ProgressProps) {
             {...props}
         >
             <Bar
+                data-slot="progress-bar"
                 role="progressbar"
                 className={cn("size-full bg-highlighted")}
             />

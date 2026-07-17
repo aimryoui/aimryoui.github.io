@@ -19,12 +19,21 @@ function InputGroup({
     return (
         <Comp
             data-slot="input-group"
+            data-cursor="input"
             role="group"
             className={cn(
-                "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-lg border border-input will-change-[outline,border] has-[>textarea]:h-auto",
+                "group/input-group relative flex h-9 w-full min-w-0 cursor-auto items-center rounded-lg ring ring-inset ring-input will-change-[outline] has-[>textarea]:h-auto",
                 {
-                    hover: "bg-element-hover",
+                    hover: [
+                        "bg-element-hover",
+                        {
+                            "data-[cursor=input]": "rounded-none"
+                        }
+                    ],
                     dark: "bg-input/30",
+
+                    "data-[cursor=input]":
+                        "transition-[border-radius] ease-spring duration-200",
 
                     // Variants based on alignment.
                     "[&>input]:has-[>[data-align=inline-start]]": "pl-2",
@@ -34,7 +43,7 @@ function InputGroup({
 
                     // Focus state.
                     "has-[[data-slot=input-group-control]:focus-visible]": [
-                        "animate-focus border-ring outline-solid",
+                        "animate-focus ring-ring outline-solid",
                         {
                             hover: "bg-transparent dark:bg-input/30"
                         }
@@ -42,7 +51,7 @@ function InputGroup({
 
                     // Error state.
                     "has-[[data-slot][aria-invalid=true]]":
-                        "border-destructive ring-destructive/20"
+                        "border border-destructive/20 ring-destructive"
                 },
 
                 // Error state.
@@ -62,7 +71,7 @@ const inputGroupAddonVariants = cva(
             align: {
                 "inline-start":
                     "order-first pl-3 has-[>button]:ml-[-0.45rem] has-[>kbd]:ml-[-0.3rem]",
-                "inline-end": "order-last has-[>kbd]:mr-2",
+                "inline-end": "order-last has-[>kbd]:pe-2",
                 "block-start":
                     "order-first w-full justify-start px-3 pt-3 group-has-[>input]/input-group:pt-2.5 [&.border-b]:pb-3",
                 "block-end":

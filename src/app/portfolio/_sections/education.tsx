@@ -87,7 +87,7 @@ function Education() {
                                     }
                                 )}
                             >
-                                Bachelor&#39;s Degree / Digital Art & Design{" "}
+                                Bachelor of Arts / Digital Art & Design{" "}
                                 <At className="float-end mx-auto" />
                             </TableCell>
 

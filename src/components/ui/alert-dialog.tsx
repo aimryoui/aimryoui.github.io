@@ -35,11 +35,11 @@ function AlertDialogOverlay({
         <AlertDialogPrimitive.Backdrop
             data-slot="alert-dialog-overlay"
             className={cn(
-                "fixed inset-0 isolate z-50 bg-black/10 duration-100",
+                "fixed inset-0 isolate z-50 bg-black/80 duration-250",
                 {
-                    "supports-[backdrop-filter]": "backdrop-blur-xs",
-                    "data-open": "animate-in fade-in-0",
-                    "data-closed": "animate-out fade-out-0"
+                    "supports-[backdrop-filter]": "backdrop-blur-sm",
+                    "data-[starting-style]": "opacity-0 backdrop-blur-0",
+                    "data-[ending-style]": "opacity-0 backdrop-blur-0"
                 },
                 className
             )}
@@ -61,13 +61,15 @@ function AlertDialogContent({
             <AlertDialogPrimitive.Popup
                 data-slot="alert-dialog-content"
                 data-size={size}
+                // data-cursor="ignore"
                 className={cn(
-                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-popover-foreground ring-1 ring-foreground/10 outline-none duration-100",
+                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3.5 rounded-2xl bg-popover px-4 py-3 text-popover-foreground ring ring-stroke outline-none duration-250",
                     {
-                        "data-open": "animate-in fade-in-0 zoom-in-95",
-                        "data-closed": "animate-out fade-out-0 zoom-out-95",
-                        "data-[size=default]": "max-w-xs sm:max-w-sm",
-                        "data-[size=sm]": "max-w-xs"
+                        "data-[starting-style]": "scale-95 opacity-0",
+                        "data-[ending-style]": "scale-95 opacity-0",
+                        "data-[size=default]": "max-w-sm sm:max-w-xs",
+                        "data-[size=sm]": "max-w-xs",
+                        md: "rounded-xl"
                     },
                     className
                 )}
@@ -84,20 +86,20 @@ function AlertDialogHeader({
     return (
         <div
             data-slot="alert-dialog-header"
+            data-cursor="ignore"
             className={cn(
-                "grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center",
+                "grid cursor-auto grid-rows-[auto_1fr] gap-2",
                 {
                     "has-data-[slot=alert-dialog-media]":
                         "grid-rows-[auto_auto_1fr] gap-x-4",
-                    sm: {
-                        "group-data-[size=default]/alert-dialog-content": [
-                            "place-items-start text-left",
-                            {
-                                "has-data-[slot=alert-dialog-media]":
-                                    "grid-rows-[auto_1fr]"
-                            }
-                        ]
-                    }
+                    "group-data-[size=default]/alert-dialog-content": [
+                        "place-items-start text-left",
+                        {
+                            "has-data-[slot=alert-dialog-media]":
+                                "grid-rows-[auto_1fr]"
+                        }
+                    ],
+                    sm: "place-items-center text-center"
                 },
                 className
             )}
@@ -114,11 +116,12 @@ function AlertDialogFooter({
         <div
             data-slot="alert-dialog-footer"
             className={cn(
-                "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4",
+                "-mx-4 -mb-3 flex flex-row justify-end gap-2.5 rounded-b-2xl border-t bg-muted/50 p-4",
                 {
                     "group-data-[size=sm]/alert-dialog-content":
                         "grid grid-cols-2",
-                    sm: "flex-row justify-end"
+                    sm: "flex-col-reverse",
+                    md: "rounded-b-xl"
                 },
                 className
             )}
@@ -157,8 +160,8 @@ function AlertDialogTitle({
         <AlertDialogPrimitive.Title
             data-slot="alert-dialog-title"
             className={cn(
-                "cn-font-heading font-medium text-base",
-                "sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2",
+                "text-base font-wght-500",
+                "group-data-[size=default]/alert-dialog-content:group-has-[[data-slot=alert-dialog-media]]/alert-dialog-content:col-start-2",
                 className
             )}
             {...props}
@@ -174,9 +177,10 @@ function AlertDialogDescription({
         <AlertDialogPrimitive.Description
             data-slot="alert-dialog-description"
             className={cn(
-                "*:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground text-balance text-sm text-muted-foreground",
+                "text-pretty text-sm text-muted-foreground",
                 {
-                    md: "text-pretty"
+                    "*:is-[a]":
+                        "underline underline-offset-2 hover:text-foreground"
                 },
                 className
             )}

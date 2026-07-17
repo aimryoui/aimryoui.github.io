@@ -137,7 +137,7 @@ function MediaFrame({
                     <div
                         data-cursor="ignore"
                         className={cn(
-                            "relative grid w-full cursor-default grid-cols-1 justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
+                            "relative grid w-full cursor-auto grid-cols-1 justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
                             className
                         )}
                     >

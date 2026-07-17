@@ -97,6 +97,7 @@ function BackToPortfolio({ mode }: { mode: PortfolioMode }) {
                     <NextLink
                         href="/portfolio#projects"
                         prefetch={false}
+                        data-cursor="target"
                         className={cn(
                             buttonVariants({
                                 variant: "outline",

@@ -224,7 +224,7 @@ div.pswp__img--placeholder,
 }
 
 .pswp__button--arrow:disabled {
-    @apply hidden cursor-default;
+    @apply hidden cursor-not-allowed;
 }
 
 .pswp__button--arrow .pswp__icn {

@@ -150,6 +150,7 @@ function ImageCore({
     return (
         <div
             ref={mergeRefs([containerRef, ref])}
+            data-slot="image"
             className={cn(
                 limitHeight ? "min-w-0 max-w-full" : "w-full",
                 asBackgroundImage ? "h-full" : "h-fit",
@@ -302,6 +303,7 @@ function Image({ className, lightbox = true, ref, ...props }: ImageCoreProps) {
                 <ImageCore
                     parsedData={parsedData}
                     {...props}
+                    data-slot="lightbox-image"
                     isInLightbox={true}
                 />
             }

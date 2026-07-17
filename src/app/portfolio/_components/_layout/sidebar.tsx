@@ -9,6 +9,16 @@ import { PanelTopClose, PanelTopOpen } from "lucide-react"
 import { Ellipsis } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/mode-toggle"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle
+} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -61,30 +71,6 @@ function Sidebar({ className }: { className?: string }) {
 
 function Menu({ className }: { className?: string }) {
     const isMobile = useMediaQuery("lg")
-
-    const router = useRouter()
-    const pathname = usePathname()
-    const mode = usePortfolioModeStore((state) => state.mode)
-    const setMode = usePortfolioModeStore((state) => state.setMode)
-
-    // Navigate back to the `/portfolio` page if mode is set to "spread"
-    // and the current URL is not `/portfolio`
-    const handleModeChange = (nextMode: PortfolioMode) => {
-        setMode(nextMode)
-
-        if (nextMode === "spread") {
-            if (pathname !== "/portfolio") {
-                router.push("/portfolio")
-            }
-        }
-    }
-
-    const [sidebarPostion, setSidebarPostion] = useState<"left" | "right">(
-        "left"
-    )
-    const [isSettingsOpen, setIsSettingsOpen] = useState(false)
-    const isTocOpen = useTocPanelStore((state) => state.isOpen)
-    const toggleTocPanel = useTocPanelStore((state) => state.toggle)
 
     return (
         <>
@@ -184,153 +170,215 @@ function Menu({ className }: { className?: string }) {
                             />
                         </li>
                         <li className="lg:me-2">
-                            <DropdownMenu
-                                onOpenChange={(open) => {
-                                    setIsSettingsOpen(open)
-                                }}
-                            >
-                                <TooltipTrigger
-                                    delay={500}
-                                    disabled={isSettingsOpen}
-                                    payload={{
-                                        content: <span>Settings</span>
-                                    }}
-                                    render={
-                                        <DropdownMenuTrigger
-                                            render={
-                                                <Button
-                                                    size="icon"
-                                                    variant="outline"
-                                                    className={cn({
-                                                        lg: "size-[36px]"
-                                                    })}
-                                                />
-                                            }
-                                        >
-                                            <Ellipsis className="size-6" />
-                                            <span className="sr-only">
-                                                Settings
-                                            </span>
-                                        </DropdownMenuTrigger>
-                                    }
-                                />
-                                <DropdownMenuContent>
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuLabel>
-                                            Settings
-                                        </DropdownMenuLabel>
-                                        <DropdownMenuSub>
-                                            <DropdownMenuSubTrigger>
-                                                View mode
-                                            </DropdownMenuSubTrigger>
-                                            <DropdownMenuSubContent>
-                                                <DropdownMenuRadioGroup
-                                                    value={mode}
-                                                    onValueChange={(value) => {
-                                                        handleModeChange(
-                                                            value as PortfolioMode
-                                                        )
-                                                    }}
-                                                >
-                                                    <DropdownMenuRadioItem
-                                                        value="pages"
-                                                        closeOnClick
-                                                    >
-                                                        Pages
-                                                    </DropdownMenuRadioItem>
-                                                    <DropdownMenuRadioItem
-                                                        value="spread"
-                                                        closeOnClick
-                                                    >
-                                                        Spread
-                                                    </DropdownMenuRadioItem>
-                                                </DropdownMenuRadioGroup>
-                                            </DropdownMenuSubContent>
-                                        </DropdownMenuSub>
-                                        <DropdownMenuSub>
-                                            <DropdownMenuSubTrigger>
-                                                Sidebar position
-                                            </DropdownMenuSubTrigger>
-                                            <DropdownMenuSubContent>
-                                                <DropdownMenuRadioGroup
-                                                    value={sidebarPostion}
-                                                    onValueChange={(value) => {
-                                                        setSidebarPostion(
-                                                            value as
-                                                                | "left"
-                                                                | "right"
-                                                        )
-                                                    }}
-                                                >
-                                                    <DropdownMenuRadioItem value="left">
-                                                        Left
-                                                    </DropdownMenuRadioItem>
-                                                    <DropdownMenuRadioItem value="right">
-                                                        Right
-                                                    </DropdownMenuRadioItem>
-                                                </DropdownMenuRadioGroup>
-                                            </DropdownMenuSubContent>
-                                        </DropdownMenuSub>
-                                    </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuLabel>
-                                            About
-                                        </DropdownMenuLabel>
-                                        <DropdownMenuLinkItem
-                                            href="https://github.com/aimryoui/aimryoui.github.io"
-                                            openInNewTab
-                                        >
-                                            Source code
-                                        </DropdownMenuLinkItem>
-                                    </DropdownMenuGroup>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                            <SettingButton />
                         </li>
                         {isMobile && (
                             <li className="-my-5.5 -me-6 size-20">
-                                <TooltipTrigger
-                                    delay={500}
-                                    disabled={isTocOpen}
-                                    payload={{
-                                        content: <span>Table of Contents</span>
-                                    }}
-                                    render={
-                                        <Button
-                                            size="icon"
-                                            variant="outline"
-                                            className={cn(
-                                                "size-full rounded-none border-y-0 border-e-0"
-                                            )}
-                                            aria-expanded={isTocOpen}
-                                            data-state={
-                                                isTocOpen ? "open" : "closed"
-                                            }
-                                            onClick={toggleTocPanel}
-                                        >
-                                            {isTocOpen ? (
-                                                <PanelTopOpen
-                                                    className="size-8"
-                                                    strokeWidth={1.25}
-                                                />
-                                            ) : (
-                                                <PanelTopClose
-                                                    className="size-8"
-                                                    strokeWidth={1.25}
-                                                />
-                                            )}
-                                            <span className="sr-only">
-                                                Table of Contents
-                                            </span>
-                                        </Button>
-                                    }
-                                />
+                                <TOCButton />
                             </li>
                         )}
                     </Tooltip>
                 </menu>
             </header>
         </>
+    )
+}
+
+function SettingButton() {
+    const mode = usePortfolioModeStore((state) => state.mode)
+    const router = useRouter()
+    const pathname = usePathname()
+    const setMode = usePortfolioModeStore((state) => state.setMode)
+
+    const [alertDialogOpen, setAlertDialogOpen] = useState(false)
+
+    // Navigate back to the `/portfolio` page if mode is set to "spread"
+    // and the current URL is not `/portfolio`
+    const handleModeChange = (nextMode: PortfolioMode) => {
+        setMode(nextMode)
+
+        if (nextMode === "spread") {
+            if (pathname !== "/portfolio") {
+                router.push("/portfolio")
+            }
+        }
+    }
+
+    const [sidebarPostion, setSidebarPostion] = useState<"left" | "right">(
+        "left"
+    )
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+
+    return (
+        <>
+            <DropdownMenu
+                onOpenChange={(open) => {
+                    setIsSettingsOpen(open)
+                }}
+            >
+                <TooltipTrigger
+                    delay={500}
+                    disabled={isSettingsOpen}
+                    payload={{
+                        content: <span>Settings</span>
+                    }}
+                    render={
+                        <DropdownMenuTrigger
+                            render={
+                                <Button
+                                    size="icon"
+                                    variant="outline"
+                                    className={cn({
+                                        lg: "size-[36px]"
+                                    })}
+                                />
+                            }
+                        >
+                            <Ellipsis className="size-6" />
+                            <span className="sr-only">Settings</span>
+                        </DropdownMenuTrigger>
+                    }
+                />
+                <DropdownMenuContent>
+                    <DropdownMenuGroup>
+                        <DropdownMenuLabel>Settings</DropdownMenuLabel>
+                        <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>
+                                View mode
+                            </DropdownMenuSubTrigger>
+                            <DropdownMenuSubContent>
+                                <DropdownMenuRadioGroup value={mode}>
+                                    <DropdownMenuRadioItem
+                                        value="pages"
+                                        closeOnClick
+                                        onClick={() => {
+                                            handleModeChange("pages")
+                                        }}
+                                    >
+                                        Pages
+                                    </DropdownMenuRadioItem>
+
+                                    <DropdownMenuRadioItem
+                                        value="spread"
+                                        closeOnClick
+                                        onClick={() => {
+                                            setAlertDialogOpen(true)
+                                        }}
+                                    >
+                                        Spread
+                                    </DropdownMenuRadioItem>
+                                </DropdownMenuRadioGroup>
+                            </DropdownMenuSubContent>
+                        </DropdownMenuSub>
+                        <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>
+                                Sidebar position
+                            </DropdownMenuSubTrigger>
+                            <DropdownMenuSubContent>
+                                <DropdownMenuRadioGroup
+                                    value={sidebarPostion}
+                                    onValueChange={(value) => {
+                                        setSidebarPostion(
+                                            value as "left" | "right"
+                                        )
+                                    }}
+                                >
+                                    <DropdownMenuRadioItem value="left">
+                                        Left
+                                    </DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value="right">
+                                        Right
+                                    </DropdownMenuRadioItem>
+                                </DropdownMenuRadioGroup>
+                            </DropdownMenuSubContent>
+                        </DropdownMenuSub>
+                    </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                        <DropdownMenuLabel>About</DropdownMenuLabel>
+                        <DropdownMenuLinkItem
+                            href="https://github.com/aimryoui/aimryoui.github.io"
+                            openInNewTab
+                        >
+                            Source code
+                        </DropdownMenuLinkItem>
+                    </DropdownMenuGroup>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            <AlertDialog
+                open={alertDialogOpen}
+                onOpenChange={setAlertDialogOpen}
+            >
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>
+                            Spread mode will affect performance!
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                            <span>
+                                A total of over 1000 media items—including
+                                images and videos—will be displayed, with around
+                                200 shown simultaneously.
+                            </span>
+                            <br />
+                            <span className="mt-[.5em] block">
+                                This causes significant performance degradation
+                                and lag during scrolling and interaction.
+                            </span>
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel className="border-none ring ring-stroke">
+                            Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                            variant="destructive"
+                            onClick={() => {
+                                handleModeChange("spread")
+                                setAlertDialogOpen(false)
+                            }}
+                        >
+                            Continue
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+        </>
+    )
+}
+
+function TOCButton() {
+    const isTocOpen = useTocPanelStore((state) => state.isOpen)
+    const toggleTocPanel = useTocPanelStore((state) => state.toggle)
+
+    return (
+        <TooltipTrigger
+            delay={500}
+            disabled={isTocOpen}
+            payload={{
+                content: <span>Table of Contents</span>
+            }}
+            render={
+                <Button
+                    size="icon"
+                    variant="outline"
+                    className={cn(
+                        "size-full rounded-none border-y-0 border-e-0"
+                    )}
+                    aria-expanded={isTocOpen}
+                    data-state={isTocOpen ? "open" : "closed"}
+                    onClick={toggleTocPanel}
+                >
+                    {isTocOpen ? (
+                        <PanelTopOpen className="size-8" strokeWidth={1.25} />
+                    ) : (
+                        <PanelTopClose className="size-8" strokeWidth={1.25} />
+                    )}
+                    <span className="sr-only">Table of Contents</span>
+                </Button>
+            }
+        />
     )
 }
 

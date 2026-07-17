@@ -44,7 +44,8 @@ function DropdownMenuContent({
             }
         >
             <MenuPrimitive.Positioner
-                className="isolate z-50 overflow-hidden p-px outline-none"
+                data-cursor="ignore"
+                className="isolate z-50 cursor-auto overflow-hidden p-px outline-none"
                 positionMethod="fixed"
                 align={align}
                 alignOffset={alignOffset}
@@ -99,7 +100,7 @@ function DropdownMenuLabel({
             data-slot="dropdown-menu-label"
             data-inset={inset}
             className={cn(
-                "px-3 py-1.5 text-xs text-muted-foreground",
+                "pointer-events-none px-3 py-1.5 text-xs text-muted-foreground",
                 {
                     "data-inset": "pl-7"
                 },

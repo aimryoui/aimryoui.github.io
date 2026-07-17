@@ -27,6 +27,7 @@ export function Masonry({
     return (
         <div
             ref={gridRef}
+            data-slot="masonry"
             className={cn("w-full gap-2 grid-lanes md:grid-cols-1", className)}
             data-grid-lanes-polyfilled
             {...props}

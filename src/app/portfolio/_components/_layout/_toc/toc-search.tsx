@@ -48,7 +48,6 @@ function TocSearch({
     return (
         <InputGroup
             as="search"
-            data-cursor="ignore"
             className={cn({
                 lg: "h-[36px]"
             })}

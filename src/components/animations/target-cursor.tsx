@@ -85,6 +85,7 @@ interface TargetCursorProps {
     targetSelector?: string
     lockSelector?: string
     ignoreSelector?: string
+    inputSelector?: string
     spinDuration?: number
     hideDefaultCursor?: boolean
     cursorColor?: string
@@ -109,6 +110,7 @@ function TargetCursor({
     targetSelector = "[data-cursor='target']",
     lockSelector = "[data-cursor='lock']",
     ignoreSelector = "[data-cursor='ignore']",
+    inputSelector = "[data-cursor='input']",
     spinDuration = 2,
     hideDefaultCursor = true,
     cursorColor = "var(--color-highlighted)",
@@ -149,6 +151,7 @@ function TargetCursor({
                 body,
                 body *:not(
                     ${ignoreSelector}, ${ignoreSelector} *,
+                    ${inputSelector}, ${inputSelector} *,
                     .pswp, .pswp *,
                     input, input *
                 ) {
@@ -173,15 +176,22 @@ function TargetCursor({
         let hasMoved = false
         let isHiddenByIgnore = false
         let isHiddenByLeave = false
+        let isHiddenByInput = false
 
         const updateVisibility = () => {
             const isHidden = !hasMoved || isHiddenByIgnore || isHiddenByLeave
 
-            gsap.to(cursor, {
+            gsap.set(cursor, {
                 autoAlpha: isHidden ? 0 : 1,
-                duration: 0,
                 overwrite: "auto"
             })
+
+            if (dotRef.current) {
+                gsap.set(dotRef.current, {
+                    autoAlpha: isHidden || isHiddenByInput ? 0 : 1,
+                    overwrite: "auto"
+                })
+            }
 
             if (isHidden) {
                 state.resumeTween?.pause()
@@ -341,6 +351,10 @@ function TargetCursor({
                 ? (e.target as Element).closest(ignoreSelector) !== null
                 : false
 
+            const isInput = inputSelector
+                ? (e.target as Element).closest(inputSelector) !== null
+                : false
+
             let visibilityChanged = false
 
             if (!hasMoved) {
@@ -360,6 +374,16 @@ function TargetCursor({
             } else if (isHiddenByIgnore || isHiddenByLeave) {
                 isHiddenByIgnore = false
                 isHiddenByLeave = false
+                visibilityChanged = true
+            }
+
+            if (isInput) {
+                if (!isHiddenByInput) {
+                    isHiddenByInput = true
+                    visibilityChanged = true
+                }
+            } else if (isHiddenByInput) {
+                isHiddenByInput = false
                 visibilityChanged = true
             }
 
@@ -394,7 +418,12 @@ function TargetCursor({
             const isStillOverTarget =
                 elementUnderMouse &&
                 (elementUnderMouse === activeTarget ||
-                    elementUnderMouse.closest(targetSelector) === activeTarget)
+                    elementUnderMouse.closest(targetSelector) ===
+                        activeTarget ||
+                    (inputSelector
+                        ? elementUnderMouse.closest(inputSelector) ===
+                          activeTarget
+                        : false))
             if (!isStillOverTarget) {
                 doLeave()
             }
@@ -421,7 +450,11 @@ function TargetCursor({
             const allTargets: Element[] = []
             let current: Element | null = directTarget
             while (current && current !== document.body) {
-                if (current.matches(targetSelector)) {
+                const matchesTarget = current.matches(targetSelector)
+                const matchesInput = inputSelector
+                    ? current.matches(inputSelector)
+                    : false
+                if (matchesTarget || matchesInput) {
                     allTargets.push(current)
                 }
                 current = current.parentElement
@@ -539,6 +572,7 @@ function TargetCursor({
         targetSelector,
         lockSelector,
         ignoreSelector,
+        inputSelector,
         spinDuration,
         hideDefaultCursor,
         cursorColor
@@ -547,10 +581,15 @@ function TargetCursor({
     return (
         <div
             ref={cursorRef}
+            aria-hidden={true}
+            role="presentation"
             className={cn(
                 "pointer-events-none invisible fixed left-0 top-0 z-infinite size-0 opacity-0 will-change-transform",
                 className
             )}
+            style={{
+                viewTransitionName: "none !important"
+            }}
             {...props}
         >
             <div

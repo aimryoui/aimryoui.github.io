@@ -11,6 +11,7 @@ export function Gif({
 }: Pick<AnimatedMediaProps, "src" | "alt" | "rounded" | "className">) {
     return (
         <AnimatedMedia
+            data-slot="gif"
             src={src}
             alt={alt}
             className={className}

@@ -213,7 +213,7 @@ function At({
     return (
         <>
             <span
-                aria-hidden="true"
+                aria-hidden={true}
                 role="presentation"
                 className={cn(
                     "inline-block text-muted-foreground font-wght-400",

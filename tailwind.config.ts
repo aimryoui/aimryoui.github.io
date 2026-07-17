@@ -26,6 +26,7 @@ import all from "./src/lib/tailwindcss-plugins/variants/all"
 import browserEngines from "./src/lib/tailwindcss-plugins/variants/browser-engines"
 import containerQueries from "./src/lib/tailwindcss-plugins/variants/container-queries"
 import has from "./src/lib/tailwindcss-plugins/variants/has"
+import is from "./src/lib/tailwindcss-plugins/variants/is"
 import not from "./src/lib/tailwindcss-plugins/variants/not"
 import nth from "./src/lib/tailwindcss-plugins/variants/nth"
 import slotted from "./src/lib/tailwindcss-plugins/variants/slotted"
@@ -310,6 +311,7 @@ export default {
         browserEngines,
         containerQueries,
         has,
+        is,
         not,
         nth,
         slotted,
