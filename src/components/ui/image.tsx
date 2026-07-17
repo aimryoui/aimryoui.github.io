@@ -195,18 +195,20 @@ function ImageCore({
                                 : "border border-default/15"
                         ]
                     },
-                gradientBorder && {
-                    after: [
-                        "pointer-events-none absolute inset-0 z-2 rounded-inherit",
-                        typeof gradientBorder.width === "number" &&
-                            "p-[var(--nhn-gradient-border-width)]",
-                        typeof gradientBorder.width === "string" &&
-                            gradientBorder.width,
-                        "bg-[image:var(--nhn-gradient-border-color)]",
-                        "mask-clip-[content-box,border-box] mask-exclude webkit-mask-xor mask-origin-[content-box,border-box]",
-                        "[mask-image:linear-gradient(#fff_0_0),linear-gradient(#fff_0_0)]"
-                    ]
-                },
+                gradientBorder && [
+                    {
+                        after: [
+                            "pointer-events-none absolute inset-0 z-2 rounded-inherit",
+                            typeof gradientBorder.width === "number" &&
+                                "p-[var(--nhn-gradient-border-width)]",
+                            "bg-[image:var(--nhn-gradient-border-color)]",
+                            "mask-clip-[content-box,border-box] mask-exclude mask-origin-[content-box,border-box]",
+                            "[mask-image:linear-gradient(#fff_0_0),linear-gradient(#fff_0_0)]"
+                        ]
+                    },
+                    typeof gradientBorder.width === "string" &&
+                        gradientBorder.width
+                ],
                 className
             )}
             style={{

@@ -44,11 +44,6 @@ export default plugin(({ addUtilities, matchUtilities }) => {
             type: ["lookup"]
         }
     )
-    addUtilities({
-        ".webkit-mask-xor": {
-            "-webkit-mask-composite": "xor"
-        }
-    })
     // mask-origin
     matchUtilities(
         {

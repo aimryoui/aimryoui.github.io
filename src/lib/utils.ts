@@ -3,6 +3,9 @@ import { type ClassValue, twg } from "twg"
 
 type AdditionalClassGroupIDs =
     | "mask"
+    | "mask-clip"
+    | "mask-composite"
+    | "mask-origin"
     | "scrollbar-width"
     | "font-wght"
     | "font-slnt"
@@ -61,22 +64,50 @@ const twMerge = extendTailwindMerge<
             ],
             "outline-offset": ["outline-offset-px"],
             "scrollbar-width": [
-                "scrollbar-auto",
-                "scrollbar-thin",
-                "scrollbar-none"
+                {
+                    scrollbar: ["auto", "thin", "none"]
+                }
             ],
-            transition: ["transition-normal", "transition-discrete"],
-            ease: ["ease-spring"],
+            transition: [
+                {
+                    transition: ["normal", "discrete"]
+                }
+            ],
+            ease: [
+                {
+                    ease: ["spring"]
+                }
+            ],
             /** @see {@link https://github.com/dcastil/tailwind-merge/blob/v2.6.1/docs/api-reference.md#validators} */
             "bg-clip": [{ "bg-clip": [validators.isArbitraryValue] }],
             duration: [{ duration: [validators.isNumber] }],
-            mask: [
+            "mask-clip": [
                 {
-                    mask: [
-                        "add",
-                        "subtract",
-                        "intersect",
-                        "exclude",
+                    "mask-clip": [
+                        "border",
+                        "padding",
+                        "content",
+                        "fill",
+                        "stroke",
+                        "view",
+                        validators.isArbitraryValue
+                    ]
+                }
+            ],
+            "mask-composite": [
+                {
+                    mask: ["add", "subtract", "intersect", "exclude"]
+                }
+            ],
+            "mask-origin": [
+                {
+                    "mask-origin": [
+                        "border",
+                        "padding",
+                        "content",
+                        "fill",
+                        "stroke",
+                        "view",
                         validators.isArbitraryValue
                     ]
                 }
@@ -84,10 +115,10 @@ const twMerge = extendTailwindMerge<
         },
         theme: {
             /** @see https://github.com/dcastil/tailwind-merge/blob/v2.6.1/docs/configuration.md#theme */
-            spacing: ["inherit"],
+            spacing: ["inherit", "px"],
             borderRadius: ["inherit"],
             transitionBehavior: ["normal", "discrete"],
-            borderWidth: ["media"]
+            borderWidth: ["media", "px"]
         }
     }
 })
