@@ -341,6 +341,7 @@ function Contact() {
 
                                 <TableBody
                                     className={cn("grid gap-y-2", {
+                                        "@[50.125rem]": "gap-y-4",
                                         lg: "gap-y-4"
                                     })}
                                 >
@@ -350,7 +351,6 @@ function Contact() {
                                             className={cn(
                                                 "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                                 {
-                                                    "last:*": "pe-6",
                                                     "@[32rem]": "flex gap-6"
                                                 }
                                             )}
@@ -401,7 +401,7 @@ function Contact() {
                                                     "col-span-1 p-0 text-right align-top text-highlighted font-wght-500",
                                                     {
                                                         "@[59.375rem]":
-                                                            "text-left",
+                                                            "pe-6 text-left",
                                                         // "@[32rem]": "ms-auto"
                                                         "@[24rem]": "sr-only"
                                                     }

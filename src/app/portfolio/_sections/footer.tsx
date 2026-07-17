@@ -133,7 +133,7 @@ function Footer() {
 
     return (
         <footer
-            className={cn("relative flex flex-col bg-background", {
+            className={cn("relative flex flex-col bg-background @container", {
                 lg: "flex-col-reverse"
             })}
         >
@@ -152,7 +152,7 @@ function Footer() {
             <Space
                 as="ul"
                 className={cn("flex items-center bg-transparent", {
-                    xl: "h-fit min-h-20 flex-wrap"
+                    "@[50.9375rem]": "h-fit min-h-20 flex-wrap"
                 })}
             >
                 <Tooltip>
@@ -166,7 +166,8 @@ function Footer() {
                                 render={
                                     <li
                                         className={cn("h-full flex-1", {
-                                            xl: "h-20 basis-[calc(20%-var(--px)*4)]"
+                                            "@[50.9375rem]":
+                                                "h-20 basis-[calc(20%-var(--px)*4)]"
                                         })}
                                     >
                                         <NextLink
@@ -196,7 +197,7 @@ function Footer() {
                                 <li
                                     role="separator"
                                     className={cn("h-full", {
-                                        xl: [
+                                        "@[50.9375rem]": [
                                             "h-20",
                                             {
                                                 "nth-of-type-10":

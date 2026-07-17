@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react"
 
-export function usePlatform() {
+function usePlatform() {
     return useSyncExternalStore(
         () => () => {},
         () => {
@@ -13,3 +13,5 @@ export function usePlatform() {
         }
     )
 }
+
+export { usePlatform }

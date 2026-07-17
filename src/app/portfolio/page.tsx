@@ -27,7 +27,7 @@ export default function Portfolio() {
                 <SectionLine showDecoration />
                 <Space />
                 <SectionLine />
-                <div className={cn("relative bg-background px-6 pb-4.5 pt-4")}>
+                <div className={cn("relative bg-background px-6 py-4.5")}>
                     <span
                         className={cn(
                             "absolute -top-9.5 left-6 font-mono uppercase"
@@ -61,11 +61,7 @@ export default function Portfolio() {
                 <SectionLine />
                 <Divider />
                 <SectionLine />
-                <div
-                    className={cn("relative bg-background px-6 py-4.5", {
-                        lg: "pb-5 pt-4"
-                    })}
-                >
+                <div className={cn("relative bg-background px-6 py-4.5")}>
                     <Text className={cn("text-pretty")}>
                         However, I came up from{" "}
                         {[
@@ -100,11 +96,16 @@ export default function Portfolio() {
                                 {index < arr.length - 1 && ", "}
                             </Fragment>
                         ))}
-                        , etc. <br />
+                        , etc.
+                    </Text>
+                    <br />
+                    <Text className={cn("text-pretty")}>
                         So with UI & UX Design, I can understand{" "}
                         <Highlight>what can be done, and what cannot</Highlight>
                         .
-                        <br />
+                    </Text>
+                    <br />
+                    <Text className={cn("text-pretty")}>
                         From there I can{" "}
                         <Bold>
                             easily work and communicate with related positions

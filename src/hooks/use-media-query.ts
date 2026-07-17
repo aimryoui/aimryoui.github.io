@@ -1,5 +1,7 @@
 import { useSyncExternalStore } from "react"
 
+import theme from "@/lib/tailwindcss-plugins/tailwind"
+
 interface UseMediaQueryOptions {
     getInitialValueInEffect: boolean
 }
@@ -50,17 +52,21 @@ const defaultOptions: UseMediaQueryOptions = {
     getInitialValueInEffect: true
 }
 
-export const BREAKPOINTS = {
-    "2xl": "(max-width: 96rem)",
-    xl: "(max-width: 80rem)",
-    lg: "(max-width: 72rem)",
-    md: "(max-width: 48rem)",
-    sm: "(max-width: 40rem)"
+function breakpoint(size: keyof typeof theme.screens) {
+    return theme.screens[size].max
+}
+
+const BREAKPOINTS = {
+    "2xl": `(max-width: ${breakpoint("2xl")})`,
+    xl: `(max-width: ${breakpoint("xl")})`,
+    lg: `(max-width: ${breakpoint("lg")})`,
+    md: `(max-width: ${breakpoint("md")})`,
+    sm: `(max-width: ${breakpoint("sm")})`
 } as const
 
-export type BreakpointKey = keyof typeof BREAKPOINTS
+type BreakpointKey = keyof typeof BREAKPOINTS
 
-export function useMediaQuery(
+function useMediaQuery(
     query: BreakpointKey | (string & Record<never, never>),
     initialValue?: boolean,
     { getInitialValueInEffect }: UseMediaQueryOptions = defaultOptions
@@ -90,3 +96,6 @@ export function useMediaQuery(
 
     return matches
 }
+
+export type { BreakpointKey }
+export { BREAKPOINTS, useMediaQuery }

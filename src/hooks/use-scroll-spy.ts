@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation"
  *   (Default: 40%)
  * @returns {string} The ID of the element that is currently in the viewport
  */
-export function useScrollSpy(ids: string[], offsetPercent = 40) {
+function useScrollSpy(ids: string[], offsetPercent = 40) {
     const [activeId, setActiveId] = useState("")
     const isScrollPending = useRef(false)
 
@@ -95,3 +95,5 @@ export function useScrollSpy(ids: string[], offsetPercent = 40) {
 
     return activeId
 }
+
+export { useScrollSpy }

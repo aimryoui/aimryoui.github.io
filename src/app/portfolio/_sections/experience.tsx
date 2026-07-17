@@ -301,6 +301,7 @@ function Experience() {
 
                             <TableBody
                                 className={cn("grid gap-y-2", {
+                                    "@[50.125rem]": "gap-y-4",
                                     lg: "gap-y-4"
                                 })}
                             >
