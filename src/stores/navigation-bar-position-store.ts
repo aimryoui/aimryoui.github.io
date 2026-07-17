@@ -16,6 +16,13 @@ const useSidebarPositionStore = create<SidebarPositionStore>()(
             position: "left",
             setPosition: (position) => {
                 set({ position })
+
+                if (typeof document !== "undefined") {
+                    document.documentElement.setAttribute(
+                        "data-sidebar-position",
+                        position
+                    )
+                }
             }
         }),
         {
@@ -38,6 +45,13 @@ const useToolbarPositionStore = create<ToolbarPositionStore>()(
             position: "bottom",
             setPosition: (position) => {
                 set({ position })
+
+                if (typeof document !== "undefined") {
+                    document.documentElement.setAttribute(
+                        "data-toolbar-position",
+                        position
+                    )
+                }
             }
         }),
         {

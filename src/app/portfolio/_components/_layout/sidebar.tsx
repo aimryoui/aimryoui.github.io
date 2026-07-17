@@ -317,12 +317,27 @@ function SettingButton() {
                                 >
                                     <DropdownMenuRadioItem
                                         value={isMobile ? "top" : "left"}
+                                        onClick={() => {
+                                            if (isMobile) {
+                                                setToolbarPosition("top")
+                                            } else {
+                                                setSidebarPosition("left")
+                                            }
+                                        }}
                                         disabled={isMobile}
                                     >
                                         {isMobile ? "Top" : "Left"}
                                     </DropdownMenuRadioItem>
                                     <DropdownMenuRadioItem
                                         value={isMobile ? "bottom" : "right"}
+                                        onClick={() => {
+                                            if (isMobile) {
+                                                setToolbarPosition("bottom")
+                                            } else {
+                                                setSidebarPosition("right")
+                                            }
+                                        }}
+                                        disabled={isMobile}
                                     >
                                         {isMobile ? "Bottom" : "Right"}
                                     </DropdownMenuRadioItem>
