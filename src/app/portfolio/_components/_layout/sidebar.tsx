@@ -1,5 +1,6 @@
 "use client"
 
+import type React from "react"
 import { useState } from "react"
 import NextLink from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -43,6 +44,10 @@ import { cn } from "@/lib/utils"
 import { useTocItems } from "@/portfolio/_components/_layout/_toc/use-toc-items"
 import { TableOfContents } from "@/portfolio/_components/_layout/table-of-contents"
 import {
+    useSidebarPositionStore,
+    useToolbarPositionStore
+} from "@/stores/navigation-bar-position-store"
+import {
     type PortfolioMode,
     usePortfolioModeStore
 } from "@/stores/portfolio-mode-store"
@@ -50,7 +55,7 @@ import { useTocPanelStore } from "@/stores/toc-panel-store"
 
 import { projects } from "~/.velite"
 
-function Sidebar({ className }: { className?: string }) {
+function Sidebar({ className, ...props }: React.ComponentProps<"aside">) {
     const mode = usePortfolioModeStore((state) => state.mode)
     const tocItems = useTocItems(mode)
 
@@ -60,10 +65,13 @@ function Sidebar({ className }: { className?: string }) {
             className={cn(
                 "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-sidebar flex-col justify-end bg-background",
                 {
+                    "group-data-[sidebar-position=right]/html":
+                        "left-auto right-[calc(var(--spacing)*6+var(--px))]",
                     lg: "hidden"
                 },
                 className
             )}
+            {...props}
         >
             <TableOfContents mode={mode} items={tocItems} />
             <Menu />
@@ -209,9 +217,16 @@ function SettingButton() {
         }
     }
 
-    const [sidebarPostion, setSidebarPostion] = useState<
-        "top" | "bottom" | "left" | "right"
-    >(isMobile ? "bottom" : "left")
+    const sidebarPosition = useSidebarPositionStore((state) => state.position)
+    const setSidebarPosition = useSidebarPositionStore(
+        (state) => state.setPosition
+    )
+
+    const toolbarPosition = useToolbarPositionStore((state) => state.position)
+    const setToolbarPosition = useToolbarPositionStore(
+        (state) => state.setPosition
+    )
+
     const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
     return (
@@ -277,23 +292,32 @@ function SettingButton() {
                         </DropdownMenuSub>
                         <DropdownMenuSub>
                             <DropdownMenuSubTrigger>
-                                Sidebar position
+                                {isMobile
+                                    ? "Toolbar position"
+                                    : "Sidebar position"}
                             </DropdownMenuSubTrigger>
                             <DropdownMenuSubContent>
                                 <DropdownMenuRadioGroup
-                                    value={sidebarPostion}
+                                    value={
+                                        isMobile
+                                            ? toolbarPosition
+                                            : sidebarPosition
+                                    }
                                     onValueChange={(value) => {
-                                        setSidebarPostion(
-                                            value as
-                                                | "top"
-                                                | "bottom"
-                                                | "left"
-                                                | "right"
-                                        )
+                                        if (isMobile) {
+                                            setToolbarPosition(
+                                                value as "top" | "bottom"
+                                            )
+                                        } else {
+                                            setSidebarPosition(
+                                                value as "left" | "right"
+                                            )
+                                        }
                                     }}
                                 >
                                     <DropdownMenuRadioItem
                                         value={isMobile ? "top" : "left"}
+                                        disabled={isMobile}
                                     >
                                         {isMobile ? "Top" : "Left"}
                                     </DropdownMenuRadioItem>

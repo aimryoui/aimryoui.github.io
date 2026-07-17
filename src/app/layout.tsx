@@ -3,7 +3,6 @@ import "@/globals.css"
 import { type Metadata, type Viewport } from "next"
 import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
-import Script from "next/script"
 
 import { TargetCursor } from "@/components/animations/target-cursor"
 import { MarginLine } from "@/components/layout/line"
@@ -153,20 +152,77 @@ export default function RootLayout({
             className={cn(
                 googleSansFlex.variable,
                 sfMono.variable,
-                "antialiased scrollbar-colored scrollbar-thumb-default/40 scrollbar-track-pattern"
+                "group/html antialiased scrollbar-colored scrollbar-thumb-default/40 scrollbar-track-pattern"
             )}
             data-scroll-behavior="smooth"
         >
             <head>
-                <Script id="platform-detection" strategy="beforeInteractive">
-                    {`
-                        document.documentElement.setAttribute("data-platform",
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: /* js */ `
+                        const htmlElement = document.documentElement
+                        // Platform detection
+                        htmlElement.setAttribute("data-platform",
                             window.navigator.platform.includes("Mac")
                             ? "mac"
                             : "win"
                         )
-                    `}
-                </Script>
+                        // Portfolio mode
+                        try {
+                            const portfolioMode = localStorage.getItem("portfolio-mode")
+                            console.log(portfolioMode)
+                            if (portfolioMode) {
+                                const parsed = JSON.parse(portfolioMode)
+                                htmlElement.setAttribute(
+                                    "data-portfolio-mode",
+                                    parsed.state.mode
+                                )
+                            } else {
+                                htmlElement.setAttribute(
+                                    "data-portfolio-mode",
+                                    "pages"
+                                )
+                            }
+                        } catch (e) {
+                            console.error("Error getting portfolio mode:", e)
+                            htmlElement.setAttribute("data-portfolio-mode", "pages")
+                        }
+                        // Navigation bar position
+                        try {
+                            const sidebarPosition = localStorage.getItem("sidebar-position")
+                            const toolbarPosition = localStorage.getItem("toolbar-position")
+                            if (sidebarPosition) {
+                                const parsed = JSON.parse(sidebarPosition)
+                                htmlElement.setAttribute(
+                                    "data-sidebar-position",
+                                    parsed.state.position
+                                )
+                            } else {
+                                htmlElement.setAttribute(
+                                    "data-sidebar-position",
+                                    "left"
+                                )
+                            }
+                            if (toolbarPosition) {
+                                const parsed = JSON.parse(toolbarPosition)
+                                htmlElement.setAttribute(
+                                    "data-toolbar-position",
+                                    parsed.state.position
+                                )
+                            } else {
+                                htmlElement.setAttribute(
+                                    "data-toolbar-position",
+                                    "bottom"
+                                )
+                            }
+                        } catch (e) {
+                            console.error("Error getting navigation bar position:", e)
+                            htmlElement.setAttribute("data-sidebar-position", "left")
+                            htmlElement.setAttribute("data-toolbar-position", "bottom")
+                        }
+                    `
+                    }}
+                />
             </head>
             <body
                 className={cn(
@@ -180,17 +236,19 @@ export default function RootLayout({
                 )}
             >
                 <ThemeProvider disableTransitionOnChange>
-                    <ProgressProvider>
-                        <TooltipProvider>
-                            {/* <BackgroundPattern /> */}
-                            <TargetCursor />
-                            <MarginLine />
-                            <MarginLine className="order-last" />
-                            <LazyMotionProvider>{children}</LazyMotionProvider>
-                            <PngAntiBleed />
-                            <PngBorder />
-                        </TooltipProvider>
-                    </ProgressProvider>
+                    <LazyMotionProvider>
+                        <ProgressProvider>
+                            <TooltipProvider>
+                                {/* <BackgroundPattern /> */}
+                                <TargetCursor />
+                                <MarginLine />
+                                <MarginLine className="order-last" />
+                                {children}
+                                <PngAntiBleed />
+                                <PngBorder />
+                            </TooltipProvider>
+                        </ProgressProvider>
+                    </LazyMotionProvider>
                 </ThemeProvider>
             </body>
         </html>

@@ -1,4 +1,5 @@
 "use client"
+
 import { Divider } from "@/components/layout/divider"
 import { MarginLine } from "@/components/layout/line"
 import { useMediaQuery } from "@/hooks/use-media-query"
@@ -33,13 +34,30 @@ export function Navigation() {
 
     return (
         <>
-            <Sidebar />
-            <MarginLine className={cn("ms-sidebar lg:hidden")} />
+            <Sidebar
+                className={cn(
+                    "group-data-[sidebar-position=right]/html:order-4"
+                )}
+            />
+            <MarginLine
+                className={cn("ms-sidebar lg:hidden", {
+                    "group-data-[sidebar-position=right]/html":
+                        "order-3 me-sidebar ms-unset"
+                })}
+            />
             <Divider
                 dir="vertical"
-                className={cn("sticky top-0 h-dvh lg:hidden")}
+                className={cn(
+                    "sticky top-0 h-dvh lg:hidden",
+                    "group-data-[sidebar-position=right]/html:order-2"
+                )}
             />
-            <MarginLine className={cn("lg:hidden")} />
+            <MarginLine
+                className={cn(
+                    "lg:hidden",
+                    "group-data-[sidebar-position=right]/html:order-1"
+                )}
+            />
         </>
     )
 }

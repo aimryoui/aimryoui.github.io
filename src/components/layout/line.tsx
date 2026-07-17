@@ -58,7 +58,11 @@ function SectionLine({
             <hr
                 className={cn(
                     "absolute top-1/2 -translate-y-1/2 border-b border-dashed border-stroke bg-background",
-                    fit ? "left-1/2 w-full -translate-x-1/2" : "-right-6 w-dvw",
+                    fit
+                        ? "left-1/2 w-full -translate-x-1/2"
+                        : [
+                              "-right-6 w-screen group-data-[sidebar-position=right]/html:-left-6"
+                          ],
                     className
                 )}
                 {...props}

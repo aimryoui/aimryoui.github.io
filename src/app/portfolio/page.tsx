@@ -21,7 +21,7 @@ export default function Portfolio() {
         <>
             <NoAIOverlay />
             {/* <ViewTransition name="main"> */}
-            <main className={cn("relative flex-1")}>
+            <main className={cn("relative order-none flex-1")}>
                 <FlashOverlay />
                 <Space />
                 <SectionLine showDecoration />
