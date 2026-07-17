@@ -44,11 +44,7 @@ function ProjectHeader({
                 >
                     {type}
                 </span>
-                <div
-                    className={cn(
-                        "flex flex-1 flex-col gap-2 px-6 pb-4 pt-3.25"
-                    )}
-                >
+                <div className={cn("flex flex-1 flex-col gap-2 px-6 py-4.5")}>
                     <H3
                         id={headerId}
                         className={cn(
@@ -83,7 +79,7 @@ function ProjectHeader({
                 <ElementLine className={cn("md:hidden")} />
                 <div
                     className={cn(
-                        "flex flex-1 flex-col justify-between text-pretty px-6 pb-4 pt-3.25",
+                        "flex flex-1 flex-col justify-between text-pretty px-6 py-4.5",
                         {
                             md: "gap-2"
                         }
@@ -136,9 +132,7 @@ function ProjectHeader({
             {detail && (
                 <>
                     <SectionLine />
-                    <div
-                        className={cn("flex flex-col gap-2 px-6 pb-4 pt-3.25")}
-                    >
+                    <div className={cn("flex flex-col gap-2 px-6 py-4.5")}>
                         <Bold className={cn("text-pretty")}>
                             {formatOrdinal(detail.description)}
                         </Bold>

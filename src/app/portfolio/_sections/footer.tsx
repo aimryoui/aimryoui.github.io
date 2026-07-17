@@ -134,7 +134,7 @@ function Footer() {
     return (
         <footer
             className={cn("relative flex flex-col bg-background", {
-                md: "flex-col-reverse"
+                lg: "flex-col-reverse"
             })}
         >
             <Space className={cn("hidden", { lg: "block" })} />

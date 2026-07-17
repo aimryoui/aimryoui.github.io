@@ -286,7 +286,7 @@ const sections: Section[] = [
 
 function Contact() {
     return (
-        <section>
+        <section className="@container">
             <Space />
             <SectionLine />
             <SectionTitle id="contact" title="Contact" />
@@ -299,27 +299,20 @@ function Contact() {
                         <div
                             data-slot="table-container"
                             className={cn(
-                                "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3",
-                                {
-                                    lg: "py-4"
-                                }
+                                "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5"
                             )}
                         >
                             <Table
                                 className={cn(
                                     "col-span-full col-start-2 grid table-fixed gap-y-2.5",
                                     {
-                                        lg: "col-start-1 ps-6",
-                                        md: "pe-6"
+                                        "@[40rem]": "col-start-1 ps-6"
                                     }
                                 )}
                             >
                                 <TableCaption
                                     className={cn(
-                                        "sr-only absolute left-6 whitespace-pre-line",
-                                        {
-                                            lg: "font-wght-[625]"
-                                        }
+                                        "sr-only absolute left-6 whitespace-pre-line font-wght-500"
                                     )}
                                 >
                                     {section.section}
@@ -328,7 +321,10 @@ function Contact() {
                                 <TableHeader className={cn("sr-only grid")}>
                                     <TableRow
                                         className={cn(
-                                            "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                            "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                            {
+                                                "last:*": "pe-6"
+                                            }
                                         )}
                                     >
                                         <TableHead className="px-0">
@@ -337,7 +333,7 @@ function Contact() {
                                         <TableHead className="px-0">
                                             Link
                                         </TableHead>
-                                        <TableHead className="col-span-2 px-0 pe-6">
+                                        <TableHead className="col-span-2 px-0">
                                             Prefer?
                                         </TableHead>
                                     </TableRow>
@@ -348,81 +344,73 @@ function Contact() {
                                         lg: "gap-y-4"
                                     })}
                                 >
-                                    {section.platforms.map(
-                                        (platform) => (
-                                            <TableRow
-                                                key={platform.title}
+                                    {section.platforms.map((platform) => (
+                                        <TableRow
+                                            key={platform.title}
+                                            className={cn(
+                                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                                {
+                                                    "last:*": "pe-6",
+                                                    "@[32rem]": "flex gap-6"
+                                                }
+                                            )}
+                                        >
+                                            <TableCell
+                                                className={cn("p-0 align-top")}
+                                            >
+                                                <span
+                                                    className={cn(
+                                                        "absolute left-6 text-highlighted [&>svg]:size-[calc(1em*1.3)]",
+                                                        {
+                                                            "@[40rem]":
+                                                                "hidden",
+                                                            "@[32rem]":
+                                                                "static !block"
+                                                        }
+                                                    )}
+                                                >
+                                                    {platform.icon}
+                                                </span>
+                                                <p
+                                                    className={cn({
+                                                        "@[32rem]": "sr-only"
+                                                    })}
+                                                >
+                                                    {platform.title}
+                                                </p>
+                                            </TableCell>
+                                            <TableCell
+                                                className={cn("p-0 align-top", {
+                                                    "@[59.375rem]": "col-span-2"
+                                                })}
+                                            >
+                                                <Link
+                                                    href={platform.links.url}
+                                                    openInNewTab
+                                                    translate="no"
+                                                    className={cn(
+                                                        platform.links.hidden &&
+                                                            "text-transparent"
+                                                    )}
+                                                >
+                                                    {platform.links.text}
+                                                </Link>
+                                            </TableCell>
+                                            <TableCell
                                                 className={cn(
-                                                    "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                                    "col-span-1 p-0 text-right align-top text-highlighted font-wght-500",
                                                     {
-                                                        md: "flex gap-6"
+                                                        "@[59.375rem]":
+                                                            "text-left",
+                                                        // "@[32rem]": "ms-auto"
+                                                        "@[24rem]": "sr-only"
                                                     }
                                                 )}
                                             >
-                                                <TableCell
-                                                    className={cn(
-                                                        "p-0 align-top"
-                                                    )}
-                                                >
-                                                    <span
-                                                        className={cn(
-                                                            "absolute left-6 text-highlighted",
-                                                            {
-                                                                lg: "hidden",
-                                                                md: "static block"
-                                                            }
-                                                        )}
-                                                    >
-                                                        {platform.icon}
-                                                    </span>
-                                                    <p
-                                                        className={cn({
-                                                            md: "sr-only"
-                                                        })}
-                                                    >
-                                                        {platform.title}
-                                                    </p>
-                                                </TableCell>
-                                                <TableCell
-                                                    className={cn(
-                                                        "p-0 align-top",
-                                                        {
-                                                            xl: "col-span-2",
-                                                            lg: "col-span-1"
-                                                        }
-                                                    )}
-                                                >
-                                                    <Link
-                                                        href={
-                                                            platform.links.url
-                                                        }
-                                                        openInNewTab
-                                                        translate="no"
-                                                        className={cn(
-                                                            platform.links
-                                                                .hidden &&
-                                                                "text-transparent"
-                                                        )}
-                                                    >
-                                                        {platform.links.text}
-                                                    </Link>
-                                                </TableCell>
-                                                <TableCell
-                                                    className={cn(
-                                                        "col-span-2 p-0 ps-12 align-top text-highlighted",
-                                                        {
-                                                            xl: "col-span-1",
-                                                            lg: "col-span-2",
-                                                            md: "sr-only"
-                                                        }
-                                                    )}
-                                                >
-                                                    {platform.prefer &&
-                                                        "Prefer"}
-                                                </TableCell>
-                                            </TableRow>
-                                        )
-                                    )}
+                                                {platform.prefer && "Prefer"}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
                                 </TableBody>
                             </Table>
                         </div>

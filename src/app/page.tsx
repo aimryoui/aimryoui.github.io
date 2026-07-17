@@ -37,6 +37,7 @@ export default function Home() {
                 />
                 <NextLink
                     href="/portfolio"
+                    data-cursor="target"
                     className={cn(
                         buttonVariants({ variant: "outline" }),
                         "z-10 light:bg-white dark:text-white",

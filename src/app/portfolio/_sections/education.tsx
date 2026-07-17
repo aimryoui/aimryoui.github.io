@@ -16,7 +16,7 @@ import SectionTitle from "@/portfolio/_components/section-title"
 
 function Education() {
     return (
-        <section>
+        <section className="@container">
             <Space />
             <SectionLine />
             <SectionTitle id="education" title="Education" />
@@ -26,22 +26,24 @@ function Education() {
             <div
                 data-slot="table-container"
                 className={cn(
-                    "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3",
-                    { lg: "py-4" }
+                    "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5"
                 )}
             >
                 <Table
                     className={cn(
                         "col-span-full col-start-2 grid table-fixed gap-y-2",
                         {
-                            lg: "col-start-1 gap-y-4 px-6"
+                            "@[50.125rem]": "col-start-1 gap-y-4 px-6"
                         }
                     )}
                 >
                     <TableCaption
-                        className={cn("absolute left-6 whitespace-pre-line", {
-                            lg: "static font-wght-[625]"
-                        })}
+                        className={cn(
+                            "absolute left-6 whitespace-pre-line font-wght-500",
+                            {
+                                "@[50.125rem]": "static font-wght-600"
+                            }
+                        )}
                     >
                         University
                     </TableCaption>
@@ -49,31 +51,37 @@ function Education() {
                     <TableHeader className={cn("sr-only grid")}>
                         <TableRow
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                {
+                                    "last:*": "pe-6"
+                                }
                             )}
                         >
                             <TableHead className="px-0">Period</TableHead>
                             <TableHead className="col-span-2 px-0">
                                 Name
                             </TableHead>
-                            <TableHead className="px-0 pe-6">Detail</TableHead>
+                            <TableHead className="px-0">Detail</TableHead>
                         </TableRow>
                     </TableHeader>
 
                     <TableBody
-                        className={cn("grid gap-y-2", { lg: "gap-y-4" })}
+                        className={cn("grid gap-y-2", {
+                            lg: "gap-y-4"
+                        })}
                     >
                         <TableRow
                             className={cn(
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                 {
-                                    xl: "grid-cols-2"
+                                    "@[59.375rem]": "grid-cols-2",
+                                    "last:*": "pe-6"
                                 }
                             )}
                         >
                             <TableCell
                                 className={cn("p-0 align-top font-mono", {
-                                    xl: "absolute"
+                                    "@[59.375rem]": "absolute"
                                 })}
                             >
                                 09.2021 — 11.2025
@@ -81,9 +89,9 @@ function Education() {
 
                             <TableCell
                                 className={cn(
-                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top text-foreground font-wght-[625]",
+                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top text-foreground font-wght-600",
                                     {
-                                        xl: "col-span-1 mt-8"
+                                        "@[59.375rem]": "col-span-1 mt-8"
                                     }
                                 )}
                             >
@@ -92,8 +100,8 @@ function Education() {
                             </TableCell>
 
                             <TableCell
-                                className={cn("p-0 pe-6 align-top", {
-                                    xl: "mt-8"
+                                className={cn("p-0 align-top", {
+                                    "@[59.375rem]": "mt-8"
                                 })}
                             >
                                 <Link
@@ -110,19 +118,20 @@ function Education() {
                             className={cn(
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent",
                                 {
-                                    xl: "grid-cols-2"
+                                    "@[59.375rem]": "grid-cols-2",
+                                    "last:*": "pe-6"
                                 }
                             )}
                         >
                             <TableCell
                                 className={cn({
-                                    xl: "hidden"
+                                    "@[59.375rem]": "hidden"
                                 })}
                             />
 
                             <TableCell
                                 className={cn("col-span-2 p-0 align-top", {
-                                    xl: "col-span-1"
+                                    "@[59.375rem]": "col-span-1"
                                 })}
                             >
                                 Grade Point Average (GPA)
@@ -130,7 +139,7 @@ function Education() {
 
                             <TableCell
                                 className={cn(
-                                    "p-0 pe-6 align-top text-highlighted font-wght-[625]"
+                                    "p-0 align-top text-highlighted font-wght-600"
                                 )}
                             >
                                 8.05
@@ -141,19 +150,20 @@ function Education() {
                             className={cn(
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent",
                                 {
-                                    xl: "grid-cols-2"
+                                    "@[59.375rem]": "grid-cols-2",
+                                    "last:*": "pe-6"
                                 }
                             )}
                         >
                             <TableCell
                                 className={cn({
-                                    xl: "hidden"
+                                    "@[59.375rem]": "hidden"
                                 })}
                             />
 
                             <TableCell
                                 className={cn("col-span-2 p-0 align-top", {
-                                    xl: "col-span-1"
+                                    "@[59.375rem]": "col-span-1"
                                 })}
                             >
                                 Degree Classification
@@ -161,7 +171,7 @@ function Education() {
 
                             <TableCell
                                 className={cn(
-                                    "p-0 pe-6 align-top italic text-foreground font-wght-[625]"
+                                    "p-0 align-top italic text-foreground font-wght-600"
                                 )}
                             >
                                 Very Good

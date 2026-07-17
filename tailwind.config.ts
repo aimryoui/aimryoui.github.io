@@ -104,6 +104,7 @@ export default {
                 sidebar: "26.25rem",
                 120: "30rem",
                 125: "31.25rem",
+                180: "45rem",
                 200: "50rem",
                 375: "93.75rem",
                 700: "175rem",

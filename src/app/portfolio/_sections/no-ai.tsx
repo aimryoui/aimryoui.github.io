@@ -91,7 +91,7 @@ function NoAIOverlay() {
         >
             <div
                 className={cn(
-                    "sticky top-0 flex h-dvh flex-col justify-center gap-8 text-default",
+                    "sticky top-0 flex h-screen min-h-180 flex-col justify-center gap-8 text-default",
                     isActive && "text-white"
                 )}
             >

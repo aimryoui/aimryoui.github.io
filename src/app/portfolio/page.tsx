@@ -35,25 +35,34 @@ export default function Portfolio() {
                     >
                         About
                     </span>
-                    <H1 id="about">
-                        Hello there! I&#39;m{" "}
-                        <Bold className="font-wght-[625]">Hoang Nhan</Bold>,{" "}
-                        <br />a{" "}
-                        <Bold className="font-wght-[625]">
-                            Creative Designer
-                        </Bold>{" "}
-                        majoring in{" "}
-                        <Highlight className="font-wght-[625]">
-                            UI & UX Design
-                        </Highlight>
-                        .
+                    <H1 id="about" className="flex flex-wrap gap-x-[.2em]">
+                        Hello there!{" "}
+                        <span className="block">
+                            I&#39;m{" "}
+                            <Bold className="font-wght-[625]">Hoàng Nhân</Bold>,
+                        </span>{" "}
+                        <span className="flex flex-wrap gap-x-[.2em]">
+                            <span className="block whitespace-nowrap">
+                                a{" "}
+                                <Bold className="font-wght-[625]">
+                                    Creative Designer
+                                </Bold>
+                            </span>{" "}
+                            majoring in{" "}
+                            <span className="block">
+                                <Highlight className="font-wght-[625]">
+                                    UI & UX Design
+                                </Highlight>
+                                .
+                            </span>
+                        </span>
                     </H1>
                 </div>
                 <SectionLine />
                 <Divider />
                 <SectionLine />
                 <div
-                    className={cn("relative bg-background px-6 pb-4 pt-3.25", {
+                    className={cn("relative bg-background px-6 py-4.5", {
                         lg: "pb-5 pt-4"
                     })}
                 >

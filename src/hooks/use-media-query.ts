@@ -53,7 +53,7 @@ const defaultOptions: UseMediaQueryOptions = {
 export const BREAKPOINTS = {
     "2xl": "(max-width: 96rem)",
     xl: "(max-width: 80rem)",
-    lg: "(max-width: 64rem)",
+    lg: "(max-width: 72rem)",
     md: "(max-width: 48rem)",
     sm: "(max-width: 40rem)"
 } as const

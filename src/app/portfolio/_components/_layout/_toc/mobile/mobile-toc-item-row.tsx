@@ -82,7 +82,7 @@ const MobileTocItemRow = memo(
                             ? "flex items-center gap-4 py-2.5"
                             : "inline-block py-3",
                         isProject
-                            ? "ps-6.5 text-foreground dark:text-muted-foreground"
+                            ? "ps-6 text-foreground dark:text-muted-foreground"
                             : "font-wght-600 font-slnt-0",
                         isActive
                             ? "!text-highlighted font-wght-[600]"

@@ -13,7 +13,7 @@ function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
                 className={cn(
                     "sticky top-0 h-full border-r border-dashed border-stroke",
                     {
-                        md: "border-r-[2px]"
+                        webkit: "border-r-[2px]"
                     }
                 )}
             />
@@ -79,7 +79,7 @@ function ElementLine({
             className={cn(
                 "pointer-events-none",
                 dir === "vertical"
-                    ? "h-full border-r border-dashed border-stroke md:border-r-[1px]"
+                    ? "h-full border-r border-dashed border-stroke webkit:border-r-[1px]"
                     : "w-full border-b border-dashed border-stroke",
                 className
             )}

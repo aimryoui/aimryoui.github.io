@@ -5,7 +5,7 @@ import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
 import Script from "next/script"
 
-import { TargetCursor } from "@/components/animations/target-cursor"
+// import { TargetCursor } from "@/components/animations/target-cursor"
 import { MarginLine } from "@/components/layout/line"
 import { PngAntiBleed, PngBorder } from "@/components/ui/svg-filter"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -183,7 +183,7 @@ export default function RootLayout({
                     <ProgressProvider>
                         <TooltipProvider>
                             {/* <BackgroundPattern /> */}
-                            <TargetCursor />
+                            {/* <TargetCursor /> */}
                             <MarginLine />
                             <MarginLine className="order-last" />
                             <LazyMotionProvider>{children}</LazyMotionProvider>

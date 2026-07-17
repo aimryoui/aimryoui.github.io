@@ -238,7 +238,7 @@ const sections: Section[] = [
 
 function Experience() {
     return (
-        <section>
+        <section className="@container">
             <Space />
             <SectionLine />
             <SectionTitle
@@ -255,23 +255,23 @@ function Experience() {
                     <div
                         data-slot="table-container"
                         className={cn(
-                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3",
-                            { lg: "py-4" }
+                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5"
                         )}
                     >
                         <Table
                             className={cn(
                                 "col-span-full col-start-2 grid table-fixed gap-y-2",
                                 {
-                                    xl: "col-start-1 gap-y-4 px-6"
+                                    "@[59.375rem]": "col-start-1 gap-y-4 ps-6"
                                 }
                             )}
                         >
                             <TableCaption
                                 className={cn(
-                                    "absolute left-6 whitespace-pre-line",
+                                    "absolute left-6 whitespace-pre-line font-wght-500",
                                     {
-                                        xl: "static whitespace-normal font-wght-600"
+                                        "@[59.375rem]":
+                                            "static whitespace-normal pe-6 font-wght-600"
                                     }
                                 )}
                             >
@@ -281,7 +281,10 @@ function Experience() {
                             <TableHeader className={cn("sr-only grid")}>
                                 <TableRow
                                     className={cn(
-                                        "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                        "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                        {
+                                            "last:*": "pe-6"
+                                        }
                                     )}
                                 >
                                     <TableHead className="px-0">
@@ -290,7 +293,7 @@ function Experience() {
                                     <TableHead className="px-0">
                                         Position
                                     </TableHead>
-                                    <TableHead className="col-span-2 px-0 pe-6">
+                                    <TableHead className="col-span-2 px-0">
                                         Organization
                                     </TableHead>
                                 </TableRow>
@@ -298,7 +301,7 @@ function Experience() {
 
                             <TableBody
                                 className={cn("grid gap-y-2", {
-                                    xl: "gap-y-4"
+                                    lg: "gap-y-4"
                                 })}
                             >
                                 {section.items.map((place) => (
@@ -307,7 +310,8 @@ function Experience() {
                                         className={cn(
                                             "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                             {
-                                                xl: "grid-cols-2"
+                                                "@[50.125rem]": "grid-cols-2",
+                                                "last:*": "pe-6"
                                             }
                                         )}
                                     >
@@ -315,7 +319,7 @@ function Experience() {
                                             className={cn(
                                                 "p-0 align-top font-mono",
                                                 {
-                                                    xl: "absolute"
+                                                    "@[50.125rem]": "absolute"
                                                 }
                                             )}
                                         >
@@ -328,7 +332,8 @@ function Experience() {
                                             className={cn(
                                                 "flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top text-foreground font-wght-600",
                                                 {
-                                                    xl: "mt-6 gap-x-2"
+                                                    "@[50.125rem]":
+                                                        "mt-6 gap-x-2"
                                                 }
                                             )}
                                         >
@@ -341,9 +346,10 @@ function Experience() {
                                         <TableCell
                                             colSpan={2}
                                             className={cn(
-                                                "col-span-2 p-0 pe-6 align-top",
+                                                "col-span-2 p-0 align-top",
                                                 {
-                                                    xl: "col-span-1 mt-6"
+                                                    "@[50.125rem]":
+                                                        "col-span-1 mt-6"
                                                 }
                                             )}
                                         >
@@ -374,12 +380,19 @@ function Experience() {
 
                             {index === arr.length - 1 && (
                                 <TableFooter className="grid border-t-0 bg-transparent">
-                                    <TableRow className="hover:bg-transparent">
+                                    <TableRow
+                                        className={cn({
+                                            hover: "bg-transparent",
+                                            "last:*": "pe-6"
+                                        })}
+                                    >
                                         <TableCell
                                             colSpan={4}
                                             className={cn(
-                                                "flex flex-col gap-y-2 p-0 pt-1.5 align-top",
-                                                { lg: "gap-y-4 pt-0" }
+                                                "flex flex-col gap-y-4.5 p-0 pt-2.5 align-top",
+                                                {
+                                                    "@[59.375rem]": "pt-0.5"
+                                                }
                                             )}
                                         >
                                             <SectionLine />

@@ -58,7 +58,10 @@ function Sidebar({ className }: { className?: string }) {
         // <ViewTransition name="sidebar">
         <aside
             className={cn(
-                "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-sidebar flex-col justify-end bg-background lg:hidden",
+                "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-sidebar flex-col justify-end bg-background",
+                {
+                    lg: "hidden"
+                },
                 className
             )}
         >

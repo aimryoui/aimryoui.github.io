@@ -21,7 +21,6 @@ import { TOOL_ICONS, type ToolProps } from "@/portfolio/_configs/tools"
 interface SectionProps {
     title: string
     tools: ToolProps[]
-    hideOnMd?: boolean
 }
 
 interface Section {
@@ -47,8 +46,7 @@ const sections: Section[] = [
             },
             {
                 title: "Less experienced",
-                tools: [ICON.blender, ICON.premierePro],
-                hideOnMd: true
+                tools: [ICON.blender, ICON.premierePro]
             }
         ]
     },
@@ -65,7 +63,7 @@ const sections: Section[] = [
 
 function Software() {
     return (
-        <section>
+        <section className="@container">
             <Space />
             <SectionLine />
             <SectionTitle id="software" title="Software" />
@@ -78,25 +76,27 @@ function Software() {
                         <div
                             data-slot="table-container"
                             className={cn(
-                                "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-3",
-                                {
-                                    lg: "grid-cols-1 py-4"
-                                }
+                                "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5"
                             )}
                         >
                             <Table
                                 className={cn(
                                     "col-span-full col-start-2 grid table-fixed gap-y-2 pb-1",
+                                    index === 0 && {
+                                        "@[39.5rem]":
+                                            "pb-[calc(1em*1.3+2px+var(--spacing)*15)]"
+                                    },
                                     {
-                                        lg: "col-start-1 px-6"
+                                        "@[46.875rem]": "col-start-1 px-6"
                                     }
                                 )}
                             >
                                 <TableCaption
                                     className={cn(
-                                        "absolute left-6 whitespace-pre-line",
+                                        "absolute left-6 whitespace-pre-line font-wght-500",
                                         {
-                                            lg: "static font-wght-[625]"
+                                            "@[46.875rem]":
+                                                "static mb-2 font-wght-600"
                                         }
                                     )}
                                 >
@@ -106,7 +106,7 @@ function Software() {
                                 <TableHeader className={cn("grid")}>
                                     <TableRow
                                         className={cn(
-                                            "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
                                         )}
                                     >
                                         {section.frequencies.map(
@@ -118,8 +118,10 @@ function Software() {
                                                         _index ===
                                                             arr.length - 1 &&
                                                             "pe-6",
-                                                        frequency.hideOnMd &&
-                                                            "md:hidden"
+                                                        _index === 1 && {
+                                                            "@[39.5rem]":
+                                                                "absolute -bottom-[calc(1em*1.3+2px+var(--spacing)*14)] left-0"
+                                                        }
                                                     )}
                                                 >
                                                     {frequency.title}
@@ -129,10 +131,14 @@ function Software() {
                                     </TableRow>
                                 </TableHeader>
 
-                                <TableBody className="grid gap-y-2">
+                                <TableBody
+                                    className={cn("grid gap-y-2", {
+                                        lg: "gap-y-4"
+                                    })}
+                                >
                                     <TableRow
                                         className={cn(
-                                            "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
                                         )}
                                     >
                                         {section.frequencies.map(
@@ -140,12 +146,14 @@ function Software() {
                                                 <TableCell
                                                     key={frequency.title}
                                                     className={cn(
-                                                        "col-span-2 p-0 align-top text-foreground font-wght-[625]",
+                                                        "col-span-2 p-0 align-top text-foreground font-wght-600",
                                                         _index ===
                                                             arr.length - 1 &&
                                                             "pe-6",
-                                                        frequency.hideOnMd &&
-                                                            "md:hidden"
+                                                        _index === 1 && {
+                                                            "@[39.5rem]":
+                                                                "absolute -bottom-[calc(1em*1.3+2px+var(--spacing)*14)] left-0"
+                                                        }
                                                     )}
                                                 >
                                                     <div
