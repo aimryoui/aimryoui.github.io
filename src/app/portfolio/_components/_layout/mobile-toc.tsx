@@ -48,7 +48,7 @@ function MobileTocPanel() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="fixed inset-0 -z-1 bg-black/80"
+                        className="fixed inset-0 -z-1 min-h-screen bg-black/80"
                         onClick={close}
                     />
                     {/* TOC */}
@@ -68,7 +68,7 @@ function MobileTocPanel() {
                             duration: 0.5
                         }}
                         className={cn(
-                            "flex h-[70dvh] flex-col overflow-hidden rounded-t-3xl text-2xl",
+                            "flex h-[80dvh] flex-col overflow-hidden rounded-t-3xl text-2xl",
                             "border border-transparent bg-[linear-gradient(var(--color-background),var(--color-background)),linear-gradient(to_bottom,var(--color-stroke)_0%,var(--color-background)_100%)] bg-origin-border bg-clip-[padding-box,border-box]"
                         )}
                         onClick={handleNavClick}

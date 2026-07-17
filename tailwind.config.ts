@@ -13,6 +13,7 @@ import cornerShape from "./src/lib/tailwindcss-plugins/utilities/corner-shape"
 import displayGridLanes from "./src/lib/tailwindcss-plugins/utilities/display-grid-lanes"
 import fieldSizing from "./src/lib/tailwindcss-plugins/utilities/field-sizing"
 import fontVariationSettings from "./src/lib/tailwindcss-plugins/utilities/font-variation-settings"
+import mask from "./src/lib/tailwindcss-plugins/utilities/mask"
 import outline from "./src/lib/tailwindcss-plugins/utilities/outline"
 import overflowAnchor from "./src/lib/tailwindcss-plugins/utilities/overflow-anchor"
 import overflowWrap from "./src/lib/tailwindcss-plugins/utilities/overflow-wrap"
@@ -298,6 +299,7 @@ export default {
         displayGridLanes,
         fieldSizing,
         fontVariationSettings,
+        mask,
         outline,
         overflowAnchor,
         overflowWrap,

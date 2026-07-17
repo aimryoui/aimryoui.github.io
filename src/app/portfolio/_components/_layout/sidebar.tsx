@@ -193,6 +193,8 @@ function SettingButton() {
     const pathname = usePathname()
     const setMode = usePortfolioModeStore((state) => state.setMode)
 
+    const isMobile = useMediaQuery("lg")
+
     const [alertDialogOpen, setAlertDialogOpen] = useState(false)
 
     // Navigate back to the `/portfolio` page if mode is set to "spread"
@@ -207,9 +209,9 @@ function SettingButton() {
         }
     }
 
-    const [sidebarPostion, setSidebarPostion] = useState<"left" | "right">(
-        "left"
-    )
+    const [sidebarPostion, setSidebarPostion] = useState<
+        "top" | "bottom" | "left" | "right"
+    >(isMobile ? "bottom" : "left")
     const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
     return (
@@ -282,15 +284,23 @@ function SettingButton() {
                                     value={sidebarPostion}
                                     onValueChange={(value) => {
                                         setSidebarPostion(
-                                            value as "left" | "right"
+                                            value as
+                                                | "top"
+                                                | "bottom"
+                                                | "left"
+                                                | "right"
                                         )
                                     }}
                                 >
-                                    <DropdownMenuRadioItem value="left">
-                                        Left
+                                    <DropdownMenuRadioItem
+                                        value={isMobile ? "top" : "left"}
+                                    >
+                                        {isMobile ? "Top" : "Left"}
                                     </DropdownMenuRadioItem>
-                                    <DropdownMenuRadioItem value="right">
-                                        Right
+                                    <DropdownMenuRadioItem
+                                        value={isMobile ? "bottom" : "right"}
+                                    >
+                                        {isMobile ? "Bottom" : "Right"}
                                     </DropdownMenuRadioItem>
                                 </DropdownMenuRadioGroup>
                             </DropdownMenuSubContent>

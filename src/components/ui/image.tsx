@@ -18,24 +18,50 @@ type ImageProps = React.ComponentProps<"div"> & {
     asBackgroundImage?: boolean
     imageRow?: "justified" | "proportional"
     limitHeight?: boolean
-    noBorder?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
     isInCarousel?: boolean
     lightbox?: boolean
     isInLightbox?: boolean
 }
 
-type RoundedImageProps = XOR<
-    { rounded?: boolean },
-    { percentageRounded?: number }
->
+type RoundedImageProps =
+    | { rounded?: boolean; percentageRounded?: never }
+    | { percentageRounded?: number; rounded?: never }
 
-type PngProps = { trimEdges?: boolean } & XOR<
-    { pngAntiBleed?: boolean },
-    { pngBorder?: boolean }
->
+interface PngProps {
+    trimEdges?: boolean
+}
 
-type ImageCoreProps = ImageProps & RoundedImageProps & PngProps
+type ExclusiveBorderAndPngProps =
+    | {
+          pngBorder?: boolean
+          pngAntiBleed?: never
+          noBorder?: never
+          gradientBorder?: never
+      }
+    | {
+          noBorder?: boolean
+          gradientBorder?: never
+          pngBorder?: never
+          pngAntiBleed?: boolean
+      }
+    | {
+          gradientBorder?: { width?: number | string; color: string }
+          noBorder?: never
+          pngBorder?: never
+          pngAntiBleed?: boolean
+      }
+    | {
+          pngAntiBleed?: boolean
+          noBorder?: never
+          gradientBorder?: never
+          pngBorder?: never
+      }
+
+type ImageCoreProps = ImageProps &
+    RoundedImageProps &
+    PngProps &
+    ExclusiveBorderAndPngProps
 
 const imageManifest = imageManifestRaw as ImageManifest
 
@@ -75,6 +101,7 @@ function ImageCore({
     rounded = false,
     percentageRounded,
     noBorder = false,
+    gradientBorder,
     pngAntiBleed = false,
     pngBorder = false,
     trimEdges = false,
@@ -159,7 +186,8 @@ function ImageCore({
                 rounded && !percentageRounded && "rounded-media",
                 lightbox && !isInLightbox && "cursor-zoom-in",
                 !noBorder &&
-                    !pngBorder && {
+                    !pngBorder &&
+                    !gradientBorder && {
                         after: [
                             "pointer-events-none absolute inset-0 z-2 rounded-inherit transition-[border-color] duration-250",
                             isInLightbox
@@ -167,6 +195,18 @@ function ImageCore({
                                 : "border border-default/15"
                         ]
                     },
+                gradientBorder && {
+                    after: [
+                        "pointer-events-none absolute inset-0 z-2 rounded-inherit",
+                        typeof gradientBorder.width === "number" &&
+                            "p-[var(--nhn-gradient-border-width)]",
+                        typeof gradientBorder.width === "string" &&
+                            gradientBorder.width,
+                        "bg-[image:var(--nhn-gradient-border-color)]",
+                        "mask-clip-[content-box,border-box] mask-exclude webkit-mask-xor mask-origin-[content-box,border-box]",
+                        "[mask-image:linear-gradient(#fff_0_0),linear-gradient(#fff_0_0)]"
+                    ]
+                },
                 className
             )}
             style={{
@@ -179,6 +219,12 @@ function ImageCore({
                     !rounded && {
                         borderRadius: `calc(${percentageRounded}% * var(--nhn-radius-offset-factor)) / calc(${percentageRounded}% * var(--nhn-aspect-ratio) * var(--nhn-radius-offset-factor))`
                     }),
+                ...(gradientBorder && {
+                    ...(typeof gradientBorder.width === "number" && {
+                        "--nhn-gradient-border-width": `${gradientBorder.width}%`
+                    }),
+                    "--nhn-gradient-border-color": gradientBorder.color
+                }),
                 ...(isInLightbox &&
                     rounded && {
                         borderRadius:
@@ -302,6 +348,7 @@ function Image({ className, lightbox = true, ref, ...props }: ImageCoreProps) {
             content={
                 <ImageCore
                     parsedData={parsedData}
+                    className={cn(className)}
                     {...props}
                     data-slot="lightbox-image"
                     isInLightbox={true}
@@ -323,5 +370,10 @@ function Image({ className, lightbox = true, ref, ...props }: ImageCoreProps) {
     )
 }
 
-export type { ImageProps, PngProps, RoundedImageProps }
+export type {
+    ExclusiveBorderAndPngProps,
+    ImageProps,
+    PngProps,
+    RoundedImageProps
+}
 export { Image }

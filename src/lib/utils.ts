@@ -2,6 +2,7 @@ import { extendTailwindMerge, validators } from "tailwind-merge"
 import { type ClassValue, twg } from "twg"
 
 type AdditionalClassGroupIDs =
+    | "mask"
     | "scrollbar-width"
     | "font-wght"
     | "font-slnt"
@@ -65,10 +66,21 @@ const twMerge = extendTailwindMerge<
                 "scrollbar-none"
             ],
             transition: ["transition-normal", "transition-discrete"],
-            ease: ["spring"],
+            ease: ["ease-spring"],
             /** @see {@link https://github.com/dcastil/tailwind-merge/blob/v2.6.1/docs/api-reference.md#validators} */
             "bg-clip": [{ "bg-clip": [validators.isArbitraryValue] }],
-            duration: [{ duration: [validators.isNumber] }]
+            duration: [{ duration: [validators.isNumber] }],
+            mask: [
+                {
+                    mask: [
+                        "add",
+                        "subtract",
+                        "intersect",
+                        "exclude",
+                        validators.isArbitraryValue
+                    ]
+                }
+            ]
         },
         theme: {
             /** @see https://github.com/dcastil/tailwind-merge/blob/v2.6.1/docs/configuration.md#theme */
