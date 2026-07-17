@@ -61,7 +61,14 @@ export default function Portfolio() {
                 <SectionLine />
                 <Divider />
                 <SectionLine />
-                <div className={cn("relative bg-background px-6 py-4.5")}>
+                <div
+                    className={cn(
+                        "relative space-y-2 bg-background px-6 py-4.5",
+                        {
+                            lg: "space-y-3.5"
+                        }
+                    )}
+                >
                     <Text className={cn("text-pretty")}>
                         However, I came up from{" "}
                         {[
@@ -77,7 +84,6 @@ export default function Portfolio() {
                         ))}
                         , or event-type university course projects.
                     </Text>
-                    <br />
                     <Text className={cn("text-pretty")}>
                         Also, I love coding, I have some experience with{" "}
                         {[
@@ -98,13 +104,11 @@ export default function Portfolio() {
                         ))}
                         , etc.
                     </Text>
-                    <br />
                     <Text className={cn("text-pretty")}>
                         So with UI & UX Design, I can understand{" "}
                         <Highlight>what can be done, and what cannot</Highlight>
                         .
                     </Text>
-                    <br />
                     <Text className={cn("text-pretty")}>
                         From there I can{" "}
                         <Bold>
