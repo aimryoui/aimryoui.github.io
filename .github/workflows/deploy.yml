@@ -28,6 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      # 1. Install pnpm
       - uses: pnpm/action-setup@v6
         name: Install pnpm
         with:
@@ -71,18 +72,40 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
             ${{ runner.os }}-nextjs-
 
-      - name: Cache Media (Videos & Images)
+      # 4. Media cache
+      - name: Cache Images
         uses: actions/cache@v6
         with:
           path: |
-            public/assets/media
-            public/color-manifest.json
             src/lib/image-manifest.json
-            src/lib/video-manifest.json
-          key: ${{ runner.os }}-media-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('**/*process-*.ts') }}
+            public/assets/media/**/*_scrambled.webp
+            public/assets/media/**/*_preview.webp
+          key: ${{ runner.os }}-image-${{ hashFiles('private/media/**/*.{png,jpg,jpeg,webp}', '!private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-images.ts') }}
           restore-keys: |
-            ${{ runner.os }}-media-
+            ${{ runner.os }}-image-
 
+      - name: Cache Videos
+        uses: actions/cache@v6
+        with:
+          path: |
+            src/lib/video-manifest.json
+            public/assets/media/**/index.txt
+            public/assets/media/**/init.mp4
+            public/assets/media/**/*.bin
+            public/assets/media/**/*_preview.webp
+          key: ${{ runner.os }}-video-${{ hashFiles('private/media/**/*.{mp4,mov,webm,gif}') }}-${{ hashFiles('private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-videos.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-video-
+
+      - name: Cache Ambient Colors
+        uses: actions/cache@v6
+        with:
+          path: public/color-manifest.json
+          key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-color-
+
+      # 5. Build
       - name: Build with Next.js
         run: pnpm run build
         env:
