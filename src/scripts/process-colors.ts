@@ -14,7 +14,7 @@ const MDX_DIR = "src/content/projects"
 const IMAGE_DIR = "private/media"
 const MANIFEST_PATH = "public/color-manifest.json"
 
-const SCRIPT_VERSION = "2"
+const SCRIPT_VERSION = "1"
 
 const BRAND_COLOR = "\x1B[38;2;168;85;247m"
 const RESET = "\x1B[0m"
@@ -28,13 +28,13 @@ const COLOR_CONFIG = {
     foreground: {
         lLight: 0.3516,
         cLight: 0.0187,
-        lDark: 0.8545,
+        lDark: 0.9543,
         cDark: 0.0115
     },
     mutedForeground: {
         lLight: 0.5655,
         cLight: 0.01472,
-        lDark: 0.7173,
+        lDark: 0.8012,
         cDark: 0.01743
     },
     ring: { lLight: 0.707, cLight: 0.022, lDark: 0.551, cDark: 0.027 },
