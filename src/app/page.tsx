@@ -26,7 +26,7 @@ export default function Home() {
             </div>
             <SectionLine />
             <Divider />
-            <MediaFrame flex className={cn("h-full")}>
+            <MediaFrame data-cursor="none" flex className={cn("h-full")}>
                 <Image
                     lightbox={false}
                     placeholderPriority
@@ -38,10 +38,13 @@ export default function Home() {
                 <NextLink
                     href="/portfolio"
                     data-cursor="target"
+                    // Fix auto-scroll to anchor section
+                    scroll={false}
                     className={cn(
                         buttonVariants({ variant: "outline" }),
                         "z-10 light:bg-white dark:text-white",
-                        "absolute left-1/2 top-1/2 !-translate-y-1/2 -translate-x-1/2"
+                        "absolute left-1/2 top-1/2 !-translate-y-1/2 -translate-x-1/2",
+                        "active:scale-95"
                     )}
                 >
                     Portfolio

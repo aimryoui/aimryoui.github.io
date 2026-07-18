@@ -8,7 +8,7 @@ const buttonVariants = cva(
         "inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm will-change-transform font-wght-500 outline-none transition-transform",
         {
             "data-[cursor=target]":
-                "transition-[border-radius] ease-spring duration-200",
+                "transition-[transform,translate,scale,border-radius] ease-spring duration-200",
             hover: {
                 "data-[cursor=target]": "rounded-none"
             },

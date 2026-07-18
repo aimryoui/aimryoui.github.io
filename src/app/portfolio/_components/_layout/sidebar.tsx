@@ -337,7 +337,6 @@ function SettingButton() {
                                                 setSidebarPosition("right")
                                             }
                                         }}
-                                        disabled={isMobile}
                                     >
                                         {isMobile ? "Bottom" : "Right"}
                                     </DropdownMenuRadioItem>

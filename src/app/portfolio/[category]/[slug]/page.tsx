@@ -171,7 +171,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     href={getCategoryPath(category)}
                                     label={`Go back to ${group.title} category page`}
                                     className={cn(
-                                        "group flex min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 transition-[background-color] duration-100",
+                                        "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 transition-[background-color] duration-100",
                                         {
                                             hover: "bg-highlighted/5 transition-none",
                                             active: "bg-highlighted/10 transition-none"
@@ -249,7 +249,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             : "No more projects, contact me"
                                     }
                                     className={cn(
-                                        "group flex min-h-20 min-w-0 items-center justify-between gap-4 bg-background px-6 py-4.5 transition-[background-color] duration-100",
+                                        "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 transition-[background-color] duration-100",
                                         {
                                             hover: "bg-highlighted/5 transition-none",
                                             active: "bg-highlighted/10 transition-none"

@@ -1,5 +1,6 @@
 "use client"
 
+import type React from "react"
 import { Fragment } from "react"
 import NextLink from "next/link"
 
@@ -79,21 +80,22 @@ export function SectionName({
 }
 
 function MediaFrame({
+    className,
     sectionName,
     author,
     lowercase,
     flex,
     continuous,
-    className,
-    children
-}: {
+    targetCursor,
+    children,
+    ...props
+}: React.ComponentProps<"div"> & {
     sectionName?: string
     author?: string
     lowercase?: boolean
     flex?: boolean
     continuous?: boolean
-    className?: string
-    children: React.ReactNode
+    targetCursor?: "target" | "lock" | "ignore" | "none"
 }) {
     return (
         <>
@@ -135,11 +137,12 @@ function MediaFrame({
                         </div>
                     )}
                     <div
-                        data-cursor="ignore"
+                        data-cursor={targetCursor ?? "ignore"}
                         className={cn(
                             "relative grid w-full cursor-auto grid-cols-1 justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
                             className
                         )}
+                        {...props}
                     >
                         <Lightbox>{children}</Lightbox>
                     </div>

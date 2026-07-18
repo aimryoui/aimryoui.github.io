@@ -90,7 +90,7 @@ function Education() {
 
                             <TableCell
                                 className={cn(
-                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top text-foreground font-wght-600",
+                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] text-pretty p-0 align-top text-foreground font-wght-600",
                                     {
                                         "@[59.375rem]": "col-span-1 mt-8"
                                     }

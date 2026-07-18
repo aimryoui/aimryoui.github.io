@@ -92,7 +92,7 @@ const MobileTocItemRow = memo(
                                   hover: isProject
                                       ? "text-muted-foreground font-wght-[600] !transition-[font-variation-settings] dark:text-foreground"
                                       : "text-foreground -font-slnt-10 !transition-[font-variation-settings]",
-                                  active: "text-highlighted font-wght-[600]",
+                                  active: "text-highlighted",
                                   "focus-visible": "text-foreground"
                               }
                     )}
