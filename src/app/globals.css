@@ -225,9 +225,6 @@
         @apply fixed inset-0 size-full !opacity-100;
     } */
     /* ::view-transition-new(pattern), */
-    ::view-transition-group(sidebar) {
-        @apply !animate-none;
-    }
     /* Prevent main from being fade in/out while keep text transitioning */
     /* ::view-transition-group(main) {
         @apply !animate-none;

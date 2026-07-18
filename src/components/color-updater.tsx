@@ -36,8 +36,8 @@ function ColorUpdater() {
         }
 
         const firstColorObj = Object.values(colorManifest)[0]
-        if (firstColorObj) {
-            Object.keys(firstColorObj).forEach((key) => {
+        if (firstColorObj?.theme) {
+            Object.keys(firstColorObj.theme).forEach((key) => {
                 document.documentElement.style.removeProperty(toCssVar(key))
             })
         }

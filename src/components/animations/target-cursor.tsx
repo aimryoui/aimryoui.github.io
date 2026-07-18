@@ -587,9 +587,6 @@ function TargetCursor({
                 "pointer-events-none invisible fixed left-0 top-0 z-infinite size-0 opacity-0 will-change-transform",
                 className
             )}
-            style={{
-                viewTransitionName: "none !important"
-            }}
             {...props}
         >
             <div
