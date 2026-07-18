@@ -62,6 +62,9 @@
     "cssrem.vw": true,
     "cssrem.vwDesign": 1707.33,
     // TypeScript
+    "code-runner.executorMap": {
+        "typescript": "pnpx tsx"
+    },
     "typescript.experimental.useTsgo": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "typescript.tsdk": "node_modules\\typescript\\lib",

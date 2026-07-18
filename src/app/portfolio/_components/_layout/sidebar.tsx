@@ -119,6 +119,8 @@ function Menu({ className }: { className?: string }) {
                         <li className="me-auto">
                             <NextLink
                                 href="/portfolio"
+                                scroll={false}
+                                data-cursor="ignore"
                                 className={cn(
                                     "group flex items-center gap-x-2",
                                     {

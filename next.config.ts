@@ -19,6 +19,9 @@ const nextConfig = (phase: string): NextConfig => {
         void import("./src/scripts/process-videos.ts").then((m) =>
             m.build({ watch: isDev, skipInitial: true })
         )
+        void import("./src/scripts/process-colors.ts").then((m) =>
+            m.build({ watch: isDev, skipInitial: true })
+        )
     }
 
     return {

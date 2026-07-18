@@ -4,7 +4,9 @@ import { type Metadata, type Viewport } from "next"
 import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
 
+import colorManifest from "@/color-manifest.json"
 import { TargetCursor } from "@/components/animations/target-cursor"
+import { ColorUpdater } from "@/components/color-updater"
 import { MarginLine } from "@/components/layout/line"
 import { PngAntiBleed, PngBorder } from "@/components/ui/svg-filter"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -139,6 +141,9 @@ const sfMono = localFont({
     variable: "--font-sf-mono"
 })
 
+const ALL_CHARACTERS_REGEX = /([A-Z])/gu
+const PATH_REGEX = /^\/portfolio\/([^/]+)\/([^/]+)$/u
+
 export default function RootLayout({
     children
 }: Readonly<{
@@ -170,7 +175,6 @@ export default function RootLayout({
                         // Portfolio mode
                         try {
                             const portfolioMode = localStorage.getItem("portfolio-mode")
-                            console.log(portfolioMode)
                             if (portfolioMode) {
                                 const parsed = JSON.parse(portfolioMode)
                                 htmlElement.setAttribute(
@@ -220,6 +224,25 @@ export default function RootLayout({
                             htmlElement.setAttribute("data-sidebar-position", "left")
                             htmlElement.setAttribute("data-toolbar-position", "bottom")
                         }
+                        // Ambient colors
+                        try {
+                            const pathname = window.location.pathname
+                            const match = ${PATH_REGEX}.exec(pathname)
+                            if (match) {
+                                const manifestKey = match[1] + "/" + match[2]
+                                const colorManifestObj = ${JSON.stringify(colorManifest)}
+                                const cacheEntry = colorManifestObj[manifestKey]
+
+                                if (cacheEntry && cacheEntry.theme) {
+                                    Object.keys(cacheEntry.theme).forEach((key) => {
+                                        const cssVar = "--color-" + key.replace(${ALL_CHARACTERS_REGEX}, "-$1").toLowerCase()
+                                        htmlElement.style.setProperty(cssVar, cacheEntry.theme[key])
+                                    })
+                                }
+                            }
+                        } catch (e) {
+                            console.error("Error setting ambient colors:", e)
+                        }
                     `
                     }}
                 />
@@ -240,6 +263,7 @@ export default function RootLayout({
                         <ProgressProvider>
                             <TooltipProvider>
                                 {/* <BackgroundPattern /> */}
+                                <ColorUpdater />
                                 <TargetCursor />
                                 <MarginLine />
                                 <MarginLine className="order-last" />

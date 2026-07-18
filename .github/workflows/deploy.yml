@@ -76,6 +76,7 @@ jobs:
         with:
           path: |
             public/assets/media
+            public/color-manifest.json
             src/lib/image-manifest.json
             src/lib/video-manifest.json
           key: ${{ runner.os }}-media-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('**/*process-*.ts') }}

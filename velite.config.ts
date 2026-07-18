@@ -18,6 +18,7 @@ const projects = defineCollection({
         projectName: s.string(),
         category: s.string(),
         coverImage: s.string().optional(),
+        colorOverrideHex: s.string().optional(),
 
         forceExpand: s.boolean().default(false),
 

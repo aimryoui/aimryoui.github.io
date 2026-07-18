@@ -3,9 +3,11 @@
         "biomejs.biome",
         "bradlc.vscode-tailwindcss",
         "cipchk.cssrem",
+        "formulahendry.code-runner",
         "joneldominic-dev.file-markers",
         "oxc.oxc-vscode",
         "Tobermory.es6-string-html",
+        "TypeScriptTeam.native-preview",
         "unifiedjs.vscode-mdx",
         "YoavBls.pretty-ts-errors"
     ]

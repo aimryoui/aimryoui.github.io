@@ -32,7 +32,7 @@ const FPS_INTERVAL = 1000 / FPS
 
 function LineSidebar({
     itemSelector = ":scope > li",
-    accentColor = "var(--color-default)",
+    accentColor = "var(--color-foreground)",
     textColor = "#c4c4c4",
     markerColor = "var(--color-marker)",
     proximityRadius = 120,

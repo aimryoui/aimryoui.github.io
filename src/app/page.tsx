@@ -26,7 +26,11 @@ export default function Home() {
             </div>
             <SectionLine />
             <Divider />
-            <MediaFrame data-cursor="none" flex className={cn("h-full")}>
+            <MediaFrame
+                data-cursor="none"
+                flex
+                className={cn("h-full min-h-32")}
+            >
                 <Image
                     lightbox={false}
                     placeholderPriority
