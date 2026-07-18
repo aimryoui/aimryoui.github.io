@@ -30,15 +30,14 @@ const nextConfig = (phase: string): NextConfig => {
         reactCompiler: true,
         poweredByHeader: false,
         typedRoutes: true,
-        devIndicators: {
-            position: "bottom-right"
-        },
+        devIndicators: false,
         typescript: {
             ignoreBuildErrors: true
         },
         images: { unoptimized: true },
         experimental: {
-            viewTransition: true
+            viewTransition: true,
+            useLightningcss: true
         }
     }
 }

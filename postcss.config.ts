@@ -1,3 +1,4 @@
+import postcssOklabFunction from "@csstools/postcss-oklab-function"
 import {
     type AtRule,
     type Comment,
@@ -74,6 +75,11 @@ export default {
     plugins: [
         "tailwindcss",
         optimizeAndReplacePlugin(),
-        "autoprefixer"
+        postcssOklabFunction({
+            preserve: true,
+            subFeatures: {
+                displayP3: false
+            }
+        })
     ] as never
 } satisfies Config

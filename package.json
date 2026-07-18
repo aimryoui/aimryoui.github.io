@@ -67,8 +67,8 @@
     ],
     "type": "module",
     "scripts": {
-        "dev": "tsx src/scripts/process-images.ts && tsx src/scripts/process-videos.ts && pnpx tsx src/scripts/process-colors.ts && next dev",
-        "build": "tsx src/scripts/process-images.ts && tsx src/scripts/process-videos.ts && pnpx tsx src/scripts/process-colors.ts && next build",
+        "dev": "tsx src/scripts/process-images.ts && tsx src/scripts/process-videos.ts && tsx src/scripts/process-colors.ts && next dev",
+        "build": "tsx src/scripts/process-images.ts && tsx src/scripts/process-videos.ts && tsx src/scripts/process-colors.ts && next build",
         "start": "pnpx serve@latest out",
         "format": "oxfmt --threads 8 && biome check --write",
         "format:check": "oxfmt --check --threads 8 && biome check",
@@ -107,6 +107,7 @@
     },
     "devDependencies": {
         "@biomejs/biome": "^2.5.4",
+        "@csstools/postcss-oklab-function": "^5.0.6",
         "@eslint/css": "^1.4.0",
         "@limegrass/eslint-plugin-import-alias": "^1.6.1",
         "@stylistic/eslint-plugin": "^5.10.0",
@@ -116,7 +117,6 @@
         "@types/react": "^19.2.17",
         "@types/react-dom": "^19.2.3",
         "@typescript/native": "npm:typescript@^7.0.2",
-        "autoprefixer": "^10.5.4",
         "babel-plugin-react-compiler": "^1.0.0",
         "chokidar": "^5.0.0",
         "chroma-js": "^3.2.0",
@@ -141,6 +141,14 @@
         "typescript": "npm:@typescript/typescript6@^6.0.2",
         "velite": "^0.4.0"
     },
+    "browserslist": [
+        "Chrome >= 111",
+        "Edge >= 111",
+        "Safari >= 15.4",
+        "Firefox >= 113",
+        "Opera >= 97",
+        "not dead"
+    ],
     "engines": {
         "node": "^24.15.0"
     },
