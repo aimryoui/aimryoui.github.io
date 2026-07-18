@@ -10,9 +10,6 @@ import matter from "gray-matter"
 import { Vibrant } from "node-vibrant/node"
 import sharp from "sharp"
 
-// oxlint-disable-next-line @limegrass/import-alias/import-alias
-import { type Project } from "../../.velite/index.js"
-
 const MDX_DIR = "src/content/projects"
 const IMAGE_DIR = "private/media"
 const MANIFEST_PATH = "public/color-manifest.json"
@@ -96,7 +93,7 @@ async function processColorForFile(
         .join(parsedPath.dir, parsedPath.name)
         .replaceAll("\\", "/")
 
-    let imagePath = data.coverImage as Project["coverImage"]
+    let imagePath = data.coverImage as string | undefined
 
     if (imagePath) {
         if (imagePath.endsWith(".mp4") || imagePath.endsWith(".gif")) {
@@ -122,20 +119,16 @@ async function processColorForFile(
 
     const absoluteImagePath = path.join(process.cwd(), IMAGE_DIR, imagePath)
 
-    // Chỉ lấy Hash của file ảnh
     const imageHash = fs.existsSync(absoluteImagePath)
         ? getFileHash(absoluteImagePath)
         : ""
 
-    // Gộp hash ảnh với thuộc tính ghi đè màu (nếu có).
-    // Nếu bạn đổi mã hex trong bài viết, hash này sẽ khác biệt và buộc chạy lại.
-    const colorOverride = (data.colorOverrideHex as string) || ""
+    const colorOverride = data.colorOverrideHex as string | undefined
     const currentInputHash = crypto
         .createHash("md5")
         .update(imageHash + colorOverride)
         .digest("hex")
 
-    // Kiểm tra Cache dựa trên dữ liệu đầu vào thực sự cấu thành nên màu sắc
     if (Object.hasOwn(oldManifest, slug)) {
         const cachedData = oldManifest[slug]
         if (
@@ -163,9 +156,9 @@ async function processColorForFile(
             imageBuffer = null
 
             const dominantHex =
-                colorOverride ||
-                palette.Vibrant?.hex ||
-                palette.Muted?.hex ||
+                colorOverride ??
+                palette.Vibrant?.hex ??
+                palette.Muted?.hex ??
                 "#01a6f4"
 
             const theme = {} as Record<keyof typeof COLOR_CONFIG, string>

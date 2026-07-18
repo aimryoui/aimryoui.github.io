@@ -72,20 +72,17 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
             ${{ runner.os }}-nextjs-
 
-      # 4. Media cache
-      - name: Cache Images
-        uses: actions/cache@v6
+      # 4. Cache media
+      - name: Restore Colors Cache
+        uses: actions/cache/restore@v6
         with:
-          path: |
-            src/lib/image-manifest.json
-            public/assets/media/**/*_scrambled.webp
-            public/assets/media/**/*_preview.webp
-          key: ${{ runner.os }}-image-${{ hashFiles('private/media/**/*.{png,jpg,jpeg,webp}', '!private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-images.ts') }}
+          path: public/color-manifest.json
+          key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}
           restore-keys: |
-            ${{ runner.os }}-image-
+            ${{ runner.os }}-color-
 
-      - name: Cache Videos
-        uses: actions/cache@v6
+      - name: Restore Videos Cache
+        uses: actions/cache/restore@v6
         with:
           path: |
             src/lib/video-manifest.json
@@ -97,13 +94,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-video-
 
-      - name: Cache Ambient Colors
-        uses: actions/cache@v6
+      - name: Restore Images Cache
+        uses: actions/cache/restore@v6
         with:
-          path: public/color-manifest.json
-          key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}
+          path: |
+            src/lib/image-manifest.json
+            public/assets/media/**/*_scrambled.webp
+            public/assets/media/**/*_preview.webp
+          key: ${{ runner.os }}-image-${{ hashFiles('private/media/**/*.{png,jpg,jpeg,webp}', '!private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-images.ts') }}
           restore-keys: |
-            ${{ runner.os }}-color-
+            ${{ runner.os }}-image-
 
       # 5. Build
       - name: Build with Next.js
@@ -111,6 +111,36 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_URL: ${{ steps.setup_pages.outputs.origin }}
           PAGES_BASE_PATH: ${{ steps.setup_pages.outputs.base_path }}
+
+      # 6. Save caches
+      - name: Save Colors Cache
+        if: always()
+        uses: actions/cache/save@v6
+        with:
+          path: public/color-manifest.json
+          key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}
+
+      - name: Save Videos Cache
+        if: always()
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            src/lib/video-manifest.json
+            public/assets/media/**/index.txt
+            public/assets/media/**/init.mp4
+            public/assets/media/**/*.bin
+            public/assets/media/**/*_preview.webp
+          key: ${{ runner.os }}-video-${{ hashFiles('private/media/**/*.{mp4,mov,webm,gif}') }}-${{ hashFiles('private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-videos.ts') }}
+
+      - name: Save Images Cache
+        if: always()
+        uses: actions/cache/save@v6
+        with:
+          path: |
+            src/lib/image-manifest.json
+            public/assets/media/**/*_scrambled.webp
+            public/assets/media/**/*_preview.webp
+          key: ${{ runner.os }}-image-${{ hashFiles('private/media/**/*.{png,jpg,jpeg,webp}', '!private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-images.ts') }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
