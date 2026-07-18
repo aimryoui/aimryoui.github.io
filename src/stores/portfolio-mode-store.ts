@@ -16,6 +16,13 @@ const usePortfolioModeStore = create<PortfolioModeStore>()(
             mode: "pages",
             setMode: (mode) => {
                 set({ mode })
+
+                if (typeof document !== "undefined") {
+                    document.documentElement.setAttribute(
+                        "data-portfolio-mode",
+                        mode
+                    )
+                }
             }
         }),
         {

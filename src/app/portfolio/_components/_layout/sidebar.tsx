@@ -44,6 +44,8 @@ import { cn } from "@/lib/utils"
 import { useTocItems } from "@/portfolio/_components/_layout/_toc/use-toc-items"
 import { TableOfContents } from "@/portfolio/_components/_layout/table-of-contents"
 import {
+    type SidebarPosition,
+    type ToolbarPosition,
     useSidebarPositionStore,
     useToolbarPositionStore
 } from "@/stores/navigation-bar-position-store"
@@ -306,11 +308,11 @@ function SettingButton() {
                                     onValueChange={(value) => {
                                         if (isMobile) {
                                             setToolbarPosition(
-                                                value as "top" | "bottom"
+                                                value as ToolbarPosition
                                             )
                                         } else {
                                             setSidebarPosition(
-                                                value as "left" | "right"
+                                                value as SidebarPosition
                                             )
                                         }
                                     }}
