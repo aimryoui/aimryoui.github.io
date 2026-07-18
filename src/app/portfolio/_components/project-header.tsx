@@ -93,7 +93,7 @@ function ProjectHeader({
                         {information.newest ? "Newest" : "Older"}
                     </Highlight>
                     <Text>{information.duration}</Text>
-                    <Text>
+                    <Text className="text-foreground">
                         {information.subject}{" "}
                         {information.place && (
                             <>

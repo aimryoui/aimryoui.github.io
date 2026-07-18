@@ -14,7 +14,7 @@ const MDX_DIR = "src/content/projects"
 const IMAGE_DIR = "private/media"
 const MANIFEST_PATH = "public/color-manifest.json"
 
-const SCRIPT_VERSION = "1"
+const SCRIPT_VERSION = "2"
 
 const BRAND_COLOR = "\x1B[38;2;168;85;247m"
 const RESET = "\x1B[0m"
@@ -38,8 +38,8 @@ const COLOR_CONFIG = {
         cDark: 0.01743
     },
     ring: { lLight: 0.707, cLight: 0.022, lDark: 0.551, cDark: 0.027 },
-    pattern: { lLight: 0.8759, cLight: 0.005, lDark: 0.2172, cDark: 0.0162 },
-    stroke: { lLight: 0.8759, cLight: 0.005, lDark: 0.2322, cDark: 0.0162 }
+    pattern: { lLight: 0.8759, cLight: 0.005, lDark: 0.235, cDark: 0.0162 },
+    stroke: { lLight: 0.85, cLight: 0.005, lDark: 0.275, cDark: 0.0162 }
 }
 
 type ColorManifest = Record<

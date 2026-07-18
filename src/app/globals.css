@@ -107,12 +107,12 @@
         --color-alert: oklch(63.7% 0.237 25.331);
 
         --color-pattern: light-dark(
-            oklch(0.8759 0.0029 264.5),
-            oklch(from var(--color-stroke) calc(l - 0.015) c h)
+            oklch(0.8759 0.005 264.5),
+            oklch(from var(--color-stroke) calc(l - 0.04) c h)
         );
         --color-stroke: light-dark(
-            oklch(0.8759 0.0029 264.5),
-            oklch(0.2322 0.0162 252.5)
+            oklch(0.85 0.005 264.5),
+            oklch(0.275 0.0162 252.5)
         );
 
         --color-element-hover: light-dark(

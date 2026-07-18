@@ -102,7 +102,7 @@ function Menu({ className }: { className?: string }) {
                 />
             </div>
             <header
-                className={cn("bg-background px-6 py-5.5", {
+                className={cn("h-20 bg-background px-6 py-5.5", {
                     lg: "py-[17px]"
                 })}
             >
