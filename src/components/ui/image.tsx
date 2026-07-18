@@ -114,9 +114,7 @@ function ImageCore({
 }: ImageCoreProps & { parsedData: ParsedImageData }) {
     const containerRef = useRef<HTMLDivElement>(null)
 
-    const [isNearViewport, setIsNearViewport] = useState(
-        isInLightbox || placeholderPriority
-    )
+    const [isNearViewport, setIsNearViewport] = useState(true)
 
     useEffect(() => {
         if (isInLightbox) return
