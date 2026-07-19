@@ -3,16 +3,19 @@
 import { useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
 
+import { PanelTopClose, PanelTopOpen } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import * as m from "motion/react-m"
 
+import { Button } from "@/components/ui/button"
+import { TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { useTocItems } from "@/portfolio/_components/_layout/_toc/use-toc-items"
-import { TableOfContents } from "@/portfolio/_components/_layout/table-of-contents"
+import { TableOfContents } from "@/portfolio/_components/_layout/_toc/toc"
+import { useTocItems } from "@/portfolio/_hooks/use-toc-items"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 import { useTocPanelStore } from "@/stores/toc-panel-store"
 
-function MobileTocPanel() {
+function MobileTocDrawer() {
     const mode = usePortfolioModeStore((state) => state.mode)
     const isOpen = useTocPanelStore((state) => state.isOpen)
     const close = useTocPanelStore((state) => state.close)
@@ -81,4 +84,38 @@ function MobileTocPanel() {
     )
 }
 
-export { MobileTocPanel }
+function MobileTocButton() {
+    const isTocOpen = useTocPanelStore((state) => state.isOpen)
+    const toggleTocPanel = useTocPanelStore((state) => state.toggle)
+
+    return (
+        <TooltipTrigger
+            delay={500}
+            disabled={isTocOpen}
+            payload={{
+                content: <span>Table of Contents</span>
+            }}
+            render={
+                <Button
+                    size="icon"
+                    variant="outline"
+                    className={cn(
+                        "size-full rounded-none border-y-0 border-e-0"
+                    )}
+                    aria-expanded={isTocOpen}
+                    data-state={isTocOpen ? "open" : "closed"}
+                    onClick={toggleTocPanel}
+                >
+                    {isTocOpen ? (
+                        <PanelTopOpen className="size-8" strokeWidth={1.25} />
+                    ) : (
+                        <PanelTopClose className="size-8" strokeWidth={1.25} />
+                    )}
+                    <span className="sr-only">Table of Contents</span>
+                </Button>
+            }
+        />
+    )
+}
+
+export { MobileTocButton, MobileTocDrawer }

@@ -221,7 +221,7 @@ function LineSidebar({
             ref={setListRef}
             data-slot="line-sidebar"
             className={cn(
-                "relative flex w-full flex-col gap-[var(--item-gap)] scrollbar-thin",
+                "relative flex w-full flex-col gap-[--item-gap] scrollbar-thin",
                 className
             )}
             style={{

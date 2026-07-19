@@ -198,8 +198,8 @@ function ImageCore({
                         after: [
                             "pointer-events-none absolute inset-0 z-2 rounded-inherit",
                             typeof gradientBorder.width === "number" &&
-                                "p-[var(--nhn-gradient-border-width)]",
-                            "bg-[image:var(--nhn-gradient-border-color)]",
+                                "p-[--nhn-gradient-border-width]",
+                            "bg-[image:--nhn-gradient-border-color]",
                             "mask-clip-[content-box,border-box] mask-exclude mask-origin-[content-box,border-box]",
                             "[mask-image:linear-gradient(#fff_0_0),linear-gradient(#fff_0_0)]"
                         ]

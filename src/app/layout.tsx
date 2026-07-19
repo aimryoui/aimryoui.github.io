@@ -6,11 +6,11 @@ import localFont from "next/font/local"
 
 import colorManifest from "@/color-manifest.json"
 import { TargetCursor } from "@/components/animations/target-cursor"
-import { ColorUpdater } from "@/components/color-updater"
 import { MarginLine } from "@/components/layout/line"
 import { PngAntiBleed, PngBorder } from "@/components/ui/svg-filter"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
+import { ColorUpdater } from "@/helpers/color-updater"
 import { cn } from "@/lib/utils"
 import { LazyMotionProvider } from "@/providers/lazy-motion-provider"
 import { ProgressProvider } from "@/providers/progress-provider"
@@ -262,7 +262,6 @@ export default function RootLayout({
                     <LazyMotionProvider>
                         <ProgressProvider>
                             <TooltipProvider>
-                                {/* <BackgroundPattern /> */}
                                 <ColorUpdater />
                                 <TargetCursor />
                                 <MarginLine />
@@ -278,16 +277,3 @@ export default function RootLayout({
         </html>
     )
 }
-
-// function BackgroundPattern() {
-//     return (
-//         <ViewTransition name="pattern">
-//             <div
-//                 className={cn(
-//                     "fixed inset-0 -z-50 size-full",
-//                     "bg-[repeating-linear-gradient(315deg,var(--color-pattern)_0,var(--color-pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]"
-//                 )}
-//             />
-//         </ViewTransition>
-//     )
-// }

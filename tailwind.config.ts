@@ -20,6 +20,7 @@ import overflowWrap from "./src/lib/tailwindcss-plugins/utilities/overflow-wrap"
 import scrollFade from "./src/lib/tailwindcss-plugins/utilities/scroll-fade"
 import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
 import scrollbarGutter from "./src/lib/tailwindcss-plugins/utilities/scrollbar-gutter"
+import transform from "./src/lib/tailwindcss-plugins/utilities/transform"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
 import viewTransition from "./src/lib/tailwindcss-plugins/utilities/view-transition"
@@ -306,6 +307,7 @@ export default {
         scrollFade,
         scrollbar,
         scrollbarGutter,
+        transform,
         transition,
         transitionBehavior,
         viewTransition,

@@ -25,7 +25,7 @@
 */
 
 .pswp {
-    @apply fixed left-0 top-0 z-[var(--pswp-root-z-index)] hidden size-full touch-none opacity-[.003] outline-0;
+    @apply fixed left-0 top-0 z-[--pswp-root-z-index] hidden size-full touch-none opacity-[.003] outline-0;
 
     contain: layout style size;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -57,7 +57,7 @@
 }
 
 .pswp__bg {
-    @apply bg-[var(--pswp-bg)] opacity-[.005];
+    @apply bg-[--pswp-bg] opacity-[.005];
 }
 
 .pswp,
@@ -139,7 +139,7 @@
     @apply grid;
 }
 .pswp__error-msg {
-    @apply m-auto text-[1em] leading-none text-[var(--pswp-error-text-color)];
+    @apply m-auto text-[1em] leading-none text-[--pswp-error-text-color];
 }
 
 /*
@@ -148,7 +148,7 @@
     and show (for example fade in) when PhotoSwipe is opened
  */
 .pswp .pswp__hide-on-close {
-    @apply pointer-events-none z-10 opacity-[.005] will-change-[opacity] transition-opacity ease-[cubic-bezier(0.4,0,0.22,1)] duration-[var(--pswp-transition-duration)];
+    @apply pointer-events-none z-10 opacity-[.005] will-change-[opacity] transition-opacity ease-[cubic-bezier(0.4,0,0.22,1)] duration-[--pswp-transition-duration];
 }
 
 /* class pswp--ui-visible is added when opening or closing transition starts */
@@ -173,7 +173,7 @@
 }
 
 .pswp__icn {
-    @apply fill-[var(--pswp-icon-color)] text-[var(--pswp-icon-color-secondary)];
+    @apply fill-[--pswp-icon-color] text-[--pswp-icon-color-secondary];
 }
 
 .pswp__icn {
@@ -181,7 +181,7 @@
 }
 
 .pswp__icn-shadow {
-    @apply fill-none stroke-[var(--pswp-icon-stroke-color)] stroke-[length:var(--pswp-icon-stroke-width)];
+    @apply fill-none stroke-[--pswp-icon-stroke-color] stroke-[length:--pswp-icon-stroke-width];
 }
 
 .pswp__icn:focus {
@@ -195,7 +195,7 @@
 */
 div.pswp__img--placeholder,
 .pswp__img--with-bg {
-    @apply bg-[var(--pswp-placeholder-bg)];
+    @apply bg-[--pswp-placeholder-bg];
 }
 
 .pswp__top-bar {
@@ -308,7 +308,7 @@ div.pswp__img--placeholder,
 
 */
 .pswp__counter {
-    @apply ms-[20px] mt-[15px] h-[30px] text-sm leading-[30px] text-[var(--pswp-icon-color)] opacity-85;
+    @apply ms-[20px] mt-[15px] h-[30px] text-sm leading-[30px] text-[--pswp-icon-color] opacity-85;
 
     text-shadow: 1px 1px 3px var(--pswp-icon-color-secondary);
 }

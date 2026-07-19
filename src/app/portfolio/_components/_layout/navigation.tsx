@@ -4,7 +4,7 @@ import { Divider } from "@/components/layout/divider"
 import { MarginLine } from "@/components/layout/line"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
-import { MobileTocPanel } from "@/portfolio/_components/_layout/mobile-toc"
+import { MobileTocDrawer } from "@/portfolio/_components/_layout/_toc/mobile/mobile-toc"
 import Sidebar, { Menu } from "@/portfolio/_components/_layout/sidebar"
 
 export function Navigation() {
@@ -17,7 +17,7 @@ export function Navigation() {
                     lg: "fixed inset-x-0 bottom-0"
                 })}
             >
-                <MobileTocPanel />
+                <MobileTocDrawer />
                 <div
                     className={cn(
                         "relative z-50 min-h-20 w-full bg-background"

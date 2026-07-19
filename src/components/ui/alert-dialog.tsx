@@ -38,8 +38,8 @@ function AlertDialogOverlay({
                 "fixed inset-0 isolate z-50 bg-black/80 duration-250",
                 {
                     "supports-[backdrop-filter]": "backdrop-blur-sm",
-                    "data-[starting-style]": "opacity-0 backdrop-blur-0",
-                    "data-[ending-style]": "opacity-0 backdrop-blur-0"
+                    "data-starting-style": "opacity-0 backdrop-blur-0",
+                    "data-ending-style": "opacity-0 backdrop-blur-0"
                 },
                 className
             )}
@@ -65,8 +65,8 @@ function AlertDialogContent({
                 className={cn(
                     "group/alert-dialog-content fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3.5 rounded-2xl bg-popover px-4 py-3 text-popover-foreground ring ring-stroke outline-none duration-250",
                     {
-                        "data-[starting-style]": "scale-95 opacity-0",
-                        "data-[ending-style]": "scale-95 opacity-0",
+                        "data-starting-style": "scale-95 opacity-0",
+                        "data-ending-style": "scale-95 opacity-0",
                         "data-[size=default]": "max-w-sm sm:max-w-xs",
                         "data-[size=sm]": "max-w-xs",
                         md: "rounded-xl"

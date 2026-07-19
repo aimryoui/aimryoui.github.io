@@ -59,7 +59,7 @@ function DropdownMenuContent({
                         "z-50 max-h-[--available-height] w-[--anchor-width] min-w-48 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background p-1 text-foreground ring ring-stroke outline-none",
                         "will-change-transform transition-transform duration-300",
                         {
-                            "data-[starting-style]": [
+                            "data-starting-style": [
                                 "pointer-events-none",
                                 {
                                     "data-[side=top]": {
@@ -205,7 +205,7 @@ function DropdownMenuSubContent({
                 "w-auto min-w-32 rounded-xl bg-background p-1 text-foreground",
                 "will-change-transform transition-transform",
                 {
-                    "data-[starting-style]": {
+                    "data-starting-style": {
                         "data-[side=right]": "-translate-x-full",
                         "data-[side=left]": "translate-x-full"
                     }

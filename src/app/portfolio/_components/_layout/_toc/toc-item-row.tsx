@@ -44,11 +44,11 @@ const TocItemRow = memo(
                     {
                         // Tick
                         after: [
-                            "absolute left-6 top-[calc(100%+var(--item-gap)/2)] h-px origin-left -translate-y-1/2 bg-[var(--marker-color)] opacity-60",
+                            "absolute left-6 top-[calc(100%+var(--item-gap)/2)] h-px origin-left -translate-y-1/2 bg-[--marker-color] opacity-60",
                             "last:hidden has-[+[role=separator]]:hidden",
                             isProject
                                 ? "w-[calc(var(--marker-length)*var(--tick-scale))] scale-x-[calc(1+var(--effect,0)*1.5)]"
-                                : "w-1.25 scale-x-[var(--effect,0)]"
+                                : "w-1.25 scale-x-[--effect,0]"
                         ]
                     }
                 )}
@@ -62,8 +62,8 @@ const TocItemRow = memo(
                             ? "bg-highlighted"
                             : "bg-[color-mix(in_srgb,var(--accent-color)_calc(var(--effect,0)*100%),var(--marker-color))]",
                         isProject
-                            ? "w-[var(--marker-length)] scale-x-[calc(1+var(--effect,0))]"
-                            : "w-2.5 scale-x-[var(--effect,0)]"
+                            ? "w-[--marker-length] scale-x-[calc(1+var(--effect,0))]"
+                            : "w-2.5 scale-x-[--effect,0]"
                     )}
                 />
                 <NextLink
