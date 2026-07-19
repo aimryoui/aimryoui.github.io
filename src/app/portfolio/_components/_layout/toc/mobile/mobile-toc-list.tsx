@@ -13,13 +13,41 @@ function handleSameLinkClick() {
     window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
 }
 
-function MobileTocList({ mode, items, filteredItems }: TocListProps) {
+function MobileTocList({
+    mode,
+    items,
+    filteredItems,
+    debouncedQuery
+}: TocListProps) {
     const scrollContainerRef = useRef<HTMLUListElement>(null)
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
 
     const allIds = items.map((item) => item.id)
     const activeId = useScrollSpy(allIds)
+
+    const prevQueryRef = useRef(debouncedQuery)
+
+    useEffect(() => {
+        const prev = prevQueryRef.current
+        prevQueryRef.current = debouncedQuery
+
+        if (prev === debouncedQuery) return
+
+        if (debouncedQuery && scrollContainerRef.current) {
+            const navEl = scrollContainerRef.current.closest("nav")
+            if (navEl) {
+                navEl.scrollTop = 0
+            }
+        } else if (!debouncedQuery && scrollContainerRef.current) {
+            const activeEl = scrollContainerRef.current.querySelector(
+                `[data-toc-id="${activeId}"]`
+            )
+            if (activeEl) {
+                activeEl.scrollIntoView({ block: "center", behavior: "auto" })
+            }
+        }
+    }, [debouncedQuery, activeId])
 
     const handleItemClick = (item: TocItemProps) => {
         const targetId = item.id
@@ -65,9 +93,7 @@ function MobileTocList({ mode, items, filteredItems }: TocListProps) {
     return (
         <ul
             ref={scrollContainerRef}
-            className={cn(
-                "group overflow-y-scroll overscroll-contain scroll-auto py-5 pb-[35vh] scrollbar-thin"
-            )}
+            className={cn("group scroll-auto py-5 pb-[35vh]")}
         >
             {filteredItems.map((item) => {
                 if (item.hidden) return null

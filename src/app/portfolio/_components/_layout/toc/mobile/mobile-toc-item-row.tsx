@@ -82,10 +82,10 @@ const MobileTocItemRow = memo(
                             ? "flex items-center gap-5 py-2"
                             : "inline-block py-3",
                         isProject
-                            ? "ps-6 text-foreground dark:text-muted-foreground"
+                            ? "px-6 text-foreground dark:text-muted-foreground"
                             : "font-wght-500 font-slnt-0",
                         isActive
-                            ? "!text-highlighted font-wght-[600]"
+                            ? "!text-highlighted font-wght-600 group-hover:pe-12"
                             : {
                                   hover: isProject
                                       ? "text-muted-foreground dark:text-foreground"
@@ -98,7 +98,7 @@ const MobileTocItemRow = memo(
                     {item.icon && (
                         <div
                             className={cn(
-                                "grid size-[36px] place-items-center rounded-xl",
+                                "grid size-[36px] place-items-center rounded-full",
                                 isActive
                                     ? "bg-highlighted text-white dark:bg-highlighted/70"
                                     : [
@@ -110,7 +110,7 @@ const MobileTocItemRow = memo(
                                                   "bg-muted-foreground/30 text-default !transition-none dark:bg-muted-foreground/40"
                                           }
                                       ],
-                                "[&>svg]:size-7"
+                                "[&>svg]:size-6"
                             )}
                         >
                             {item.icon}
@@ -120,14 +120,14 @@ const MobileTocItemRow = memo(
                     {isActive && (
                         <div
                             className={cn(
-                                "absolute right-0 top-1/2 hidden size-5 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                "absolute right-0 top-1/2 hidden size-8 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
                                 "group-hover:grid group-focus-visible/link:hidden dark:bg-highlighted/20"
                             )}
                         >
                             {mode === "pages" ? (
-                                <ArrowRight className={cn("size-3")} />
+                                <ArrowRight className={cn("size-4.5")} />
                             ) : (
-                                <ArrowUp className={cn("size-3")} />
+                                <ArrowUp className={cn("size-4.5")} />
                             )}
                         </div>
                     )}

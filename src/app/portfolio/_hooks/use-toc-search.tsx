@@ -78,6 +78,7 @@ function useTocSearch(
     return {
         query,
         setQuery,
+        debouncedQuery,
         filteredItems,
         handleClearSearch
     }

@@ -130,7 +130,7 @@ function RightAddon({
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="hover:bg-transparent"
+                            className="hover:bg-transparent lg:size-[36px]"
                             onClick={onClear}
                         >
                             <XCircle className="cursor-pointer lg:size-5.5" />

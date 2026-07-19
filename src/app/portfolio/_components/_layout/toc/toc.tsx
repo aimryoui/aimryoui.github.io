@@ -19,7 +19,7 @@ interface TocProps {
 function TableOfContents({ mode, items }: TocProps) {
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const { query, setQuery, filteredItems, handleClearSearch } = useTocSearch(
+    const { query, setQuery, debouncedQuery, filteredItems, handleClearSearch } = useTocSearch(
         inputRef,
         items
     )
@@ -88,6 +88,7 @@ function TableOfContents({ mode, items }: TocProps) {
                     <TocList
                         mode={mode}
                         items={items}
+                        debouncedQuery={debouncedQuery}
                         filteredItems={filteredItems}
                         onActiveReady={handleActiveReady}
                     />

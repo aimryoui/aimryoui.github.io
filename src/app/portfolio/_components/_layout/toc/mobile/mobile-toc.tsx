@@ -1,7 +1,8 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
+import { type Drawer as DrawerType } from "@base-ui/react"
 import { PanelTopClose, PanelTopOpen } from "lucide-react"
 
 import { SectionLine } from "@/components/layout/line"
@@ -17,56 +18,43 @@ import { TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { MobileTocList } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-list"
 import { TocHeader } from "@/portfolio/_components/_layout/toc/toc-header"
-import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { type TocListProps } from "@/portfolio/_components/_layout/toc/toc-list"
 import { TocSearchNoResult } from "@/portfolio/_components/_layout/toc/toc-search"
 import { useTocItems } from "@/portfolio/_hooks/use-toc-items"
 import { useTocSearch } from "@/portfolio/_hooks/use-toc-search"
-import {
-    type PortfolioMode,
-    usePortfolioModeStore
-} from "@/stores/portfolio-mode-store"
+import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
-interface TocProps {
-    mode: PortfolioMode
-    items: TocItemProps[]
-}
-
-function MobileToc({ mode, items }: TocProps) {
-    const inputRef = useRef<HTMLInputElement>(null)
-
-    const { query, setQuery, filteredItems, handleClearSearch } = useTocSearch(
-        inputRef,
-        items
-    )
-
+function MobileToc({
+    mode,
+    items,
+    filteredItems,
+    debouncedQuery,
+    handleClearSearch
+}: TocListProps & {
+    handleClearSearch: () => void
+}) {
     if (items.length === 0) return null
 
     return (
-        <>
-            <TocHeader
-                ref={inputRef}
-                value={query}
-                onChange={setQuery}
-                onClear={handleClearSearch}
-            />
-            <SectionLine fit />
-            <nav
-                aria-label="Table of contents"
-                className={cn("flex flex-1 flex-col overflow-auto")}
-            >
-                {filteredItems.length === 0 ? (
-                    <TocSearchNoResult onClear={handleClearSearch} />
-                ) : (
-                    <MobileTocList
-                        mode={mode}
-                        items={items}
-                        filteredItems={filteredItems}
-                    />
-                )}
-            </nav>
-        </>
+        <nav
+            aria-label="Table of contents"
+            className={cn("flex flex-1 flex-col overflow-auto scrollbar-thin")}
+        >
+            {filteredItems.length === 0 ? (
+                <TocSearchNoResult onClear={handleClearSearch} />
+            ) : (
+                <MobileTocList
+                    mode={mode}
+                    items={items}
+                    filteredItems={filteredItems}
+                    debouncedQuery={debouncedQuery}
+                />
+            )}
+        </nav>
     )
 }
+
+const snapPoints = [0.85, 1]
 
 function MobileTocButton() {
     const [isTocOpen, setIsTocOpen] = useState(false)
@@ -74,8 +62,25 @@ function MobileTocButton() {
     const mode = usePortfolioModeStore((state) => state.mode)
     const tocItems = useTocItems(mode)
 
+    const inputRef = useRef<HTMLInputElement>(null)
+    const {
+        query,
+        setQuery,
+        debouncedQuery,
+        filteredItems,
+        handleClearSearch
+    } = useTocSearch(inputRef, tocItems)
+
+    const [snapPoint, setSnapPoint] =
+        useState<DrawerType.Root.SnapPoint | null>(snapPoints[0])
+
     return (
-        <Drawer onOpenChange={setIsTocOpen}>
+        <Drawer
+            snapPoints={snapPoints}
+            snapPoint={snapPoint}
+            onSnapPointChange={setSnapPoint}
+            onOpenChange={setIsTocOpen}
+        >
             <DrawerTrigger
                 render={
                     <TooltipTrigger
@@ -113,15 +118,27 @@ function MobileTocButton() {
                     />
                 }
             />
-            <DrawerContent
-                data-cursor="ignore"
-                className="h-[85vh] cursor-auto [--drawer-add-bottom-padding:theme(spacing.20)]"
-            >
-                <DrawerHeader className="sr-only">
-                    <DrawerTitle>Table of Contents</DrawerTitle>
+            <DrawerContent data-current-snap-points={snapPoint}>
+                <DrawerHeader className="sticky top-0 p-0">
+                    <DrawerTitle className="sr-only">
+                        Table of Contents
+                    </DrawerTitle>
+                    <TocHeader
+                        ref={inputRef}
+                        value={query}
+                        onChange={setQuery}
+                        onClear={handleClearSearch}
+                    />
+                    <SectionLine fit />
                 </DrawerHeader>
-                <div className="flex flex-col overflow-hidden text-2xl">
-                    <MobileToc mode={mode} items={tocItems} />
+                <div className="-mb-12 flex flex-col overflow-hidden pb-[calc(env(safe-area-inset-bottom,0px)+theme(spacing.12)+theme(spacing.20))] text-2xl">
+                    <MobileToc
+                        mode={mode}
+                        items={tocItems}
+                        filteredItems={filteredItems}
+                        debouncedQuery={debouncedQuery}
+                        handleClearSearch={handleClearSearch}
+                    />
                 </div>
             </DrawerContent>
         </Drawer>

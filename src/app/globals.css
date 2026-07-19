@@ -133,7 +133,7 @@
         --px: 0.09375rem;
         font-size: 0.937135vw;
 
-        @apply font-wght-[450] 2xl:text-base lg:text-sm lg:[--px:.1071428rem] dark:font-wght-400;
+        @apply font-wght-450 2xl:text-base lg:text-sm lg:[--px:.1071428rem] dark:font-wght-400;
     }
 
     * {
@@ -158,6 +158,9 @@
     }
     svg {
         @apply overflow-visible;
+    }
+    input::placeholder {
+        @apply select-none;
     }
     input[type="search"]::-webkit-search-cancel-button {
         @apply hidden;

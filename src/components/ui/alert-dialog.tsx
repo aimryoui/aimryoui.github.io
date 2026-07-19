@@ -156,7 +156,7 @@ function AlertDialogTitle({
         <AlertDialogPrimitive.Title
             data-slot="alert-dialog-title"
             className={cn(
-                "text-pretty text-base font-wght-[550]",
+                "text-pretty text-base font-wght-500",
                 "group-data-[size=default]/alert-dialog-content:group-has-[[data-slot=alert-dialog-media]]/alert-dialog-content:col-start-2",
                 className
             )}

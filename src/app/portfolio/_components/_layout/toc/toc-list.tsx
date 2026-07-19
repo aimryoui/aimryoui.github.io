@@ -17,7 +17,7 @@ interface TocListProps {
     mode: PortfolioMode
     items: TocItemProps[]
     filteredItems: TocItemProps[]
-    onActiveReady?: () => void
+    debouncedQuery: string
 }
 
 function handleSameLinkClick() {
@@ -26,7 +26,15 @@ function handleSameLinkClick() {
 
 const _DELAY = 400
 
-function TocList({ mode, items, filteredItems, onActiveReady }: TocListProps) {
+function TocList({
+    mode,
+    items,
+    filteredItems,
+    debouncedQuery,
+    onActiveReady
+}: TocListProps & {
+    onActiveReady?: () => void
+}) {
     const pathname = usePathname()
 
     const scrollContainerRef = useRef<HTMLUListElement>(null)
@@ -38,6 +46,26 @@ function TocList({ mode, items, filteredItems, onActiveReady }: TocListProps) {
     const rawActiveId = useScrollSpy(allIds)
     const [activeId, setActiveId] = useState(rawActiveId)
     const lastUpdateTimestamp = useRef(0)
+
+    const prevQueryRef = useRef(debouncedQuery)
+
+    useEffect(() => {
+        const prev = prevQueryRef.current
+        prevQueryRef.current = debouncedQuery
+
+        if (prev === debouncedQuery) return
+
+        if (debouncedQuery && scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTop = 0
+        } else if (!debouncedQuery && scrollContainerRef.current) {
+            const activeEl = scrollContainerRef.current.querySelector(
+                `[data-toc-id="${activeId}"]`
+            )
+            if (activeEl) {
+                activeEl.scrollIntoView({ block: "center", behavior: "auto" })
+            }
+        }
+    }, [debouncedQuery, activeId])
 
     useLayoutEffect(() => {
         const container = scrollContainerRef.current
