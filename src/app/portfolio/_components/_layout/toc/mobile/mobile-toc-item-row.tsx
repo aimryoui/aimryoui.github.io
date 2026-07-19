@@ -8,7 +8,7 @@ import { ChevronDown } from "lucide-react"
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
 import { formatOrdinal } from "@/helpers/format-ordinal"
 import { cn } from "@/lib/utils"
-import { type TocItemRowProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
+import { type TocItemRowProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 
 const MobileTocItemRow = memo(
     ({ mode, item, isActive, onClick, onSameLinkClick }: TocItemRowProps) => {
@@ -79,19 +79,17 @@ const MobileTocItemRow = memo(
                     className={cn(
                         "group/link relative flex-1 truncate leading-6",
                         item.icon
-                            ? "flex items-center gap-4 py-2.5"
+                            ? "flex items-center gap-5 py-2"
                             : "inline-block py-3",
                         isProject
                             ? "ps-6 text-foreground dark:text-muted-foreground"
-                            : "font-wght-600 font-slnt-0",
+                            : "font-wght-500 font-slnt-0",
                         isActive
                             ? "!text-highlighted font-wght-[600]"
                             : {
-                                  "group-hover":
-                                      "transition-[color,font-variation-settings] ease-spring duration-500",
                                   hover: isProject
-                                      ? "text-muted-foreground font-wght-[600] !transition-[font-variation-settings] dark:text-foreground"
-                                      : "text-foreground -font-slnt-10 !transition-[font-variation-settings]",
+                                      ? "text-muted-foreground dark:text-foreground"
+                                      : "text-foreground",
                                   active: "text-highlighted",
                                   "focus-visible": "text-foreground"
                               }
@@ -100,7 +98,7 @@ const MobileTocItemRow = memo(
                     {item.icon && (
                         <div
                             className={cn(
-                                "grid size-9 place-items-center rounded-lg",
+                                "grid size-[36px] place-items-center rounded-xl",
                                 isActive
                                     ? "bg-highlighted text-white dark:bg-highlighted/70"
                                     : [
@@ -112,7 +110,7 @@ const MobileTocItemRow = memo(
                                                   "bg-muted-foreground/30 text-default !transition-none dark:bg-muted-foreground/40"
                                           }
                                       ],
-                                "[&>svg]:size-6"
+                                "[&>svg]:size-7"
                             )}
                         >
                             {item.icon}

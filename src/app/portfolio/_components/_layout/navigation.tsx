@@ -4,7 +4,6 @@ import { Divider } from "@/components/layout/divider"
 import { MarginLine } from "@/components/layout/line"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
-import { MobileTocDrawer } from "@/portfolio/_components/_layout/_toc/mobile/mobile-toc"
 import Sidebar, { Menu } from "@/portfolio/_components/_layout/sidebar"
 
 export function Navigation() {
@@ -17,7 +16,6 @@ export function Navigation() {
                     lg: "fixed inset-x-0 bottom-0"
                 })}
             >
-                <MobileTocDrawer />
                 <div
                     className={cn(
                         "relative z-50 min-h-20 w-full bg-background"
@@ -40,9 +38,10 @@ export function Navigation() {
                 )}
             />
             <MarginLine
-                className={cn("ms-sidebar lg:hidden", {
+                className={cn("ms-sidebar", {
                     "group-data-[sidebar-position=right]/html":
-                        "order-3 me-sidebar ms-unset"
+                        "z-60 order-3 me-sidebar ms-unset",
+                    lg: "hidden"
                 })}
             />
             <Divider

@@ -4,10 +4,10 @@ import { Fragment, useEffect, useRef } from "react"
 
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
-import { MobileTocItemRow } from "@/portfolio/_components/_layout/_toc/mobile/mobile-toc-item-row"
-import { TocDivider } from "@/portfolio/_components/_layout/_toc/toc-divider"
-import { type TocItemProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
-import { type TocListProps } from "@/portfolio/_components/_layout/_toc/toc-list"
+import { MobileTocItemRow } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-item-row"
+import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { type TocListProps } from "@/portfolio/_components/_layout/toc/toc-list"
 
 function handleSameLinkClick() {
     window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
@@ -66,7 +66,7 @@ function MobileTocList({ mode, items, filteredItems }: TocListProps) {
         <ul
             ref={scrollContainerRef}
             className={cn(
-                "group overflow-y-scroll overscroll-contain scroll-auto py-3 pb-[30vh] scrollbar-thin"
+                "group overflow-y-scroll overscroll-contain scroll-auto py-5 pb-[35vh] scrollbar-thin"
             )}
         >
             {filteredItems.map((item) => {
@@ -75,7 +75,7 @@ function MobileTocList({ mode, items, filteredItems }: TocListProps) {
                 return (
                     <Fragment key={item.id}>
                         {(item.depth === 2 || item.depth === 4) && (
-                            <TocDivider id={item.id} className="my-5" />
+                            <TocDivider id={item.id} className="mb-4 mt-4.5" />
                         )}
 
                         <MobileTocItemRow

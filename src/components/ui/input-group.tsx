@@ -19,10 +19,9 @@ function InputGroup({
     return (
         <Comp
             data-slot="input-group"
-            data-cursor="input"
             role="group"
             className={cn(
-                "group/input-group relative flex h-9 w-full min-w-0 cursor-auto items-center rounded-lg ring ring-inset ring-input will-change-[outline] has-[>textarea]:h-auto",
+                "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-lg ring ring-inset ring-input will-change-[outline] has-[>textarea]:h-auto",
                 {
                     hover: [
                         "bg-element-hover",
@@ -30,7 +29,7 @@ function InputGroup({
                             "data-[cursor=input]": "rounded-none"
                         }
                     ],
-                    dark: "bg-input/30",
+                    dark: "bg-input/25",
 
                     "data-[cursor=input]":
                         "transition-[border-radius] ease-spring duration-200",

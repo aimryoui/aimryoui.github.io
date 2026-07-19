@@ -27,7 +27,14 @@ export default function Portfolio() {
                 <SectionLine showDecoration />
                 <Space />
                 <SectionLine />
-                <div className={cn("relative bg-background px-6 py-4.5")}>
+                <div
+                    className={cn(
+                        "relative bg-background px-6 pb-[.96875rem] pt-3.75",
+                        {
+                            lg: "py-4.5"
+                        }
+                    )}
+                >
                     <span
                         className={cn(
                             "absolute -top-9.5 left-6 font-mono uppercase"

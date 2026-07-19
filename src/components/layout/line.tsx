@@ -4,7 +4,7 @@ function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
             className={cn(
-                "pointer-events-none sticky top-0 h-dvh w-px",
+                "pointer-events-none sticky top-0 z-30 h-dvh w-px",
                 className
             )}
             {...props}
@@ -50,7 +50,7 @@ function SectionLine({
     return (
         <div
             className={cn(
-                "pointer-events-none relative z-10 h-0 w-full",
+                "pointer-events-none relative z-40 h-0 w-full",
                 showDecoration && "flex items-center justify-between"
             )}
         >

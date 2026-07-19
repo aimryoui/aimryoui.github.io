@@ -15,7 +15,7 @@ import {
     ProjectsIcon,
     SoftwareIcon
 } from "@/portfolio/_components/_icons/toc-icons"
-import { type TocItemProps } from "@/portfolio/_components/_layout/_toc/toc-item-row"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
@@ -24,35 +24,35 @@ function useTocItems(mode: PortfolioMode) {
     const projectGroups = groupProjectsByCategory(projects)
 
     const projectItems = projectGroups.flatMap((group) => {
-            const items: TocItemProps[] = [
-                {
-                    id: group.id,
-                    label: group.title,
-                    depth: 2,
-                    kind: "project",
-                    mode: mode === "pages" ? "route" : "anchor",
-                    href:
-                        mode === "pages"
-                            ? getCategoryPath(group.id)
-                            : `#${group.id}`
-                }
-            ]
-
-            for (const project of group.projects) {
-                items.push({
-                    id: getProjectRouteSlug(project),
-                    label: project.projectName,
-                    depth: 3,
-                    kind: "project",
-                    mode: mode === "pages" ? "route" : "anchor",
-                    href:
-                        mode === "pages"
-                            ? getProjectPath(project)
-                            : `#${getProjectRouteSlug(project)}`
-                })
+        const items: TocItemProps[] = [
+            {
+                id: group.id,
+                label: group.title,
+                depth: 2,
+                kind: "project",
+                mode: mode === "pages" ? "route" : "anchor",
+                href:
+                    mode === "pages"
+                        ? getCategoryPath(group.id)
+                        : `#${group.id}`
             }
+        ]
 
-            return items
+        for (const project of group.projects) {
+            items.push({
+                id: getProjectRouteSlug(project),
+                label: project.projectName,
+                depth: 3,
+                kind: "project",
+                mode: mode === "pages" ? "route" : "anchor",
+                href:
+                    mode === "pages"
+                        ? getProjectPath(project)
+                        : `#${getProjectRouteSlug(project)}`
+            })
+        }
+
+        return items
     })
 
     const staticItemMode = mode === "pages" ? "route" : "anchor"

@@ -63,13 +63,12 @@ function AlertDialogContent({
                 data-size={size}
                 // data-cursor="ignore"
                 className={cn(
-                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3.5 rounded-2xl bg-popover px-4 py-3 text-popover-foreground ring ring-stroke outline-none duration-250",
+                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-2xl bg-popover px-4 py-3 text-popover-foreground ring ring-stroke outline-none duration-250",
                     {
                         "data-starting-style": "scale-95 opacity-0",
                         "data-ending-style": "scale-95 opacity-0",
                         "data-[size=default]": "max-w-sm sm:max-w-xs",
-                        "data-[size=sm]": "max-w-xs",
-                        md: "rounded-xl"
+                        "data-[size=sm]": "max-w-xs"
                     },
                     className
                 )}
@@ -88,7 +87,7 @@ function AlertDialogHeader({
             data-slot="alert-dialog-header"
             data-cursor="ignore"
             className={cn(
-                "grid cursor-auto grid-rows-[auto_1fr] gap-2",
+                "grid cursor-auto grid-rows-[auto_1fr] gap-3 px-4 py-3",
                 {
                     "has-data-[slot=alert-dialog-media]":
                         "grid-rows-[auto_auto_1fr] gap-x-4",
@@ -116,12 +115,9 @@ function AlertDialogFooter({
         <div
             data-slot="alert-dialog-footer"
             className={cn(
-                "-mx-4 -mb-3 flex flex-row justify-end gap-2.5 rounded-b-2xl border-t bg-muted/50 p-4",
+                "-mx-4 -my-3 grid grid-cols-2 gap-2 p-4",
                 {
-                    "group-data-[size=sm]/alert-dialog-content":
-                        "grid grid-cols-2",
-                    sm: "flex-col-reverse",
-                    md: "rounded-b-xl"
+                    sm: "flex flex-col-reverse"
                 },
                 className
             )}
@@ -160,7 +156,7 @@ function AlertDialogTitle({
         <AlertDialogPrimitive.Title
             data-slot="alert-dialog-title"
             className={cn(
-                "text-base font-wght-500",
+                "text-pretty text-base font-wght-[550]",
                 "group-data-[size=default]/alert-dialog-content:group-has-[[data-slot=alert-dialog-media]]/alert-dialog-content:col-start-2",
                 className
             )}
@@ -177,8 +173,9 @@ function AlertDialogDescription({
         <AlertDialogPrimitive.Description
             data-slot="alert-dialog-description"
             className={cn(
-                "text-pretty text-sm text-muted-foreground",
+                "text-pretty text-sm text-foreground/90",
                 {
+                    dark: "text-foreground/80",
                     "*:is-[a]":
                         "underline underline-offset-2 hover:text-foreground"
                 },
@@ -204,7 +201,7 @@ function AlertDialogAction({
 
 function AlertDialogCancel({
     className,
-    variant = "outline",
+    variant = "tinted",
     size = "default",
     ...props
 }: AlertDialogPrimitive.Close.Props &

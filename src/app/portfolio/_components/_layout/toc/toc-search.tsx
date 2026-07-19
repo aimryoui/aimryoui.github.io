@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/input-group"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { TooltipTrigger } from "@/components/ui/tooltip"
+import { Highlight, Text } from "@/components/ui/typography"
 import { useHotkeys } from "@/hooks/use-hotkeys"
 import { usePlatform } from "@/hooks/use-platform"
 import { cn } from "@/lib/utils"
@@ -20,13 +21,15 @@ interface TocSearchProps extends Omit<
     value: string
     onChange: (value: string) => void
     onClear: () => void
+    cursorTarget?: boolean
 }
 
 function TocSearch({
+    className,
     value,
     onChange,
     onClear,
-    className,
+    cursorTarget = false,
     ref,
     ...props
 }: TocSearchProps) {
@@ -48,7 +51,10 @@ function TocSearch({
     return (
         <InputGroup
             as="search"
-            className={cn({
+            {...(cursorTarget && {
+                "data-cursor": "input"
+            })}
+            className={cn(cursorTarget && "cursor-auto", {
                 lg: "h-[36px]"
             })}
         >
@@ -164,4 +170,21 @@ function Command({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-export { TocSearch }
+function TocSearchNoResult({ onClear }: { onClear: () => void }) {
+    return (
+        <Text className={cn("px-6 py-4")}>
+            No results found.{" "}
+            <Highlight
+                onClick={onClear}
+                className={cn(
+                    "cursor-pointer decoration-solid hover:underline"
+                )}
+            >
+                Clear search
+            </Highlight>
+        </Text>
+    )
+}
+
+export type { TocSearchProps }
+export { TocSearch, TocSearchNoResult }

@@ -6,11 +6,11 @@ import { usePathname } from "next/navigation"
 import { LineSidebar } from "@/components/animations/line-sidebar"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
-import { TocDivider } from "@/portfolio/_components/_layout/_toc/toc-divider"
+import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
 import {
     type TocItemProps,
     TocItemRow
-} from "@/portfolio/_components/_layout/_toc/toc-item-row"
+} from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocListProps {

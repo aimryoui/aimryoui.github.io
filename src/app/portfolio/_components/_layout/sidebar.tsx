@@ -12,8 +12,8 @@ import { At, Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
-import { MobileTocButton } from "@/portfolio/_components/_layout/_toc/mobile/mobile-toc"
-import { TableOfContents } from "@/portfolio/_components/_layout/_toc/toc"
+import { MobileTocButton } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
+import { TableOfContents } from "@/portfolio/_components/_layout/toc/toc"
 import { useTocItems } from "@/portfolio/_hooks/use-toc-items"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
@@ -27,7 +27,7 @@ function Sidebar({ className, ...props }: React.ComponentProps<"aside">) {
         // <ViewTransition name="sidebar">
         <aside
             className={cn(
-                "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-20 flex h-dvh w-sidebar flex-col justify-end bg-background",
+                "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-50 flex h-dvh w-sidebar flex-col justify-end bg-background",
                 {
                     "group-data-[sidebar-position=right]/html":
                         "left-auto right-[calc(var(--spacing)*6+var(--px))]",
@@ -70,7 +70,7 @@ function Menu({ className }: { className?: string }) {
             >
                 <menu
                     className={cn(
-                        "flex items-center gap-2 @container",
+                        "flex items-center gap-3 @container",
                         {
                             lg: "gap-4"
                         },
