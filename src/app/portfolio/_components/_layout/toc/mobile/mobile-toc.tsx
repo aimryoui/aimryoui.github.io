@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 
-import { type Drawer as DrawerType } from "@base-ui/react"
+import { type Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
 import { PanelTopClose, PanelTopOpen } from "lucide-react"
 
 import { SectionLine } from "@/components/layout/line"
@@ -72,7 +72,7 @@ function MobileTocButton() {
     } = useTocSearch(inputRef, tocItems)
 
     const [snapPoint, setSnapPoint] =
-        useState<DrawerType.Root.SnapPoint | null>(snapPoints[0])
+        useState<DrawerPrimitive.Root.SnapPoint | null>(snapPoints[0])
 
     return (
         <Drawer

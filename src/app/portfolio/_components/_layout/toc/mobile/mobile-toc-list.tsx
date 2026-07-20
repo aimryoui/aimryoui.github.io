@@ -1,17 +1,14 @@
-"use client"
+import { Fragment } from "react"
 
-import { Fragment, useEffect, useRef } from "react"
-
-import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { cn } from "@/lib/utils"
 import { MobileTocItemRow } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-item-row"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
-import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
-import { type TocListProps } from "@/portfolio/_components/_layout/toc/toc-list"
-
-function handleSameLinkClick() {
-    window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
-}
+import {
+    handleItemClick,
+    handleSameLinkClick,
+    type TocListProps
+} from "@/portfolio/_components/_layout/toc/toc-list"
+import { useTocScroll } from "@/portfolio/_hooks/use-toc-scroll"
 
 function MobileTocList({
     mode,
@@ -19,76 +16,11 @@ function MobileTocList({
     filteredItems,
     debouncedQuery
 }: TocListProps) {
-    const scrollContainerRef = useRef<HTMLUListElement>(null)
-    const clickedTargetRef = useRef<string | null>(null)
-    const isFirstRenderRef = useRef(true)
-
-    const allIds = items.map((item) => item.id)
-    const activeId = useScrollSpy(allIds)
-
-    const prevQueryRef = useRef(debouncedQuery)
-
-    useEffect(() => {
-        const prev = prevQueryRef.current
-        prevQueryRef.current = debouncedQuery
-
-        if (prev === debouncedQuery) return
-
-        if (debouncedQuery && scrollContainerRef.current) {
-            const navEl = scrollContainerRef.current.closest("nav")
-            if (navEl) {
-                navEl.scrollTop = 0
-            }
-        } else if (!debouncedQuery && scrollContainerRef.current) {
-            const activeEl = scrollContainerRef.current.querySelector(
-                `[data-toc-id="${activeId}"]`
-            )
-            if (activeEl) {
-                activeEl.scrollIntoView({ block: "center", behavior: "auto" })
-            }
-        }
-    }, [debouncedQuery, activeId])
-
-    const handleItemClick = (item: TocItemProps) => {
-        const targetId = item.id
-
-        if (item.mode === "route") return
-
-        clickedTargetRef.current = targetId
-        const el = document.getElementById(targetId)
-        if (el) {
-            el.scrollIntoView({ behavior: "smooth", block: "start" })
-        }
-        window.history.pushState(null, "", `#${targetId}`)
-    }
-
-    useEffect(() => {
-        if (activeId && scrollContainerRef.current) {
-            if (clickedTargetRef.current) {
-                if (activeId !== clickedTargetRef.current) return
-                clickedTargetRef.current = null
-            }
-
-            const activeElement = scrollContainerRef.current.querySelector(
-                `[data-toc-id="${activeId}"]`
-            )
-
-            if (activeElement) {
-                if (isFirstRenderRef.current) {
-                    isFirstRenderRef.current = false
-                    activeElement.scrollIntoView({
-                        block: "center",
-                        behavior: "auto"
-                    })
-                } else {
-                    activeElement.scrollIntoView({
-                        block: "center",
-                        behavior: "smooth"
-                    })
-                }
-            }
-        }
-    }, [activeId])
+    const { scrollContainerRef, clickedTargetRef, activeId } = useTocScroll({
+        items,
+        debouncedQuery,
+        scrollParentSelector: "nav"
+    })
 
     return (
         <ul
@@ -108,7 +40,9 @@ function MobileTocList({
                             mode={mode}
                             item={item}
                             isActive={activeId === item.id}
-                            onClick={handleItemClick}
+                            onClick={() => {
+                                handleItemClick(item, clickedTargetRef)
+                            }}
                             onSameLinkClick={handleSameLinkClick}
                         />
                     </Fragment>
