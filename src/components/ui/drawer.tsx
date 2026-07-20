@@ -173,7 +173,7 @@ function DrawerContent({
                             // Nested.
                             "data-[nested-drawer-open]:overflow-hidden data-[nested-drawer-open]:brightness-95",
                             // Bleed.
-                            "after:pointer-events-none after:absolute after:bg-[var(--drawer-bleed-background,inherit)] data-[swipe-axis=x]:after:inset-y-0 data-[swipe-axis=y]:after:inset-x-0 data-[swipe-direction=down]:after:top-full data-[swipe-direction=left]:after:right-full data-[swipe-direction=right]:after:left-full data-[swipe-direction=up]:after:bottom-full data-[swipe-axis=y]:after:h-[--bleed] data-[swipe-axis=x]:after:w-[--bleed]",
+                            "after:pointer-events-none after:absolute after:bg-[var(--drawer-bleed-background,inherit)] data-[swipe-axis=x]:after:-inset-y-px data-[swipe-axis=y]:after:-inset-x-px data-[swipe-direction=down]:after:top-full data-[swipe-direction=left]:after:right-full data-[swipe-direction=right]:after:left-full data-[swipe-direction=up]:after:bottom-full data-[swipe-axis=y]:after:h-[--bleed] data-[swipe-axis=x]:after:w-[--bleed]",
                             // Sizing.
                             "[--drawer-content-height:--drawer-height,auto] data-[swipe-axis=y]:data-[snap-points]:[--drawer-content-height:100dvh] data-[swipe-axis=y]:[--drawer-content-max-height:calc(100dvh+var(--bleed))] data-[swipe-axis=x]:[--drawer-content-width:75%] data-[swipe-axis=x]:sm:[--drawer-content-width:24rem]",
                             // Stack.

@@ -27,7 +27,6 @@ const MobileTocItemRow = memo(
 
         return (
             <li
-                onTouchStart={() => {}}
                 className={cn(
                     "pointer-events-auto relative mx-6 box-content flex h-fit touch-auto list-inside items-center gap-4",
                     isProject && [
