@@ -28,7 +28,7 @@ const MobileTocItemRow = memo(
         return (
             <li
                 className={cn(
-                    "relative box-content flex h-fit list-inside items-center gap-4",
+                    "pointer-events-auto relative mx-6 box-content flex h-fit list-inside items-center gap-4",
                     isProject && [
                         "border-s-[.0625rem] border-muted-foreground/20",
                         isActive

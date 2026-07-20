@@ -21,15 +21,15 @@ function MobileTocList({
 }) {
     const { scrollContainerRef, clickedTargetRef, activeId } = useTocScroll({
         items,
-        debouncedQuery,
-        scrollParentSelector: "nav"
+        debouncedQuery
     })
 
     return (
         <ul
             ref={scrollContainerRef}
             className={cn(
-                "group pointer-events-auto mx-6 scroll-auto py-5 pb-[35vh]"
+                "group overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-5 scrollbar-thin",
+                "scroll-fade-y scroll-fade-16"
             )}
         >
             {filteredItems.map((item) => {
@@ -61,6 +61,7 @@ function MobileTocList({
                     </Fragment>
                 )
             })}
+            <div className="pointer-events-auto h-[35vh] w-full" />
         </ul>
     )
 }

@@ -10,15 +10,13 @@ interface UseTocScrollOptions {
     debouncedQuery: string
     delay?: number
     onActiveReady?: () => void
-    scrollParentSelector?: string
 }
 
 function useTocScroll({
     items,
     debouncedQuery,
     delay = 0,
-    onActiveReady,
-    scrollParentSelector
+    onActiveReady
 }: UseTocScrollOptions) {
     const pathname = usePathname()
 
@@ -43,13 +41,7 @@ function useTocScroll({
         if (prev === debouncedQuery) return
 
         if (debouncedQuery && scrollContainerRef.current) {
-            const scrollTarget = scrollParentSelector
-                ? scrollContainerRef.current.closest(scrollParentSelector)
-                : scrollContainerRef.current
-
-            if (scrollTarget) {
-                scrollTarget.scrollTop = 0
-            }
+            scrollContainerRef.current.scrollTop = 0
         } else if (!debouncedQuery && scrollContainerRef.current) {
             const activeEl = scrollContainerRef.current.querySelector(
                 `[data-toc-id="${activeId}"]`
@@ -58,7 +50,7 @@ function useTocScroll({
                 activeEl.scrollIntoView({ block: "center", behavior: "auto" })
             }
         }
-    }, [debouncedQuery, activeId, scrollParentSelector])
+    }, [debouncedQuery, activeId])
 
     // Compute initial active ID before paint
     useLayoutEffect(() => {
