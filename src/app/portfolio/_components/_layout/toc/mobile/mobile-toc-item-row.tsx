@@ -71,7 +71,10 @@ const MobileTocItemRow = memo(
                             return
                         }
 
-                        if (item.mode === "route") return
+                        if (item.mode === "route") {
+                            onClick(item)
+                            return
+                        }
 
                         e.preventDefault()
                         onClick(item)
@@ -85,7 +88,7 @@ const MobileTocItemRow = memo(
                             ? "px-6 text-foreground dark:text-muted-foreground"
                             : "font-wght-500 font-slnt-0",
                         isActive
-                            ? "!text-highlighted font-wght-600 group-hover:pe-12"
+                            ? "pe-12 !text-highlighted font-wght-600"
                             : {
                                   hover: isProject
                                       ? "text-muted-foreground dark:text-foreground"
@@ -120,8 +123,8 @@ const MobileTocItemRow = memo(
                     {isActive && (
                         <div
                             className={cn(
-                                "absolute right-0 top-1/2 hidden size-8 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
-                                "group-hover:grid group-focus-visible/link:hidden dark:bg-highlighted/20"
+                                "absolute right-0 top-1/2 grid size-8 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                "group-focus-visible/link:hidden dark:bg-highlighted/20"
                             )}
                         >
                             {mode === "pages" ? (

@@ -29,9 +29,11 @@ function MobileToc({
     items,
     filteredItems,
     debouncedQuery,
-    handleClearSearch
+    handleClearSearch,
+    onLinkClick
 }: TocListProps & {
     handleClearSearch: () => void
+    onLinkClick?: () => void
 }) {
     if (items.length === 0) return null
 
@@ -48,6 +50,7 @@ function MobileToc({
                     items={items}
                     filteredItems={filteredItems}
                     debouncedQuery={debouncedQuery}
+                    onLinkClick={onLinkClick}
                 />
             )}
         </nav>
@@ -76,6 +79,7 @@ function MobileTocButton() {
 
     return (
         <Drawer
+            open={isTocOpen}
             snapPoints={snapPoints}
             snapPoint={snapPoint}
             onSnapPointChange={setSnapPoint}
@@ -131,13 +135,16 @@ function MobileTocButton() {
                     />
                     <SectionLine fit />
                 </DrawerHeader>
-                <div className="-mb-12 flex flex-col overflow-hidden pb-[calc(env(safe-area-inset-bottom,0px)+theme(spacing.12)+theme(spacing.20))] text-2xl">
+                <div className="-mb-[--bleed] flex flex-col overflow-hidden pb-[calc(env(safe-area-inset-bottom,0px)+var(--bleed)+theme(spacing.20))] text-2xl">
                     <MobileToc
                         mode={mode}
                         items={tocItems}
                         filteredItems={filteredItems}
                         debouncedQuery={debouncedQuery}
                         handleClearSearch={handleClearSearch}
+                        onLinkClick={() => {
+                            setIsTocOpen(false)
+                        }}
                     />
                 </div>
             </DrawerContent>

@@ -14,8 +14,11 @@ function MobileTocList({
     mode,
     items,
     filteredItems,
-    debouncedQuery
-}: TocListProps) {
+    debouncedQuery,
+    onLinkClick
+}: TocListProps & {
+    onLinkClick?: () => void
+}) {
     const { scrollContainerRef, clickedTargetRef, activeId } = useTocScroll({
         items,
         debouncedQuery,
@@ -40,10 +43,14 @@ function MobileTocList({
                             mode={mode}
                             item={item}
                             isActive={activeId === item.id}
-                            onClick={() => {
+                            onClick={(item) => {
                                 handleItemClick(item, clickedTargetRef)
+                                onLinkClick?.()
                             }}
-                            onSameLinkClick={handleSameLinkClick}
+                            onSameLinkClick={() => {
+                                handleSameLinkClick()
+                                onLinkClick?.()
+                            }}
                         />
                     </Fragment>
                 )
