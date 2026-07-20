@@ -40,7 +40,7 @@
             oklch(0.985 0.002 247.839)
         );
         --color-popover: var(--color-background); /* NHN */
-        --color-popover-foreground: var(--color-default); /* NHN */
+        --color-popover-foreground: var(--color-foreground); /* NHN */
         --color-primary: light-dark(
             oklch(0.21 0.034 264.665),
             oklch(0.928 0.006 264.531)
