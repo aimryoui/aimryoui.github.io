@@ -107,6 +107,7 @@ function Projects() {
                         <NextLink
                             href={getCategoryPath(group.id)}
                             prefetch={false}
+                            draggable={false}
                             data-cursor="target"
                             className={cn(
                                 "group flex min-h-20 items-center justify-between gap-4 pe-6 transition-[background-color] duration-100",

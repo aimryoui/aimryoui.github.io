@@ -85,6 +85,7 @@ function ProjectCard({
             data-hover={isHovered}
             href={href}
             prefetch={false}
+            draggable={false}
             className={cn(
                 "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 transition-[background-color] duration-100",
                 {

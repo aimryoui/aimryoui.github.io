@@ -47,7 +47,10 @@ export function SectionName({
         >
             <Comp
                 aria-hidden={isAnchorTag ? undefined : "true"}
-                href={isAnchorTag ? `#${slugify(sectionName)}` : undefined}
+                {...(isAnchorTag && {
+                    href: `#${slugify(sectionName)}`,
+                    draggable: false
+                })}
                 {...(isAnchorTag && {
                     "data-cursor": "ignore"
                 })}

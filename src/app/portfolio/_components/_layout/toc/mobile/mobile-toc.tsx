@@ -41,7 +41,7 @@ function MobileToc({
         <nav
             aria-label="Table of contents"
             className={cn(
-                "flex flex-1 flex-col overflow-auto overscroll-contain scroll-fade-y scroll-fade-12 scrollbar-thin"
+                "flex flex-1 flex-col overflow-auto overscroll-contain scroll-fade-y scroll-fade-16 scrollbar-thin"
             )}
         >
             {filteredItems.length === 0 ? (

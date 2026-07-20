@@ -28,7 +28,9 @@ function MobileTocList({
     return (
         <ul
             ref={scrollContainerRef}
-            className={cn("group scroll-auto py-5 pb-[35vh]")}
+            className={cn(
+                "group pointer-events-auto mx-6 scroll-auto py-5 pb-[35vh]"
+            )}
         >
             {filteredItems.map((item) => {
                 if (item.hidden) return null
@@ -36,7 +38,10 @@ function MobileTocList({
                 return (
                     <Fragment key={item.id}>
                         {(item.depth === 2 || item.depth === 4) && (
-                            <TocDivider id={item.id} className="mb-4 mt-4.5" />
+                            <TocDivider
+                                id={item.id}
+                                className="-mx-6 mb-4 mt-4.5"
+                            />
                         )}
 
                         <MobileTocItemRow

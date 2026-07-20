@@ -52,6 +52,7 @@ function PaginationLink({
             data-slot="pagination-link"
             data-active={isActive}
             prefetch={false}
+            draggable={false}
             className={cn(className)}
             {...props}
         />

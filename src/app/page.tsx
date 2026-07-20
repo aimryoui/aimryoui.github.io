@@ -44,6 +44,7 @@ export default function Home() {
                     data-cursor="target"
                     // Fix auto-scroll to anchor section
                     scroll={false}
+                    draggable={false}
                     className={cn(
                         buttonVariants({ variant: "outline" }),
                         "z-10 light:bg-white dark:text-white",

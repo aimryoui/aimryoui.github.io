@@ -9,7 +9,7 @@ function Progress({ className, ...props }: ProgressProps) {
         <BProgress
             data-slot="progress"
             className={cn(
-                "absolute inset-x-0 -top-px z-20 h-0.75 w-full overflow-hidden",
+                "absolute inset-x-0 -top-px z-50 h-0.75 w-full overflow-hidden",
                 className
             )}
             {...props}

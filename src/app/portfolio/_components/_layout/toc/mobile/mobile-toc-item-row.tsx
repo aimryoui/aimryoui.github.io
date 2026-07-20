@@ -28,7 +28,7 @@ const MobileTocItemRow = memo(
         return (
             <li
                 className={cn(
-                    "pointer-events-auto relative mx-6 box-content flex h-fit list-inside items-center gap-4",
+                    "relative box-content flex h-fit list-inside items-center gap-4",
                     isProject && [
                         "border-s-[.0625rem] border-muted-foreground/20",
                         isActive
@@ -40,7 +40,7 @@ const MobileTocItemRow = memo(
                                       before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
                                   },
                                   active: {
-                                      before: "!bg-highlighted"
+                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-highlighted"
                                   }
                               }
                     ]
@@ -49,6 +49,7 @@ const MobileTocItemRow = memo(
                 <NextLink
                     href={href}
                     data-toc-id={item.id}
+                    draggable={false}
                     onClick={(e) => {
                         if (isSameUrl(href)) {
                             e.preventDefault()
@@ -104,8 +105,10 @@ const MobileTocItemRow = memo(
                             {item.icon}
                         </div>
                     )}
-                    {highlightQuery(item.label, query ?? "") ??
-                        formatOrdinals(item.label)}
+                    <span>
+                        {highlightQuery(item.label, query ?? "") ??
+                            formatOrdinals(item.label)}
+                    </span>
                     {isActive && (
                         <div
                             className={cn(

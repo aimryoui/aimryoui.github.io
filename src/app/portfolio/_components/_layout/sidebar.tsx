@@ -82,6 +82,7 @@ function Menu({ className }: { className?: string }) {
                             <NextLink
                                 href="/portfolio"
                                 scroll={false}
+                                draggable={false}
                                 data-cursor="ignore"
                                 className={cn(
                                     "group flex items-center gap-x-2",

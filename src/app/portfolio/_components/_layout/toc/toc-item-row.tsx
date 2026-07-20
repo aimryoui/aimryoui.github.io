@@ -80,6 +80,7 @@ const TocItemRow = memo(
                     href={href}
                     prefetch={false}
                     data-toc-id={item.id}
+                    draggable={false}
                     data-cursor="target"
                     onClick={(e) => {
                         if (isSameUrl(href)) {

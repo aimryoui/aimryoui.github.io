@@ -49,6 +49,7 @@ function TocHeader({
                             <NextLink
                                 href="/portfolio#projects"
                                 prefetch={false}
+                                draggable={false}
                                 {...(cursorTarget && {
                                     "data-cursor": "target"
                                 })}

@@ -174,6 +174,7 @@ function Footer() {
                                             href={platform.links.url}
                                             target="_blank"
                                             rel="noreferrer"
+                                            draggable={false}
                                             data-cursor="target"
                                             className={cn(
                                                 "grid h-full place-items-center bg-background opacity-40 transition-[color,background-color,opacity] duration-100",
