@@ -19,10 +19,15 @@ interface TocProps {
 function TableOfContents({ mode, items }: TocProps) {
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const { query, setQuery, debouncedQuery, filteredItems, handleClearSearch } = useTocSearch(
-        inputRef,
-        items
-    )
+    const hasRevealed = useRef(false)
+
+    const {
+        query,
+        setQuery,
+        debouncedQuery,
+        filteredItems,
+        handleClearSearch
+    } = useTocSearch(inputRef, items)
 
     // const [_, startTransition] = useTransition()
 
@@ -34,7 +39,10 @@ function TableOfContents({ mode, items }: TocProps) {
     >("waiting")
 
     const handleActiveReady = () => {
+        if (hasRevealed.current) return
+
         setNavRevealPhase("animating")
+        hasRevealed.current = true
     }
 
     useEffect(() => {

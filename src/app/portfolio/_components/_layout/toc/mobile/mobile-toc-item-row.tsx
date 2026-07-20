@@ -28,7 +28,7 @@ const MobileTocItemRow = memo(
         return (
             <li
                 className={cn(
-                    "relative mx-6 box-content flex h-fit list-inside items-center gap-4",
+                    "pointer-events-auto relative mx-6 box-content flex h-fit list-inside items-center gap-4",
                     isProject && [
                         "border-s-[.0625rem] border-muted-foreground/20",
                         isActive
@@ -38,6 +38,9 @@ const MobileTocItemRow = memo(
                             : {
                                   hover: {
                                       before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
+                                  },
+                                  active: {
+                                      before: "!bg-highlighted"
                                   }
                               }
                     ]
@@ -75,7 +78,7 @@ const MobileTocItemRow = memo(
                                   hover: isProject
                                       ? "text-muted-foreground dark:text-foreground"
                                       : "text-foreground",
-                                  active: "text-highlighted",
+                                  active: "!text-highlighted",
                                   "focus-visible": "text-foreground"
                               }
                     )}

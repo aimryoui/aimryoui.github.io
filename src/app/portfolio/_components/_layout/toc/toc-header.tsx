@@ -53,6 +53,7 @@ function TocHeader({
                                     "data-cursor": "target"
                                 })}
                                 className={cn(
+                                    "pointer-events-auto",
                                     buttonVariants({
                                         variant: "outline",
                                         size: "icon"

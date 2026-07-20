@@ -64,13 +64,13 @@ function Menu({ className }: { className?: string }) {
                 />
             </div>
             <header
-                className={cn("h-20 bg-background px-6 py-5.5", {
+                className={cn("flex h-20 items-center bg-background px-6", {
                     lg: "py-[17px]"
                 })}
             >
                 <menu
                     className={cn(
-                        "flex items-center gap-3 @container",
+                        "flex w-full items-center gap-3 @container",
                         {
                             lg: "gap-4"
                         },

@@ -125,7 +125,7 @@ function MobileTocButton() {
                 }
             />
             <DrawerContent data-current-snap-points={snapPoint}>
-                <DrawerHeader className="sticky top-0 p-0">
+                <DrawerHeader className="pointer-events-none sticky top-0 p-0">
                     <DrawerTitle className="sr-only">
                         Table of Contents
                     </DrawerTitle>

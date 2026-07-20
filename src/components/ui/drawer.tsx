@@ -200,7 +200,7 @@ function DrawerContent({
                         <DrawerPrimitive.Content
                             data-slot="drawer-content"
                             className={cn(
-                                "-mt-3 flex min-h-0 flex-1 select-text flex-col overflow-hidden overscroll-contain rounded-inherit transition-opacity ease-[cubic-bezier(0.45,1.005,0,1.005)] duration-300 group-data-[swiping]/drawer-popup:select-none group-data-[nested-drawer-open]/drawer-popup:opacity-0 group-data-[nested-drawer-swiping]/drawer-popup:opacity-100"
+                                "pointer-events-none -mt-3 flex min-h-0 flex-1 select-text flex-col overflow-hidden overscroll-contain rounded-inherit transition-opacity ease-[cubic-bezier(0.45,1.005,0,1.005)] duration-300 group-data-[swiping]/drawer-popup:select-none group-data-[nested-drawer-open]/drawer-popup:opacity-0 group-data-[nested-drawer-swiping]/drawer-popup:opacity-100"
                             )}
                         >
                             {children}

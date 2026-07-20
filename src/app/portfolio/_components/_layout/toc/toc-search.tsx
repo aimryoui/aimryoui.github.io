@@ -54,9 +54,13 @@ function TocSearch({
             {...(cursorTarget && {
                 "data-cursor": "input"
             })}
-            className={cn(cursorTarget && "cursor-auto", {
-                lg: "h-[36px]"
-            })}
+            className={cn(
+                "pointer-events-auto",
+                cursorTarget && "cursor-auto",
+                {
+                    lg: "h-[36px]"
+                }
+            )}
         >
             <LeftAddon />
             <InputGroupInput
