@@ -205,7 +205,12 @@
                 ],
 
                 // Console.log
-                "no-console": "warn",
+                "no-console": [
+                    "warn",
+                    {
+                        "allow": ["info", "warn", "error"]
+                    }
+                ],
 
                 //* Re-render
                 "unicorn/consistent-function-scoping": "error",

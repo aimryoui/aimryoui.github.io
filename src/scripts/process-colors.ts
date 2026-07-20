@@ -1,3 +1,4 @@
+// oxlint-disable no-console
 import crypto from "node:crypto"
 import fs from "node:fs"
 import path from "node:path"
@@ -14,7 +15,7 @@ const MDX_DIR = "src/content/projects"
 const IMAGE_DIR = "private/media"
 const MANIFEST_PATH = "public/color-manifest.json"
 
-const SCRIPT_VERSION = "1"
+const SCRIPT_VERSION = "2"
 
 const BRAND_COLOR = "\x1B[38;2;168;85;247m"
 const RESET = "\x1B[0m"
@@ -42,12 +43,14 @@ const COLOR_CONFIG = {
     stroke: { lLight: 0.85, cLight: 0.005, lDark: 0.275, cDark: 0.0162 }
 }
 
+type Theme = Record<keyof typeof COLOR_CONFIG, { hex: string; oklch: string }>
+
 type ColorManifest = Record<
     string,
     | {
           hash: string
           version: string
-          theme: Record<keyof typeof COLOR_CONFIG, string>
+          theme: Theme
       }
     | undefined
 >
@@ -161,17 +164,32 @@ async function processColorForFile(
                 palette.Muted?.hex ??
                 "#01a6f4"
 
-            const theme = {} as Record<keyof typeof COLOR_CONFIG, string>
+            const theme = {} as Theme
 
             for (const [key, config] of Object.entries(COLOR_CONFIG)) {
-                const light = hexToOklch(
-                    dominantHex,
+                const [_, __, h] = chroma(dominantHex).oklch()
+                const finalHue = Number.isNaN(h) ? 0 : h
+
+                const lightOklchStr = `oklch(${config.lLight} ${config.cLight} ${finalHue.toFixed(2)})`
+                const darkOklchStr = `oklch(${config.lDark} ${config.cDark} ${finalHue.toFixed(2)})`
+
+                const lightHex = chroma(
                     config.lLight,
-                    config.cLight
-                )
-                const dark = hexToOklch(dominantHex, config.lDark, config.cDark)
-                theme[key as keyof typeof COLOR_CONFIG] =
-                    `light-dark(${light}, ${dark})`
+                    config.cLight,
+                    finalHue,
+                    "oklch"
+                ).hex()
+                const darkHex = chroma(
+                    config.lDark,
+                    config.cDark,
+                    finalHue,
+                    "oklch"
+                ).hex()
+
+                theme[key as keyof typeof COLOR_CONFIG] = {
+                    hex: `light-dark(${lightHex}, ${darkHex})`,
+                    oklch: `light-dark(${lightOklchStr}, ${darkOklchStr})`
+                }
             }
 
             newManifest[slug] = {

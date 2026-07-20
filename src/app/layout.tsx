@@ -236,7 +236,10 @@ export default function RootLayout({
                                 if (cacheEntry && cacheEntry.theme) {
                                     Object.keys(cacheEntry.theme).forEach((key) => {
                                         const cssVar = "--color-" + key.replace(${ALL_CHARACTERS_REGEX}, "-$1").toLowerCase()
-                                        htmlElement.style.setProperty(cssVar, cacheEntry.theme[key])
+                                        const colorData = cacheEntry.theme[key]
+                                        
+                                        htmlElement.style.setProperty(cssVar, colorData.hex)
+                                        htmlElement.style.setProperty(cssVar, colorData.oklch)
                                     })
                                 }
                             }

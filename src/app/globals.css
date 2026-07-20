@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Colors that will be changed by project ambient colors */
+@property --color-highlighted {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+@property --color-background {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+@property --color-foreground {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+@property --color-muted-foreground {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+@property --color-ring {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+@property --color-pattern {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+@property --color-stroke {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: transparent;
+}
+
 @layer base {
     html {
         color-scheme: light dark;

@@ -25,10 +25,16 @@ function ColorUpdater() {
             const manifestKey = `${match[1]}/${match[2]}`
             const cacheEntry = colorManifest[manifestKey]
             if (cacheEntry?.theme) {
-                Object.entries(cacheEntry.theme).forEach(([key, value]) => {
+                Object.entries(cacheEntry.theme).forEach(([key, colorData]) => {
+                    const cssVar = toCssVar(key)
+
                     document.documentElement.style.setProperty(
-                        toCssVar(key),
-                        value
+                        cssVar,
+                        colorData.hex
+                    )
+                    document.documentElement.style.setProperty(
+                        cssVar,
+                        colorData.oklch
                     )
                 })
                 return
