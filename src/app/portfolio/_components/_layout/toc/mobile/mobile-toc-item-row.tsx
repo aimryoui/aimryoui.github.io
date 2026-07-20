@@ -27,6 +27,7 @@ const MobileTocItemRow = memo(
 
         return (
             <li
+                onTouchStart={() => {}}
                 className={cn(
                     "pointer-events-auto relative mx-6 box-content flex h-fit touch-auto list-inside items-center gap-4",
                     isProject && [
@@ -39,9 +40,7 @@ const MobileTocItemRow = memo(
                                   hover: {
                                       before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
                                   },
-                                  active: {
-                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-highlighted"
-                                  }
+                                  active: "border-highlighted"
                               }
                     ]
                 )}
