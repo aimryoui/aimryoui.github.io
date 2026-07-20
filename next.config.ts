@@ -37,7 +37,10 @@ const nextConfig = (phase: string): NextConfig => {
         images: { unoptimized: true },
         experimental: {
             viewTransition: true,
-            useLightningcss: true
+            useLightningcss: true,
+            lightningCssFeatures: {
+                include: ["light-dark"]
+            }
         }
     }
 }

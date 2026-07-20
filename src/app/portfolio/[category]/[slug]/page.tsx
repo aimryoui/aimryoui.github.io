@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/pagination"
 import { Bold, Highlight, Text } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
+import colorManifestRaw from "@/lib/color-manifest.json"
 import {
     getCategoryPath,
     getProjectPath,
@@ -26,6 +27,7 @@ import { MDXContent } from "@/portfolio/_components/mdx-content"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import Footer from "@/portfolio/_sections/footer"
 import ProjectCard from "@/portfolio/[category]/_components/project-card"
+import { type ColorManifest } from "@/scripts/process-colors"
 
 import { projects } from "~/.velite"
 
@@ -88,6 +90,20 @@ export async function generateMetadata({
     }
 }
 
+const colorManifest = colorManifestRaw as ColorManifest
+const ALL_CHARACTERS_REGEX = /([A-Z])/gu
+
+function applyLightningFallback(colorValue: string) {
+    if (colorValue.startsWith("light-dark(")) {
+        const inner = colorValue.slice(11, -1)
+        const [light, dark] = inner.split(",")
+
+        return `var(--lightningcss-light, ${light.trim()}) var(--lightningcss-dark, ${dark.trim()})`
+    }
+
+    return colorValue
+}
+
 export default async function ProjectPage({ params }: ProjectPageProps) {
     const { category, slug } = await params
     const groups = groupProjectsByCategory(projects)
@@ -102,19 +118,42 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
     if (!group || !project) notFound()
 
-    // Get prev and next project
+    const manifestKey = `${category}/${getProjectRouteSlug(project)}`
+    const projectColor = colorManifest[manifestKey]
+
+    let ambientStyles = ""
+    if (projectColor?.theme) {
+        const hexRules = Object.entries(projectColor.theme)
+            .map(([key, colorData]) => {
+                const cssVar = `--color-${key.replace(ALL_CHARACTERS_REGEX, "-$1").toLowerCase()}`
+                return `${cssVar}:${applyLightningFallback(colorData.hex)};`
+            })
+            .join("")
+
+        const oklchRules = Object.entries(projectColor.theme)
+            .map(([key, colorData]) => {
+                const cssVar = `--color-${key.replace(ALL_CHARACTERS_REGEX, "-$1").toLowerCase()}`
+                return `${cssVar}:${applyLightningFallback(colorData.oklch)};`
+            })
+            .join("")
+
+        ambientStyles = `:root{${hexRules}}@supports (color: oklab(0% 0 0%)){:root{${oklchRules}}}`
+    }
+
     const prev = projectIndex > 0 ? categoryProjects[projectIndex - 1] : null
     const next =
         projectIndex < categoryProjects.length - 1
             ? categoryProjects[projectIndex + 1]
             : null
-    // Get next category if there is no more project in current category
     const nextCategory =
         !next && groupIndex < groups.length - 1 ? groups[groupIndex + 1] : null
 
     return (
         // <ViewTransition name="main">
         <main className={cn("relative flex-1")}>
+            {ambientStyles && (
+                <style dangerouslySetInnerHTML={{ __html: ambientStyles }} />
+            )}
             <FlashOverlay />
             <section>
                 <Space />

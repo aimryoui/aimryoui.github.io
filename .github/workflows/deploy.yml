@@ -76,7 +76,7 @@ jobs:
       - name: Restore Colors Cache
         uses: actions/cache/restore@v6
         with:
-          path: public/color-manifest.json
+          path: src/lib/color-manifest.json
           key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}
           restore-keys: |
             ${{ runner.os }}-color-
@@ -117,7 +117,7 @@ jobs:
         if: always()
         uses: actions/cache/save@v6
         with:
-          path: public/color-manifest.json
+          path: src/lib/color-manifest.json
           key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}
 
       - name: Save Videos Cache

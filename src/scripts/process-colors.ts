@@ -13,7 +13,7 @@ import sharp from "sharp"
 
 const MDX_DIR = "src/content/projects"
 const IMAGE_DIR = "private/media"
-const MANIFEST_PATH = "public/color-manifest.json"
+const MANIFEST_PATH = "src/lib/color-manifest.json"
 
 const SCRIPT_VERSION = "2"
 
@@ -34,9 +34,9 @@ const COLOR_CONFIG = {
     },
     mutedForeground: {
         lLight: 0.5655,
-        cLight: 0.01472,
+        cLight: 0.0147,
         lDark: 0.8012,
-        cDark: 0.01743
+        cDark: 0.0174
     },
     ring: { lLight: 0.707, cLight: 0.022, lDark: 0.551, cDark: 0.027 },
     pattern: { lLight: 0.8759, cLight: 0.005, lDark: 0.235, cDark: 0.0162 },
@@ -76,11 +76,7 @@ function getProgressBar(current: number, total: number, width = 30) {
     return `[${filled}${empty}] ${percent.toString()}% (${current.toString()}/${total.toString()})`
 }
 
-const hexToOklch = (hex: string, lightness: number, chromaVal: number) => {
-    const [l, c, h] = chroma(hex).oklch()
-    const finalHue = Number.isNaN(h) ? 0 : h
-    return `oklch(${lightness} ${chromaVal} ${finalHue.toFixed(2)})`
-}
+const ZERO_TO_DOT_REGEX = /\b0\./gu
 
 async function processColorForFile(
     file: string,
@@ -170,8 +166,16 @@ async function processColorForFile(
                 const [_, __, h] = chroma(dominantHex).oklch()
                 const finalHue = Number.isNaN(h) ? 0 : h
 
-                const lightOklchStr = `oklch(${config.lLight} ${config.cLight} ${finalHue.toFixed(2)})`
-                const darkOklchStr = `oklch(${config.lDark} ${config.cDark} ${finalHue.toFixed(2)})`
+                const lightOklchStr =
+                    `oklch(${config.lLight} ${config.cLight} ${finalHue.toFixed(4)})`.replace(
+                        ZERO_TO_DOT_REGEX,
+                        "."
+                    )
+                const darkOklchStr =
+                    `oklch(${config.lDark} ${config.cDark} ${finalHue.toFixed(4)})`.replace(
+                        ZERO_TO_DOT_REGEX,
+                        "."
+                    )
 
                 const lightHex = chroma(
                     config.lLight,

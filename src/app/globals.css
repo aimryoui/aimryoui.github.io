@@ -2,43 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Colors that will be changed by project ambient colors */
-@property --color-highlighted {
-    syntax: "<color>";
-    inherits: true;
-    initial-value: transparent;
-}
-@property --color-background {
-    syntax: "<color>";
-    inherits: true;
-    initial-value: transparent;
-}
-@property --color-foreground {
-    syntax: "<color>";
-    inherits: true;
-    initial-value: transparent;
-}
-@property --color-muted-foreground {
-    syntax: "<color>";
-    inherits: true;
-    initial-value: transparent;
-}
-@property --color-ring {
-    syntax: "<color>";
-    inherits: true;
-    initial-value: transparent;
-}
-@property --color-pattern {
-    syntax: "<color>";
-    inherits: true;
-    initial-value: transparent;
-}
-@property --color-stroke {
-    syntax: "<color>";
-    inherits: true;
-    initial-value: transparent;
-}
-
 @layer base {
     html {
         color-scheme: light dark;
@@ -96,8 +59,8 @@
         );
         --color-muted: var(--color-stroke); /* NHN */
         --color-muted-foreground: light-dark(
-            oklch(0.5655 0.01472 266.647),
-            oklch(0.8012 0.01743 262.779)
+            oklch(0.5655 0.0147 266.647),
+            oklch(0.8012 0.0174 262.779)
         ); /* NHN */
         --color-accent: var(--color-stroke); /* NHN */
         --color-accent-foreground: light-dark(
@@ -113,8 +76,8 @@
             oklch(1 0 0 / 10%)
         );
         --color-marker: light-dark(
-            oklch(0.5655 0.01472 266.647 / 0.5),
-            oklch(0.7173 0.01743 262.779 / 0.4)
+            oklch(0.5655 0.0147 266.647 / 0.5),
+            oklch(0.7173 0.0174 262.779 / 0.4)
         ); /* NHN */
         --color-svg-filter: var(--color-default); /* NHN */
         --color-input: var(--color-stroke); /* NHN */
@@ -144,7 +107,7 @@
         );
 
         --color-highlighted: light-dark(
-            oklch(0.666 0.15222 239.89),
+            oklch(0.666 0.1522 239.89),
             oklch(0.692 0.1595 240.4)
         ); /* NHN */
         --color-alert: oklch(63.7% 0.237 25.331); /* NHN */

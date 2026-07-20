@@ -4,6 +4,7 @@ import {
     type Comment,
     type Declaration,
     type Plugin,
+    type Root,
     type Rule
 } from "postcss"
 import { type Config } from "postcss-load-config"
@@ -14,6 +15,11 @@ const REPLACE_WITH = "--nhn-"
 const NO_OPACITY_COLOR_MIX_REGEX =
     /color-mix\(in oklab, (var\(--[^)]+\)|currentColor) calc\((?:var\(--nhn-[\w-]+-opacity, ?1\)|1) \* 100%\), transparent\)/gu
 const CALC_PERCENTAGE_REGEX = /calc\(([\d.]+) \* 100%\)/gu
+
+const SUPPORTS_LIGHT_DARK_REGEX_COME_FIRST =
+    /\(color:\s*light-dark\(red,\s*red\)\)\s*and\s*/gu
+const SUPPORTS_LIGHT_DARK_REGEX_COME_LAST =
+    /\s*and\s*\(color:\s*light-dark\(red,\s*red\)\)/gu
 
 const optimizeAndReplacePlugin = (): Plugin => {
     return {
@@ -43,14 +49,6 @@ const optimizeAndReplacePlugin = (): Plugin => {
                 }
             }
         },
-        AtRule(atRule: AtRule) {
-            if (REPLACE_PATTERN.test(atRule.params)) {
-                atRule.params = atRule.params.replace(
-                    REPLACE_PATTERN,
-                    REPLACE_WITH
-                )
-            }
-        },
         Rule(rule: Rule) {
             if (REPLACE_PATTERN.test(rule.selector)) {
                 rule.selector = rule.selector.replace(
@@ -66,6 +64,25 @@ const optimizeAndReplacePlugin = (): Plugin => {
                     REPLACE_WITH
                 )
             }
+        },
+        OnceExit(root: Root) {
+            root.walkAtRules((atRule: AtRule) => {
+                if (REPLACE_PATTERN.test(atRule.params)) {
+                    atRule.params = atRule.params.replace(
+                        REPLACE_PATTERN,
+                        REPLACE_WITH
+                    )
+                }
+
+                if (
+                    atRule.name === "supports" &&
+                    atRule.params.includes("(color: light-dark(red, red))")
+                ) {
+                    atRule.params = atRule.params
+                        .replace(SUPPORTS_LIGHT_DARK_REGEX_COME_FIRST, "")
+                        .replace(SUPPORTS_LIGHT_DARK_REGEX_COME_LAST, "")
+                }
+            })
         }
     }
 }
@@ -74,12 +91,12 @@ optimizeAndReplacePlugin.postcss = true
 export default {
     plugins: [
         "tailwindcss",
-        optimizeAndReplacePlugin(),
         postcssOklabFunction({
             preserve: true,
             subFeatures: {
                 displayP3: false
             }
-        })
+        }),
+        optimizeAndReplacePlugin()
     ] as never
 } satisfies Config
