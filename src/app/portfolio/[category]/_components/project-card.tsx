@@ -7,7 +7,7 @@ import NextLink from "next/link"
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Bold, Text } from "@/components/ui/typography"
-import { formatOrdinal } from "@/helpers/format-ordinal"
+import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { cn } from "@/lib/utils"
 
@@ -261,7 +261,7 @@ function ProjectName({
                         viewTransitionName: "none !important"
                     }}
                 >
-                    {formatOrdinal(projectName)}
+                    {formatOrdinals(projectName)}
                 </span>
             </ViewTransition>
             <span
@@ -278,7 +278,7 @@ function ProjectName({
                     }
                 )}
             >
-                {formatOrdinal(projectName)}
+                {formatOrdinals(projectName)}
             </span>
         </Bold>
     )

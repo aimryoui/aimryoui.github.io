@@ -6,7 +6,9 @@ import NextLink from "next/link"
 import { ChevronDown } from "lucide-react"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
-import { formatOrdinal } from "@/helpers/format-ordinal"
+import { formatOrdinals } from "@/helpers/format-ordinals"
+import { highlightQuery } from "@/helpers/highlight-query"
+import { isSameUrl } from "@/helpers/is-same-url"
 import { cn } from "@/lib/utils"
 import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
@@ -25,12 +27,20 @@ interface TocItemRowProps {
     mode: PortfolioMode
     item: TocItemProps
     isActive: boolean
+    query?: string
     onClick: (item: TocItemProps) => void
     onSameLinkClick: () => void
 }
 
 const TocItemRow = memo(
-    ({ mode, item, isActive, onClick, onSameLinkClick }: TocItemRowProps) => {
+    ({
+        mode,
+        item,
+        isActive,
+        query,
+        onClick,
+        onSameLinkClick
+    }: TocItemRowProps) => {
         const href = item.href ?? `#${item.id}`
 
         const isProject = item.depth === 3 && !item.icon
@@ -72,34 +82,7 @@ const TocItemRow = memo(
                     data-toc-id={item.id}
                     data-cursor="target"
                     onClick={(e) => {
-                        const isSameUrl = (() => {
-                            try {
-                                const targetUrl = new URL(
-                                    href,
-                                    window.location.href
-                                )
-                                const targetSearch =
-                                    targetUrl.search.startsWith("?")
-                                        ? targetUrl.search.slice(1)
-                                        : targetUrl.search
-
-                                const currentSearch =
-                                    window.location.search.startsWith("?")
-                                        ? window.location.search.slice(1)
-                                        : window.location.search
-
-                                return (
-                                    window.location.pathname ===
-                                        targetUrl.pathname &&
-                                    currentSearch === targetSearch &&
-                                    window.location.hash === targetUrl.hash
-                                )
-                            } catch {
-                                return false
-                            }
-                        })()
-
-                        if (isSameUrl) {
+                        if (isSameUrl(href)) {
                             e.preventDefault()
                             onSameLinkClick()
                             return
@@ -162,7 +145,8 @@ const TocItemRow = memo(
                             "translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
                         )}
                     >
-                        {formatOrdinal(item.label)}
+                        {highlightQuery(item.label, query ?? "") ??
+                            formatOrdinals(item.label)}
                     </span>
                     {isActive && (
                         <div

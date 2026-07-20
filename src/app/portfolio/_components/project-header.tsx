@@ -4,7 +4,7 @@ import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
-import { formatOrdinal } from "@/helpers/format-ordinal"
+import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
@@ -134,11 +134,11 @@ function ProjectHeader({
                     <SectionLine />
                     <div className={cn("flex flex-col gap-2 px-6 py-4.5")}>
                         <Bold className={cn("text-pretty")}>
-                            {formatOrdinal(detail.description)}
+                            {formatOrdinals(detail.description)}
                         </Bold>
                         {detail.abbreviation && (
                             <Text className={cn("text-pretty")}>
-                                {formatOrdinal(detail.abbreviation)}
+                                {formatOrdinals(detail.abbreviation)}
                             </Text>
                         )}
                     </div>
@@ -153,7 +153,7 @@ function ProjectName({ projectName }: { projectName: string }) {
         <ViewTransition
             name={formatViewTransitionName(`project-${projectName}`)}
         >
-            <span>{formatOrdinal(projectName)}</span>
+            <span>{formatOrdinals(projectName)}</span>
         </ViewTransition>
     )
 }

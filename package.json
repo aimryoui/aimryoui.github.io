@@ -75,7 +75,7 @@
         "lint": "oxlint --threads 8",
         "lint:fix": "oxlint --fix --threads 8",
         "check": "tsc --noEmit",
-        "doctor": "pnpx react-doctor@latest --verbose",
+        "react-doctor": "pnpx react-doctor@latest --verbose",
         "shadcn:add": "pnpm dlx shadcn@2.3.0 add"
     },
     "dependencies": {

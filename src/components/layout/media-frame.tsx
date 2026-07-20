@@ -8,7 +8,7 @@ import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Lightbox } from "@/components/ui/lightbox"
 import { Highlight } from "@/components/ui/typography"
-import { formatOrdinal } from "@/helpers/format-ordinal"
+import { formatOrdinals } from "@/helpers/format-ordinals"
 import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 
@@ -67,7 +67,7 @@ export function SectionName({
                         className: "inline cursor-pointer"
                     })}
                 >
-                    {formatOrdinal(sectionName)}
+                    {formatOrdinals(sectionName)}
                 </TextComp>{" "}
                 {author && (
                     <Highlight className="font-mono normal-case" italic>

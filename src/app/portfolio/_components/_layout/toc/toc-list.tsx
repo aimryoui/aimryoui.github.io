@@ -79,6 +79,7 @@ function TocList({
                             mode={mode}
                             item={item}
                             isActive={activeId === item.id}
+                            query={debouncedQuery}
                             onClick={() => {
                                 handleItemClick(item, clickedTargetRef)
                             }}

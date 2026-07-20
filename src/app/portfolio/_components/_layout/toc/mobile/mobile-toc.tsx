@@ -40,7 +40,9 @@ function MobileToc({
     return (
         <nav
             aria-label="Table of contents"
-            className={cn("flex flex-1 flex-col overflow-auto scrollbar-thin")}
+            className={cn(
+                "flex flex-1 flex-col overflow-auto overscroll-contain scroll-fade-y scroll-fade-12 scrollbar-thin"
+            )}
         >
             {filteredItems.length === 0 ? (
                 <TocSearchNoResult onClear={handleClearSearch} />

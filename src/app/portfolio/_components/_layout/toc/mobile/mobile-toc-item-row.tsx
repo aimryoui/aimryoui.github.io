@@ -6,12 +6,21 @@ import NextLink from "next/link"
 import { ChevronDown } from "lucide-react"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
-import { formatOrdinal } from "@/helpers/format-ordinal"
+import { formatOrdinals } from "@/helpers/format-ordinals"
+import { highlightQuery } from "@/helpers/highlight-query"
+import { isSameUrl } from "@/helpers/is-same-url"
 import { cn } from "@/lib/utils"
 import { type TocItemRowProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 
 const MobileTocItemRow = memo(
-    ({ mode, item, isActive, onClick, onSameLinkClick }: TocItemRowProps) => {
+    ({
+        mode,
+        item,
+        isActive,
+        query,
+        onClick,
+        onSameLinkClick
+    }: TocItemRowProps) => {
         const href = item.href ?? `#${item.id}`
 
         const isProject = item.depth === 3 && !item.icon
@@ -38,34 +47,7 @@ const MobileTocItemRow = memo(
                     href={href}
                     data-toc-id={item.id}
                     onClick={(e) => {
-                        const isSameUrl = (() => {
-                            try {
-                                const targetUrl = new URL(
-                                    href,
-                                    window.location.href
-                                )
-                                const targetSearch =
-                                    targetUrl.search.startsWith("?")
-                                        ? targetUrl.search.slice(1)
-                                        : targetUrl.search
-
-                                const currentSearch =
-                                    window.location.search.startsWith("?")
-                                        ? window.location.search.slice(1)
-                                        : window.location.search
-
-                                return (
-                                    window.location.pathname ===
-                                        targetUrl.pathname &&
-                                    currentSearch === targetSearch &&
-                                    window.location.hash === targetUrl.hash
-                                )
-                            } catch {
-                                return false
-                            }
-                        })()
-
-                        if (isSameUrl) {
+                        if (isSameUrl(href)) {
                             e.preventDefault()
                             onSameLinkClick()
                             return
@@ -82,7 +64,7 @@ const MobileTocItemRow = memo(
                     className={cn(
                         "group/link relative flex-1 truncate leading-6",
                         item.icon
-                            ? "flex items-center gap-5 py-2"
+                            ? "flex items-center gap-4 py-2"
                             : "inline-block py-3",
                         isProject
                             ? "px-6 text-foreground dark:text-muted-foreground"
@@ -119,7 +101,8 @@ const MobileTocItemRow = memo(
                             {item.icon}
                         </div>
                     )}
-                    {formatOrdinal(item.label)}
+                    {highlightQuery(item.label, query ?? "") ??
+                        formatOrdinals(item.label)}
                     {isActive && (
                         <div
                             className={cn(

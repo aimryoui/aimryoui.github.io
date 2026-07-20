@@ -44,6 +44,7 @@ export default {
         files: [
             "./src/app/**/*.{ts,tsx}",
             "./src/components/**/*.{ts,tsx}",
+            "./src/helpers/**/*.tsx",
             "./src/content/**/*.mdx"
         ],
         transform: transformer({
@@ -236,6 +237,7 @@ export default {
             })
         },
         colors: {
+            inherit: "inherit",
             transparent: "transparent",
             current:
                 "color-mix(in oklab, currentColor calc(<alpha-value> * 100%), transparent)",
