@@ -9,14 +9,21 @@ function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
             )}
             {...props}
         >
-            <hr
-                className={cn(
-                    "sticky top-0 h-full border-r border-dashed border-stroke",
-                    {
-                        webkit: "border-r-[2px]"
-                    }
-                )}
-            />
+            <svg
+                className="size-full"
+                xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none"
+            >
+                <line
+                    x1="50%"
+                    y1="0"
+                    x2="50%"
+                    y2="100%"
+                    className="stroke-stroke"
+                    strokeWidth="var(--px)"
+                    strokeDasharray="4 4"
+                />
+            </svg>
         </div>
     )
 }

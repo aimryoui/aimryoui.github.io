@@ -84,13 +84,36 @@ export function SectionName({
     )
 }
 
-interface MediaFrameProps extends React.ComponentProps<"div"> {
+interface MediaFrameContentProps extends React.ComponentProps<"div"> {
+    targetCursor?: CursorSelector
+}
+
+function MediaFrameContent({
+    children,
+    targetCursor,
+    className,
+    ...props
+}: MediaFrameContentProps) {
+    return (
+        <div
+            data-cursor={targetCursor ?? "ignore"}
+            className={cn(
+                "relative grid w-full cursor-auto grid-cols-1 justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
+                className
+            )}
+            {...props}
+        >
+            <Lightbox>{children}</Lightbox>
+        </div>
+    )
+}
+
+interface MediaFrameProps extends MediaFrameContentProps {
     sectionName?: string
     author?: string
     lowercase?: boolean
     flex?: boolean
     continuous?: boolean
-    targetCursor?: CursorSelector
 }
 
 function MediaFrame({
@@ -160,26 +183,6 @@ function MediaFrame({
             <Divider />
             <SectionLine />
         </>
-    )
-}
-
-function MediaFrameContent({
-    children,
-    targetCursor,
-    className,
-    ...props
-}: MediaFrameProps) {
-    return (
-        <div
-            data-cursor={targetCursor ?? "ignore"}
-            className={cn(
-                "relative grid w-full cursor-auto grid-cols-1 justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
-                className
-            )}
-            {...props}
-        >
-            <Lightbox>{children}</Lightbox>
-        </div>
     )
 }
 
