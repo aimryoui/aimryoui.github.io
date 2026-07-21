@@ -92,11 +92,11 @@ function useTocScroll({
     // Make sure the scrollIntoView animation is finished
     // before setting the other activeIds
     useEffect(() => {
-        if (activeId === rawActiveId || isBlink) return
+        if (activeId === rawActiveId) return
 
         let currentDelay = 0
 
-        if (pathname === "/portfolio" && activeId) {
+        if (isBlink && pathname === "/portfolio" && activeId) {
             const elapsed = Date.now() - lastUpdateTimestamp.current
             if (elapsed < SCROLL_DELAY) {
                 currentDelay = SCROLL_DELAY - elapsed

@@ -10,19 +10,7 @@ function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
             )}
             {...props}
         >
-            <svg
-                className="size-full"
-                xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="none"
-            >
-                <line
-                    x1="50%"
-                    y1="0"
-                    x2="50%"
-                    y2="100%"
-                    className="stroke-stroke stroke-px stroke-dashed"
-                />
-            </svg>
+            <SvgElementLine />
         </div>
     )
 }
@@ -32,7 +20,7 @@ function Plus({ position }: { position?: "left" | "right" }) {
         <div
             role="presentation"
             className={cn(
-                "pointer-events-none relative z-1 size-1",
+                "pointer-events-none relative z-40 size-1",
                 {
                     before: "absolute left-1/2 top-1/2 h-6 w-1 -translate-x-1/2 -translate-y-1/2 bg-highlighted",
                     after: "absolute left-1/2 top-1/2 h-1 w-6 -translate-x-1/2 -translate-y-1/2 bg-highlighted"
@@ -81,7 +69,8 @@ function SectionLine({
 
 function ElementLine({
     className,
-    dir = "vertical"
+    dir = "vertical",
+    ...props
 }: React.ComponentProps<"hr"> & {
     dir?: "vertical" | "horizontal"
 }) {
@@ -94,6 +83,7 @@ function ElementLine({
                     : "w-full border-b border-dashed border-stroke",
                 className
             )}
+            {...props}
         />
     )
 }

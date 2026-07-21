@@ -743,12 +743,7 @@ function CarouselImage({
 
     return spreadImages.map((src) => (
         <CarouselItem key={src} gap={gap}>
-            <Image
-                {...props}
-                data-slot="carousel-image"
-                src={src}
-                isInCarousel={true}
-            />
+            <Image {...props} data-slot="carousel-image" src={src} />
         </CarouselItem>
     ))
 }

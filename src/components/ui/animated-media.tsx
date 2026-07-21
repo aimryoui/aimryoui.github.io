@@ -8,6 +8,7 @@ import Hls from "hls.js"
 
 import { Spinner } from "@/components/ui/spinner"
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
+import { useMediaObserver } from "@/hooks/use-media-observer"
 import { cn } from "@/lib/utils"
 import videoManifestRaw from "@/lib/video-manifest.json"
 import { type VideoManifest } from "@/scripts/process-videos"
@@ -63,8 +64,9 @@ export function AnimatedMedia({
     const hostRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
     const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null)
-    const [shouldLoad, setShouldLoad] = useState(false)
     const [isVideoReady, setIsVideoReady] = useState(false)
+
+    const shouldLoad = useMediaObserver(hostRef)
 
     const shouldAutoPlay = autoPlay ?? autoplay ?? true
     const shouldMute = muted ?? mute ?? true
@@ -112,28 +114,6 @@ export function AnimatedMedia({
             }
 
             throw error
-        }
-    }, [])
-
-    // Lazy load
-    useEffect(() => {
-        const hostEl = hostRef.current
-        if (!hostEl) return
-
-        const lazyObserver = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setShouldLoad(true)
-                    lazyObserver.disconnect()
-                }
-            },
-            { rootMargin: "100% 0px" }
-        )
-
-        lazyObserver.observe(hostEl)
-
-        return () => {
-            lazyObserver.disconnect()
         }
     }, [])
 
@@ -277,7 +257,7 @@ export function AnimatedMedia({
         <div
             ref={hostRef}
             className={cn(
-                "relative w-full overflow-hidden",
+                "relative w-full overflow-hidden content-auto",
                 rounded && "rounded-2xl md:rounded-xl",
                 {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
@@ -305,34 +285,37 @@ export function AnimatedMedia({
                     />,
                     shadowRoot
                 )}
-            {/* Placeholder thumbnail, useful when reloading right at the position of video tag */}
-            <NextImage
-                src={posterPath ?? defaultPoster}
-                alt={alt}
-                width={exactW}
-                height={exactH}
-                className={cn("size-full object-cover")}
-                fetchPriority="high"
-                loading="lazy"
-                style={{
-                    background: `url("${metadata.blurDataURL}") center / cover no-repeat`
-                }}
-                onLoad={(e) => {
-                    e.currentTarget.style.background = ""
-                }}
-            />
-            {/* Loading overlay with spinner */}
             {!isVideoReady && (
-                <div
-                    aria-hidden
-                    className={cn(
-                        "pointer-events-none absolute inset-0 z-1 grid place-items-center bg-black/30"
-                    )}
-                >
-                    <div className={cn("rounded-full bg-background/80 p-2")}>
-                        <Spinner />
+                <>
+                    {/* Placeholder thumbnail, useful when reloading right at the position of video tag */}
+                    <NextImage
+                        src={posterPath ?? defaultPoster}
+                        alt={alt}
+                        width={exactW}
+                        height={exactH}
+                        className={cn("size-full object-cover")}
+                        loading="lazy"
+                        style={{
+                            background: `url("${metadata.blurDataURL}") center / cover no-repeat`
+                        }}
+                        onLoad={(e) => {
+                            e.currentTarget.style.background = ""
+                        }}
+                    />
+                    {/* Loading overlay with spinner */}
+                    <div
+                        aria-hidden
+                        className={cn(
+                            "pointer-events-none absolute inset-0 z-1 grid place-items-center bg-black/30"
+                        )}
+                    >
+                        <div
+                            className={cn("rounded-full bg-background/80 p-2")}
+                        >
+                            <Spinner />
+                        </div>
                     </div>
-                </div>
+                </>
             )}
             <noscript>
                 {/* oxlint-disable-next-line next/no-img-element */}

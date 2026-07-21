@@ -103,11 +103,9 @@ function highlightQuery(text: string, query: string): React.ReactNode | null {
                         "relative rounded-[2px] bg-transparent text-default",
                         {
                             before: [
-                                "absolute inset-0 -z-1 rounded-xs bg-highlighted/20",
+                                "absolute -inset-x-[0.01em] -inset-y-[0.2em] -z-1 rounded-sm bg-highlighted/20",
                                 {
-                                    dark: "z-1 bg-highlighted/30",
-                                    "has-[sub]": "-bottom-[0.2em]",
-                                    "has-[sup]": "-top-[0.2em]"
+                                    dark: "z-1 bg-highlighted/30"
                                 }
                             ]
                         }

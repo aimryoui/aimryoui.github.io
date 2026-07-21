@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 import NextImage from "next/image"
 
 import { mergeRefs } from "react-merge-refs"
 
 import { LightboxItem } from "@/components/ui/lightbox"
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
+import { useMediaObserver } from "@/hooks/use-media-observer"
 import imageManifestRaw from "@/lib/image-manifest.json"
 import { cn } from "@/lib/utils"
 import { type ImageManifest } from "@/scripts/process-images"
@@ -20,7 +21,6 @@ type ImageProps = React.ComponentProps<"div"> & {
     imageRow?: "justified" | "proportional"
     limitHeight?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
-    isInCarousel?: boolean
     lightbox?: boolean
     isInLightbox?: boolean
 }
@@ -108,7 +108,6 @@ function ImageCore({
     pngBorder = false,
     trimEdges = false,
     objectFit = "cover",
-    isInCarousel = false,
     lightbox = true,
     isInLightbox = false,
     ref,
@@ -116,30 +115,7 @@ function ImageCore({
 }: ImageCoreProps & { parsedData: ParsedImageData }) {
     const containerRef = useRef<HTMLDivElement>(null)
 
-    const [isNearViewport, setIsNearViewport] = useState(true)
-
-    useEffect(() => {
-        if (isInLightbox) return
-
-        const element = containerRef.current
-        if (!element) return
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsNearViewport(entry.isIntersecting)
-            },
-            {
-                rootMargin: "200% 0px 200% 0px",
-                threshold: 0
-            }
-        )
-
-        observer.observe(element)
-
-        return () => {
-            observer.unobserve(element)
-        }
-    }, [isInLightbox, isInCarousel])
+    const isNearViewport = useMediaObserver(containerRef, isInLightbox)
 
     const { metadata, exactW, exactH, aspectRatio, basePath, fileName } =
         parsedData
@@ -179,6 +155,7 @@ function ImageCore({
             ref={mergeRefs([containerRef, ref])}
             data-slot="image"
             className={cn(
+                "content-auto",
                 limitHeight ? "min-w-0 max-w-full" : "w-full",
                 asBackgroundImage ? "h-full" : "h-fit",
                 "relative grid place-items-center",
@@ -268,7 +245,6 @@ function ImageCore({
                         background: `url("${metadata.blurDataURL}") center / cover no-repeat`
                     }}
                     draggable={false}
-                    fetchPriority="high"
                     loading={placeholderPriority ? "eager" : "lazy"}
                     onLoad={(e) => {
                         e.currentTarget.style.background = ""
