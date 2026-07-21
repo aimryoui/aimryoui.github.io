@@ -107,7 +107,7 @@ function TooltipContent({
                 collisionPadding={12}
                 arrowPadding={7}
                 className={cn(
-                    "z-50 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] duration-400 data-instant:transition-none",
+                    "z-90 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] duration-400 data-instant:transition-none",
                     "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-spring"
                 )}
             >

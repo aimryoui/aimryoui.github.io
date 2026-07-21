@@ -37,7 +37,7 @@ function DropdownMenuContent({
             className={
                 shadow
                     ? cn(
-                          "fixed inset-0 z-50",
+                          "fixed inset-0 z-80",
                           "[filter:drop-shadow(0px_0px_25px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_2px_rgba(0,0,0,0.10))]"
                       )
                     : undefined
@@ -45,7 +45,7 @@ function DropdownMenuContent({
         >
             <MenuPrimitive.Positioner
                 data-cursor="ignore"
-                className="isolate z-50 cursor-auto overflow-hidden p-px outline-none"
+                className="isolate z-80 cursor-auto overflow-hidden p-px outline-none"
                 positionMethod="fixed"
                 align={align}
                 alignOffset={alignOffset}
