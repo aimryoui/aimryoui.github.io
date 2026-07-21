@@ -16,6 +16,7 @@ type ImageProps = React.ComponentProps<"div"> & {
     alt: string
     placeholderPriority?: boolean
     asBackgroundImage?: boolean
+    imageCol?: "justified"
     imageRow?: "justified" | "proportional"
     limitHeight?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
@@ -96,6 +97,7 @@ function ImageCore({
     parsedData,
     placeholderPriority = false,
     asBackgroundImage = false,
+    imageCol,
     imageRow,
     limitHeight = false,
     rounded = false,
@@ -211,10 +213,29 @@ function ImageCore({
             )}
             style={{
                 "--nhn-aspect-ratio": aspectRatio,
-                ...(limitHeight &&
-                    !isInLightbox && {
-                        width: "calc(max(80vh, calc(var(--spacing) * 125)) * calc(var(--nhn-aspect-ratio)))"
-                    }),
+
+                ...(isInLightbox
+                    ? {
+                          ...(rounded && {
+                              borderRadius:
+                                  "calc(var(--radius-media) / var(--nhn-wrap-scale))"
+                          })
+                      }
+                    : {
+                          ...(limitHeight && {
+                              width: "calc(max(80vh, calc(var(--spacing) * 125)) * calc(var(--nhn-aspect-ratio)))"
+                          }),
+                          ...(imageRow && {
+                              flex: `${imageRow === "justified" ? "calc(var(--nhn-aspect-ratio))" : exactW} 1 0%`
+                          }),
+                          ...(imageCol && {
+                              width: `calc(${exactW} / 1599 * 100%)`
+                          })
+                      }),
+
+                ...(!asBackgroundImage && {
+                    aspectRatio: "var(--nhn-aspect-ratio)"
+                }),
                 ...(percentageRounded &&
                     !rounded && {
                         borderRadius: `calc(${percentageRounded}% * var(--nhn-radius-offset-factor)) / calc(${percentageRounded}% * var(--nhn-aspect-ratio) * var(--nhn-radius-offset-factor))`
@@ -225,18 +246,7 @@ function ImageCore({
                     }),
                     "--nhn-gradient-border-color": gradientBorder.color
                 }),
-                ...(isInLightbox &&
-                    rounded && {
-                        borderRadius:
-                            "calc(var(--radius-media) / var(--nhn-wrap-scale))"
-                    }),
-                ...(imageRow &&
-                    !isInLightbox && {
-                        flex: `${imageRow === "justified" ? "calc(var(--nhn-aspect-ratio))" : exactW} 1 0%`
-                    }),
-                ...(!asBackgroundImage && {
-                    aspectRatio: "var(--nhn-aspect-ratio)"
-                }),
+
                 ...cssVars
             }}
             {...props}

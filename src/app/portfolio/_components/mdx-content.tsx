@@ -1,7 +1,11 @@
 import * as runtime from "react/jsx-runtime"
 
 import { SectionLine } from "@/components/layout/line"
-import { JustifiedColumn, MediaFrame } from "@/components/layout/media-frame"
+import {
+    JustifiedColumn,
+    MediaFrame,
+    MediaFrameContent
+} from "@/components/layout/media-frame"
 import { Carousel, CarouselImage, CarouselItem } from "@/components/ui/carousel"
 import { Gif } from "@/components/ui/gif"
 import { Image } from "@/components/ui/image"
@@ -17,6 +21,7 @@ const sharedComponents = {
     CarouselImage,
     Masonry,
     MediaFrame,
+    MediaFrameContent,
     JustifiedColumn,
     SectionLine
 }

@@ -4,6 +4,7 @@ import type React from "react"
 import { Fragment, useRef } from "react"
 import NextLink from "next/link"
 
+import { type CursorSelector } from "@/components/animations/target-cursor"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Lightbox } from "@/components/ui/lightbox"
@@ -83,6 +84,15 @@ export function SectionName({
     )
 }
 
+interface MediaFrameProps extends React.ComponentProps<"div"> {
+    sectionName?: string
+    author?: string
+    lowercase?: boolean
+    flex?: boolean
+    continuous?: boolean
+    targetCursor?: CursorSelector
+}
+
 function MediaFrame({
     className,
     sectionName,
@@ -93,14 +103,7 @@ function MediaFrame({
     targetCursor,
     children,
     ...props
-}: React.ComponentProps<"div"> & {
-    sectionName?: string
-    author?: string
-    lowercase?: boolean
-    flex?: boolean
-    continuous?: boolean
-    targetCursor?: "target" | "lock" | "ignore" | "none"
-}) {
+}: MediaFrameProps) {
     return (
         <>
             <figure
@@ -116,7 +119,7 @@ function MediaFrame({
                         <SectionLine />
                     </>
                 ) : (
-                    !continuous && <SectionLine />
+                    <SectionLine />
                 )}
                 <div
                     className={cn(
@@ -135,27 +138,48 @@ function MediaFrame({
                                 author={author}
                                 lowercase={lowercase}
                                 className={cn(
-                                    "bg-transparent text-foreground shadow-sm -outline-offset-px outline-stroke outline"
+                                    "static top-0 bg-transparent text-foreground shadow-sm -outline-offset-px outline-stroke outline"
                                 )}
                             />
                         </div>
                     )}
-                    <div
-                        data-cursor={targetCursor ?? "ignore"}
-                        className={cn(
-                            "relative grid w-full cursor-auto grid-cols-1 justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
-                            className
-                        )}
-                        {...props}
-                    >
-                        <Lightbox>{children}</Lightbox>
-                    </div>
+                    {continuous ? (
+                        children
+                    ) : (
+                        <MediaFrameContent
+                            targetCursor={targetCursor}
+                            className={cn(className)}
+                            {...props}
+                        >
+                            {children}
+                        </MediaFrameContent>
+                    )}
                 </div>
             </figure>
             <SectionLine />
             <Divider />
             <SectionLine />
         </>
+    )
+}
+
+function MediaFrameContent({
+    children,
+    targetCursor,
+    className,
+    ...props
+}: MediaFrameProps) {
+    return (
+        <div
+            data-cursor={targetCursor ?? "ignore"}
+            className={cn(
+                "relative grid w-full cursor-auto grid-cols-1 justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
+                className
+            )}
+            {...props}
+        >
+            <Lightbox>{children}</Lightbox>
+        </div>
     )
 }
 
@@ -227,4 +251,4 @@ function JustifiedColumn({
     )
 }
 
-export { JustifiedColumn, MediaFrame }
+export { JustifiedColumn, MediaFrame, MediaFrameContent }

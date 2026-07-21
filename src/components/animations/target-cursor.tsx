@@ -7,6 +7,8 @@ import { gsap } from "gsap"
 import { pxToRem } from "@/helpers/px-to-rem"
 import { cn } from "@/lib/utils"
 
+type CursorSelector = "target" | "lock" | "ignore" | false
+
 const CONTAIN_STYLE_REGEX = /\b(paint|layout|strict|content)\b/u
 const WILL_CHANGE_REGEX = /\b(transform|perspective|filter)\b/u
 
@@ -639,5 +641,5 @@ function TargetCursor({
     )
 }
 
-export type { TargetCursorProps }
+export type { CursorSelector, TargetCursorProps }
 export { TargetCursor }

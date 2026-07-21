@@ -133,38 +133,37 @@ detail:
     />
 </MediaFrame>
 
-{/* TODO: Implement continuous layout */}
-
-<MediaFrame sectionName="Landyard" className="flex flex-col items-center">
-    <Image
-        src="/events/coc-sai-gon-15th-anniversary/17.jpg"
-        alt="Short Piece"
-        className="w-[calc((210/1599)*100%)]"
-    />
-    <Image
-        src="/events/coc-sai-gon-15th-anniversary/18.jpg"
-        alt="Long Piece"
-        imageRow="justified"
-    />
-</MediaFrame>
-<MediaFrame className="w-fit py-0" continuous>
-    <Image
-        src="/events/coc-sai-gon-15th-anniversary/19.jpg"
-        alt="Landyard Poster"
-        limitHeight
-    />
-</MediaFrame>
-<MediaFrame className="flex md:flex-col" continuous>
-    <Image
-        src="/events/coc-sai-gon-15th-anniversary/20.jpg"
-        alt="Actual Product Photos #1"
-        imageRow="justified"
-    />
-    <Image
-        src="/events/coc-sai-gon-15th-anniversary/21.jpg"
-        alt="Actual Product Photos #2"
-        imageRow="justified"
-    />
+<MediaFrame sectionName="Landyard" continuous>
+    <MediaFrameContent className="flex flex-col items-center">
+        <Image
+            src="/events/coc-sai-gon-15th-anniversary/17.jpg"
+            alt="Short Piece"
+            imageCol="justified"
+        />
+        <Image
+            src="/events/coc-sai-gon-15th-anniversary/18.jpg"
+            alt="Long Piece"
+        />
+    </MediaFrameContent>
+    <MediaFrameContent className="w-fit py-0">
+        <Image
+            src="/events/coc-sai-gon-15th-anniversary/19.jpg"
+            alt="Landyard Poster"
+            limitHeight
+        />
+    </MediaFrameContent>
+    <MediaFrameContent className="flex md:flex-col">
+        <Image
+            src="/events/coc-sai-gon-15th-anniversary/20.jpg"
+            alt="Actual Product Photos #1"
+            imageRow="justified"
+        />
+        <Image
+            src="/events/coc-sai-gon-15th-anniversary/21.jpg"
+            alt="Actual Product Photos #2"
+            imageRow="justified"
+        />
+    </MediaFrameContent>
 </MediaFrame>
 
 <MediaFrame sectionName="Our Members 💛">
