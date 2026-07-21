@@ -93,7 +93,7 @@ interface MediaFrameContentProps extends React.ComponentProps<"div"> {
 function MediaFrameContent({
     className,
     targetCursor,
-    showHideAnimationType,
+    showHideAnimationType = "zoom",
     children,
     ...props
 }: MediaFrameContentProps & {
