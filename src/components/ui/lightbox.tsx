@@ -130,6 +130,8 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 // Lift-off effect (hide original element)
                 let liftedOffEl: HTMLElement | null = null
                 const hideOriginal = (slide?: typeof lightbox.currSlide) => {
+                    if (lightbox.options.showHideAnimationType !== "zoom")
+                        return
                     if (!slide || !slide.data.element) return
                     const currentEl = slide.data.element
 

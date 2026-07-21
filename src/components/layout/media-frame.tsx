@@ -4,6 +4,8 @@ import type React from "react"
 import { Fragment, useRef } from "react"
 import NextLink from "next/link"
 
+import { type PhotoSwipeOptions } from "photoswipe"
+
 import { type CursorSelector } from "@/components/animations/target-cursor"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -89,11 +91,14 @@ interface MediaFrameContentProps extends React.ComponentProps<"div"> {
 }
 
 function MediaFrameContent({
-    children,
-    targetCursor,
     className,
+    targetCursor,
+    showHideAnimationType,
+    children,
     ...props
-}: MediaFrameContentProps) {
+}: MediaFrameContentProps & {
+    showHideAnimationType?: PhotoSwipeOptions["showHideAnimationType"]
+}) {
     return (
         <div
             data-cursor={targetCursor ?? "ignore"}
@@ -103,7 +108,7 @@ function MediaFrameContent({
             )}
             {...props}
         >
-            <Lightbox>{children}</Lightbox>
+            <Lightbox options={{ showHideAnimationType }}>{children}</Lightbox>
         </div>
     )
 }
