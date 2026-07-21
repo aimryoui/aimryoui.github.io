@@ -61,12 +61,13 @@ export function AnimatedMedia({
     loop = true,
     ...props
 }: AnimatedMediaProps) {
+    const wrapperRef = useRef<HTMLDivElement>(null)
     const hostRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
     const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null)
     const [isVideoReady, setIsVideoReady] = useState(false)
 
-    const shouldLoad = useMediaObserver(hostRef)
+    const shouldLoad = useMediaObserver(wrapperRef)
 
     const shouldAutoPlay = autoPlay ?? autoplay ?? true
     const shouldMute = muted ?? mute ?? true
@@ -161,7 +162,7 @@ export function AnimatedMedia({
     // Auto-play
     useEffect(() => {
         const video = videoRef.current
-        const hostEl = hostRef.current
+        const hostEl = wrapperRef.current
         if (!video || !hostEl) return
 
         let isIntersecting = false
@@ -255,7 +256,7 @@ export function AnimatedMedia({
 
     return (
         <div
-            ref={hostRef}
+            ref={wrapperRef}
             className={cn(
                 "relative w-full overflow-hidden content-auto",
                 rounded && "rounded-2xl md:rounded-xl",
@@ -268,9 +269,10 @@ export function AnimatedMedia({
                 aspectRatio: `${exactW.toString()}/${exactH.toString()}`
             }}
         >
+            <div ref={hostRef} className="absolute inset-0 size-full" />
             {shadowRoot &&
                 createPortal(
-                    // oxlint-disable-next-line jsx-a11y/media-has-caption, react-doctor/media-has-caption
+                    // oxlint-disable-next-line jsx-a11y/media-has-caption
                     <video
                         ref={videoRef}
                         poster={posterPath ?? defaultPoster}
@@ -285,15 +287,18 @@ export function AnimatedMedia({
                     />,
                     shadowRoot
                 )}
+
             {!isVideoReady && (
                 <>
-                    {/* Placeholder thumbnail, useful when reloading right at the position of video tag */}
+                    {/* Placeholder thumbnail */}
                     <NextImage
                         src={posterPath ?? defaultPoster}
                         alt={alt}
                         width={exactW}
                         height={exactH}
-                        className={cn("size-full object-cover")}
+                        className={cn(
+                            "absolute inset-0 size-full object-cover"
+                        )}
                         loading="lazy"
                         style={{
                             background: `url("${metadata.blurDataURL}") center / cover no-repeat`
@@ -306,7 +311,7 @@ export function AnimatedMedia({
                     <div
                         aria-hidden
                         className={cn(
-                            "pointer-events-none absolute inset-0 z-1 grid place-items-center bg-black/30"
+                            "pointer-events-none absolute inset-0 z-10 grid place-items-center bg-black/30"
                         )}
                     >
                         <div
