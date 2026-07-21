@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils"
 function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
+            role="separator"
             className={cn(
                 "pointer-events-none sticky top-0 z-30 h-dvh w-px",
                 className
@@ -19,9 +20,7 @@ function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
                     y1="0"
                     x2="50%"
                     y2="100%"
-                    className="stroke-stroke"
-                    strokeWidth="var(--px)"
-                    strokeDasharray="4 4"
+                    className="stroke-stroke stroke-px stroke-dashed"
                 />
             </svg>
         </div>
@@ -31,6 +30,7 @@ function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
 function Plus({ position }: { position?: "left" | "right" }) {
     return (
         <div
+            role="presentation"
             className={cn(
                 "pointer-events-none relative z-1 size-1",
                 {
@@ -40,7 +40,6 @@ function Plus({ position }: { position?: "left" | "right" }) {
                 position === "left" && "-ml-[.171875rem]",
                 position === "right" && "-mr-[.171875rem]"
             )}
-            role="presentation"
         />
     )
 }
@@ -56,6 +55,7 @@ function SectionLine({
 }) {
     return (
         <div
+            role="separator"
             className={cn(
                 "pointer-events-none relative z-40 h-0 w-full",
                 showDecoration && "flex items-center justify-between"
@@ -98,4 +98,29 @@ function ElementLine({
     )
 }
 
-export { ElementLine, MarginLine, SectionLine }
+function SvgElementLine({
+    className,
+    dir = "vertical",
+    ...props
+}: React.ComponentProps<"svg"> & {
+    dir?: "vertical" | "horizontal"
+}) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+            className={cn("pointer-events-none size-full", className)}
+            {...props}
+        >
+            <line
+                x1={dir === "vertical" ? "50%" : "0"}
+                y1={dir === "vertical" ? "0" : "50%"}
+                x2={dir === "vertical" ? "50%" : "100%"}
+                y2={dir === "vertical" ? "100%" : "50%"}
+                className="stroke-stroke stroke-px stroke-dashed"
+            />
+        </svg>
+    )
+}
+
+export { ElementLine, MarginLine, SectionLine, SvgElementLine }

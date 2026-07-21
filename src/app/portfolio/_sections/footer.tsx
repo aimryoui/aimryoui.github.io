@@ -1,16 +1,22 @@
 "use client"
 
-import { Fragment } from "react"
+import { Fragment, useRef } from "react"
 import NextLink from "next/link"
 
 import { Divider } from "@/components/layout/divider"
-import { ElementLine, SectionLine } from "@/components/layout/line"
+import {
+    ElementLine,
+    SectionLine,
+    SvgElementLine
+} from "@/components/layout/line"
 import { SectionName } from "@/components/layout/media-frame"
 import { Space } from "@/components/layout/space"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
+import { useBrowserEngine } from "@/hooks/use-browser-engine"
+import { useContainerQuery } from "@/hooks/use-container-query"
 import { cn } from "@/lib/utils"
-import { sections } from "@/portfolio/_sections/contact"
+import { type SectionProps, sections } from "@/portfolio/_sections/contact"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 const ALL_PLATFORMS = sections.flatMap((section) => section.platforms)
@@ -25,6 +31,8 @@ const CURRENT_YEAR = new Date().getFullYear()
 
 function Footer() {
     const mode = usePortfolioModeStore((state) => state.mode)
+
+    const containerRef = useRef<HTMLElement>(null)
 
     if (mode === "spread") {
         return (
@@ -133,6 +141,7 @@ function Footer() {
 
     return (
         <footer
+            ref={containerRef}
             className={cn("relative flex flex-col bg-background @container", {
                 lg: "flex-col-reverse"
             })}
@@ -194,29 +203,83 @@ function Footer() {
                                 }
                             />
 
-                            {index < arr.length - 1 && (
-                                <li
-                                    role="separator"
-                                    className={cn("h-full", {
-                                        "@[50.9375rem]": [
-                                            "h-20",
-                                            {
-                                                "nth-of-type-10":
-                                                    "h-auto w-full",
-                                                "[&>hr]:nth-of-type-10":
-                                                    "h-auto w-full border-b border-r-0"
-                                            }
-                                        ]
-                                    })}
-                                >
-                                    <ElementLine />
-                                </li>
-                            )}
+                            <FooterSeparator
+                                index={index}
+                                arr={arr}
+                                containerRef={containerRef}
+                            />
                         </Fragment>
                     ))}
                 </Tooltip>
             </Space>
         </footer>
+    )
+}
+
+function FooterSeparator({
+    index,
+    arr,
+    containerRef
+}: {
+    index: number
+    arr: SectionProps[]
+    containerRef: React.RefObject<HTMLElement | null>
+}) {
+    const { isWebkit } = useBrowserEngine()
+
+    return isWebkit ? (
+        <WebkitFooterSeparator
+            index={index}
+            arr={arr}
+            containerRef={containerRef}
+        />
+    ) : (
+        index < arr.length - 1 && (
+            <li
+                role="separator"
+                className={cn("h-full", {
+                    "@[50.9375rem]": [
+                        "h-20",
+                        {
+                            "nth-of-type-10": "h-auto w-full",
+                            "[&>hr]:nth-of-type-10":
+                                "h-auto w-full border-b border-r-0"
+                        }
+                    ]
+                })}
+            >
+                <ElementLine />
+            </li>
+        )
+    )
+}
+
+function WebkitFooterSeparator({
+    index,
+    arr,
+    containerRef
+}: {
+    index: number
+    arr: SectionProps[]
+    containerRef: React.RefObject<HTMLElement | null>
+}) {
+    const isContainerNarrow = useContainerQuery(containerRef, "50.9375rem")
+
+    return isContainerNarrow && index === 4 ? (
+        <li role="separator" className={cn("h-auto w-full")}>
+            <ElementLine dir="horizontal" />
+        </li>
+    ) : (
+        index < arr.length - 1 && (
+            <li
+                role="separator"
+                className={cn("h-full w-px", {
+                    "@[50.9375rem]": "h-20"
+                })}
+            >
+                <SvgElementLine />
+            </li>
+        )
     )
 }
 

@@ -425,5 +425,6 @@ function Contact() {
     )
 }
 
+export type { SectionProps }
 export { sections }
 export default Contact

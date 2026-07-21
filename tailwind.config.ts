@@ -20,6 +20,7 @@ import overflowWrap from "./src/lib/tailwindcss-plugins/utilities/overflow-wrap"
 import scrollFade from "./src/lib/tailwindcss-plugins/utilities/scroll-fade"
 import scrollbar from "./src/lib/tailwindcss-plugins/utilities/scrollbar"
 import scrollbarGutter from "./src/lib/tailwindcss-plugins/utilities/scrollbar-gutter"
+import stroke from "./src/lib/tailwindcss-plugins/utilities/stroke"
 import transform from "./src/lib/tailwindcss-plugins/utilities/transform"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
@@ -151,6 +152,9 @@ export default {
             },
             ringWidth: {
                 DEFAULT: "var(--px)"
+            },
+            strokeWidth: {
+                px: "var(--px)"
             },
             backdropBlur: {
                 xs: "4px",
@@ -316,6 +320,7 @@ export default {
         scrollFade,
         scrollbar,
         scrollbarGutter,
+        stroke,
         transform,
         transition,
         transitionBehavior,

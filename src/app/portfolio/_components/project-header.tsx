@@ -72,7 +72,7 @@ function ProjectHeader({
                 </div>
                 <ElementLine
                     className={cn({
-                        md: "h-auto w-full border-b border-r-0"
+                        md: "-mx-6 h-auto w-screen border-b border-r-0"
                     })}
                 />
                 <Divider dir="vertical" className={cn("md:hidden")} />
