@@ -5,13 +5,14 @@ import { createPortal } from "react-dom"
 import NextImage from "next/image"
 
 import Hls from "hls.js"
+import { mergeRefs } from "react-merge-refs"
 
 import { Spinner } from "@/components/ui/spinner"
+import { type ParsedMediaData } from "@/helpers/get-parsed-media-data"
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 import { useMediaObserver } from "@/hooks/use-media-observer"
 import { cn } from "@/lib/utils"
-import videoManifestRaw from "@/lib/video-manifest.json"
-import { type VideoManifest } from "@/scripts/process-videos"
+import { type VideoMetadata } from "@/scripts/process-videos"
 
 let sharedStyleSheet: CSSStyleSheet | null = null
 
@@ -36,29 +37,34 @@ function getSharedStyleSheet() {
     return sharedStyleSheet
 }
 
-const videoManifest = videoManifestRaw as VideoManifest
-
-export interface AnimatedMediaProps extends React.ComponentProps<"video"> {
-    src: string
+type AnimatedMediaProps = {
+    parsedData: ParsedMediaData<VideoMetadata>
     alt: string
     posterPath?: string
     rounded?: boolean
     autoplay?: boolean
     mute?: boolean
-}
+    isInLightbox?: boolean
+} & React.ComponentProps<"div"> &
+    Pick<
+        React.ComponentProps<"video">,
+        "autoPlay" | "muted" | "controls" | "loop"
+    >
 
-export function AnimatedMedia({
-    src,
+function AnimatedMedia({
+    className,
+    parsedData,
     alt,
     posterPath,
     rounded = false,
-    className,
     autoPlay,
     autoplay,
     muted,
     mute,
     controls,
     loop = true,
+    isInLightbox = false,
+    ref,
     ...props
 }: AnimatedMediaProps) {
     const wrapperRef = useRef<HTMLDivElement>(null)
@@ -67,23 +73,13 @@ export function AnimatedMedia({
     const [shadowRoot, setShadowRoot] = useState<ShadowRoot | null>(null)
     const [isVideoReady, setIsVideoReady] = useState(false)
 
+    const { metadata, exactW, exactH, aspectRatio, basePath, fileName } =
+        parsedData
+
     const shouldLoad = useMediaObserver(wrapperRef)
 
     const shouldAutoPlay = autoPlay ?? autoplay ?? true
     const shouldMute = muted ?? mute ?? true
-
-    const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
-    const pathWithoutExt = normalizedSrc.replace(/\.[^/.]+$/u, "")
-    const fileName = pathWithoutExt.split("/").pop()
-
-    const basePath = `/assets/media/${pathWithoutExt}`
-    const defaultPoster = `${basePath}/${fileName}_preview.webp`
-
-    const metadata = videoManifest[pathWithoutExt]
-
-    if (!metadata) {
-        console.error(`[Video]: No metadata for "${src}" in manifest.`)
-    }
 
     // #shadow-root (closed) with #adopted-style-sheets
     useIsomorphicLayoutEffect(() => {
@@ -168,9 +164,15 @@ export function AnimatedMedia({
         let isIntersecting = false
         let userPaused = false
         let pausingByScroll = false
+        let pausingByLightbox = false
+
+        const isLightboxOpen = () =>
+            !isInLightbox &&
+            document.body.querySelector(":scope > div.pswp") !== null
 
         const tryPlay = () => {
             if (userPaused) return
+            if (isLightboxOpen()) return
             if (video.paused && !document.hidden && shouldAutoPlay) {
                 video.play().catch((error: unknown) => {
                     if (error instanceof Error) {
@@ -189,10 +191,11 @@ export function AnimatedMedia({
         }
 
         const handlePause = () => {
-            if (!pausingByScroll) {
+            if (!pausingByScroll && !pausingByLightbox) {
                 userPaused = true
             }
             pausingByScroll = false
+            pausingByLightbox = false
         }
 
         const handlePlay = () => {
@@ -228,7 +231,38 @@ export function AnimatedMedia({
             }
         }
 
+        const handleWindowBlur = () => {
+            pausingByScroll = true
+            video.pause()
+        }
+
+        const handleWindowFocus = () => {
+            if (isIntersecting) {
+                tryPlay()
+            }
+        }
+
         document.addEventListener("visibilitychange", handleVisibilityChange)
+        window.addEventListener("blur", handleWindowBlur)
+        window.addEventListener("focus", handleWindowFocus)
+
+        // Watch for PhotoSwipe (div.pswp) appearing/disappearing as direct child of body
+        // Only relevant for videos that are NOT inside the lightbox itself
+        const mutationObserver = isInLightbox
+            ? null
+            : new MutationObserver(() => {
+                  if (isLightboxOpen()) {
+                      // Lightbox opened — pause video without marking it as user-paused
+                      if (!video.paused) {
+                          pausingByLightbox = true
+                          video.pause()
+                      }
+                  } else if (isIntersecting) {
+                      tryPlay()
+                  }
+              })
+
+        mutationObserver?.observe(document.body, { childList: true })
 
         return () => {
             video.removeEventListener("pause", handlePause)
@@ -238,8 +272,11 @@ export function AnimatedMedia({
                 "visibilitychange",
                 handleVisibilityChange
             )
+            window.removeEventListener("blur", handleWindowBlur)
+            window.removeEventListener("focus", handleWindowFocus)
+            mutationObserver?.disconnect()
         }
-    }, [shouldAutoPlay, shadowRoot])
+    }, [shouldAutoPlay, shadowRoot, isInLightbox])
 
     // Force muted attribute
     // @see https://github.com/react/react/issues/10389
@@ -249,14 +286,9 @@ export function AnimatedMedia({
     //     videoEl.setAttribute("muted", "")
     // }, [shadowRoot])
 
-    if (!metadata) return null
-
-    const exactW = metadata.width
-    const exactH = metadata.height
-
     return (
         <div
-            ref={wrapperRef}
+            ref={mergeRefs([wrapperRef, ref])}
             className={cn(
                 "relative w-full overflow-hidden content-auto",
                 rounded && "rounded-2xl md:rounded-xl",
@@ -266,8 +298,9 @@ export function AnimatedMedia({
                 className
             )}
             style={{
-                aspectRatio: `${exactW.toString()}/${exactH.toString()}`
+                aspectRatio
             }}
+            {...props}
         >
             <div ref={hostRef} className="absolute inset-0 size-full" />
             {shadowRoot &&
@@ -275,7 +308,9 @@ export function AnimatedMedia({
                     // oxlint-disable-next-line jsx-a11y/media-has-caption
                     <video
                         ref={videoRef}
-                        poster={posterPath ?? defaultPoster}
+                        poster={
+                            posterPath ?? `${basePath}/${fileName}_preview.webp`
+                        }
                         controls={controls}
                         disablePictureInPicture
                         autoPlay={shouldAutoPlay}
@@ -283,7 +318,7 @@ export function AnimatedMedia({
                         loop={loop}
                         muted={shouldMute}
                         preload="none"
-                        {...props}
+                        className="transform-gpu"
                     />,
                     shadowRoot
                 )}
@@ -292,7 +327,9 @@ export function AnimatedMedia({
                 <>
                     {/* Placeholder thumbnail */}
                     <NextImage
-                        src={posterPath ?? defaultPoster}
+                        src={
+                            posterPath ?? `${basePath}/${fileName}_preview.webp`
+                        }
                         alt={alt}
                         width={exactW}
                         height={exactH}
@@ -322,10 +359,10 @@ export function AnimatedMedia({
                     </div>
                 </>
             )}
-            <noscript>
-                {/* oxlint-disable-next-line next/no-img-element */}
-                <img src={posterPath ?? defaultPoster} alt={alt} />
-            </noscript>
+            <noscript>Turn on JavaScript to watch this video.</noscript>
         </div>
     )
 }
+
+export type { AnimatedMediaProps }
+export { AnimatedMedia }

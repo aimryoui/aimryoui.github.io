@@ -25,18 +25,16 @@ const BATCH_SIZE = 10
 
 const IGNORE_REGEX = /(^|[/\\])\..|.*-poster\.(png|jpg|jpeg|webp)$/iu
 
-type ImageManifest = Record<
-    string,
-    | {
-          hash: string
-          version: string
-          width: number
-          height: number
-          mapping: number[]
-          blurDataURL: string
-      }
-    | undefined
->
+interface ImageMetadata {
+    hash: string
+    version: string
+    width: number
+    height: number
+    mapping: number[]
+    blurDataURL: string
+}
+
+type ImageManifest = Record<string, ImageMetadata | undefined>
 
 const chunkArray = <T>(arr: T[], size: number): T[][] =>
     Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
@@ -407,5 +405,5 @@ void (async () => {
     }
 })()
 
-export type { ImageManifest }
+export type { ImageManifest, ImageMetadata }
 export { build }

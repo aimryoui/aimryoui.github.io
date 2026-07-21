@@ -21,20 +21,18 @@ const PREFIX = `${BRAND_COLOR}[VIDEOS]${RESET}`
 
 const SHORT_VIDEO_THRESHOLD = 30 * 1024 * 1024
 
-type VideoManifest = Record<
-    string,
-    | {
-          hash: string
-          posterHash: string
-          version: string
-          type: "short" | "long"
-          duration: number
-          width: number
-          height: number
-          blurDataURL: string
-      }
-    | undefined
->
+interface VideoMetadata {
+    hash: string
+    posterHash: string
+    version: string
+    type: "short" | "long"
+    duration: number
+    width: number
+    height: number
+    blurDataURL: string
+}
+
+type VideoManifest = Record<string, VideoMetadata | undefined>
 
 function getFileHash(filePath: string) {
     return crypto
@@ -438,5 +436,5 @@ void (async () => {
     }
 })()
 
-export type { VideoManifest }
+export type { VideoManifest, VideoMetadata }
 export { build }

@@ -7,13 +7,20 @@ import { mergeRefs } from "react-merge-refs"
 
 import { LightboxItem } from "@/components/ui/lightbox"
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
+import {
+    getParsedMediaData,
+    type ParsedMediaData
+} from "@/helpers/get-parsed-media-data"
 import { useMediaObserver } from "@/hooks/use-media-observer"
 import imageManifestRaw from "@/lib/image-manifest.json"
 import { cn } from "@/lib/utils"
-import { type ImageManifest } from "@/scripts/process-images"
+import {
+    type ImageManifest,
+    type ImageMetadata
+} from "@/scripts/process-images"
 
-type ImageProps = React.ComponentProps<"div"> & {
-    src: string
+type GeneralImageProps = React.ComponentProps<"div"> & {
+    parsedData: ParsedMediaData<ImageMetadata>
     alt: string
     placeholderPriority?: boolean
     asBackgroundImage?: boolean
@@ -25,7 +32,7 @@ type ImageProps = React.ComponentProps<"div"> & {
     isInLightbox?: boolean
 }
 
-type RoundedImageProps =
+type ImageRoundProps =
     | { rounded?: boolean; percentageRounded?: never }
     | { percentageRounded?: number; rounded?: never }
 
@@ -33,7 +40,7 @@ interface PngProps {
     trimEdges?: boolean
 }
 
-type ExclusiveBorderAndPngProps =
+type ImageBorderProps =
     | {
           pngBorder?: boolean
           pngAntiBleed?: never
@@ -59,38 +66,10 @@ type ExclusiveBorderAndPngProps =
           pngBorder?: never
       }
 
-type ImageCoreProps = ImageProps &
-    RoundedImageProps &
+type ImageCoreProps = GeneralImageProps &
+    ImageRoundProps &
     PngProps &
-    ExclusiveBorderAndPngProps
-
-const imageManifest = imageManifestRaw as ImageManifest
-
-const FILE_EXTENSION_REGEX = /\.[^/.]+$/u
-
-function getParsedImageData(src: string) {
-    const normalizedSrc = src.startsWith("/") ? src.slice(1) : src
-    const metadata =
-        imageManifest[normalizedSrc.replace(FILE_EXTENSION_REGEX, "")]
-
-    if (!metadata) {
-        console.error(`[Image]: No metadata for "${src}" in manifest.`)
-        return null
-    }
-
-    const exactW = metadata.width
-    const exactH = metadata.height
-    const aspectRatio = `${exactW.toString()}/${exactH.toString()}`
-
-    const lastDotIndex = src.lastIndexOf(".")
-    const pathWithoutExt = src.slice(0, lastDotIndex)
-    const fileName = src.slice(src.lastIndexOf("/") + 1, lastDotIndex)
-    const basePath = `/assets/media${pathWithoutExt}`
-
-    return { metadata, exactW, exactH, aspectRatio, basePath, fileName }
-}
-
-type ParsedImageData = NonNullable<ReturnType<typeof getParsedImageData>>
+    ImageBorderProps
 
 function ImageCore({
     className,
@@ -112,7 +91,7 @@ function ImageCore({
     isInLightbox = false,
     ref,
     ...props
-}: ImageCoreProps & { parsedData: ParsedImageData }) {
+}: ImageCoreProps) {
     const containerRef = useRef<HTMLDivElement>(null)
 
     const isNearViewport = useMediaObserver(containerRef, isInLightbox)
@@ -315,8 +294,17 @@ function ImageCore({
     )
 }
 
-function Image({ className, lightbox = true, ref, ...props }: ImageCoreProps) {
-    const parsedData = getParsedImageData(props.src)
+const imageManifest = imageManifestRaw as ImageManifest
+
+type ImageProps = Omit<GeneralImageProps, "parsedData"> &
+    ImageRoundProps &
+    PngProps &
+    ImageBorderProps & {
+        src: string
+    }
+
+function Image({ className, lightbox = true, ref, ...props }: ImageProps) {
+    const parsedData = getParsedMediaData(props.src, imageManifest)
 
     if (!parsedData) return null
 
@@ -356,10 +344,5 @@ function Image({ className, lightbox = true, ref, ...props }: ImageCoreProps) {
     )
 }
 
-export type {
-    ExclusiveBorderAndPngProps,
-    ImageProps,
-    PngProps,
-    RoundedImageProps
-}
+export type { ImageBorderProps, ImageProps, ImageRoundProps, PngProps }
 export { Image }
