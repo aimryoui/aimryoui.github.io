@@ -3,22 +3,24 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
 
+import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 
 interface UseTocScrollOptions {
     items: { id: string }[]
     debouncedQuery: string
-    delay?: number
     onActiveReady?: () => void
 }
+
+const SCROLL_DELAY = 400
 
 function useTocScroll({
     items,
     debouncedQuery,
-    delay = 0,
     onActiveReady
 }: UseTocScrollOptions) {
     const pathname = usePathname()
+    const { isBlink } = useBrowserEngine()
 
     const scrollContainerRef = useRef<HTMLUListElement>(null)
     const clickedTargetRef = useRef<string | null>(null)
@@ -90,14 +92,14 @@ function useTocScroll({
     // Make sure the scrollIntoView animation is finished
     // before setting the other activeIds
     useEffect(() => {
-        if (activeId === rawActiveId) return
+        if (activeId === rawActiveId || isBlink) return
 
         let currentDelay = 0
 
-        if (pathname === "/portfolio" && activeId && delay > 0) {
+        if (pathname === "/portfolio" && activeId) {
             const elapsed = Date.now() - lastUpdateTimestamp.current
-            if (elapsed < delay) {
-                currentDelay = delay - elapsed
+            if (elapsed < SCROLL_DELAY) {
+                currentDelay = SCROLL_DELAY - elapsed
             }
         }
 
@@ -109,9 +111,9 @@ function useTocScroll({
         return () => {
             clearTimeout(timer)
         }
-    }, [rawActiveId, activeId, pathname, delay])
+    }, [rawActiveId, activeId, pathname, isBlink])
 
-    // Notify parent
+    // Notify parent that activeId is ready
     useEffect(() => {
         if (activeId && !hasNotifiedActiveRef.current) {
             hasNotifiedActiveRef.current = true

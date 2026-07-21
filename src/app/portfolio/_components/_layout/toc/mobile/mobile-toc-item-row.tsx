@@ -39,7 +39,9 @@ const MobileTocItemRow = memo(
                                   hover: {
                                       before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
                                   },
-                                  active: "border-highlighted"
+                                  active: {
+                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.5 bg-highlighted"
+                                  }
                               }
                     ]
                 )}
@@ -94,7 +96,9 @@ const MobileTocItemRow = memo(
                                               "group-hover":
                                                   "transition-[background-color,color] duration-100",
                                               "group-hover/link":
-                                                  "bg-muted-foreground/30 text-default !transition-none dark:bg-muted-foreground/40"
+                                                  "bg-muted-foreground/30 text-default !transition-none dark:bg-muted-foreground/40",
+                                              "group-active/link":
+                                                  "bg-highlighted/15 text-highlighted !transition-none dark:bg-highlighted/25"
                                           }
                                       ],
                                 "[&>svg]:size-6"

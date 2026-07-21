@@ -110,7 +110,7 @@ function Projects() {
                             draggable={false}
                             data-cursor="target"
                             className={cn(
-                                "group flex min-h-20 items-center justify-between gap-4 pe-6 transition-[background-color] duration-100",
+                                "group flex items-center justify-between gap-4 pe-6 transition-[background-color] duration-100",
                                 {
                                     hover: "bg-highlighted/5 transition-none",
                                     active: "bg-highlighted/10 transition-none"
@@ -123,7 +123,11 @@ function Projects() {
                                 noteId={
                                     groupIndex === 0 ? "projects" : undefined
                                 }
-                                note={groupIndex === 0 ? "Projects" : undefined}
+                                note={
+                                    groupIndex === 0
+                                        ? "Design Projects"
+                                        : undefined
+                                }
                                 className={cn("flex-1 bg-transparent")}
                             />
                             <ArrowRight

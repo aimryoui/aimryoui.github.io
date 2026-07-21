@@ -1,7 +1,6 @@
 import { Fragment } from "react"
 
 import { LineSidebar } from "@/components/animations/line-sidebar"
-import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { cn } from "@/lib/utils"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
 import {
@@ -38,8 +37,6 @@ function handleSameLinkClick() {
     window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
 }
 
-const SCROLL_DELAY = 400
-
 function TocList({
     mode,
     items,
@@ -49,12 +46,9 @@ function TocList({
 }: TocListProps & {
     onActiveReady?: () => void
 }) {
-    const { isBlink } = useBrowserEngine()
-
     const { scrollContainerRef, clickedTargetRef, activeId } = useTocScroll({
         items,
         debouncedQuery,
-        delay: isBlink ? SCROLL_DELAY : 0,
         onActiveReady
     })
 
