@@ -1,3 +1,4 @@
+import { DASHES_REGEX } from "@/helpers/character-regexes"
 import { slugify } from "@/helpers/slugify"
 import { PROJECT_CATEGORIES } from "@/portfolio/_configs/project-categories"
 
@@ -25,8 +26,6 @@ const parseDate = (str: string) => {
     const year = parseInt(yearStr, 10) || 0
     return new Date(year, month, 1)
 }
-
-const DASHES_REGEX = /[-–—]/gu
 
 const getDurationDates = (duration: string) => {
     const parts = duration.split(DASHES_REGEX)

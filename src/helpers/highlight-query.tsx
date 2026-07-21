@@ -1,33 +1,12 @@
 import { Fragment } from "react"
 
+import {
+    DIGIT_REGEX,
+    ORDINAL_AFTER_DIGIT_REGEX,
+    ORDINAL_START_OR_AFTER_DIGIT_REGEX
+} from "@/helpers/character-regexes"
+import { removeDiacritics } from "@/helpers/remove-diacritics"
 import { cn } from "@/lib/utils"
-
-const DIACRITICS_REGEX = /[\u0300-\u036f]/gu
-const VIETNAMESE_D_LOWERCASE_REGEX = /[đ]/gu
-const VIETNAMESE_D_UPPERCASE_REGEX = /[Đ]/gu
-
-const ESCAPE_REGEX = /[.*+?^${}()|[\]\\]/gu
-const ORDINAL_AFTER_DIGIT_REGEX = /(?<=\d)(st|nd|rd|th)/gu
-const ORDINAL_START_OR_AFTER_DIGIT_REGEX =
-    /^(st|nd|rd|th)|(?<=\d)(st|nd|rd|th)/gu
-
-const DIGIT_REGEX = /\d/u
-
-/**
- * Normalizes a string by removing Vietnamese diacritics and converting special
- * characters. Ensures the output string length perfectly matches the input
- * string length for precise index mapping.
- *
- * @param {string} str - The original string with diacritics.
- * @returns {string} The normalized string without diacritics.
- */
-const removeDiacritics = (str: string): string => {
-    return str
-        .normalize("NFD")
-        .replace(DIACRITICS_REGEX, "")
-        .replace(VIETNAMESE_D_LOWERCASE_REGEX, "d")
-        .replace(VIETNAMESE_D_UPPERCASE_REGEX, "D")
-}
 
 /**
  * Parses a string segment and formats English ordinal suffixes (st, nd, rd, th)
@@ -43,10 +22,10 @@ const removeDiacritics = (str: string): string => {
  * @returns {React.ReactNode} The original string, or an array of strings and
  *   `<sup>` elements.
  */
-const formatHighlightedOrdinals = (
+function formatHighlightedOrdinals(
     string: string,
     isAfterDigit: boolean
-): React.ReactNode => {
+): React.ReactNode {
     const ordinalRegex = isAfterDigit
         ? ORDINAL_START_OR_AFTER_DIGIT_REGEX
         : ORDINAL_AFTER_DIGIT_REGEX
@@ -59,6 +38,8 @@ const formatHighlightedOrdinals = (
         return seg
     })
 }
+
+const ESCAPE_REGEX = /[.*+?^${}()|[\]\\]/gu
 
 /**
  * Splits `text` into segments and wraps each match of `query` in a highlighted

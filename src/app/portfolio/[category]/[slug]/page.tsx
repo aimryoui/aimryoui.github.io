@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/pagination"
 import { Bold, Highlight, Text } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
+import { UPPERCASE_CHARACTERS_REGEX } from "@/helpers/character-regexes"
 import colorManifestRaw from "@/lib/color-manifest.json"
 import {
     getCategoryPath,
@@ -91,7 +92,6 @@ export async function generateMetadata({
 }
 
 const colorManifest = colorManifestRaw as ColorManifest
-const ALL_CHARACTERS_REGEX = /([A-Z])/gu
 
 function applyLightningFallback(colorValue: string) {
     if (colorValue.startsWith("light-dark(")) {
@@ -125,14 +125,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     if (projectColor?.theme) {
         const hexRules = Object.entries(projectColor.theme)
             .map(([key, colorData]) => {
-                const cssVar = `--color-${key.replace(ALL_CHARACTERS_REGEX, "-$1").toLowerCase()}`
+                const cssVar = `--color-${key.replace(UPPERCASE_CHARACTERS_REGEX, "-$1").toLowerCase()}`
                 return `${cssVar}:${applyLightningFallback(colorData.hex)};`
             })
             .join("")
 
         const oklchRules = Object.entries(projectColor.theme)
             .map(([key, colorData]) => {
-                const cssVar = `--color-${key.replace(ALL_CHARACTERS_REGEX, "-$1").toLowerCase()}`
+                const cssVar = `--color-${key.replace(UPPERCASE_CHARACTERS_REGEX, "-$1").toLowerCase()}`
                 return `${cssVar}:${applyLightningFallback(colorData.oklch)};`
             })
             .join("")

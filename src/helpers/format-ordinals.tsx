@@ -1,4 +1,4 @@
-const ORDINAL_AFTER_DIGIT_REGEX = /(?<=\d)(st|nd|rd|th)/gu
+import { ORDINAL_AFTER_DIGIT_REGEX } from "@/helpers/character-regexes"
 
 const formatOrdinals = (text: string) => {
     if (!text) return ""

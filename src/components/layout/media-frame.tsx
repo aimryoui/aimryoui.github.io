@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { Fragment } from "react"
+import { Fragment, useRef } from "react"
 import NextLink from "next/link"
 
 import { Divider } from "@/components/layout/divider"
@@ -10,6 +10,7 @@ import { Lightbox } from "@/components/ui/lightbox"
 import { Highlight } from "@/components/ui/typography"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { slugify } from "@/helpers/slugify"
+import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 import { cn } from "@/lib/utils"
 
 interface SectionNameProps extends React.ComponentProps<"div"> {
@@ -39,7 +40,7 @@ export function SectionName({
         <ContainerComp
             id={isAnchorTag ? slugify(sectionName) : undefined}
             className={cn(
-                isAnchorTag && "sticky top-3.5 z-30",
+                isAnchorTag && "sticky top-3.5 z-50",
                 "pointer-events-none grid h-13 place-items-center",
                 containerClassName
             )}
@@ -125,7 +126,7 @@ function MediaFrame({
                     {sectionName && (
                         <div
                             className={cn(
-                                "sticky top-16.5 z-30 flex h-0 items-end justify-center"
+                                "sticky top-16.5 z-50 flex h-0 items-end justify-center"
                             )}
                         >
                             <SectionName
@@ -158,4 +159,72 @@ function MediaFrame({
     )
 }
 
-export { MediaFrame }
+function JustifiedColumn({
+    children,
+    className,
+    style,
+    ...props
+}: React.ComponentProps<"div">) {
+    const ref = useRef<HTMLDivElement>(null)
+
+    useIsomorphicLayoutEffect(() => {
+        const el = ref.current
+        if (!el) return
+
+        let currentRatio = 0.5
+
+        const updateRatio = () => {
+            const firstChild = el.firstElementChild
+            const lastChild = el.lastElementChild
+
+            if (firstChild && lastChild) {
+                const firstRect = firstChild.getBoundingClientRect()
+                const lastRect = lastChild.getBoundingClientRect()
+                const intrinsicHeight = lastRect.bottom - firstRect.top
+                const width = el.getBoundingClientRect().width
+
+                if (intrinsicHeight > 0) {
+                    const x = width / intrinsicHeight
+
+                    if (Math.abs(currentRatio - x) > 0.0001) {
+                        currentRatio = x
+                        el.style.setProperty("--flex-ratio", x.toFixed(5))
+                    }
+                }
+            }
+        }
+
+        updateRatio()
+
+        const observer = new ResizeObserver(() => {
+            requestAnimationFrame(updateRatio)
+        })
+
+        observer.observe(el)
+
+        const childrenList = Array.from(el.children)
+        for (const child of childrenList) {
+            observer.observe(child)
+        }
+
+        return () => {
+            observer.disconnect()
+        }
+    }, [])
+
+    return (
+        <div
+            ref={ref}
+            className={cn("flex flex-col", className)}
+            style={{
+                flex: "var(--flex-ratio, 1) 1 0%",
+                ...style
+            }}
+            {...props}
+        >
+            {children}
+        </div>
+    )
+}
+
+export { JustifiedColumn, MediaFrame }

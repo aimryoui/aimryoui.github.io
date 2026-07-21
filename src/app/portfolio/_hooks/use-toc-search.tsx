@@ -1,12 +1,6 @@
+import { removeDiacritics } from "@/helpers/remove-diacritics"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { useSearch } from "@/portfolio/_hooks/use-search"
-
-function removeAccents(str: string): string {
-    return str
-        .normalize("NFD")
-        .replaceAll(/[\u0300-\u036F]/gu, "")
-        .replaceAll(/[đĐ]/gu, "d")
-}
 
 interface NormalizedTocItem extends TocItemProps {
     _normalizedLabel: string
@@ -15,7 +9,7 @@ interface NormalizedTocItem extends TocItemProps {
 function getFilteredItems(normalizedItems: NormalizedTocItem[], query: string) {
     if (!query.trim()) return normalizedItems
 
-    const normalizedQuery = removeAccents(query.toLowerCase().trim())
+    const normalizedQuery = removeDiacritics(query.toLowerCase().trim())
     const result: TocItemProps[] = []
     let currentCategory: NormalizedTocItem | null = null
     let currentChildren: NormalizedTocItem[] = []
@@ -67,7 +61,7 @@ function useTocSearch(
     const normalizedItems = items.length
         ? items.map((item) => ({
               ...item,
-              _normalizedLabel: removeAccents(item.label.toLowerCase())
+              _normalizedLabel: removeDiacritics(item.label.toLowerCase())
           }))
         : []
 

@@ -1,8 +1,10 @@
-const DIACRITICS_REGEX = /[\u0300-\u036f]/gu
-const VIETNAMESE_D_REGEX = /[đĐ]/gu
-const NON_ALPHANUMERIC_REGEX = /[^a-zA-Z0-9]/gu
-const CONSECUTIVE_HYPHENS_REGEX = /-+/gu
-const LEADING_TRAILING_HYPHENS_REGEX = /^-|-$/gu
+import {
+    CONSECUTIVE_HYPHENS_REGEX,
+    DIACRITICS_REGEX,
+    LEADING_TRAILING_HYPHENS_REGEX,
+    NON_ALPHANUMERIC_REGEX,
+    VIETNAMESE_D_REGEX
+} from "@/helpers/character-regexes"
 
 export function formatViewTransitionName(value: string): string {
     return value
