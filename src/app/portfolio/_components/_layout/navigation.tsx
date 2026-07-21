@@ -12,13 +12,13 @@ export function Navigation() {
     if (isMobile) {
         return (
             <div
-                className={cn("z-50", {
+                className={cn("pointer-events-none z-70", {
                     lg: "fixed inset-x-0 bottom-0"
                 })}
             >
                 <div
                     className={cn(
-                        "relative z-50 min-h-20 w-full bg-background"
+                        "pointer-events-auto relative min-h-20 w-full bg-background"
                     )}
                     style={{
                         viewTransitionName: "toolbar"

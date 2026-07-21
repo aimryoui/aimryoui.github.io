@@ -3,7 +3,7 @@
 import type React from "react"
 import NextLink from "next/link"
 
-import { SectionLine } from "@/components/layout/line"
+import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
 import { SettingButton } from "@/components/layout/toolbar/settings-button"
 import { Progress } from "@/components/ui/progress"
@@ -151,7 +151,8 @@ function Menu({ className }: { className?: string }) {
                             <SettingButton />
                         </li>
                         {isMobile && (
-                            <li className="-my-5.5 -me-6 size-20">
+                            <li className="relative -my-5.5 -me-6 size-20">
+                                <SvgElementLine className="absolute inset-y-0 left-0 z-1 w-px" />
                                 <MobileTocButton />
                             </li>
                         )}
