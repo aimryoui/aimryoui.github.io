@@ -157,14 +157,25 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             )}
             <FlashOverlay />
             <section>
-                {project.social?.behance ? (
+                {project.social ? (
                     <Space
                         className={cn(
                             "pointer-events-none sticky top-0 z-60 flex items-center justify-end bg-transparent px-6"
                         )}
                     >
                         <SocialButton
-                            href={project.social.behance}
+                            href={
+                                project.social.behance ??
+                                project.social.productWebsite ??
+                                ""
+                            }
+                            socialType={
+                                project.social.behance
+                                    ? "behance"
+                                    : project.social.productWebsite
+                                      ? "product-website"
+                                      : undefined
+                            }
                             className={cn({
                                 lg: "fixed bottom-25 right-6 h-[36px] text-base"
                             })}
@@ -176,7 +187,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <SectionLine showDecoration />
                 <Space
                     className={
-                        project.social?.behance &&
+                        project.social &&
                         cn("relative", {
                             before: "absolute inset-x-0 bottom-full h-20 bg-background"
                         })

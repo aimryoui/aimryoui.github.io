@@ -10,6 +10,7 @@ import { Bold, Text } from "@/components/ui/typography"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { cn } from "@/lib/utils"
+import { type SocialType } from "@/portfolio/[category]/[slug]/_components/social-button"
 
 import { type Project } from "~/.velite"
 
@@ -113,7 +114,13 @@ function ProjectCard({
                 projectName={project.projectName}
                 navigation={navigation}
                 src={coverImagePath}
-                hasSocialBehance={!!project.social?.behance}
+                socialType={
+                    project.social?.behance
+                        ? "behance"
+                        : project.social?.productWebsite
+                          ? "product-website"
+                          : undefined
+                }
                 className={cn(
                     projectNavigation && navigation === "backward"
                         ? {
@@ -166,15 +173,22 @@ function ProjectCover({
     className,
     projectName,
     navigation,
-    hasSocialBehance,
+    socialType,
     src,
     ...props
 }: React.ComponentProps<"div"> &
     Pick<ProjectCardProps, "navigation"> & {
         projectName: string
         src: string
-        hasSocialBehance: boolean
-    }) {
+    } & SocialType) {
+    const socialColor = {
+        default:
+            socialType === "behance"
+                ? "bg-[#0056ff]"
+                : socialType === "product-website"
+                  ? "bg-[#b18c1b]"
+                  : "bg-default"
+    }
     return (
         <ViewTransition name={formatViewTransitionName(`cover-${projectName}`)}>
             <div
@@ -217,16 +231,17 @@ function ProjectCover({
                         }
                     )}
                 >
-                    {hasSocialBehance && (
+                    {socialType === "behance" ? (
                         <div
                             className={cn(
-                                "absolute -right-1 -top-1 size-4.5 rounded-full border border-default/15 bg-[#0056ff] p-0.5 text-white"
+                                socialColor.default,
+                                "absolute -right-1 -top-1 size-4.5 rounded-full border border-default/15 p-0.5 text-white"
                             )}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 40 40"
-                                className="-translate-y-[.5px]"
+                                className="-translate-y-[.5px] translate-x-[.5px]"
                             >
                                 <path
                                     fill="currentColor"
@@ -234,6 +249,25 @@ function ProjectCover({
                                 />
                             </svg>
                         </div>
+                    ) : (
+                        socialType === "product-website" && (
+                            <div
+                                className={cn(
+                                    socialColor.default,
+                                    "absolute -right-1 -top-1 size-4.5 rounded-full border border-default/15 p-0.5 text-white"
+                                )}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 40 40"
+                                >
+                                    <path
+                                        fill="currentColor"
+                                        d="M20 2C10.075 2 2 10.075 2 20s8.075 18 18 18 18-8.075 18-18S29.925 2 20 2M5.6 20q0-.823.094-1.623c.097-.834.146-1.251.443-1.547.233-.232.655-.379.982-.342.417.048.757.388 1.437 1.068l3.4 3.4c.312.312.467.467.579.65q.148.242.215.52c.05.206.05.427.05.867v1.214c0 .44 0 .66.05.868q.067.276.215.52c.112.182.267.337.579.649l3.713 3.712c.31.312.466.467.578.65q.148.242.215.52c.05.206.05.427.05.867v.106c0 .734 0 1.101-.18 1.392a1.3 1.3 0 0 1-.691.522c-.329.094-.64.005-1.26-.171C10.036 32.127 5.6 26.577 5.6 20m25.794 8.771c-.68-.548-1.564-.988-2.428-1.261-.74-.235-1.11-.352-1.266-.464-.258-.185-.342-.299-.44-.601-.06-.182-.06-.47-.06-1.045a3.6 3.6 0 0 0-3.6-3.6h-4.5c-.839 0-1.258 0-1.589-.137a1.8 1.8 0 0 1-.974-.974c-.137-.331-.137-.75-.137-1.589 0-.521 0-.782.038-.963.097-.468.017-.283.292-.673.107-.151.78-.777 2.124-2.03l.092-.088A3.6 3.6 0 0 0 20 12.8c0-.56 0-.839.091-1.06a1.2 1.2 0 0 1 .65-.649C20.96 11 21.24 11 21.8 11a3.6 3.6 0 0 0 3.6-3.6c0-.353.358-.594.678-.444C30.988 9.251 34.4 14.232 34.4 20c0 3.177-1.058 6.262-3.006 8.771"
+                                    />
+                                </svg>
+                            </div>
+                        )
                     )}
                     {/* oxlint-disable-next-line next/no-img-element */}
                     <img

@@ -37,6 +37,7 @@ function AlertDialogOverlay({
             className={cn(
                 "fixed inset-0 isolate z-50 bg-black/80 duration-250",
                 {
+                    dark: "bg-black/40",
                     "supports-[backdrop-filter]": "backdrop-blur-sm",
                     "data-starting-style": "opacity-0 backdrop-blur-0",
                     "data-ending-style": "opacity-0 backdrop-blur-0"
