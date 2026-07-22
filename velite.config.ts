@@ -4,6 +4,8 @@ import { defineCollection, defineConfig, type Schema, s } from "velite"
 
 import { TOOL_ICONS, type ToolKey } from "@/portfolio/_configs/tools"
 
+const HEX_COLOR_REGEX = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/u
+
 const projects = defineCollection({
     name: "Project",
     pattern: "projects/**/*.mdx",
@@ -27,8 +29,8 @@ const projects = defineCollection({
 
         social: s
             .object({
-                behance: s.string().optional(),
-                productWebsite: s.string().optional()
+                behance: s.string().url().optional(),
+                productWebsite: s.string().url().optional()
             })
             .optional(),
 
@@ -36,7 +38,13 @@ const projects = defineCollection({
             .object({
                 forceExpand: s.boolean().default(false),
                 coverImage: s.string().optional(),
-                colorOverrideHex: s.string().optional()
+                colorOverrideHex: s
+                    .string()
+                    .regex(HEX_COLOR_REGEX, {
+                        message:
+                            "Invalid hex color format. Must be #FFF or #FFFFFF"
+                    })
+                    .optional()
             })
             .optional(),
 

@@ -99,10 +99,14 @@ export default {
                 11.5: "2.875rem",
                 13: "3.25rem",
                 16.5: "4.125rem",
+                17: "4.25rem",
                 18: "4.5rem",
                 22: "5.5rem",
                 24.5: "6.125rem",
                 25: "6.25rem",
+                25.25: "6.3125rem",
+                25.5: "6.375rem",
+                26: "6.5rem",
                 37.5: "9.375rem",
                 56.25: "14.0625rem",
                 61.25: "15.3125rem",
@@ -203,7 +207,9 @@ export default {
                 spinner: "spinner",
                 focus: ".2s ease-out focus forwards",
                 inert: "inert forwards",
-                "nav-reveal": "nav-reveal 1s cubic-bezier(.4,0,.6,1) forwards"
+                "nav-reveal": "nav-reveal 1s cubic-bezier(.4,0,.6,1) forwards",
+                "social-button-shake-in":
+                    "social-button-shake-in .3s ease-in-out forwards"
             },
             keyframes: ({ theme }) => ({
                 spinner: {
@@ -238,6 +244,17 @@ export default {
                     },
                     "100%": {
                         maskPosition: "0 0"
+                    }
+                },
+                "social-button-shake-in": {
+                    "0%": {
+                        transform: "translateX(0)"
+                    },
+                    "50%": {
+                        transform: "translateX(-.375rem)"
+                    },
+                    "100%": {
+                        transform: "translateX(0)"
                     }
                 }
             })

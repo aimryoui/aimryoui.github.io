@@ -79,7 +79,7 @@ function ElementLine({
             className={cn(
                 "pointer-events-none",
                 dir === "vertical"
-                    ? "h-full border-r border-dashed border-stroke webkit:border-r-[1px]"
+                    ? "h-full border-r border-dashed border-stroke"
                     : "w-full border-b border-dashed border-stroke",
                 className
             )}
@@ -96,20 +96,32 @@ function SvgElementLine({
     dir?: "vertical" | "horizontal"
 }) {
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="none"
-            className={cn("pointer-events-none size-full", className)}
-            {...props}
+        <div
+            role="separator"
+            className={cn(
+                "pointer-events-none relative",
+                dir === "vertical" ? "h-full" : "w-full",
+                className
+            )}
         >
-            <line
-                x1={dir === "vertical" ? "50%" : "0"}
-                y1={dir === "vertical" ? "0" : "50%"}
-                x2={dir === "vertical" ? "50%" : "100%"}
-                y2={dir === "vertical" ? "100%" : "50%"}
-                className="stroke-stroke stroke-px stroke-dashed"
-            />
-        </svg>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none"
+                className={cn(
+                    "absolute inset-0",
+                    dir === "vertical" ? "h-full w-px" : "h-px w-full"
+                )}
+                {...props}
+            >
+                <line
+                    x1={dir === "vertical" ? "50%" : "0"}
+                    y1={dir === "vertical" ? "0" : "50%"}
+                    x2={dir === "vertical" ? "50%" : "100%"}
+                    y2={dir === "vertical" ? "100%" : "50%"}
+                    className="stroke-stroke stroke-px stroke-dashed"
+                />
+            </svg>
+        </div>
     )
 }
 

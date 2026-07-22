@@ -1,6 +1,6 @@
 function PngAntiBleed() {
     return (
-        <svg className="absolute size-0" aria-hidden={true}>
+        <svg aria-hidden={true} className="absolute size-0">
             <filter id="png-anti-bleed" colorInterpolationFilters="sRGB">
                 <feGaussianBlur
                     in="SourceAlpha"
@@ -24,7 +24,7 @@ function PngAntiBleed() {
 
 function PngBorder() {
     return (
-        <svg className="absolute size-0" aria-hidden={true}>
+        <svg aria-hidden={true} className="absolute size-0">
             <filter id="png-border" colorInterpolationFilters="sRGB">
                 <feOffset in="SourceAlpha" dx="0" dy="-1.5" result="O_N" />
                 <feOffset in="SourceAlpha" dx="0" dy="1.5" result="O_S" />
@@ -101,4 +101,27 @@ function PngBorder() {
     )
 }
 
-export { PngAntiBleed, PngBorder }
+function MetaBall() {
+    return (
+        <svg aria-hidden={true} className="absolute size-0">
+            <defs>
+                <filter id="metaball">
+                    <feGaussianBlur
+                        in="SourceGraphic"
+                        stdDeviation="4"
+                        result="blur"
+                    />
+                    <feColorMatrix
+                        in="blur"
+                        mode="matrix"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -8"
+                        result="goo"
+                    />
+                    <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+                </filter>
+            </defs>
+        </svg>
+    )
+}
+
+export { MetaBall, PngAntiBleed, PngBorder }

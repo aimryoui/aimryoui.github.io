@@ -29,7 +29,7 @@ const QR_ITEMS = [
 
 const CURRENT_YEAR = new Date().getFullYear()
 
-function Footer() {
+function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
     const mode = usePortfolioModeStore((state) => state.mode)
 
     const containerRef = useRef<HTMLElement>(null)
@@ -147,6 +147,12 @@ function Footer() {
             })}
         >
             <Space className={cn("hidden", { lg: "block" })} />
+            {hasSocialLinks && (
+                <>
+                    <Space className={cn("hidden", { lg: "block" })} />
+                    <SectionLine />
+                </>
+            )}
             <Divider
                 className={cn(
                     "grid h-auto place-items-center bg-background px-4 py-3 text-sm"
@@ -237,11 +243,11 @@ function FooterSeparator({
         index < arr.length - 1 && (
             <li
                 role="separator"
-                className={cn("h-full", {
+                className={cn("z-1 h-full w-0", {
                     "@[50.9375rem]": [
                         "h-20",
                         {
-                            "nth-of-type-10": "h-auto w-full",
+                            "nth-of-type-10": "h-0 w-full",
                             "[&>hr]:nth-of-type-10":
                                 "h-auto w-full border-b border-r-0"
                         }
@@ -266,14 +272,14 @@ function WebkitFooterSeparator({
     const isContainerNarrow = useContainerQuery(containerRef, "50.9375rem")
 
     return isContainerNarrow && index === 4 ? (
-        <li role="separator" className={cn("h-auto w-full")}>
+        <li role="separator" className={cn("z-1 h-0 w-full")}>
             <ElementLine dir="horizontal" />
         </li>
     ) : (
         index < arr.length - 1 && (
             <li
                 role="separator"
-                className={cn("h-full w-px", {
+                className={cn("z-1 h-full", {
                     "@[50.9375rem]": "h-20"
                 })}
             >

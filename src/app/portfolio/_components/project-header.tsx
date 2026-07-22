@@ -104,7 +104,9 @@ function ProjectHeader({
                 </div>
                 {tools.length > 0 && (
                     <div
-                        className={cn("absolute -top-10 right-4.5 flex gap-2")}
+                        className={cn(
+                            "absolute bottom-[calc(100%+1.25rem)] right-6 flex gap-2"
+                        )}
                     >
                         <Tooltip>
                             {tools.map((key) => {

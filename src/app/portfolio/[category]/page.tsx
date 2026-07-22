@@ -274,7 +274,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 </div>
                             </PaginationPrevious>
                         </PaginationItem>
-                        <li className="h-full w-0">
+                        <li className="h-full">
                             <SvgElementLine />
                         </li>
                         <PaginationItem>

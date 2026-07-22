@@ -20,15 +20,17 @@ interface SectionNameProps extends React.ComponentProps<"div"> {
     as?: React.ElementType
     sectionName: string
     author?: string
-    lowercase?: boolean
+    normalcase?: boolean
+    hasSocialLinks?: boolean
     containerClassName?: string
 }
 
 export function SectionName({
     as = NextLink,
-    lowercase = false,
+    normalcase = false,
     sectionName,
     author,
+    hasSocialLinks = false,
     className,
     containerClassName,
     ...props
@@ -36,15 +38,14 @@ export function SectionName({
     const isAnchorTag = as === NextLink
 
     const Comp = as
-    const ContainerComp = isAnchorTag ? "figcaption" : "div"
     const TextComp = isAnchorTag ? "h4" : Fragment
 
     return (
-        <ContainerComp
+        <div
             id={isAnchorTag ? slugify(sectionName) : undefined}
             className={cn(
                 isAnchorTag && "sticky top-3.5 z-50",
-                "pointer-events-none grid h-13 place-items-center",
+                "pointer-events-none grid min-h-13 place-items-center py-2",
                 containerClassName
             )}
             {...props}
@@ -61,8 +62,9 @@ export function SectionName({
                 className={cn(
                     isAnchorTag &&
                         "pointer-events-auto hover:underline hover:decoration-foreground",
-                    "mx-4 text-pretty rounded-full bg-background px-3.5 py-1.5 text-center font-mono",
-                    !lowercase && "uppercase",
+                    "text-pretty rounded-full bg-background px-3.5 py-1.5 text-center font-mono",
+                    hasSocialLinks ? "mx-17 lg:mx-4" : "mx-4",
+                    !normalcase && "uppercase",
                     {
                         md: "py-2 text-sm"
                     },
@@ -82,7 +84,7 @@ export function SectionName({
                     </Highlight>
                 )}
             </Comp>
-        </ContainerComp>
+        </div>
     )
 }
 
@@ -116,18 +118,20 @@ function MediaFrameContent({
 interface MediaFrameProps extends MediaFrameContentProps {
     sectionName?: string
     author?: string
-    lowercase?: boolean
+    normalcase?: boolean
     flex?: boolean
     continuous?: boolean
+    hasSocialLinks?: SectionNameProps["hasSocialLinks"]
 }
 
 function MediaFrame({
     className,
     sectionName,
     author,
-    lowercase,
+    normalcase,
     flex,
     continuous,
+    hasSocialLinks,
     targetCursor,
     children,
     ...props
@@ -135,42 +139,82 @@ function MediaFrame({
     return (
         <>
             <figure
-                className={cn("w-full bg-background", flex && "h-full flex-1")}
+                className={cn(
+                    "grid w-full grid-cols-1 bg-background",
+                    flex && "h-full flex-1"
+                )}
             >
                 {sectionName ? (
                     <>
-                        <SectionName
-                            sectionName={sectionName}
-                            author={author}
-                            lowercase={lowercase}
-                        />
-                        <SectionLine />
-                    </>
-                ) : (
-                    <SectionLine />
-                )}
-                <div
-                    className={cn(
-                        "grid size-inherit place-items-center overflow-clip"
-                    )}
-                >
-                    {sectionName && (
-                        <div
+                        <figcaption
                             className={cn(
-                                "sticky top-16.5 z-50 flex h-0 items-end justify-center"
+                                "pointer-events-none z-30 col-start-1 row-span-2 row-start-1 flex flex-col"
+                            )}
+                        >
+                            <SectionName
+                                sectionName={sectionName}
+                                author={author}
+                                normalcase={normalcase}
+                                hasSocialLinks={hasSocialLinks}
+                                containerClassName="!z-30"
+                                className={cn("bg-background text-foreground")}
+                            />
+                        </figcaption>
+
+                        <div
+                            aria-hidden={true}
+                            role="presentation"
+                            className={cn(
+                                "pointer-events-none z-10 col-start-1 row-span-2 row-start-1 flex flex-col"
                             )}
                         >
                             <SectionName
                                 as="div"
                                 sectionName={sectionName}
                                 author={author}
-                                lowercase={lowercase}
+                                normalcase={normalcase}
+                                hasSocialLinks={hasSocialLinks}
+                                containerClassName="sticky top-3.5 !z-10"
                                 className={cn(
-                                    "static top-0 bg-transparent text-foreground shadow-sm -outline-offset-px outline-stroke outline"
+                                    "bg-transparent text-transparent shadow-sm outline-default/15 outline"
                                 )}
                             />
                         </div>
+
+                        <div
+                            aria-hidden={true}
+                            role="presentation"
+                            className={cn(
+                                "pointer-events-none z-20 col-start-1 row-start-1 flex flex-col bg-background"
+                            )}
+                        >
+                            <SectionName
+                                as="div"
+                                sectionName={sectionName}
+                                author={author}
+                                normalcase={normalcase}
+                                hasSocialLinks={hasSocialLinks}
+                                className="invisible"
+                            />
+                            <SectionLine />
+                        </div>
+                    </>
+                ) : (
+                    <div
+                        className={cn(
+                            "z-20 col-start-1 row-start-1 flex h-0 flex-col justify-end bg-background"
+                        )}
+                    >
+                        <SectionLine />
+                    </div>
+                )}
+
+                <div
+                    className={cn(
+                        "z-0 col-start-1 grid place-items-center overflow-clip",
+                        sectionName ? "row-start-2" : "row-start-1"
                     )}
+                >
                     {continuous ? (
                         children
                     ) : (
@@ -259,4 +303,5 @@ function JustifiedColumn({
     )
 }
 
+export type { MediaFrameProps }
 export { JustifiedColumn, MediaFrame, MediaFrameContent }

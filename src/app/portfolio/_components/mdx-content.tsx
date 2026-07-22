@@ -4,7 +4,8 @@ import { SectionLine } from "@/components/layout/line"
 import {
     JustifiedColumn,
     MediaFrame,
-    MediaFrameContent
+    MediaFrameContent,
+    type MediaFrameProps
 } from "@/components/layout/media-frame"
 import { Gif } from "@/components/media/gif"
 import { Image } from "@/components/media/image"
@@ -46,11 +47,22 @@ const useMDXComponent = (code: string) => {
 interface MDXProps {
     code: string
     components?: Record<string, React.ComponentType>
+    hasSocialLinks?: MediaFrameProps["hasSocialLinks"]
 }
 
-export const MDXContent = ({ code, components }: MDXProps) => {
+export const MDXContent = ({ code, components, hasSocialLinks }: MDXProps) => {
     const Component = useMDXComponent(code)
 
+    const customComponents = {
+        ...sharedComponents,
+        ...(hasSocialLinks && {
+            MediaFrame: (props: React.ComponentProps<typeof MediaFrame>) => (
+                <MediaFrame {...props} hasSocialLinks={hasSocialLinks} />
+            )
+        }),
+        ...components
+    }
+
     // oxlint-disable-next-line react-compiler/static-components
-    return <Component components={{ ...sharedComponents, ...components }} />
+    return <Component components={customComponents} />
 }

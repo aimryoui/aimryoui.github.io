@@ -28,6 +28,7 @@ import { MDXContent } from "@/portfolio/_components/mdx-content"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import Footer from "@/portfolio/_sections/footer"
 import ProjectCard from "@/portfolio/[category]/_components/project-card"
+import SocialButton from "@/portfolio/[category]/[slug]/_components/social-button"
 import { type ColorManifest } from "@/scripts/process-colors"
 
 import { projects } from "~/.velite"
@@ -156,9 +157,31 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             )}
             <FlashOverlay />
             <section>
-                <Space />
+                {project.social?.behance ? (
+                    <Space
+                        className={cn(
+                            "pointer-events-none sticky top-0 z-60 flex items-center justify-end bg-transparent px-6"
+                        )}
+                    >
+                        <SocialButton
+                            href={project.social.behance}
+                            className={cn({
+                                lg: "fixed bottom-25 right-6 h-[36px] text-base"
+                            })}
+                        />
+                    </Space>
+                ) : (
+                    <Space />
+                )}
                 <SectionLine showDecoration />
-                <Space />
+                <Space
+                    className={
+                        project.social?.behance &&
+                        cn("relative", {
+                            before: "absolute inset-x-0 bottom-full h-20 bg-background"
+                        })
+                    }
+                />
                 <SectionLine />
                 <article>
                     <ProjectHeader
@@ -174,7 +197,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <Divider />
                     <SectionLine />
 
-                    <MDXContent code={project.code} />
+                    <MDXContent
+                        code={project.code}
+                        hasSocialLinks={!!project.social}
+                    />
                 </article>
             </section>
 
@@ -264,7 +290,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 </PaginationPrevious>
                             )}
                         </PaginationItem>
-                        <li className="h-full w-0">
+                        <li className="h-full">
                             <SvgElementLine />
                         </li>
                         <PaginationItem>
@@ -384,7 +410,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <Divider />
             <SectionLine />
 
-            <Footer />
+            <Footer hasSocialLinks={!!project.social} />
         </main>
         // </ViewTransition>
     )

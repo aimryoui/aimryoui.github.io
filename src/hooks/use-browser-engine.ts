@@ -35,9 +35,12 @@ function detectBrowserEngine(): BrowserEngine {
         CSS.supports("-webkit-touch-callout", "none")
     ) {
         cachedEngine = "webkit"
-    } else if (CSS.supports("-moz-context-properties", "fill")) {
+    } else if (CSS.supports("-moz-appearance", "none")) {
         cachedEngine = "gecko"
-    } else if (CSS.supports("-webkit-appearance", "none")) {
+    } else if (
+        CSS.supports("-webkit-appearance", "none") &&
+        !CSS.supports("-moz-appearance", "none")
+    ) {
         cachedEngine = "blink"
     } else {
         cachedEngine = "unknown"
