@@ -71,7 +71,7 @@ function SocialButton({
             target="_blank"
             rel="noreferrer"
             className={cn(
-                "group pointer-events-auto relative flex h-9 w-fit items-center justify-end gap-2 text-sm text-white font-wght-500",
+                "group pointer-events-auto relative flex h-9 w-fit items-center justify-end gap-2 text-sm text-white font-wght-500 lg:gap-2.5",
                 "[filter:drop-shadow(0px_0px_3px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_1.5px_rgba(0,0,0,0.10))]",
                 "will-change-transform transition-transform ease-spring duration-400",
                 isAtBottom && isMobile && "-translate-x-5",
@@ -82,7 +82,7 @@ function SocialButton({
             <div
                 aria-hidden={true}
                 className={cn(
-                    "pointer-events-none absolute inset-0 z-0 flex items-center justify-end gap-2 [filter:url(#metaball)]"
+                    "pointer-events-none absolute inset-0 z-0 flex items-center justify-end gap-2 [filter:url(#metaball)] lg:gap-2.5"
                 )}
             >
                 <span
@@ -103,10 +103,10 @@ function SocialButton({
                 </span>
                 <div
                     className={cn(
-                        "size-9 shrink-0 rounded-full bg-[#0056ff] will-change-transform",
+                        "-mr-0.5 size-9.5 shrink-0 rounded-full bg-[#0056ff] will-change-transform",
                         "transition-[background-color] duration-100",
                         {
-                            lg: "size-[36px]",
+                            lg: "-mr-[2px] size-[38px]",
                             "group-hover":
                                 "animate-social-button-shake-in bg-[#054cd9] transition-transform",
                             "group-data-[expanded=true]":
@@ -134,9 +134,9 @@ function SocialButton({
             </span>
             <div
                 className={cn(
-                    "relative z-20 grid size-9 shrink-0 place-items-center rounded-full border border-white/15 will-change-transform transition-[border-color] duration-1000",
+                    "relative z-20 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15 will-change-transform transition-[border-color] duration-1000",
                     {
-                        lg: "size-[36px]",
+                        lg: "-mr-[2px] size-[38px]",
                         "group-hover":
                             "animate-social-button-shake-in border-transparent transition-transform",
                         "group-data-[expanded=true]":
@@ -164,7 +164,7 @@ function SocialButton({
             target="_blank"
             rel="noreferrer"
             className={cn(
-                "group pointer-events-auto ml-auto flex h-9 w-fit items-center justify-end gap-2 text-sm text-white font-wght-500",
+                "group pointer-events-auto ml-auto flex h-9 w-fit items-center justify-end gap-2 text-sm text-white font-wght-500 lg:gap-2.5",
                 "will-change-transform transition-transform ease-spring duration-400",
                 isAtBottom && isMobile && "-translate-x-5",
                 className
@@ -189,10 +189,10 @@ function SocialButton({
             </span>
             <div
                 className={cn(
-                    "z-1 grid size-9 shrink-0 place-items-center rounded-full border border-white/15 bg-[#0056ff] will-change-transform",
+                    "z-1 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15 bg-[#0056ff] will-change-transform",
                     "transition-[background-color] duration-100",
                     {
-                        lg: "size-[36px]",
+                        lg: "-mr-[2px] size-[38px]",
                         "group-hover":
                             "animate-social-button-shake-in bg-[#054cd9] transition-transform",
                         "group-data-[expanded=true]":
