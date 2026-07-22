@@ -17,10 +17,6 @@ const projects = defineCollection({
         type: s.string(),
         projectName: s.string(),
         category: s.string(),
-        coverImage: s.string().optional(),
-        colorOverrideHex: s.string().optional(),
-
-        forceExpand: s.boolean().default(false),
 
         information: s.object({
             newest: s.boolean().default(false),
@@ -28,6 +24,21 @@ const projects = defineCollection({
             subject: s.string(),
             place: s.string().optional()
         }),
+
+        social: s
+            .object({
+                behance: s.string().optional(),
+                productWebsite: s.string().optional()
+            })
+            .optional(),
+
+        override: s
+            .object({
+                forceExpand: s.boolean().default(false),
+                coverImage: s.string().optional(),
+                colorOverrideHex: s.string().optional()
+            })
+            .optional(),
 
         tools: s.array(
             s.enum(Object.keys(TOOL_ICONS()) as [ToolKey, ...ToolKey[]])

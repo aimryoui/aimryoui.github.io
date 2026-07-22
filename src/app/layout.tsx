@@ -6,7 +6,7 @@ import localFont from "next/font/local"
 
 import { TargetCursor } from "@/components/animations/target-cursor"
 import { MarginLine } from "@/components/layout/line"
-import { PngAntiBleed, PngBorder } from "@/components/ui/svg-filter"
+import { PngAntiBleed, PngBorder } from "@/components/media/svg-filter"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"

@@ -1,7 +1,7 @@
 import {
     AnimatedMedia,
     type AnimatedMediaProps
-} from "@/components/ui/animated-media"
+} from "@/components/media/animated-media"
 import { getParsedMediaData } from "@/helpers/get-parsed-media-data"
 import videoManifestRaw from "@/lib/video-manifest.json"
 import { type VideoManifest } from "@/scripts/process-videos"

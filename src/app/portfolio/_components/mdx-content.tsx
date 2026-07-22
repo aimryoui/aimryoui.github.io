@@ -6,11 +6,11 @@ import {
     MediaFrame,
     MediaFrameContent
 } from "@/components/layout/media-frame"
+import { Gif } from "@/components/media/gif"
+import { Image } from "@/components/media/image"
+import { Video } from "@/components/media/video"
 import { Carousel, CarouselImage, CarouselItem } from "@/components/ui/carousel"
-import { Gif } from "@/components/ui/gif"
-import { Image } from "@/components/ui/image"
 import { Masonry } from "@/components/ui/masonry"
-import { Video } from "@/components/ui/video"
 
 const sharedComponents = {
     Image,

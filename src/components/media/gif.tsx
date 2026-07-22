@@ -5,7 +5,7 @@ import { mergeRefs } from "react-merge-refs"
 import {
     AnimatedMedia,
     type AnimatedMediaProps
-} from "@/components/ui/animated-media"
+} from "@/components/media/animated-media"
 import { LightboxItem } from "@/components/ui/lightbox"
 import { getParsedMediaData } from "@/helpers/get-parsed-media-data"
 import { cn } from "@/lib/utils"

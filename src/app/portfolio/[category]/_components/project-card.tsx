@@ -42,12 +42,14 @@ function ProjectCard({
         }
     }, [])
 
-    const coverImageSrc = project.coverImage
+    const coverImage = project.override?.coverImage
+
+    const coverImagePath = coverImage
         ? (() => {
-              const lastDotIndex = project.coverImage.lastIndexOf(".")
-              const pathWithoutExt = project.coverImage.slice(0, lastDotIndex)
-              const fileName = project.coverImage.slice(
-                  project.coverImage.lastIndexOf("/") + 1,
+              const lastDotIndex = coverImage.lastIndexOf(".")
+              const pathWithoutExt = coverImage.slice(0, lastDotIndex)
+              const fileName = coverImage.slice(
+                  coverImage.lastIndexOf("/") + 1,
                   lastDotIndex
               )
 
@@ -110,7 +112,7 @@ function ProjectCard({
             <ProjectCover
                 projectName={project.projectName}
                 navigation={navigation}
-                src={coverImageSrc}
+                src={coverImagePath}
                 className={cn(
                     projectNavigation && navigation === "backward"
                         ? {

@@ -74,7 +74,11 @@ function Projects() {
 
                                 <ExpandableWrapper
                                     projectName={project.projectName}
-                                    forceExpand={project.forceExpand}
+                                    forceExpand={
+                                        project.override
+                                            ? project.override.forceExpand
+                                            : false
+                                    }
                                 >
                                     <MDXContent code={project.code} />
                                 </ExpandableWrapper>

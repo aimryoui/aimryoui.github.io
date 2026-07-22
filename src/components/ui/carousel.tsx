@@ -18,14 +18,14 @@ import Ssr from "embla-carousel-ssr"
 import WheelGestures from "embla-carousel-wheel-gestures"
 
 import { ArrowLeft, ArrowRight, Refresh } from "@/components/icons/icons"
-import { Button } from "@/components/ui/button"
 import {
     Image,
     type ImageBorderProps,
     type ImageProps,
     type ImageRoundProps,
     type PngProps
-} from "@/components/ui/image"
+} from "@/components/media/image"
+import { Button } from "@/components/ui/button"
 import { Lightbox } from "@/components/ui/lightbox"
 import { Slider } from "@/components/ui/slider"
 import { Spinner } from "@/components/ui/spinner"

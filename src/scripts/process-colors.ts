@@ -15,7 +15,7 @@ const MDX_DIR = "src/content/projects"
 const IMAGE_DIR = "private/media"
 const MANIFEST_PATH = "src/lib/color-manifest.json"
 
-const SCRIPT_VERSION = "2"
+const SCRIPT_VERSION = "1"
 
 const BRAND_COLOR = "\x1B[38;2;168;85;247m"
 const RESET = "\x1B[0m"
@@ -92,11 +92,18 @@ async function processColorForFile(
         .join(parsedPath.dir, parsedPath.name)
         .replaceAll("\\", "/")
 
-    let imagePath = data.coverImage as string | undefined
+    let coverImagePath = (data as { override?: { coverImage?: string } })
+        .override?.coverImage
 
-    if (imagePath) {
-        if (imagePath.endsWith(".mp4") || imagePath.endsWith(".gif")) {
-            imagePath = imagePath.replace(/\.(mp4|gif)$/u, "-poster.webp")
+    if (coverImagePath) {
+        if (
+            coverImagePath.endsWith(".mp4") ||
+            coverImagePath.endsWith(".gif")
+        ) {
+            coverImagePath = coverImagePath.replace(
+                /\.(mp4|gif)$/u,
+                "-poster.webp"
+            )
         }
     } else {
         const possibleExtensions = [
@@ -109,20 +116,25 @@ async function processColorForFile(
         for (const ext of possibleExtensions) {
             const tempPath = `/${slug}/1${ext}`
             if (fs.existsSync(path.join(process.cwd(), IMAGE_DIR, tempPath))) {
-                imagePath = tempPath
+                coverImagePath = tempPath
                 break
             }
         }
-        imagePath ??= `/${slug}/1.jpg`
+        coverImagePath ??= `/${slug}/1.jpg`
     }
 
-    const absoluteImagePath = path.join(process.cwd(), IMAGE_DIR, imagePath)
+    const absoluteCoverImagePath = path.join(
+        process.cwd(),
+        IMAGE_DIR,
+        coverImagePath
+    )
 
-    const imageHash = fs.existsSync(absoluteImagePath)
-        ? getFileHash(absoluteImagePath)
+    const imageHash = fs.existsSync(absoluteCoverImagePath)
+        ? getFileHash(absoluteCoverImagePath)
         : ""
 
-    const colorOverride = data.colorOverrideHex as string | undefined
+    const colorOverride = (data as { override?: { colorOverrideHex?: string } })
+        .override?.colorOverrideHex
     const currentInputHash = crypto
         .createHash("md5")
         .update(imageHash + colorOverride)
@@ -140,12 +152,12 @@ async function processColorForFile(
     }
 
     try {
-        if (fs.existsSync(absoluteImagePath)) {
-            let imageSource: string | Buffer = absoluteImagePath
+        if (fs.existsSync(absoluteCoverImagePath)) {
+            let imageSource: string | Buffer = absoluteCoverImagePath
             let imageBuffer: Buffer | null = null
 
-            if (absoluteImagePath.toLowerCase().endsWith(".webp")) {
-                imageBuffer = await sharp(absoluteImagePath)
+            if (absoluteCoverImagePath.toLowerCase().endsWith(".webp")) {
+                imageBuffer = await sharp(absoluteCoverImagePath)
                     .toFormat("png")
                     .toBuffer()
                 imageSource = imageBuffer
@@ -204,7 +216,7 @@ async function processColorForFile(
             return true
         }
         console.warn(
-            `\n${PREFIX} Warning: Source image not found for "${slug}". Looked at: ${absoluteImagePath}`
+            `\n${PREFIX} Warning: Source image not found for "${slug}". Looked at: ${absoluteCoverImagePath}`
         )
         return false
     } catch (error) {
