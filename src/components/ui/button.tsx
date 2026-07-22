@@ -32,6 +32,7 @@ const buttonVariants = cva(
                     "aria-expanded": "bg-secondary text-secondary-foreground"
                 }),
                 outline: cn("border border-stroke bg-background", {
+                    dark: "bg-input/25",
                     hover: "bg-element-hover text-foreground",
                     active: "bg-muted",
                     "aria-expanded": "bg-muted text-foreground"

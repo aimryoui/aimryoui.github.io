@@ -37,7 +37,7 @@ export default function Portfolio() {
                 >
                     <span
                         className={cn(
-                            "absolute -top-9.5 left-6 font-mono uppercase"
+                            "absolute bottom-[calc(100%+1rem)] left-6 font-mono uppercase leading-normal"
                         )}
                     >
                         About
