@@ -16,9 +16,9 @@ const NO_OPACITY_COLOR_MIX_REGEX =
     /color-mix\(in oklab, (var\(--[^)]+\)|currentColor) calc\((?:var\(--nhn-[\w-]+-opacity, ?1\)|1) \* 100%\), transparent\)/gu
 const CALC_PERCENTAGE_REGEX = /calc\(([\d.]+) \* 100%\)/gu
 
-const SUPPORTS_LIGHT_DARK_REGEX_COME_FIRST =
+const SUPPORTS_LIGHT_DARK_COME_FIRST_REGEX =
     /\(color:\s*light-dark\(red,\s*red\)\)\s*and\s*/gu
-const SUPPORTS_LIGHT_DARK_REGEX_COME_LAST =
+const SUPPORTS_LIGHT_DARK_COME_LAST_REGEX =
     /\s*and\s*\(color:\s*light-dark\(red,\s*red\)\)/gu
 
 const optimizeAndReplacePlugin = (): Plugin => {
@@ -79,8 +79,8 @@ const optimizeAndReplacePlugin = (): Plugin => {
                     atRule.params.includes("(color: light-dark(red, red))")
                 ) {
                     atRule.params = atRule.params
-                        .replace(SUPPORTS_LIGHT_DARK_REGEX_COME_FIRST, "")
-                        .replace(SUPPORTS_LIGHT_DARK_REGEX_COME_LAST, "")
+                        .replace(SUPPORTS_LIGHT_DARK_COME_FIRST_REGEX, "")
+                        .replace(SUPPORTS_LIGHT_DARK_COME_LAST_REGEX, "")
                 }
             })
         }

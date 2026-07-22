@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
-import { ElementLine, SectionLine } from "@/components/layout/line"
+import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import {
     Pagination,
@@ -275,7 +275,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                             </PaginationPrevious>
                         </PaginationItem>
                         <li className="h-full w-0">
-                            <ElementLine />
+                            <SvgElementLine />
                         </li>
                         <PaginationItem>
                             <PaginationNext

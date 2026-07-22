@@ -37,10 +37,7 @@ function detectBrowserEngine(): BrowserEngine {
         cachedEngine = "webkit"
     } else if (CSS.supports("-moz-context-properties", "fill")) {
         cachedEngine = "gecko"
-    } else if (
-        CSS.supports("anchor-name", "--test") ||
-        CSS.supports("-webkit-appearance", "none")
-    ) {
+    } else if (CSS.supports("-webkit-appearance", "none")) {
         cachedEngine = "blink"
     } else {
         cachedEngine = "unknown"

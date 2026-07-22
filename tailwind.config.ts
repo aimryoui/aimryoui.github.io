@@ -32,11 +32,12 @@ import has from "./src/lib/tailwindcss-plugins/variants/has"
 import is from "./src/lib/tailwindcss-plugins/variants/is"
 import not from "./src/lib/tailwindcss-plugins/variants/not"
 import nth from "./src/lib/tailwindcss-plugins/variants/nth"
+import operatingSystems from "./src/lib/tailwindcss-plugins/variants/operating-systems"
 import slotted from "./src/lib/tailwindcss-plugins/variants/slotted"
 
 export const BASE_FONT_SIZE = 16
 
-const colorMix = (variable: string) => {
+function colorMix(variable: string) {
     return `color-mix(in oklab, var(${variable}) calc(<alpha-value> * 100%), transparent)`
 }
 
@@ -333,6 +334,7 @@ export default {
         is,
         not,
         nth,
+        operatingSystems,
         slotted,
 
         plugin(({ addBase, addVariant }) => {
