@@ -21,7 +21,7 @@ function SectionTitle({
     return (
         <div
             className={cn(
-                "relative flex min-h-20 items-center bg-background px-6",
+                "relative flex min-h-20 items-center bg-background px-6 py-[1.203125rem]",
                 className
             )}
         >

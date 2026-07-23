@@ -5,9 +5,9 @@ export default plugin(({ addVariant }) => {
         "webkit",
         "@supports (-apple-pay-button-style: black) or (-webkit-touch-callout: none)"
     )
-    addVariant("gecko", "@supports (-moz-context-properties: fill)")
+    addVariant("gecko", "@supports (-moz-appearance: none)")
     addVariant(
         "blink",
-        "@supports (-webkit-appearance: none) and (not (-apple-pay-button-style: black)) and (not (-webkit-touch-callout: none)) and (not (-moz-context-properties: fill))"
+        "@supports (-webkit-appearance: none) and (not (-apple-pay-button-style: black)) and (not (-webkit-touch-callout: none)) and (not (-moz-appearance: none))"
     )
 })
