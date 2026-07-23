@@ -120,7 +120,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <main className={cn("relative flex-1")}>
             <AmbientStyle project={project} category={category} />
             <FlashOverlay />
-            <section>
+            <section
+                {...(socialData && {
+                    className: cn("lg:pt-20")
+                })}
+            >
                 {socialData ? (
                     <Space
                         className={cn(
