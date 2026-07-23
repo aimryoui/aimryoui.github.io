@@ -289,7 +289,7 @@ function About() {
             <SectionLine />
             <Space
                 className={cn(
-                    "hidden h-auto min-h-20 flex-col gap-1 px-6 py-4.5",
+                    "hidden h-auto min-h-20 flex-col gap-0.5 px-6 py-4.5",
                     {
                         md: "flex"
                     }
@@ -326,8 +326,8 @@ function About() {
                     .
                 </Text>
                 <Text>
-                    I&#39;m comfortable with remote setups, experienced in and
-                    prefer working remotely.
+                    I&#39;m <Bold>comfortable</Bold> with remote setups,
+                    experienced in and <Bold>prefer working remotely</Bold>.
                 </Text>
             </Space>
         </>
