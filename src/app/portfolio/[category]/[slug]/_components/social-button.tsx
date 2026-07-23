@@ -140,13 +140,12 @@ function SocialButton({
                         socialColor.hover,
                         socialColor.expanded,
                         "-mr-0.5 size-9.5 shrink-0 rounded-full will-change-transform",
-                        "transition-[background-color] duration-100",
+                        "transition-[transform,translate,background-color] duration-100",
                         {
                             lg: "-mr-[2px] size-[38px]",
-                            "group-hover":
-                                "animate-social-button-shake-in transition-transform",
+                            "group-hover": "animate-social-button-shake-in",
                             "group-data-[expanded=true]":
-                                "animate-social-button-shake-in transition-transform"
+                                "animate-social-button-shake-in"
                         }
                     )}
                 />
@@ -154,8 +153,8 @@ function SocialButton({
 
             <span
                 className={cn(
-                    "relative z-10 flex h-9 w-0 translate-x-11 items-center justify-end gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-0 opacity-0 [interpolate-size:allow-keywords]",
-                    "will-change-[transform,width,opacity,padding] transition-[transform,width,opacity,padding] ease-spring duration-450",
+                    "relative z-10 flex h-9 w-0 translate-x-11 items-center justify-end gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-0 opacity-0",
+                    "will-change-[transform,width,opacity,padding] transition-[transform,width,opacity,padding] ease-spring duration-450 [interpolate-size:allow-keywords]",
                     {
                         lg: "h-[36px]",
                         "group-hover":
@@ -174,13 +173,14 @@ function SocialButton({
             </span>
             <div
                 className={cn(
-                    "relative z-20 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15 will-change-transform transition-[border-color] duration-1000",
+                    "relative z-20 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15",
+                    "will-change-transform transition-[transform,translate,border-color] duration-1000",
                     {
                         lg: "-mr-[2px] size-[38px]",
                         "group-hover":
-                            "animate-social-button-shake-in border-transparent transition-transform",
+                            "animate-social-button-shake-in border-transparent",
                         "group-data-[expanded=true]":
-                            "animate-social-button-shake-in border-transparent transition-transform"
+                            "animate-social-button-shake-in border-transparent"
                     }
                 )}
             >
@@ -252,14 +252,13 @@ function SocialButton({
                     socialColor.default,
                     socialColor.hover,
                     socialColor.expanded,
-                    "z-1 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15 will-change-transform",
-                    "transition-[background-color] duration-100",
+                    "z-1 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15",
+                    "will-change-transform transition-[transform,translate,background-color] duration-100",
                     {
                         lg: "-mr-[2px] size-[38px]",
-                        "group-hover":
-                            "animate-social-button-shake-in transition-transform",
+                        "group-hover": "animate-social-button-shake-in",
                         "group-data-[expanded=true]":
-                            "animate-social-button-shake-in transition-transform"
+                            "animate-social-button-shake-in"
                     }
                 )}
             >

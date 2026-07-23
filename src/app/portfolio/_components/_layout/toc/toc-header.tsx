@@ -60,6 +60,7 @@ function TocHeader({
                                         size: "icon"
                                     }),
                                     {
+                                        dark: "bg-input/25",
                                         lg: "size-[36px]"
                                     }
                                 )}

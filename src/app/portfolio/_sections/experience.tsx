@@ -140,7 +140,7 @@ const sections: Section[] = [
             {
                 startDate: "05.2026",
                 endDate: "06.2026",
-                position: "Freelance UI/UX Designer",
+                position: "UI/UX Designer",
                 organization: {
                     text: "FINA Care Studio",
                     url: "https://fina-studio.com",
@@ -150,7 +150,7 @@ const sections: Section[] = [
             {
                 startDate: "01.2026",
                 endDate: "01.2026",
-                position: "Freelance Designer",
+                position: "Logo Designer",
                 organization: {
                     text: "Nguyên Liệu 24H Co., Ltd",
                     url: "https://masothue.com/0319246054-cong-ty-tnhh-nguyen-lieu-24h",
@@ -170,7 +170,7 @@ const sections: Section[] = [
             {
                 startDate: "02.2025",
                 endDate: "10.2025",
-                position: "Freelance UI/UX Designer",
+                position: "UI/UX Designer",
                 organization: {
                     text: "Nalee Viet Nam JSC",
                     url: "http://naleegroup.com",
@@ -180,7 +180,7 @@ const sections: Section[] = [
             {
                 startDate: "02.2025",
                 endDate: "04.2025",
-                position: "Visual Designer",
+                position: "Key Visual Designer",
                 organization: {
                     text: "Xoay Vật Chuyển Dòng",
                     url: "https://www.facebook.com/xoayvatchuyendong.project",
@@ -190,7 +190,7 @@ const sections: Section[] = [
             {
                 startDate: "02.2025",
                 endDate: "03.2025",
-                position: "Freelance Designer",
+                position: "Key Visual Designer",
                 organization: {
                     text: "Oẳn Tù Tì Production",
                     url: "https://www.facebook.com/OanTuTiProduction"
@@ -307,7 +307,7 @@ function Experience() {
                             >
                                 {section.items.map((place) => (
                                     <TableRow
-                                        key={`${place.startDate}-${place.position}`}
+                                        key={`${place.startDate}-${place.position}-${place.organization?.text}`}
                                         className={cn(
                                             "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                             {
@@ -324,14 +324,24 @@ function Experience() {
                                                 }
                                             )}
                                         >
-                                            {place.startDate === place.endDate
-                                                ? place.startDate
-                                                : `${place.startDate} — ${place.endDate ?? "Now"}`}
+                                            {place.startDate ===
+                                            place.endDate ? (
+                                                place.startDate
+                                            ) : (
+                                                <>
+                                                    {place.startDate} —{" "}
+                                                    {place.endDate ?? (
+                                                        <span className="text-foreground">
+                                                            Now
+                                                        </span>
+                                                    )}
+                                                </>
+                                            )}
                                         </TableCell>
 
                                         <TableCell
                                             className={cn(
-                                                "flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top text-foreground font-wght-600",
+                                                "flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top text-foreground font-wght-500",
                                                 {
                                                     "@[50.125rem]":
                                                         "mt-6 gap-x-2"

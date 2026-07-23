@@ -143,6 +143,7 @@ function ProjectCard({
                 <ProjectName
                     projectName={project.projectName}
                     navigation={navigation}
+                    isNew={project.information.newest}
                     className={cn(navigation === "backward" && "justify-end")}
                 />
                 <ProjectCategory
@@ -235,7 +236,7 @@ function ProjectCover({
                         <div
                             className={cn(
                                 socialColor.default,
-                                "absolute -right-1 -top-1 size-4.5 rounded-full border border-default/15 p-0.5 text-white"
+                                "absolute -right-1 -top-1 size-4.5 rounded-full border border-white/15 p-0.5 text-white"
                             )}
                         >
                             <svg
@@ -254,7 +255,7 @@ function ProjectCover({
                             <div
                                 className={cn(
                                     socialColor.default,
-                                    "absolute -right-1 -top-1 size-4.5 rounded-full border border-default/15 p-0.5 text-white"
+                                    "absolute -right-1 -top-1 size-4.5 rounded-full border border-white/15 p-0.5 text-white"
                                 )}
                             >
                                 <svg
@@ -291,16 +292,18 @@ function ProjectCover({
 function ProjectName({
     className,
     projectName,
+    isNew,
     navigation,
     ...props
 }: React.ComponentProps<typeof Bold> &
     Pick<ProjectCardProps, "navigation"> & {
         projectName: string
+        isNew: boolean
     }) {
     return (
         <Bold
             className={cn(
-                "relative inline-flex w-full overflow-clip",
+                "relative inline-flex w-fit max-w-full overflow-hidden pe-3",
                 className
             )}
             {...props}
@@ -344,6 +347,19 @@ function ProjectName({
             >
                 {formatOrdinals(projectName)}
             </span>
+            {isNew && (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                    className="absolute right-0 top-0 size-2.75 text-highlighted lg:size-2.5"
+                >
+                    <path
+                        fill="currentColor"
+                        d="M12.195.002c.474.02.944.255 1.29.635s.537.868.515 1.342a1.58 1.58 0 0 1-.63 1.186l-.523.405-9.423 7.296-.524.405a.73.73 0 0 1-.504.14.7.7 0 0 1-.465-.224.7.7 0 0 1-.182-.484.73.73 0 0 1 .186-.49l.45-.484 8.122-8.722.45-.485a1.58 1.58 0 0 1 1.238-.52M10.758 10.106c.455-.149.927-.1 1.317.17s.667.74.763 1.27c.097.53.003 1.067-.267 1.456-.27.391-.694.602-1.173.624l-.402.02-7.26.336-.403.02a.74.74 0 0 1-.48-.17.7.7 0 0 1-.265-.423.7.7 0 0 1 .098-.49.74.74 0 0 1 .39-.327q.193-.06.385-.124l6.913-2.238zM.515 1.817c.378-.285.943-.394 1.514-.313.57.082 1.082.345 1.365.724.287.38.32.845.153 1.3l-.088.244-1.602 4.372-.088.242a.76.76 0 0 1-.328.368.7.7 0 0 1-.464.106.7.7 0 0 1-.415-.232.76.76 0 0 1-.21-.443q-.01-.13-.018-.259L.021 3.281q-.008-.13-.017-.259c-.034-.484.13-.92.51-1.205"
+                    />
+                </svg>
+            )}
         </Bold>
     )
 }

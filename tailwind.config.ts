@@ -88,6 +88,7 @@ export default {
                 0.75: ".1875rem",
                 1.25: ".3125rem",
                 2.25: ".5625rem",
+                2.75: ".6875rem",
                 3.25: ".8125rem",
                 3.75: ".9375rem",
                 4.5: "1.125rem",
@@ -205,7 +206,7 @@ export default {
             },
             animation: {
                 spinner: "spinner",
-                focus: ".2s ease-out focus forwards",
+                focus: "focus .2s ease-out forwards",
                 inert: "inert forwards",
                 "nav-reveal": "nav-reveal 1s cubic-bezier(.4,0,.6,1) forwards",
                 "social-button-shake-in":

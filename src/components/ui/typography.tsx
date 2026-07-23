@@ -174,7 +174,7 @@ function Link({
                 },
                 highlight && "text-highlighted",
                 italic && "italic",
-                mono ? "font-mono" : "font-wght-600",
+                mono ? "font-mono" : "font-wght-500",
                 className
             )}
             {...(openInNewTab && { target: "_blank", rel: "noreferrer" })}
