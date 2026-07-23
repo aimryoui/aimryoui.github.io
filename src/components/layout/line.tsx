@@ -99,7 +99,7 @@ function SvgElementLine({
         <div
             role="separator"
             className={cn(
-                "pointer-events-none relative",
+                "pointer-events-none relative z-1",
                 dir === "vertical" ? "h-full" : "w-full",
                 className
             )}
@@ -109,7 +109,9 @@ function SvgElementLine({
                 preserveAspectRatio="none"
                 className={cn(
                     "absolute inset-0",
-                    dir === "vertical" ? "h-full w-px" : "h-px w-full"
+                    dir === "vertical"
+                        ? "-ml-[calc(var(--px)/2)] h-full w-px"
+                        : "-mt-[calc(var(--px)/2)] h-px w-full"
                 )}
                 {...props}
             >
