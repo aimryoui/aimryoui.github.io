@@ -10,7 +10,19 @@ function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
             )}
             {...props}
         >
-            <SvgElementLine />
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none"
+                className={cn("absolute inset-0 h-full w-px")}
+            >
+                <line
+                    x1="50%"
+                    y1="0"
+                    x2="50%"
+                    y2="100%"
+                    className="stroke-stroke stroke-px stroke-dashed"
+                />
+            </svg>
         </div>
     )
 }
