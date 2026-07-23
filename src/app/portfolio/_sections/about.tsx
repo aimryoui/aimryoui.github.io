@@ -291,7 +291,8 @@ function About() {
                 className={cn(
                     "hidden h-auto min-h-20 flex-col gap-0.5 px-6 py-4.5",
                     {
-                        md: "flex"
+                        md: "flex",
+                        sm: "gap-3.5"
                     }
                 )}
             >
@@ -300,7 +301,7 @@ function About() {
                     <Link
                         href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
                         openInNewTab
-                        className="inline"
+                        className="inline font-wght-600"
                     >
                         Hồ Chí Minh City
                     </Link>
@@ -308,7 +309,7 @@ function About() {
                     <Link
                         href="https://wikipedia.org/wiki/Vietnam"
                         openInNewTab
-                        className="inline-flex items-center gap-1"
+                        className="inline-flex items-center gap-1 font-wght-600"
                     >
                         <span
                             className={cn(
