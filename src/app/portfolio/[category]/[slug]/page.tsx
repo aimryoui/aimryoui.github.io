@@ -124,14 +124,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 {socialData ? (
                     <Space
                         className={cn(
-                            "pointer-events-none sticky top-0 z-60 flex items-center justify-end bg-transparent px-6"
+                            "pointer-events-none sticky inset-x-0 top-0 z-60 flex items-center justify-end bg-transparent px-6",
+                            {
+                                lg: "fixed bottom-20 top-auto text-base"
+                            }
                         )}
                     >
                         <SocialButton
                             social={project.social}
-                            className={cn({
-                                lg: "fixed bottom-25 right-6 h-[36px] text-base"
-                            })}
+                            className="lg:h-[36px]"
                         />
                     </Space>
                 ) : (

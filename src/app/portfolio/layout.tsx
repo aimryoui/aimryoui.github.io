@@ -3,8 +3,8 @@ import { type Metadata } from "next"
 import { siteConfig } from "@/configs/site.config"
 import { Navigation } from "@/portfolio/_components/_layout/navigation"
 
-const APP_PATH_TITLE = "Portfolio | Q2.2026 | Nguyễn Hoàng Nhân"
-// const APP_TITLE_TEMPLATE = "%s | Q2.2026 | Nguyễn Hoàng Nhân"
+const APP_PATH_TITLE = "Portfolio | Q3.2026 | Nguyễn Hoàng Nhân"
+// const APP_TITLE_TEMPLATE = "%s | Q3.2026 | Nguyễn Hoàng Nhân"
 const APP_DESCRIPTION = "This is my Portfolio Space, come enjoy my artworks"
 
 const APP_FULL_URL = siteConfig.fullUrl

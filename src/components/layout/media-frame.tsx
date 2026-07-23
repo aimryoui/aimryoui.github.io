@@ -90,12 +90,14 @@ export function SectionName({
 
 interface MediaFrameContentProps extends React.ComponentProps<"div"> {
     targetCursor?: CursorSelector
+    widthFit?: boolean
 }
 
 function MediaFrameContent({
     className,
     targetCursor,
     showHideAnimationType = "zoom",
+    widthFit = false,
     children,
     ...props
 }: MediaFrameContentProps & {
@@ -105,7 +107,8 @@ function MediaFrameContent({
         <div
             data-cursor={targetCursor ?? "ignore"}
             className={cn(
-                "relative grid w-full cursor-auto grid-cols-1 justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
+                "relative grid cursor-auto grid-cols-1 justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
+                widthFit ? "w-fit md:w-full" : "w-full",
                 className
             )}
             {...props}

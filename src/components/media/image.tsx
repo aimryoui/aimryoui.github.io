@@ -135,7 +135,14 @@ function ImageCore({
             data-slot="image"
             className={cn(
                 "content-auto",
-                limitHeight ? "min-w-0 max-w-full" : "w-full",
+                limitHeight
+                    ? [
+                          "min-w-0 max-w-full md:!w-full",
+                          {
+                              md: "!w-full min-w-unset max-w-unset"
+                          }
+                      ]
+                    : "w-full",
                 asBackgroundImage ? "h-full" : "h-fit",
                 "relative grid place-items-center",
                 !pngBorder && "overflow-hidden",

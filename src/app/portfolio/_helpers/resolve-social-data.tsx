@@ -5,7 +5,7 @@ import { type Project } from "~/.velite"
 const SOCIAL_UI_MAP: Record<
     string,
     {
-        color: { default: string; hover: string; expanded: string }
+        color: { default: string; hover: string }
         icon: (props: React.ComponentProps<"svg">) => React.ReactNode
         label: string
     }
@@ -13,8 +13,7 @@ const SOCIAL_UI_MAP: Record<
     behance: {
         color: {
             default: "bg-[#0056ff]",
-            hover: "group-hover:bg-[#054cd9]",
-            expanded: "group-data-[expanded=true]:bg-[#054cd9]"
+            hover: "group-hover:bg-[#054cd9]"
         },
         icon: ({ className, ...props }) => (
             <svg
@@ -34,8 +33,7 @@ const SOCIAL_UI_MAP: Record<
     dribbble: {
         color: {
             default: "bg-[#ea4c89]",
-            hover: "group-hover:bg-[#e83b7d]",
-            expanded: "group-data-[expanded=true]:bg-[#e83b7d]"
+            hover: "group-hover:bg-[#e83b7d]"
         },
         icon: ({ className, ...props }) => (
             <svg
@@ -55,8 +53,7 @@ const SOCIAL_UI_MAP: Record<
     "product-website": {
         color: {
             default: "bg-[#b18c1b]",
-            hover: "group-hover:bg-[#a07e18]",
-            expanded: "group-data-[expanded=true]:bg-[#a07e18]"
+            hover: "group-hover:bg-[#a07e18]"
         },
         icon: ({ className, ...props }) => (
             <svg
