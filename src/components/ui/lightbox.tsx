@@ -63,7 +63,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
         "(max-width: 48rem) and (orientation: portrait)"
     )
 
-    const { isWebkit } = useBrowserEngine()
+    const { isWebKit } = useBrowserEngine()
 
     return (
         <Gallery
@@ -73,15 +73,15 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 showHideAnimationType: "zoom",
                 wheelToZoom: true,
                 secondaryZoomLevel: isMobilePortrait ? 0.75 : 2,
-                easing: isWebkit
+                easing: isWebKit
                     ? "cubic-bezier(0.25, 0.1, 0.25, 1)"
                     : "cubic-bezier(0.20, 1, 0.36, 1)",
                 loop: false,
                 preloaderDelay: 500,
                 bgOpacity: 1,
                 spacing: isMobilePortrait ? 0.1 : 0.05,
-                showAnimationDuration: isWebkit ? 250 : ANIMATION_DURATION,
-                hideAnimationDuration: isWebkit ? 250 : ANIMATION_DURATION,
+                showAnimationDuration: isWebKit ? 250 : ANIMATION_DURATION,
+                hideAnimationDuration: isWebKit ? 250 : ANIMATION_DURATION,
                 imageClickAction: "zoom",
                 clickToCloseNonZoomable: false,
                 ...options

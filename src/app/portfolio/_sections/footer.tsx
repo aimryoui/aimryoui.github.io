@@ -231,9 +231,9 @@ function FooterSeparator({
     arr: SectionProps[]
     containerRef: React.RefObject<HTMLElement | null>
 }) {
-    const { isWebkit } = useBrowserEngine()
+    const { isWebKit } = useBrowserEngine()
 
-    return isWebkit ? (
+    return isWebKit ? (
         <WebkitFooterSeparator
             index={index}
             arr={arr}

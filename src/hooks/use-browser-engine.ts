@@ -8,7 +8,7 @@ type BrowserEngine = "blink" | "webkit" | "gecko" | "unknown"
 
 interface BrowserEngineInfo {
     engine: BrowserEngine
-    isWebkit: boolean
+    isWebKit: boolean
     isGecko: boolean
     isBlink: boolean
     isDesktopApp: boolean
@@ -69,7 +69,7 @@ function checkIsDesktopApp(): boolean {
 function useBrowserEngine(): BrowserEngineInfo {
     const [info, setInfo] = useState<BrowserEngineInfo>({
         engine: "unknown",
-        isWebkit: false,
+        isWebKit: false,
         isGecko: false,
         isBlink: false,
         isDesktopApp: false
@@ -81,7 +81,7 @@ function useBrowserEngine(): BrowserEngineInfo {
 
         setInfo({
             engine,
-            isWebkit: engine === "webkit",
+            isWebKit: engine === "webkit",
             isGecko: engine === "gecko",
             isBlink: engine === "blink",
             isDesktopApp: isDesktop

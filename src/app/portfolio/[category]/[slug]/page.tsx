@@ -14,8 +14,6 @@ import {
 } from "@/components/ui/pagination"
 import { Bold, Highlight, Text } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
-import { UPPERCASE_CHARACTERS_REGEX } from "@/helpers/character-regexes"
-import colorManifestRaw from "@/lib/color-manifest.json"
 import {
     getCategoryPath,
     getProjectPath,
@@ -26,10 +24,11 @@ import { cn } from "@/lib/utils"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
 import { MDXContent } from "@/portfolio/_components/mdx-content"
 import ProjectHeader from "@/portfolio/_components/project-header"
+import { resolveSocialData } from "@/portfolio/_helpers/resolve-social-data"
 import Footer from "@/portfolio/_sections/footer"
 import ProjectCard from "@/portfolio/[category]/_components/project-card"
+import { AmbientStyle } from "@/portfolio/[category]/[slug]/_components/ambient-style"
 import SocialButton from "@/portfolio/[category]/[slug]/_components/social-button"
-import { type ColorManifest } from "@/scripts/process-colors"
 
 import { projects } from "~/.velite"
 
@@ -92,19 +91,6 @@ export async function generateMetadata({
     }
 }
 
-const colorManifest = colorManifestRaw as ColorManifest
-
-function applyLightningFallback(colorValue: string) {
-    if (colorValue.startsWith("light-dark(")) {
-        const inner = colorValue.slice(11, -1)
-        const [light, dark] = inner.split(",")
-
-        return `var(--lightningcss-light, ${light.trim()}) var(--lightningcss-dark, ${dark.trim()})`
-    }
-
-    return colorValue
-}
-
 export default async function ProjectPage({ params }: ProjectPageProps) {
     const { category, slug } = await params
     const groups = groupProjectsByCategory(projects)
@@ -119,28 +105,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
     if (!group || !project) notFound()
 
-    const manifestKey = `${category}/${getProjectRouteSlug(project)}`
-    const projectColor = colorManifest[manifestKey]
-
-    let ambientStyles = ""
-    if (projectColor?.theme) {
-        const hexRules = Object.entries(projectColor.theme)
-            .map(([key, colorData]) => {
-                const cssVar = `--color-${key.replace(UPPERCASE_CHARACTERS_REGEX, "-$1").toLowerCase()}`
-                return `${cssVar}:${applyLightningFallback(colorData.hex)};`
-            })
-            .join("")
-
-        const oklchRules = Object.entries(projectColor.theme)
-            .map(([key, colorData]) => {
-                const cssVar = `--color-${key.replace(UPPERCASE_CHARACTERS_REGEX, "-$1").toLowerCase()}`
-                return `${cssVar}:${applyLightningFallback(colorData.oklch)};`
-            })
-            .join("")
-
-        ambientStyles = `:root{${hexRules}}@supports (color: oklab(0% 0 0%)){:root{${oklchRules}}}`
-    }
-
     const prev = projectIndex > 0 ? categoryProjects[projectIndex - 1] : null
     const next =
         projectIndex < categoryProjects.length - 1
@@ -149,33 +113,22 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     const nextCategory =
         !next && groupIndex < groups.length - 1 ? groups[groupIndex + 1] : null
 
+    const socialData = resolveSocialData(project.social)
+
     return (
         // <ViewTransition name="main">
         <main className={cn("relative flex-1")}>
-            {ambientStyles && (
-                <style dangerouslySetInnerHTML={{ __html: ambientStyles }} />
-            )}
+            <AmbientStyle project={project} category={category} />
             <FlashOverlay />
             <section>
-                {project.social ? (
+                {socialData ? (
                     <Space
                         className={cn(
                             "pointer-events-none sticky top-0 z-60 flex items-center justify-end bg-transparent px-6"
                         )}
                     >
                         <SocialButton
-                            href={
-                                project.social.behance ??
-                                project.social.productWebsite ??
-                                ""
-                            }
-                            socialType={
-                                project.social.behance
-                                    ? "behance"
-                                    : project.social.productWebsite
-                                      ? "product-website"
-                                      : undefined
-                            }
+                            social={project.social}
                             className={cn({
                                 lg: "fixed bottom-25 right-6 h-[36px] text-base"
                             })}
@@ -186,12 +139,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 )}
                 <SectionLine showDecoration />
                 <Space
-                    className={
-                        project.social &&
-                        cn("relative", {
+                    {...(socialData && {
+                        className: cn("relative", {
                             before: "absolute inset-x-0 bottom-full h-20 bg-background"
                         })
-                    }
+                    })}
                 />
                 <SectionLine />
                 <article>
@@ -210,7 +162,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
                     <MDXContent
                         code={project.code}
-                        hasSocialLinks={!!project.social}
+                        hasSocialLinks={!!socialData}
                     />
                 </article>
             </section>
@@ -421,7 +373,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <Divider />
             <SectionLine />
 
-            <Footer hasSocialLinks={!!project.social} />
+            <Footer hasSocialLinks={!!socialData} />
         </main>
         // </ViewTransition>
     )

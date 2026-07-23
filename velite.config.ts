@@ -30,7 +30,9 @@ const projects = defineCollection({
         social: s
             .object({
                 behance: s.string().url().optional(),
-                productWebsite: s.string().url().optional()
+                dribbble: s.string().url().optional(),
+                github: s.string().url().optional(),
+                "product-website": s.string().url().optional()
             })
             .optional(),
 
