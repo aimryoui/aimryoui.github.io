@@ -85,7 +85,7 @@ function Menu({ className }: { className?: string }) {
                                 draggable={false}
                                 data-cursor="ignore"
                                 className={cn(
-                                    "group flex items-center gap-x-2",
+                                    "group flex items-center gap-x-3",
                                     {
                                         lg: "gap-x-4"
                                     }
@@ -95,7 +95,10 @@ function Menu({ className }: { className?: string }) {
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 48 48"
                                     className={cn(
-                                        "size-9 will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180"
+                                        "size-9 will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180",
+                                        {
+                                            lg: "size-[34px]"
+                                        }
                                     )}
                                 >
                                     <path
@@ -127,14 +130,14 @@ function Menu({ className }: { className?: string }) {
                                 </svg>
                                 <div
                                     className={cn(
-                                        "flex flex-col sm:@[20.5rem]:hidden"
+                                        "flex flex-col sm:@[21.5rem]:hidden"
                                     )}
                                 >
-                                    <Bold className="text-sm">
+                                    <Bold className="text-sm lg:text-base">
                                         <At className="text-current font-wght-[625]" />
                                         {siteConfig.username}
                                     </Bold>
-                                    <p className="font-mono text-xs">
+                                    <p className="font-mono text-xs lg:text-sm">
                                         {`${projects.length} PROJECTS`}
                                     </p>
                                 </div>

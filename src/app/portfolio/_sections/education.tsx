@@ -90,9 +90,10 @@ function Education() {
 
                             <TableCell
                                 className={cn(
-                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] text-pretty p-0 align-top text-foreground font-wght-600",
+                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] text-pretty p-0 align-top text-foreground font-wght-500",
                                     {
-                                        "@[59.375rem]": "col-span-1 mt-8"
+                                        "@[59.375rem]": "col-span-1 mt-8",
+                                        lg: "font-wght-600"
                                     }
                                 )}
                             >
@@ -109,6 +110,7 @@ function Education() {
                                     href="https://daihoc.fpt.edu.vn/hcm/"
                                     openInNewTab
                                     aria-label="Go to the FPT University website"
+                                    className="lg:font-wght-600"
                                 >
                                     FPT University HCMC
                                 </Link>

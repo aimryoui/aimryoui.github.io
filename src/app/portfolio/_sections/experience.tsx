@@ -344,7 +344,8 @@ function Experience() {
                                                 "flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top text-foreground font-wght-500",
                                                 {
                                                     "@[50.125rem]":
-                                                        "mt-6 gap-x-2"
+                                                        "mt-6 gap-x-2",
+                                                    lg: "font-wght-600"
                                                 }
                                             )}
                                         >
@@ -378,7 +379,8 @@ function Experience() {
                                                     className={cn(
                                                         place.organization
                                                             .duplicate &&
-                                                            "text-muted-foreground"
+                                                            "text-muted-foreground",
+                                                        "lg:font-wght-600"
                                                     )}
                                                 >
                                                     {place.organization.text}

@@ -313,7 +313,7 @@ function About() {
                     >
                         <span
                             className={cn(
-                                "grid aspect-3/2 h-fit w-[--w] place-items-center bg-[#da251d] [--w:calc(var(--spacing)*6)]"
+                                "grid aspect-3/2 h-fit w-[--w] translate-y-[.05em] place-items-center bg-[#da251d] [--w:calc(var(--spacing)*6)]"
                             )}
                         >
                             <span
