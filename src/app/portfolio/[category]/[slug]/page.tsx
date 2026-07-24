@@ -130,7 +130,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         className={cn(
                             "pointer-events-none sticky inset-x-0 top-0 z-60 flex items-center justify-end bg-transparent px-6",
                             {
-                                lg: "fixed bottom-20 top-auto text-base"
+                                lg: "fixed bottom-20 top-auto"
                             }
                         )}
                     >

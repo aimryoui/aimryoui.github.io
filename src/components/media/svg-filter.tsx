@@ -108,13 +108,13 @@ function MetaBall() {
                 <filter id="metaball">
                     <feGaussianBlur
                         in="SourceGraphic"
-                        stdDeviation="4"
+                        stdDeviation="5.25"
                         result="blur"
                     />
                     <feColorMatrix
                         in="blur"
                         mode="matrix"
-                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -8"
+                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 25 -10"
                         result="goo"
                     />
                     <feComposite in="SourceGraphic" in2="goo" operator="atop" />

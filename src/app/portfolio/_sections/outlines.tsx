@@ -55,7 +55,7 @@ function Outlines() {
                                         {section.title}
                                         <div
                                             className={cn(
-                                                "hidden size-5 translate-y-[.0625rem] place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                                "hidden size-5 translate-y-0.25 place-items-center rounded-full bg-highlighted/10 text-highlighted",
                                                 "group-hover:grid dark:bg-highlighted/20"
                                             )}
                                         >

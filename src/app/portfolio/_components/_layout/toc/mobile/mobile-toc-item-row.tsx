@@ -30,17 +30,17 @@ const MobileTocItemRow = memo(
                 className={cn(
                     "pointer-events-auto relative mx-6 box-content flex h-fit touch-auto list-inside items-center gap-4",
                     isProject && [
-                        "border-s-[.0625rem] border-muted-foreground/20",
+                        "border-s-1 border-muted-foreground/20",
                         isActive
                             ? {
-                                  before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-highlighted"
+                                  before: "absolute inset-y-0 -left-0.25 w-0.75 bg-highlighted"
                               }
                             : {
                                   hover: {
-                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
+                                      before: "absolute inset-y-0 -left-0.25 w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
                                   },
                                   active: {
-                                      before: "absolute inset-y-0 -left-[.0625rem] w-0.5 bg-highlighted"
+                                      before: "absolute inset-y-0 -left-0.25 w-0.5 bg-highlighted"
                                   }
                               }
                     ]

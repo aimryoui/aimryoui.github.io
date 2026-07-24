@@ -85,6 +85,7 @@ export default {
             },
             spacing: {
                 px: "var(--px)",
+                0.25: ".0625rem",
                 0.75: ".1875rem",
                 1.25: ".3125rem",
                 2.25: ".5625rem",
@@ -151,6 +152,7 @@ export default {
             borderWidth: {
                 DEFAULT: "var(--px)",
                 0: "0",
+                1: ".0625rem",
                 2: ".125rem",
                 3: ".1875rem",
                 6: ".375rem",

@@ -54,10 +54,10 @@ jobs:
 
       # 3. Install FFmpeg
       - name: Install FFmpeg
-        uses: FedericoCarboni/setup-ffmpeg@v3
+        uses: AnimMouse/setup-ffmpeg@v1
         with:
-          architecture: ""
-          github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
+          version: master
+          token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
 
       - name: Setup Pages
         id: setup_pages

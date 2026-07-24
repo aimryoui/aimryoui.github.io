@@ -3,7 +3,7 @@ import { ViewTransition } from "react"
 import { Divider } from "@/components/layout/divider"
 import { ElementLine, SectionLine } from "@/components/layout/line"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
-import { At, Bold, H3, Highlight, Link, Text } from "@/components/ui/typography"
+import { At, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { slugify } from "@/helpers/slugify"
@@ -44,8 +44,12 @@ function ProjectHeader({
                 >
                     {type}
                 </span>
-                <div className={cn("flex flex-1 flex-col gap-2 px-6 py-4.5")}>
-                    <H3
+                <div
+                    className={cn("flex flex-1 flex-col gap-2 px-6 py-4.5", {
+                        md: "gap-2.5"
+                    })}
+                >
+                    <H1
                         id={headerId}
                         className={cn(
                             "w-fit text-pretty text-foreground wrap-anywhere"
@@ -64,7 +68,7 @@ function ProjectHeader({
                                 .
                             </span>
                         )}
-                    </H3>
+                    </H1>
                     <ProjectCategory
                         projectName={projectName}
                         category={category}
@@ -105,7 +109,7 @@ function ProjectHeader({
                 {tools.length > 0 && (
                     <div
                         className={cn(
-                            "absolute bottom-[calc(100%+1.25rem)] right-6 flex gap-2"
+                            "absolute bottom-[calc(100%+1.05rem)] right-6 flex gap-2"
                         )}
                     >
                         <Tooltip>
@@ -135,13 +139,21 @@ function ProjectHeader({
                 <>
                     <SectionLine />
                     <div className={cn("flex flex-col gap-2 px-6 py-4.5")}>
-                        <Bold className={cn("text-pretty")}>
+                        <h2
+                            className={cn(
+                                "text-pretty text-foreground font-wght-600"
+                            )}
+                        >
                             {formatOrdinals(detail.description)}
-                        </Bold>
+                        </h2>
                         {detail.abbreviation && (
-                            <Text className={cn("text-pretty")}>
+                            <h3
+                                className={cn(
+                                    "text-pretty text-muted-foreground"
+                                )}
+                            >
                                 {formatOrdinals(detail.abbreviation)}
-                            </Text>
+                            </h3>
                         )}
                     </div>
                 </>
