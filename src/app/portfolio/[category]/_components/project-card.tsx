@@ -215,7 +215,7 @@ function ProjectCover({
                 />
                 <div
                     className={cn(
-                        "relative rounded-lg -outline-offset-2 outline-muted-foreground/80 will-change-transform outline-2 transition-transform duration-150",
+                        "relative rounded-xlg -outline-offset-2 outline-muted-foreground/80 will-change-transform outline-2 transition-transform duration-150",
                         {
                             "group-hover":
                                 "translate-y-0.5 -outline-offset-3 outline-3",
@@ -246,7 +246,7 @@ function ProjectCover({
                         width={56}
                         height={31.5}
                         className={cn(
-                            "aspect-video h-auto w-14 rounded-lg object-cover"
+                            "aspect-video h-auto w-14 rounded-xlg object-cover"
                         )}
                         loading="lazy"
                         decoding="async"

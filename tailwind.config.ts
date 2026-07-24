@@ -143,9 +143,11 @@ export default {
                 sm: "var(--radius-sm)",
                 md: "var(--radius-md)",
                 lg: "var(--radius-lg)",
+                xlg: "var(--radius-xlg)",
                 xl: "var(--radius-xl)",
                 "2xl": "var(--radius-2xl)",
                 "3xl": "var(--radius-3xl)",
+                "4xl": "var(--radius-4xl)",
                 media: "var(--radius-media)",
                 inherit: "inherit"
             },

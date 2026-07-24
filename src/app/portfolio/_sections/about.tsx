@@ -132,7 +132,7 @@ function About() {
                                 </Highlight>
                                 <div
                                     className={cn(
-                                        "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
+                                        "absolute top-full grid h-4.5 translate-y-0.75 place-items-center rounded-md border border-stroke bg-background px-1"
                                     )}
                                 >
                                     <span
@@ -199,7 +199,7 @@ function About() {
                         />
                         <div
                             className={cn(
-                                "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
+                                "absolute top-full grid h-4.5 translate-y-0.75 place-items-center rounded-md border border-stroke bg-background px-1"
                             )}
                         >
                             <span
@@ -270,7 +270,7 @@ function About() {
                         />
                         <div
                             className={cn(
-                                "absolute -bottom-5.25 flex rounded-md border border-stroke bg-background px-1 py-0.5"
+                                "absolute top-full grid h-4.5 translate-y-0.75 place-items-center rounded-md border border-stroke bg-background px-1"
                             )}
                         >
                             <span

@@ -7,7 +7,7 @@ import { gsap } from "gsap"
 import { pxToRem } from "@/helpers/px-to-rem"
 import { cn } from "@/lib/utils"
 
-type CursorSelector = "target" | "lock" | "ignore" | false
+type CursorSelector = "target" | "lock" | "ignore" | undefined
 
 const CONTAIN_STYLE_REGEX = /\b(paint|layout|strict|content)\b/u
 const WILL_CHANGE_REGEX = /\b(transform|perspective|filter)\b/u
@@ -43,8 +43,12 @@ function getContainingBlockOffset(block: HTMLElement | null): {
     return { x: rect.left + block.clientLeft, y: rect.top + block.clientTop }
 }
 
-function isMobileDevice(): boolean {
+function shouldDisable(): boolean {
     if (typeof window === "undefined") return false
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return true
+    }
 
     // (hover: none) and (pointer: coarse) is the most robust way to detect
     // pure touch devices (phones/tablets).
@@ -135,7 +139,7 @@ function TargetCursor({
     })
 
     useEffect(() => {
-        if (isMobileDevice() || !cursorRef.current) return
+        if (shouldDisable() || !cursorRef.current) return
 
         const cursor = cursorRef.current
         const state = stateRef.current

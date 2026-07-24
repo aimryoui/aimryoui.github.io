@@ -10,7 +10,7 @@ export default plugin(({ matchUtilities }) => {
         {
             /** @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/overflow-wrap#formal_syntax} */
             values: {
-                breakWord: "break-word",
+                "break-word": "break-word",
                 anywhere: "anywhere",
                 normal: "normal"
             },

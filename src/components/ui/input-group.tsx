@@ -21,7 +21,7 @@ function InputGroup({
             data-slot="input-group"
             role="group"
             className={cn(
-                "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-lg ring ring-inset ring-input will-change-[outline] has-[>textarea]:h-auto",
+                "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-xlg ring ring-inset ring-input will-change-[outline] has-[>textarea]:h-auto",
                 {
                     hover: [
                         "bg-element-hover",

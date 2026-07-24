@@ -126,7 +126,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                 className={cn(
                     socialColors,
                     "grid h-9 translate-x-11 items-center overflow-clip rounded-full border border-white/15 px-0 opacity-0",
-                    "will-change-[transform,grid-template-columns,opacity,padding] transition-[transform,grid-template-columns,opacity,padding] ease-spring duration-500",
+                    "will-change-[transform,grid-template-columns,opacity,padding] transition-[transform,grid-template-columns,opacity,padding] ease-spring duration-400",
                     "grid-cols-[0fr]",
                     {
                         hover: "underline decoration-solid",
@@ -196,7 +196,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                     className={cn(
                         socialColors,
                         "grid h-9 translate-x-10 items-center overflow-clip rounded-full px-0 text-transparent",
-                        "will-change-[transform,grid-template-columns,padding] transition-[transform,grid-template-columns,padding] ease-spring duration-500",
+                        "will-change-[transform,grid-template-columns,padding] transition-[transform,grid-template-columns,padding] ease-spring duration-400",
                         "grid-cols-[0fr]",
                         {
                             lg: "h-[36px]",
@@ -233,7 +233,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
             <div
                 className={cn(
                     "relative z-10 grid h-9 translate-x-10 items-center overflow-clip rounded-full px-0",
-                    "will-change-[transform,grid-template-columns,padding] transition-[transform,grid-template-columns,padding] ease-spring duration-500",
+                    "will-change-[transform,grid-template-columns,padding] transition-[transform,grid-template-columns,padding] ease-spring duration-400",
                     "grid-cols-[0fr]",
                     {
                         hover: "underline decoration-solid",
@@ -248,7 +248,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                 <div className="min-w-0">
                     <span
                         className={cn(
-                            "flex w-max items-center justify-end gap-1.5 opacity-0 transition-opacity ease-spring duration-500",
+                            "flex w-max items-center justify-end gap-1.5 opacity-0 transition-opacity ease-spring duration-400",
                             {
                                 "group-hover": "opacity-100",
                                 "group-data-[expanded=true]": "opacity-100"

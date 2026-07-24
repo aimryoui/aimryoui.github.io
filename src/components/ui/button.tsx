@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
     cn(
-        "inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm will-change-transform font-wght-500 outline-none transition-transform",
+        "inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-xlg text-sm will-change-transform font-wght-500 outline-none transition-transform",
         {
             "data-[cursor=target]":
                 "transition-[transform,translate,scale,border-radius] ease-spring duration-200",

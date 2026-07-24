@@ -128,7 +128,7 @@ function CarouselIndicator({
         <div
             data-slot="carousel-indicator"
             className={cn(
-                "grid h-9 select-none place-items-center rounded-lg border border-default/15 bg-background px-4 font-mono text-sm",
+                "grid h-9 select-none place-items-center rounded-xlg border border-default/15 bg-background px-4 font-mono text-sm",
                 (!emblaApi || count === 0) && "opacity-40",
                 className
             )}
@@ -495,6 +495,7 @@ function CarouselReplay({
             render={
                 <Button
                     data-slot="carousel-replay"
+                    data-cursor={undefined}
                     variant={variant}
                     size={size}
                     className={cn(
@@ -547,6 +548,7 @@ function CarouselPrevious({
             render={
                 <Button
                     data-slot="carousel-previous"
+                    data-cursor={undefined}
                     variant={variant}
                     size={size}
                     className={cn(
@@ -599,6 +601,7 @@ function CarouselNext({
             render={
                 <Button
                     data-slot="carousel-next"
+                    data-cursor={undefined}
                     variant={variant}
                     size={size}
                     className={cn(
