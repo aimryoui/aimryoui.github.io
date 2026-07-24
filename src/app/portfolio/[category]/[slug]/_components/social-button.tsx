@@ -27,7 +27,7 @@ interface SocialButtonProps extends Omit<
 const SCROLL_UP_PX_THRESHOLD = 500
 
 function SocialButton({ className, social, ...props }: SocialButtonProps) {
-    const { isWebKit, isBlink } = useBrowserEngine()
+    const { isWebKit } = useBrowserEngine()
 
     const isMobile = useMediaQuery("lg")
     const [isScrolledUp, setIsScrolledUp] = useState(false)
@@ -104,7 +104,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
 
     const socialColors = [color.default, color.hover]
 
-    return isBlink ? (
+    return isWebKit ? (
         <NextLink
             data-cursor="ignore"
             data-expanded={isExpanded}
