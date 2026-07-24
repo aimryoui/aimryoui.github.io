@@ -5,6 +5,7 @@ import NextLink from "next/link"
 
 import { ExternalLink } from "lucide-react"
 
+import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import {
@@ -26,6 +27,8 @@ interface SocialButtonProps extends Omit<
 const SCROLL_UP_PX_THRESHOLD = 500
 
 function SocialButton({ className, social, ...props }: SocialButtonProps) {
+    const { isWebKit, isBlink } = useBrowserEngine()
+
     const isMobile = useMediaQuery("lg")
     const [isScrolledUp, setIsScrolledUp] = useState(false)
     const [isAtBottom, setIsAtBottom] = useState(false)
@@ -101,7 +104,69 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
 
     const socialColors = [color.default, color.hover]
 
-    return (
+    return isBlink ? (
+        <NextLink
+            data-cursor="ignore"
+            data-expanded={isExpanded}
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            className={cn(
+                "group pointer-events-auto flex h-9 w-fit items-center justify-end gap-2.5 text-sm text-white font-wght-500",
+                "will-change-transform transition-transform ease-spring duration-400",
+                isAtBottom && isMobile && "-translate-x-5.5",
+                {
+                    lg: "text-base font-wght-600"
+                },
+                className
+            )}
+            {...props}
+        >
+            <div
+                className={cn(
+                    socialColors,
+                    "grid h-9 translate-x-11 items-center overflow-clip rounded-full border border-white/15 px-0 opacity-0",
+                    "will-change-[transform,grid-template-columns,opacity,padding] transition-[transform,grid-template-columns,opacity,padding] ease-spring duration-500",
+                    "grid-cols-[0fr]",
+                    {
+                        hover: "underline decoration-solid",
+                        lg: "h-[36px]",
+                        "group-hover":
+                            "translate-x-0 grid-cols-[1fr] pe-3 ps-3.5 opacity-100 delay-75",
+                        "group-data-[expanded=true]":
+                            "translate-x-0 grid-cols-[1fr] pe-3 ps-3.5 opacity-100 delay-75"
+                    }
+                )}
+            >
+                <div className="min-w-0">
+                    <span className="flex w-max items-center justify-end gap-1.5">
+                        {label}
+                        <ExternalLink className="mb-0.75 size-4 lg:size-5" />
+                    </span>
+                </div>
+            </div>
+            <div
+                className={cn(
+                    socialColors,
+                    "z-1 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15",
+                    "will-change-transform transition-[transform,translate,background-color] duration-100",
+                    {
+                        lg: "-mr-[2px] size-[38px]",
+                        "group-hover": "animate-social-button-shake-in",
+                        "group-data-[expanded=true]":
+                            "animate-social-button-shake-in"
+                    }
+                )}
+            >
+                <SocialIcon
+                    className={cn(
+                        "size-5.5 lg:size-6",
+                        type === "behance" && "mb-[1px] ml-[1px]"
+                    )}
+                />
+            </div>
+        </NextLink>
+    ) : (
         <NextLink
             data-cursor="ignore"
             data-expanded={isExpanded}
@@ -136,9 +201,9 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                         {
                             lg: "h-[36px]",
                             "group-hover":
-                                "translate-x-0 grid-cols-[1fr] pl-3.75 pr-3 delay-75",
+                                "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75",
                             "group-data-[expanded=true]":
-                                "translate-x-0 grid-cols-[1fr] pl-3.75 pr-3 delay-75"
+                                "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75"
                         }
                     )}
                 >
@@ -174,9 +239,9 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                         hover: "underline decoration-solid",
                         lg: "h-[36px]",
                         "group-hover":
-                            "translate-x-0 grid-cols-[1fr] pl-3.75 pr-3 delay-75",
+                            "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75",
                         "group-data-[expanded=true]":
-                            "translate-x-0 grid-cols-[1fr] pl-3.75 pr-3 delay-75"
+                            "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75"
                     }
                 )}
             >
