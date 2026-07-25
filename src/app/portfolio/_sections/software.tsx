@@ -81,7 +81,10 @@ function Software() {
                     <Fragment key={section.section}>
                         <TableContainer
                             className={cn(
-                                "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-4 bg-background py-4.5"
+                                "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-4 bg-background py-4.5",
+                                {
+                                    lg: "pb-4.75 pt-5.5"
+                                }
                             )}
                         >
                             <TableCaption

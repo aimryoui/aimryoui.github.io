@@ -287,7 +287,10 @@ function Contact() {
                     <Fragment key={section.section}>
                         <TableContainer
                             className={cn(
-                                "grid grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5"
+                                "grid grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5",
+                                {
+                                    lg: "py-5.5"
+                                }
                             )}
                         >
                             <TableCaption

@@ -53,7 +53,7 @@ function About() {
             <SectionLine />
             <div
                 className={cn("relative space-y-2 bg-background px-6 py-4.5", {
-                    lg: "space-y-3.5"
+                    lg: "space-y-3.5 py-5.5"
                 })}
             >
                 <Text className={cn("text-pretty")}>
@@ -119,7 +119,8 @@ function About() {
                                 className={cn(
                                     "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                                     {
-                                        md: "min-w-[20%]"
+                                        md: "min-w-[20%]",
+                                        sm: "h-20"
                                     }
                                 )}
                             >
@@ -132,7 +133,7 @@ function About() {
                                 </Highlight>
                                 <div
                                     className={cn(
-                                        "absolute top-full grid h-4.5 translate-y-0.75 place-items-center rounded-md border border-stroke bg-background px-1"
+                                        "absolute top-full flex h-4.5 translate-y-0.75 items-center justify-center rounded-md border border-stroke bg-background px-1"
                                     )}
                                 >
                                     <span
@@ -146,27 +147,33 @@ function About() {
                             </div>
                             {index < array.length - 1 && (
                                 <>
-                                    <SvgElementLine className="h-24" />
-                                    <Divider dir="vertical" className="h-24" />
-                                    <SvgElementLine className="h-24" />
+                                    <SvgElementLine className="h-24 sm:h-20" />
+                                    <Divider
+                                        dir="vertical"
+                                        className="h-24 sm:h-20"
+                                    />
+                                    <SvgElementLine className="h-24 sm:h-20" />
                                 </>
                             )}
                         </Fragment>
                     ))}
                     <SvgElementLine
                         className={cn("h-24", {
-                            md: "hidden"
+                            md: "hidden",
+                            sm: "h-20"
                         })}
                     />
                     <Divider
                         dir="vertical"
                         className={cn("h-24", {
-                            md: "hidden"
+                            md: "hidden",
+                            sm: "h-20"
                         })}
                     />
                     <SvgElementLine
                         className={cn("h-24", {
-                            md: "hidden"
+                            md: "hidden",
+                            sm: "h-20"
                         })}
                     />
                     <div
@@ -174,7 +181,8 @@ function About() {
                         className={cn(
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {
-                                md: "hidden"
+                                md: "hidden",
+                                sm: "h-20"
                             }
                         )}
                     >
@@ -199,7 +207,7 @@ function About() {
                         />
                         <div
                             className={cn(
-                                "absolute top-full grid h-4.5 translate-y-0.75 place-items-center rounded-md border border-stroke bg-background px-1"
+                                "absolute top-full flex h-4.5 translate-y-0.75 items-center justify-center rounded-md border border-stroke bg-background px-1"
                             )}
                         >
                             <span
@@ -213,18 +221,21 @@ function About() {
                     </div>
                     <SvgElementLine
                         className={cn("h-24", {
-                            md: "hidden"
+                            md: "hidden",
+                            sm: "h-20"
                         })}
                     />
                     <Divider
                         dir="vertical"
                         className={cn("h-24", {
-                            md: "hidden"
+                            md: "hidden",
+                            sm: "h-20"
                         })}
                     />
                     <SvgElementLine
                         className={cn("h-24", {
-                            md: "hidden"
+                            md: "hidden",
+                            sm: "h-20"
                         })}
                     />
                     <div
@@ -232,7 +243,8 @@ function About() {
                         className={cn(
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {
-                                md: "hidden"
+                                md: "hidden",
+                                sm: "h-20"
                             }
                         )}
                     >
@@ -270,7 +282,7 @@ function About() {
                         />
                         <div
                             className={cn(
-                                "absolute top-full grid h-4.5 translate-y-0.75 place-items-center rounded-md border border-stroke bg-background px-1"
+                                "absolute top-full flex h-4.5 translate-y-0.75 items-center justify-center rounded-md border border-stroke bg-background px-1"
                             )}
                         >
                             <span
@@ -291,6 +303,7 @@ function About() {
                 className={cn(
                     "hidden h-auto min-h-20 flex-col gap-0.5 px-6 py-4.5",
                     {
+                        lg: "py-5.5",
                         md: "flex",
                         sm: "gap-3.5"
                     }

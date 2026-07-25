@@ -28,7 +28,10 @@ function Education() {
             <SectionLine />
             <TableContainer
                 className={cn(
-                    "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-4 bg-background py-4.5"
+                    "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-4 bg-background py-4.5",
+                    {
+                        lg: "py-5.5"
+                    }
                 )}
             >
                 <TableCaption
@@ -96,7 +99,7 @@ function Education() {
                                 className={cn(
                                     "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] text-pretty p-0 align-top text-foreground font-wght-500",
                                     {
-                                        "@[59.375rem]": "col-span-1 mt-8",
+                                        "@[59.375rem]": "col-span-1 mt-9.5",
                                         lg: "font-wght-600"
                                     }
                                 )}

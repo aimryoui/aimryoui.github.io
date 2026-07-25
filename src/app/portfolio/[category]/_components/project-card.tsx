@@ -197,7 +197,7 @@ function ProjectCover({
             >
                 <div
                     className={cn(
-                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40 will-change-transform transition-transform duration-150",
+                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40 will-change-transform transition-transform ease-in duration-150",
                         {
                             "group-hover": "-translate-y-0.5 scale-y-150",
                             "group-active": "-translate-y-0.5 scale-y-150"
@@ -206,7 +206,7 @@ function ProjectCover({
                 />
                 <div
                     className={cn(
-                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70 will-change-transform transition-transform duration-150",
+                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70 will-change-transform transition-transform ease-in duration-150",
                         {
                             "group-hover": "scale-y-150",
                             "group-active": "scale-y-150"
@@ -215,12 +215,17 @@ function ProjectCover({
                 />
                 <div
                     className={cn(
-                        "relative rounded-xlg -outline-offset-2 outline-muted-foreground/80 will-change-transform outline-2 transition-transform duration-150",
+                        "relative rounded-xlg will-change-transform transition-transform ease-in duration-150",
                         {
-                            "group-hover":
-                                "translate-y-0.5 -outline-offset-3 outline-3",
-                            "group-active":
-                                "translate-y-0.5 -outline-offset-3 outline-3"
+                            "group-hover": "translate-y-0.5",
+                            "group-active": "translate-y-0.5",
+                            after: [
+                                "absolute inset-0 size-full rounded-inherit ring-2 ring-inset ring-muted-foreground/80 will-change-[box-shadow] transition-shadow",
+                                {
+                                    "group-hover": "ring-3",
+                                    "group-active": "ring-3"
+                                }
+                            ]
                         }
                     )}
                 >
@@ -246,7 +251,7 @@ function ProjectCover({
                         width={56}
                         height={31.5}
                         className={cn(
-                            "aspect-video h-auto w-14 rounded-xlg object-cover"
+                            "aspect-video h-auto w-14 rounded-inherit object-cover"
                         )}
                         loading="lazy"
                         decoding="async"

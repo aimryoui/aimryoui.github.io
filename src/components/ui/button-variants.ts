@@ -1,7 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority"
+
 import { cn } from "@/lib/utils"
 
-export const buttonVariants = cva(
+const buttonVariants = cva(
     cn(
         "inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-xlg text-sm will-change-transform font-wght-500 outline-none transition-transform",
         {
@@ -77,3 +78,4 @@ export const buttonVariants = cva(
 )
 
 export type ButtonVariantsType = VariantProps<typeof buttonVariants>
+export { buttonVariants }

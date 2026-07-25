@@ -15,7 +15,7 @@
     --pswp-icon-color: #fff;
     --pswp-icon-color-secondary: #4f4f4f;
     --pswp-icon-stroke-color: #4f4f4f;
-    --pswp-icon-stroke-width: 2px;
+    --pswp-icon-stroke-width: 0.125rem;
 
     --pswp-error-text-color: var(--pswp-icon-color);
 }
@@ -315,13 +315,14 @@ div.pswp__img--placeholder,
 
 /*
 
-  "1 of 10" counter
+  "1 / 10" counter
 
 */
 .pswp__counter {
-    @apply ms-6 mt-4.5 h-7.5 text-base text-[--pswp-icon-color] opacity-90 font-wght-450;
+    @apply ms-6 mt-4.5 h-7.5 text-nowrap text-base text-[--pswp-icon-color] opacity-90 font-wght-450 lg:ms-6.5 lg:text-lg;
 
-    text-shadow: 1px 1px 3px var(--pswp-icon-color-secondary);
+    -webkit-text-stroke: 0.125rem var(--pswp-icon-color-secondary);
+    paint-order: stroke fill;
 }
 
 .pswp--one-slide .pswp__counter {
