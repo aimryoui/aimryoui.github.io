@@ -4,7 +4,7 @@ import NextLink from "next/link"
 import { usePathname } from "next/navigation"
 
 import { ArrowLeft } from "@/components/icons/icons"
-import { buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button-variants"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import {
