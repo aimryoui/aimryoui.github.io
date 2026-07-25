@@ -1,3 +1,5 @@
+"use client"
+
 import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
@@ -8,6 +10,7 @@ import {
     TableBody,
     TableCaption,
     TableCell,
+    TableContainer,
     TableFooter,
     TableHead,
     TableHeader,
@@ -252,13 +255,24 @@ function Experience() {
 
             {sections.map((section, index, arr) => (
                 <Fragment key={section.section}>
-                    <div
-                        data-slot="table-container"
+                    <TableContainer
                         className={cn(
-                            "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5"
+                            "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-4 bg-background py-4.5"
                         )}
                     >
+                        <TableCaption
+                            className={cn(
+                                "absolute left-6 top-4.5 whitespace-pre-line font-wght-500",
+                                {
+                                    "@[59.375rem]":
+                                        "static col-span-full whitespace-normal px-6 font-wght-600"
+                                }
+                            )}
+                        >
+                            {section.section}
+                        </TableCaption>
                         <Table
+                            aria-label="Experience"
                             className={cn(
                                 "col-span-full col-start-2 grid table-fixed gap-y-2",
                                 {
@@ -266,48 +280,37 @@ function Experience() {
                                 }
                             )}
                         >
-                            <TableCaption
-                                className={cn(
-                                    "absolute left-6 whitespace-pre-line font-wght-500",
-                                    {
-                                        "@[59.375rem]":
-                                            "static whitespace-normal pe-6 font-wght-600"
-                                    }
-                                )}
-                            >
-                                {section.section}
-                            </TableCaption>
-
-                            <TableHeader className={cn("sr-only grid")}>
-                                <TableRow
-                                    className={cn(
+                            <TableHeader
+                                className={cn("sr-only grid", {
+                                    "[&>tr]": [
                                         "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                         {
                                             "last:*": "pe-6"
                                         }
-                                    )}
-                                >
-                                    <TableHead className="px-0">
-                                        Period
-                                    </TableHead>
-                                    <TableHead className="px-0">
-                                        Position
-                                    </TableHead>
-                                    <TableHead className="col-span-2 px-0">
-                                        Organization
-                                    </TableHead>
-                                </TableRow>
+                                    ]
+                                })}
+                            >
+                                <TableHead className="px-0">Period</TableHead>
+                                <TableHead className="px-0" isRowHeader>
+                                    Position
+                                </TableHead>
+                                <TableHead className="col-span-2 px-0">
+                                    Organization
+                                </TableHead>
                             </TableHeader>
 
                             <TableBody
+                                items={section.items.map((place) => ({
+                                    ...place,
+                                    id: `${place.startDate} - ${place.position} - ${place.organization?.text ?? "freelance"}`
+                                }))}
                                 className={cn("grid gap-y-2", {
                                     "@[50.125rem]": "gap-y-4",
                                     lg: "gap-y-4"
                                 })}
                             >
-                                {section.items.map((place) => (
+                                {(place) => (
                                     <TableRow
-                                        key={`${place.startDate}-${place.position}-${place.organization?.text}`}
                                         className={cn(
                                             "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                             {
@@ -356,7 +359,6 @@ function Experience() {
                                         </TableCell>
 
                                         <TableCell
-                                            colSpan={2}
                                             className={cn(
                                                 "col-span-2 p-0 align-top",
                                                 {
@@ -388,7 +390,7 @@ function Experience() {
                                             )}
                                         </TableCell>
                                     </TableRow>
-                                ))}
+                                )}
                             </TableBody>
 
                             {index === arr.length - 1 && (
@@ -400,7 +402,7 @@ function Experience() {
                                         })}
                                     >
                                         <TableCell
-                                            colSpan={4}
+                                            colSpan={3}
                                             className={cn(
                                                 "flex flex-col gap-y-4.5 p-0 pt-2.5 align-top",
                                                 {
@@ -417,7 +419,7 @@ function Experience() {
                                 </TableFooter>
                             )}
                         </Table>
-                    </div>
+                    </TableContainer>
                     {index < arr.length - 1 &&
                         arr[index + 1].section !== section.section && (
                             <SectionLine />

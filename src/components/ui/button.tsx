@@ -1,5 +1,10 @@
-import { Button as ButtonPrimitive } from "@base-ui/react/button"
 import { cva, type VariantProps } from "class-variance-authority"
+import {
+    Button as ButtonPrimitive,
+    type ButtonProps as ButtonPrimitiveProps,
+    Link as LinkPrimitive,
+    type LinkProps as LinkPrimitiveProps
+} from "react-aria-components"
 
 import { cn } from "@/lib/utils"
 
@@ -61,10 +66,11 @@ const buttonVariants = cva(
                 })
             },
             size: {
-                default: "h-9 min-w-9 px-4 py-2 has-[>svg]:px-3",
+                default:
+                    "h-9 min-w-9 px-4 py-2 has-[>svg]:px-3 lg:h-[36px] lg:min-w-[36px]",
                 lg: "h-10 min-w-10 rounded-md px-6 has-[>svg]:px-4",
                 sm: "h-8 min-w-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5",
-                icon: "size-9 text-muted-foreground",
+                icon: "size-9 text-muted-foreground lg:size-[36px]",
                 "icon-sm": "size-8 text-muted-foreground",
                 "icon-lg": "size-10 text-muted-foreground",
                 "icon-xl": "size-12 text-muted-foreground"
@@ -82,10 +88,16 @@ function Button({
     variant = "default",
     size = "default",
     ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: Omit<ButtonPrimitiveProps, "className"> &
+    React.RefAttributes<HTMLButtonElement> &
+    VariantProps<typeof buttonVariants> & {
+        className?: string
+    }) {
     return (
         <ButtonPrimitive
             data-slot="button"
+            data-variant={variant}
+            data-size={size}
             data-cursor="target"
             className={cn(buttonVariants({ variant, size, className }))}
             {...props}
@@ -93,4 +105,30 @@ function Button({
     )
 }
 
-export { Button, buttonVariants }
+function LinkButton({
+    className,
+    variant = "default",
+    size = "default",
+    nativeLink = false,
+    ...props
+}: Omit<LinkPrimitiveProps, "className"> &
+    VariantProps<typeof buttonVariants> & {
+        className?: string
+        nativeLink?: boolean
+    }) {
+    return (
+        <LinkPrimitive
+            {...(!nativeLink && { "data-slot": "link-button" })}
+            data-variant={variant}
+            data-size={size}
+            className={cn(
+                nativeLink
+                    ? className
+                    : buttonVariants({ variant, size, className })
+            )}
+            {...props}
+        />
+    )
+}
+
+export { Button, buttonVariants, LinkButton }

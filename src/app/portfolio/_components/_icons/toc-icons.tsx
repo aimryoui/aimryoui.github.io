@@ -7,7 +7,6 @@ function AboutIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="none"
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -29,7 +28,6 @@ function ExperienceIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="none"
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -58,7 +56,6 @@ function EducationIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="none"
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -85,7 +82,6 @@ function SoftwareIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="none"
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -112,7 +108,6 @@ function ContactIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="none"
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -134,7 +129,6 @@ function ProjectsIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="none"
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -156,7 +150,6 @@ function AdoptMeIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
-            fill="none"
             className={cn("size-4.5", className)}
             {...props}
         >

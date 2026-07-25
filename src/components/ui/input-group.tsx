@@ -1,23 +1,18 @@
-/** Biome-ignore-all lint/a11y/useSemanticElements: shadcn/ui */
 "use client"
 
+import type React from "react"
+
 import { cva, type VariantProps } from "class-variance-authority"
+import { Group, type GroupProps } from "react-aria-components"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-function InputGroup({
-    className,
-    as,
-    ...props
-}: React.ComponentProps<"div"> & {
-    as?: React.ElementType
-}) {
-    const Comp = as ?? "div"
+function InputGroup({ className, ...props }: GroupProps) {
     return (
-        <Comp
+        <Group
             data-slot="input-group"
             role="group"
             className={cn(
@@ -60,6 +55,33 @@ function InputGroup({
             )}
             {...props}
         />
+    )
+}
+
+function SearchGroup({
+    htmlFor,
+    label,
+    hideLabel = true,
+    ...props
+}: GroupProps &
+    Pick<React.ComponentProps<"label">, "htmlFor"> & {
+        label?: string
+        hideLabel?: boolean
+    }) {
+    return (
+        <search className="w-full">
+            <form action="#" method="GET" className="w-full">
+                {label && (
+                    <label
+                        htmlFor={htmlFor}
+                        {...(hideLabel && { className: "sr-only" })}
+                    >
+                        {label}
+                    </label>
+                )}
+                <InputGroup {...props} />
+            </form>
+        </search>
     )
 }
 
@@ -139,8 +161,10 @@ function InputGroupButton({
     variant = "ghost",
     size = "xs",
     ...props
-}: Omit<React.ComponentProps<typeof Button>, "size"> &
-    VariantProps<typeof inputGroupButtonVariants>) {
+}: Omit<React.ComponentProps<typeof Button>, "size" | "type"> &
+    VariantProps<typeof inputGroupButtonVariants> & {
+        type?: "button" | "submit" | "reset"
+    }) {
     return (
         <Button
             type={type}
@@ -209,5 +233,6 @@ export {
     InputGroupButton,
     InputGroupInput,
     InputGroupText,
-    InputGroupTextarea
+    InputGroupTextarea,
+    SearchGroup
 }

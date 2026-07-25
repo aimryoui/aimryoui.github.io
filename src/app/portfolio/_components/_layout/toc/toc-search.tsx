@@ -3,9 +3,9 @@
 import { Search, XCircle } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
 import {
-    InputGroup,
     InputGroupAddon,
-    InputGroupInput
+    InputGroupInput,
+    SearchGroup
 } from "@/components/ui/input-group"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { TooltipTrigger } from "@/components/ui/tooltip"
@@ -49,8 +49,9 @@ function TocSearch({
     const hasValue = Boolean(value)
 
     return (
-        <InputGroup
-            as="search"
+        <SearchGroup
+            label="Search for sections"
+            htmlFor="toc-search"
             {...(cursorTarget && {
                 "data-cursor": "input"
             })}
@@ -92,7 +93,7 @@ function TocSearch({
                 platform={platform}
                 onClear={onClear}
             />
-        </InputGroup>
+        </SearchGroup>
     )
 }
 

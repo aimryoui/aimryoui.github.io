@@ -60,13 +60,19 @@ export function SectionName({
                     "data-cursor": "ignore"
                 })}
                 className={cn(
-                    isAnchorTag &&
-                        "pointer-events-auto hover:underline hover:decoration-foreground",
+                    isAnchorTag && [
+                        "pointer-events-auto",
+                        {
+                            hover: "underline decoration-foreground",
+                            "focus-visible":
+                                "underline decoration-foreground decoration-solid"
+                        }
+                    ],
                     "text-pretty rounded-full bg-background px-3.5 py-1.5 text-center font-mono",
                     hasSocialLinks ? "mx-17 lg:mx-4" : "mx-4",
                     !normalcase && "uppercase",
                     {
-                        md: "py-2 text-sm"
+                        lg: "min-h-[36px] py-2.5"
                     },
                     className
                 )}

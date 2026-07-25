@@ -1,3 +1,5 @@
+"use client"
+
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
@@ -6,6 +8,7 @@ import {
     TableBody,
     TableCaption,
     TableCell,
+    TableContainer,
     TableHead,
     TableHeader,
     TableRow
@@ -23,13 +26,24 @@ function Education() {
             <SectionLine />
             <Divider />
             <SectionLine />
-            <div
-                data-slot="table-container"
+            <TableContainer
                 className={cn(
-                    "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5"
+                    "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-4 bg-background py-4.5"
                 )}
             >
+                <TableCaption
+                    className={cn(
+                        "absolute left-6 top-4.5 whitespace-pre-line font-wght-500",
+                        {
+                            "@[50.125rem]":
+                                "static col-span-full whitespace-normal px-6 font-wght-600"
+                        }
+                    )}
+                >
+                    University
+                </TableCaption>
                 <Table
+                    aria-label="Education"
                     className={cn(
                         "col-span-full col-start-2 grid table-fixed gap-y-2",
                         {
@@ -37,32 +51,21 @@ function Education() {
                         }
                     )}
                 >
-                    <TableCaption
-                        className={cn(
-                            "absolute left-6 whitespace-pre-line font-wght-500",
-                            {
-                                "@[50.125rem]": "static font-wght-600"
-                            }
-                        )}
-                    >
-                        University
-                    </TableCaption>
-
-                    <TableHeader className={cn("sr-only grid")}>
-                        <TableRow
-                            className={cn(
+                    <TableHeader
+                        className={cn("sr-only grid", {
+                            "[&>tr]": [
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                 {
                                     "last:*": "pe-6"
                                 }
-                            )}
-                        >
-                            <TableHead className="px-0">Period</TableHead>
-                            <TableHead className="col-span-2 px-0">
-                                Name
-                            </TableHead>
-                            <TableHead className="px-0">Detail</TableHead>
-                        </TableRow>
+                            ]
+                        })}
+                    >
+                        <TableHead className="px-0">Period</TableHead>
+                        <TableHead className="col-span-2 px-0" isRowHeader>
+                            Name
+                        </TableHead>
+                        <TableHead className="px-0">Detail</TableHead>
                     </TableHeader>
 
                     <TableBody
@@ -72,6 +75,7 @@ function Education() {
                         })}
                     >
                         <TableRow
+                            id="education-degree"
                             className={cn(
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                 {
@@ -118,6 +122,7 @@ function Education() {
                         </TableRow>
 
                         <TableRow
+                            id="education-grade"
                             className={cn(
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent",
                                 {
@@ -150,6 +155,7 @@ function Education() {
                         </TableRow>
 
                         <TableRow
+                            id="education-classification"
                             className={cn(
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent",
                                 {
@@ -180,9 +186,42 @@ function Education() {
                                 Very Good
                             </TableCell>
                         </TableRow>
+
+                        <TableRow
+                            id="education-scholarships"
+                            className={cn(
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent",
+                                {
+                                    "@[59.375rem]": "grid-cols-2",
+                                    "last:*": "pe-6"
+                                }
+                            )}
+                        >
+                            <TableCell
+                                className={cn({
+                                    "@[59.375rem]": "hidden"
+                                })}
+                            />
+
+                            <TableCell
+                                className={cn("col-span-2 p-0 align-top", {
+                                    "@[59.375rem]": "col-span-1"
+                                })}
+                            >
+                                Full Scholarship
+                            </TableCell>
+
+                            <TableCell
+                                className={cn(
+                                    "p-0 align-top text-highlighted font-wght-600"
+                                )}
+                            >
+                                30%
+                            </TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
-            </div>
+            </TableContainer>
         </section>
     )
 }

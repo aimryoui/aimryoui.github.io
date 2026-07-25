@@ -1,3 +1,5 @@
+"use client"
+
 import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
@@ -8,6 +10,7 @@ import {
     TableBody,
     TableCaption,
     TableCell,
+    TableContainer,
     TableHead,
     TableHeader,
     TableRow
@@ -282,13 +285,20 @@ function Contact() {
             <address>
                 {sections.map((section, index, arr) => (
                     <Fragment key={section.section}>
-                        <div
-                            data-slot="table-container"
+                        <TableContainer
                             className={cn(
-                                "relative grid w-full grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5"
+                                "grid grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5"
                             )}
                         >
+                            <TableCaption
+                                className={cn(
+                                    "sr-only absolute left-6 top-4.5 whitespace-pre-line font-wght-500"
+                                )}
+                            >
+                                {section.section}
+                            </TableCaption>
                             <Table
+                                aria-label="Contact"
                                 className={cn(
                                     "col-span-full col-start-2 grid table-fixed gap-y-2.5",
                                     {
@@ -296,44 +306,39 @@ function Contact() {
                                     }
                                 )}
                             >
-                                <TableCaption
-                                    className={cn(
-                                        "sr-only absolute left-6 whitespace-pre-line font-wght-500"
-                                    )}
-                                >
-                                    {section.section}
-                                </TableCaption>
-
-                                <TableHeader className={cn("sr-only grid")}>
-                                    <TableRow
-                                        className={cn(
+                                <TableHeader
+                                    className={cn("sr-only grid", {
+                                        "[&>tr]": [
                                             "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                             {
                                                 "last:*": "pe-6"
                                             }
-                                        )}
-                                    >
-                                        <TableHead className="px-0">
-                                            Name
-                                        </TableHead>
-                                        <TableHead className="px-0">
-                                            Link
-                                        </TableHead>
-                                        <TableHead className="col-span-2 px-0">
-                                            Prefer?
-                                        </TableHead>
-                                    </TableRow>
+                                        ]
+                                    })}
+                                >
+                                    <TableHead className="px-0" isRowHeader>
+                                        Name
+                                    </TableHead>
+                                    <TableHead className="px-0">Link</TableHead>
+                                    <TableHead className="col-span-2 px-0">
+                                        Prefer?
+                                    </TableHead>
                                 </TableHeader>
 
                                 <TableBody
+                                    items={section.platforms.map(
+                                        (platform) => ({
+                                            ...platform,
+                                            id: `contact-${platform.title.toLowerCase().replace(/[\s/]+/gu, "-")}`
+                                        })
+                                    )}
                                     className={cn("grid gap-y-2", {
                                         "@[50.125rem]": "gap-y-4",
                                         lg: "gap-y-4"
                                     })}
                                 >
-                                    {section.platforms.map((platform) => (
+                                    {(platform) => (
                                         <TableRow
-                                            key={platform.title}
                                             className={cn(
                                                 "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                                 {
@@ -365,6 +370,7 @@ function Contact() {
                                                     {platform.title}
                                                 </p>
                                             </TableCell>
+
                                             <TableCell
                                                 className={cn("p-0 align-top", {
                                                     "@[59.375rem]": "col-span-2"
@@ -383,13 +389,13 @@ function Contact() {
                                                     {platform.links.text}
                                                 </Link>
                                             </TableCell>
+
                                             <TableCell
                                                 className={cn(
                                                     "col-span-1 p-0 text-right align-top text-highlighted font-wght-500",
                                                     {
                                                         "@[59.375rem]":
                                                             "pe-6 text-left",
-                                                        // "@[32rem]": "ms-auto"
                                                         "@[24rem]": "sr-only"
                                                     }
                                                 )}
@@ -397,10 +403,10 @@ function Contact() {
                                                 {platform.prefer && "Prefer"}
                                             </TableCell>
                                         </TableRow>
-                                    ))}
+                                    )}
                                 </TableBody>
                             </Table>
-                        </div>
+                        </TableContainer>
                         {index < arr.length - 1 &&
                             arr[index + 1].section !== section.section && (
                                 <SectionLine />

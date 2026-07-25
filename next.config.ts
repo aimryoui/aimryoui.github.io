@@ -35,6 +35,9 @@ const nextConfig = (phase: string): NextConfig => {
             ignoreBuildErrors: true
         },
         images: { unoptimized: true },
+        turbopack: {
+            ignoreIssue: [{ path: "", title: /Google Sans Flex/iu }]
+        },
         experimental: {
             viewTransition: true,
             useLightningcss: true,

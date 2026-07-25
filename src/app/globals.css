@@ -201,9 +201,33 @@
 
             --nhn-radius-offset-factor: 1;
         }
-        [class*="rounded-"]:not(.rounded-full),
-        [class*="before:rounded-"]:not(.before\:rounded-full)::before,
-        [class*="after:rounded-"]:not(.after\:rounded-full)::after {
+        [class*="rounded-"]:not(
+            .rounded-full,
+            .rounded-t-full,
+            .rounded-b-full,
+            .rounded-l-full,
+            .rounded-r-full,
+            .rounded-s-full,
+            .rounded-e-full
+        ),
+        [class*="before:rounded-"]:not(
+            .before\:rounded-full,
+            .before\:rounded-t-full,
+            .before\:rounded-b-full,
+            .before\:rounded-l-full,
+            .before\:rounded-r-full,
+            .before\:rounded-s-full,
+            .before\:rounded-e-full
+        )::before,
+        [class*="after:rounded-"]:not(
+            .after\:rounded-full,
+            .after\:rounded-t-full,
+            .after\:rounded-b-full,
+            .after\:rounded-l-full,
+            .after\:rounded-r-full,
+            .after\:rounded-s-full,
+            .after\:rounded-e-full
+        )::after {
             @apply corner-superellipse;
         }
     }

@@ -130,6 +130,9 @@ function CarouselIndicator({
             className={cn(
                 "grid h-9 select-none place-items-center rounded-xlg border border-default/15 bg-background px-4 font-mono text-sm",
                 (!emblaApi || count === 0) && "opacity-40",
+                {
+                    lg: "h-[36px] text-base"
+                },
                 className
             )}
             {...props}
@@ -503,7 +506,7 @@ function CarouselReplay({
                         orientation === "horizontal" ? "" : "rotate-90",
                         className
                     )}
-                    disabled={!canGoToPrev}
+                    isDisabled={!canGoToPrev}
                     onClick={scrollStart}
                     {...props}
                 >
@@ -556,7 +559,7 @@ function CarouselPrevious({
                         orientation === "horizontal" ? "" : "rotate-90",
                         className
                     )}
-                    disabled={!canGoToPrev}
+                    isDisabled={!canGoToPrev}
                     onClick={goToPrev}
                     {...props}
                 >
@@ -609,7 +612,7 @@ function CarouselNext({
                         orientation === "horizontal" ? "" : "rotate-90",
                         className
                     )}
-                    disabled={!canGoToNext}
+                    isDisabled={!canGoToNext}
                     onClick={goToNext}
                     {...props}
                 >
@@ -694,20 +697,21 @@ function CarouselScrollbar({
     return (
         <Slider
             data-slot="carousel-scrollbar"
-            min={0}
-            max={1}
+            minValue={0}
+            maxValue={1}
+            defaultValue={0}
             step={0.001}
             value={value}
             snapCount={snapCount}
-            disabled={!emblaApi || snapCount <= 1}
-            onValueChange={onScrollBarChange}
-            onValueCommitted={onScrollBarRelease}
+            isDisabled={!emblaApi || snapCount <= 1}
+            onChange={onScrollBarChange}
+            onChangeEnd={onScrollBarRelease}
             onPointerUp={() => {
                 if (isDragging.current) {
                     onScrollBarRelease(latestValue.current)
                 }
             }}
-            label="Slide scrollbar"
+            label="Slide"
             className={className}
             {...props}
         />

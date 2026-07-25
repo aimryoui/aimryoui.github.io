@@ -49,7 +49,7 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
                 <Button
                     variant="outline"
                     size="icon"
-                    disabled={!mounted}
+                    isDisabled={!mounted}
                     onClick={() => {
                         setTheme(
                             theme === "light"
@@ -66,7 +66,6 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
                         },
                         className
                     )}
-                    suppressHydrationWarning
                 >
                     {mounted ? <ThemedIcon /> : <Spinner />}
                     <span className="sr-only">Toggle theme</span>

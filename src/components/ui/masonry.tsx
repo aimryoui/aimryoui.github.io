@@ -15,7 +15,7 @@ export function Masonry({
     useEffect(() => {
         if (!gridRef.current || supportsGridLanes()) return
 
-        console.log("🛣️ Grid Lanes Polyfill loaded")
+        console.info("🛣️ Grid Lanes Polyfill loaded")
 
         const layout = apply(gridRef.current)
 

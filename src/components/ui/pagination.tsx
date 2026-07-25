@@ -1,7 +1,8 @@
-import NextLink from "next/link"
+"use client"
 
 import { MoreHorizontalIcon } from "lucide-react"
 
+import { LinkButton } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
@@ -39,21 +40,28 @@ function PaginationItem({ className, ...props }: React.ComponentProps<"li">) {
     )
 }
 
+type PaginationLinkProps = {
+    isActive?: boolean
+} & Omit<React.ComponentProps<typeof LinkButton>, "variant">
+
 function PaginationLink({
     className,
     isActive,
+    size = "icon",
+    nativeLink = true,
     ...props
-}: React.ComponentProps<typeof NextLink> & {
-    isActive?: boolean
-}) {
+}: PaginationLinkProps) {
     return (
-        <NextLink
+        <LinkButton
+            {...(!nativeLink && {
+                variant: isActive ? "outline" : "ghost",
+                size
+            })}
+            nativeLink={nativeLink}
+            className={cn(className)}
             aria-current={isActive ? "page" : undefined}
             data-slot="pagination-link"
             data-active={isActive}
-            prefetch={false}
-            draggable={false}
-            className={cn(className)}
             {...props}
         />
     )

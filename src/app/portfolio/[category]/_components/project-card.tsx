@@ -272,7 +272,8 @@ function ProjectName({
     return (
         <Bold
             className={cn(
-                "relative inline-flex w-fit max-w-full overflow-hidden pe-3",
+                "relative inline-flex w-fit max-w-full overflow-hidden",
+                isNew && "pe-3",
                 className
             )}
             {...props}

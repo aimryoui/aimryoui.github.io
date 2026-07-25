@@ -9,6 +9,12 @@ import {
 
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import {
+    ChevronBackward,
+    ChevronForward,
+    PlusMagnify,
+    XMark
+} from "@/portfolio/_components/_icons/lightbox-icons"
 
 interface CustomItemData {
     placeholderAspectRatio: string
@@ -84,7 +90,13 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 hideAnimationDuration: isWebKit ? 250 : ANIMATION_DURATION,
                 imageClickAction: "zoom",
                 clickToCloseNonZoomable: false,
-                ...options
+                ...options,
+
+                // Icons
+                zoomSVG: PlusMagnify,
+                closeSVG: XMark,
+                arrowPrevSVG: ChevronBackward,
+                arrowNextSVG: ChevronForward
             }}
             onBeforeOpen={(lightbox) => {
                 const onEvent = lightbox.on.bind(lightbox)

@@ -88,6 +88,7 @@ export default {
                 0.25: ".0625rem",
                 0.75: ".1875rem",
                 1.25: ".3125rem",
+                1.75: ".4375rem",
                 2.25: ".5625rem",
                 2.75: ".6875rem",
                 3.25: ".8125rem",
@@ -100,6 +101,7 @@ export default {
                 9.5: "2.375rem",
                 11.5: "2.875rem",
                 13: "3.25rem",
+                15: "3.75rem",
                 16.5: "4.125rem",
                 17: "4.25rem",
                 18: "4.5rem",
@@ -161,7 +163,11 @@ export default {
                 media: "calc(var(--px) / var(--nhn-wrap-scale, 1))"
             },
             ringWidth: {
-                DEFAULT: "var(--px)"
+                DEFAULT: "var(--px)",
+                1: ".0625rem",
+                2: ".125rem",
+                4: ".25rem",
+                8: ".5rem"
             },
             strokeWidth: {
                 px: "var(--px)"
@@ -200,6 +206,8 @@ export default {
                 instant: "instant",
                 "starting-style": "starting-style",
                 "ending-style": "ending-style",
+                entering: "entering",
+                exiting: "exiting",
                 inset: "inset",
                 disabled: "disabled",
                 horizontal: "orientation=horizontal",
