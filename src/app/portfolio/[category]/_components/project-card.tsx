@@ -233,7 +233,7 @@ function ProjectCover({
                         <div
                             className={cn(
                                 socialData.color.default,
-                                "absolute -right-1.5 -top-1 size-4.5 rounded-full border border-white/15 p-0.5 text-white"
+                                "absolute -right-1.5 -top-1 z-1 size-4.5 rounded-full border border-white/15 p-0.5 text-white"
                             )}
                         >
                             <socialData.icon
