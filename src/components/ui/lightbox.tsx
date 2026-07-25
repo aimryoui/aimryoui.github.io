@@ -1,3 +1,5 @@
+"use client"
+
 import "@/portfolio/_styles/photoswipe.css"
 
 import {
