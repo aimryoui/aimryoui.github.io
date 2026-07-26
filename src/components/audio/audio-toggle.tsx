@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
-import { Volume2, VolumeX } from "lucide-react"
+import { Volume1, Volume2, VolumeX } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { TooltipTrigger } from "@/components/ui/tooltip"
@@ -20,9 +20,31 @@ function AudioToggle({
 
     const playerRef = useRef<ReturnType<typeof createTickPlayer> | null>(null)
 
+    const [isIdle, setIsIdle] = useState(false)
+
     useEffect(() => {
-        playerRef.current = createTickPlayer()
-        return () => playerRef.current?.dispose()
+        const player = createTickPlayer()
+        playerRef.current = player
+
+        const ctx = player.getContext()
+
+        if (ctx) {
+            const handleStateChange = () => {
+                setIsIdle(ctx.state !== "running")
+            }
+
+            handleStateChange()
+            ctx.addEventListener("statechange", handleStateChange)
+
+            return () => {
+                ctx.removeEventListener("statechange", handleStateChange)
+                player.dispose()
+            }
+        }
+
+        return () => {
+            player.dispose()
+        }
     }, [])
 
     const handleToggle = () => {
@@ -60,7 +82,11 @@ function AudioToggle({
                     {...props}
                 >
                     {isAudioEnabled ? (
-                        <Volume2 className="size-5.5" />
+                        isIdle ? (
+                            <Volume1 className="size-5.5 text-muted-foreground transition-colors" />
+                        ) : (
+                            <Volume2 className="size-5.5 transition-colors" />
+                        )
                     ) : (
                         <VolumeX className="size-5.5" />
                     )}

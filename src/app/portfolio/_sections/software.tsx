@@ -21,6 +21,8 @@ import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
 import { TOOL_ICONS, type ToolProps } from "@/portfolio/_configs/tools"
 
+import { slugify } from "~/src/helpers/slugify"
+
 interface SectionProps {
     title: string
     tools: ToolProps[]
@@ -146,7 +148,7 @@ function Software() {
                                     })}
                                 >
                                     <TableRow
-                                        id={`software-${section.section.toLowerCase().replace(/\s+/gu, "-")}`}
+                                        id={`software-${slugify(section.section)}`}
                                         className={cn(
                                             "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
                                         )}

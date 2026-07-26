@@ -82,6 +82,7 @@ interface TickPlayer {
     prepare: () => void
     play: () => void
     dispose: () => void
+    getContext: () => AudioContext | null
 }
 
 function createTickPlayer(): TickPlayer {
@@ -121,6 +122,11 @@ function createTickPlayer(): TickPlayer {
                 masterGain = null
                 clickBuffer = null
             }
+        },
+        getContext() {
+            if (disposed) return null
+            ensureContext()
+            return ctx
         }
     }
 }

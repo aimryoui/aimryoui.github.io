@@ -20,6 +20,8 @@ import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
 
+import { slugify } from "~/src/helpers/slugify"
+
 interface SectionProps {
     title: string
     icon: React.ReactElement<React.SVGProps<SVGSVGElement>>
@@ -332,7 +334,7 @@ function Contact() {
                                     items={section.platforms.map(
                                         (platform) => ({
                                             ...platform,
-                                            id: `contact-${platform.title.toLowerCase().replace(/[\s/]+/gu, "-")}`
+                                            id: `contact-${slugify(platform.title)}`
                                         })
                                     )}
                                     className={cn("grid gap-y-2", {

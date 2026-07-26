@@ -2,7 +2,6 @@
 
 import type React from "react"
 import { Fragment, useRef } from "react"
-import NextLink from "next/link"
 
 import { type PhotoSwipeOptions } from "photoswipe"
 
@@ -25,8 +24,8 @@ interface SectionNameProps extends React.ComponentProps<"div"> {
     containerClassName?: string
 }
 
-export function SectionName({
-    as = NextLink,
+function SectionName({
+    as = "a",
     normalcase = false,
     sectionName,
     author,
@@ -35,7 +34,7 @@ export function SectionName({
     containerClassName,
     ...props
 }: SectionNameProps) {
-    const isAnchorTag = as === NextLink
+    const isAnchorTag = as === "a"
 
     const Comp = as
     const TextComp = isAnchorTag ? "h4" : Fragment
@@ -44,8 +43,8 @@ export function SectionName({
         <div
             id={isAnchorTag ? slugify(sectionName) : undefined}
             className={cn(
-                isAnchorTag && "sticky top-0 z-50",
-                "pointer-events-none grid min-h-20 place-items-center py-5.5",
+                isAnchorTag && "sticky top-3.5 z-50 scroll-mt-6.5",
+                "pointer-events-none grid min-h-13 place-items-center py-2",
                 containerClassName
             )}
             {...props}
@@ -54,9 +53,7 @@ export function SectionName({
                 aria-hidden={isAnchorTag ? undefined : "true"}
                 {...(isAnchorTag && {
                     href: `#${slugify(sectionName)}`,
-                    draggable: false
-                })}
-                {...(isAnchorTag && {
+                    draggable: false,
                     "data-cursor": "ignore"
                 })}
                 className={cn(
@@ -183,7 +180,7 @@ function MediaFrame({
                                 author={author}
                                 normalcase={normalcase}
                                 hasSocialLinks={hasSocialLinks}
-                                containerClassName="sticky top-0 !z-10"
+                                containerClassName="sticky top-3.5 !z-10"
                                 className={cn(
                                     "bg-transparent text-transparent shadow-sm outline-default/15 outline"
                                 )}
@@ -313,4 +310,4 @@ function JustifiedColumn({
 }
 
 export type { MediaFrameProps }
-export { JustifiedColumn, MediaFrame, MediaFrameContent }
+export { JustifiedColumn, MediaFrame, MediaFrameContent, SectionName }
