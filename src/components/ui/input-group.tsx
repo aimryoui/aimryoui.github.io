@@ -62,18 +62,20 @@ function SearchGroup({
     htmlFor,
     label,
     hideLabel = true,
-    preventDefaultEnter,
+    formAction,
+    preventDefaultEnter = true,
     ...props
 }: GroupProps &
     Pick<React.ComponentProps<"label">, "htmlFor"> & {
         label?: string
         hideLabel?: boolean
+        formAction?: React.ComponentProps<"form">["action"]
         preventDefaultEnter?: boolean
     }) {
     return (
         <search role="searchbox" className="w-full">
             <form
-                action=""
+                action={formAction ?? undefined}
                 method="GET"
                 className="w-full"
                 onSubmit={(e) => {
