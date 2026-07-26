@@ -39,7 +39,12 @@
   ],
   "markers": {
     "src/content/projects/events/chi-chi-chanh-chanh-2023.mdx": "review",
-    "src/content/projects/other-course-projects/mojito-soda-co.mdx": "review"
+    "src/content/projects/other-course-projects/mojito-soda-co.mdx": "review",
+    "src/components/ui/alert-dialog.tsx": "in-progress",
+    "src/components/ui/drawer.tsx": "in-progress",
+    "src/components/ui/dropdown-menu.tsx": "in-progress",
+    "src/components/ui/progress.tsx": "in-progress",
+    "src/components/ui/tooltip.tsx": "in-progress"
   },
   "lineHighlightTypes": [
     {

@@ -15,7 +15,7 @@ import {
     type TableHeaderProps,
     Table as TablePrimitive,
     type TableProps
-} from "react-aria-components"
+} from "react-aria-components/Table"
 
 import { cn } from "@/lib/utils"
 

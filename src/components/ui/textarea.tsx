@@ -1,9 +1,7 @@
 "use client"
 
-import {
-    composeRenderProps,
-    TextArea as TextareaPrimitive
-} from "react-aria-components"
+import { composeRenderProps } from "react-aria-components"
+import { TextArea as TextareaPrimitive } from "react-aria-components/TextArea"
 
 import { cn } from "@/lib/utils"
 

@@ -1,15 +1,15 @@
 "use client"
 
 import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
+import { composeRenderProps } from "react-aria-components"
 import {
     Breadcrumb as BreadcrumbPrimitive,
     type BreadcrumbProps,
     Breadcrumbs as BreadcrumbsPrimitive,
     type BreadcrumbsProps,
-    composeRenderProps,
     Link as LinkPrimitive,
     type LinkProps
-} from "react-aria-components"
+} from "react-aria-components/Breadcrumbs"
 
 import { cn } from "@/lib/utils"
 

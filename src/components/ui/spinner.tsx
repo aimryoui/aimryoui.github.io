@@ -6,8 +6,8 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
 
     return (
         <svg
-            viewBox="0 0 30 30"
             data-slot="spinner"
+            viewBox="0 0 30 30"
             className={cn("size-5", className)}
             {...props}
         >

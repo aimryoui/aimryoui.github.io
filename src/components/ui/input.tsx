@@ -1,9 +1,7 @@
 "use client"
 
-import {
-    composeRenderProps,
-    Input as InputPrimitive
-} from "react-aria-components"
+import { composeRenderProps } from "react-aria-components"
+import { Input as InputPrimitive } from "react-aria-components/Input"
 
 import { cn } from "@/lib/utils"
 

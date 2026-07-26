@@ -1,6 +1,6 @@
 "use client"
 
-import { Keyboard as KbdPrimitive } from "react-aria-components"
+import { Keyboard as KbdPrimitive } from "react-aria-components/Keyboard"
 
 import { cn } from "@/lib/utils"
 

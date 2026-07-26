@@ -6,7 +6,7 @@ import {
     type SliderProps as SliderPrimitiveProps,
     SliderThumb,
     SliderTrack
-} from "react-aria-components"
+} from "react-aria-components/Slider"
 
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"

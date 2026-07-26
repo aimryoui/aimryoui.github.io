@@ -68,7 +68,7 @@ function TocSearch({
                 ref={ref}
                 id="toc-search"
                 type="search"
-                role="searchbox"
+                role="search"
                 tabIndex={0}
                 placeholder="Search for sections..."
                 autoComplete="off"

@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { cva, type VariantProps } from "class-variance-authority"
-import { Group, type GroupProps } from "react-aria-components"
+import { Group, type GroupProps } from "react-aria-components/Group"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -62,15 +62,26 @@ function SearchGroup({
     htmlFor,
     label,
     hideLabel = true,
+    preventDefaultEnter,
     ...props
 }: GroupProps &
     Pick<React.ComponentProps<"label">, "htmlFor"> & {
         label?: string
         hideLabel?: boolean
+        preventDefaultEnter?: boolean
     }) {
     return (
-        <search className="w-full">
-            <form action="#" method="GET" className="w-full">
+        <search role="searchbox" className="w-full">
+            <form
+                action=""
+                method="GET"
+                className="w-full"
+                onSubmit={(e) => {
+                    if (preventDefaultEnter) {
+                        e.preventDefault()
+                    }
+                }}
+            >
                 {label && (
                     <label
                         htmlFor={htmlFor}

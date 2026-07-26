@@ -4,7 +4,7 @@ import {
     LabelContext,
     Label as LabelPrimitive,
     type LabelProps
-} from "react-aria-components"
+} from "react-aria-components/Label"
 
 import { cn } from "@/lib/utils"
 
