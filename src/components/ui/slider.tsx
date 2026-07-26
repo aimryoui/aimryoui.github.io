@@ -90,9 +90,9 @@ function Slider<T extends number | number[]>({
             }
 
             if (nextActive !== activeDotRef.current) {
-                if (isTouchDevice) {
-                    void trigger("selection")
-                } else if (useAudioStore.getState().isAudioEnabled) {
+                void trigger("light")
+
+                if (!isTouchDevice && useAudioStore.getState().isAudioEnabled) {
                     playerRef.current?.play()
                 }
 
