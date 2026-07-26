@@ -4,6 +4,7 @@ import { memo } from "react"
 import NextLink from "next/link"
 
 import { ChevronDown } from "lucide-react"
+import { useWebHaptics } from "web-haptics/react"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
 import { formatOrdinals } from "@/helpers/format-ordinals"
@@ -24,6 +25,8 @@ const MobileTocItemRow = memo(
         const href = item.href ?? `#${item.id}`
 
         const isProject = item.depth === 3 && !item.icon
+
+        const { trigger } = useWebHaptics()
 
         return (
             <li
@@ -51,6 +54,8 @@ const MobileTocItemRow = memo(
                     data-toc-id={item.id}
                     draggable={false}
                     onClick={(e) => {
+                        void trigger(isProject ? "light" : "success")
+
                         if (isSameUrl(href)) {
                             e.preventDefault()
                             onSameLinkClick()

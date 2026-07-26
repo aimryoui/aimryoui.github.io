@@ -30,7 +30,7 @@ let consumers = 0
 let clickBuffer: AudioBuffer | null = null
 let pressBuffer: AudioBuffer | null = null
 
-function buildClickBuffer(context: AudioContext): AudioBuffer {
+function buildHoverBuffer(context: AudioContext): AudioBuffer {
     const sampleRate = context.sampleRate
     const length = Math.ceil(TICK_DURATION * sampleRate)
     const buffer = context.createBuffer(1, length, sampleRate)
@@ -68,7 +68,7 @@ function buildClickBuffer(context: AudioContext): AudioBuffer {
 
 function buildPressBuffer(context: AudioContext): AudioBuffer {
     const sampleRate = context.sampleRate
-    const length = Math.ceil(0.015 * sampleRate)
+    const length = Math.ceil(PRESS_DURATION * sampleRate)
     const buffer = context.createBuffer(1, length, sampleRate)
     const data = buffer.getChannelData(0)
 
@@ -76,7 +76,7 @@ function buildPressBuffer(context: AudioContext): AudioBuffer {
     for (let i = 0; i < length; i++) {
         const t = i / sampleRate
         const attack = Math.min(1, t / 0.0005)
-        const fadeOut = Math.min(1, (0.015 - t) / 0.002)
+        const fadeOut = Math.min(1, (PRESS_DURATION - t) / 0.002)
 
         const freq = 1200 * Math.exp(-t * 250) + 150
         const osc = Math.sin(2 * Math.PI * freq * t) * Math.exp(-t / 0.003)
@@ -106,7 +106,7 @@ function ensureContext() {
     pressGain.gain.value = PRESS_GAIN
     pressGain.connect(ctx.destination)
 
-    clickBuffer = buildClickBuffer(ctx)
+    clickBuffer = buildHoverBuffer(ctx)
     pressBuffer = buildPressBuffer(ctx)
 }
 

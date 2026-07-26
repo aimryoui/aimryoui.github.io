@@ -57,7 +57,7 @@ function Slider<T extends number | number[]>({
         return () => playerRef.current?.dispose()
     }, [isTouchDevice])
 
-    const handleTick = useCallback(
+    const handleTickHaptic = useCallback(
         (val: T) => {
             if (snapCount <= 1) return
 
@@ -104,12 +104,12 @@ function Slider<T extends number | number[]>({
 
     useEffect(() => {
         if (props.value !== undefined) {
-            handleTick(props.value)
+            handleTickHaptic(props.value)
         }
-    }, [props.value, handleTick])
+    }, [props.value, handleTickHaptic])
 
     const handleOnChange = (val: T) => {
-        handleTick(val)
+        handleTickHaptic(val)
         if (onChange) {
             onChange(val)
         }

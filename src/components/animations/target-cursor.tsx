@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
 
 import { pxToRem } from "@/helpers/px-to-rem"
+import { useDevice } from "@/hooks/use-device"
 import { cn } from "@/lib/utils"
 
 type CursorSelector = "target" | "lock" | "ignore" | undefined
@@ -43,18 +44,14 @@ function getContainingBlockOffset(block: HTMLElement | null): {
     return { x: rect.left + block.clientLeft, y: rect.top + block.clientTop }
 }
 
-function shouldDisable(): boolean {
+function shouldDisable(isTouchDevice: boolean): boolean {
     if (typeof window === "undefined") return false
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return true
     }
 
-    // (hover: none) and (pointer: coarse) is the most robust way to detect
-    // pure touch devices (phones/tablets).
-    // Touch-enabled laptops will evaluate to (hover: hover) and (pointer: fine)
-    // due to their trackpad/mouse, so they won't trigger this condition.
-    return window.matchMedia("(hover: none) and (pointer: coarse)").matches
+    return isTouchDevice
 }
 
 function computeTargetPositions(
@@ -122,6 +119,7 @@ function TargetCursor({
     cursorColor = "var(--color-highlighted)",
     ...props
 }: React.ComponentProps<"div"> & TargetCursorProps) {
+    const { isTouchDevice } = useDevice()
     const cursorRef = useRef<HTMLDivElement>(null)
     const dotRef = useRef<HTMLDivElement>(null)
     const containingBlockRef = useRef<HTMLElement | null>(null)
@@ -139,7 +137,7 @@ function TargetCursor({
     })
 
     useEffect(() => {
-        if (shouldDisable() || !cursorRef.current) return
+        if (shouldDisable(isTouchDevice) || !cursorRef.current) return
 
         const cursor = cursorRef.current
         const state = stateRef.current
@@ -581,7 +579,8 @@ function TargetCursor({
         inputSelector,
         spinDuration,
         hideDefaultCursor,
-        cursorColor
+        cursorColor,
+        isTouchDevice
     ])
 
     return (
