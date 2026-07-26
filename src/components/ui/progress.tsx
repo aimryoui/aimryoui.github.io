@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext } from "react"
+import { createContext, useContext, useMemo } from "react"
 
 import { Bar, Progress as BProgress, type ProgressProps } from "@bprogress/next"
 import { ProgressProvider as AppProgressProvider } from "@bprogress/next/app"
@@ -8,6 +8,10 @@ import {
     Label as LabelPrimitive,
     type LabelProps
 } from "react-aria-components/Label"
+import {
+    ProgressBar as ProgressPrimitive,
+    type ProgressBarProps as ProgressPrimitiveProps
+} from "react-aria-components/ProgressBar"
 
 import { cn } from "@/lib/utils"
 
@@ -26,35 +30,52 @@ function useProgress() {
     return context
 }
 
-function ProgressProvider({ children }: { children: React.ReactNode }) {
+function ProgressContent({
+    children,
+    percentage,
+    isIndeterminate,
+    valueText
+}: ProgressContextValue & {
+    children?: React.ReactNode
+}) {
+    const context = useMemo(
+        () => ({ percentage, isIndeterminate, valueText }),
+        [percentage, isIndeterminate, valueText]
+    )
     return (
-        <AppProgressProvider
-            disableStyle
-            options={{ showSpinner: false, template: null }}
-            shallowRouting
-            startOnLoad
-        >
+        <ProgressContext value={context}>
             {children}
-        </AppProgressProvider>
+            <ProgressTrack>
+                <ProgressIndicator />
+            </ProgressTrack>
+        </ProgressContext>
     )
 }
 
-function Progress({ className, ...props }: ProgressProps) {
+function Progress({
+    className,
+    children,
+    ...props
+}: Omit<ProgressPrimitiveProps, "children" | "className"> & {
+    children?: React.ReactNode
+    className?: string
+}) {
     return (
-        <BProgress
+        <ProgressPrimitive
             data-slot="progress"
-            className={cn(
-                "absolute inset-x-0 -top-px z-50 h-0.75 w-full overflow-hidden",
-                className
-            )}
+            className={cn("flex flex-wrap gap-3", className)}
             {...props}
         >
-            <Bar
-                data-slot="progress-bar"
-                role="progressbar"
-                className={cn("size-full bg-highlighted")}
-            />
-        </BProgress>
+            {({ percentage, valueText, isIndeterminate }) => (
+                <ProgressContent
+                    percentage={percentage}
+                    valueText={valueText}
+                    isIndeterminate={isIndeterminate}
+                >
+                    {children}
+                </ProgressContent>
+            )}
+        </ProgressPrimitive>
     )
 }
 
@@ -122,11 +143,45 @@ function ProgressValue({
     )
 }
 
+function ProgressRouteProvider({ children }: { children: React.ReactNode }) {
+    return (
+        <AppProgressProvider
+            disableStyle
+            options={{ showSpinner: false, template: null }}
+            shallowRouting
+            startOnLoad
+        >
+            {children}
+        </AppProgressProvider>
+    )
+}
+
+function ProgressRoute({ className, ...props }: ProgressProps) {
+    return (
+        <BProgress
+            data-slot="progress"
+            className={cn(
+                "absolute inset-x-0 -top-px z-50 h-0.75 w-full overflow-hidden",
+                className
+            )}
+            {...props}
+        >
+            <Bar
+                data-slot="progress-bar"
+                role="progressbar"
+                className={cn("size-full bg-highlighted")}
+            />
+        </BProgress>
+    )
+}
+
 export {
     Progress,
+    ProgressContent,
     ProgressIndicator,
     ProgressLabel,
-    ProgressProvider,
+    ProgressRoute,
+    ProgressRouteProvider,
     ProgressTrack,
     ProgressValue
 }

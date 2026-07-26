@@ -33,7 +33,7 @@ function Slider<T extends number | number[]>({
     hideLabel = true,
     thumbLabels,
     fillOffset = 0,
-    snapCount = 10,
+    snapCount = 0,
     onChange,
     ...props
 }: SliderProps<T>) {
@@ -120,6 +120,9 @@ function Slider<T extends number | number[]>({
             data-slot="slider"
             aria-label={label}
             onChange={handleOnChange}
+            onChangeEnd={() => {
+                void trigger("light")
+            }}
             className={cn(
                 "group flex touch-none select-none flex-col items-start gap-1",
                 {

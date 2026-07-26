@@ -7,7 +7,7 @@ import { AudioToggle } from "@/components/audio/audio"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
 import { SettingButton } from "@/components/layout/toolbar/settings-button"
-import { Progress } from "@/components/ui/progress"
+import { ProgressRoute } from "@/components/ui/progress"
 import { Tooltip } from "@/components/ui/tooltip"
 import { At, Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
@@ -58,7 +58,7 @@ function Menu({ className }: { className?: string }) {
                 //     viewTransitionName: "progress-bar"
                 // }}
             >
-                <Progress />
+                <ProgressRoute />
                 <SectionLine
                     fit
                     // style={{

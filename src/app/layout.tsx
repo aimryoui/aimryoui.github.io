@@ -12,7 +12,7 @@ import {
     PngAntiBleed,
     PngBorder
 } from "@/components/media/svg-filter"
-import { ProgressProvider } from "@/components/ui/progress"
+import { ProgressRouteProvider } from "@/components/ui/progress"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
@@ -242,7 +242,7 @@ export default function RootLayout({
                 <AudioProvider>
                     <ThemeProvider disableTransitionOnChange>
                         <LazyMotionProvider>
-                            <ProgressProvider>
+                            <ProgressRouteProvider>
                                 <TooltipProvider>
                                     <TargetCursor />
                                     <MarginLine />
@@ -252,7 +252,7 @@ export default function RootLayout({
                                     <PngBorder />
                                     <MetaBall />
                                 </TooltipProvider>
-                            </ProgressProvider>
+                            </ProgressRouteProvider>
                         </LazyMotionProvider>
                     </ThemeProvider>
                 </AudioProvider>
