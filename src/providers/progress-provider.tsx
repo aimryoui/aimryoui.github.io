@@ -2,7 +2,7 @@
 
 import { ProgressProvider as AppProgressProvider } from "@bprogress/next/app"
 
-export function ProgressProvider({ children }: { children: React.ReactNode }) {
+function ProgressProvider({ children }: { children: React.ReactNode }) {
     return (
         <AppProgressProvider
             disableStyle
@@ -14,3 +14,5 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
         </AppProgressProvider>
     )
 }
+
+export { ProgressProvider }

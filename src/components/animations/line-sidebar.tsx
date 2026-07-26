@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef } from "react"
 
 import { pxToRem } from "@/helpers/px-to-rem"
-import { createTickPlayer } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
-import { useAudioStore } from "@/stores/audio-store"
 
 type Falloff = "linear" | "smooth" | "sharp"
 
@@ -20,7 +18,6 @@ interface LineSidebarProps {
     tickScale?: number
     itemGap?: number
     smoothing?: number
-    audioThreshold?: number
     className?: string
 }
 
@@ -32,8 +29,6 @@ const FALLOFF_CURVES: Record<Falloff, (p: number) => number> = {
 
 const FPS = 60
 const FPS_INTERVAL = 1000 / FPS
-const MAX_DT = 0.05 // Giới hạn Delta time tối đa để tránh lỗi khi tab bị ẩn
-const SETTLE_THRESHOLD = 0.0015 // Ngưỡng sai số để dừng animation
 
 function LineSidebar({
     itemSelector = ":scope > li",
@@ -48,7 +43,6 @@ function LineSidebar({
     tickScale = 0.5,
     itemGap = 0,
     smoothing = 100,
-    audioThreshold = 15,
     className,
     ref,
     ...props
@@ -89,7 +83,6 @@ function LineSidebar({
         const items = Array.from(
             list.querySelectorAll<HTMLElement>(itemSelector)
         )
-
         listItemsRef.current = items
         itemCentersRef.current = items.map(
             (el) => el.offsetTop + el.offsetHeight / 2
@@ -128,7 +121,7 @@ function LineSidebar({
             return
         }
 
-        const dt = Math.min(elapsed / 1000, MAX_DT)
+        const dt = Math.min(elapsed / 1000, 0.05)
         lastRef.current = now - (elapsed % FPS_INTERVAL)
         const tau = Math.max(smoothingRef.current, 1) / 1000
         const k = 1 - Math.exp(-dt / tau)
@@ -144,7 +137,7 @@ function LineSidebar({
             if (cur === 0 && target === 0) continue
 
             const next = cur + (target - cur) * k
-            const settled = Math.abs(target - next) < SETTLE_THRESHOLD
+            const settled = Math.abs(target - next) < 0.0015
             const value = settled ? target : next
 
             if (currentRef.current[i] !== value) {
@@ -169,18 +162,6 @@ function LineSidebar({
         })
     }, [])
 
-    // Tick sounds
-    const playerRef = useRef<ReturnType<typeof createTickPlayer> | null>(null)
-    const activeItemIndexRef = useRef<number>(-1)
-
-    useEffect(() => {
-        playerRef.current = createTickPlayer()
-
-        return () => {
-            playerRef.current?.dispose()
-        }
-    }, [])
-
     useEffect(() => {
         const list = internalListRef.current
         if (!list) return
@@ -193,40 +174,17 @@ function LineSidebar({
             const items = listItemsRef.current
             const centers = itemCentersRef.current
 
-            let closestIndex = -1
-            let minDistance = Infinity
-
             for (let i = 0; i < items.length; i++) {
                 const distance = Math.abs(pointerYLocal - centers[i])
                 targetsRef.current[i] = ease(
                     Math.max(0, 1 - distance / proximityRadius)
                 )
-
-                if (distance < minDistance) {
-                    minDistance = distance
-                    closestIndex = i
-                }
             }
-
-            if (
-                closestIndex !== activeItemIndexRef.current &&
-                closestIndex !== -1
-            ) {
-                if (minDistance < audioThreshold) {
-                    if (useAudioStore.getState().isAudioEnabled) {
-                        playerRef.current?.play()
-                    }
-
-                    activeItemIndexRef.current = closestIndex
-                }
-            }
-
             startLoop()
         }
 
         const handlePointerLeave = () => {
             targetsRef.current = targetsRef.current.map(() => 0)
-            activeItemIndexRef.current = -1
             startLoop()
         }
 
@@ -241,7 +199,7 @@ function LineSidebar({
             list.removeEventListener("pointermove", handlePointerMove)
             list.removeEventListener("pointerleave", handlePointerLeave)
         }
-    }, [falloff, proximityRadius, startLoop, audioThreshold])
+    }, [falloff, proximityRadius, startLoop])
 
     useEffect(() => {
         if (rafRef.current === null) {

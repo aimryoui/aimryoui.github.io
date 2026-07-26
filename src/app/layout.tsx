@@ -14,6 +14,7 @@ import {
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
+import { AudioProvider } from "@/providers/audio-provider"
 import { LazyMotionProvider } from "@/providers/lazy-motion-provider"
 import { ProgressProvider } from "@/providers/progress-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
@@ -238,21 +239,23 @@ export default function RootLayout({
                     }
                 )}
             >
-                <ThemeProvider disableTransitionOnChange>
-                    <LazyMotionProvider>
-                        <ProgressProvider>
-                            <TooltipProvider>
-                                <TargetCursor />
-                                <MarginLine />
-                                <MarginLine className="order-last" />
-                                {children}
-                                <PngAntiBleed />
-                                <PngBorder />
-                                <MetaBall />
-                            </TooltipProvider>
-                        </ProgressProvider>
-                    </LazyMotionProvider>
-                </ThemeProvider>
+                <AudioProvider>
+                    <ThemeProvider disableTransitionOnChange>
+                        <LazyMotionProvider>
+                            <ProgressProvider>
+                                <TooltipProvider>
+                                    <TargetCursor />
+                                    <MarginLine />
+                                    <MarginLine className="order-last" />
+                                    {children}
+                                    <PngAntiBleed />
+                                    <PngBorder />
+                                    <MetaBall />
+                                </TooltipProvider>
+                            </ProgressProvider>
+                        </LazyMotionProvider>
+                    </ThemeProvider>
+                </AudioProvider>
             </body>
         </html>
     )
