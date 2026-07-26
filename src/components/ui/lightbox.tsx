@@ -10,6 +10,7 @@ import {
 } from "react-photoswipe-gallery"
 
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
+import { useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import {
     ChevronBackward,
@@ -70,6 +71,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
     const isMobilePortrait = useMediaQuery(
         "(max-width: 48rem) and (orientation: portrait)"
     )
+    const { isTouchDevice } = useDevice()
 
     const { isWebKit } = useBrowserEngine()
 
@@ -93,6 +95,10 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 imageClickAction: "zoom",
                 clickToCloseNonZoomable: false,
                 ...options,
+
+                // Fallback for sideload browsers like Raynard
+                arrowPrev: !isTouchDevice,
+                arrowNext: !isTouchDevice,
 
                 // Icons
                 zoomSVG: PlusMagnify,

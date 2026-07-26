@@ -33,7 +33,7 @@ function Slider<T extends number | number[]>({
     hideLabel = true,
     thumbLabels,
     fillOffset = 0,
-    snapCount = 0,
+    snapCount = 10,
     onChange,
     ...props
 }: SliderProps<T>) {

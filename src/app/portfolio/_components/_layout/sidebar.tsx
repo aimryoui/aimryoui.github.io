@@ -3,7 +3,7 @@
 import type React from "react"
 import NextLink from "next/link"
 
-import { AudioToggle } from "@/components/audio/audio-toggle"
+import { AudioToggle } from "@/components/audio/audio"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
 import { SettingButton } from "@/components/layout/toolbar/settings-button"

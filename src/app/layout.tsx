@@ -5,18 +5,18 @@ import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
 
 import { TargetCursor } from "@/components/animations/target-cursor"
+import { AudioProvider } from "@/components/audio/audio"
 import { MarginLine } from "@/components/layout/line"
 import {
     MetaBall,
     PngAntiBleed,
     PngBorder
 } from "@/components/media/svg-filter"
+import { ProgressProvider } from "@/components/ui/progress"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
-import { AudioProvider } from "@/providers/audio-provider"
 import { LazyMotionProvider } from "@/providers/lazy-motion-provider"
-import { ProgressProvider } from "@/providers/progress-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
 import AppData from "~/package.json"
