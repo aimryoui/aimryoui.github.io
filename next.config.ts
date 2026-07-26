@@ -39,6 +39,7 @@ const nextConfig = (phase: string): NextConfig => {
             ignoreIssue: [{ path: "", title: /Google Sans Flex/iu }]
         },
         experimental: {
+            useTypeScriptCli: true,
             viewTransition: true,
             useLightningcss: true,
             lightningCssFeatures: {

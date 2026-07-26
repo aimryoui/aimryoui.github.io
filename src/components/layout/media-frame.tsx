@@ -44,8 +44,8 @@ export function SectionName({
         <div
             id={isAnchorTag ? slugify(sectionName) : undefined}
             className={cn(
-                isAnchorTag && "sticky top-3.5 z-50",
-                "pointer-events-none grid min-h-13 place-items-center py-2",
+                isAnchorTag && "sticky top-0 z-50",
+                "pointer-events-none grid min-h-20 place-items-center py-5.5",
                 containerClassName
             )}
             {...props}
@@ -183,7 +183,7 @@ function MediaFrame({
                                 author={author}
                                 normalcase={normalcase}
                                 hasSocialLinks={hasSocialLinks}
-                                containerClassName="sticky top-3.5 !z-10"
+                                containerClassName="sticky top-0 !z-10"
                                 className={cn(
                                     "bg-transparent text-transparent shadow-sm outline-default/15 outline"
                                 )}

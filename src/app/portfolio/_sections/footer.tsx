@@ -159,7 +159,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                 )}
             >
                 <p className="flex flex-wrap justify-center gap-x-0.5 text-balance text-center">
-                    {`© ${CURRENT_YEAR} aimryoui. NO AI training allowed.`}
+                    {`© 2024 - ${CURRENT_YEAR} aimryoui. NO AI training allowed.`}
                     <span>All Rights Reserved.</span>
                 </p>
             </Divider>

@@ -64,7 +64,7 @@ function AlertDialogContent({
                 data-size={size}
                 // data-cursor="ignore"
                 className={cn(
-                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-2xl bg-popover px-4 py-3 text-popover-foreground ring ring-stroke outline-none duration-250",
+                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl bg-popover px-4 py-3 text-popover-foreground ring ring-stroke outline-none duration-250",
                     {
                         "data-starting-style": "scale-95 opacity-0",
                         "data-ending-style": "scale-95 opacity-0",
@@ -88,7 +88,7 @@ function AlertDialogHeader({
             data-slot="alert-dialog-header"
             data-cursor="ignore"
             className={cn(
-                "grid cursor-auto grid-rows-[auto_1fr] gap-3 px-4 py-3",
+                "grid cursor-auto grid-rows-[auto_1fr] gap-3 p-2",
                 {
                     "has-data-[slot=alert-dialog-media]":
                         "grid-rows-[auto_auto_1fr] gap-x-4",
