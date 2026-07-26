@@ -18,6 +18,7 @@ import {
 } from "@/portfolio/_helpers/resolve-social-data"
 
 import { type Project } from "~/.velite"
+import { useDevice } from "~/src/hooks/use-device"
 import { playPressSound } from "~/src/lib/sounds"
 import { useAudioStore } from "~/src/stores/audio-store"
 
@@ -83,6 +84,7 @@ function ProjectCard({
         }, remaining)
     }
 
+    const { isTouchDevice } = useDevice()
     const { trigger } = useWebHaptics()
 
     const Comp = navigation
@@ -114,7 +116,7 @@ function ProjectCard({
             onClick={(e) => {
                 void trigger("light")
 
-                if (useAudioStore.getState().isAudioEnabled) {
+                if (!isTouchDevice && useAudioStore.getState().isAudioEnabled) {
                     playPressSound()
                 }
 

@@ -133,7 +133,10 @@ function Menu({ className }: { className?: string }) {
                                 </svg>
                                 <div
                                     className={cn(
-                                        "flex flex-col sm:@[21.5rem]:hidden"
+                                        "flex flex-col",
+                                        isTouchDevice
+                                            ? "sm:@[21.5rem]:hidden"
+                                            : "sm:@[25rem]:hidden"
                                     )}
                                 >
                                     <Bold className="text-sm lg:text-base">

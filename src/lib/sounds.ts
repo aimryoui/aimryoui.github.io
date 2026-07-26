@@ -2,7 +2,7 @@ const TICK_DURATION = 0.008
 const TICK_GAIN = 0.045
 
 const PRESS_DURATION = 0.015
-const PRESS_GAIN = 0.15
+const PRESS_GAIN = 0.175
 
 const MODES = [
     { frequency: 2400, decay: 0.0015, gain: 0.6, phase: 0 },

@@ -15,6 +15,7 @@ import { useWebHaptics } from "web-haptics/react"
 import { buttonVariants } from "@/components/ui/button-variants"
 import { cn } from "@/lib/utils"
 
+import { useDevice } from "~/src/hooks/use-device"
 import { playPressSound } from "~/src/lib/sounds"
 import { useAudioStore } from "~/src/stores/audio-store"
 
@@ -35,6 +36,7 @@ function Button({
         haptic?: HapticVariantsType
         mute?: boolean
     }) {
+    const { isTouchDevice } = useDevice()
     const { trigger } = useWebHaptics()
 
     return (
@@ -48,7 +50,11 @@ function Button({
             onPress={(e) => {
                 void trigger(haptic)
 
-                if (!mute && useAudioStore.getState().isAudioEnabled) {
+                if (
+                    !mute &&
+                    !isTouchDevice &&
+                    useAudioStore.getState().isAudioEnabled
+                ) {
                     playPressSound()
                 }
 
@@ -74,6 +80,7 @@ function LinkButton({
         haptic?: HapticVariantsType
         mute?: boolean
     }) {
+    const { isTouchDevice } = useDevice()
     const { trigger } = useWebHaptics()
 
     return (
@@ -92,7 +99,11 @@ function LinkButton({
             onPress={(e) => {
                 void trigger(haptic)
 
-                if (!mute && useAudioStore.getState().isAudioEnabled) {
+                if (
+                    !mute &&
+                    !isTouchDevice &&
+                    useAudioStore.getState().isAudioEnabled
+                ) {
                     playPressSound()
                 }
 

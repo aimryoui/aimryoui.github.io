@@ -3,6 +3,8 @@
 import { Fragment } from "react"
 import NextLink from "next/link"
 
+import { useWebHaptics } from "web-haptics/react"
+
 import { ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -21,6 +23,9 @@ import ProjectCard from "@/portfolio/[category]/_components/project-card"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
+import { useDevice } from "~/src/hooks/use-device"
+import { playPressSound } from "~/src/lib/sounds"
+import { useAudioStore } from "~/src/stores/audio-store"
 
 function Projects() {
     const mode = usePortfolioModeStore((state) => state.mode)
@@ -97,6 +102,9 @@ function Projects() {
         ))
     }
 
+    const { isTouchDevice } = useDevice()
+    const { trigger } = useWebHaptics()
+
     return (
         <>
             <Space />
@@ -113,6 +121,16 @@ function Projects() {
                             prefetch={false}
                             draggable={false}
                             data-cursor="target"
+                            onClick={() => {
+                                void trigger("success")
+
+                                if (
+                                    !isTouchDevice &&
+                                    useAudioStore.getState().isAudioEnabled
+                                ) {
+                                    playPressSound()
+                                }
+                            }}
                             className={cn(
                                 "group flex items-center justify-between gap-4 pe-6 transition-[background-color] duration-100",
                                 {
