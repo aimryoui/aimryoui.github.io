@@ -49,7 +49,6 @@ const TocItemRow = memo(
         return (
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
             <li
-                data-sound="tick"
                 className={cn(
                     "relative box-content flex h-fit list-inside items-center gap-4",
                     {

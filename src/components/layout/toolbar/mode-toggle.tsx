@@ -49,6 +49,7 @@ function ModeToggle({ className }: React.ComponentProps<"button">) {
                 <Button
                     variant="outline"
                     size="icon"
+                    haptic="success"
                     isDisabled={!mounted}
                     onPress={() => {
                         setTheme(

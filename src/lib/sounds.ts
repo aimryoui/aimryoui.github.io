@@ -1,15 +1,10 @@
-// Synthesizes a short, dry mechanical detent for gesture feedback (e.g. the
-// WheelPicker row-cross click) entirely at runtime. Several inharmonic modes
-// make it read as a tiny physical impact instead of an oscillator beep, while
-// the high-passed transient gives it definition through phone speakers.
-
-const DURATION = 0.016 // seconds, short enough to stay distinct during a fling
-const MASTER_GAIN = 0.055
+const DURATION = 0.008
+const MASTER_GAIN = 0.045
 
 const MODES = [
-    { frequency: 980, decay: 0.0038, gain: 0.5, phase: 0 },
-    { frequency: 1820, decay: 0.0024, gain: 0.3, phase: 0.65 },
-    { frequency: 3160, decay: 0.00115, gain: 0.12, phase: 1.3 }
+    { frequency: 2400, decay: 0.0015, gain: 0.6, phase: 0 },
+    { frequency: 4200, decay: 0.0008, gain: 0.3, phase: 0.65 },
+    { frequency: 6800, decay: 0.0004, gain: 0.1, phase: 1.3 }
 ] as const
 
 type AudioContextCtor = typeof AudioContext
@@ -17,18 +12,13 @@ type AudioContextCtor = typeof AudioContext
 function getAudioContextCtor(): AudioContextCtor | undefined {
     if (typeof window === "undefined") return undefined
     return (
-        window.AudioContext ??
+        (window as unknown as { AudioContext?: AudioContextCtor })
+            .AudioContext ??
         (window as unknown as { webkitAudioContext?: AudioContextCtor })
             .webkitAudioContext
     )
 }
 
-// One shared context/buffer/gain for the whole page, ref-counted across every
-// `createTickPlayer()` caller. Components like WheelPicker commonly compose
-// several side by side (a date made of month/day/year drums) — giving each
-// its own AudioContext would waste resources and risk hitting a browser's cap
-// on concurrent contexts. The context only closes once every consumer that
-// created a player has called `dispose()`.
 let ctx: AudioContext | null = null
 let masterGain: GainNode | null = null
 let clickBuffer: AudioBuffer | null = null
@@ -44,7 +34,7 @@ function buildClickBuffer(context: AudioContext): AudioBuffer {
     let previousNoise = 0
     for (let i = 0; i < length; i++) {
         const t = i / sampleRate
-        const attack = Math.min(1, t / 0.00012)
+        const attack = Math.min(1, t / 0.0001)
         const fadeOut = Math.min(1, (DURATION - t) / 0.001)
         let resonance = 0
         for (const mode of MODES) {
@@ -54,11 +44,9 @@ function buildClickBuffer(context: AudioContext): AudioBuffer {
                 mode.gain
         }
 
-        // Differencing consecutive noise samples removes the low, papery part of
-        // white noise and leaves only a tiny impact at the front of the sound.
         const noise = Math.random() * 2 - 1
         const transient =
-            (noise - previousNoise) * Math.exp(-t / 0.00038) * 0.035
+            (noise - previousNoise) * Math.exp(-t / 0.0006) * 0.075
         previousNoise = noise
 
         data[i] = (resonance + transient) * attack * fadeOut
@@ -86,9 +74,6 @@ function ensureContext() {
 function prepareContext() {
     ensureContext()
     if (ctx?.state === "suspended") {
-        // Browsers may reject this when it is not called from a trusted gesture.
-        // Pointer, touch, wheel and keyboard entry points call `prepare()` first;
-        // this repeat attempt keeps direct `play()` calls safe as well.
         void ctx.resume().catch(() => undefined)
     }
 }
@@ -113,9 +98,6 @@ function createTickPlayer(): TickPlayer {
             if (disposed) return
             prepareContext()
             if (!ctx || !masterGain || !clickBuffer) return
-            // A fast fling can cross rows more quickly than the tail of a tick.
-            // Cutting that tail keeps the feedback dry instead of stacking into a
-            // louder metallic ring.
             activeSource?.stop()
             const source = ctx.createBufferSource()
             source.buffer = clickBuffer

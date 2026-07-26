@@ -86,7 +86,6 @@ function ProjectCard({
 
     return (
         <Comp
-            data-sound="tick"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             data-hover={isHovered}

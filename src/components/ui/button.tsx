@@ -9,21 +9,26 @@ import {
     Link as LinkPrimitive,
     type LinkProps as LinkPrimitiveProps
 } from "react-aria-components/Link"
+import { type defaultPatterns } from "web-haptics"
 import { useWebHaptics } from "web-haptics/react"
 
 import { buttonVariants } from "@/components/ui/button-variants"
 import { cn } from "@/lib/utils"
 
+type HapticVariantsType = keyof typeof defaultPatterns
+
 function Button({
     className,
     variant = "default",
     size = "default",
+    haptic = "light",
     onPress,
     ...props
 }: Omit<ButtonPrimitiveProps, "className"> &
     React.RefAttributes<HTMLButtonElement> &
     VariantProps<typeof buttonVariants> & {
         className?: string
+        haptic?: HapticVariantsType
     }) {
     const { trigger } = useWebHaptics()
 
@@ -36,7 +41,7 @@ function Button({
             className={cn(buttonVariants({ variant, size, className }))}
             {...props}
             onPress={(e) => {
-                void trigger("success")
+                void trigger(haptic)
                 onPress?.(e)
             }}
         />
@@ -48,12 +53,14 @@ function LinkButton({
     variant = "default",
     size = "default",
     nativeLink = false,
+    haptic = "medium",
     onPress,
     ...props
 }: Omit<LinkPrimitiveProps, "className"> &
     VariantProps<typeof buttonVariants> & {
         className?: string
         nativeLink?: boolean
+        haptic?: HapticVariantsType
     }) {
     const { trigger } = useWebHaptics()
 
@@ -71,7 +78,7 @@ function LinkButton({
             )}
             {...props}
             onPress={(e) => {
-                void trigger("success")
+                void trigger(haptic)
                 onPress?.(e)
             }}
         />

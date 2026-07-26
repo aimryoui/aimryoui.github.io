@@ -97,6 +97,7 @@ function MobileTocButton() {
                             <Button
                                 size="icon"
                                 variant="outline"
+                                haptic="nudge"
                                 className={cn(
                                     "!size-full !rounded-none border-0"
                                 )}

@@ -11,6 +11,7 @@ import { Progress } from "@/components/ui/progress"
 import { Tooltip } from "@/components/ui/tooltip"
 import { At, Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
+import { useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import { MobileTocButton } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
@@ -47,6 +48,7 @@ function Sidebar({ className, ...props }: React.ComponentProps<"aside">) {
 
 function Menu({ className }: { className?: string }) {
     const isMobile = useMediaQuery("lg")
+    const { isTouchDevice } = useDevice()
 
     return (
         <>
@@ -144,7 +146,7 @@ function Menu({ className }: { className?: string }) {
                                 </div>
                             </NextLink>
                         </li>
-                        {!isMobile && (
+                        {!isTouchDevice && (
                             <li>
                                 <AudioToggle />
                             </li>

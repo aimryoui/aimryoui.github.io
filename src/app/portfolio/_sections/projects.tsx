@@ -109,7 +109,6 @@ function Projects() {
                 <Fragment key={group.id}>
                     <section className={cn("bg-background")}>
                         <NextLink
-                            data-sound="tick"
                             href={getCategoryPath(group.id)}
                             prefetch={false}
                             draggable={false}
