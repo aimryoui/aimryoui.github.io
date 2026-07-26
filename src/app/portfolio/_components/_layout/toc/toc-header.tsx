@@ -52,6 +52,8 @@ function TocHeader({
                                 {...(cursorTarget && {
                                     "data-cursor": "target"
                                 })}
+                                prefetch={false}
+                                scroll={false}
                                 className={cn("pointer-events-auto", {
                                     dark: "bg-input/25",
                                     lg: "size-[36px]"

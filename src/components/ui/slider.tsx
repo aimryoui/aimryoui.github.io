@@ -9,7 +9,6 @@ import {
     SliderThumb,
     SliderTrack
 } from "react-aria-components/Slider"
-import { useWebHaptics } from "web-haptics/react"
 
 import { Label } from "@/components/ui/label"
 import { useDevice } from "@/hooks/use-device"
@@ -45,7 +44,6 @@ function Slider<T extends number | number[]>({
             : []
 
     const { isTouchDevice } = useDevice()
-    const { trigger } = useWebHaptics()
 
     const playerRef = useRef<ReturnType<typeof createTickPlayer> | null>(null)
     const activeDotRef = useRef<number | null>(null)
@@ -204,16 +202,6 @@ function Slider<T extends number | number[]>({
                                         key={index}
                                         index={index}
                                         aria-label={thumbLabels?.[index]}
-                                        onTouchStart={() => {
-                                            if (isTouchDevice) {
-                                                void trigger("light")
-                                            }
-                                        }}
-                                        onTouchEnd={() => {
-                                            if (isTouchDevice) {
-                                                void trigger("light")
-                                            }
-                                        }}
                                         className={cn(
                                             "relative block size-5 shrink-0 cursor-grab select-none rounded-md border border-muted-foreground/60 bg-background ring-ring/50 will-change-[top,left] transition-[color,box-shadow]",
                                             {

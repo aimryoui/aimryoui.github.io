@@ -41,6 +41,7 @@ export default function Home() {
                     href="/portfolio"
                     data-cursor="target"
                     variant="outline"
+                    scroll={false}
                     className={cn(
                         "z-10 light:bg-white dark:text-white",
                         "absolute left-1/2 top-1/2 !-translate-y-1/2 -translate-x-1/2",

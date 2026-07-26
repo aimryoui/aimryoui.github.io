@@ -1,14 +1,14 @@
 "use client"
+import { useRef } from "react"
+import NextLink from "next/link"
 
+import { useLink } from "@react-aria/link"
 import { type VariantProps } from "class-variance-authority"
 import {
     Button as ButtonPrimitive,
-    type ButtonProps as ButtonPrimitiveProps
+    type ButtonProps as ButtonPrimitiveProps,
+    type PressEvent
 } from "react-aria-components/Button"
-import {
-    Link as LinkPrimitive,
-    type LinkProps as LinkPrimitiveProps
-} from "react-aria-components/Link"
 import { type defaultPatterns } from "web-haptics"
 import { useWebHaptics } from "web-haptics/react"
 
@@ -59,6 +59,18 @@ function Button({
     )
 }
 
+type NextLinkProps = React.ComponentProps<typeof NextLink>
+
+type LinkButtonProps = NextLinkProps &
+    VariantProps<typeof buttonVariants> & {
+        className?: string
+        nativeLink?: boolean
+        haptic?: HapticVariantsType
+        mute?: boolean
+        onPress?: (e: PressEvent) => void
+        ref?: React.Ref<HTMLAnchorElement>
+    }
+
 function LinkButton({
     className,
     variant = "default",
@@ -67,19 +79,40 @@ function LinkButton({
     haptic = "medium",
     mute = false,
     onPress,
+    href,
+    draggable = false,
+    ref,
     ...props
-}: Omit<LinkPrimitiveProps, "className"> &
-    VariantProps<typeof buttonVariants> & {
-        className?: string
-        nativeLink?: boolean
-        haptic?: HapticVariantsType
-        mute?: boolean
-    }) {
+}: LinkButtonProps) {
     const { isTouchDevice } = useDevice()
     const { trigger } = useWebHaptics()
 
+    const fallbackRef = useRef<HTMLAnchorElement>(null)
+    const domRef = (ref ?? fallbackRef) as React.RefObject<HTMLAnchorElement>
+
+    const { linkProps } = useLink(
+        {
+            elementType: "a",
+            href: typeof href === "string" ? href : (href.href ?? ""),
+            onPress: (e) => {
+                if (isTouchDevice) {
+                    void trigger(haptic)
+                } else if (!mute && useAudioStore.getState().isAudioEnabled) {
+                    playPressSound()
+                }
+                onPress?.(e)
+            }
+        },
+        domRef
+    )
+
     return (
-        <LinkPrimitive
+        <NextLink
+            href={href}
+            draggable={draggable}
+            {...props}
+            {...linkProps}
+            ref={domRef}
             {...(!nativeLink && {
                 "data-slot": "link-button",
                 "data-variant": variant,
@@ -90,16 +123,6 @@ function LinkButton({
                     ? className
                     : buttonVariants({ variant, size, className })
             )}
-            {...props}
-            onPress={(e) => {
-                if (isTouchDevice) {
-                    void trigger(haptic)
-                } else if (!mute && useAudioStore.getState().isAudioEnabled) {
-                    playPressSound()
-                }
-
-                onPress?.(e)
-            }}
         />
     )
 }
