@@ -72,7 +72,7 @@ export function SectionName({
                     hasSocialLinks ? "mx-17 lg:mx-4" : "mx-4",
                     !normalcase && "uppercase",
                     {
-                        lg: "min-h-[36px] py-2.5"
+                        lg: "min-h-[36px] px-4.5 py-2.5"
                     },
                     className
                 )}

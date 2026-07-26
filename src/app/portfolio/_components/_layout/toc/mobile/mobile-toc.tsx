@@ -98,7 +98,7 @@ function MobileTocButton() {
                                 size="icon"
                                 variant="outline"
                                 className={cn(
-                                    "!size-full rounded-none border-0"
+                                    "!size-full !rounded-none border-0"
                                 )}
                                 aria-expanded={isTocOpen}
                                 data-state={isTocOpen ? "open" : "closed"}
