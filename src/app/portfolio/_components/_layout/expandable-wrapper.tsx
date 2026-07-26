@@ -85,7 +85,7 @@ export function ExpandableWrapper({
                             className={cn(
                                 "pointer-events-auto gap-2 rounded-full shadow-sm"
                             )}
-                            onClick={() => {
+                            onPress={() => {
                                 setUserExpanded(true)
                             }}
                         >
@@ -113,7 +113,7 @@ export function ExpandableWrapper({
                                 className={cn(
                                     "my-5.5 gap-2 rounded-full shadow-sm"
                                 )}
-                                onClick={handleShowLess}
+                                onPress={handleShowLess}
                             >
                                 Show Less
                                 <ArrowUp className={cn("size-3")} />

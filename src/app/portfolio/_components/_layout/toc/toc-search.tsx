@@ -136,7 +136,7 @@ function RightAddon({
                             variant="ghost"
                             size="icon"
                             className="hover:bg-transparent lg:size-[36px]"
-                            onClick={onClear}
+                            onPress={onClear}
                         >
                             <XCircle className="cursor-pointer lg:size-5.5" />
                             <span className="sr-only">Clear search</span>

@@ -501,13 +501,13 @@ function CarouselReplay({
                     data-cursor={undefined}
                     variant={variant}
                     size={size}
+                    onPress={scrollStart}
+                    isDisabled={!canGoToPrev}
                     className={cn(
                         "border-default/15",
                         orientation === "horizontal" ? "" : "rotate-90",
                         className
                     )}
-                    isDisabled={!canGoToPrev}
-                    onClick={scrollStart}
                     {...props}
                 >
                     <Refresh className="size-5" />
@@ -554,13 +554,13 @@ function CarouselPrevious({
                     data-cursor={undefined}
                     variant={variant}
                     size={size}
+                    onPress={goToPrev}
+                    isDisabled={!canGoToPrev}
                     className={cn(
                         "border-default/15",
                         orientation === "horizontal" ? "" : "rotate-90",
                         className
                     )}
-                    isDisabled={!canGoToPrev}
-                    onClick={goToPrev}
                     {...props}
                 >
                     <ArrowLeft />
@@ -607,13 +607,13 @@ function CarouselNext({
                     data-cursor={undefined}
                     variant={variant}
                     size={size}
+                    onPress={goToNext}
+                    isDisabled={!canGoToNext}
                     className={cn(
                         "border-default/15",
                         orientation === "horizontal" ? "" : "rotate-90",
                         className
                     )}
-                    isDisabled={!canGoToNext}
-                    onClick={goToNext}
                     {...props}
                 >
                     <ArrowRight />

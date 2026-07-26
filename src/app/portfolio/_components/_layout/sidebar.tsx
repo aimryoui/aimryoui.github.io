@@ -3,6 +3,7 @@
 import type React from "react"
 import NextLink from "next/link"
 
+import { AudioToggle } from "@/components/animations/audio-toggle"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
 import { SettingButton } from "@/components/layout/toolbar/settings-button"
@@ -143,6 +144,11 @@ function Menu({ className }: { className?: string }) {
                                 </div>
                             </NextLink>
                         </li>
+                        {!isMobile && (
+                            <li>
+                                <AudioToggle />
+                            </li>
+                        )}
                         <li>
                             <ModeToggle
                                 className={cn({

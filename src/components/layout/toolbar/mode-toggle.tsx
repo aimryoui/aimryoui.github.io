@@ -21,11 +21,11 @@ function ThemedIcon() {
             return <Moon className="size-6" />
         case "system":
         case undefined:
-            return <System className="size-6" />
+            return <System className="size-5.75" />
     }
 }
 
-export function ModeToggle({ className }: React.ComponentProps<"button">) {
+function ModeToggle({ className }: React.ComponentProps<"button">) {
     const { theme, setTheme } = useTheme()
 
     const mounted = useSyncExternalStore(
@@ -50,7 +50,7 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
                     variant="outline"
                     size="icon"
                     isDisabled={!mounted}
-                    onClick={() => {
+                    onPress={() => {
                         setTheme(
                             theme === "light"
                                 ? "dark"
@@ -74,3 +74,5 @@ export function ModeToggle({ className }: React.ComponentProps<"button">) {
         />
     )
 }
+
+export { ModeToggle }
