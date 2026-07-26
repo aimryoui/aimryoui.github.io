@@ -24,7 +24,7 @@ function Button({
     VariantProps<typeof buttonVariants> & {
         className?: string
     }) {
-    const { trigger, isSupported } = useWebHaptics()
+    const { trigger } = useWebHaptics()
 
     return (
         <ButtonPrimitive
@@ -32,7 +32,7 @@ function Button({
             data-variant={variant}
             data-size={size}
             data-cursor="target"
-            onClick={() => void (isSupported && trigger("success"))}
+            onClick={() => void trigger("success")}
             className={cn(buttonVariants({ variant, size, className }))}
             {...props}
         />
@@ -50,7 +50,7 @@ function LinkButton({
         className?: string
         nativeLink?: boolean
     }) {
-    const { trigger, isSupported } = useWebHaptics()
+    const { trigger } = useWebHaptics()
 
     return (
         <LinkPrimitive
@@ -59,7 +59,7 @@ function LinkButton({
                 "data-variant": variant,
                 "data-size": size
             })}
-            onClick={() => void (isSupported && trigger("success"))}
+            onClick={() => void trigger("success")}
             className={cn(
                 nativeLink
                     ? className
