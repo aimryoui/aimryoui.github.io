@@ -1,10 +1,9 @@
 "use client"
 
-import NextLink from "next/link"
 import { usePathname } from "next/navigation"
 
 import { ArrowLeft } from "@/components/icons/icons"
-import { buttonVariants } from "@/components/ui/button-variants"
+import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import {
@@ -46,30 +45,23 @@ function TocHeader({
                             side: "bottom"
                         }}
                         render={
-                            <NextLink
+                            <LinkButton
                                 href="/portfolio#projects"
-                                prefetch={false}
-                                draggable={false}
+                                variant="outline"
+                                size="icon"
                                 {...(cursorTarget && {
                                     "data-cursor": "target"
                                 })}
-                                className={cn(
-                                    "pointer-events-auto",
-                                    buttonVariants({
-                                        variant: "outline",
-                                        size: "icon"
-                                    }),
-                                    {
-                                        dark: "bg-input/25",
-                                        lg: "size-[36px]"
-                                    }
-                                )}
+                                className={cn("pointer-events-auto", {
+                                    dark: "bg-input/25",
+                                    lg: "size-[36px]"
+                                })}
                             >
                                 <ArrowLeft className="size-4 lg:size-5" />
                                 <span className="sr-only">
                                     Back to Portfolio
                                 </span>
-                            </NextLink>
+                            </LinkButton>
                         }
                     />
                 )}

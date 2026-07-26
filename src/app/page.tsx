@@ -1,12 +1,10 @@
-import NextLink from "next/link"
-
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
 import { Space } from "@/components/layout/space"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
 import { Image } from "@/components/media/image"
-import { buttonVariants } from "@/components/ui/button-variants"
+import { LinkButton } from "@/components/ui/button"
 import { Tooltip } from "@/components/ui/tooltip"
 import { H1, Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
@@ -39,21 +37,18 @@ export default function Home() {
                     alt="hehe"
                     rounded
                 />
-                <NextLink
+                <LinkButton
                     href="/portfolio"
                     data-cursor="target"
-                    // Fix auto-scroll to anchor section
-                    scroll={false}
-                    draggable={false}
+                    variant="outline"
                     className={cn(
-                        buttonVariants({ variant: "outline" }),
                         "z-10 light:bg-white dark:text-white",
                         "absolute left-1/2 top-1/2 !-translate-y-1/2 -translate-x-1/2",
                         "active:scale-95"
                     )}
                 >
                     Portfolio
-                </NextLink>
+                </LinkButton>
             </MediaFrame>
             <SectionLine />
             <Space className="grid place-items-center">

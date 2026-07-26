@@ -9,6 +9,7 @@ import {
     Link as LinkPrimitive,
     type LinkProps as LinkPrimitiveProps
 } from "react-aria-components/Link"
+import { useWebHaptics } from "web-haptics/react"
 
 import { buttonVariants } from "@/components/ui/button-variants"
 import { cn } from "@/lib/utils"
@@ -23,12 +24,15 @@ function Button({
     VariantProps<typeof buttonVariants> & {
         className?: string
     }) {
+    const { trigger, isSupported } = useWebHaptics()
+
     return (
         <ButtonPrimitive
             data-slot="button"
             data-variant={variant}
             data-size={size}
             data-cursor="target"
+            onClick={() => void (isSupported && trigger("success"))}
             className={cn(buttonVariants({ variant, size, className }))}
             {...props}
         />
@@ -46,11 +50,16 @@ function LinkButton({
         className?: string
         nativeLink?: boolean
     }) {
+    const { trigger, isSupported } = useWebHaptics()
+
     return (
         <LinkPrimitive
-            {...(!nativeLink && { "data-slot": "link-button" })}
-            data-variant={variant}
-            data-size={size}
+            {...(!nativeLink && {
+                "data-slot": "link-button",
+                "data-variant": variant,
+                "data-size": size
+            })}
+            onClick={() => void (isSupported && trigger("success"))}
             className={cn(
                 nativeLink
                     ? className
