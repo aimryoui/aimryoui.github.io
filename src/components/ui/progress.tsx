@@ -138,7 +138,7 @@ function ProgressValue({
             data-slot="progress-value"
             {...props}
         >
-            {children && valueText != null ? children(valueText) : valueText}
+            {children && valueText !== undefined ? children(valueText) : valueText}
         </span>
     )
 }

@@ -57,9 +57,9 @@ function Slider<T extends number | number[]>({
         return () => playerRef.current?.dispose()
     }, [isTouchDevice])
 
-    const handleTickHaptic = useCallback(
+    const handleTick = useCallback(
         (val: T) => {
-            if (snapCount <= 1) return
+            if (isTouchDevice || snapCount <= 1) return
 
             const currentValue: number = Array.isArray(val) ? val[0] : val
             const min = props.minValue ?? 0
@@ -90,26 +90,23 @@ function Slider<T extends number | number[]>({
             }
 
             if (nextActive !== activeDotRef.current) {
-                void trigger("light")
-
-                if (!isTouchDevice && useAudioStore.getState().isAudioEnabled) {
+                if (useAudioStore.getState().isAudioEnabled) {
                     playerRef.current?.play()
                 }
-
                 activeDotRef.current = nextActive
             }
         },
-        [snapCount, props.minValue, props.maxValue, isTouchDevice, trigger]
+        [snapCount, props.minValue, props.maxValue, isTouchDevice]
     )
 
     useEffect(() => {
         if (props.value !== undefined) {
-            handleTickHaptic(props.value)
+            handleTick(props.value)
         }
-    }, [props.value, handleTickHaptic])
+    }, [props.value, handleTick])
 
     const handleOnChange = (val: T) => {
-        handleTickHaptic(val)
+        handleTick(val)
         if (onChange) {
             onChange(val)
         }
@@ -120,9 +117,6 @@ function Slider<T extends number | number[]>({
             data-slot="slider"
             aria-label={label}
             onChange={handleOnChange}
-            onChangeEnd={() => {
-                void trigger("light")
-            }}
             className={cn(
                 "group flex touch-none select-none flex-col items-start gap-1",
                 {
@@ -210,6 +204,16 @@ function Slider<T extends number | number[]>({
                                         key={index}
                                         index={index}
                                         aria-label={thumbLabels?.[index]}
+                                        onTouchStart={() => {
+                                            if (isTouchDevice) {
+                                                void trigger("light")
+                                            }
+                                        }}
+                                        onTouchEnd={() => {
+                                            if (isTouchDevice) {
+                                                void trigger("light")
+                                            }
+                                        }}
                                         className={cn(
                                             "relative block size-5 shrink-0 cursor-grab select-none rounded-md border border-muted-foreground/60 bg-background ring-ring/50 will-change-[top,left] transition-[color,box-shadow]",
                                             {
