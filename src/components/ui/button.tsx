@@ -18,6 +18,7 @@ function Button({
     className,
     variant = "default",
     size = "default",
+    onPress,
     ...props
 }: Omit<ButtonPrimitiveProps, "className"> &
     React.RefAttributes<HTMLButtonElement> &
@@ -32,9 +33,12 @@ function Button({
             data-variant={variant}
             data-size={size}
             data-cursor="target"
-            onClick={() => void trigger("success")}
             className={cn(buttonVariants({ variant, size, className }))}
             {...props}
+            onPress={(e) => {
+                void trigger("success")
+                onPress?.(e)
+            }}
         />
     )
 }
@@ -44,6 +48,7 @@ function LinkButton({
     variant = "default",
     size = "default",
     nativeLink = false,
+    onPress,
     ...props
 }: Omit<LinkPrimitiveProps, "className"> &
     VariantProps<typeof buttonVariants> & {
@@ -59,13 +64,16 @@ function LinkButton({
                 "data-variant": variant,
                 "data-size": size
             })}
-            onClick={() => void trigger("success")}
             className={cn(
                 nativeLink
                     ? className
                     : buttonVariants({ variant, size, className })
             )}
             {...props}
+            onPress={(e) => {
+                void trigger("success")
+                onPress?.(e)
+            }}
         />
     )
 }
