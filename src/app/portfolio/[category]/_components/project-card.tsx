@@ -4,6 +4,8 @@ import type React from "react"
 import { useEffect, useRef, useState, ViewTransition } from "react"
 import NextLink from "next/link"
 
+import { useWebHaptics } from "web-haptics/react"
+
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Bold, Text } from "@/components/ui/typography"
@@ -16,6 +18,8 @@ import {
 } from "@/portfolio/_helpers/resolve-social-data"
 
 import { type Project } from "~/.velite"
+import { playPressSound } from "~/src/lib/sounds"
+import { useAudioStore } from "~/src/stores/audio-store"
 
 interface ProjectCardProps {
     project: Project
@@ -31,6 +35,7 @@ function ProjectCard({
     project,
     navigation,
     projectNavigation = false,
+    onClick,
     ...props
 }: React.ComponentProps<typeof NextLink> & ProjectCardProps) {
     const [isHovered, setIsHovered] = useState(false)
@@ -78,6 +83,8 @@ function ProjectCard({
         }, remaining)
     }
 
+    const { trigger } = useWebHaptics()
+
     const Comp = navigation
         ? navigation === "forward"
             ? PaginationNext
@@ -104,6 +111,15 @@ function ProjectCard({
                 className
             )}
             {...props}
+            onClick={(e) => {
+                void trigger("light")
+
+                if (useAudioStore.getState().isAudioEnabled) {
+                    playPressSound()
+                }
+
+                onClick?.(e as React.MouseEvent<HTMLAnchorElement, MouseEvent>)
+            }}
         >
             {navigation === "backward" && (
                 <ArrowLeft

@@ -1,5 +1,8 @@
-const DURATION = 0.008
-const MASTER_GAIN = 0.045
+const TICK_DURATION = 0.008
+const TICK_GAIN = 0.045
+
+const PRESS_DURATION = 0.015
+const PRESS_GAIN = 0.15
 
 const MODES = [
     { frequency: 2400, decay: 0.0015, gain: 0.6, phase: 0 },
@@ -20,13 +23,16 @@ function getAudioContextCtor(): AudioContextCtor | undefined {
 }
 
 let ctx: AudioContext | null = null
-let masterGain: GainNode | null = null
-let clickBuffer: AudioBuffer | null = null
+let tickGain: GainNode | null = null
+let pressGain: GainNode | null = null
 let consumers = 0
+
+let clickBuffer: AudioBuffer | null = null
+let pressBuffer: AudioBuffer | null = null
 
 function buildClickBuffer(context: AudioContext): AudioBuffer {
     const sampleRate = context.sampleRate
-    const length = Math.ceil(DURATION * sampleRate)
+    const length = Math.ceil(TICK_DURATION * sampleRate)
     const buffer = context.createBuffer(1, length, sampleRate)
     const data = buffer.getChannelData(0)
 
@@ -35,7 +41,7 @@ function buildClickBuffer(context: AudioContext): AudioBuffer {
     for (let i = 0; i < length; i++) {
         const t = i / sampleRate
         const attack = Math.min(1, t / 0.0001)
-        const fadeOut = Math.min(1, (DURATION - t) / 0.001)
+        const fadeOut = Math.min(1, (TICK_DURATION - t) / 0.001)
         let resonance = 0
         for (const mode of MODES) {
             resonance +=
@@ -60,15 +66,48 @@ function buildClickBuffer(context: AudioContext): AudioBuffer {
     return buffer
 }
 
+function buildPressBuffer(context: AudioContext): AudioBuffer {
+    const sampleRate = context.sampleRate
+    const length = Math.ceil(0.015 * sampleRate)
+    const buffer = context.createBuffer(1, length, sampleRate)
+    const data = buffer.getChannelData(0)
+
+    let peak = 0
+    for (let i = 0; i < length; i++) {
+        const t = i / sampleRate
+        const attack = Math.min(1, t / 0.0005)
+        const fadeOut = Math.min(1, (0.015 - t) / 0.002)
+
+        const freq = 1200 * Math.exp(-t * 250) + 150
+        const osc = Math.sin(2 * Math.PI * freq * t) * Math.exp(-t / 0.003)
+
+        data[i] = osc * attack * fadeOut
+        peak = Math.max(peak, Math.abs(data[i]))
+    }
+
+    if (peak > 0) {
+        const norm = 0.8 / peak
+        for (let i = 0; i < length; i++) data[i] *= norm
+    }
+    return buffer
+}
+
 function ensureContext() {
     if (ctx) return
     const Ctor = getAudioContextCtor()
     if (!Ctor) return
     ctx = new Ctor()
-    masterGain = ctx.createGain()
-    masterGain.gain.value = MASTER_GAIN
-    masterGain.connect(ctx.destination)
+
+    tickGain = ctx.createGain()
+    tickGain.gain.value = TICK_GAIN
+    tickGain.connect(ctx.destination)
+
+    pressGain = ctx.createGain()
+    pressGain.gain.value = PRESS_GAIN
+    pressGain.connect(ctx.destination)
+
     clickBuffer = buildClickBuffer(ctx)
+    pressBuffer = buildPressBuffer(ctx)
 }
 
 function prepareContext() {
@@ -98,11 +137,11 @@ function createTickPlayer(): TickPlayer {
         play() {
             if (disposed) return
             prepareContext()
-            if (!ctx || !masterGain || !clickBuffer) return
+            if (!ctx || !tickGain || !clickBuffer) return
             activeSource?.stop()
             const source = ctx.createBufferSource()
             source.buffer = clickBuffer
-            source.connect(masterGain)
+            source.connect(tickGain)
             source.onended = () => {
                 source.disconnect()
                 if (activeSource === source) activeSource = null
@@ -119,7 +158,7 @@ function createTickPlayer(): TickPlayer {
             if (consumers === 0 && ctx) {
                 void ctx.close()
                 ctx = null
-                masterGain = null
+                tickGain = null
                 clickBuffer = null
             }
         },
@@ -131,4 +170,13 @@ function createTickPlayer(): TickPlayer {
     }
 }
 
-export { createTickPlayer }
+function playPressSound() {
+    if (!ctx || !pressGain || !pressBuffer) return
+    prepareContext()
+    const source = ctx.createBufferSource()
+    source.buffer = pressBuffer
+    source.connect(pressGain)
+    source.start()
+}
+
+export { createTickPlayer, playPressSound }

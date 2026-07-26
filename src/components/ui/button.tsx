@@ -15,6 +15,9 @@ import { useWebHaptics } from "web-haptics/react"
 import { buttonVariants } from "@/components/ui/button-variants"
 import { cn } from "@/lib/utils"
 
+import { playPressSound } from "~/src/lib/sounds"
+import { useAudioStore } from "~/src/stores/audio-store"
+
 type HapticVariantsType = keyof typeof defaultPatterns
 
 function Button({
@@ -22,6 +25,7 @@ function Button({
     variant = "default",
     size = "default",
     haptic = "light",
+    mute = false,
     onPress,
     ...props
 }: Omit<ButtonPrimitiveProps, "className"> &
@@ -29,6 +33,7 @@ function Button({
     VariantProps<typeof buttonVariants> & {
         className?: string
         haptic?: HapticVariantsType
+        mute?: boolean
     }) {
     const { trigger } = useWebHaptics()
 
@@ -42,6 +47,11 @@ function Button({
             {...props}
             onPress={(e) => {
                 void trigger(haptic)
+
+                if (!mute && useAudioStore.getState().isAudioEnabled) {
+                    playPressSound()
+                }
+
                 onPress?.(e)
             }}
         />
@@ -54,6 +64,7 @@ function LinkButton({
     size = "default",
     nativeLink = false,
     haptic = "medium",
+    mute = false,
     onPress,
     ...props
 }: Omit<LinkPrimitiveProps, "className"> &
@@ -61,6 +72,7 @@ function LinkButton({
         className?: string
         nativeLink?: boolean
         haptic?: HapticVariantsType
+        mute?: boolean
     }) {
     const { trigger } = useWebHaptics()
 
@@ -79,6 +91,11 @@ function LinkButton({
             {...props}
             onPress={(e) => {
                 void trigger(haptic)
+
+                if (!mute && useAudioStore.getState().isAudioEnabled) {
+                    playPressSound()
+                }
+
                 onPress?.(e)
             }}
         />

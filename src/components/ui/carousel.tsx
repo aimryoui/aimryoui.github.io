@@ -501,6 +501,7 @@ function CarouselReplay({
                     data-cursor={undefined}
                     variant={variant}
                     size={size}
+                    haptic="nudge"
                     onPress={scrollStart}
                     isDisabled={!canGoToPrev}
                     className={cn(
