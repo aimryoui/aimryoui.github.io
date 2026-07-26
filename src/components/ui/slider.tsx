@@ -9,6 +9,7 @@ import {
     SliderThumb,
     SliderTrack
 } from "react-aria-components/Slider"
+import { useWebHaptics } from "web-haptics/react"
 
 import { Label } from "@/components/ui/label"
 import { useDevice } from "@/hooks/use-device"
@@ -44,6 +45,7 @@ function Slider<T extends number | number[]>({
             : []
 
     const { isTouchDevice } = useDevice()
+    const { trigger } = useWebHaptics()
 
     const playerRef = useRef<ReturnType<typeof createTickPlayer> | null>(null)
     const activeDotRef = useRef<number | null>(null)
@@ -57,7 +59,7 @@ function Slider<T extends number | number[]>({
 
     const handleTick = useCallback(
         (val: T) => {
-            if (isTouchDevice || snapCount <= 1) return
+            if (snapCount <= 1) return
 
             const currentValue: number = Array.isArray(val) ? val[0] : val
             const min = props.minValue ?? 0
@@ -88,13 +90,16 @@ function Slider<T extends number | number[]>({
             }
 
             if (nextActive !== activeDotRef.current) {
-                if (useAudioStore.getState().isAudioEnabled) {
+                if (isTouchDevice) {
+                    void trigger("selection")
+                } else if (useAudioStore.getState().isAudioEnabled) {
                     playerRef.current?.play()
                 }
+
                 activeDotRef.current = nextActive
             }
         },
-        [snapCount, props.minValue, props.maxValue, isTouchDevice]
+        [snapCount, props.minValue, props.maxValue, isTouchDevice, trigger]
     )
 
     useEffect(() => {

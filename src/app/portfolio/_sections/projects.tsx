@@ -9,27 +9,30 @@ import { ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
+import { useDevice } from "@/hooks/use-device"
 import {
     getCategoryPath,
     getProjectPath,
     groupProjectsByCategory
 } from "@/lib/project-sort"
+import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import { ExpandableWrapper } from "@/portfolio/_components/_layout/expandable-wrapper"
 import { MDXContent } from "@/portfolio/_components/mdx-content"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import SectionTitle from "@/portfolio/_components/section-title"
 import ProjectCard from "@/portfolio/[category]/_components/project-card"
+import { useAudioStore } from "@/stores/audio-store"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
-import { useDevice } from "~/src/hooks/use-device"
-import { playPressSound } from "~/src/lib/sounds"
-import { useAudioStore } from "~/src/stores/audio-store"
 
 function Projects() {
     const mode = usePortfolioModeStore((state) => state.mode)
     const projectGroups = groupProjectsByCategory(projects)
+
+    const { isTouchDevice } = useDevice()
+    const { trigger } = useWebHaptics()
 
     if (mode === "spread") {
         return projectGroups.map((group, index) => (
@@ -102,9 +105,6 @@ function Projects() {
         ))
     }
 
-    const { isTouchDevice } = useDevice()
-    const { trigger } = useWebHaptics()
-
     return (
         <>
             <Space />
@@ -122,10 +122,9 @@ function Projects() {
                             draggable={false}
                             data-cursor="target"
                             onClick={() => {
-                                void trigger("success")
-
-                                if (
-                                    !isTouchDevice &&
+                                if (isTouchDevice) {
+                                    void trigger("success")
+                                } else if (
                                     useAudioStore.getState().isAudioEnabled
                                 ) {
                                     playPressSound()

@@ -11,16 +11,16 @@ import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Bold, Text } from "@/components/ui/typography"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
+import { useDevice } from "@/hooks/use-device"
+import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import {
     resolveSocialData,
     type SocialData
 } from "@/portfolio/_helpers/resolve-social-data"
+import { useAudioStore } from "@/stores/audio-store"
 
 import { type Project } from "~/.velite"
-import { useDevice } from "~/src/hooks/use-device"
-import { playPressSound } from "~/src/lib/sounds"
-import { useAudioStore } from "~/src/stores/audio-store"
 
 interface ProjectCardProps {
     project: Project
@@ -114,13 +114,13 @@ function ProjectCard({
             )}
             {...props}
             onClick={(e) => {
-                void trigger("light")
-
-                if (!isTouchDevice && useAudioStore.getState().isAudioEnabled) {
+                if (isTouchDevice) {
+                    void trigger("light")
+                } else if (useAudioStore.getState().isAudioEnabled) {
                     playPressSound()
                 }
 
-                onClick?.(e as React.MouseEvent<HTMLAnchorElement, MouseEvent>)
+                onClick?.(e as React.MouseEvent<HTMLAnchorElement>)
             }}
         >
             {navigation === "backward" && (
