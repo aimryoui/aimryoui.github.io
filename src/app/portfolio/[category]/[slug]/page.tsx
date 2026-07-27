@@ -23,6 +23,7 @@ import {
 import { cn } from "@/lib/utils"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
 import { MDXContent } from "@/portfolio/_components/mdx-content"
+import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrumb"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import { resolveSocialData } from "@/portfolio/_helpers/resolve-social-data"
 import Footer from "@/portfolio/_sections/footer"
@@ -120,17 +121,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <main className={cn("relative flex-1")}>
             <AmbientStyle project={project} category={category} />
             <FlashOverlay />
-            <section
-                {...(socialData && {
-                    className: "lg:pt-20"
-                })}
-            >
-                {socialData ? (
+            <Space className={cn("flex items-center justify-start px-6")}>
+                <PortfolioBreadcrumb
+                    category={category}
+                    categoryTitle={group.title}
+                    projectName={project.projectName}
+                />
+            </Space>
+            <section className={cn("@container")}>
+                {socialData && (
                     <Space
                         className={cn(
-                            "pointer-events-none sticky inset-x-0 top-0 z-60 flex items-center justify-end bg-transparent px-6",
+                            "pointer-events-none fixed top-0 z-60 flex w-[100cqw] items-center justify-end bg-transparent px-6",
                             {
-                                lg: "fixed bottom-20 top-auto"
+                                lg: "bottom-33.5 top-auto px-0"
                             }
                         )}
                     >
@@ -139,17 +143,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             className="lg:h-[36px]"
                         />
                     </Space>
-                ) : (
-                    <Space />
                 )}
                 <SectionLine showDecoration />
-                <Space
-                    {...(socialData && {
-                        className: cn("relative", {
-                            before: "pointer-events-none absolute inset-x-0 bottom-full h-20 bg-background"
-                        })
-                    })}
-                />
+                <Space />
                 <SectionLine />
                 <article>
                     <ProjectHeader

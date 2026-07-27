@@ -1,5 +1,8 @@
 "use client"
 
+import { createContext, use, useMemo } from "react"
+import NextLink from "next/link"
+
 import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
 import { composeRenderProps } from "react-aria-components"
 import {
@@ -18,21 +21,8 @@ function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
         <nav
             aria-label="breadcrumb"
             data-slot="breadcrumb"
-            className={cn(className)}
-            {...props}
-        />
-    )
-}
-
-function BreadcrumbList<T extends object>({
-    className,
-    ...props
-}: BreadcrumbsProps<T>) {
-    return (
-        <BreadcrumbsPrimitive
-            data-slot="breadcrumb-list"
             className={cn(
-                "flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground wrap-break-word",
+                "flex h-full items-center justify-start font-wght-500",
                 className
             )}
             {...props}
@@ -40,46 +30,100 @@ function BreadcrumbList<T extends object>({
     )
 }
 
-function BreadcrumbItem({
+function BreadcrumbList<T extends object>({
     className,
-    children,
-    separatorClassName,
+    ref,
     ...props
-}: BreadcrumbProps & { separatorClassName?: string }) {
+}: BreadcrumbsProps<T> & {
+    ref: React.RefObject<HTMLOListElement | null>
+}) {
+    return (
+        <BreadcrumbsPrimitive
+            data-slot="breadcrumb-list"
+            ref={ref}
+            className={cn(
+                "flex h-full items-center scroll-smooth text-muted-foreground",
+                className
+            )}
+            {...props}
+        />
+    )
+}
+
+const BreadcrumbItemContext = createContext<{ isCurrent: boolean }>({
+    isCurrent: false
+})
+
+function BreadcrumbItemContextProvider({
+    isCurrent,
+    children
+}: {
+    isCurrent: boolean
+    children: React.ReactNode
+}) {
+    const value = useMemo(() => ({ isCurrent }), [isCurrent])
+    return (
+        <BreadcrumbItemContext value={value}>{children}</BreadcrumbItemContext>
+    )
+}
+
+function BreadcrumbItem({ className, children, ...props }: BreadcrumbProps) {
     return (
         <BreadcrumbPrimitive
             data-slot="breadcrumb-item"
-            className={cn("inline-flex items-center gap-1", className)}
+            data-cursor="target"
+            className={cn(
+                "group inline-flex h-full items-center text-nowrap",
+                className
+            )}
             {...props}
         >
             {composeRenderProps(children, (children, { isCurrent }) => (
-                <>
+                <BreadcrumbItemContextProvider isCurrent={isCurrent}>
                     {children}
-                    {!isCurrent && (
-                        <span
-                            data-slot="breadcrumb-separator"
-                            role="presentation"
-                            aria-hidden="true"
-                            className={cn(
-                                "[&>svg]:size-3.5",
-                                separatorClassName
-                            )}
-                        >
-                            <ChevronRightIcon className="cn-rtl-flip" />
-                        </span>
-                    )}
-                </>
+                </BreadcrumbItemContextProvider>
             ))}
         </BreadcrumbPrimitive>
     )
 }
 
-function BreadcrumbLink({ className, render, ...props }: LinkProps) {
+function BreadcrumbLink({ className, ...props }: LinkProps) {
+    const { isCurrent } = use(BreadcrumbItemContext)
     return (
         <LinkPrimitive
             data-slot="breadcrumb-link"
-            className={cn("transition-colors hover:text-foreground", className)}
-            render={render}
+            className={cn(
+                "flex h-full items-center gap-1 transition-[color] duration-100",
+                "group-first:-ms-1.25 group-[:not(*:first-child)]:ps-1",
+                {
+                    hover: "text-foreground transition-none",
+                    md: "py-3.5"
+                },
+                className
+            )}
+            render={(props) =>
+                "href" in props ? (
+                    <NextLink {...props} draggable={false}>
+                        <span data-cursor="lock" className="px-1.25 md:py-0.5">
+                            {props.children}
+                        </span>
+                        {!isCurrent && (
+                            <span
+                                data-slot="breadcrumb-separator"
+                                role="presentation"
+                                aria-hidden={true}
+                                className={cn("text-muted-foreground/60", {
+                                    "[&>svg]": "size-3.5"
+                                })}
+                            >
+                                <ChevronRightIcon className="cn-rtl-flip" />
+                            </span>
+                        )}
+                    </NextLink>
+                ) : (
+                    <span {...props} />
+                )
+            }
             {...props}
         />
     )
@@ -87,14 +131,26 @@ function BreadcrumbLink({ className, render, ...props }: LinkProps) {
 
 function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
     return (
-        <span
-            data-slot="breadcrumb-page"
+        <button
             role="link"
-            aria-disabled="true"
+            type="button"
+            data-slot="breadcrumb-page"
             aria-current="page"
-            className={cn("text-foreground", className)}
-            {...props}
-        />
+            onClick={() =>
+                void window.dispatchEvent(
+                    new CustomEvent("portfolio:main-flash")
+                )
+            }
+            className={cn(
+                "-me-1.25 grid h-full cursor-pointer place-items-center ps-1 text-foreground",
+                {
+                    md: "py-4"
+                },
+                className
+            )}
+        >
+            <span data-cursor="lock" className="px-1.25" {...props} />
+        </button>
     )
 }
 
@@ -106,7 +162,7 @@ function BreadcrumbEllipsis({
         <span
             data-slot="breadcrumb-ellipsis"
             role="presentation"
-            aria-hidden="true"
+            aria-hidden={true}
             className={cn(
                 "flex size-5 items-center justify-center [&>svg]:size-4",
                 className

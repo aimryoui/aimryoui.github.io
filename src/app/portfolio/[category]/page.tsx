@@ -21,6 +21,7 @@ import {
 } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
+import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrumb"
 import SectionTitle from "@/portfolio/_components/section-title"
 import Footer from "@/portfolio/_sections/footer"
 import ProjectCard from "@/portfolio/[category]/_components/project-card"
@@ -102,7 +103,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         // <ViewTransition name="main">
         <main className={cn("relative flex-1")}>
             <FlashOverlay />
-            <Space />
+            <Space className={cn("flex items-center justify-start px-6")}>
+                <PortfolioBreadcrumb
+                    category={category}
+                    categoryTitle={group.title}
+                />
+            </Space>
             <SectionLine showDecoration />
             <Space />
             <SectionLine />

@@ -43,7 +43,7 @@ export default function FlashOverlay() {
             role="alert"
             aria-hidden
             className={cn(
-                "pointer-events-none absolute inset-x-0 top-0 z-40 h-full animate-pulse bg-highlighted/40 opacity-0 animation-duration-400 animation-ease-in repeat-2"
+                "pointer-events-none absolute inset-x-0 top-0 z-50 h-full animate-pulse bg-highlighted/40 opacity-0 animation-duration-400 animation-ease-in repeat-2"
             )}
         />
     )

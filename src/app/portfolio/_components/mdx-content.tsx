@@ -50,7 +50,7 @@ interface MDXProps {
     hasSocialLinks?: MediaFrameProps["hasSocialLinks"]
 }
 
-export const MDXContent = ({ code, components, hasSocialLinks }: MDXProps) => {
+const MDXContent = ({ code, components, hasSocialLinks }: MDXProps) => {
     const Component = useMDXComponent(code)
 
     const customComponents = {
@@ -66,3 +66,5 @@ export const MDXContent = ({ code, components, hasSocialLinks }: MDXProps) => {
     // oxlint-disable-next-line react-compiler/static-components
     return <Component components={customComponents} />
 }
+
+export { MDXContent }

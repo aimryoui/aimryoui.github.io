@@ -114,6 +114,7 @@ export default {
                 25.25: "6.3125rem",
                 25.5: "6.375rem",
                 26: "6.5rem",
+                33.5: "8.375rem",
                 37.5: "9.375rem",
                 56.25: "14.0625rem",
                 61.25: "15.3125rem",
@@ -174,7 +175,12 @@ export default {
                 8: ".5rem"
             },
             strokeWidth: {
-                px: "var(--px)"
+                px: "var(--px)",
+                1: ".0625rem",
+                2: ".125rem",
+                3: ".1875rem",
+                4: ".25rem",
+                5: ".3125rem"
             },
             backdropBlur: {
                 xs: "4px",

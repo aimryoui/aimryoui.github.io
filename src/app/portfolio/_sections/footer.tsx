@@ -2,6 +2,7 @@
 
 import { Fragment, useRef } from "react"
 import NextLink from "next/link"
+import { usePathname } from "next/navigation"
 
 import { Divider } from "@/components/layout/divider"
 import {
@@ -30,6 +31,7 @@ const QR_ITEMS = [
 const CURRENT_YEAR = new Date().getFullYear()
 
 function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
+    const pathName = usePathname()
     const mode = usePortfolioModeStore((state) => state.mode)
 
     const containerRef = useRef<HTMLElement>(null)
@@ -147,7 +149,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             })}
         >
             <Space
-                className={cn("hidden", {
+                className={cn("hidden", pathName !== "/portfolio" && "h-33.5", {
                     lg: [
                         "block",
                         {
@@ -164,7 +166,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             )}
             <Divider
                 className={cn(
-                    "grid h-auto place-items-center bg-background px-6 py-3 text-sm"
+                    "grid h-auto place-items-center px-6 py-3 text-sm"
                 )}
             >
                 <p className="flex flex-wrap justify-center gap-x-[.2em] text-balance text-center">
