@@ -38,13 +38,9 @@ function Toolbar({ className }: { className?: string }) {
                 />
             </div>
             <header
-                className={cn(
-                    "flex h-20 items-center bg-background px-6 will-change-transform transition-transform ease-spring duration-250",
-                    {
-                        starting: "translate-y-full",
-                        lg: "py-[17px]"
-                    }
-                )}
+                className={cn("flex h-20 items-center bg-background px-6", {
+                    lg: "py-[17px]"
+                })}
             >
                 <menu
                     className={cn(

@@ -224,7 +224,9 @@ export default {
                 spinner: "spinner",
                 focus: "focus .2s ease-out forwards",
                 inert: "inert forwards",
-                "nav-reveal": "nav-reveal 1s cubic-bezier(.4,0,.6,1) forwards",
+                "toc-reveal": "toc-reveal 1s cubic-bezier(.4,0,.6,1) forwards",
+                "toolbar-reveal":
+                    "toolbar-reveal .5s cubic-bezier(0.22, 1, 0.36, 1) forwards",
                 "social-button-shake-in":
                     "social-button-shake-in .3s ease-in-out forwards"
             },
@@ -255,12 +257,20 @@ export default {
                         pointerEvent: "auto"
                     }
                 },
-                "nav-reveal": {
+                "toc-reveal": {
                     "0%": {
                         maskPosition: "0 100%"
                     },
                     "100%": {
                         maskPosition: "0 0"
+                    }
+                },
+                "toolbar-reveal": {
+                    "0%": {
+                        transform: "translateY(100%)"
+                    },
+                    "100%": {
+                        transform: "translateY(0)"
                     }
                 },
                 "social-button-shake-in": {

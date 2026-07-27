@@ -13,9 +13,12 @@ function Navigation() {
     if (isMobile) {
         return (
             <div
-                className={cn("pointer-events-none z-70", {
-                    lg: "fixed inset-x-0 bottom-0"
-                })}
+                className={cn(
+                    "pointer-events-none z-70 will-change-transform",
+                    {
+                        lg: "fixed inset-x-0 bottom-0 animate-toolbar-reveal"
+                    }
+                )}
             >
                 <div
                     className={cn(

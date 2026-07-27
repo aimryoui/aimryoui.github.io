@@ -32,7 +32,7 @@ function TableOfContents({ mode, items }: TocProps) {
     // const [_, startTransition] = useTransition()
 
     // 'waiting' = mask on, no animation (TOC hidden)
-    // 'animating' = mask + animate-nav-reveal (revealing)
+    // 'animating' = mask + animate-toc-reveal (revealing)
     // 'done' = all mask/animation classes removed
     const [navRevealPhase, setNavRevealPhase] = useState<
         "waiting" | "animating" | "done"
@@ -50,7 +50,7 @@ function TableOfContents({ mode, items }: TocProps) {
 
         const timer = setTimeout(() => {
             setNavRevealPhase("done")
-        }, 1000) // matches nav-reveal animation duration
+        }, 1000) // matches toc-reveal animation duration
 
         return () => {
             clearTimeout(timer)
@@ -78,7 +78,7 @@ function TableOfContents({ mode, items }: TocProps) {
                 aria-label="Table of contents"
                 className={cn(
                     "flex flex-1 flex-col overflow-auto",
-                    navRevealPhase === "animating" && "animate-nav-reveal"
+                    navRevealPhase === "animating" && "animate-toc-reveal"
                 )}
                 {...(navRevealPhase !== "done" && {
                     style: {
