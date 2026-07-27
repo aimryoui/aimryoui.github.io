@@ -10,58 +10,55 @@ import Toolbar from "@/portfolio/_components/_layout/navigation/toolbar"
 function Navigation() {
     const isMobile = useMediaQuery("lg")
 
-    if (isMobile) {
+    if (!isMobile) {
         return (
-            <div
-                className={cn(
-                    "pointer-events-none z-70 will-change-transform",
-                    {
-                        lg: "fixed inset-x-0 bottom-0 animate-toolbar-reveal"
-                    }
-                )}
-            >
-                <div
+            <>
+                <Sidebar
                     className={cn(
-                        "pointer-events-auto relative min-h-20 w-full bg-background"
+                        "group-data-[sidebar-position=right]/html:order-4"
                     )}
-                    style={{
-                        viewTransitionName: "toolbar"
-                    }}
-                >
-                    <Toolbar />
-                </div>
-            </div>
+                />
+                <MarginLine
+                    className={cn("ms-sidebar", {
+                        "group-data-[sidebar-position=right]/html":
+                            "z-60 order-3 me-sidebar ms-unset",
+                        lg: "hidden"
+                    })}
+                />
+                <Divider
+                    dir="vertical"
+                    className={cn(
+                        "sticky top-0 h-dvh lg:hidden",
+                        "group-data-[sidebar-position=right]/html:order-2"
+                    )}
+                />
+                <MarginLine
+                    className={cn(
+                        "lg:hidden",
+                        "group-data-[sidebar-position=right]/html:order-1"
+                    )}
+                />
+            </>
         )
     }
 
     return (
-        <>
-            <Sidebar
+        <div
+            className={cn("pointer-events-none z-70 will-change-transform", {
+                lg: "fixed inset-x-0 bottom-0 animate-toolbar-reveal"
+            })}
+        >
+            <div
                 className={cn(
-                    "group-data-[sidebar-position=right]/html:order-4"
+                    "pointer-events-auto relative min-h-20 w-full bg-background"
                 )}
-            />
-            <MarginLine
-                className={cn("ms-sidebar", {
-                    "group-data-[sidebar-position=right]/html":
-                        "z-60 order-3 me-sidebar ms-unset",
-                    lg: "hidden"
-                })}
-            />
-            <Divider
-                dir="vertical"
-                className={cn(
-                    "sticky top-0 h-dvh lg:hidden",
-                    "group-data-[sidebar-position=right]/html:order-2"
-                )}
-            />
-            <MarginLine
-                className={cn(
-                    "lg:hidden",
-                    "group-data-[sidebar-position=right]/html:order-1"
-                )}
-            />
-        </>
+                style={{
+                    viewTransitionName: "toolbar"
+                }}
+            >
+                <Toolbar />
+            </div>
+        </div>
     )
 }
 

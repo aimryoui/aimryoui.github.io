@@ -121,13 +121,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <AmbientStyle project={project} category={category} />
             <FlashOverlay />
             <section
-                className={cn({
-                    lg: [
-                        socialData && "pt-20",
-                        {
-                            before: "pointer-events-none absolute left-1/2 top-0 z-40 h-20 w-screen -translate-x-1/2 bg-gradient-to-b from-background to-transparent"
-                        }
-                    ]
+                {...(socialData && {
+                    className: "lg:pt-20"
                 })}
             >
                 {socialData ? (

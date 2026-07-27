@@ -46,6 +46,7 @@ function ProjectHeader({
                 </span>
                 <div
                     className={cn("flex flex-1 flex-col gap-2 px-6 py-4.5", {
+                        lg: "pb-5.5",
                         md: "gap-2.5"
                     })}
                 >

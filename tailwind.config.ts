@@ -224,7 +224,8 @@ export default {
                 spinner: "spinner",
                 focus: "focus .2s ease-out forwards",
                 inert: "inert forwards",
-                "toc-reveal": "toc-reveal 1s cubic-bezier(.4,0,.6,1) forwards",
+                "toc-reveal":
+                    "toc-reveal 1.25s cubic-bezier(.4,0,.6,1) forwards",
                 "toolbar-reveal":
                     "toolbar-reveal .5s cubic-bezier(0.22, 1, 0.36, 1) forwards",
                 "social-button-shake-in":

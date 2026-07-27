@@ -17,10 +17,9 @@ import {
     TableRow
 } from "@/components/ui/table"
 import { At, Link } from "@/components/ui/typography"
+import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
-
-import { slugify } from "~/src/helpers/slugify"
 
 interface SectionProps {
     startDate: string
@@ -307,7 +306,9 @@ function Experience() {
                             <TableBody
                                 items={section.items.map((place) => ({
                                     ...place,
-                                    id: `${slugify(`${place.startDate} ${place.position} ${place.organization?.text}`) ?? "freelance"}`
+                                    id: slugify(
+                                        `${place.startDate} ${place.position} ${place.organization?.text}`
+                                    )
                                 }))}
                                 className={cn("grid gap-y-2", {
                                     "@[50.125rem]": "gap-y-4",

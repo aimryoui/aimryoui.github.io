@@ -220,7 +220,7 @@ function ProjectCover({
                             "group-hover": "translate-y-0.5",
                             "group-active": "translate-y-0.5",
                             after: [
-                                "absolute inset-0 size-full rounded-inherit ring-2 ring-inset ring-muted-foreground/80 will-change-[box-shadow] transition-shadow",
+                                "absolute inset-0 size-full rounded-inherit ring-2 ring-inset ring-muted-foreground/80 transition-shadow",
                                 {
                                     "group-hover": "ring-3",
                                     "group-active": "ring-3"

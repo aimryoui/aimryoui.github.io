@@ -17,11 +17,10 @@ import {
 } from "@/components/ui/table"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Link } from "@/components/ui/typography"
+import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
 import { TOOL_ICONS, type ToolProps } from "@/portfolio/_configs/tools"
-
-import { slugify } from "~/src/helpers/slugify"
 
 interface SectionProps {
     title: string

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 
 import { SectionLine } from "@/components/layout/line"
 import { cn } from "@/lib/utils"
@@ -45,17 +45,11 @@ function TableOfContents({ mode, items }: TocProps) {
         hasRevealed.current = true
     }
 
-    useEffect(() => {
-        if (navRevealPhase !== "animating") return
-
-        const timer = setTimeout(() => {
+    const handleAnimationEnd = (e: React.AnimationEvent<HTMLElement>) => {
+        if (e.animationName === "toc-reveal") {
             setNavRevealPhase("done")
-        }, 1000) // matches toc-reveal animation duration
-
-        return () => {
-            clearTimeout(timer)
         }
-    }, [navRevealPhase])
+    }
 
     if (items.length === 0) return null
 
@@ -80,6 +74,7 @@ function TableOfContents({ mode, items }: TocProps) {
                     "flex flex-1 flex-col overflow-auto",
                     navRevealPhase === "animating" && "animate-toc-reveal"
                 )}
+                onAnimationEnd={handleAnimationEnd}
                 {...(navRevealPhase !== "done" && {
                     style: {
                         maskImage:

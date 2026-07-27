@@ -17,10 +17,9 @@ import {
 } from "@/components/ui/table"
 import { Link } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
+import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
-
-import { slugify } from "~/src/helpers/slugify"
 
 interface SectionProps {
     title: string

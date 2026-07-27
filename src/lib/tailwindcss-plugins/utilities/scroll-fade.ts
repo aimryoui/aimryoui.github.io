@@ -345,7 +345,7 @@ export default plugin(
         // ---------------------------------------------------------------
 
         /** Spacing scale values for size modifiers. */
-        const spacingValues = theme("spacing") as Record<string, string>
+        const spacingValues = theme("spacing")
 
         // scroll-fade-{n} — global size override
         matchUtilities(

@@ -594,10 +594,7 @@ function TargetCursor({
                 "mouseenter",
                 documentEnterHandler
             )
-            document.removeEventListener(
-                "visibilitychange",
-                visibilityHandler
-            )
+            document.removeEventListener("visibilitychange", visibilityHandler)
             window.removeEventListener("blur", blurHandler)
             state.spinTl?.kill()
             state.resumeTween?.kill()

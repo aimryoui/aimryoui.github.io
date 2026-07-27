@@ -1,5 +1,6 @@
 /**
- * Checks if the given href points to the exact same URL as the current window location.
+ * Checks if the given href points to the exact same URL as the current window
+ * location.
  *
  * @param {string} href - The target URL to check
  * @returns {boolean} True if the href matches the current window location
