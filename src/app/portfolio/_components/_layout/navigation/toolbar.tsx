@@ -1,6 +1,5 @@
 "use client"
 
-import type React from "react"
 import NextLink from "next/link"
 
 import { AudioToggle } from "@/components/audio/audio"
@@ -15,38 +14,10 @@ import { useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import { MobileTocButton } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
-import { TableOfContents } from "@/portfolio/_components/_layout/toc/toc"
-import { useTocItems } from "@/portfolio/_hooks/use-toc-items"
-import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
 
-function Sidebar({ className, ...props }: React.ComponentProps<"aside">) {
-    const mode = usePortfolioModeStore((state) => state.mode)
-    const tocItems = useTocItems(mode)
-
-    return (
-        // <ViewTransition name="sidebar">
-        <aside
-            className={cn(
-                "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-50 flex h-dvh w-sidebar flex-col justify-end bg-background",
-                {
-                    "group-data-[sidebar-position=right]/html":
-                        "left-auto right-[calc(var(--spacing)*6+var(--px))]",
-                    lg: "hidden"
-                },
-                className
-            )}
-            {...props}
-        >
-            <TableOfContents mode={mode} items={tocItems} />
-            <Menu />
-        </aside>
-        // </ViewTransition>
-    )
-}
-
-function Menu({ className }: { className?: string }) {
+function Toolbar({ className }: { className?: string }) {
     const isMobile = useMediaQuery("lg")
     const { isTouchDevice } = useDevice()
 
@@ -67,9 +38,13 @@ function Menu({ className }: { className?: string }) {
                 />
             </div>
             <header
-                className={cn("flex h-20 items-center bg-background px-6", {
-                    lg: "py-[17px]"
-                })}
+                className={cn(
+                    "flex h-20 items-center bg-background px-6 will-change-transform transition-transform ease-spring duration-250",
+                    {
+                        starting: "translate-y-full",
+                        lg: "py-[17px]"
+                    }
+                )}
             >
                 <menu
                     className={cn(
@@ -177,5 +152,4 @@ function Menu({ className }: { className?: string }) {
     )
 }
 
-export default Sidebar
-export { Menu }
+export default Toolbar

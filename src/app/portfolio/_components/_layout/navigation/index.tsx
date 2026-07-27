@@ -4,9 +4,10 @@ import { Divider } from "@/components/layout/divider"
 import { MarginLine } from "@/components/layout/line"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
-import Sidebar, { Menu } from "@/portfolio/_components/_layout/sidebar"
+import Sidebar from "@/portfolio/_components/_layout/navigation/sidebar"
+import Toolbar from "@/portfolio/_components/_layout/navigation/toolbar"
 
-export function Navigation() {
+function Navigation() {
     const isMobile = useMediaQuery("lg")
 
     if (isMobile) {
@@ -24,7 +25,7 @@ export function Navigation() {
                         viewTransitionName: "toolbar"
                     }}
                 >
-                    <Menu />
+                    <Toolbar />
                 </div>
             </div>
         )
@@ -60,3 +61,5 @@ export function Navigation() {
         </>
     )
 }
+
+export default Navigation

@@ -11,7 +11,6 @@ import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight, Text } from "@/components/ui/typography"
 import { useHotkeys } from "@/hooks/use-hotkeys"
-import { usePlatform } from "@/hooks/use-platform"
 import { cn } from "@/lib/utils"
 
 interface TocSearchProps extends Omit<
@@ -33,8 +32,6 @@ function TocSearch({
     ref,
     ...props
 }: TocSearchProps) {
-    const platform = usePlatform()
-
     useHotkeys([
         [
             "mod + K",
@@ -88,11 +85,7 @@ function TocSearch({
                 className={cn("text-md", className)}
                 {...props}
             />
-            <RightAddon
-                hasValue={hasValue}
-                platform={platform}
-                onClear={onClear}
-            />
+            <RightAddon hasValue={hasValue} onClear={onClear} />
         </SearchGroup>
     )
 }
@@ -107,11 +100,9 @@ function LeftAddon() {
 
 function RightAddon({
     hasValue,
-    platform,
     onClear
 }: {
     hasValue: boolean
-    platform: ReturnType<typeof usePlatform>
     onClear: TocSearchProps["onClear"]
 }) {
     return (
@@ -146,11 +137,8 @@ function RightAddon({
             ) : (
                 <KbdGroup className={cn({ lg: "hidden" })}>
                     <Kbd>
-                        {platform === "mac" ? (
-                            <Command className="size-2.5" />
-                        ) : (
-                            "Ctrl"
-                        )}
+                        <Command className="size-2.5 win:hidden" />
+                        <span className="mac:hidden">Ctrl</span>
                     </Kbd>
                     <Kbd>K</Kbd>
                 </KbdGroup>
