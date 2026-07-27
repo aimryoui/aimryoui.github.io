@@ -146,7 +146,16 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                 lg: "flex-col-reverse"
             })}
         >
-            <Space className={cn("hidden", { lg: "block" })} />
+            <Space
+                className={cn("hidden", {
+                    lg: [
+                        "block",
+                        {
+                            after: "pointer-events-none absolute bottom-0 left-1/2 z-40 h-20 w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent"
+                        }
+                    ]
+                })}
+            />
             {hasSocialLinks && (
                 <>
                     <Space className={cn("hidden", { lg: "block" })} />
@@ -155,11 +164,12 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             )}
             <Divider
                 className={cn(
-                    "grid h-auto place-items-center bg-background px-4 py-3 text-sm"
+                    "grid h-auto place-items-center bg-background px-6 py-3 text-sm"
                 )}
             >
-                <p className="flex flex-wrap justify-center gap-x-0.5 text-balance text-center">
-                    {`© 2024 - ${CURRENT_YEAR} aimryoui. NO AI training allowed.`}
+                <p className="flex flex-wrap justify-center gap-x-[.2em] text-balance text-center">
+                    {`© 2024 - ${CURRENT_YEAR} aimryoui.`}
+                    <span>NO AI training allowed.</span>
                     <span>All Rights Reserved.</span>
                 </p>
             </Divider>

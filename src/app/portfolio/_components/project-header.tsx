@@ -85,6 +85,7 @@ function ProjectHeader({
                     className={cn(
                         "flex flex-1 flex-col justify-between text-pretty px-6 py-4.5",
                         {
+                            lg: "py-5.5",
                             md: "gap-2"
                         }
                     )}
@@ -138,7 +139,11 @@ function ProjectHeader({
             {detail && (
                 <>
                     <SectionLine />
-                    <div className={cn("flex flex-col gap-2 px-6 py-4.5")}>
+                    <div
+                        className={cn("flex flex-col gap-2 px-6 py-4.5", {
+                            lg: "py-5.5"
+                        })}
+                    >
                         <h2
                             className={cn(
                                 "text-pretty text-foreground font-wght-600"

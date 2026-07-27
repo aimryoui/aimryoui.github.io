@@ -402,14 +402,40 @@ function TargetCursor({
             isHiddenByLeave = true
             updateVisibility()
         }
-        document.addEventListener("mouseleave", documentLeaveHandler)
+        // Use documentElement (<html>) instead of document — Firefox
+        // doesn't reliably fire mouseleave/mouseenter on `document`
+        // because it has no bounding box in Gecko's event model.
+        document.documentElement.addEventListener(
+            "mouseleave",
+            documentLeaveHandler
+        )
 
         const documentEnterHandler = () => {
             if (!isHiddenByLeave) return
             isHiddenByLeave = false
             updateVisibility()
         }
-        document.addEventListener("mouseenter", documentEnterHandler)
+        document.documentElement.addEventListener(
+            "mouseenter",
+            documentEnterHandler
+        )
+
+        // Hide cursor when the tab loses visibility (e.g. switching tabs)
+        const visibilityHandler = () => {
+            if (document.hidden) {
+                isHiddenByLeave = true
+                updateVisibility()
+            }
+        }
+        document.addEventListener("visibilitychange", visibilityHandler)
+
+        // Hide cursor when the window loses focus (e.g. Alt+Tab)
+        const blurHandler = () => {
+            if (!hasMoved) return
+            isHiddenByLeave = true
+            updateVisibility()
+        }
+        window.addEventListener("blur", blurHandler)
 
         const scrollHandler = () => {
             if (!activeTarget || !cursorRef.current) return
@@ -560,8 +586,19 @@ function TargetCursor({
             window.removeEventListener("mousedown", mouseDownHandler)
             window.removeEventListener("mouseup", mouseUpHandler)
             window.removeEventListener("dragend", mouseUpHandler)
-            document.removeEventListener("mouseleave", documentLeaveHandler)
-            document.removeEventListener("mouseenter", documentEnterHandler)
+            document.documentElement.removeEventListener(
+                "mouseleave",
+                documentLeaveHandler
+            )
+            document.documentElement.removeEventListener(
+                "mouseenter",
+                documentEnterHandler
+            )
+            document.removeEventListener(
+                "visibilitychange",
+                visibilityHandler
+            )
+            window.removeEventListener("blur", blurHandler)
             state.spinTl?.kill()
             state.resumeTween?.kill()
             document.body.style.cursor = originalCursor

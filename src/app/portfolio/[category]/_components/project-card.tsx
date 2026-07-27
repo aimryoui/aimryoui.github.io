@@ -2,23 +2,18 @@
 
 import type React from "react"
 import { useEffect, useRef, useState, ViewTransition } from "react"
-import NextLink from "next/link"
-
-import { useWebHaptics } from "web-haptics/react"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
+import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Bold, Text } from "@/components/ui/typography"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
-import { useDevice } from "@/hooks/use-device"
-import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import {
     resolveSocialData,
     type SocialData
 } from "@/portfolio/_helpers/resolve-social-data"
-import { useAudioStore } from "@/stores/audio-store"
 
 import { type Project } from "~/.velite"
 
@@ -36,9 +31,8 @@ function ProjectCard({
     project,
     navigation,
     projectNavigation = false,
-    onClick,
     ...props
-}: React.ComponentProps<typeof NextLink> & ProjectCardProps) {
+}: LinkButtonProps & ProjectCardProps) {
     const [isHovered, setIsHovered] = useState(false)
     const startTimeRef = useRef<number>(0)
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
@@ -84,14 +78,11 @@ function ProjectCard({
         }, remaining)
     }
 
-    const { isTouchDevice } = useDevice()
-    const { trigger } = useWebHaptics()
-
     const Comp = navigation
         ? navigation === "forward"
             ? PaginationNext
             : PaginationPrevious
-        : NextLink
+        : LinkButton
 
     return (
         <Comp
@@ -100,7 +91,7 @@ function ProjectCard({
             data-hover={isHovered}
             href={href}
             prefetch={false}
-            draggable={false}
+            nativeLink={true}
             className={cn(
                 "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 transition-[background-color] duration-100",
                 {
@@ -113,15 +104,6 @@ function ProjectCard({
                 className
             )}
             {...props}
-            onClick={(e) => {
-                if (isTouchDevice) {
-                    void trigger("light")
-                } else if (useAudioStore.getState().isAudioEnabled) {
-                    playPressSound()
-                }
-
-                onClick?.(e as React.MouseEvent<HTMLAnchorElement>)
-            }}
         >
             {navigation === "backward" && (
                 <ArrowLeft

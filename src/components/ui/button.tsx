@@ -2,12 +2,11 @@
 import { useRef } from "react"
 import NextLink from "next/link"
 
-import { useLink } from "@react-aria/link"
+import { type AriaLinkOptions, useLink } from "@react-aria/link"
 import { type VariantProps } from "class-variance-authority"
 import {
     Button as ButtonPrimitive,
-    type ButtonProps as ButtonPrimitiveProps,
-    type PressEvent
+    type ButtonProps as ButtonPrimitiveProps
 } from "react-aria-components/Button"
 import { type defaultPatterns } from "web-haptics"
 import { useWebHaptics } from "web-haptics/react"
@@ -20,6 +19,14 @@ import { useAudioStore } from "@/stores/audio-store"
 
 type HapticVariantsType = keyof typeof defaultPatterns
 
+type ButtonProps = Omit<ButtonPrimitiveProps, "className"> &
+    React.RefAttributes<HTMLButtonElement> &
+    VariantProps<typeof buttonVariants> & {
+        className?: string
+        haptic?: HapticVariantsType
+        mute?: boolean
+    }
+
 function Button({
     className,
     variant = "default",
@@ -28,13 +35,7 @@ function Button({
     mute = false,
     onPress,
     ...props
-}: Omit<ButtonPrimitiveProps, "className"> &
-    React.RefAttributes<HTMLButtonElement> &
-    VariantProps<typeof buttonVariants> & {
-        className?: string
-        haptic?: HapticVariantsType
-        mute?: boolean
-    }) {
+}: ButtonProps) {
     const { isTouchDevice } = useDevice()
     const { trigger } = useWebHaptics()
 
@@ -61,14 +62,15 @@ function Button({
 
 type NextLinkProps = React.ComponentProps<typeof NextLink>
 
-type LinkButtonProps = NextLinkProps &
+type LinkButtonProps = Omit<NextLinkProps, "href" | keyof AriaLinkOptions> &
+    Omit<AriaLinkOptions, "href"> &
     VariantProps<typeof buttonVariants> & {
         className?: string
         nativeLink?: boolean
         haptic?: HapticVariantsType
         mute?: boolean
-        onPress?: (e: PressEvent) => void
-        ref?: React.Ref<HTMLAnchorElement>
+        href: NextLinkProps["href"]
+        ref?: React.RefObject<HTMLAnchorElement | null>
     }
 
 function LinkButton({
@@ -87,13 +89,17 @@ function LinkButton({
     const { isTouchDevice } = useDevice()
     const { trigger } = useWebHaptics()
 
-    const fallbackRef = useRef<HTMLAnchorElement>(null)
-    const domRef = (ref ?? fallbackRef) as React.RefObject<HTMLAnchorElement>
+    const defaultRef = useRef<HTMLAnchorElement>(null)
+    const domRef = ref ?? defaultRef
 
     const { linkProps } = useLink(
         {
+            ...props,
             elementType: "a",
-            href: typeof href === "string" ? href : (href.href ?? ""),
+            href:
+                typeof href === "string"
+                    ? href
+                    : (href.href ?? href.pathname ?? ""),
             onPress: (e) => {
                 if (isTouchDevice) {
                     void trigger(haptic)
@@ -127,5 +133,5 @@ function LinkButton({
     )
 }
 
-export type { HapticVariantsType }
+export type { ButtonProps, HapticVariantsType, LinkButtonProps }
 export { Button, buttonVariants, LinkButton }
