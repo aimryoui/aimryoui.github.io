@@ -151,7 +151,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <Space
                     {...(socialData && {
                         className: cn("relative", {
-                            before: "absolute inset-x-0 bottom-full h-20 bg-background"
+                            before: "pointer-events-none absolute inset-x-0 bottom-full h-20 bg-background"
                         })
                     })}
                 />

@@ -14,7 +14,14 @@ let isGlobalSetup = false
 
 function getInitialGuess(): boolean {
     if (typeof window === "undefined") return false
-    return !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+
+    const hasTouchPoints = navigator.maxTouchPoints > 0
+
+    const hasCoarsePointer = window.matchMedia("(any-pointer: coarse)").matches
+
+    const hasTouchStart = "ontouchstart" in window
+
+    return hasTouchPoints || hasCoarsePointer || hasTouchStart
 }
 
 function setupGlobalModalityListeners() {

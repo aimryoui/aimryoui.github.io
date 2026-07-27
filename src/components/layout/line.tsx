@@ -81,22 +81,32 @@ function SectionLine({
 
 function ElementLine({
     className,
+    containerClassName,
     dir = "vertical",
     ...props
-}: React.ComponentProps<"hr"> & {
+}: React.ComponentProps<"div"> & {
     dir?: "vertical" | "horizontal"
+    containerClassName?: string
 }) {
     return (
-        <hr
+        <div
             className={cn(
-                "pointer-events-none",
-                dir === "vertical"
-                    ? "h-full border-r border-dashed border-stroke"
-                    : "w-full border-b border-dashed border-stroke",
-                className
+                "pointer-events-none relative",
+                dir === "vertical" ? "h-full w-0" : "h-0 w-full",
+                containerClassName
             )}
             {...props}
-        />
+        >
+            <hr
+                className={cn(
+                    "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+                    dir === "vertical"
+                        ? "h-full border-r border-dashed border-stroke"
+                        : "w-full border-b border-dashed border-stroke",
+                    className
+                )}
+            />
+        </div>
     )
 }
 
@@ -120,10 +130,8 @@ function SvgElementLine({
                 xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="none"
                 className={cn(
-                    "absolute inset-0",
-                    dir === "vertical"
-                        ? "-ml-[calc(var(--px)/2)] h-full w-px"
-                        : "-mt-[calc(var(--px)/2)] h-px w-full"
+                    "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+                    dir === "vertical" ? "h-full w-px" : "h-px w-full"
                 )}
                 {...props}
             >

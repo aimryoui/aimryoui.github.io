@@ -258,7 +258,8 @@ function FooterSeparator({
                         "h-20",
                         {
                             "nth-of-type-10": "h-0 w-full",
-                            "[&>hr]:nth-of-type-10":
+                            "[&>*]:nth-of-type-10": "h-0 w-full",
+                            "[&_hr]:nth-of-type-10":
                                 "h-auto w-full border-b border-r-0"
                         }
                     ]

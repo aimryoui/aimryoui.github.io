@@ -90,7 +90,7 @@ function ProjectCard({
             onMouseLeave={handleMouseLeave}
             data-hover={isHovered}
             href={href}
-            prefetch={false}
+            prefetch={!!navigation}
             nativeLink={true}
             className={cn(
                 "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 transition-[background-color] duration-100",
