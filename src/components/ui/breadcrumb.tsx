@@ -93,7 +93,7 @@ function BreadcrumbLink({ className, ...props }: LinkProps) {
         <LinkPrimitive
             data-slot="breadcrumb-link"
             className={cn(
-                "flex h-full items-center gap-1 transition-[color] duration-100",
+                "flex h-full items-center gap-1 text-muted-foreground/90 transition-[color] duration-100",
                 "group-first:-ms-1.25 group-[:not(*:first-child)]:ps-1",
                 {
                     hover: "text-foreground transition-none",

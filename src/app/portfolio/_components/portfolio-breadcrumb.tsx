@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react"
 
+import { SectionLine } from "@/components/layout/line"
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -40,9 +41,15 @@ function PortfolioBreadcrumb({
     return (
         <Breadcrumb
             className={cn({
-                md: "fixed inset-x-0 bottom-20 z-50 h-fit w-full border-t border-dashed border-stroke bg-background"
+                md: "fixed inset-x-0 bottom-20 z-50 h-auto w-full bg-background"
             })}
         >
+            <SectionLine
+                fit
+                containerClassName={cn({
+                    md: "absolute inset-x-0 top-0"
+                })}
+            />
             <BreadcrumbList
                 ref={listRef}
                 className={cn({

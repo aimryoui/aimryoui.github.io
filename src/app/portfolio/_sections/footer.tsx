@@ -149,14 +149,18 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             })}
         >
             <Space
-                className={cn("hidden", pathName !== "/portfolio" && "h-33.5", {
-                    lg: [
-                        "block",
-                        {
-                            after: "pointer-events-none absolute bottom-0 left-1/2 z-40 h-20 w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent"
-                        }
-                    ]
-                })}
+                className={cn(
+                    "hidden",
+                    pathName !== "/portfolio" && "md:h-33.5",
+                    {
+                        lg: [
+                            "block",
+                            {
+                                after: "pointer-events-none absolute bottom-0 left-1/2 z-40 h-20 w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent"
+                            }
+                        ]
+                    }
+                )}
             />
             {hasSocialLinks && (
                 <>

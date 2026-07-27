@@ -46,10 +46,12 @@ function Plus({ position }: { position?: "left" | "right" }) {
 
 function SectionLine({
     className,
+    containerClassName,
     showDecoration = false,
     fit = false,
     ...props
 }: React.ComponentProps<"hr"> & {
+    containerClassName?: string
     showDecoration?: boolean
     fit?: boolean
 }) {
@@ -58,7 +60,8 @@ function SectionLine({
             role="separator"
             className={cn(
                 "pointer-events-none relative z-40 h-0 w-full",
-                showDecoration && "flex items-center justify-between"
+                showDecoration && "flex items-center justify-between",
+                containerClassName
             )}
         >
             {showDecoration && <Plus position="left" />}
