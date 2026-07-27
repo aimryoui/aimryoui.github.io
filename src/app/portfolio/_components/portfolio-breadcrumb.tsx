@@ -41,7 +41,12 @@ function PortfolioBreadcrumb({
     return (
         <Breadcrumb
             className={cn({
-                md: "fixed inset-x-0 bottom-20 h-auto w-full bg-background"
+                md: [
+                    "fixed inset-x-0 bottom-20 h-auto w-full bg-background",
+                    {
+                        before: "absolute inset-0 bg-input/25"
+                    }
+                ]
             })}
         >
             <SectionLine

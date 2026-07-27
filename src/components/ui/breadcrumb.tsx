@@ -153,12 +153,12 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
             className={cn(
                 "-me-1.25 grid h-full cursor-pointer place-items-center ps-1 text-foreground",
                 {
-                    md: "py-4"
+                    md: "py-3.5"
                 },
                 className
             )}
         >
-            <span data-cursor="lock" className="px-1.25" {...props} />
+            <span data-cursor="lock" className="px-1.25 md:py-0.5" {...props} />
         </button>
     )
 }
