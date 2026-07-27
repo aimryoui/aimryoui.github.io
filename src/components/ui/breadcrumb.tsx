@@ -22,7 +22,7 @@ function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
             aria-label="breadcrumb"
             data-slot="breadcrumb"
             className={cn(
-                "flex h-full items-center justify-start font-wght-500",
+                "z-50 flex h-full items-center justify-start font-wght-500",
                 className
             )}
             {...props}
@@ -87,7 +87,13 @@ function BreadcrumbItem({ className, children, ...props }: BreadcrumbProps) {
     )
 }
 
-function BreadcrumbLink({ className, ...props }: LinkProps) {
+function BreadcrumbLink({
+    className,
+    spanClassName,
+    ...props
+}: LinkProps & {
+    spanClassName?: string
+}) {
     const { isCurrent } = use(BreadcrumbItemContext)
     return (
         <LinkPrimitive
@@ -104,7 +110,10 @@ function BreadcrumbLink({ className, ...props }: LinkProps) {
             render={(props) =>
                 "href" in props ? (
                     <NextLink {...props} draggable={false}>
-                        <span data-cursor="lock" className="px-1.25 md:py-0.5">
+                        <span
+                            data-cursor="lock"
+                            className={cn("px-1.25 md:py-0.5", spanClassName)}
+                        >
                             {props.children}
                         </span>
                         {!isCurrent && (
