@@ -5,27 +5,19 @@ import type React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { usePress } from "react-aria"
 import { Group, type GroupProps } from "react-aria-components/Group"
-import { useWebHaptics } from "web-haptics/react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { useDevice } from "@/hooks/use-device"
-import { playPressSound } from "@/lib/sounds"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
-import { useAudioStore } from "@/stores/audio-store"
 
 function InputGroup({ className, ...props }: GroupProps) {
-    const { isTouchDevice } = useDevice()
-    const { trigger } = useWebHaptics()
+    const playPressFeedback = usePressFeedback()
 
     let { pressProps, isPressed } = usePress({
         onPress: () => {
-            if (isTouchDevice) {
-                void trigger("light")
-            } else if (useAudioStore.getState().isAudioEnabled) {
-                playPressSound("input")
-            }
+            playPressFeedback("input")
         }
     })
 

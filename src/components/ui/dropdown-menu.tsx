@@ -6,6 +6,7 @@ import NextLink from "next/link"
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { ArrowUpRight, CheckIcon, ChevronRightIcon } from "lucide-react"
 
+import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
 type DropdownMenuOptions = {
@@ -148,6 +149,7 @@ function DropdownMenuContent({
             >
                 <MenuPrimitive.Popup
                     data-slot="dropdown-menu-content"
+                    data-cursor="lock"
                     tabIndex={-1}
                     className={cn(
                         "relative z-50 flex h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 origin-[--transform-origin] flex-col overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
@@ -240,18 +242,25 @@ function DropdownMenuLabel({
 function DropdownMenuItem({
     className,
     inset,
+    onClick,
     variant = "default",
     ...props
 }: MenuPrimitive.Item.Props & {
     inset?: boolean
     variant?: "default" | "destructive"
 }) {
+    const playPressFeedback = usePressFeedback()
+
     return (
         <MenuPrimitive.Item
             data-slot="dropdown-menu-item"
             data-inset={inset}
             data-variant={variant}
             data-sound="button"
+            onClick={(e) => {
+                playPressFeedback("button")
+                onClick?.(e)
+            }}
             className={cn(
                 "group/dropdown-menu-item relative flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
@@ -285,16 +294,23 @@ function DropdownMenuSub({ ...props }: MenuPrimitive.SubmenuRoot.Props) {
 function DropdownMenuSubTrigger({
     className,
     inset,
+    onClick,
     children,
     ...props
 }: MenuPrimitive.SubmenuTrigger.Props & {
     inset?: boolean
 }) {
+    const playPressFeedback = usePressFeedback()
+
     return (
         <MenuPrimitive.SubmenuTrigger
             data-slot="dropdown-menu-sub-trigger"
             data-inset={inset}
             data-sound="button"
+            onClick={(e) => {
+                playPressFeedback("button")
+                onClick?.(e)
+            }}
             className={cn(
                 "flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
@@ -351,19 +367,26 @@ function DropdownMenuLinkItem({
     href,
     openInNewTab,
     inset,
+    onClick,
     ...props
 }: Omit<MenuPrimitive.LinkItem.Props, "href"> &
     Pick<React.ComponentProps<typeof NextLink>, "href"> & {
         openInNewTab?: boolean
         inset?: boolean
     }) {
+    const playPressFeedback = usePressFeedback()
+
     return (
         <MenuPrimitive.LinkItem
             data-slot="dropdown-menu-link-item"
             data-inset={inset}
-            data-sound="button"
+            data-sound="tick"
+            onClick={(e) => {
+                playPressFeedback("link")
+                onClick?.(e)
+            }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-1.5 text-nowrap rounded-lg py-2 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center gap-2 text-nowrap rounded-lg py-2 text-sm outline-hidden",
                 openInNewTab ? "pe-8 ps-3" : "px-3",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
@@ -403,15 +426,22 @@ function DropdownMenuCheckboxItem({
     children,
     checked,
     inset,
+    onClick,
     ...props
 }: MenuPrimitive.CheckboxItem.Props & {
     inset?: boolean
 }) {
+    const playPressFeedback = usePressFeedback()
+
     return (
         <MenuPrimitive.CheckboxItem
             data-slot="dropdown-menu-checkbox-item"
             data-inset={inset}
-            data-sound="button"
+            data-sound="tick"
+            onClick={(e) => {
+                playPressFeedback("button")
+                onClick?.(e)
+            }}
             className={cn(
                 "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
                 {
@@ -452,15 +482,22 @@ function DropdownMenuRadioItem({
     className,
     children,
     inset,
+    onClick,
     ...props
 }: MenuPrimitive.RadioItem.Props & {
     inset?: boolean
 }) {
+    const playPressFeedback = usePressFeedback()
+
     return (
         <MenuPrimitive.RadioItem
             data-slot="dropdown-menu-radio-item"
             data-inset={inset}
-            data-sound="button"
+            data-sound="tick"
+            onClick={(e) => {
+                playPressFeedback("button")
+                onClick?.(e)
+            }}
             className={cn(
                 "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
                 {

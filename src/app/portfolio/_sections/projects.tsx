@@ -2,27 +2,23 @@
 
 import { Fragment } from "react"
 
-import { useWebHaptics } from "web-haptics/react"
-
 import { ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { LinkButton } from "@/components/ui/button"
-import { useDevice } from "@/hooks/use-device"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
 import {
     getCategoryPath,
     getProjectPath,
     groupProjectsByCategory
 } from "@/lib/project-sort"
-import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import { ExpandableWrapper } from "@/portfolio/_components/_layout/expandable-wrapper"
 import { MDXContent } from "@/portfolio/_components/mdx-content"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import SectionTitle from "@/portfolio/_components/section-title"
 import ProjectCard from "@/portfolio/[category]/_components/project-card"
-import { useAudioStore } from "@/stores/audio-store"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
@@ -31,8 +27,7 @@ function Projects() {
     const mode = usePortfolioModeStore((state) => state.mode)
     const projectGroups = groupProjectsByCategory(projects)
 
-    const { isTouchDevice } = useDevice()
-    const { trigger } = useWebHaptics()
+    const playPressFeedback = usePressFeedback()
 
     if (mode === "spread") {
         return projectGroups.map((group, index) => (
@@ -124,13 +119,7 @@ function Projects() {
                             data-cursor="target"
                             data-sound="tick"
                             onPress={() => {
-                                if (isTouchDevice) {
-                                    void trigger("success")
-                                } else if (
-                                    useAudioStore.getState().isAudioEnabled
-                                ) {
-                                    playPressSound("link")
-                                }
+                                playPressFeedback("link", "success")
                             }}
                             className={cn(
                                 "group flex items-center justify-between gap-4 pe-6 transition-[background-color] duration-100",

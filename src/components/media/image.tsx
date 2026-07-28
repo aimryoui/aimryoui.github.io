@@ -4,7 +4,6 @@ import { useRef } from "react"
 import NextImage from "next/image"
 
 import { mergeRefs } from "react-merge-refs"
-import { useWebHaptics } from "web-haptics/react"
 
 import { LightboxItem } from "@/components/ui/lightbox"
 import { EDGE_PAD, GRID_COLS, GRID_ROWS } from "@/configs/image.config"
@@ -12,16 +11,14 @@ import {
     getParsedMediaData,
     type ParsedMediaData
 } from "@/helpers/get-parsed-media-data"
-import { useDevice } from "@/hooks/use-device"
 import { useMediaObserver } from "@/hooks/use-media-observer"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
 import imageManifestRaw from "@/lib/image-manifest.json"
-import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import {
     type ImageManifest,
     type ImageMetadata
 } from "@/scripts/process-images"
-import { useAudioStore } from "@/stores/audio-store"
 
 type GeneralImageProps = React.ComponentProps<"div"> & {
     parsedData: ParsedMediaData<ImageMetadata>
@@ -314,11 +311,16 @@ type ImageProps = Omit<GeneralImageProps, "parsedData"> &
         src: string
     }
 
-function Image({ className, lightbox = true, ref, ...props }: ImageProps) {
+function Image({
+    className,
+    lightbox = true,
+    onClick,
+    ref,
+    ...props
+}: ImageProps) {
     const parsedData = getParsedMediaData(props.src, imageManifest)
 
-    const { isTouchDevice } = useDevice()
-    const { trigger } = useWebHaptics()
+    const playPressFeedback = usePressFeedback()
 
     if (!parsedData) return null
 
@@ -348,12 +350,10 @@ function Image({ className, lightbox = true, ref, ...props }: ImageProps) {
                     parsedData={parsedData}
                     ref={mergeRefs([ref, lightboxRef])}
                     onClick={(e) => {
-                        if (isTouchDevice) {
-                            void trigger("light")
-                        } else if (useAudioStore.getState().isAudioEnabled) {
-                            playPressSound("zoom")
-                        }
+                        playPressFeedback("zoom-in")
                         open(e)
+
+                        onClick?.(e)
                     }}
                     className={cn(className)}
                     {...props}

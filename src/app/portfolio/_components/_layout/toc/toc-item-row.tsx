@@ -3,17 +3,14 @@
 import { memo } from "react"
 
 import { ChevronDown } from "lucide-react"
-import { useWebHaptics } from "web-haptics/react"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
 import { LinkButton } from "@/components/ui/button"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { isSameUrl } from "@/helpers/is-same-url"
-import { useDevice } from "@/hooks/use-device"
-import { playPressSound } from "@/lib/sounds"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
-import { useAudioStore } from "@/stores/audio-store"
 import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocItemProps {
@@ -50,8 +47,7 @@ const TocItemRow = memo(
         const isProject = item.depth === 3 && !item.icon
         const isCollapsible = item.depth === 2 && item.id !== "outlines"
 
-        const { isTouchDevice } = useDevice()
-        const { trigger } = useWebHaptics()
+        const playPressFeedback = usePressFeedback()
 
         return (
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
@@ -87,16 +83,11 @@ const TocItemRow = memo(
                     href={href}
                     nativeLink
                     prefetch={false}
-                    draggable={false}
                     data-toc-id={item.id}
                     data-cursor="target"
                     data-sound="tick"
                     onPress={() => {
-                        if (isTouchDevice) {
-                            void trigger("light")
-                        } else if (useAudioStore.getState().isAudioEnabled) {
-                            playPressSound("link")
-                        }
+                        playPressFeedback("link")
 
                         if (isSameUrl(href)) {
                             onSameLinkClick()

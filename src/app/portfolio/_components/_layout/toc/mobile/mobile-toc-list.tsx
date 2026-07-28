@@ -49,7 +49,7 @@ function MobileTocList({
                             item={item}
                             isActive={activeId === item.id}
                             query={debouncedQuery}
-                            onClick={(item) => {
+                            onPress={(item) => {
                                 handleItemClick(item, clickedTargetRef)
                                 onLinkClick?.()
                             }}

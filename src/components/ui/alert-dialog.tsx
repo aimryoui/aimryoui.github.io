@@ -35,7 +35,7 @@ function AlertDialogOverlay({
         <AlertDialogPrimitive.Backdrop
             data-slot="alert-dialog-overlay"
             className={cn(
-                "fixed inset-0 isolate z-50 bg-black/80 duration-250",
+                "fixed inset-0 isolate z-90 bg-black/80 duration-250",
                 {
                     dark: "bg-black/40",
                     "supports-[backdrop-filter]": "backdrop-blur-sm",
@@ -64,7 +64,7 @@ function AlertDialogContent({
                 data-size={size}
                 // data-cursor="ignore"
                 className={cn(
-                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-50 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl bg-popover px-4 py-3 text-popover-foreground ring ring-stroke outline-none duration-250",
+                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-90 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl bg-popover px-4 py-3 text-popover-foreground ring ring-stroke outline-none duration-250",
                     {
                         "data-starting-style": "scale-95 opacity-0",
                         "data-ending-style": "scale-95 opacity-0",

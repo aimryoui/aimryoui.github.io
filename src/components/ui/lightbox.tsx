@@ -12,12 +12,15 @@ import {
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
+import { playHoverSound } from "@/lib/sounds"
 import {
     ChevronBackward,
     ChevronForward,
     PlusMagnify,
     XMark
 } from "@/portfolio/_components/_icons/lightbox-icons"
+import { useAudioStore } from "@/stores/audio-store"
 
 interface CustomItemData {
     placeholderAspectRatio: string
@@ -72,6 +75,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
         "(max-width: 48rem) and (orientation: portrait)"
     )
     const { isTouchDevice } = useDevice()
+    const playPressFeedback = usePressFeedback()
 
     const { isWebKit } = useBrowserEngine()
 
@@ -348,8 +352,30 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     }
 
                     document.body.style.removeProperty("--color-svg-filter")
+
+                    playPressFeedback("zoom-out")
                 })
                 onEvent("closingAnimationEnd", stopAFSync)
+
+                onEvent("beforeZoomTo", (e) => {
+                    const slide = lightbox.currSlide
+                    if (!slide) return
+
+                    const currentZoom = slide.currZoomLevel
+                    const minZoom = slide.zoomLevels.min
+                    const maxZoom = slide.zoomLevels.max
+
+                    const clampedDestZoom = Math.max(
+                        minZoom,
+                        Math.min(maxZoom, e.destZoomLevel)
+                    )
+
+                    if (Math.abs(clampedDestZoom - currentZoom) > 0.01) {
+                        if (useAudioStore.getState().isAudioEnabled) {
+                            playHoverSound("tick")
+                        }
+                    }
+                })
 
                 onEvent("zoomPanUpdate", (e) => {
                     const placeholder = getElements(e.slide).placeholder()

@@ -12,8 +12,14 @@ function getAudioContextCtor(): AudioContextCtor | undefined {
 
 const HOVER_SOUNDS = ["tick", "button"] as const
 
-type HoverSoundType = (typeof HOVER_SOUNDS)[number]
-type PressSoundType = "button" | "link" | "input" | "zoom"
+type HoverSoundType = (typeof HOVER_SOUNDS)[number] | false
+type PressSoundType =
+    | "button"
+    | "link"
+    | "input"
+    | "zoom-in"
+    | "zoom-out"
+    | false
 
 interface HoverConfigs {
     duration: number
@@ -36,7 +42,7 @@ interface PressConfigs {
     noiseMix: number
 }
 
-const HOVER_CONFIGS: Record<HoverSoundType, HoverConfigs> = {
+const HOVER_PRESETS: Record<Exclude<HoverSoundType, false>, HoverConfigs> = {
     tick: {
         duration: 0.008,
         gain: 0.045,
@@ -61,7 +67,7 @@ const HOVER_CONFIGS: Record<HoverSoundType, HoverConfigs> = {
     }
 }
 
-const PRESS_CONFIGS: Record<PressSoundType, PressConfigs> = {
+const PRESS_PRESETS: Record<Exclude<PressSoundType, false>, PressConfigs> = {
     button: {
         duration: 0.015,
         gain: 0.175,
@@ -101,7 +107,7 @@ const PRESS_CONFIGS: Record<PressSoundType, PressConfigs> = {
         noiseMix: 0
     },
 
-    zoom: {
+    "zoom-in": {
         duration: 0.2,
         gain: 0.06,
         attack: 0.1,
@@ -109,6 +115,19 @@ const PRESS_CONFIGS: Record<PressSoundType, PressConfigs> = {
         pitchSweep: 100,
         baseFreq: 130,
         sweepDirection: "up",
+        sweepSpeed: 4,
+        oscDecay: 10,
+        noiseMix: 0
+    },
+
+    "zoom-out": {
+        duration: 0.2,
+        gain: 0.06,
+        attack: 0.1,
+        release: 0.1,
+        pitchSweep: 100,
+        baseFreq: 230,
+        sweepDirection: "down",
         sweepSpeed: 4,
         oscDecay: 10,
         noiseMix: 0
@@ -124,9 +143,9 @@ const gains = new Map<string, GainNode>()
 
 function buildHoverBuffer(
     context: AudioContext,
-    type: HoverSoundType
+    type: Exclude<HoverSoundType, false>
 ): AudioBuffer {
-    const config = HOVER_CONFIGS[type]
+    const config = HOVER_PRESETS[type]
     const sampleRate = context.sampleRate
     const length = Math.ceil(config.duration * sampleRate)
     const buffer = context.createBuffer(1, length, sampleRate)
@@ -167,9 +186,9 @@ function buildHoverBuffer(
 
 function buildPressBuffer(
     context: AudioContext,
-    type: PressSoundType
+    type: Exclude<PressSoundType, false>
 ): AudioBuffer {
-    const config = PRESS_CONFIGS[type]
+    const config = PRESS_PRESETS[type]
     const sampleRate = context.sampleRate
     const length = Math.ceil(config.duration * sampleRate)
     const buffer = context.createBuffer(1, length, sampleRate)
@@ -234,15 +253,15 @@ function getBufferAndGain(
 
     if (!buffers.has(cacheKey)) {
         const buffer = isHover
-            ? buildHoverBuffer(ctx, type as HoverSoundType)
-            : buildPressBuffer(ctx, type as PressSoundType)
+            ? buildHoverBuffer(ctx, type as Exclude<HoverSoundType, false>)
+            : buildPressBuffer(ctx, type as Exclude<PressSoundType, false>)
         buffers.set(cacheKey, buffer)
 
         const gainNode = ctx.createGain()
 
         gainNode.gain.value = isHover
-            ? HOVER_CONFIGS[type as HoverSoundType].gain
-            : PRESS_CONFIGS[type as PressSoundType].gain
+            ? HOVER_PRESETS[type as Exclude<HoverSoundType, false>].gain
+            : PRESS_PRESETS[type as Exclude<PressSoundType, false>].gain
 
         gainNode.connect(ctx.destination)
         gains.set(cacheKey, gainNode)
@@ -302,9 +321,11 @@ function createSoundEngine(): SoundEngine {
             prepareContext()
         },
         playHover(type: HoverSoundType) {
+            if (type === false) return
             playSound(type, true)
         },
         playPress(type: PressSoundType) {
+            if (type === false) return
             playSound(type, false)
         },
         dispose() {
@@ -329,7 +350,17 @@ function createSoundEngine(): SoundEngine {
     }
 }
 
+function playHoverSound(type: HoverSoundType = "tick") {
+    if (type === false) return
+    const engine = createSoundEngine()
+    engine.playHover(type)
+    setTimeout(() => {
+        engine.dispose()
+    }, 500)
+}
+
 function playPressSound(type: PressSoundType = "button") {
+    if (type === false) return
     const engine = createSoundEngine()
     engine.playPress(type)
     setTimeout(() => {
@@ -338,4 +369,4 @@ function playPressSound(type: PressSoundType = "button") {
 }
 
 export type { HoverSoundType, PressSoundType }
-export { createSoundEngine, HOVER_SOUNDS, playPressSound }
+export { createSoundEngine, HOVER_SOUNDS, playHoverSound, playPressSound }

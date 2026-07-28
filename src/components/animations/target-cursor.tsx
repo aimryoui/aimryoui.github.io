@@ -110,6 +110,8 @@ function TargetCursor({
         posStrength: 0,
         sizeStrength: 0,
 
+        clickScale: 1,
+
         tx: new Float32Array(4),
         ty: new Float32Array(4)
     })
@@ -329,6 +331,7 @@ function TargetCursor({
                 const {
                     posStrength,
                     sizeStrength,
+                    clickScale,
                     startX,
                     startY,
                     cornerStarts,
@@ -339,10 +342,16 @@ function TargetCursor({
 
                 if (!corners || !cornerStarts) return
 
+                const wrapperX = startX + (cx - startX) * posStrength
+                const wrapperY = startY + (cy - startY) * posStrength
+
                 gsap.set(wrapper, {
-                    x: startX + (cx - startX) * posStrength,
-                    y: startY + (cy - startY) * posStrength
+                    x: wrapperX,
+                    y: wrapperY
                 })
+
+                const mxRem = (state.mouseX - wrapperX) / rootRem
+                const myRem = (state.mouseY - wrapperY) / rootRem
 
                 const currentCornerSize =
                     REST_CORNER_SIZE +
@@ -351,11 +360,19 @@ function TargetCursor({
                 for (let i = 0; i < 4; i++) {
                     const sx = cornerStarts[i].x
                     const sy = cornerStarts[i].y
+
+                    const baseX = sx + (tx[i] - sx) * posStrength
+                    const baseY = sy + (ty[i] - sy) * posStrength
+
+                    const finalX = mxRem + (baseX - mxRem) * clickScale
+                    const finalY = myRem + (baseY - myRem) * clickScale
+                    const finalSize = currentCornerSize * clickScale
+
                     gsap.set(corners[i], {
-                        x: `${sx + (tx[i] - sx) * posStrength}rem`,
-                        y: `${sy + (ty[i] - sy) * posStrength}rem`,
-                        width: `${currentCornerSize}rem`,
-                        height: `${currentCornerSize}rem`
+                        x: `${finalX}rem`,
+                        y: `${finalY}rem`,
+                        width: `${finalSize}rem`,
+                        height: `${finalSize}rem`
                     })
                 }
             }
@@ -474,16 +491,31 @@ function TargetCursor({
 
         const mouseDownHandler = () => {
             gsap.to(dot, { scale: 0.7, duration: 0.3 })
-            gsap.to(wrapper, { scale: 0.9, duration: 0.2 })
+            if (state.isActive) {
+                gsap.to(state, {
+                    clickScale: 0.9,
+                    duration: 0.2,
+                    overwrite: "auto"
+                })
+            } else {
+                gsap.to(wrapper, {
+                    scale: 0.9,
+                    duration: 0.2,
+                    overwrite: "auto"
+                })
+            }
         }
-        window.addEventListener("mousedown", mouseDownHandler)
-
         const mouseUpHandler = () => {
             gsap.to(dot, { scale: 1, duration: 0.3 })
-            gsap.to(wrapper, { scale: 1, duration: 0.2 })
+            gsap.to(state, { clickScale: 1, duration: 0.2, overwrite: "auto" })
+            gsap.to(wrapper, { scale: 1, duration: 0.2, overwrite: "auto" })
         }
-        window.addEventListener("mouseup", mouseUpHandler)
-        window.addEventListener("dragend", mouseUpHandler)
+
+        window.addEventListener("mousedown", mouseDownHandler, {
+            capture: true
+        })
+        window.addEventListener("mouseup", mouseUpHandler, { capture: true })
+        window.addEventListener("dragend", mouseUpHandler, { capture: true })
 
         const enterHandler = (e: MouseEvent) => {
             const directTarget = e.target as Element
@@ -528,15 +560,16 @@ function TargetCursor({
             }))
 
             if (!wasActive) {
-                gsap.killTweensOf(wrapper, "rotation")
+                gsap.killTweensOf(wrapper, "rotation,scale")
                 state.resumeTween?.kill()
                 state.spinTl?.pause()
-                gsap.set(wrapper, { rotation: 0 })
+                gsap.set(wrapper, { rotation: 0, scale: 1 })
                 gsap.to(corners, { duration: 0.15, ease: "power2.out" })
             }
 
             state.isActive = true
             state.posStrength = 0
+            state.clickScale = 1
             if (!wasActive) state.sizeStrength = 0
 
             gsap.ticker.add(tickerFn)
@@ -565,9 +598,17 @@ function TargetCursor({
             )
             window.removeEventListener("scroll", scrollHandler)
             window.removeEventListener("resize", resizeHandler)
-            window.removeEventListener("mousedown", mouseDownHandler)
-            window.removeEventListener("mouseup", mouseUpHandler)
-            window.removeEventListener("dragend", mouseUpHandler)
+
+            window.removeEventListener("mousedown", mouseDownHandler, {
+                capture: true
+            })
+            window.removeEventListener("mouseup", mouseUpHandler, {
+                capture: true
+            })
+            window.removeEventListener("dragend", mouseUpHandler, {
+                capture: true
+            })
+
             document.documentElement.removeEventListener(
                 "mouseleave",
                 documentLeaveHandler

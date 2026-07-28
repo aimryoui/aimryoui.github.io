@@ -13,13 +13,10 @@ import {
     Link as LinkPrimitive,
     type LinkProps
 } from "react-aria-components/Breadcrumbs"
-import { useWebHaptics } from "web-haptics/react"
 
 import { Button, type ButtonProps } from "@/components/ui/button"
-import { useDevice } from "@/hooks/use-device"
-import { playPressSound } from "@/lib/sounds"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
-import { useAudioStore } from "@/stores/audio-store"
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
     return (
@@ -101,7 +98,7 @@ function BreadcrumbSeparator({
             data-slot="breadcrumb-separator"
             role="presentation"
             aria-hidden={true}
-            className={cn("text-muted-foreground/60", className)}
+            className={cn("text-muted-foreground/50", className)}
             {...props}
         >
             <DotIcon className="cn-rtl-flip stroke-3" />
@@ -119,8 +116,7 @@ function BreadcrumbLink({
 }) {
     const { isCurrent } = use(BreadcrumbItemContext)
 
-    const { isTouchDevice } = useDevice()
-    const { trigger } = useWebHaptics()
+    const playPressFeedback = usePressFeedback()
 
     return (
         <LinkPrimitive
@@ -153,11 +149,7 @@ function BreadcrumbLink({
                 )
             }
             onPress={(e) => {
-                if (isTouchDevice) {
-                    void trigger("light")
-                } else if (useAudioStore.getState().isAudioEnabled) {
-                    playPressSound("button")
-                }
+                playPressFeedback("button")
 
                 onPress?.(e)
             }}

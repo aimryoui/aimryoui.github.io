@@ -1,12 +1,12 @@
 "use client"
 
 import { memo } from "react"
-import NextLink from "next/link"
 
 import { ChevronDown } from "lucide-react"
 import { useWebHaptics } from "web-haptics/react"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
+import { LinkButton } from "@/components/ui/button"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { isSameUrl } from "@/helpers/is-same-url"
@@ -19,7 +19,7 @@ const MobileTocItemRow = memo(
         item,
         isActive,
         query,
-        onClick,
+        onPress,
         onSameLinkClick
     }: TocItemRowProps) => {
         const href = item.href ?? `#${item.id}`
@@ -49,26 +49,24 @@ const MobileTocItemRow = memo(
                     ]
                 )}
             >
-                <NextLink
+                <LinkButton
                     href={href}
+                    nativeLink
                     data-toc-id={item.id}
-                    draggable={false}
-                    onClick={(e) => {
+                    onPress={() => {
                         void trigger(isProject ? "light" : "success")
 
                         if (isSameUrl(href)) {
-                            e.preventDefault()
                             onSameLinkClick()
                             return
                         }
 
                         if (item.mode === "route") {
-                            onClick(item)
+                            onPress(item)
                             return
                         }
 
-                        e.preventDefault()
-                        onClick(item)
+                        onPress(item)
                     }}
                     className={cn(
                         "group/link relative flex-1 truncate leading-6",
@@ -130,7 +128,7 @@ const MobileTocItemRow = memo(
                             )}
                         </div>
                     )}
-                </NextLink>
+                </LinkButton>
                 {item.depth === 2 && item.id !== "outlines" && (
                     <div
                         className={cn(

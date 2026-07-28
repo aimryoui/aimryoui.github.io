@@ -9,21 +9,15 @@ import {
     type ButtonProps as ButtonPrimitiveProps
 } from "react-aria-components/Button"
 import { type defaultPatterns } from "web-haptics"
-import { useWebHaptics } from "web-haptics/react"
 
 import { buttonVariants } from "@/components/ui/button-variants"
-import { useDevice } from "@/hooks/use-device"
-import {
-    type HoverSoundType,
-    type PressSoundType,
-    playPressSound
-} from "@/lib/sounds"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
+import { type HoverSoundType, type PressSoundType } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
-import { useAudioStore } from "@/stores/audio-store"
 
 type HapticVariantsType = keyof typeof defaultPatterns
 
-interface ButtonHapticSound {
+interface ButtonFeedback {
     haptic?: HapticVariantsType
     hoverSound?: HoverSoundType
     pressSound?: PressSoundType
@@ -32,7 +26,7 @@ interface ButtonHapticSound {
 type ButtonProps = Omit<ButtonPrimitiveProps, "className"> &
     React.RefAttributes<HTMLButtonElement> &
     VariantProps<typeof buttonVariants> &
-    ButtonHapticSound & {
+    ButtonFeedback & {
         className?: string
         nativeButton?: boolean
         mute?: boolean
@@ -50,8 +44,7 @@ function Button({
     onPress,
     ...props
 }: ButtonProps) {
-    const { isTouchDevice } = useDevice()
-    const { trigger } = useWebHaptics()
+    const playPressFeedback = usePressFeedback()
 
     return (
         <ButtonPrimitive
@@ -69,11 +62,7 @@ function Button({
             )}
             {...props}
             onPress={(e) => {
-                if (isTouchDevice) {
-                    void trigger(haptic)
-                } else if (!mute && useAudioStore.getState().isAudioEnabled) {
-                    playPressSound(pressSound)
-                }
+                playPressFeedback(mute ? false : pressSound, haptic)
 
                 onPress?.(e)
             }}
@@ -86,7 +75,7 @@ type NextLinkProps = React.ComponentProps<typeof NextLink>
 type LinkButtonProps = Omit<NextLinkProps, "href" | keyof AriaLinkOptions> &
     Omit<AriaLinkOptions, "href"> &
     VariantProps<typeof buttonVariants> &
-    ButtonHapticSound & {
+    ButtonFeedback & {
         className?: string
         nativeLink?: boolean
         mute?: boolean
@@ -109,8 +98,7 @@ function LinkButton({
     ref,
     ...props
 }: LinkButtonProps) {
-    const { isTouchDevice } = useDevice()
-    const { trigger } = useWebHaptics()
+    const playPressFeedback = usePressFeedback()
 
     const defaultRef = useRef<HTMLAnchorElement>(null)
     const domRef = ref ?? defaultRef
@@ -124,11 +112,8 @@ function LinkButton({
                     ? href
                     : (href.href ?? href.pathname ?? ""),
             onPress: (e) => {
-                if (isTouchDevice) {
-                    void trigger(haptic)
-                } else if (!mute && useAudioStore.getState().isAudioEnabled) {
-                    playPressSound(pressSound)
-                }
+                playPressFeedback(mute ? false : pressSound, haptic)
+
                 onPress?.(e)
             }
         },
