@@ -155,7 +155,9 @@ function SettingButton() {
                                                                 ? toolbarPosition
                                                                 : sidebarPosition
                                                         }
-                                                        onValueChange={(value) => {
+                                                        onValueChange={(
+                                                            value
+                                                        ) => {
                                                             if (isMobile) {
                                                                 setToolbarPosition(
                                                                     value as ToolbarPosition

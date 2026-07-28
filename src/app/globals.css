@@ -216,31 +216,31 @@
             .rounded-br-full
         ),
         [class*="before:rounded-"]:not(
-            .before\:rounded-full,
-            .before\:rounded-t-full,
-            .before\:rounded-b-full,
-            .before\:rounded-l-full,
-            .before\:rounded-r-full,
-            .before\:rounded-s-full,
-            .before\:rounded-e-full,
-            .before\:rounded-tl-full,
-            .before\:rounded-tr-full,
-            .before\:rounded-bl-full,
-            .before\:rounded-br-full
-        )::before,
+                .before\:rounded-full,
+                .before\:rounded-t-full,
+                .before\:rounded-b-full,
+                .before\:rounded-l-full,
+                .before\:rounded-r-full,
+                .before\:rounded-s-full,
+                .before\:rounded-e-full,
+                .before\:rounded-tl-full,
+                .before\:rounded-tr-full,
+                .before\:rounded-bl-full,
+                .before\:rounded-br-full
+            )::before,
         [class*="after:rounded-"]:not(
-            .after\:rounded-full,
-            .after\:rounded-t-full,
-            .after\:rounded-b-full,
-            .after\:rounded-l-full,
-            .after\:rounded-r-full,
-            .after\:rounded-s-full,
-            .after\:rounded-e-full,
-            .after\:rounded-tl-full,
-            .after\:rounded-tr-full,
-            .after\:rounded-bl-full,
-            .after\:rounded-br-full
-        )::after {
+                .after\:rounded-full,
+                .after\:rounded-t-full,
+                .after\:rounded-b-full,
+                .after\:rounded-l-full,
+                .after\:rounded-r-full,
+                .after\:rounded-s-full,
+                .after\:rounded-e-full,
+                .after\:rounded-tl-full,
+                .after\:rounded-tr-full,
+                .after\:rounded-bl-full,
+                .after\:rounded-br-full
+            )::after {
             @apply corner-superellipse;
         }
     }

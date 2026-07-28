@@ -151,7 +151,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             <Space
                 className={cn(
                     "hidden",
-                    pathName !== "/portfolio" && "md:h-33.5",
+                    pathName !== "/portfolio" && "md:h-31.5",
                     {
                         lg: [
                             "block",
@@ -170,7 +170,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             )}
             <Divider
                 className={cn(
-                    "grid h-auto place-items-center px-6 py-3 text-sm"
+                    "grid h-auto place-items-center bg-alert px-6 py-3 text-sm"
                 )}
             >
                 <p className="flex flex-wrap justify-center gap-x-[.2em] text-balance text-center">

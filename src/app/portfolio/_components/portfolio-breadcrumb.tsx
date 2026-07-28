@@ -79,7 +79,7 @@ function PortfolioBreadcrumb({
             >
                 <BreadcrumbItem
                     data-cursor={false}
-                    className={cn("flex items-center gap-3.5")}
+                    className={cn("flex items-center gap-3.75")}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
