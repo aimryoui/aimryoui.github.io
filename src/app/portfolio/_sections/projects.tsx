@@ -1,7 +1,6 @@
 "use client"
 
 import { Fragment } from "react"
-import NextLink from "next/link"
 
 import { useWebHaptics } from "web-haptics/react"
 
@@ -9,6 +8,7 @@ import { ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
+import { LinkButton } from "@/components/ui/button"
 import { useDevice } from "@/hooks/use-device"
 import {
     getCategoryPath,
@@ -116,18 +116,20 @@ function Projects() {
             {projectGroups.map((group, groupIndex) => (
                 <Fragment key={group.id}>
                     <section className={cn("bg-background")}>
-                        <NextLink
+                        <LinkButton
                             href={getCategoryPath(group.id)}
+                            nativeLink
                             prefetch={false}
                             draggable={false}
                             data-cursor="target"
-                            onClick={() => {
+                            data-sound="tick"
+                            onPress={() => {
                                 if (isTouchDevice) {
                                     void trigger("success")
                                 } else if (
                                     useAudioStore.getState().isAudioEnabled
                                 ) {
-                                    playPressSound()
+                                    playPressSound("link")
                                 }
                             }}
                             className={cn(
@@ -164,7 +166,7 @@ function Projects() {
                                     }
                                 )}
                             />
-                        </NextLink>
+                        </LinkButton>
                         <SectionLine />
                         <ul
                             className={cn(
@@ -174,7 +176,6 @@ function Projects() {
                             {group.projects.map((project, index) => (
                                 <li
                                     key={project.slug}
-                                    data-cursor="target"
                                     className={cn({
                                         odd: "border-r border-dashed border-stroke",
                                         md: "!border-none"

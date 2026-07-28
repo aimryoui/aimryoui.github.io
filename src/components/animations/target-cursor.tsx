@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react"
 
 import { gsap } from "gsap"
 
-import { pxToRem } from "@/helpers/px-to-rem"
 import { useDevice } from "@/hooks/use-device"
 import { cn } from "@/lib/utils"
 
@@ -13,10 +12,6 @@ type CursorSelector = "target" | "lock" | "ignore" | undefined
 const CONTAIN_STYLE_REGEX = /\b(paint|layout|strict|content)\b/u
 const WILL_CHANGE_REGEX = /\b(transform|perspective|filter)\b/u
 
-// A position: fixed element is positioned relative to the viewport UNLESS an
-// ancestor establishes a containing block (transform, perspective, filter,
-// will-change of those, or contain). When that happens, the cursor's translate
-// no longer maps to viewport coordinates, so we measure and compensate for it.
 function getContainingBlock(element: HTMLElement | null): HTMLElement | null {
     let node = element?.parentElement ?? null
     while (node && node !== document.documentElement) {
@@ -46,42 +41,10 @@ function getContainingBlockOffset(block: HTMLElement | null): {
 
 function shouldDisable(isTouchDevice: boolean): boolean {
     if (typeof window === "undefined") return false
-
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return true
     }
-
     return isTouchDevice
-}
-
-function computeTargetPositions(
-    rect: DOMRect,
-    offsetX: number,
-    offsetY: number
-): { x: number; y: number }[] {
-    const remSize =
-        parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
-    const border = BORDER_WIDTH * remSize
-    const expand = EXPANDED_CORNER_SIZE * remSize
-
-    return [
-        {
-            x: rect.left - border - offsetX,
-            y: rect.top - border - offsetY
-        },
-        {
-            x: rect.right + border - expand - offsetX,
-            y: rect.top - border - offsetY
-        },
-        {
-            x: rect.right + border - expand - offsetX,
-            y: rect.bottom + border - expand - offsetY
-        },
-        {
-            x: rect.left - border - offsetX,
-            y: rect.bottom + border - expand - offsetY
-        }
-    ]
 }
 
 interface TargetCursorProps {
@@ -95,18 +58,12 @@ interface TargetCursorProps {
 }
 
 const HOVER_DURATION = 0.25
-const BORDER_WIDTH = pxToRem(3)
-const EXPANDED_CORNER_SIZE = pxToRem(12)
-const REST_CORNER_SIZE = pxToRem(6)
-const REST_OFFSET = pxToRem(9)
 
-// Precomputed rest positions (corners collapsed near center)
-const REST_POSITIONS = [
-    { x: -REST_OFFSET, y: -REST_OFFSET },
-    { x: REST_OFFSET - REST_CORNER_SIZE, y: -REST_OFFSET },
-    { x: REST_OFFSET - REST_CORNER_SIZE, y: REST_OFFSET - REST_CORNER_SIZE },
-    { x: -REST_OFFSET, y: REST_OFFSET - REST_CORNER_SIZE }
-] as const
+// Base values (we will compute actual px based on rem at runtime for GSAP)
+const BASE_BORDER_W = 3
+const BASE_EXPANDED_SIZE = 12
+const BASE_REST_SIZE = 6
+const BASE_REST_OFF = 9
 
 function TargetCursor({
     className,
@@ -120,32 +77,62 @@ function TargetCursor({
     ...props
 }: React.ComponentProps<"div"> & TargetCursorProps) {
     const { isTouchDevice } = useDevice()
-    const cursorRef = useRef<HTMLDivElement>(null)
+
+    const rootRef = useRef<HTMLDivElement>(null)
     const dotRef = useRef<HTMLDivElement>(null)
+    const wrapperRef = useRef<HTMLDivElement>(null)
     const containingBlockRef = useRef<HTMLElement | null>(null)
 
-    // Mutable state kept outside React for perf — no re-renders needed
     const stateRef = useRef({
         corners: null as HTMLDivElement[] | null,
         spinTl: null as gsap.core.Timeline | null,
         resumeTween: null as gsap.core.Tween | null,
         isActive: false,
-        targetPositions: null as { x: number; y: number }[] | null,
-        startPositions: null as { x: number; y: number }[] | null,
-        posStrength: 0, // interpolation weight for position (0=start, 1=target)
-        sizeStrength: 0 // interpolation weight for size (0=REST, 1=EXPANDED)
+
+        // Track the real mouse pos to resume wrapper instantly on leave
+        mouseX: 0,
+        mouseY: 0,
+
+        // Target interpolation tracking
+        startX: 0,
+        startY: 0,
+        cornerStarts: null as { x: number; y: number }[] | null,
+
+        posStrength: 0,
+        sizeStrength: 0
     })
 
     useEffect(() => {
-        if (shouldDisable(isTouchDevice) || !cursorRef.current) return
+        if (
+            shouldDisable(isTouchDevice) ||
+            !rootRef.current ||
+            !wrapperRef.current ||
+            !dotRef.current
+        )
+            return
 
-        const cursor = cursorRef.current
+        const root = rootRef.current
+        const wrapper = wrapperRef.current
+        const dot = dotRef.current
         const state = stateRef.current
 
-        // Hide custom cursor until the first mousemove so it doesn't flash
-        // at the center of the screen on load/reload before the user moves
-        // their pointer. Browsers don't expose cursor position without movement.
-        gsap.set(cursor, { autoAlpha: 0 })
+        // Calculate actual pixel values based on current root font size
+        const remSize =
+            parseFloat(getComputedStyle(document.documentElement).fontSize) ||
+            16
+        const borderPx = (BASE_BORDER_W / 16) * remSize
+        const expandedPx = (BASE_EXPANDED_SIZE / 16) * remSize
+        const restPx = (BASE_REST_SIZE / 16) * remSize
+        const offsetPx = (BASE_REST_OFF / 16) * remSize
+
+        const restPositions = [
+            { x: -offsetPx, y: -offsetPx },
+            { x: offsetPx - restPx, y: -offsetPx },
+            { x: offsetPx - restPx, y: offsetPx - restPx },
+            { x: -offsetPx, y: offsetPx - restPx }
+        ]
+
+        gsap.set(root, { autoAlpha: 0 })
 
         const originalCursor = document.body.style.cursor
         let styleEl: HTMLStyleElement | null = null
@@ -158,18 +145,26 @@ function TargetCursor({
                     ${inputSelector}, ${inputSelector} *,
                     .pswp, .pswp *,
                     input, input *
-                ) {
-                    cursor: none;
-                }
+                ) { cursor: none; }
             `
             document.head.appendChild(styleEl)
         }
 
         state.corners = Array.from(
-            cursor.querySelectorAll<HTMLDivElement>("[data-cursor='corner']")
+            wrapper.querySelectorAll<HTMLDivElement>("[data-cursor='corner']")
         )
 
-        containingBlockRef.current = getContainingBlock(cursor)
+        // Setup initial corners state in wrapper
+        state.corners.forEach((corner, i) => {
+            gsap.set(corner, {
+                x: restPositions[i].x,
+                y: restPositions[i].y,
+                width: restPx,
+                height: restPx
+            })
+        })
+
+        containingBlockRef.current = getContainingBlock(root)
         const getOffset = () =>
             getContainingBlockOffset(containingBlockRef.current)
 
@@ -184,18 +179,11 @@ function TargetCursor({
 
         const updateVisibility = () => {
             const isHidden = !hasMoved || isHiddenByIgnore || isHiddenByLeave
-
-            gsap.set(cursor, {
-                autoAlpha: isHidden ? 0 : 1,
+            gsap.set(root, { autoAlpha: isHidden ? 0 : 1, overwrite: "auto" })
+            gsap.set(dot, {
+                autoAlpha: isHidden || isHiddenByInput ? 0 : 1,
                 overwrite: "auto"
             })
-
-            if (dotRef.current) {
-                gsap.set(dotRef.current, {
-                    autoAlpha: isHidden || isHiddenByInput ? 0 : 1,
-                    overwrite: "auto"
-                })
-            }
 
             if (isHidden) {
                 state.resumeTween?.pause()
@@ -212,32 +200,34 @@ function TargetCursor({
         const doLeave = () => {
             gsap.ticker.remove(tickerFn)
             state.isActive = false
-            state.targetPositions = null
-            state.startPositions = null
-            gsap.killTweensOf(state, "posStrength,sizeStrength")
-            state.posStrength = 0
-            state.sizeStrength = 0
             activeTarget = null
             activeLockEl = null
 
-            if (state.corners) {
-                gsap.to(state.corners, {
-                    duration: 0.15,
-                    ease: "power2.out"
-                })
-            }
+            // Calc offset needed so corners don't jump visually when wrapper snaps back to mouse
+            const currentWrapperX = gsap.getProperty(wrapper, "x") as number
+            const currentWrapperY = gsap.getProperty(wrapper, "y") as number
+            const dx = currentWrapperX - state.mouseX
+            const dy = currentWrapperY - state.mouseY
+
+            gsap.set(wrapper, { x: state.mouseX, y: state.mouseY })
 
             if (state.corners) {
-                gsap.killTweensOf(state.corners, "x,y")
+                gsap.killTweensOf(state.corners, "x,y,width,height")
                 const tl = gsap.timeline()
+
                 state.corners.forEach((corner, index) => {
+                    const currentX = gsap.getProperty(corner, "x") as number
+                    const currentY = gsap.getProperty(corner, "y") as number
+
+                    // Counter-offset then animate to rest
+                    gsap.set(corner, { x: currentX + dx, y: currentY + dy })
                     tl.to(
                         corner,
                         {
-                            x: `${REST_POSITIONS[index].x}rem`,
-                            y: `${REST_POSITIONS[index].y}rem`,
-                            width: `${REST_CORNER_SIZE}rem`,
-                            height: `${REST_CORNER_SIZE}rem`,
+                            x: restPositions[index].x,
+                            y: restPositions[index].y,
+                            width: restPx,
+                            height: restPx,
                             duration: 0.3,
                             ease: "power3.out"
                         },
@@ -245,30 +235,28 @@ function TargetCursor({
                     )
                 })
             }
+
             resumeTimeout = setTimeout(() => {
-                if (!activeTarget && cursorRef.current && state.spinTl) {
+                if (!activeTarget && state.spinTl) {
                     const currentRotation = gsap.getProperty(
-                        cursorRef.current,
+                        wrapper,
                         "rotation"
                     ) as number
                     const normalizedRotation = currentRotation % 360
                     state.spinTl.kill()
-                    state.spinTl = gsap
-                        .timeline({ repeat: -1 })
-                        .to(cursorRef.current, {
-                            rotation: "+=360",
-                            duration: spinDuration,
-                            ease: "none"
-                        })
+                    state.spinTl = gsap.timeline({ repeat: -1 }).to(wrapper, {
+                        rotation: "+=360",
+                        duration: spinDuration,
+                        ease: "none"
+                    })
                     state.spinTl.pause()
 
-                    if (state.resumeTween) state.resumeTween.kill()
+                    state.resumeTween?.kill()
                     const isHidden =
                         !hasMoved || isHiddenByIgnore || isHiddenByLeave
-                    gsap.set(cursorRef.current, {
-                        rotation: normalizedRotation
-                    })
-                    state.resumeTween = gsap.to(cursorRef.current, {
+                    gsap.set(wrapper, { rotation: normalizedRotation })
+
+                    state.resumeTween = gsap.to(wrapper, {
                         rotation: 360,
                         duration: spinDuration * (1 - normalizedRotation / 360),
                         ease: "none",
@@ -288,16 +276,14 @@ function TargetCursor({
             }, 50)
         }
 
-        // Spin timeline
         if (state.spinTl) state.spinTl.kill()
         if (state.resumeTween) state.resumeTween.kill()
-        state.spinTl = gsap.timeline({ repeat: -1, paused: true }).to(cursor, {
+        state.spinTl = gsap.timeline({ repeat: -1, paused: true }).to(wrapper, {
             rotation: "+=360",
             duration: spinDuration,
             ease: "none"
         })
 
-        // Per-frame ticker — uses gsap.set (synchronous, no tween allocation)
         const tickerFn = () => {
             if (activeTarget) {
                 if (!activeTarget.isConnected) {
@@ -309,52 +295,76 @@ function TargetCursor({
                     activeLockEl ?? activeTarget
                 ).getBoundingClientRect()
                 const { x: offsetX, y: offsetY } = getOffset()
-                state.targetPositions = computeTargetPositions(
-                    rect,
-                    offsetX,
-                    offsetY
-                )
-            }
 
-            const {
-                targetPositions,
-                startPositions,
-                corners,
-                posStrength,
-                sizeStrength
-            } = state
-            if (!targetPositions || !startPositions || !corners) return
+                // Target center
+                const cx = rect.left + rect.width / 2 - offsetX
+                const cy = rect.top + rect.height / 2 - offsetY
 
-            const cursorX = gsap.getProperty(cursor, "x") as number
-            const cursorY = gsap.getProperty(cursor, "y") as number
+                const w = rect.width / 2
+                const h = rect.height / 2
 
-            const currentCornerSize =
-                REST_CORNER_SIZE +
-                (EXPANDED_CORNER_SIZE - REST_CORNER_SIZE) * sizeStrength
+                const tx = [
+                    -w - borderPx,
+                    w + borderPx - expandedPx,
+                    w + borderPx - expandedPx,
+                    -w - borderPx
+                ]
+                const ty = [
+                    -h - borderPx,
+                    -h - borderPx,
+                    h + borderPx - expandedPx,
+                    h + borderPx - expandedPx
+                ]
 
-            for (let i = 0; i < 4; i++) {
-                const sx = startPositions[i].x
-                const sy = startPositions[i].y
-                const tx = targetPositions[i].x
-                const ty = targetPositions[i].y
-                gsap.set(corners[i], {
-                    x: sx + (tx - sx) * posStrength - cursorX,
-                    y: sy + (ty - sy) * posStrength - cursorY,
-                    width: `${currentCornerSize}rem`,
-                    height: `${currentCornerSize}rem`
+                const {
+                    posStrength,
+                    sizeStrength,
+                    startX,
+                    startY,
+                    cornerStarts
+                } = state
+
+                // Smoothly snap wrapper to target center
+                gsap.set(wrapper, {
+                    x: startX + (cx - startX) * posStrength,
+                    y: startY + (cy - startY) * posStrength
                 })
+
+                // Locally expand corners based on target bounds
+                const currentCornerSize =
+                    restPx + (expandedPx - restPx) * sizeStrength
+                for (let i = 0; i < 4; i++) {
+                    const sx = cornerStarts![i].x
+                    const sy = cornerStarts![i].y
+                    gsap.set(state.corners![i], {
+                        x: sx + (tx[i] - sx) * posStrength,
+                        y: sy + (ty[i] - sy) * posStrength,
+                        width: currentCornerSize,
+                        height: currentCornerSize
+                    })
+                }
             }
         }
 
-        // Event handlers
         const moveHandler = (e: MouseEvent) => {
             const { x: offsetX, y: offsetY } = getOffset()
-            gsap.set(cursor, { x: e.clientX - offsetX, y: e.clientY - offsetY })
+            const mx = e.clientX - offsetX
+            const my = e.clientY - offsetY
+
+            state.mouseX = mx
+            state.mouseY = my
+
+            // Dot ALWAYS follows mouse
+            gsap.set(dot, { x: mx, y: my })
+
+            // Wrapper ONLY follows mouse when not snapped to a target
+            if (!state.isActive) {
+                gsap.set(wrapper, { x: mx, y: my })
+            }
 
             const isIgnored = ignoreSelector
                 ? (e.target as Element).closest(ignoreSelector) !== null
                 : false
-
             const isInput = inputSelector
                 ? (e.target as Element).closest(inputSelector) !== null
                 : false
@@ -363,10 +373,6 @@ function TargetCursor({
 
             if (!hasMoved) {
                 hasMoved = true
-                gsap.set(cursor, {
-                    xPercent: -50,
-                    yPercent: -50
-                })
                 visibilityChanged = true
             }
 
@@ -391,9 +397,7 @@ function TargetCursor({
                 visibilityChanged = true
             }
 
-            if (visibilityChanged) {
-                updateVisibility()
-            }
+            if (visibilityChanged) updateVisibility()
         }
         window.addEventListener("mousemove", moveHandler)
 
@@ -402,9 +406,6 @@ function TargetCursor({
             isHiddenByLeave = true
             updateVisibility()
         }
-        // Use documentElement (<html>) instead of document — Firefox
-        // doesn't reliably fire mouseleave/mouseenter on `document`
-        // because it has no bounding box in Gecko's event model.
         document.documentElement.addEventListener(
             "mouseleave",
             documentLeaveHandler
@@ -420,7 +421,6 @@ function TargetCursor({
             documentEnterHandler
         )
 
-        // Hide cursor when the tab loses visibility (e.g. switching tabs)
         const visibilityHandler = () => {
             if (document.hidden) {
                 isHiddenByLeave = true
@@ -429,7 +429,6 @@ function TargetCursor({
         }
         document.addEventListener("visibilitychange", visibilityHandler)
 
-        // Hide cursor when the window loses focus (e.g. Alt+Tab)
         const blurHandler = () => {
             if (!hasMoved) return
             isHiddenByLeave = true
@@ -438,12 +437,10 @@ function TargetCursor({
         window.addEventListener("blur", blurHandler)
 
         const scrollHandler = () => {
-            if (!activeTarget || !cursorRef.current) return
+            if (!activeTarget) return
             const { x: offsetX, y: offsetY } = getOffset()
-            const mouseX =
-                (gsap.getProperty(cursorRef.current, "x") as number) + offsetX
-            const mouseY =
-                (gsap.getProperty(cursorRef.current, "y") as number) + offsetY
+            const mouseX = state.mouseX + offsetX
+            const mouseY = state.mouseY + offsetY
             const elementUnderMouse = document.elementFromPoint(mouseX, mouseY)
             const isStillOverTarget =
                 elementUnderMouse &&
@@ -454,23 +451,20 @@ function TargetCursor({
                         ? elementUnderMouse.closest(inputSelector) ===
                           activeTarget
                         : false))
-            if (!isStillOverTarget) {
-                doLeave()
-            }
+
+            if (!isStillOverTarget) doLeave()
         }
         window.addEventListener("scroll", scrollHandler, { passive: true })
 
         const mouseDownHandler = () => {
-            if (!dotRef.current) return
-            gsap.to(dotRef.current, { scale: 0.7, duration: 0.3 })
-            gsap.to(cursorRef.current, { scale: 0.9, duration: 0.2 })
+            gsap.to(dot, { scale: 0.7, duration: 0.3 })
+            gsap.to(wrapper, { scale: 0.9, duration: 0.2 })
         }
         window.addEventListener("mousedown", mouseDownHandler)
 
         const mouseUpHandler = () => {
-            if (!dotRef.current) return
-            gsap.to(dotRef.current, { scale: 1, duration: 0.3 })
-            gsap.to(cursorRef.current, { scale: 1, duration: 0.2 })
+            gsap.to(dot, { scale: 1, duration: 0.3 })
+            gsap.to(wrapper, { scale: 1, duration: 0.2 })
         }
         window.addEventListener("mouseup", mouseUpHandler)
         window.addEventListener("dragend", mouseUpHandler)
@@ -479,31 +473,25 @@ function TargetCursor({
             const directTarget = e.target as Element
             const allTargets: Element[] = []
             let current: Element | null = directTarget
+
             while (current && current !== document.body) {
                 const matchesTarget = current.matches(targetSelector)
                 const matchesInput = inputSelector
                     ? current.matches(inputSelector)
                     : false
-                if (matchesTarget || matchesInput) {
-                    allTargets.push(current)
-                }
+                if (matchesTarget || matchesInput) allTargets.push(current)
                 current = current.parentElement
             }
-            // Left all targets
+
             if (allTargets.length === 0) {
-                if (activeTarget) {
-                    doLeave()
-                }
+                if (activeTarget) doLeave()
                 return
             }
 
             const target = allTargets[0]
-
-            if (!cursorRef.current || !state.corners) return
-            // Still on the same target
+            if (!state.corners) return
             if (activeTarget === target) return
 
-            // Moving from one target to another — skip leave animation
             const wasActive = !!activeTarget
             activeTarget = target
             activeLockEl = target.querySelector(lockSelector)
@@ -512,52 +500,28 @@ function TargetCursor({
                 clearTimeout(resumeTimeout)
                 resumeTimeout = null
             }
-            const { corners } = state
-            corners.forEach((corner) => {
-                gsap.killTweensOf(corner, "x,y")
-            })
 
-            // Only stop spin/reset rotation when first entering from no-target state
-            if (!wasActive) {
-                gsap.killTweensOf(cursorRef.current, "rotation")
-                state.resumeTween?.kill()
-                state.spinTl?.pause()
-                gsap.set(cursorRef.current, { rotation: 0 })
-            }
-
-            // Only animate color when first entering a target — skip on target-to-target
-            if (!wasActive) {
-                gsap.to(corners, {
-                    duration: 0.15,
-                    ease: "power2.out"
-                })
-            }
-
-            // Use cached lock element rect if present, otherwise target rect
-            const rect = (activeLockEl ?? target).getBoundingClientRect()
-            const { x: offsetX, y: offsetY } = getOffset()
-            const cursorX = gsap.getProperty(cursorRef.current, "x") as number
-            const cursorY = gsap.getProperty(cursorRef.current, "y") as number
-
-            // Capture current absolute corner positions as start
-            state.startPositions = corners.map((corner) => ({
-                x: (gsap.getProperty(corner, "x") as number) + cursorX,
-                y: (gsap.getProperty(corner, "y") as number) + cursorY
+            // Capture exact current states to interpolate from (avoids snapping)
+            state.startX = gsap.getProperty(wrapper, "x") as number
+            state.startY = gsap.getProperty(wrapper, "y") as number
+            state.cornerStarts = state.corners.map((c) => ({
+                x: gsap.getProperty(c, "x") as number,
+                y: gsap.getProperty(c, "y") as number
             }))
 
-            state.targetPositions = computeTargetPositions(
-                rect,
-                offsetX,
-                offsetY
-            )
+            if (!wasActive) {
+                gsap.killTweensOf(wrapper, "rotation")
+                state.resumeTween?.kill()
+                state.spinTl?.pause()
+                gsap.set(wrapper, { rotation: 0 })
+                gsap.to(state.corners, { duration: 0.15, ease: "power2.out" })
+            }
 
             state.isActive = true
-            // Always reset position strength for smooth transition
             state.posStrength = 0
-            // Keep sizeStrength at 1 on target-to-target so corners don't flash small
             if (!wasActive) state.sizeStrength = 0
-            gsap.ticker.add(tickerFn)
 
+            gsap.ticker.add(tickerFn)
             gsap.to(state, {
                 posStrength: 1,
                 sizeStrength: 1,
@@ -570,7 +534,7 @@ function TargetCursor({
         window.addEventListener("mouseover", enterHandler as EventListener)
 
         const resizeHandler = () => {
-            containingBlockRef.current = getContainingBlock(cursor)
+            containingBlockRef.current = getContainingBlock(root)
         }
         window.addEventListener("resize", resizeHandler)
 
@@ -600,10 +564,6 @@ function TargetCursor({
             state.resumeTween?.kill()
             document.body.style.cursor = originalCursor
             state.isActive = false
-            state.targetPositions = null
-            state.startPositions = null
-            state.posStrength = 0
-            state.sizeStrength = 0
             styleEl?.remove()
         }
     }, [
@@ -619,61 +579,49 @@ function TargetCursor({
 
     return (
         <div
-            ref={cursorRef}
+            ref={rootRef}
             aria-hidden={true}
             role="presentation"
+            // Container gốc chỉ đứng im, không cần kích thước
             className={cn(
-                "pointer-events-none invisible fixed left-0 top-0 z-infinite size-0 opacity-0 will-change-transform",
+                "pointer-events-none invisible fixed left-0 top-0 z-infinite opacity-0",
                 className
             )}
             {...props}
         >
+            {/* Chấm bi đi theo trỏ chuột tuyệt đối */}
             <div
                 ref={dotRef}
                 className={cn(
-                    "absolute left-1/2 top-1/2 z-1 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-white will-change-transform"
+                    "absolute left-0 top-0 z-1 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-white will-change-transform"
                 )}
             />
+            {/* Wrapper quản lý 4 corners */}
             <div
-                data-cursor="corner"
-                className="absolute left-1/2 top-1/2 border-3 border-b-0 border-r-0 will-change-transform"
-                style={{
-                    borderColor: cursorColor,
-                    width: `${REST_CORNER_SIZE}rem`,
-                    height: `${REST_CORNER_SIZE}rem`,
-                    transform: `translate(${REST_POSITIONS[0].x}rem, ${REST_POSITIONS[0].y}rem)`
-                }}
-            />
-            <div
-                data-cursor="corner"
-                className="absolute left-1/2 top-1/2 border-3 border-b-0 border-l-0 will-change-transform"
-                style={{
-                    borderColor: cursorColor,
-                    width: `${REST_CORNER_SIZE}rem`,
-                    height: `${REST_CORNER_SIZE}rem`,
-                    transform: `translate(${REST_POSITIONS[1].x}rem, ${REST_POSITIONS[1].y}rem)`
-                }}
-            />
-            <div
-                data-cursor="corner"
-                className="absolute left-1/2 top-1/2 border-3 border-l-0 border-t-0 will-change-transform"
-                style={{
-                    borderColor: cursorColor,
-                    width: `${REST_CORNER_SIZE}rem`,
-                    height: `${REST_CORNER_SIZE}rem`,
-                    transform: `translate(${REST_POSITIONS[2].x}rem, ${REST_POSITIONS[2].y}rem)`
-                }}
-            />
-            <div
-                data-cursor="corner"
-                className="absolute left-1/2 top-1/2 border-3 border-r-0 border-t-0 will-change-transform"
-                style={{
-                    borderColor: cursorColor,
-                    width: `${REST_CORNER_SIZE}rem`,
-                    height: `${REST_CORNER_SIZE}rem`,
-                    transform: `translate(${REST_POSITIONS[3].x}rem, ${REST_POSITIONS[3].y}rem)`
-                }}
-            />
+                ref={wrapperRef}
+                className="absolute left-0 top-0 will-change-transform"
+            >
+                <div
+                    data-cursor="corner"
+                    className="absolute left-0 top-0 border-3 border-b-0 border-r-0 will-change-transform"
+                    style={{ borderColor: cursorColor }}
+                />
+                <div
+                    data-cursor="corner"
+                    className="absolute left-0 top-0 border-3 border-b-0 border-l-0 will-change-transform"
+                    style={{ borderColor: cursorColor }}
+                />
+                <div
+                    data-cursor="corner"
+                    className="absolute left-0 top-0 border-3 border-l-0 border-t-0 will-change-transform"
+                    style={{ borderColor: cursorColor }}
+                />
+                <div
+                    data-cursor="corner"
+                    className="absolute left-0 top-0 border-3 border-r-0 border-t-0 will-change-transform"
+                    style={{ borderColor: cursorColor }}
+                />
+            </div>
         </div>
     )
 }

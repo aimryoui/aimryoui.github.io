@@ -126,7 +126,7 @@ function DropdownMenuContent({
                     ? cn(
                           "z-80",
                           "[filter:drop-shadow(0px_0px_25px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_2px_rgba(0,0,0,0.10))]",
-                          "dark:[filter:drop-shadow(0px_0px_25px_theme(colors.background/0.8))_drop-shadow(0px_0px_2px_theme(colors.background/0.55))]"
+                          "dark:[filter:drop-shadow(0px_0px_25px_theme(colors.background/0.6))_drop-shadow(0px_0px_2px_theme(colors.background/0.4))]"
                       )
                     : undefined
             }

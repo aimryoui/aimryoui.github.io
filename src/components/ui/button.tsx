@@ -13,18 +13,28 @@ import { useWebHaptics } from "web-haptics/react"
 
 import { buttonVariants } from "@/components/ui/button-variants"
 import { useDevice } from "@/hooks/use-device"
-import { playPressSound } from "@/lib/sounds"
+import {
+    type HoverSoundType,
+    type PressSoundType,
+    playPressSound
+} from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import { useAudioStore } from "@/stores/audio-store"
 
 type HapticVariantsType = keyof typeof defaultPatterns
 
+interface ButtonHapticSound {
+    haptic?: HapticVariantsType
+    hoverSound?: HoverSoundType
+    pressSound?: PressSoundType
+}
+
 type ButtonProps = Omit<ButtonPrimitiveProps, "className"> &
     React.RefAttributes<HTMLButtonElement> &
-    VariantProps<typeof buttonVariants> & {
+    VariantProps<typeof buttonVariants> &
+    ButtonHapticSound & {
         className?: string
         nativeButton?: boolean
-        haptic?: HapticVariantsType
         mute?: boolean
     }
 
@@ -34,6 +44,8 @@ function Button({
     size = "default",
     nativeButton = false,
     haptic = "light",
+    hoverSound = "button",
+    pressSound = "button",
     mute = false,
     onPress,
     ...props
@@ -49,7 +61,7 @@ function Button({
                 "data-size": size
             })}
             data-cursor="target"
-            data-sound="button"
+            data-sound={hoverSound}
             className={cn(
                 nativeButton
                     ? className
@@ -60,7 +72,7 @@ function Button({
                 if (isTouchDevice) {
                     void trigger(haptic)
                 } else if (!mute && useAudioStore.getState().isAudioEnabled) {
-                    playPressSound("button")
+                    playPressSound(pressSound)
                 }
 
                 onPress?.(e)
@@ -73,10 +85,10 @@ type NextLinkProps = React.ComponentProps<typeof NextLink>
 
 type LinkButtonProps = Omit<NextLinkProps, "href" | keyof AriaLinkOptions> &
     Omit<AriaLinkOptions, "href"> &
-    VariantProps<typeof buttonVariants> & {
+    VariantProps<typeof buttonVariants> &
+    ButtonHapticSound & {
         className?: string
         nativeLink?: boolean
-        haptic?: HapticVariantsType
         mute?: boolean
         href: NextLinkProps["href"]
         ref?: React.RefObject<HTMLAnchorElement | null>
@@ -88,6 +100,8 @@ function LinkButton({
     size = "default",
     nativeLink = false,
     haptic = "medium",
+    hoverSound = "button",
+    pressSound = "button",
     mute = false,
     onPress,
     href,
@@ -113,7 +127,7 @@ function LinkButton({
                 if (isTouchDevice) {
                     void trigger(haptic)
                 } else if (!mute && useAudioStore.getState().isAudioEnabled) {
-                    playPressSound("button")
+                    playPressSound(pressSound)
                 }
                 onPress?.(e)
             }
@@ -132,7 +146,7 @@ function LinkButton({
                 "data-slot": "link-button",
                 "data-variant": variant,
                 "data-size": size,
-                "data-sound": "button"
+                "data-sound": { hoverSound }
             })}
             className={cn(
                 nativeLink

@@ -35,7 +35,6 @@ function PaginationItem({ className, ...props }: React.ComponentProps<"li">) {
     return (
         <li
             data-slot="pagination-item"
-            data-cursor="target"
             className={cn("h-full min-w-0", className)}
             {...props}
         />
