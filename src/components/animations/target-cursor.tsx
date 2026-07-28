@@ -4,8 +4,11 @@ import { useEffect, useRef } from "react"
 
 import { gsap } from "gsap"
 
+import { pxToRem } from "@/helpers/px-to-rem"
 import { useDevice } from "@/hooks/use-device"
 import { cn } from "@/lib/utils"
+
+import { BASE_FONT_SIZE } from "~/tailwind.config"
 
 type CursorSelector = "target" | "lock" | "ignore" | undefined
 
@@ -59,11 +62,17 @@ interface TargetCursorProps {
 
 const HOVER_DURATION = 0.25
 
-// Base values (we will compute actual px based on rem at runtime for GSAP)
-const BASE_BORDER_W = 3
-const BASE_EXPANDED_SIZE = 12
-const BASE_REST_SIZE = 6
-const BASE_REST_OFF = 9
+const BORDER_WIDTH = pxToRem(3)
+const EXPANDED_CORNER_SIZE = pxToRem(12)
+const REST_CORNER_SIZE = pxToRem(6)
+const REST_OFFSET = pxToRem(9)
+
+const REST_POSITIONS = [
+    { x: -REST_OFFSET, y: -REST_OFFSET },
+    { x: REST_OFFSET - REST_CORNER_SIZE, y: -REST_OFFSET },
+    { x: REST_OFFSET - REST_CORNER_SIZE, y: REST_OFFSET - REST_CORNER_SIZE },
+    { x: -REST_OFFSET, y: REST_OFFSET - REST_CORNER_SIZE }
+] as const
 
 function TargetCursor({
     className,
@@ -83,23 +92,26 @@ function TargetCursor({
     const wrapperRef = useRef<HTMLDivElement>(null)
     const containingBlockRef = useRef<HTMLElement | null>(null)
 
+    const cachedOffset = useRef({ x: 0, y: 0 })
+
     const stateRef = useRef({
         corners: null as HTMLDivElement[] | null,
         spinTl: null as gsap.core.Timeline | null,
         resumeTween: null as gsap.core.Tween | null,
         isActive: false,
 
-        // Track the real mouse pos to resume wrapper instantly on leave
         mouseX: 0,
         mouseY: 0,
 
-        // Target interpolation tracking
         startX: 0,
         startY: 0,
         cornerStarts: null as { x: number; y: number }[] | null,
 
         posStrength: 0,
-        sizeStrength: 0
+        sizeStrength: 0,
+
+        tx: new Float32Array(4),
+        ty: new Float32Array(4)
     })
 
     useEffect(() => {
@@ -116,29 +128,13 @@ function TargetCursor({
         const dot = dotRef.current
         const state = stateRef.current
 
-        // Calculate actual pixel values based on current root font size
-        const remSize =
-            parseFloat(getComputedStyle(document.documentElement).fontSize) ||
-            16
-        const borderPx = (BASE_BORDER_W / 16) * remSize
-        const expandedPx = (BASE_EXPANDED_SIZE / 16) * remSize
-        const restPx = (BASE_REST_SIZE / 16) * remSize
-        const offsetPx = (BASE_REST_OFF / 16) * remSize
-
-        const restPositions = [
-            { x: -offsetPx, y: -offsetPx },
-            { x: offsetPx - restPx, y: -offsetPx },
-            { x: offsetPx - restPx, y: offsetPx - restPx },
-            { x: -offsetPx, y: offsetPx - restPx }
-        ]
-
         gsap.set(root, { autoAlpha: 0 })
 
         const originalCursor = document.body.style.cursor
         let styleEl: HTMLStyleElement | null = null
         if (hideDefaultCursor) {
             styleEl = document.createElement("style")
-            styleEl.textContent = /* css */ `
+            styleEl.textContent = `
                 body,
                 body *:not(
                     ${ignoreSelector}, ${ignoreSelector} *,
@@ -154,19 +150,22 @@ function TargetCursor({
             wrapper.querySelectorAll<HTMLDivElement>("[data-cursor='corner']")
         )
 
-        // Setup initial corners state in wrapper
         state.corners.forEach((corner, i) => {
             gsap.set(corner, {
-                x: restPositions[i].x,
-                y: restPositions[i].y,
-                width: restPx,
-                height: restPx
+                x: `${REST_POSITIONS[i].x}rem`,
+                y: `${REST_POSITIONS[i].y}rem`,
+                width: `${REST_CORNER_SIZE}rem`,
+                height: `${REST_CORNER_SIZE}rem`
             })
         })
 
-        containingBlockRef.current = getContainingBlock(root)
-        const getOffset = () =>
-            getContainingBlockOffset(containingBlockRef.current)
+        const updateOffsetCache = () => {
+            containingBlockRef.current = getContainingBlock(root)
+            cachedOffset.current = getContainingBlockOffset(
+                containingBlockRef.current
+            )
+        }
+        updateOffsetCache()
 
         let activeTarget: Element | null = null
         let activeLockEl: Element | null = null
@@ -203,31 +202,42 @@ function TargetCursor({
             activeTarget = null
             activeLockEl = null
 
-            // Calc offset needed so corners don't jump visually when wrapper snaps back to mouse
             const currentWrapperX = gsap.getProperty(wrapper, "x") as number
             const currentWrapperY = gsap.getProperty(wrapper, "y") as number
+
             const dx = currentWrapperX - state.mouseX
             const dy = currentWrapperY - state.mouseY
 
             gsap.set(wrapper, { x: state.mouseX, y: state.mouseY })
 
-            if (state.corners) {
-                gsap.killTweensOf(state.corners, "x,y,width,height")
+            const corners = state.corners
+            if (corners) {
+                gsap.killTweensOf(corners, "x,y,width,height")
                 const tl = gsap.timeline()
 
-                state.corners.forEach((corner, index) => {
+                const rootRem =
+                    parseFloat(
+                        getComputedStyle(document.documentElement).fontSize
+                    ) || BASE_FONT_SIZE
+                const dxRem = dx / rootRem
+                const dyRem = dy / rootRem
+
+                corners.forEach((corner, index) => {
                     const currentX = gsap.getProperty(corner, "x") as number
                     const currentY = gsap.getProperty(corner, "y") as number
 
-                    // Counter-offset then animate to rest
-                    gsap.set(corner, { x: currentX + dx, y: currentY + dy })
+                    gsap.set(corner, {
+                        x: `${currentX + dxRem}rem`,
+                        y: `${currentY + dyRem}rem`
+                    })
+
                     tl.to(
                         corner,
                         {
-                            x: restPositions[index].x,
-                            y: restPositions[index].y,
-                            width: restPx,
-                            height: restPx,
+                            x: `${REST_POSITIONS[index].x}rem`,
+                            y: `${REST_POSITIONS[index].y}rem`,
+                            width: `${REST_CORNER_SIZE}rem`,
+                            height: `${REST_CORNER_SIZE}rem`,
                             duration: 0.3,
                             ease: "power3.out"
                         },
@@ -294,70 +304,74 @@ function TargetCursor({
                 const rect = (
                     activeLockEl ?? activeTarget
                 ).getBoundingClientRect()
-                const { x: offsetX, y: offsetY } = getOffset()
+                const offsetX = cachedOffset.current.x
+                const offsetY = cachedOffset.current.y
 
-                // Target center
                 const cx = rect.left + rect.width / 2 - offsetX
                 const cy = rect.top + rect.height / 2 - offsetY
 
-                const w = rect.width / 2
-                const h = rect.height / 2
+                const rootRem =
+                    parseFloat(
+                        getComputedStyle(document.documentElement).fontSize
+                    ) || BASE_FONT_SIZE
+                const wRem = rect.width / 2 / rootRem
+                const hRem = rect.height / 2 / rootRem
 
-                const tx = [
-                    -w - borderPx,
-                    w + borderPx - expandedPx,
-                    w + borderPx - expandedPx,
-                    -w - borderPx
-                ]
-                const ty = [
-                    -h - borderPx,
-                    -h - borderPx,
-                    h + borderPx - expandedPx,
-                    h + borderPx - expandedPx
-                ]
+                state.tx[0] = -wRem - BORDER_WIDTH
+                state.ty[0] = -hRem - BORDER_WIDTH
+                state.tx[1] = wRem + BORDER_WIDTH - EXPANDED_CORNER_SIZE
+                state.ty[1] = -hRem - BORDER_WIDTH
+                state.tx[2] = wRem + BORDER_WIDTH - EXPANDED_CORNER_SIZE
+                state.ty[2] = hRem + BORDER_WIDTH - EXPANDED_CORNER_SIZE
+                state.tx[3] = -wRem - BORDER_WIDTH
+                state.ty[3] = hRem + BORDER_WIDTH - EXPANDED_CORNER_SIZE
 
                 const {
                     posStrength,
                     sizeStrength,
                     startX,
                     startY,
-                    cornerStarts
+                    cornerStarts,
+                    corners,
+                    tx,
+                    ty
                 } = state
 
-                // Smoothly snap wrapper to target center
+                if (!corners || !cornerStarts) return
+
                 gsap.set(wrapper, {
                     x: startX + (cx - startX) * posStrength,
                     y: startY + (cy - startY) * posStrength
                 })
 
-                // Locally expand corners based on target bounds
                 const currentCornerSize =
-                    restPx + (expandedPx - restPx) * sizeStrength
+                    REST_CORNER_SIZE +
+                    (EXPANDED_CORNER_SIZE - REST_CORNER_SIZE) * sizeStrength
+
                 for (let i = 0; i < 4; i++) {
-                    const sx = cornerStarts![i].x
-                    const sy = cornerStarts![i].y
-                    gsap.set(state.corners![i], {
-                        x: sx + (tx[i] - sx) * posStrength,
-                        y: sy + (ty[i] - sy) * posStrength,
-                        width: currentCornerSize,
-                        height: currentCornerSize
+                    const sx = cornerStarts[i].x
+                    const sy = cornerStarts[i].y
+                    gsap.set(corners[i], {
+                        x: `${sx + (tx[i] - sx) * posStrength}rem`,
+                        y: `${sy + (ty[i] - sy) * posStrength}rem`,
+                        width: `${currentCornerSize}rem`,
+                        height: `${currentCornerSize}rem`
                     })
                 }
             }
         }
 
         const moveHandler = (e: MouseEvent) => {
-            const { x: offsetX, y: offsetY } = getOffset()
+            const offsetX = cachedOffset.current.x
+            const offsetY = cachedOffset.current.y
             const mx = e.clientX - offsetX
             const my = e.clientY - offsetY
 
             state.mouseX = mx
             state.mouseY = my
 
-            // Dot ALWAYS follows mouse
             gsap.set(dot, { x: mx, y: my })
 
-            // Wrapper ONLY follows mouse when not snapped to a target
             if (!state.isActive) {
                 gsap.set(wrapper, { x: mx, y: my })
             }
@@ -437,8 +451,10 @@ function TargetCursor({
         window.addEventListener("blur", blurHandler)
 
         const scrollHandler = () => {
+            updateOffsetCache()
             if (!activeTarget) return
-            const { x: offsetX, y: offsetY } = getOffset()
+            const offsetX = cachedOffset.current.x
+            const offsetY = cachedOffset.current.y
             const mouseX = state.mouseX + offsetX
             const mouseY = state.mouseY + offsetY
             const elementUnderMouse = document.elementFromPoint(mouseX, mouseY)
@@ -489,7 +505,9 @@ function TargetCursor({
             }
 
             const target = allTargets[0]
-            if (!state.corners) return
+            const corners = state.corners
+
+            if (!corners) return
             if (activeTarget === target) return
 
             const wasActive = !!activeTarget
@@ -501,10 +519,10 @@ function TargetCursor({
                 resumeTimeout = null
             }
 
-            // Capture exact current states to interpolate from (avoids snapping)
             state.startX = gsap.getProperty(wrapper, "x") as number
             state.startY = gsap.getProperty(wrapper, "y") as number
-            state.cornerStarts = state.corners.map((c) => ({
+
+            state.cornerStarts = corners.map((c) => ({
                 x: gsap.getProperty(c, "x") as number,
                 y: gsap.getProperty(c, "y") as number
             }))
@@ -514,7 +532,7 @@ function TargetCursor({
                 state.resumeTween?.kill()
                 state.spinTl?.pause()
                 gsap.set(wrapper, { rotation: 0 })
-                gsap.to(state.corners, { duration: 0.15, ease: "power2.out" })
+                gsap.to(corners, { duration: 0.15, ease: "power2.out" })
             }
 
             state.isActive = true
@@ -534,7 +552,7 @@ function TargetCursor({
         window.addEventListener("mouseover", enterHandler as EventListener)
 
         const resizeHandler = () => {
-            containingBlockRef.current = getContainingBlock(root)
+            updateOffsetCache()
         }
         window.addEventListener("resize", resizeHandler)
 
@@ -579,47 +597,71 @@ function TargetCursor({
 
     return (
         <div
+            data-slot="target-cursor"
             ref={rootRef}
             aria-hidden={true}
             role="presentation"
-            // Container gốc chỉ đứng im, không cần kích thước
             className={cn(
                 "pointer-events-none invisible fixed left-0 top-0 z-infinite opacity-0",
                 className
             )}
             {...props}
         >
-            {/* Chấm bi đi theo trỏ chuột tuyệt đối */}
             <div
+                data-slot="target-cursor-dot"
                 ref={dotRef}
                 className={cn(
                     "absolute left-0 top-0 z-1 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-white will-change-transform"
                 )}
             />
-            {/* Wrapper quản lý 4 corners */}
             <div
+                data-slot="target-cursor-corners"
                 ref={wrapperRef}
                 className="absolute left-0 top-0 will-change-transform"
             >
                 <div
+                    data-slot="target-cursor-corner"
                     data-cursor="corner"
                     className="absolute left-0 top-0 border-3 border-b-0 border-r-0 will-change-transform"
-                    style={{ borderColor: cursorColor }}
+                    style={{
+                        borderColor: cursorColor,
+                        width: `${REST_CORNER_SIZE}rem`,
+                        height: `${REST_CORNER_SIZE}rem`,
+                        transform: `translate(${REST_POSITIONS[0].x}rem, ${REST_POSITIONS[0].y}rem)`
+                    }}
                 />
                 <div
+                    data-slot="target-cursor-corner"
                     data-cursor="corner"
                     className="absolute left-0 top-0 border-3 border-b-0 border-l-0 will-change-transform"
-                    style={{ borderColor: cursorColor }}
+                    style={{
+                        borderColor: cursorColor,
+                        width: `${REST_CORNER_SIZE}rem`,
+                        height: `${REST_CORNER_SIZE}rem`,
+                        transform: `translate(${REST_POSITIONS[1].x}rem, ${REST_POSITIONS[1].y}rem)`
+                    }}
                 />
                 <div
+                    data-slot="target-cursor-corner"
                     data-cursor="corner"
                     className="absolute left-0 top-0 border-3 border-l-0 border-t-0 will-change-transform"
-                    style={{ borderColor: cursorColor }}
+                    style={{
+                        borderColor: cursorColor,
+                        width: `${REST_CORNER_SIZE}rem`,
+                        height: `${REST_CORNER_SIZE}rem`,
+                        transform: `translate(${REST_POSITIONS[2].x}rem, ${REST_POSITIONS[2].y}rem)`
+                    }}
                 />
                 <div
+                    data-slot="target-cursor-corner"
                     data-cursor="corner"
                     className="absolute left-0 top-0 border-3 border-r-0 border-t-0 will-change-transform"
-                    style={{ borderColor: cursorColor }}
+                    style={{
+                        borderColor: cursorColor,
+                        width: `${REST_CORNER_SIZE}rem`,
+                        height: `${REST_CORNER_SIZE}rem`,
+                        transform: `translate(${REST_POSITIONS[3].x}rem, ${REST_POSITIONS[3].y}rem)`
+                    }}
                 />
             </div>
         </div>

@@ -291,7 +291,7 @@ div.pswp__img--placeholder,
 
 */
 .pswp__preloader {
-    @apply relative me-auto h-[60px] w-[50px] overflow-hidden;
+    @apply pointer-events-none relative me-auto h-[60px] w-[50px] overflow-hidden;
 }
 
 .pswp__preloader .pswp__icn {
@@ -319,7 +319,7 @@ div.pswp__img--placeholder,
 
 */
 .pswp__counter {
-    @apply ms-6 mt-4.5 h-7.5 text-nowrap text-base text-[--pswp-icon-color] opacity-90 font-wght-450 lg:ms-6.5 lg:text-lg;
+    @apply ms-6 mt-4.5 h-7.5 cursor-default text-nowrap text-base text-[--pswp-icon-color] opacity-90 font-wght-450 lg:ms-6.5 lg:text-lg;
 
     -webkit-text-stroke: 0.125rem var(--pswp-icon-color-secondary);
     paint-order: stroke fill;

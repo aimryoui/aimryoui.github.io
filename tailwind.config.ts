@@ -175,7 +175,7 @@ export default {
                 8: ".5rem"
             },
             strokeWidth: {
-                px: "1.5",
+                px: "var(--px)",
                 1: "1",
                 2: "2",
                 3: "3",

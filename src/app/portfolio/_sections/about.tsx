@@ -116,6 +116,7 @@ function About() {
                         <Fragment key={item.label}>
                             <div
                                 data-cursor="target"
+                                data-sound="button"
                                 className={cn(
                                     "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                                     {
@@ -178,6 +179,7 @@ function About() {
                     />
                     <div
                         data-cursor="target"
+                        data-sound="button"
                         className={cn(
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {
@@ -240,6 +242,7 @@ function About() {
                     />
                     <div
                         data-cursor="target"
+                        data-sound="button"
                         className={cn(
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {

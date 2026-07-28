@@ -1,3 +1,4 @@
+import { AudioToggle } from "@/components/audio/audio"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
@@ -52,8 +53,9 @@ export default function Home() {
                 </LinkButton>
             </MediaFrame>
             <SectionLine />
-            <Space className="grid place-items-center">
+            <Space className="flex items-center justify-center gap-3">
                 <Tooltip>
+                    <AudioToggle />
                     <ModeToggle />
                 </Tooltip>
             </Space>

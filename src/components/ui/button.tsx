@@ -146,7 +146,7 @@ function LinkButton({
                 "data-slot": "link-button",
                 "data-variant": variant,
                 "data-size": size,
-                "data-sound": { hoverSound }
+                "data-sound": hoverSound
             })}
             className={cn(
                 nativeLink
