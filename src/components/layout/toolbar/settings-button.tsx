@@ -17,7 +17,6 @@ import {
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
-    DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuLabel,
     DropdownMenuLinkItem,
@@ -102,108 +101,142 @@ function SettingButton() {
                                     })}
                                 />
                             }
+                            payload={{
+                                content: (
+                                    <>
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuLabel>
+                                                Settings
+                                            </DropdownMenuLabel>
+                                            <DropdownMenuSub>
+                                                <DropdownMenuSubTrigger>
+                                                    View mode
+                                                </DropdownMenuSubTrigger>
+                                                <DropdownMenuSubContent>
+                                                    <DropdownMenuRadioGroup
+                                                        value={mode}
+                                                    >
+                                                        <DropdownMenuRadioItem
+                                                            value="pages"
+                                                            closeOnClick
+                                                            onClick={() => {
+                                                                handleModeChange(
+                                                                    "pages"
+                                                                )
+                                                            }}
+                                                        >
+                                                            Pages
+                                                        </DropdownMenuRadioItem>
+
+                                                        <DropdownMenuRadioItem
+                                                            value="spread"
+                                                            closeOnClick
+                                                            onClick={() => {
+                                                                setAlertDialogOpen(
+                                                                    true
+                                                                )
+                                                            }}
+                                                        >
+                                                            Spread
+                                                        </DropdownMenuRadioItem>
+                                                    </DropdownMenuRadioGroup>
+                                                </DropdownMenuSubContent>
+                                            </DropdownMenuSub>
+                                            <DropdownMenuSub>
+                                                <DropdownMenuSubTrigger>
+                                                    {isMobile
+                                                        ? "Toolbar position"
+                                                        : "Sidebar position"}
+                                                </DropdownMenuSubTrigger>
+                                                <DropdownMenuSubContent>
+                                                    <DropdownMenuRadioGroup
+                                                        value={
+                                                            isMobile
+                                                                ? toolbarPosition
+                                                                : sidebarPosition
+                                                        }
+                                                        onValueChange={(value) => {
+                                                            if (isMobile) {
+                                                                setToolbarPosition(
+                                                                    value as ToolbarPosition
+                                                                )
+                                                            } else {
+                                                                setSidebarPosition(
+                                                                    value as SidebarPosition
+                                                                )
+                                                            }
+                                                        }}
+                                                    >
+                                                        <DropdownMenuRadioItem
+                                                            value={
+                                                                isMobile
+                                                                    ? "top"
+                                                                    : "left"
+                                                            }
+                                                            onClick={() => {
+                                                                if (isMobile) {
+                                                                    setToolbarPosition(
+                                                                        "top"
+                                                                    )
+                                                                } else {
+                                                                    setSidebarPosition(
+                                                                        "left"
+                                                                    )
+                                                                }
+                                                            }}
+                                                            disabled={isMobile}
+                                                        >
+                                                            {isMobile
+                                                                ? "Top"
+                                                                : "Left"}
+                                                        </DropdownMenuRadioItem>
+                                                        <DropdownMenuRadioItem
+                                                            value={
+                                                                isMobile
+                                                                    ? "bottom"
+                                                                    : "right"
+                                                            }
+                                                            onClick={() => {
+                                                                if (isMobile) {
+                                                                    setToolbarPosition(
+                                                                        "bottom"
+                                                                    )
+                                                                } else {
+                                                                    setSidebarPosition(
+                                                                        "right"
+                                                                    )
+                                                                }
+                                                            }}
+                                                        >
+                                                            {isMobile
+                                                                ? "Bottom"
+                                                                : "Right"}
+                                                        </DropdownMenuRadioItem>
+                                                    </DropdownMenuRadioGroup>
+                                                </DropdownMenuSubContent>
+                                            </DropdownMenuSub>
+                                        </DropdownMenuGroup>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuLabel>
+                                                About
+                                            </DropdownMenuLabel>
+                                            <DropdownMenuLinkItem
+                                                href="https://github.com/aimryoui/aimryoui.github.io"
+                                                openInNewTab
+                                            >
+                                                Source code
+                                            </DropdownMenuLinkItem>
+                                        </DropdownMenuGroup>
+                                    </>
+                                )
+                            }}
                         >
                             <Ellipsis className="size-6" />
                             <span className="sr-only">Settings</span>
                         </DropdownMenuTrigger>
                     }
                 />
-                <DropdownMenuContent>
-                    <DropdownMenuGroup>
-                        <DropdownMenuLabel>Settings</DropdownMenuLabel>
-                        <DropdownMenuSub>
-                            <DropdownMenuSubTrigger>
-                                View mode
-                            </DropdownMenuSubTrigger>
-                            <DropdownMenuSubContent>
-                                <DropdownMenuRadioGroup value={mode}>
-                                    <DropdownMenuRadioItem
-                                        value="pages"
-                                        closeOnClick
-                                        onClick={() => {
-                                            handleModeChange("pages")
-                                        }}
-                                    >
-                                        Pages
-                                    </DropdownMenuRadioItem>
-
-                                    <DropdownMenuRadioItem
-                                        value="spread"
-                                        closeOnClick
-                                        onClick={() => {
-                                            setAlertDialogOpen(true)
-                                        }}
-                                    >
-                                        Spread
-                                    </DropdownMenuRadioItem>
-                                </DropdownMenuRadioGroup>
-                            </DropdownMenuSubContent>
-                        </DropdownMenuSub>
-                        <DropdownMenuSub>
-                            <DropdownMenuSubTrigger>
-                                {isMobile
-                                    ? "Toolbar position"
-                                    : "Sidebar position"}
-                            </DropdownMenuSubTrigger>
-                            <DropdownMenuSubContent>
-                                <DropdownMenuRadioGroup
-                                    value={
-                                        isMobile
-                                            ? toolbarPosition
-                                            : sidebarPosition
-                                    }
-                                    onValueChange={(value) => {
-                                        if (isMobile) {
-                                            setToolbarPosition(
-                                                value as ToolbarPosition
-                                            )
-                                        } else {
-                                            setSidebarPosition(
-                                                value as SidebarPosition
-                                            )
-                                        }
-                                    }}
-                                >
-                                    <DropdownMenuRadioItem
-                                        value={isMobile ? "top" : "left"}
-                                        onClick={() => {
-                                            if (isMobile) {
-                                                setToolbarPosition("top")
-                                            } else {
-                                                setSidebarPosition("left")
-                                            }
-                                        }}
-                                        disabled={isMobile}
-                                    >
-                                        {isMobile ? "Top" : "Left"}
-                                    </DropdownMenuRadioItem>
-                                    <DropdownMenuRadioItem
-                                        value={isMobile ? "bottom" : "right"}
-                                        onClick={() => {
-                                            if (isMobile) {
-                                                setToolbarPosition("bottom")
-                                            } else {
-                                                setSidebarPosition("right")
-                                            }
-                                        }}
-                                    >
-                                        {isMobile ? "Bottom" : "Right"}
-                                    </DropdownMenuRadioItem>
-                                </DropdownMenuRadioGroup>
-                            </DropdownMenuSubContent>
-                        </DropdownMenuSub>
-                    </DropdownMenuGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                        <DropdownMenuLabel>About</DropdownMenuLabel>
-                        <DropdownMenuLinkItem
-                            href="https://github.com/aimryoui/aimryoui.github.io"
-                            openInNewTab
-                        >
-                            Source code
-                        </DropdownMenuLinkItem>
-                    </DropdownMenuGroup>
-                </DropdownMenuContent>
             </DropdownMenu>
 
             <AlertDialog

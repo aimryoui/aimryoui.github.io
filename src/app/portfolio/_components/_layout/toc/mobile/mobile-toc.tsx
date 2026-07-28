@@ -15,6 +15,7 @@ import {
     DrawerTrigger
 } from "@/components/ui/drawer"
 import { TooltipTrigger } from "@/components/ui/tooltip"
+import { useIsMounted } from "@/hooks/use-is-mounted"
 import { cn } from "@/lib/utils"
 import { MobileTocList } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-list"
 import { TocHeader } from "@/portfolio/_components/_layout/toc/toc-header"
@@ -59,7 +60,7 @@ function MobileToc({
 
 const snapPoints = [0.85, 1]
 
-function MobileTocButton() {
+function MobileTocButtonCore() {
     const [isTocOpen, setIsTocOpen] = useState(false)
 
     const mode = usePortfolioModeStore((state) => state.mode)
@@ -150,6 +151,27 @@ function MobileTocButton() {
                 </div>
             </DrawerContent>
         </Drawer>
+    )
+}
+
+function MobileTocButton() {
+    const isMounted = useIsMounted()
+
+    return isMounted ? (
+        <MobileTocButtonCore />
+    ) : (
+        <Button
+            size="icon"
+            variant="outline"
+            haptic={undefined}
+            isDisabled={true}
+            className={cn("!size-full !rounded-none border-0")}
+            aria-expanded={false}
+            data-state="closed"
+        >
+            <PanelTopClose className="size-8" strokeWidth={1.25} />
+            <span className="sr-only">Table of Contents</span>
+        </Button>
     )
 }
 

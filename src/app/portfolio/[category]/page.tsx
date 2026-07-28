@@ -188,7 +188,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 href={
                                     prev
                                         ? getCategoryPath(prev.id)
-                                        : "/portfolio#projects"
+                                        : "/portfolio#design-projects"
                                 }
                                 {...(!prev && {
                                     label: "Go back to Projects page"

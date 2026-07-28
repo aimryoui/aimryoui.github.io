@@ -175,12 +175,12 @@ export default {
                 8: ".5rem"
             },
             strokeWidth: {
-                px: "var(--px)",
-                1: ".0625rem",
-                2: ".125rem",
-                3: ".1875rem",
-                4: ".25rem",
-                5: ".3125rem"
+                px: "1.5",
+                1: "1",
+                2: "2",
+                3: "3",
+                4: "4",
+                5: "5"
             },
             backdropBlur: {
                 xs: "4px",
@@ -216,6 +216,7 @@ export default {
                 instant: "instant",
                 "starting-style": "starting-style",
                 "ending-style": "ending-style",
+                highlighted: "highlighted",
                 entering: "entering",
                 exiting: "exiting",
                 inset: "inset",

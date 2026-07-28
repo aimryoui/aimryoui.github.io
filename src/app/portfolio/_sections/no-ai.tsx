@@ -80,7 +80,7 @@ function NoAIOverlay() {
     return (
         <div
             className={cn(
-                "inset-x-0 z-50 border-y border-dashed border-stroke anchored/no-ai-placeholder top-anchor-top-0 h-anchor-height-0 transition-[background-color] duration-500",
+                "inset-x-0 z-80 border-y border-dashed border-stroke anchored/no-ai-placeholder top-anchor-top-0 h-anchor-height-0 transition-[background-color] duration-500",
                 isActive ? "bg-alert" : "bg-background",
                 "px-[calc(var(--spacing)*6.5*2+theme(spacing.sidebar)+var(--px)*3+var(--spacing)*6)] lg:px-[calc(var(--spacing)*6.5+var(--px)*2+var(--spacing)*6)]",
                 {

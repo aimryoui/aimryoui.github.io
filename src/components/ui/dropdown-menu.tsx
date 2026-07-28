@@ -1,21 +1,101 @@
 "use client"
+import type React from "react"
+import { createContext, isValidElement, useContext, useState } from "react"
+import NextLink from "next/link"
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { ArrowUpRight, CheckIcon, ChevronRightIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-function DropdownMenu({ ...props }: MenuPrimitive.Root.Props) {
-    return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />
+type DropdownMenuOptions = {
+    content: React.ReactNode
+    className?: string
+    anchor?: HTMLElement | null
+} & Pick<
+    MenuPrimitive.Positioner.Props,
+    "align" | "alignOffset" | "side" | "sideOffset"
+>
+
+type DropdownMenuPayload = React.ReactNode | DropdownMenuOptions
+
+type DropdownMenuHandle = MenuPrimitive.Handle<DropdownMenuPayload>
+
+const DropdownMenuHandleContext = createContext<DropdownMenuHandle | null>(null)
+
+const createDropdownMenuHandle = MenuPrimitive.createHandle<DropdownMenuPayload>
+
+function DropdownMenu({
+    children,
+    handle: externalHandle,
+    ...props
+}: Omit<
+    MenuPrimitive.Root.Props<DropdownMenuPayload>,
+    "children" | "handle"
+> & {
+    children?: React.ReactNode
+    handle?: DropdownMenuHandle
+}) {
+    const [internalHandle] = useState(
+        MenuPrimitive.createHandle<DropdownMenuPayload>
+    )
+    const handle = externalHandle ?? internalHandle
+
+    return (
+        <DropdownMenuHandleContext value={handle}>
+            {children}
+            <MenuPrimitive.Root<DropdownMenuPayload>
+                data-slot="dropdown-menu"
+                handle={handle}
+                modal={false}
+                {...props}
+            >
+                {({ payload }) => {
+                    const { content, className, ...options } =
+                        typeof payload === "object" &&
+                        payload !== null &&
+                        "content" in payload &&
+                        !isValidElement(payload)
+                            ? payload
+                            : { content: payload, className: undefined }
+
+                    return (
+                        <DropdownMenuContent
+                            align={options.align}
+                            alignOffset={options.alignOffset}
+                            side={options.side}
+                            sideOffset={options.sideOffset}
+                            anchor={options.anchor}
+                            className={className}
+                        >
+                            {content}
+                        </DropdownMenuContent>
+                    )
+                }}
+            </MenuPrimitive.Root>
+        </DropdownMenuHandleContext>
+    )
 }
 
 function DropdownMenuPortal({ ...props }: MenuPrimitive.Portal.Props) {
     return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />
 }
 
-function DropdownMenuTrigger({ ...props }: MenuPrimitive.Trigger.Props) {
+function DropdownMenuTrigger<TPayload = DropdownMenuPayload>({
+    handle: explicitHandle,
+    ...props
+}: MenuPrimitive.Trigger.Props<TPayload>) {
+    const contextHandle = useContext(DropdownMenuHandleContext)
+
+    const handle = (explicitHandle ??
+        contextHandle) as MenuPrimitive.Handle<TPayload> | null
+
     return (
-        <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />
+        <MenuPrimitive.Trigger
+            data-slot="dropdown-menu-trigger"
+            handle={handle ?? undefined}
+            {...props}
+        />
     )
 }
 
@@ -24,63 +104,106 @@ function DropdownMenuContent({
     alignOffset = 0,
     side = "top",
     sideOffset = -1.5,
+    anchor,
     shadow = true,
+    isSubMenu = false,
     className,
+    children,
     ...props
 }: MenuPrimitive.Popup.Props &
     Pick<
         MenuPrimitive.Positioner.Props,
         "align" | "alignOffset" | "side" | "sideOffset"
-    > & { shadow?: boolean }) {
+    > & {
+        shadow?: boolean
+        isSubMenu?: boolean
+        anchor?: HTMLElement | null
+    }) {
     return (
         <DropdownMenuPortal
             className={
                 shadow
                     ? cn(
-                          "fixed inset-0 z-80",
-                          "[filter:drop-shadow(0px_0px_25px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_2px_rgba(0,0,0,0.10))]"
+                          "z-80",
+                          "[filter:drop-shadow(0px_0px_25px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_2px_rgba(0,0,0,0.10))]",
+                          "dark:[filter:drop-shadow(0px_0px_25px_theme(colors.background/0.8))_drop-shadow(0px_0px_2px_theme(colors.background/0.55))]"
                       )
                     : undefined
             }
         >
             <MenuPrimitive.Positioner
+                anchor={anchor ?? undefined}
                 data-cursor="ignore"
-                className="isolate z-80 cursor-auto overflow-hidden p-px outline-none"
-                positionMethod="fixed"
+                className={cn(
+                    "z-80 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] cursor-auto outline-none",
+                    isSubMenu && "p-0.5",
+                    "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350 data-instant:transition-none"
+                )}
                 align={align}
                 alignOffset={alignOffset}
                 side={side}
                 sideOffset={sideOffset}
+                sticky
             >
                 <MenuPrimitive.Popup
                     data-slot="dropdown-menu-content"
                     tabIndex={-1}
                     className={cn(
-                        "z-50 max-h-[--available-height] w-[--anchor-width] min-w-48 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background p-1 text-foreground ring ring-stroke outline-none",
-                        "will-change-transform transition-transform duration-300",
+                        "relative z-50 flex h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 origin-[--transform-origin] flex-col overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
+                        "will-change-transform transition-[width,height,opacity,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350",
                         {
                             "data-starting-style": [
-                                "pointer-events-none",
-                                {
-                                    "data-[side=top]": {
-                                        "data-[align=start]":
-                                            "translate-y-full",
-                                        "data-[align=end]": "translate-y-full"
-                                    },
-                                    "data-[side=bottom]": {
-                                        "data-[align=start]":
-                                            "-translate-y-full",
-                                        "data-[align=end]": "translate-y-full"
-                                    }
-                                }
-                            ]
+                                isSubMenu ? "scale-90" : "scale-50",
+                                "opacity-0"
+                            ],
+                            "data-ending-style": [
+                                isSubMenu ? "scale-90" : "scale-0",
+                                "opacity-0"
+                            ],
+                            "data-instant": "transition-none"
                         },
                         className
                     )}
                     {...props}
-                />
+                >
+                    <DropdownMenuViewport>{children}</DropdownMenuViewport>
+                </MenuPrimitive.Popup>
             </MenuPrimitive.Positioner>
         </DropdownMenuPortal>
+    )
+}
+
+function DropdownMenuViewport({
+    className,
+    ...props
+}: MenuPrimitive.Viewport.Props) {
+    return (
+        <MenuPrimitive.Viewport
+            data-slot="dropdown-menu-viewport"
+            className={cn(
+                "relative size-full overflow-y-auto overflow-x-hidden p-1 scrollbar-none",
+                {
+                    "[&_:is([data-current],[data-previous])]":
+                        "w-[calc(var(--popup-width)-var(--spacing)*2)] translate-x-0 opacity-100 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.35s,.175s]",
+                    "[&_[data-current][data-starting-style]]": {
+                        "data-[activation-direction~='left']":
+                            "-translate-x-1/2 opacity-0",
+                        "data-[activation-direction~='right']":
+                            "translate-x-1/2 opacity-0"
+                    },
+                    "[&_[data-previous][data-ending-style]]": {
+                        "data-[activation-direction~='left']":
+                            "translate-x-1/2 opacity-0",
+                        "data-[activation-direction~='right']":
+                            "-translate-x-1/2 opacity-0"
+                    },
+                    "[[data-instant]_&_:is([data-current],[data-previous])]":
+                        "transition-none"
+                },
+                className
+            )}
+            {...props}
+        />
     )
 }
 
@@ -128,7 +251,7 @@ function DropdownMenuItem({
             className={cn(
                 "group/dropdown-menu-item relative flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
-                    focus: "bg-accent text-accent-foreground",
+                    focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
                     "data-disabled": "pointer-events-none opacity-50",
                     "data-[variant=destructive]": [
@@ -170,9 +293,11 @@ function DropdownMenuSubTrigger({
             className={cn(
                 "flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
-                    focus: "bg-accent text-accent-foreground",
-                    "data-open": "bg-accent text-accent-foreground",
-                    "data-popup-open": "bg-accent text-accent-foreground",
+                    focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
+                    "data-open":
+                        "bg-accent/60 text-accent-foreground dark:bg-accent",
+                    "data-popup-open":
+                        "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
                     "not-data-[variant=destructive]":
                         "focus:**:text-accent-foreground",
@@ -201,15 +326,10 @@ function DropdownMenuSubContent({
         <DropdownMenuContent
             data-slot="dropdown-menu-sub-content"
             shadow={false}
+            isSubMenu={true}
             className={cn(
-                "w-auto min-w-32 rounded-xl bg-background p-1 text-foreground",
+                "w-auto min-w-32 rounded-xl bg-background text-foreground",
                 "will-change-transform transition-transform",
-                {
-                    "data-starting-style": {
-                        "data-[side=right]": "-translate-x-full",
-                        "data-[side=left]": "translate-x-full"
-                    }
-                },
                 className
             )}
             align={align}
@@ -228,18 +348,20 @@ function DropdownMenuLinkItem({
     openInNewTab,
     inset,
     ...props
-}: MenuPrimitive.LinkItem.Props & {
-    openInNewTab?: boolean
-    inset?: boolean
-}) {
+}: Omit<MenuPrimitive.LinkItem.Props, "href"> &
+    Pick<React.ComponentProps<typeof NextLink>, "href"> & {
+        openInNewTab?: boolean
+        inset?: boolean
+    }) {
     return (
         <MenuPrimitive.LinkItem
             data-slot="dropdown-menu-link-item"
             data-inset={inset}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center gap-1.5 text-nowrap rounded-lg py-2 text-sm outline-hidden",
+                openInNewTab ? "pe-8 ps-3" : "px-3",
                 {
-                    focus: "bg-accent text-accent-foreground **:text-accent-foreground",
+                    focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
                     "data-disabled": "pointer-events-none opacity-50",
                     "[&_svg:not([class*='size-'])]": "size-4",
@@ -247,8 +369,15 @@ function DropdownMenuLinkItem({
                 },
                 className
             )}
-            href={href}
-            {...(openInNewTab && { target: "_blank", rel: "noreferrer" })}
+            render={
+                <NextLink
+                    href={href}
+                    {...(openInNewTab && {
+                        target: "_blank",
+                        rel: "noreferrer"
+                    })}
+                />
+            }
             {...props}
         >
             {openInNewTab && (
@@ -280,7 +409,7 @@ function DropdownMenuCheckboxItem({
             className={cn(
                 "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
                 {
-                    focus: "bg-accent text-accent-foreground **:text-accent-foreground",
+                    focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
                     "data-disabled": "pointer-events-none opacity-50",
                     "[&_svg:not([class*='size-'])]": "size-4",
@@ -328,7 +457,7 @@ function DropdownMenuRadioItem({
             className={cn(
                 "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
                 {
-                    focus: "bg-accent text-accent-foreground **:text-accent-foreground",
+                    focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
                     "data-disabled": "pointer-events-none opacity-50",
                     "[&_svg:not([class*='size-'])]": "size-4",
@@ -358,7 +487,7 @@ function DropdownMenuSeparator({
     return (
         <MenuPrimitive.Separator
             data-slot="dropdown-menu-separator"
-            className={cn("-mx-1 my-1 h-px bg-stroke", className)}
+            className={cn("-mx-1 my-1 h-px border-t border-stroke", className)}
             {...props}
         />
     )
@@ -382,6 +511,7 @@ function DropdownMenuShortcut({
 }
 
 export {
+    createDropdownMenuHandle,
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,

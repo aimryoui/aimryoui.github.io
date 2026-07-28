@@ -1,8 +1,9 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { SectionLine } from "@/components/layout/line"
+import { useIsMounted } from "@/hooks/use-is-mounted"
 import { cn } from "@/lib/utils"
 import { TocHeader } from "@/portfolio/_components/_layout/toc/toc-header"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
@@ -17,6 +18,9 @@ interface TocProps {
 }
 
 function TableOfContents({ mode, items }: TocProps) {
+    const isMounted = useIsMounted()
+    const rafRef = useRef<number | null>(null)
+
     const inputRef = useRef<HTMLInputElement>(null)
 
     const hasRevealed = useRef(false)
@@ -40,9 +44,11 @@ function TableOfContents({ mode, items }: TocProps) {
 
     const handleActiveReady = () => {
         if (hasRevealed.current) return
-
-        setNavRevealPhase("animating")
         hasRevealed.current = true
+
+        rafRef.current = requestAnimationFrame(() => {
+            setNavRevealPhase("animating")
+        })
     }
 
     const handleAnimationEnd = (e: React.AnimationEvent<HTMLElement>) => {
@@ -50,6 +56,13 @@ function TableOfContents({ mode, items }: TocProps) {
             setNavRevealPhase("done")
         }
     }
+
+    useEffect(
+        () => () => {
+            if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
+        },
+        []
+    )
 
     if (items.length === 0) return null
 
@@ -61,42 +74,55 @@ function TableOfContents({ mode, items }: TocProps) {
                 onChange={setQuery}
                 onClear={handleClearSearch}
                 cursorTarget
+                containerClassName="lg:hidden"
             />
             <SectionLine
                 fit
+                containerClassName="lg:hidden"
                 // style={{
                 //     viewTransitionName: "toc-divider-search"
                 // }}
             />
-            <nav
-                aria-label="Table of contents"
-                className={cn(
-                    "flex flex-1 flex-col overflow-auto",
-                    navRevealPhase === "animating" && "animate-toc-reveal"
-                )}
-                onAnimationEnd={handleAnimationEnd}
-                {...(navRevealPhase !== "done" && {
-                    style: {
-                        maskImage:
-                            "linear-gradient(black 33.333%, black 35%, transparent 65%, transparent 100%)",
-                        maskPosition: "0 100%",
-                        maskSize: "100% 300%",
-                        willChange: "mask-position"
-                    }
-                })}
-            >
-                {filteredItems.length === 0 ? (
-                    <TocSearchNoResult onClear={handleClearSearch} />
-                ) : (
-                    <TocList
-                        mode={mode}
-                        items={items}
-                        debouncedQuery={debouncedQuery}
-                        filteredItems={filteredItems}
-                        onActiveReady={handleActiveReady}
-                    />
-                )}
-            </nav>
+            {isMounted ? (
+                <nav
+                    aria-label="Table of contents"
+                    className={cn(
+                        "flex flex-1 flex-col overflow-auto",
+                        navRevealPhase === "animating" && "animate-toc-reveal",
+                        {
+                            lg: "hidden"
+                        }
+                    )}
+                    onAnimationEnd={handleAnimationEnd}
+                    {...(navRevealPhase !== "done" && {
+                        style: {
+                            maskImage:
+                                "linear-gradient(black 33.333%, black 35%, transparent 65%, transparent 100%)",
+                            maskPosition: "0 100%",
+                            maskSize: "100% 300%",
+                            willChange: "mask-position"
+                        }
+                    })}
+                >
+                    {filteredItems.length === 0 ? (
+                        <TocSearchNoResult onClear={handleClearSearch} />
+                    ) : (
+                        <TocList
+                            mode={mode}
+                            items={items}
+                            debouncedQuery={debouncedQuery}
+                            filteredItems={filteredItems}
+                            onActiveReady={handleActiveReady}
+                        />
+                    )}
+                </nav>
+            ) : (
+                <div
+                    className={cn("flex-1", {
+                        lg: "hidden"
+                    })}
+                />
+            )}
         </>
     )
 }

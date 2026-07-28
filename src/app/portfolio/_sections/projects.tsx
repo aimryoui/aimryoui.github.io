@@ -142,7 +142,9 @@ function Projects() {
                                 id={group.id}
                                 title={group.title}
                                 noteId={
-                                    groupIndex === 0 ? "projects" : undefined
+                                    groupIndex === 0
+                                        ? "design-projects"
+                                        : undefined
                                 }
                                 note={
                                     groupIndex === 0

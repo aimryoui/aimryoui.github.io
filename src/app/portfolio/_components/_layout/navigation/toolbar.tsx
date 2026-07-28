@@ -18,7 +18,7 @@ import { MobileTocButton } from "@/portfolio/_components/_layout/toc/mobile/mobi
 import { projects } from "~/.velite"
 
 function Toolbar({ className }: { className?: string }) {
-    const isMobile = useMediaQuery("lg")
+    const isMobile = useMediaQuery("lg", true)
     const { isTouchDevice } = useDevice()
 
     return (
@@ -132,11 +132,18 @@ function Toolbar({ className }: { className?: string }) {
                                 })}
                             />
                         </li>
-                        <li className="lg:me-2">
+                        <li>
                             <SettingButton />
                         </li>
                         {isMobile && (
-                            <li className="relative -my-5.5 -me-6 size-20">
+                            <li
+                                className={cn(
+                                    "relative -my-5.5 -me-6 hidden size-20",
+                                    {
+                                        lg: "ms-2 block"
+                                    }
+                                )}
+                            >
                                 <SvgElementLine className="absolute inset-y-0 left-0 z-1 w-px" />
                                 <MobileTocButton />
                             </li>

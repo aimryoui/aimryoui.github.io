@@ -1,17 +1,31 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
+import { ArrowLeft } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
 import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
     BreadcrumbList,
+    BreadcrumbMenu,
+    BreadcrumbMenuPage,
     BreadcrumbPage
 } from "@/components/ui/breadcrumb"
-import { getCategoryPath } from "@/lib/project-sort"
+import {
+    createDropdownMenuHandle,
+    DropdownMenu,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLinkItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import { getCategoryPath, groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
+
+import { projects } from "~/.velite"
 
 interface ProjectBreadcrumbProps {
     category: string
@@ -25,6 +39,8 @@ function PortfolioBreadcrumb({
     projectName
 }: ProjectBreadcrumbProps) {
     const listRef = useRef<HTMLOListElement>(null)
+
+    const [menuHandle] = useState(createDropdownMenuHandle)
 
     useEffect(() => {
         const rafId = requestAnimationFrame(() => {
@@ -100,27 +116,103 @@ function PortfolioBreadcrumb({
                         Portfolio
                     </BreadcrumbLink>
                 </BreadcrumbItem>
+
                 <BreadcrumbItem>
-                    <BreadcrumbLink href="/portfolio#projects">
-                        Projects
-                    </BreadcrumbLink>
+                    <BreadcrumbDropdown
+                        handle={menuHandle}
+                        content={
+                            <>
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem disabled>
+                                        Coding Projects
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
+                                    <DropdownMenuLinkItem href="/portfolio#design-projects">
+                                        <ArrowLeft className="-ms-0.25 size-3" />
+                                        Design Projects
+                                    </DropdownMenuLinkItem>
+                                </DropdownMenuGroup>
+                            </>
+                        }
+                    >
+                        Design Projects
+                    </BreadcrumbDropdown>
                 </BreadcrumbItem>
+
                 <BreadcrumbItem>
-                    {projectName ? (
-                        <BreadcrumbLink href={getCategoryPath(category)}>
-                            {categoryTitle}
-                        </BreadcrumbLink>
-                    ) : (
-                        <BreadcrumbPage>{categoryTitle}</BreadcrumbPage>
-                    )}
+                    <BreadcrumbDropdown
+                        handle={menuHandle}
+                        isPage={!projectName}
+                        content={
+                            <>
+                                <DropdownMenuGroup>
+                                    {groupProjectsByCategory(projects)
+                                        .filter((g) => g.id !== category)
+                                        .map((g) => (
+                                            <DropdownMenuLinkItem
+                                                key={g.id}
+                                                href={getCategoryPath(g.id)}
+                                            >
+                                                {g.title}
+                                            </DropdownMenuLinkItem>
+                                        ))}
+                                </DropdownMenuGroup>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuGroup>
+                                    <DropdownMenuLinkItem
+                                        href={getCategoryPath(category)}
+                                    >
+                                        <ArrowLeft className="-ms-0.25 size-3" />
+                                        {categoryTitle}
+                                    </DropdownMenuLinkItem>
+                                </DropdownMenuGroup>
+                            </>
+                        }
+                    >
+                        {categoryTitle}
+                    </BreadcrumbDropdown>
                 </BreadcrumbItem>
+
                 {projectName && (
                     <BreadcrumbItem>
                         <BreadcrumbPage>{projectName}</BreadcrumbPage>
                     </BreadcrumbItem>
                 )}
             </BreadcrumbList>
+
+            <DropdownMenu handle={menuHandle} />
         </Breadcrumb>
+    )
+}
+
+function BreadcrumbDropdown({
+    handle,
+    isPage,
+    content,
+    children
+}: {
+    handle: ReturnType<typeof createDropdownMenuHandle>
+    isPage?: boolean
+    content: React.ReactNode
+    children: React.ReactNode
+}) {
+    const [anchor, setAnchor] = useState<HTMLElement | null>(null)
+    const Comp = isPage ? BreadcrumbMenuPage : BreadcrumbMenu
+
+    return (
+        <DropdownMenuTrigger
+            handle={handle}
+            render={<Comp anchorRef={setAnchor}>{children}</Comp>}
+            payload={{
+                anchor,
+                align: "center",
+                sideOffset: 6,
+                className: "min-w-auto",
+                content
+            }}
+        />
     )
 }
 

@@ -1,7 +1,5 @@
 "use client"
 
-import { useSyncExternalStore } from "react"
-
 import { useTheme } from "next-themes"
 
 import { Moon, Sun, System } from "@/components/icons/icons"
@@ -9,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
+import { useIsMounted } from "@/hooks/use-is-mounted"
 import { cn } from "@/lib/utils"
 
 function ThemedIcon() {
@@ -28,11 +27,7 @@ function ThemedIcon() {
 function ModeToggle({ className }: React.ComponentProps<"button">) {
     const { theme, setTheme } = useTheme()
 
-    const mounted = useSyncExternalStore(
-        () => () => {},
-        () => true,
-        () => false
-    )
+    const mounted = useIsMounted()
 
     return (
         <TooltipTrigger

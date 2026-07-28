@@ -13,21 +13,28 @@ import {
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 function TocHeader({
+    containerClassName,
     value,
     onChange,
     onClear,
     cursorTarget,
     ref,
     ...props
-}: TocSearchProps) {
+}: TocSearchProps & {
+    containerClassName?: string
+}) {
     const pathname = usePathname()
     const mode = usePortfolioModeStore((state) => state.mode)
 
     return (
         <div
-            className={cn("flex gap-3 bg-background px-6 py-5.5", {
-                lg: "gap-4"
-            })}
+            className={cn(
+                "flex gap-3 bg-background px-6 py-5.5",
+                {
+                    lg: "gap-4"
+                },
+                containerClassName
+            )}
             // style={{
             //     viewTransitionName: "header"
             // }}
@@ -46,7 +53,7 @@ function TocHeader({
                         }}
                         render={
                             <LinkButton
-                                href="/portfolio#projects"
+                                href="/portfolio#design-projects"
                                 variant="outline"
                                 size="icon"
                                 {...(cursorTarget && {

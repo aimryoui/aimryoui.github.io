@@ -3,7 +3,7 @@
 import { createContext, use, useMemo } from "react"
 import NextLink from "next/link"
 
-import { ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
+import { ChevronDownIcon, DotIcon, MoreHorizontalIcon } from "lucide-react"
 import { composeRenderProps } from "react-aria-components"
 import {
     Breadcrumb as BreadcrumbPrimitive,
@@ -14,6 +14,7 @@ import {
     type LinkProps
 } from "react-aria-components/Breadcrumbs"
 
+import { Button, type ButtonProps } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
@@ -87,6 +88,23 @@ function BreadcrumbItem({ className, children, ...props }: BreadcrumbProps) {
     )
 }
 
+function BreadcrumbSeparator({
+    className,
+    ...props
+}: React.ComponentProps<"span">) {
+    return (
+        <span
+            data-slot="breadcrumb-separator"
+            role="presentation"
+            aria-hidden={true}
+            className={cn("text-muted-foreground/60", className)}
+            {...props}
+        >
+            <DotIcon className="cn-rtl-flip stroke-3" />
+        </span>
+    )
+}
+
 function BreadcrumbLink({
     className,
     spanClassName,
@@ -95,15 +113,17 @@ function BreadcrumbLink({
     spanClassName?: string
 }) {
     const { isCurrent } = use(BreadcrumbItemContext)
+
     return (
         <LinkPrimitive
             data-slot="breadcrumb-link"
             className={cn(
-                "flex h-full items-center gap-1 text-muted-foreground/90 transition-[color] duration-100",
-                "group-first:-ms-1.25 group-[:not(*:first-child)]:ps-1",
+                "flex h-full items-center text-muted-foreground/90 transition-[color] duration-100",
+                "group-first:-ms-1.25",
                 {
                     hover: "text-foreground transition-none",
-                    md: "py-3.5"
+                    "data-[popup-open]": "text-foreground",
+                    md: "py-2.5"
                 },
                 className
             )}
@@ -116,18 +136,7 @@ function BreadcrumbLink({
                         >
                             {props.children}
                         </span>
-                        {!isCurrent && (
-                            <span
-                                data-slot="breadcrumb-separator"
-                                role="presentation"
-                                aria-hidden={true}
-                                className={cn("text-muted-foreground/60", {
-                                    "[&>svg]": "size-3.5"
-                                })}
-                            >
-                                <ChevronRightIcon className="cn-rtl-flip" />
-                            </span>
-                        )}
+                        {!isCurrent && <BreadcrumbSeparator />}
                     </NextLink>
                 ) : (
                     <span {...props} />
@@ -138,28 +147,157 @@ function BreadcrumbLink({
     )
 }
 
-function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
+function BreadcrumbPage({
+    className,
+    spanClassName,
+    children,
+    ...props
+}: Omit<ButtonProps, "children"> &
+    Pick<React.ComponentProps<"span">, "children"> & {
+        spanClassName?: string
+    }) {
+    const { isCurrent } = use(BreadcrumbItemContext)
+
     return (
-        <button
-            role="link"
-            type="button"
+        <Button
+            nativeButton={true}
             data-slot="breadcrumb-page"
             aria-current="page"
-            onClick={() =>
+            onPress={() =>
                 void window.dispatchEvent(
                     new CustomEvent("portfolio:main-flash")
                 )
             }
             className={cn(
-                "-me-1.25 grid h-full cursor-pointer place-items-center ps-1 text-foreground",
+                "-me-1.25 flex h-full items-center text-foreground",
                 {
-                    md: "py-3.5"
+                    md: "py-2.5"
+                },
+                className
+            )}
+            {...props}
+        >
+            <span
+                data-cursor="lock"
+                className={cn("px-1.25 md:py-0.5", spanClassName)}
+            >
+                {children}
+            </span>
+            {!isCurrent && <BreadcrumbSeparator />}
+        </Button>
+    )
+}
+
+function BreadcrumbMenu({
+    className,
+    spanClassName,
+    onPress,
+    anchorRef,
+    children,
+    ...props
+}: Omit<ButtonProps, "children"> & {
+    spanClassName?: string
+    anchorRef?: React.Ref<HTMLSpanElement>
+    children?: React.ReactNode
+}) {
+    const { isCurrent } = use(BreadcrumbItemContext)
+
+    return (
+        <Button
+            data-slot="breadcrumb-menu"
+            nativeButton={true}
+            onPress={onPress}
+            {...props}
+            className={cn(
+                "group/trigger flex h-full items-center text-muted-foreground/90 transition-[color] duration-100",
+                "group-first:-ms-1.25",
+                {
+                    hover: "text-foreground transition-none",
+                    md: "py-2.5"
                 },
                 className
             )}
         >
-            <span data-cursor="lock" className="px-1.25 md:py-0.5" {...props} />
-        </button>
+            <span
+                ref={anchorRef}
+                data-cursor="lock"
+                className={cn(
+                    "flex items-center gap-1 pe-0.5 ps-1.25 md:py-0.5",
+                    {
+                        "group-data-[popup-open]/trigger": "text-foreground",
+                        md: "py-0.5"
+                    },
+                    spanClassName
+                )}
+            >
+                {children}
+                <ChevronDownIcon
+                    className={cn(
+                        "size-4 transition-transform duration-300",
+                        "text-muted-foreground group-hover:text-foreground",
+                        {
+                            "group-hover/trigger": "text-foreground",
+                            "group-data-[popup-open]/trigger":
+                                "-rotate-180 text-foreground"
+                        }
+                    )}
+                />
+            </span>
+            {!isCurrent && <BreadcrumbSeparator />}
+        </Button>
+    )
+}
+
+function BreadcrumbMenuPage({
+    className,
+    spanClassName,
+    anchorRef,
+    children,
+    ...props
+}: Omit<ButtonProps, "children"> & {
+    spanClassName?: string
+    anchorRef?: React.Ref<HTMLSpanElement>
+    children?: React.ReactNode
+}) {
+    const { isCurrent } = use(BreadcrumbItemContext)
+
+    return (
+        <Button
+            data-slot="breadcrumb-menu-page"
+            aria-current="page"
+            nativeButton={true}
+            {...props}
+            className={cn(
+                "group/trigger -me-1.25 flex h-full items-center text-foreground",
+                {
+                    md: "py-2.5"
+                },
+                className
+            )}
+        >
+            <span
+                ref={anchorRef}
+                data-cursor="lock"
+                className={cn(
+                    "flex items-center gap-1 pe-0.5 ps-1.25 md:py-0.5",
+                    spanClassName
+                )}
+            >
+                {children}
+                <ChevronDownIcon
+                    className={cn(
+                        "size-4 transition-transform duration-300",
+                        "text-muted-foreground group-hover:text-foreground",
+                        {
+                            "group-hover/trigger": "text-foreground",
+                            "group-data-[popup-open]/trigger":
+                                "-rotate-180 text-foreground"
+                        }
+                    )}
+                />
+            </span>
+            {!isCurrent && <BreadcrumbSeparator />}
+        </Button>
     )
 }
 
@@ -172,13 +310,10 @@ function BreadcrumbEllipsis({
             data-slot="breadcrumb-ellipsis"
             role="presentation"
             aria-hidden={true}
-            className={cn(
-                "flex size-5 items-center justify-center [&>svg]:size-4",
-                className
-            )}
+            className={cn("flex size-5 items-center justify-center", className)}
             {...props}
         >
-            <MoreHorizontalIcon />
+            <MoreHorizontalIcon className="size-4" />
             <span className="sr-only">More</span>
         </span>
     )
@@ -190,5 +325,7 @@ export {
     BreadcrumbItem,
     BreadcrumbLink,
     BreadcrumbList,
+    BreadcrumbMenu,
+    BreadcrumbMenuPage,
     BreadcrumbPage
 }

@@ -23,6 +23,7 @@ type ButtonProps = Omit<ButtonPrimitiveProps, "className"> &
     React.RefAttributes<HTMLButtonElement> &
     VariantProps<typeof buttonVariants> & {
         className?: string
+        nativeButton?: boolean
         haptic?: HapticVariantsType
         mute?: boolean
     }
@@ -31,6 +32,7 @@ function Button({
     className,
     variant = "default",
     size = "default",
+    nativeButton = false,
     haptic = "light",
     mute = false,
     onPress,
@@ -41,11 +43,17 @@ function Button({
 
     return (
         <ButtonPrimitive
-            data-slot="button"
-            data-variant={variant}
-            data-size={size}
+            {...(nativeButton && {
+                "data-slot": "button",
+                "data-variant": variant,
+                "data-size": size
+            })}
             data-cursor="target"
-            className={cn(buttonVariants({ variant, size, className }))}
+            className={cn(
+                nativeButton
+                    ? className
+                    : buttonVariants({ variant, size, className })
+            )}
             {...props}
             onPress={(e) => {
                 if (isTouchDevice) {

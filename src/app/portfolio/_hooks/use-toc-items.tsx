@@ -8,9 +8,9 @@ import {
     AboutIcon,
     AdoptMeIcon,
     ContactIcon,
+    DesignProjectsIcon,
     EducationIcon,
     ExperienceIcon,
-    ProjectsIcon,
     SoftwareIcon
 } from "@/portfolio/_components/_icons/toc-icons"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
@@ -102,13 +102,13 @@ function useTocItems(mode: PortfolioMode) {
             href: mode === "pages" ? "/portfolio#contact" : "#contact"
         },
         {
-            id: "projects",
-            label: "Projects",
+            id: "design-projects",
+            label: "Design Projects",
             depth: 4,
             kind: "static",
-            icon: <ProjectsIcon />,
+            icon: <DesignProjectsIcon />,
             mode: staticItemMode,
-            href: "/portfolio#projects",
+            href: "/portfolio#design-projects",
             hidden: mode === "spread"
         },
         {

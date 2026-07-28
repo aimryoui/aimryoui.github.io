@@ -26,9 +26,7 @@ function TooltipProvider({
     )
 }
 
-type TooltipHandle = ReturnType<
-    typeof TooltipPrimitive.createHandle<TooltipPayload>
->
+type TooltipHandle = TooltipPrimitive.Handle<TooltipPayload>
 
 const TooltipHandleContext = createContext<TooltipHandle | null>(null)
 
@@ -169,7 +167,10 @@ function TooltipArrow({ ...props }: TooltipPrimitive.Arrow.Props) {
     )
 }
 
-function TooltipViewport({ ...props }: TooltipPrimitive.Viewport.Props) {
+function TooltipViewport({
+    className,
+    ...props
+}: TooltipPrimitive.Viewport.Props) {
     return (
         <TooltipPrimitive.Viewport
             className={cn(
@@ -193,7 +194,8 @@ function TooltipViewport({ ...props }: TooltipPrimitive.Viewport.Props) {
                     },
                     "[[data-instant]_&_:is([data-current],[data-previous])]":
                         "transition-none"
-                }
+                },
+                className
             )}
             {...props}
         />

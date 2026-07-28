@@ -1,64 +1,59 @@
 "use client"
 
+import type React from "react"
+
 import { Divider } from "@/components/layout/divider"
 import { MarginLine } from "@/components/layout/line"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
-import Sidebar from "@/portfolio/_components/_layout/navigation/sidebar"
 import Toolbar from "@/portfolio/_components/_layout/navigation/toolbar"
+import { TableOfContents } from "@/portfolio/_components/_layout/toc/toc"
+import { useTocItems } from "@/portfolio/_hooks/use-toc-items"
+import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
-function Navigation() {
+function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
     const isMobile = useMediaQuery("lg")
-
-    if (!isMobile) {
-        return (
-            <>
-                <Sidebar
-                    className={cn(
-                        "group-data-[sidebar-position=right]/html:order-4"
-                    )}
-                />
-                <MarginLine
-                    className={cn("ms-sidebar", {
-                        "group-data-[sidebar-position=right]/html":
-                            "z-60 order-3 me-sidebar ms-unset",
-                        lg: "hidden"
-                    })}
-                />
-                <Divider
-                    dir="vertical"
-                    className={cn(
-                        "sticky top-0 h-dvh lg:hidden",
-                        "group-data-[sidebar-position=right]/html:order-2"
-                    )}
-                />
-                <MarginLine
-                    className={cn(
-                        "lg:hidden",
-                        "group-data-[sidebar-position=right]/html:order-1"
-                    )}
-                />
-            </>
-        )
-    }
+    const mode = usePortfolioModeStore((state) => state.mode)
+    const tocItems = useTocItems(mode)
 
     return (
-        <div
-            className={cn("pointer-events-none z-70 will-change-transform", {
-                lg: "fixed inset-x-0 bottom-0 animate-toolbar-reveal"
-            })}
-        >
-            <div
+        <>
+            <aside
                 className={cn(
-                    "pointer-events-auto relative min-h-20 w-full bg-background"
+                    "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-70 flex h-dvh w-sidebar flex-col justify-end bg-background",
+                    {
+                        "group-data-[sidebar-position=right]/html":
+                            "left-auto right-[calc(var(--spacing)*6+var(--px))] order-4",
+                        lg: "inset-x-0 bottom-0 top-auto h-auto w-full"
+                    },
+                    className
                 )}
-                style={{
-                    viewTransitionName: "toolbar"
-                }}
+                {...props}
             >
+                {!isMobile && <TableOfContents mode={mode} items={tocItems} />}
                 <Toolbar />
-            </div>
-        </div>
+            </aside>
+            <MarginLine
+                className={cn("ms-sidebar", {
+                    "group-data-[sidebar-position=right]/html":
+                        "z-60 order-3 me-sidebar ms-unset",
+                    lg: "hidden"
+                })}
+            />
+            <Divider
+                dir="vertical"
+                className={cn(
+                    "sticky top-0 h-dvh lg:hidden",
+                    "group-data-[sidebar-position=right]/html:order-2"
+                )}
+            />
+            <MarginLine
+                className={cn(
+                    "lg:hidden",
+                    "group-data-[sidebar-position=right]/html:order-1"
+                )}
+            />
+        </>
     )
 }
 

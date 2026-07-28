@@ -124,7 +124,10 @@ function ContactIcon({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function ProjectsIcon({ className, ...props }: React.ComponentProps<"svg">) {
+function DesignProjectsIcon({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -170,8 +173,8 @@ export {
     AboutIcon,
     AdoptMeIcon,
     ContactIcon,
+    DesignProjectsIcon,
     EducationIcon,
     ExperienceIcon,
-    ProjectsIcon,
     SoftwareIcon
 }
