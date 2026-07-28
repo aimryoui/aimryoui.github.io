@@ -151,7 +151,8 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             <Space
                 className={cn(
                     "hidden",
-                    pathName !== "/portfolio" && "md:h-31.5",
+                    pathName !== "/portfolio" &&
+                        "md:h-[calc(var(--spacing)*31.5+var(--px))]",
                     {
                         lg: [
                             "block",
