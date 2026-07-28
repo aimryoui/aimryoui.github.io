@@ -2,8 +2,8 @@
 import { useRef } from "react"
 import NextLink from "next/link"
 
-import { type AriaLinkOptions, useLink } from "@react-aria/link"
 import { type VariantProps } from "class-variance-authority"
+import { type AriaLinkOptions, useLink } from "react-aria/useLink"
 import {
     Button as ButtonPrimitive,
     type ButtonProps as ButtonPrimitiveProps
@@ -49,6 +49,7 @@ function Button({
                 "data-size": size
             })}
             data-cursor="target"
+            data-sound="button"
             className={cn(
                 nativeButton
                     ? className
@@ -59,7 +60,7 @@ function Button({
                 if (isTouchDevice) {
                     void trigger(haptic)
                 } else if (!mute && useAudioStore.getState().isAudioEnabled) {
-                    playPressSound()
+                    playPressSound("button")
                 }
 
                 onPress?.(e)
@@ -112,7 +113,7 @@ function LinkButton({
                 if (isTouchDevice) {
                     void trigger(haptic)
                 } else if (!mute && useAudioStore.getState().isAudioEnabled) {
-                    playPressSound()
+                    playPressSound("button")
                 }
                 onPress?.(e)
             }
@@ -130,7 +131,8 @@ function LinkButton({
             {...(!nativeLink && {
                 "data-slot": "link-button",
                 "data-variant": variant,
-                "data-size": size
+                "data-size": size,
+                "data-sound": "button"
             })}
             className={cn(
                 nativeLink

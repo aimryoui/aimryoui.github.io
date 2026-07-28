@@ -74,7 +74,7 @@ function TocList({
                             item={item}
                             isActive={activeId === item.id}
                             query={debouncedQuery}
-                            onClick={() => {
+                            onPress={() => {
                                 handleItemClick(item, clickedTargetRef)
                             }}
                             onSameLinkClick={handleSameLinkClick}

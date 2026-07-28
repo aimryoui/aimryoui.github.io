@@ -1,15 +1,19 @@
 "use client"
 
 import { memo } from "react"
-import NextLink from "next/link"
 
 import { ChevronDown } from "lucide-react"
+import { useWebHaptics } from "web-haptics/react"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
+import { LinkButton } from "@/components/ui/button"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { isSameUrl } from "@/helpers/is-same-url"
+import { useDevice } from "@/hooks/use-device"
+import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
+import { useAudioStore } from "@/stores/audio-store"
 import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocItemProps {
@@ -28,7 +32,7 @@ interface TocItemRowProps {
     item: TocItemProps
     isActive: boolean
     query?: string
-    onClick: (item: TocItemProps) => void
+    onPress: (item: TocItemProps) => void
     onSameLinkClick: () => void
 }
 
@@ -38,13 +42,16 @@ const TocItemRow = memo(
         item,
         isActive,
         query,
-        onClick,
+        onPress,
         onSameLinkClick
     }: TocItemRowProps) => {
         const href = item.href ?? `#${item.id}`
 
         const isProject = item.depth === 3 && !item.icon
         const isCollapsible = item.depth === 2 && item.id !== "outlines"
+
+        const { isTouchDevice } = useDevice()
+        const { trigger } = useWebHaptics()
 
         return (
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
@@ -76,23 +83,29 @@ const TocItemRow = memo(
                             : "w-2.5 scale-x-[--effect,0]"
                     )}
                 />
-                <NextLink
+                <LinkButton
                     href={href}
+                    nativeLink
                     prefetch={false}
-                    data-toc-id={item.id}
                     draggable={false}
+                    data-toc-id={item.id}
                     data-cursor="target"
-                    onClick={(e) => {
+                    data-sound="tick"
+                    onPress={() => {
+                        if (isTouchDevice) {
+                            void trigger("light")
+                        } else if (useAudioStore.getState().isAudioEnabled) {
+                            playPressSound("link")
+                        }
+
                         if (isSameUrl(href)) {
-                            e.preventDefault()
                             onSameLinkClick()
                             return
                         }
 
                         if (item.mode === "route") return
 
-                        e.preventDefault()
-                        onClick(item)
+                        onPress(item)
                     }}
                     className={cn(
                         "group/link relative flex-1 truncate leading-6",
@@ -164,7 +177,7 @@ const TocItemRow = memo(
                             )}
                         </div>
                     )}
-                </NextLink>
+                </LinkButton>
                 {isCollapsible && (
                     <div
                         className={cn(

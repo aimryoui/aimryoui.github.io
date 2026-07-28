@@ -118,7 +118,7 @@ function PortfolioBreadcrumb({
                 </BreadcrumbItem>
 
                 <BreadcrumbItem>
-                    <BreadcrumbDropdown
+                    <BreadcrumbDropdownMenu
                         handle={menuHandle}
                         content={
                             <>
@@ -138,11 +138,11 @@ function PortfolioBreadcrumb({
                         }
                     >
                         Design Projects
-                    </BreadcrumbDropdown>
+                    </BreadcrumbDropdownMenu>
                 </BreadcrumbItem>
 
                 <BreadcrumbItem>
-                    <BreadcrumbDropdown
+                    <BreadcrumbDropdownMenu
                         handle={menuHandle}
                         isPage={!projectName}
                         content={
@@ -172,7 +172,7 @@ function PortfolioBreadcrumb({
                         }
                     >
                         {categoryTitle}
-                    </BreadcrumbDropdown>
+                    </BreadcrumbDropdownMenu>
                 </BreadcrumbItem>
 
                 {projectName && (
@@ -187,7 +187,7 @@ function PortfolioBreadcrumb({
     )
 }
 
-function BreadcrumbDropdown({
+function BreadcrumbDropdownMenu({
     handle,
     isPage,
     content,

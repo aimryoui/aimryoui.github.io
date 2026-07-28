@@ -8,25 +8,27 @@ import { Button } from "@/components/ui/button"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
 import { useDevice } from "@/hooks/use-device"
-import { createTickPlayer } from "@/lib/sounds"
+import {
+    createSoundEngine,
+    HOVER_SOUNDS,
+    type HoverSoundType
+} from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import { useAudioStore } from "@/stores/audio-store"
 
-const TARGET_SELECTORS = [
-    "[data-sound='tick']",
-    "[data-cursor='target']",
-    "[data-cursor='input']"
-].join(", ")
+const TARGET_SELECTORS = HOVER_SOUNDS.map(
+    (sound) => `[data-sound='${sound}']`
+).join(", ")
 
 function AudioProvider({ children }: { children: React.ReactNode }) {
-    const playerRef = useRef<ReturnType<typeof createTickPlayer> | null>(null)
+    const playerRef = useRef<ReturnType<typeof createSoundEngine> | null>(null)
     const lastTargetRef = useRef<Element | null>(null)
     const { isTouchDevice } = useDevice()
 
     useEffect(() => {
         if (isTouchDevice) return
 
-        playerRef.current = createTickPlayer()
+        playerRef.current = createSoundEngine()
 
         const handlePointerOver = (e: PointerEvent) => {
             if (!useAudioStore.getState().isAudioEnabled) return
@@ -34,7 +36,10 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
             const target = (e.target as Element).closest(TARGET_SELECTORS)
 
             if (target && target !== lastTargetRef.current) {
-                playerRef.current?.play()
+                const soundType = target.getAttribute(
+                    "data-sound"
+                ) as HoverSoundType
+                playerRef.current?.playHover(soundType)
             }
 
             lastTargetRef.current = target
@@ -60,12 +65,12 @@ function AudioToggle({
     const isAudioEnabled = useAudioStore((state) => state.isAudioEnabled)
     const toggleAudio = useAudioStore((state) => state.toggleAudio)
 
-    const playerRef = useRef<ReturnType<typeof createTickPlayer> | null>(null)
+    const playerRef = useRef<ReturnType<typeof createSoundEngine> | null>(null)
 
     const [isActive, setIsActive] = useState(false)
 
     useEffect(() => {
-        const player = createTickPlayer()
+        const player = createSoundEngine()
         playerRef.current = player
 
         const ctx = player.getContext()

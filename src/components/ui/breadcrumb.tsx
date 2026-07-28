@@ -13,9 +13,13 @@ import {
     Link as LinkPrimitive,
     type LinkProps
 } from "react-aria-components/Breadcrumbs"
+import { useWebHaptics } from "web-haptics/react"
 
 import { Button, type ButtonProps } from "@/components/ui/button"
+import { useDevice } from "@/hooks/use-device"
+import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
+import { useAudioStore } from "@/stores/audio-store"
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
     return (
@@ -108,15 +112,20 @@ function BreadcrumbSeparator({
 function BreadcrumbLink({
     className,
     spanClassName,
+    onPress,
     ...props
 }: LinkProps & {
     spanClassName?: string
 }) {
     const { isCurrent } = use(BreadcrumbItemContext)
 
+    const { isTouchDevice } = useDevice()
+    const { trigger } = useWebHaptics()
+
     return (
         <LinkPrimitive
             data-slot="breadcrumb-link"
+            data-sound="button"
             className={cn(
                 "flex h-full items-center text-muted-foreground/90 transition-[color] duration-100",
                 "group-first:-ms-1.25",
@@ -127,6 +136,7 @@ function BreadcrumbLink({
                 },
                 className
             )}
+            {...props}
             render={(props) =>
                 "href" in props ? (
                     <NextLink {...props} draggable={false}>
@@ -142,7 +152,15 @@ function BreadcrumbLink({
                     <span {...props} />
                 )
             }
-            {...props}
+            onPress={(e) => {
+                if (isTouchDevice) {
+                    void trigger("light")
+                } else if (useAudioStore.getState().isAudioEnabled) {
+                    playPressSound("button")
+                }
+
+                onPress?.(e)
+            }}
         />
     )
 }

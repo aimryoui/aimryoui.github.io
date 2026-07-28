@@ -52,6 +52,7 @@ function TocSearch({
             {...(cursorTarget && {
                 "data-cursor": "input"
             })}
+            data-sound="button"
             className={cn(
                 "pointer-events-auto",
                 cursorTarget && "cursor-auto",

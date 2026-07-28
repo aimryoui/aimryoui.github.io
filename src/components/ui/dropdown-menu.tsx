@@ -132,10 +132,11 @@ function DropdownMenuContent({
             }
         >
             <MenuPrimitive.Positioner
+                data-slot="dropdown-menu-positioner"
+                data-cursor="target"
                 anchor={anchor ?? undefined}
-                data-cursor="ignore"
                 className={cn(
-                    "z-80 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] cursor-auto outline-none",
+                    "group z-80 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] cursor-auto outline-none",
                     isSubMenu && "p-0.5",
                     "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350 data-instant:transition-none"
                 )}
@@ -150,8 +151,10 @@ function DropdownMenuContent({
                     tabIndex={-1}
                     className={cn(
                         "relative z-50 flex h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 origin-[--transform-origin] flex-col overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
-                        "will-change-transform transition-[width,height,opacity,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350",
+                        "will-change-[width,height,opacity,transform,border-radius] transition-[width,height,opacity,transform,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350",
                         {
+                            "group-data-[cursor=target]:group-hover":
+                                "rounded-none",
                             "data-starting-style": [
                                 isSubMenu ? "scale-90" : "scale-50",
                                 "opacity-0"
@@ -160,7 +163,7 @@ function DropdownMenuContent({
                                 isSubMenu ? "scale-90" : "scale-0",
                                 "opacity-0"
                             ],
-                            "data-instant": "transition-none"
+                            "data-instant": "transition-[border-radius]"
                         },
                         className
                     )}
@@ -248,6 +251,7 @@ function DropdownMenuItem({
             data-slot="dropdown-menu-item"
             data-inset={inset}
             data-variant={variant}
+            data-sound="button"
             className={cn(
                 "group/dropdown-menu-item relative flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
@@ -290,6 +294,7 @@ function DropdownMenuSubTrigger({
         <MenuPrimitive.SubmenuTrigger
             data-slot="dropdown-menu-sub-trigger"
             data-inset={inset}
+            data-sound="button"
             className={cn(
                 "flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
@@ -329,7 +334,6 @@ function DropdownMenuSubContent({
             isSubMenu={true}
             className={cn(
                 "w-auto min-w-32 rounded-xl bg-background text-foreground",
-                "will-change-transform transition-transform",
                 className
             )}
             align={align}
@@ -357,6 +361,7 @@ function DropdownMenuLinkItem({
         <MenuPrimitive.LinkItem
             data-slot="dropdown-menu-link-item"
             data-inset={inset}
+            data-sound="button"
             className={cn(
                 "relative flex cursor-pointer select-none items-center gap-1.5 text-nowrap rounded-lg py-2 text-sm outline-hidden",
                 openInNewTab ? "pe-8 ps-3" : "px-3",
@@ -406,6 +411,7 @@ function DropdownMenuCheckboxItem({
         <MenuPrimitive.CheckboxItem
             data-slot="dropdown-menu-checkbox-item"
             data-inset={inset}
+            data-sound="button"
             className={cn(
                 "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
                 {
@@ -454,6 +460,7 @@ function DropdownMenuRadioItem({
         <MenuPrimitive.RadioItem
             data-slot="dropdown-menu-radio-item"
             data-inset={inset}
+            data-sound="button"
             className={cn(
                 "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
                 {

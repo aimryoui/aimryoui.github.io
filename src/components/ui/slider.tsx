@@ -12,7 +12,7 @@ import {
 
 import { Label } from "@/components/ui/label"
 import { useDevice } from "@/hooks/use-device"
-import { createTickPlayer } from "@/lib/sounds"
+import { createSoundEngine } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import { useAudioStore } from "@/stores/audio-store"
 
@@ -45,13 +45,13 @@ function Slider<T extends number | number[]>({
 
     const { isTouchDevice } = useDevice()
 
-    const playerRef = useRef<ReturnType<typeof createTickPlayer> | null>(null)
+    const playerRef = useRef<ReturnType<typeof createSoundEngine> | null>(null)
     const activeDotRef = useRef<number | null>(null)
 
     useEffect(() => {
         if (isTouchDevice) return
 
-        playerRef.current = createTickPlayer()
+        playerRef.current = createSoundEngine()
         return () => playerRef.current?.dispose()
     }, [isTouchDevice])
 
@@ -89,7 +89,7 @@ function Slider<T extends number | number[]>({
 
             if (nextActive !== activeDotRef.current) {
                 if (useAudioStore.getState().isAudioEnabled) {
-                    playerRef.current?.play()
+                    playerRef.current?.playHover("tick")
                 }
                 activeDotRef.current = nextActive
             }
