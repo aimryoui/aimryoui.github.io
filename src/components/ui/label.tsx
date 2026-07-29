@@ -3,10 +3,12 @@
 import {
     LabelContext,
     Label as LabelPrimitive,
-    type LabelProps
+    type LabelProps as LabelPrimitiveProps
 } from "react-aria-components/Label"
 
 import { cn } from "@/lib/utils"
+
+type LabelProps = LabelPrimitiveProps
 
 function Label({ className, htmlFor, slot, ...props }: LabelProps) {
     const label = (
@@ -37,4 +39,5 @@ function Label({ className, htmlFor, slot, ...props }: LabelProps) {
     return label
 }
 
+export type { LabelProps }
 export { Label }

@@ -48,7 +48,7 @@ function TocSearch({
     return (
         <SearchGroup
             label="Search for sections"
-            htmlFor="toc-search"
+            labelFor="toc-search"
             {...(cursorTarget && {
                 "data-cursor": "input"
             })}

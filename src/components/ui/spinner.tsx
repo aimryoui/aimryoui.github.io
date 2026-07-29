@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils"
 
-function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+type SpinnerProps = React.ComponentProps<"svg">
+
+function Spinner({ className, ...props }: SpinnerProps) {
     const lines = 8
     const duration = 1000
 
@@ -36,4 +38,5 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
+export type { SpinnerProps }
 export { Spinner }

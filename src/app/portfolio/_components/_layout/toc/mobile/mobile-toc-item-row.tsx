@@ -117,7 +117,7 @@ const MobileTocItemRow = memo(
                         <div
                             className={cn(
                                 "absolute right-0 top-1/2 grid size-8 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
-                                "group-focus-visible/link:hidden dark:bg-highlighted/20"
+                                "dark:bg-highlighted/20"
                             )}
                         >
                             {mode === "pages" ? (

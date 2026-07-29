@@ -4,7 +4,9 @@ import { Keyboard as KbdPrimitive } from "react-aria-components/Keyboard"
 
 import { cn } from "@/lib/utils"
 
-function Kbd({ className, ...props }: React.ComponentProps<"kbd">) {
+type KbdProps = React.ComponentProps<typeof KbdPrimitive>
+
+function Kbd({ className, ...props }: KbdProps) {
     return (
         <KbdPrimitive
             data-slot="kbd"
@@ -22,7 +24,7 @@ function Kbd({ className, ...props }: React.ComponentProps<"kbd">) {
     )
 }
 
-function KbdGroup({ className, ...props }: React.ComponentProps<"kbd">) {
+function KbdGroup({ className, ...props }: KbdProps) {
     return (
         <KbdPrimitive
             data-slot="kbd-group"
@@ -32,4 +34,5 @@ function KbdGroup({ className, ...props }: React.ComponentProps<"kbd">) {
     )
 }
 
+export type { KbdProps }
 export { Kbd, KbdGroup }

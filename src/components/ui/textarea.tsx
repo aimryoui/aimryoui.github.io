@@ -5,10 +5,9 @@ import { TextArea as TextareaPrimitive } from "react-aria-components/TextArea"
 
 import { cn } from "@/lib/utils"
 
-function Textarea({
-    className,
-    ...props
-}: React.ComponentProps<typeof TextareaPrimitive>) {
+type TextareaProps = React.ComponentProps<typeof TextareaPrimitive>
+
+function Textarea({ className, ...props }: TextareaProps) {
     return (
         <TextareaPrimitive
             data-slot="textarea"
@@ -31,4 +30,5 @@ function Textarea({
     )
 }
 
+export type { TextareaProps }
 export { Textarea }

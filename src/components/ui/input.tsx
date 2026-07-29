@@ -5,11 +5,9 @@ import { Input as InputPrimitive } from "react-aria-components/Input"
 
 import { cn } from "@/lib/utils"
 
-function Input({
-    className,
-    type,
-    ...props
-}: React.ComponentProps<typeof InputPrimitive>) {
+type InputProps = React.ComponentProps<typeof InputPrimitive>
+
+function Input({ className, type, ...props }: InputProps) {
     return (
         <InputPrimitive
             type={type}
@@ -39,4 +37,5 @@ function Input({
     )
 }
 
+export type { InputProps }
 export { Input }

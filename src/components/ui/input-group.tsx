@@ -6,9 +6,9 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { usePress } from "react-aria"
 import { Group, type GroupProps } from "react-aria-components/Group"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { Button, type ButtonProps } from "@/components/ui/button"
+import { Input, type InputProps } from "@/components/ui/input"
+import { Textarea, type TextareaProps } from "@/components/ui/textarea"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
@@ -70,19 +70,19 @@ function InputGroup({ className, ...props }: GroupProps) {
 }
 
 function SearchGroup({
-    htmlFor,
+    labelFor,
     label,
     hideLabel = true,
     formAction,
     preventDefaultEnter = true,
     ...props
-}: GroupProps &
-    Pick<React.ComponentProps<"label">, "htmlFor"> & {
-        label?: string
-        hideLabel?: boolean
-        formAction?: React.ComponentProps<"form">["action"]
-        preventDefaultEnter?: boolean
-    }) {
+}: GroupProps & {
+    label?: string
+    hideLabel?: boolean
+    labelFor?: React.ComponentProps<"label">["htmlFor"]
+    formAction?: React.ComponentProps<"form">["action"]
+    preventDefaultEnter?: boolean
+}) {
     return (
         <search role="searchbox" className="w-full">
             <form
@@ -97,7 +97,7 @@ function SearchGroup({
             >
                 {label && (
                     <label
-                        htmlFor={htmlFor}
+                        htmlFor={labelFor}
                         {...(hideLabel && { className: "sr-only" })}
                     >
                         {label}
@@ -185,7 +185,7 @@ function InputGroupButton({
     variant = "ghost",
     size = "xs",
     ...props
-}: Omit<React.ComponentProps<typeof Button>, "size" | "type"> &
+}: Omit<ButtonProps, "size" | "type"> &
     VariantProps<typeof inputGroupButtonVariants> & {
         type?: "button" | "submit" | "reset"
     }) {
@@ -213,10 +213,7 @@ function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
     )
 }
 
-function InputGroupInput({
-    className,
-    ...props
-}: React.ComponentProps<"input">) {
+function InputGroupInput({ className, ...props }: InputProps) {
     return (
         <Input
             data-slot="input-group-control"
@@ -234,10 +231,7 @@ function InputGroupInput({
     )
 }
 
-function InputGroupTextarea({
-    className,
-    ...props
-}: React.ComponentProps<"textarea">) {
+function InputGroupTextarea({ className, ...props }: TextareaProps) {
     return (
         <Textarea
             data-slot="input-group-control"

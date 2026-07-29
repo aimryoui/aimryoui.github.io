@@ -158,7 +158,7 @@ const TocItemRow = memo(
                             className={cn(
                                 "absolute top-1/2 hidden size-5 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
                                 isCollapsible ? "right-0" : "right-5.5",
-                                "group-hover:grid group-focus-visible/link:hidden dark:bg-highlighted/20"
+                                "group-hover:grid dark:bg-highlighted/20"
                             )}
                         >
                             {mode === "pages" ? (

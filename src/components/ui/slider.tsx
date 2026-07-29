@@ -16,7 +16,7 @@ import { createSoundEngine } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import { useAudioStore } from "@/stores/audio-store"
 
-export interface SliderProps<
+interface SliderProps<
     T extends number | number[]
 > extends SliderPrimitiveProps<T> {
     label?: string
@@ -232,4 +232,5 @@ function Slider<T extends number | number[]>({
     )
 }
 
+export type { SliderProps }
 export { Slider }

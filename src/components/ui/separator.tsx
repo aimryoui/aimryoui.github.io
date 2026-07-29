@@ -4,11 +4,13 @@ import { Separator as SeparatorPrimitive } from "react-aria-components"
 
 import { cn } from "@/lib/utils"
 
+type SeparatorProps = React.ComponentProps<typeof SeparatorPrimitive>
+
 function Separator({
     className,
     orientation = "horizontal",
     ...props
-}: React.ComponentProps<typeof SeparatorPrimitive>) {
+}: SeparatorProps) {
     return (
         <SeparatorPrimitive
             data-slot="separator"
@@ -27,4 +29,5 @@ function Separator({
     )
 }
 
+export type { SeparatorProps }
 export { Separator }
