@@ -133,18 +133,9 @@ function InputGroupAddon({
     className,
     align = "inline-start",
     ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>) {
-    const playPressFeedback = usePressFeedback()
-
-    let { pressProps, isPressed } = usePress({
-        onPress: () => {
-            playPressFeedback("button")
-        }
-    })
-
+}: GroupProps & VariantProps<typeof inputGroupAddonVariants>) {
     return (
-        <div
-            // {...pressProps}
+        <Group
             role="group"
             data-slot="input-group-addon"
             data-align={align}

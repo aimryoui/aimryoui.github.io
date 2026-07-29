@@ -61,7 +61,6 @@ function TocSearch({
                 }
             )}
         >
-            <LeftAddon />
             <InputGroupInput
                 ref={ref}
                 id="toc-search"
@@ -86,20 +85,21 @@ function TocSearch({
                 className={cn("text-md", className)}
                 {...props}
             />
-            <RightAddon hasValue={hasValue} onClear={onClear} />
+            <SearchIcon />
+            <Addons hasValue={hasValue} onClear={onClear} />
         </SearchGroup>
     )
 }
 
-function LeftAddon() {
+function SearchIcon() {
     return (
-        <InputGroupAddon>
+        <InputGroupAddon align="inline-start">
             <Search className="lg:size-5.5" />
         </InputGroupAddon>
     )
 }
 
-function RightAddon({
+function Addons({
     hasValue,
     onClear
 }: {

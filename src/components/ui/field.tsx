@@ -100,6 +100,22 @@ function Field({
     )
 }
 
+function SearchField({
+    className,
+    orientation = "vertical",
+    ...props
+}: React.ComponentProps<"search"> & VariantProps<typeof fieldVariants>) {
+    return (
+        <search
+            role="searchbox"
+            data-slot="search-field"
+            data-orientation={orientation}
+            className={cn(fieldVariants({ orientation }), className)}
+            {...props}
+        />
+    )
+}
+
 function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
     return (
         <div
@@ -249,5 +265,6 @@ export {
     FieldLegend,
     FieldSeparator,
     FieldSet,
-    FieldTitle
+    FieldTitle,
+    SearchField
 }
