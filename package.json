@@ -92,7 +92,7 @@
         "gsap": "^3.15.0",
         "hls.js": "^1.6.16",
         "lucide-react": "^1.27.0",
-        "motion": "^12.42.2",
+        "motion": "^12.43.0",
         "next": "^16.2.12",
         "next-themes": "^0.4.6",
         "photoswipe": "^5.4.4",
@@ -108,7 +108,7 @@
         "zustand": "^5.0.14"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.5.5",
+        "@biomejs/biome": "^2.5.6",
         "@csstools/postcss-oklab-function": "^5.0.7",
         "@eslint/css": "^1.4.0",
         "@limegrass/eslint-plugin-import-alias": "^1.6.1",
@@ -134,7 +134,7 @@
         "oxfmt": "^0.61.0",
         "oxlint": "^1.76.0",
         "oxlint-tsgolint": "^7.0.2001",
-        "postcss": "^8.5.23",
+        "postcss": "^8.5.24",
         "postcss-load-config": "^6.0.1",
         "sharp": "^0.35.3",
         "tailwindcss": "3.4.19",

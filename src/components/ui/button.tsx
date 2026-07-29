@@ -29,6 +29,7 @@ type ButtonProps = Omit<ButtonPrimitiveProps, "className"> &
     ButtonFeedback & {
         className?: string
         nativeButton?: boolean
+        keepFeedback?: boolean
         mute?: boolean
     }
 
@@ -37,6 +38,7 @@ function Button({
     variant = "default",
     size = "default",
     nativeButton = false,
+    keepFeedback = false,
     haptic = "light",
     hoverSound = "button",
     pressSound = "button",
@@ -54,18 +56,22 @@ function Button({
                 "data-size": size
             })}
             data-cursor="target"
-            data-sound={hoverSound}
+            {...((!nativeButton || keepFeedback) && {
+                "data-sound": hoverSound
+            })}
             className={cn(
                 nativeButton
                     ? className
                     : buttonVariants({ variant, size, className })
             )}
             {...props}
-            onPress={(e) => {
-                playPressFeedback(mute ? false : pressSound, haptic)
+            {...((!nativeButton || keepFeedback) && {
+                onPress: (e) => {
+                    playPressFeedback(mute ? false : pressSound, haptic)
 
-                onPress?.(e)
-            }}
+                    onPress?.(e)
+                }
+            })}
         />
     )
 }
@@ -78,6 +84,8 @@ type LinkButtonProps = Omit<NextLinkProps, "href" | keyof AriaLinkOptions> &
     ButtonFeedback & {
         className?: string
         nativeLink?: boolean
+        keepFeedback?: boolean
+        openInNewTab?: boolean
         mute?: boolean
         href: NextLinkProps["href"]
         ref?: React.RefObject<HTMLAnchorElement | null>
@@ -88,6 +96,8 @@ function LinkButton({
     variant = "default",
     size = "default",
     nativeLink = false,
+    keepFeedback = false,
+    openInNewTab = false,
     haptic = "medium",
     hoverSound = "button",
     pressSound = "button",
@@ -111,11 +121,13 @@ function LinkButton({
                 typeof href === "string"
                     ? href
                     : (href.href ?? href.pathname ?? ""),
-            onPress: (e) => {
-                playPressFeedback(mute ? false : pressSound, haptic)
+            ...((!nativeLink || keepFeedback) && {
+                onPress: (e) => {
+                    playPressFeedback(mute ? false : pressSound, haptic)
 
-                onPress?.(e)
-            }
+                    onPress?.(e)
+                }
+            })
         },
         domRef
     )
@@ -130,8 +142,14 @@ function LinkButton({
             {...(!nativeLink && {
                 "data-slot": "link-button",
                 "data-variant": variant,
-                "data-size": size,
+                "data-size": size
+            })}
+            {...((!nativeLink || keepFeedback) && {
                 "data-sound": hoverSound
+            })}
+            {...(openInNewTab && {
+                target: "_blank",
+                rel: "noreferrer"
             })}
             className={cn(
                 nativeLink

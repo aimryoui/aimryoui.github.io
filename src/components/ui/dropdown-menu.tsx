@@ -1,18 +1,19 @@
 "use client"
 import type React from "react"
 import { createContext, isValidElement, useContext, useState } from "react"
-import NextLink from "next/link"
+import type NextLink from "next/link"
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { ArrowUpRight, CheckIcon, ChevronRightIcon } from "lucide-react"
 
+import { LinkButton } from "@/components/ui/button"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
 type DropdownMenuOptions = {
+    anchor?: HTMLElement | null
     content: React.ReactNode
     className?: string
-    anchor?: HTMLElement | null
 } & Pick<
     MenuPrimitive.Positioner.Props,
     "align" | "alignOffset" | "side" | "sideOffset"
@@ -102,13 +103,14 @@ function DropdownMenuTrigger<TPayload = DropdownMenuPayload>({
 
 function DropdownMenuContent({
     align = "start",
-    alignOffset = 0,
-    side = "top",
-    sideOffset = -1.5,
+    alignOffset = 1.5,
+    side = "bottom",
+    sideOffset = 0,
     anchor,
     shadow = true,
     isSubMenu = false,
     className,
+    viewportClassName,
     children,
     ...props
 }: MenuPrimitive.Popup.Props &
@@ -116,9 +118,10 @@ function DropdownMenuContent({
         MenuPrimitive.Positioner.Props,
         "align" | "alignOffset" | "side" | "sideOffset"
     > & {
+        anchor?: HTMLElement | null
         shadow?: boolean
         isSubMenu?: boolean
-        anchor?: HTMLElement | null
+        viewportClassName?: Pick<MenuPrimitive.Viewport.Props, "className">
     }) {
     return (
         <DropdownMenuPortal
@@ -137,7 +140,7 @@ function DropdownMenuContent({
                 data-cursor="target"
                 anchor={anchor ?? undefined}
                 className={cn(
-                    "group z-80 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] cursor-auto outline-none",
+                    "group/dropdown-menu-positioner z-80 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] cursor-auto outline-none",
                     isSubMenu && "p-0.5",
                     "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350 data-instant:transition-none"
                 )}
@@ -152,17 +155,18 @@ function DropdownMenuContent({
                     data-cursor="lock"
                     tabIndex={-1}
                     className={cn(
-                        "relative z-50 flex h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 origin-[--transform-origin] flex-col overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
-                        "will-change-[width,height,opacity,transform,border-radius] transition-[width,height,opacity,transform,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350",
+                        "group/dropdown-menu-popup relative z-50 grid h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
+                        "will-change-[width,height,opacity,transform,border-radius] transition-[width,height,opacity,transform,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)]",
+                        isSubMenu ? "duration-100" : "duration-350",
                         {
-                            "group-data-[cursor=target]:group-hover":
+                            "group-data-[cursor=target]/dropdown-menu-positioner:group-hover/dropdown-menu-positioner":
                                 "rounded-none",
                             "data-starting-style": [
-                                isSubMenu ? "scale-90" : "scale-50",
+                                isSubMenu ? "scale-95" : "scale-50",
                                 "opacity-0"
                             ],
                             "data-ending-style": [
-                                isSubMenu ? "scale-90" : "scale-0",
+                                isSubMenu ? "scale-95" : "scale-0",
                                 "opacity-0"
                             ],
                             "data-instant": "transition-[border-radius]"
@@ -171,7 +175,9 @@ function DropdownMenuContent({
                     )}
                     {...props}
                 >
-                    <DropdownMenuViewport>{children}</DropdownMenuViewport>
+                    <DropdownMenuViewport className={cn(viewportClassName)}>
+                        {children}
+                    </DropdownMenuViewport>
                 </MenuPrimitive.Popup>
             </MenuPrimitive.Positioner>
         </DropdownMenuPortal>
@@ -186,8 +192,9 @@ function DropdownMenuViewport({
         <MenuPrimitive.Viewport
             data-slot="dropdown-menu-viewport"
             className={cn(
-                "relative size-full overflow-y-auto overflow-x-hidden p-1 scrollbar-none",
+                "relative flex size-full flex-col overflow-y-auto overflow-x-hidden p-1 scrollbar-none",
                 {
+                    "group-data-[side=top]/dropdown-menu-popup": "justify-end",
                     "[&_:is([data-current],[data-previous])]":
                         "w-[calc(var(--popup-width)-var(--spacing)*2)] translate-x-0 opacity-100 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.35s,.175s]",
                     "[&_[data-current][data-starting-style]]": {
@@ -398,12 +405,10 @@ function DropdownMenuLinkItem({
                 className
             )}
             render={
-                <NextLink
+                <LinkButton
                     href={href}
-                    {...(openInNewTab && {
-                        target: "_blank",
-                        rel: "noreferrer"
-                    })}
+                    nativeLink
+                    openInNewTab={openInNewTab}
                 />
             }
             {...props}

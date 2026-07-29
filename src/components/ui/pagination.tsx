@@ -54,15 +54,19 @@ function PaginationLink({
 }: PaginationLinkProps) {
     return (
         <LinkButton
+            data-slot="pagination-link"
+            data-cursor="target"
+            aria-current={isActive ? "page" : undefined}
+            data-active={isActive}
             {...(!nativeLink && {
                 variant: isActive ? "outline" : "ghost",
                 size
             })}
-            nativeLink={nativeLink}
             className={cn(className)}
-            aria-current={isActive ? "page" : undefined}
-            data-slot="pagination-link"
-            data-active={isActive}
+            nativeLink={nativeLink}
+            keepFeedback
+            hoverSound="tick"
+            pressSound="link"
             {...props}
         />
     )

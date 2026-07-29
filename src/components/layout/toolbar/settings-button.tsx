@@ -248,7 +248,8 @@ function SettingButton() {
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>
-                            Spread mode will affect performance!
+                            Spread mode is not stable and will affect
+                            performance!
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                             <span>

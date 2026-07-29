@@ -1,12 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import NextLink from "next/link"
 
 import { ExternalLink } from "lucide-react"
 
+import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 import {
     resolveSocialData,
@@ -17,17 +18,21 @@ interface SocialType {
     socialType?: "behance" | "dribbble" | "product-website"
 }
 
-interface SocialButtonProps extends Omit<
-    React.ComponentProps<typeof NextLink>,
-    "href"
-> {
+interface SocialButtonProps extends Omit<LinkButtonProps, "href"> {
     social?: SocialData
 }
 
 const SCROLL_UP_PX_THRESHOLD = 500
 
-function SocialButton({ className, social, ...props }: SocialButtonProps) {
+function SocialButton({
+    className,
+    social,
+    onPress,
+    ...props
+}: SocialButtonProps) {
     const { isWebKit } = useBrowserEngine()
+
+    const playPressFeedback = usePressFeedback()
 
     const isMobile = useMediaQuery("lg")
     const [isScrolledUp, setIsScrolledUp] = useState(false)
@@ -37,6 +42,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
         let lastScrollY = window.scrollY
         let accumulatedScrollUp = 0
         let scrollTimeout: NodeJS.Timeout
+        let zoomOutTimeout: NodeJS.Timeout
 
         const handleScroll = () => {
             const currentScrollY = window.scrollY
@@ -47,6 +53,16 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                 currentScrollY + windowHeight >= documentHeight - 10
 
             setIsAtBottom(atBottom)
+
+            clearTimeout(zoomOutTimeout)
+            if (
+                (atBottom || currentScrollY <= 0) &&
+                currentScrollY !== lastScrollY
+            ) {
+                zoomOutTimeout = setTimeout(() => {
+                    playPressFeedback("zoom-out")
+                }, 75)
+            }
 
             if (atBottom) {
                 setIsScrolledUp(true)
@@ -92,9 +108,10 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
         return () => {
             clearTimeout(initialTrigger)
             clearTimeout(scrollTimeout)
+            clearTimeout(zoomOutTimeout)
             window.removeEventListener("scroll", handleScroll)
         }
-    }, [isMobile])
+    }, [isMobile, playPressFeedback])
 
     const isExpanded = isScrolledUp
 
@@ -105,18 +122,26 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
     const socialColors = [color.default, color.hover]
 
     return isWebKit ? (
-        <NextLink
+        <LinkButton
             data-cursor="ignore"
             data-expanded={isExpanded}
+            data-sound="button"
             href={url}
-            target="_blank"
-            rel="noreferrer"
+            nativeLink
+            openInNewTab
+            onPress={(e) => {
+                playPressFeedback("link")
+
+                onPress?.(e)
+            }}
             className={cn(
                 "group pointer-events-auto flex h-9 w-fit items-center justify-end gap-2.5 text-sm text-white font-wght-500",
                 "will-change-transform transition-transform ease-spring duration-400",
-                isAtBottom && isMobile && "-translate-x-5.5",
                 {
-                    lg: "text-base font-wght-600"
+                    lg: [
+                        "text-base font-wght-600",
+                        isAtBottom && "-translate-x-5.5"
+                    ]
                 },
                 className
             )}
@@ -165,21 +190,26 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                     )}
                 />
             </div>
-        </NextLink>
+        </LinkButton>
     ) : (
-        <NextLink
+        <LinkButton
             data-cursor="ignore"
             data-expanded={isExpanded}
+            data-sound="button"
             href={url}
-            target="_blank"
-            rel="noreferrer"
+            nativeLink
+            openInNewTab
+            onPress={(e) => {
+                playPressFeedback("link")
+
+                onPress?.(e)
+            }}
             className={cn(
                 "group pointer-events-auto relative flex h-9 w-fit items-center justify-end gap-1 text-sm text-white font-wght-500",
                 "[filter:drop-shadow(0px_0px_3px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_1.5px_rgba(0,0,0,0.10))]",
                 "will-change-transform transition-transform ease-spring duration-400",
-                isAtBottom && "lg:-translate-x-5.5",
                 {
-                    lg: "text-base"
+                    lg: ["text-base", isAtBottom && "-translate-x-5.5"]
                 },
                 className
             )}
@@ -283,7 +313,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                     )}
                 />
             </div>
-        </NextLink>
+        </LinkButton>
     )
 }
 

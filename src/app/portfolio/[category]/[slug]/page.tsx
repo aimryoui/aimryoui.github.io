@@ -134,7 +134,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         className={cn(
                             "pointer-events-none fixed top-0 z-60 flex w-[100cqw] items-center justify-end bg-transparent px-6",
                             {
-                                lg: "bottom-[calc(var(--spacing)*31.5+var(--px))] top-auto px-0"
+                                lg: "bottom-20 top-auto px-0",
+                                md: "bottom-[calc(var(--spacing)*31.5+var(--px))]"
                             }
                         )}
                     >

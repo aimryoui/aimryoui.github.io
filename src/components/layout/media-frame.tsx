@@ -4,6 +4,7 @@ import type React from "react"
 import { Fragment, useRef } from "react"
 
 import { type PhotoSwipeOptions } from "photoswipe"
+import { usePress } from "react-aria"
 
 import { type CursorSelector } from "@/components/animations/target-cursor"
 import { Divider } from "@/components/layout/divider"
@@ -13,6 +14,7 @@ import { Highlight } from "@/components/ui/typography"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { slugify } from "@/helpers/slugify"
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
 interface SectionNameProps extends React.ComponentProps<"div"> {
@@ -39,6 +41,14 @@ function SectionName({
     const Comp = as
     const TextComp = isAnchorTag ? "h4" : Fragment
 
+    const playPressFeedback = usePressFeedback()
+
+    let { pressProps, isPressed } = usePress({
+        onPress: () => {
+            playPressFeedback("link")
+        }
+    })
+
     return (
         <div
             id={isAnchorTag ? slugify(sectionName) : undefined}
@@ -52,9 +62,11 @@ function SectionName({
             <Comp
                 aria-hidden={isAnchorTag ? undefined : "true"}
                 {...(isAnchorTag && {
+                    ...pressProps,
                     href: `#${slugify(sectionName)}`,
                     draggable: false,
-                    "data-cursor": "ignore"
+                    "data-cursor": "ignore",
+                    "data-sound": "tick"
                 })}
                 className={cn(
                     isAnchorTag && [

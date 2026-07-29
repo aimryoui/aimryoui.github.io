@@ -87,14 +87,17 @@ function ProjectCard({
     return (
         <Comp
             data-cursor="target"
-            data-sound="tick"
-            pressSound="link"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             data-hover={isHovered}
             href={href}
             prefetch={!!navigation}
-            nativeLink={true}
+            {...(!navigation && {
+                nativeLink: true,
+                keepFeedback: true,
+                hoverSound: "tick",
+                pressSound: "link"
+            })}
             className={cn(
                 "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 transition-[background-color] duration-100",
                 {

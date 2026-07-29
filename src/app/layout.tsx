@@ -16,7 +16,6 @@ import { ProgressRouteProvider } from "@/components/ui/progress"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
-import { LazyMotionProvider } from "@/providers/lazy-motion-provider"
 import { ThemeProvider } from "@/providers/theme-provider"
 
 import AppData from "~/package.json"
@@ -243,19 +242,19 @@ export default function RootLayout({
             >
                 <AudioProvider>
                     <ThemeProvider disableTransitionOnChange>
-                        <LazyMotionProvider>
-                            <ProgressRouteProvider>
-                                <TooltipProvider>
-                                    <TargetCursor />
-                                    <MarginLine />
-                                    <MarginLine className="order-last" />
-                                    {children}
-                                    <PngAntiBleed />
-                                    <PngBorder />
-                                    <MetaBall />
-                                </TooltipProvider>
-                            </ProgressRouteProvider>
-                        </LazyMotionProvider>
+                        {/* <LazyMotionProvider> */}
+                        <ProgressRouteProvider>
+                            <TooltipProvider>
+                                <MarginLine />
+                                <MarginLine className="order-last" />
+                                {children}
+                                <PngAntiBleed />
+                                <PngBorder />
+                                <MetaBall />
+                                <TargetCursor />
+                            </TooltipProvider>
+                        </ProgressRouteProvider>
+                        {/* </LazyMotionProvider> */}
                     </ThemeProvider>
                 </AudioProvider>
             </body>

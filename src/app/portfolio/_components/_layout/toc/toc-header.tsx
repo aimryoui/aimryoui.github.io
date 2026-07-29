@@ -31,7 +31,7 @@ function TocHeader({
             className={cn(
                 "flex gap-3 bg-background px-6 py-5.5",
                 {
-                    lg: "gap-4"
+                    lg: "gap-5"
                 },
                 containerClassName
             )}

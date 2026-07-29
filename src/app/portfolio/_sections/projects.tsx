@@ -7,7 +7,6 @@ import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { LinkButton } from "@/components/ui/button"
-import { usePressFeedback } from "@/hooks/use-press-feedback"
 import {
     getCategoryPath,
     getProjectPath,
@@ -26,8 +25,6 @@ import { projects } from "~/.velite"
 function Projects() {
     const mode = usePortfolioModeStore((state) => state.mode)
     const projectGroups = groupProjectsByCategory(projects)
-
-    const playPressFeedback = usePressFeedback()
 
     if (mode === "spread") {
         return projectGroups.map((group, index) => (
@@ -49,7 +46,7 @@ function Projects() {
                             <div
                                 className={cn(
                                     "flex aspect-3 size-full items-center justify-evenly rounded-2xl border border-highlighted bg-background",
-                                    "bg-[radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]"
+                                    "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]"
                                 )}
                             >
                                 {group.icons}
@@ -112,15 +109,11 @@ function Projects() {
                 <Fragment key={group.id}>
                     <section className={cn("bg-background")}>
                         <LinkButton
+                            data-cursor="target"
                             href={getCategoryPath(group.id)}
                             nativeLink
+                            keepFeedback
                             prefetch={false}
-                            draggable={false}
-                            data-cursor="target"
-                            data-sound="tick"
-                            onPress={() => {
-                                playPressFeedback("link", "success")
-                            }}
                             className={cn(
                                 "group flex items-center justify-between gap-4 pe-6 transition-[background-color] duration-100",
                                 {

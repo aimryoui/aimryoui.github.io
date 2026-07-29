@@ -46,7 +46,7 @@ function Toolbar({ className }: { className?: string }) {
                     className={cn(
                         "flex w-full items-center gap-3 @container",
                         {
-                            lg: "gap-4"
+                            lg: "gap-5"
                         },
                         className
                     )}
@@ -106,8 +106,8 @@ function Toolbar({ className }: { className?: string }) {
                                     className={cn(
                                         "flex flex-col",
                                         isTouchDevice
-                                            ? "sm:@[21.5rem]:hidden"
-                                            : "sm:@[25rem]:hidden"
+                                            ? "sm:@[21.8rem]:hidden"
+                                            : "sm:@[25.7rem]:hidden"
                                     )}
                                 >
                                     <Bold className="text-sm lg:text-base">
@@ -140,7 +140,7 @@ function Toolbar({ className }: { className?: string }) {
                                 className={cn(
                                     "relative -my-5.5 -me-6 hidden size-20",
                                     {
-                                        lg: "ms-2 block"
+                                        lg: "block"
                                     }
                                 )}
                             >

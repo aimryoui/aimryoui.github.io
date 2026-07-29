@@ -164,7 +164,6 @@ function DrawerContent({
                         data-slot="drawer-popup"
                         data-swipe-axis={swipeAxis}
                         data-snap-points={hasSnapPoints ? "" : undefined}
-                        render={<aside />}
                         className={cn(
                             // Base.
                             "group/drawer-popup pointer-events-auto fixed z-60 m-[--drawer-inset,0px] flex h-[--drawer-content-height] max-h-[--drawer-content-max-height,none] min-h-0 w-[--drawer-content-width,auto] select-none flex-col rounded-t-4xl text-sm text-popover-foreground shadow-xl will-change-transform outline-none transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] transition-[transform,height,opacity,filter,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)] duration-450 [--drawer-bleed-background:var(--color-background)] [--drawer-inset:0px] [--drawer-stacked-shadow:0_-20px_25px_-5px_rgb(0_0_0/0.1),0_-8px_10px_-6px_rgb(0_0_0/0.1)] [interpolate-size:allow-keywords] data-[swipe-direction=down]:data-[nested-drawer-open]:shadow-[--drawer-stacked-shadow]",

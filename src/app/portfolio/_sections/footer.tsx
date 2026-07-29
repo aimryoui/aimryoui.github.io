@@ -1,7 +1,6 @@
 "use client"
 
 import { Fragment, useRef } from "react"
-import NextLink from "next/link"
 import { usePathname } from "next/navigation"
 
 import { Divider } from "@/components/layout/divider"
@@ -12,10 +11,12 @@ import {
 } from "@/components/layout/line"
 import { SectionName } from "@/components/layout/media-frame"
 import { Space } from "@/components/layout/space"
+import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useContainerQuery } from "@/hooks/use-container-query"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 import { type SectionProps, sections } from "@/portfolio/_sections/contact"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
@@ -36,6 +37,8 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
 
     const containerRef = useRef<HTMLElement>(null)
 
+    const playPressFeedback = usePressFeedback()
+
     if (mode === "spread") {
         return (
             <footer>
@@ -55,7 +58,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                         <div
                             className={cn(
                                 "flex aspect-3 size-full items-center justify-evenly rounded-2xl border border-highlighted bg-background",
-                                "bg-[radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]"
+                                "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]"
                             )}
                         >
                             <div
@@ -202,12 +205,15 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                                 "h-20 basis-[calc(20%-var(--px)*4)]"
                                         })}
                                     >
-                                        <NextLink
-                                            href={platform.links.url}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            draggable={false}
+                                        <LinkButton
                                             data-cursor="target"
+                                            data-sound="tick"
+                                            href={platform.links.url}
+                                            nativeLink
+                                            openInNewTab
+                                            onPress={() => {
+                                                playPressFeedback("link")
+                                            }}
                                             className={cn(
                                                 "grid h-full place-items-center bg-background opacity-40 transition-[color,background-color,opacity] duration-100",
                                                 {
@@ -221,7 +227,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                             <span className="sr-only">
                                                 {platform.title}
                                             </span>
-                                        </NextLink>
+                                        </LinkButton>
                                     </li>
                                 }
                             />

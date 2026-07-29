@@ -109,7 +109,7 @@ const PRESS_PRESETS: Record<Exclude<PressSoundType, false>, PressConfigs> = {
 
     "zoom-in": {
         duration: 0.2,
-        gain: 0.06,
+        gain: 0.12,
         attack: 0.1,
         release: 0.1,
         pitchSweep: 100,
@@ -122,7 +122,7 @@ const PRESS_PRESETS: Record<Exclude<PressSoundType, false>, PressConfigs> = {
 
     "zoom-out": {
         duration: 0.2,
-        gain: 0.06,
+        gain: 0.12,
         attack: 0.1,
         release: 0.1,
         pitchSweep: 100,
