@@ -30,27 +30,45 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
 
         playerRef.current = createSoundEngine()
 
-        const handlePointerOver = (e: PointerEvent) => {
+        const handleInteraction = (e: Event) => {
             if (!useAudioStore.getState().isAudioEnabled) return
 
             const target = (e.target as Element).closest(TARGET_SELECTORS)
+
+            if (
+                e.type === "focusin" &&
+                target &&
+                !target.matches(":focus-visible")
+            ) {
+                return
+            }
 
             if (target && target !== lastTargetRef.current) {
                 const soundType = target.getAttribute(
                     "data-sound"
                 ) as HoverSoundType
-                playerRef.current?.playHover(soundType)
+
+                if (
+                    soundType &&
+                    soundType !== ("false" as unknown as HoverSoundType)
+                ) {
+                    playerRef.current?.playHover(soundType)
+                }
             }
 
             lastTargetRef.current = target
         }
 
-        document.addEventListener("pointerover", handlePointerOver, {
+        document.addEventListener("pointerover", handleInteraction, {
+            passive: true
+        })
+        document.addEventListener("focusin", handleInteraction, {
             passive: true
         })
 
         return () => {
-            document.removeEventListener("pointerover", handlePointerOver)
+            document.removeEventListener("pointerover", handleInteraction)
+            document.removeEventListener("focusin", handleInteraction)
             playerRef.current?.dispose()
         }
     }, [isTouchDevice])

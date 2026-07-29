@@ -65,13 +65,14 @@ function Button({
                     : buttonVariants({ variant, size, className })
             )}
             {...props}
-            {...((!nativeButton || keepFeedback) && {
-                onPress: (e) => {
-                    playPressFeedback(mute ? false : pressSound, haptic)
+            {...(!mute &&
+                (!nativeButton || keepFeedback) && {
+                    onPress: (e) => {
+                        playPressFeedback(pressSound, haptic)
 
-                    onPress?.(e)
-                }
-            })}
+                        onPress?.(e)
+                    }
+                })}
         />
     )
 }
@@ -121,13 +122,15 @@ function LinkButton({
                 typeof href === "string"
                     ? href
                     : (href.href ?? href.pathname ?? ""),
-            ...((!nativeLink || keepFeedback) && {
-                onPress: (e) => {
-                    playPressFeedback(mute ? false : pressSound, haptic)
+            ...(!mute &&
+                (!nativeLink || keepFeedback) && {
+                    "data-sound": hoverSound,
+                    onPress: (e) => {
+                        playPressFeedback(pressSound, haptic)
 
-                    onPress?.(e)
-                }
-            })
+                        onPress?.(e)
+                    }
+                })
         },
         domRef
     )
@@ -143,9 +146,6 @@ function LinkButton({
                 "data-slot": "link-button",
                 "data-variant": variant,
                 "data-size": size
-            })}
-            {...((!nativeLink || keepFeedback) && {
-                "data-sound": hoverSound
             })}
             {...(openInNewTab && {
                 target: "_blank",

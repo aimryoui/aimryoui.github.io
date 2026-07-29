@@ -5,7 +5,7 @@ function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
         <div
             role="separator"
             className={cn(
-                "pointer-events-none sticky top-0 z-30 h-dvh w-px",
+                "pointer-events-none sticky top-0 z-30 h-dvh w-px will-change-transform",
                 className
             )}
             {...props}

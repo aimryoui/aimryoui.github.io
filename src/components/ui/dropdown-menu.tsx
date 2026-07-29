@@ -1,12 +1,11 @@
 "use client"
 import type React from "react"
 import { createContext, isValidElement, useContext, useState } from "react"
-import type NextLink from "next/link"
+import NextLink from "next/link"
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { ArrowUpRight, CheckIcon, ChevronRightIcon } from "lucide-react"
 
-import { LinkButton } from "@/components/ui/button"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
@@ -399,18 +398,12 @@ function DropdownMenuLinkItem({
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
                     "data-disabled": "pointer-events-none opacity-50",
-                    "[&_svg:not([class*='size-'])]": "size-4",
-                    "[&_svg]": "pointer-events-none shrink-0"
+                    "[&_svg]": "pointer-events-none shrink-0",
+                    "[&_svg:not([class*='size-'])]": "size-4"
                 },
                 className
             )}
-            render={
-                <LinkButton
-                    href={href}
-                    nativeLink
-                    openInNewTab={openInNewTab}
-                />
-            }
+            render={<NextLink href={href} />}
             {...props}
         >
             {openInNewTab && (

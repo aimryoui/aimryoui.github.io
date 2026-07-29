@@ -3,7 +3,6 @@
 import { memo } from "react"
 
 import { ChevronDown } from "lucide-react"
-import { useWebHaptics } from "web-haptics/react"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
 import { LinkButton } from "@/components/ui/button"
@@ -25,8 +24,6 @@ const MobileTocItemRow = memo(
         const href = item.href ?? `#${item.id}`
 
         const isProject = item.depth === 3 && !item.icon
-
-        const { trigger } = useWebHaptics()
 
         return (
             <li
@@ -52,10 +49,12 @@ const MobileTocItemRow = memo(
                 <LinkButton
                     href={href}
                     nativeLink
+                    keepFeedback
+                    hoverSound="tick"
+                    pressSound={isProject ? "link" : "button"}
+                    haptic={isProject ? "light" : "success"}
                     data-toc-id={item.id}
                     onPress={() => {
-                        void trigger(isProject ? "light" : "success")
-
                         if (isSameUrl(href)) {
                             onSameLinkClick()
                             return

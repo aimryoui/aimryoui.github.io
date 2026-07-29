@@ -371,7 +371,9 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     )
 
                     if (Math.abs(clampedDestZoom - currentZoom) > 0.01) {
-                        if (useAudioStore.getState().isAudioEnabled) {
+                        if (isTouchDevice) {
+                            playPressFeedback(false, "nudge")
+                        } else if (useAudioStore.getState().isAudioEnabled) {
                             playHoverSound("tick")
                         }
                     }

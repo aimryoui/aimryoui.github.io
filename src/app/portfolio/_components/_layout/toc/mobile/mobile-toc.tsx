@@ -99,6 +99,7 @@ function MobileTocButtonCore() {
                                 size="icon"
                                 variant="outline"
                                 haptic="nudge"
+                                pressSound={isTocOpen ? "zoom-out" : "zoom-in"}
                                 className={cn(
                                     "!size-full !rounded-none border-0"
                                 )}

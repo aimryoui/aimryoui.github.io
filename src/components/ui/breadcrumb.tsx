@@ -170,9 +170,10 @@ function BreadcrumbPage({
 
     return (
         <Button
-            nativeButton={true}
             data-slot="breadcrumb-page"
             aria-current="page"
+            nativeButton
+            keepFeedback
             onPress={() =>
                 void window.dispatchEvent(
                     new CustomEvent("portfolio:main-flash")
@@ -215,9 +216,9 @@ function BreadcrumbMenu({
     return (
         <Button
             data-slot="breadcrumb-menu"
-            nativeButton={true}
             onPress={onPress}
-            {...props}
+            nativeButton
+            keepFeedback
             className={cn(
                 "group/trigger flex h-full items-center text-muted-foreground/90 transition-[color] duration-100",
                 "group-first:-ms-1.25",
@@ -227,6 +228,7 @@ function BreadcrumbMenu({
                 },
                 className
             )}
+            {...props}
         >
             <span
                 ref={anchorRef}
@@ -275,8 +277,8 @@ function BreadcrumbMenuPage({
         <Button
             data-slot="breadcrumb-menu-page"
             aria-current="page"
-            nativeButton={true}
-            {...props}
+            nativeButton
+            keepFeedback
             className={cn(
                 "group/trigger -me-1.25 flex h-full items-center text-foreground",
                 {
@@ -284,6 +286,7 @@ function BreadcrumbMenuPage({
                 },
                 className
             )}
+            {...props}
         >
             <span
                 ref={anchorRef}
