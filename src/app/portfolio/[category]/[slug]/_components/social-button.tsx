@@ -22,29 +22,37 @@ interface SocialButtonProps extends Omit<LinkButtonProps, "href"> {
     social?: SocialData
 }
 
+const FEEDBACK_DELAY = 75
 const SCROLL_UP_PX_THRESHOLD = 500
 
-function SocialButton({
-    className,
-    social,
-    onPress,
-    ...props
-}: SocialButtonProps) {
+function SocialButton({ className, social, ...props }: SocialButtonProps) {
     const { isWebKit } = useBrowserEngine()
 
     const playPressFeedback = usePressFeedback()
 
     const isMobile = useMediaQuery("lg")
-    const [isScrolledUp, setIsScrolledUp] = useState(false)
+    const [isExpanded, setIsExpanded] = useState(false)
     const [isAtBottom, setIsAtBottom] = useState(false)
 
     const hoverTimeoutRef = useRef<NodeJS.Timeout>(undefined)
+    const hasScrolledRef = useRef(false)
+
+    const handleHoverStart = () => {
+        if (isExpanded) return
+
+        hoverTimeoutRef.current = setTimeout(() => {
+            playPressFeedback("zoom-out")
+        }, FEEDBACK_DELAY)
+    }
+
+    const handleHoverEnd = () => {
+        clearTimeout(hoverTimeoutRef.current)
+    }
 
     useEffect(() => {
         let lastScrollY = window.scrollY
         let accumulatedScrollUp = 0
         let scrollTimeout: NodeJS.Timeout
-        let zoomOutTimeout: NodeJS.Timeout
 
         const handleScroll = () => {
             const currentScrollY = window.scrollY
@@ -56,38 +64,34 @@ function SocialButton({
 
             setIsAtBottom(atBottom)
 
-            clearTimeout(zoomOutTimeout)
-            if (
-                (atBottom || currentScrollY <= 0) &&
-                currentScrollY !== lastScrollY
-            ) {
-                zoomOutTimeout = setTimeout(() => {
-                    playPressFeedback("zoom-out")
-                }, 75)
+            if (currentScrollY !== lastScrollY) {
+                hasScrolledRef.current = true
             }
 
             if (atBottom) {
-                setIsScrolledUp(true)
+                setIsExpanded(true)
                 accumulatedScrollUp = 0
             } else if (currentScrollY <= 0) {
-                setIsScrolledUp(true)
+                setIsExpanded(true)
                 accumulatedScrollUp = 0
             } else {
                 const delta = currentScrollY - lastScrollY
 
                 if (isMobile) {
                     if (delta > 0) {
-                        setIsScrolledUp(false)
+                        setIsExpanded(false)
                         accumulatedScrollUp = 0
                     } else if (delta < 0) {
                         accumulatedScrollUp += Math.abs(delta)
 
                         if (accumulatedScrollUp >= SCROLL_UP_PX_THRESHOLD) {
-                            setIsScrolledUp(true)
+                            setIsExpanded(true)
                         }
                     }
                 } else {
-                    setIsScrolledUp(false)
+                    if (delta !== 0) {
+                        setIsExpanded(false)
+                    }
                 }
             }
 
@@ -102,6 +106,8 @@ function SocialButton({
         const initialTrigger = setTimeout(() => {
             lastScrollY = window.scrollY
 
+            setIsExpanded(true)
+
             handleScroll()
 
             window.addEventListener("scroll", handleScroll, { passive: true })
@@ -110,21 +116,27 @@ function SocialButton({
         return () => {
             clearTimeout(initialTrigger)
             clearTimeout(scrollTimeout)
-            clearTimeout(zoomOutTimeout)
             window.removeEventListener("scroll", handleScroll)
         }
-    }, [isMobile, playPressFeedback])
+    }, [isMobile])
 
-    const isExpanded = isScrolledUp
+    useEffect(() => {
+        if (isExpanded && hasScrolledRef.current) {
+            const timeout = setTimeout(() => {
+                playPressFeedback("zoom-out")
+            }, FEEDBACK_DELAY)
+
+            return () => {
+                clearTimeout(timeout)
+            }
+        }
+    }, [isExpanded, playPressFeedback])
 
     const socialData = resolveSocialData(social)
     if (!socialData) return null
     const { type, url, label, icon: SocialIcon, color } = socialData
 
     const socialColors = [color.default, color.hover]
-
-    const isAlreadyExpanded =
-        isAtBottom || (typeof window !== "undefined" && window.scrollY <= 0)
 
     return isWebKit ? (
         <LinkButton
@@ -134,19 +146,10 @@ function SocialButton({
             openInNewTab
             nativeLink
             keepFeedback
-            hoverSound={isAlreadyExpanded ? "button" : false}
+            hoverSound={isExpanded ? "button" : false}
             pressSound="link"
-            onHoverStart={() => {
-                if (isAlreadyExpanded) return
-
-                hoverTimeoutRef.current = setTimeout(() => {
-                    playPressFeedback("zoom-out")
-                }, 75)
-            }}
-            onHoverEnd={() => {
-                clearTimeout(hoverTimeoutRef.current)
-            }}
-            onPress={onPress}
+            onHoverStart={handleHoverStart}
+            onHoverEnd={handleHoverEnd}
             className={cn(
                 "group pointer-events-auto flex h-9 w-fit items-center justify-end gap-2.5 text-sm text-white font-wght-500",
                 "will-change-transform transition-transform ease-spring duration-400",
@@ -212,19 +215,10 @@ function SocialButton({
             nativeLink
             openInNewTab
             keepFeedback
-            hoverSound={isAlreadyExpanded ? "button" : false}
+            hoverSound={isExpanded ? "button" : false}
             pressSound="link"
-            onHoverStart={() => {
-                if (isAlreadyExpanded) return
-
-                hoverTimeoutRef.current = setTimeout(() => {
-                    playPressFeedback("zoom-out")
-                }, 75)
-            }}
-            onHoverEnd={() => {
-                clearTimeout(hoverTimeoutRef.current)
-            }}
-            onPress={onPress}
+            onHoverStart={handleHoverStart}
+            onHoverEnd={handleHoverEnd}
             className={cn(
                 "group pointer-events-auto relative flex h-9 w-fit items-center justify-end gap-1 text-sm text-white font-wght-500",
                 "[filter:drop-shadow(0px_0px_3px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_1.5px_rgba(0,0,0,0.10))]",

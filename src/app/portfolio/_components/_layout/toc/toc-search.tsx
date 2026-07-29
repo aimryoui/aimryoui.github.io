@@ -85,17 +85,11 @@ function TocSearch({
                 className={cn("text-md", className)}
                 {...props}
             />
-            <SearchIcon />
+            <InputGroupAddon align="inline-start">
+                <Search className="lg:size-5.5" />
+            </InputGroupAddon>
             <Addons hasValue={hasValue} onClear={onClear} />
         </SearchGroup>
-    )
-}
-
-function SearchIcon() {
-    return (
-        <InputGroupAddon align="inline-start">
-            <Search className="lg:size-5.5" />
-        </InputGroupAddon>
     )
 }
 
