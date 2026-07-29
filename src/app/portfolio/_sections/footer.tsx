@@ -207,19 +207,18 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                     >
                                         <LinkButton
                                             data-cursor="target"
-                                            data-sound="tick"
                                             href={platform.links.url}
-                                            nativeLink
                                             openInNewTab
-                                            onPress={() => {
-                                                playPressFeedback("link")
-                                            }}
+                                            nativeLink
+                                            keepFeedback
+                                            hoverSound="tick"
+                                            pressSound="link"
                                             className={cn(
-                                                "grid h-full place-items-center bg-background opacity-40 transition-[color,background-color,opacity] duration-100",
+                                                "grid h-full place-items-center bg-background text-muted-foreground/40 transition-[color,background-color] duration-100",
                                                 {
-                                                    hover: "bg-highlighted/5 text-highlighted opacity-100 transition-none",
-                                                    active: "bg-highlighted/10 text-highlighted opacity-100 transition-none",
-                                                    lg: "opacity-100"
+                                                    hover: "bg-highlighted/5 text-highlighted transition-none",
+                                                    active: "bg-highlighted/10 text-highlighted transition-none",
+                                                    lg: "text-muted-foreground"
                                                 }
                                             )}
                                         >

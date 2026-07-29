@@ -1,13 +1,16 @@
 "use client"
-import { useRef } from "react"
+
 import NextLink from "next/link"
 
 import { type VariantProps } from "class-variance-authority"
-import { type AriaLinkOptions, useLink } from "react-aria/useLink"
 import {
     Button as ButtonPrimitive,
     type ButtonProps as ButtonPrimitiveProps
 } from "react-aria-components/Button"
+import {
+    Link as LinkPrimitive,
+    type LinkProps
+} from "react-aria-components/Link"
 import { type defaultPatterns } from "web-haptics"
 
 import { buttonVariants } from "@/components/ui/button-variants"
@@ -56,40 +59,35 @@ function Button({
                 "data-size": size
             })}
             data-cursor="target"
-            {...((!nativeButton || keepFeedback) && {
-                "data-sound": hoverSound
-            })}
-            className={cn(
-                nativeButton
-                    ? className
-                    : buttonVariants({ variant, size, className })
-            )}
-            {...props}
             {...(!mute &&
                 (!nativeButton || keepFeedback) && {
+                    "data-sound": hoverSound,
                     onPress: (e) => {
                         playPressFeedback(pressSound, haptic)
 
                         onPress?.(e)
                     }
                 })}
+            className={cn(
+                nativeButton
+                    ? className
+                    : buttonVariants({ variant, size, className })
+            )}
+            {...props}
         />
     )
 }
 
 type NextLinkProps = React.ComponentProps<typeof NextLink>
 
-type LinkButtonProps = Omit<NextLinkProps, "href" | keyof AriaLinkOptions> &
-    Omit<AriaLinkOptions, "href"> &
+type LinkButtonProps = Omit<NextLinkProps, "href"> &
+    LinkProps &
     VariantProps<typeof buttonVariants> &
     ButtonFeedback & {
-        className?: string
         nativeLink?: boolean
         keepFeedback?: boolean
         openInNewTab?: boolean
         mute?: boolean
-        href: NextLinkProps["href"]
-        ref?: React.RefObject<HTMLAnchorElement | null>
     }
 
 function LinkButton({
@@ -106,42 +104,13 @@ function LinkButton({
     onPress,
     href,
     draggable = false,
-    ref,
     ...props
 }: LinkButtonProps) {
     const playPressFeedback = usePressFeedback()
 
-    const defaultRef = useRef<HTMLAnchorElement>(null)
-    const domRef = ref ?? defaultRef
-
-    const { linkProps } = useLink(
-        {
-            ...props,
-            elementType: "a",
-            href:
-                typeof href === "string"
-                    ? href
-                    : (href.href ?? href.pathname ?? ""),
-            ...(!mute &&
-                (!nativeLink || keepFeedback) && {
-                    "data-sound": hoverSound,
-                    onPress: (e) => {
-                        playPressFeedback(pressSound, haptic)
-
-                        onPress?.(e)
-                    }
-                })
-        },
-        domRef
-    )
-
     return (
-        <NextLink
+        <LinkPrimitive
             href={href}
-            draggable={draggable}
-            {...props}
-            {...linkProps}
-            ref={domRef}
             {...(!nativeLink && {
                 "data-slot": "link-button",
                 "data-variant": variant,
@@ -151,11 +120,28 @@ function LinkButton({
                 target: "_blank",
                 rel: "noreferrer"
             })}
+            {...(!mute &&
+                (!nativeLink || keepFeedback) && {
+                    "data-sound": hoverSound,
+                    onPress: (e) => {
+                        playPressFeedback(pressSound, haptic)
+
+                        onPress?.(e)
+                    }
+                })}
             className={cn(
                 nativeLink
                     ? className
                     : buttonVariants({ variant, size, className })
             )}
+            {...props}
+            render={(props) =>
+                "href" in props ? (
+                    <NextLink {...props} draggable={draggable} />
+                ) : (
+                    <span {...props} />
+                )
+            }
         />
     )
 }

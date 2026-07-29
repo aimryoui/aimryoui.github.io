@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { ExternalLink } from "lucide-react"
 
@@ -37,6 +37,8 @@ function SocialButton({
     const isMobile = useMediaQuery("lg")
     const [isScrolledUp, setIsScrolledUp] = useState(false)
     const [isAtBottom, setIsAtBottom] = useState(false)
+
+    const hoverTimeoutRef = useRef<NodeJS.Timeout>(undefined)
 
     useEffect(() => {
         let lastScrollY = window.scrollY
@@ -121,19 +123,30 @@ function SocialButton({
 
     const socialColors = [color.default, color.hover]
 
+    const isAlreadyExpanded =
+        isAtBottom || (typeof window !== "undefined" && window.scrollY <= 0)
+
     return isWebKit ? (
         <LinkButton
             data-cursor="ignore"
             data-expanded={isExpanded}
-            data-sound="button"
             href={url}
-            nativeLink
             openInNewTab
-            onPress={(e) => {
-                playPressFeedback("link")
+            nativeLink
+            keepFeedback
+            hoverSound={isAlreadyExpanded ? "button" : false}
+            pressSound="link"
+            onHoverStart={() => {
+                if (isAlreadyExpanded) return
 
-                onPress?.(e)
+                hoverTimeoutRef.current = setTimeout(() => {
+                    playPressFeedback("zoom-out")
+                }, 75)
             }}
+            onHoverEnd={() => {
+                clearTimeout(hoverTimeoutRef.current)
+            }}
+            onPress={onPress}
             className={cn(
                 "group pointer-events-auto flex h-9 w-fit items-center justify-end gap-2.5 text-sm text-white font-wght-500",
                 "will-change-transform transition-transform ease-spring duration-400",
@@ -195,15 +208,23 @@ function SocialButton({
         <LinkButton
             data-cursor="ignore"
             data-expanded={isExpanded}
-            data-sound="button"
             href={url}
             nativeLink
             openInNewTab
-            onPress={(e) => {
-                playPressFeedback("link")
+            keepFeedback
+            hoverSound={isAlreadyExpanded ? "button" : false}
+            pressSound="link"
+            onHoverStart={() => {
+                if (isAlreadyExpanded) return
 
-                onPress?.(e)
+                hoverTimeoutRef.current = setTimeout(() => {
+                    playPressFeedback("zoom-out")
+                }, 75)
             }}
+            onHoverEnd={() => {
+                clearTimeout(hoverTimeoutRef.current)
+            }}
+            onPress={onPress}
             className={cn(
                 "group pointer-events-auto relative flex h-9 w-fit items-center justify-end gap-1 text-sm text-white font-wght-500",
                 "[filter:drop-shadow(0px_0px_3px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_1.5px_rgba(0,0,0,0.10))]",

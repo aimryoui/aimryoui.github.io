@@ -80,15 +80,15 @@ const TocItemRow = memo(
                     )}
                 />
                 <LinkButton
-                    href={href}
-                    nativeLink
-                    prefetch={false}
                     data-toc-id={item.id}
                     data-cursor="target"
-                    data-sound="tick"
+                    href={href}
+                    nativeLink
+                    keepFeedback
+                    hoverSound="tick"
+                    pressSound="link"
+                    prefetch={false}
                     onPress={() => {
-                        playPressFeedback("link")
-
                         if (isSameUrl(href)) {
                             onSameLinkClick()
                             return

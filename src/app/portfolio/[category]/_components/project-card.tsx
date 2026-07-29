@@ -37,8 +37,7 @@ function ProjectCard({
     const startTimeRef = useRef<number>(0)
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
-    const hrefPath = typeof href === "string" ? href : (href.pathname ?? "")
-    const projectPath = hrefPath.replace("/portfolio/", "")
+    const projectPath = href?.replace("/portfolio/", "")
 
     useEffect(() => {
         return () => {

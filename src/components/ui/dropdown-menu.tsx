@@ -403,7 +403,15 @@ function DropdownMenuLinkItem({
                 },
                 className
             )}
-            render={<NextLink href={href} />}
+            render={
+                <NextLink
+                    href={href}
+                    {...(openInNewTab && {
+                        target: "_blank",
+                        rel: "noreferrer"
+                    })}
+                />
+            }
             {...props}
         >
             {openInNewTab && (
