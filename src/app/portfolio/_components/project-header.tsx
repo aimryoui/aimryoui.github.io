@@ -1,9 +1,14 @@
 import { ViewTransition } from "react"
 
 import { Divider } from "@/components/layout/divider"
-import { ElementLine, SectionLine } from "@/components/layout/line"
+import {
+    ElementLine,
+    SectionLine,
+    SvgElementLine
+} from "@/components/layout/line"
+import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
-import { At, H1, Highlight, Link, Text } from "@/components/ui/typography"
+import { At, H1, Highlight, Text } from "@/components/ui/typography"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { slugify } from "@/helpers/slugify"
@@ -75,16 +80,17 @@ function ProjectHeader({
                         category={category}
                     />
                 </div>
+                <SvgElementLine className={cn("md:hidden")} />
                 <ElementLine
                     className={cn({
                         md: "w-screen border-b border-r-0"
                     })}
-                    containerClassName={cn({
-                        md: "h-0 w-full"
+                    containerClassName={cn("hidden", {
+                        md: "block h-0 w-full"
                     })}
                 />
                 <Divider dir="vertical" className={cn("md:hidden")} />
-                <ElementLine className={cn("md:hidden")} />
+                <SvgElementLine className={cn("md:hidden")} />
                 <div
                     className={cn(
                         "flex flex-1 flex-col justify-between text-pretty px-6 py-4.5",
@@ -126,12 +132,19 @@ function ProjectHeader({
                                         key={key}
                                         payload={tool.label}
                                         render={
-                                            <Link openInNewTab href={tool.url}>
+                                            <LinkButton
+                                                href={tool.url}
+                                                openInNewTab
+                                                nativeLink
+                                                keepFeedback
+                                                hoverSound="tick"
+                                                pressSound="link"
+                                            >
                                                 {tool.icon}
                                                 <span className="sr-only">
                                                     {tool.label}
                                                 </span>
-                                            </Link>
+                                            </LinkButton>
                                         }
                                     />
                                 )

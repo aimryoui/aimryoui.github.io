@@ -189,6 +189,7 @@ function LinkButton({
                 "data-variant": variant,
                 "data-size": size
             })}
+            data-cursor="target"
             {...(openInNewTab && {
                 target: "_blank",
                 rel: "noreferrer"

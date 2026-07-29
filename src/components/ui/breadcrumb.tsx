@@ -202,7 +202,6 @@ function BreadcrumbPage({
 function BreadcrumbMenu({
     className,
     spanClassName,
-    onPress,
     anchorRef,
     children,
     ...props
@@ -216,7 +215,6 @@ function BreadcrumbMenu({
     return (
         <Button
             data-slot="breadcrumb-menu"
-            onPress={onPress}
             nativeButton
             keepFeedback
             className={cn(

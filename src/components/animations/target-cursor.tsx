@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 
 import { BASE_FONT_SIZE } from "~/tailwind.config"
 
-type CursorSelector = "target" | "lock" | "ignore" | undefined
+type CursorSelector = "target" | "lock" | "input" | "ignore" | "corner" | false
 
 const CONTAIN_STYLE_REGEX = /\b(paint|layout|strict|content)\b/u
 const WILL_CHANGE_REGEX = /\b(transform|perspective|filter)\b/u

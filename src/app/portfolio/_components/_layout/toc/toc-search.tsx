@@ -20,7 +20,6 @@ interface TocSearchProps extends Omit<
     value: string
     onChange: (value: string) => void
     onClear: () => void
-    cursorTarget?: boolean
 }
 
 function TocSearch({
@@ -28,7 +27,6 @@ function TocSearch({
     value,
     onChange,
     onClear,
-    cursorTarget = false,
     ref,
     ...props
 }: TocSearchProps) {
@@ -49,17 +47,11 @@ function TocSearch({
         <SearchGroup
             label="Search for sections"
             labelFor="toc-search"
-            {...(cursorTarget && {
-                "data-cursor": "input"
-            })}
+            data-cursor="input"
             data-sound="button"
-            className={cn(
-                "pointer-events-auto",
-                cursorTarget && "cursor-auto",
-                {
-                    lg: "h-[36px]"
-                }
-            )}
+            className={cn("pointer-events-auto cursor-auto", {
+                lg: "h-[36px]"
+            })}
         >
             <InputGroupInput
                 ref={ref}

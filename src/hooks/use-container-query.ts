@@ -1,14 +1,13 @@
 import {
     type RefObject,
-    useLayoutEffect,
+    useCallback,
     useMemo,
-    useRef,
     useSyncExternalStore
 } from "react"
 
 import { BASE_FONT_SIZE } from "~/tailwind.config"
 
-const UNIT_REGEX = /^([\d.]+)(px|rem|em|vw|vh)$/u
+const UNIT_REGEX = /^([\d.]+)(px|rem|vw|vh)$/u
 
 interface UseContainerQueryOptions {
     type?: "max" | "min"
@@ -21,11 +20,39 @@ const subscriberMap = new WeakMap<Element, Set<() => void>>()
 const sizeCache = new WeakMap<Element, number>()
 let globalObserver: ResizeObserver | null = null
 
+let rootFontSizeCache: number | null = null
+let windowWidthCache: number | null = null
+let windowHeightCache: number | null = null
+
+if (typeof window !== "undefined") {
+    window.addEventListener(
+        "resize",
+        () => {
+            rootFontSizeCache = null
+            windowWidthCache = null
+            windowHeightCache = null
+        },
+        { passive: true }
+    )
+}
+
+function getRootFontSize() {
+    if (rootFontSizeCache !== null) return rootFontSizeCache
+
+    rootFontSizeCache =
+        parseFloat(getComputedStyle(document.documentElement).fontSize) ||
+        BASE_FONT_SIZE
+    return rootFontSizeCache
+}
+
 function getObserver() {
     if (typeof window === "undefined") return null
     globalObserver ??= new ResizeObserver((entries) => {
         for (const entry of entries) {
-            const width = entry.contentRect.width
+            let width = entry.contentRect.width
+            if ("borderBoxSize" in entry && entry.borderBoxSize.length > 0) {
+                width = entry.borderBoxSize[0].inlineSize
+            }
             sizeCache.set(entry.target, width)
 
             const callbacks = subscriberMap.get(entry.target)
@@ -45,7 +72,8 @@ function subscribeElement(element: Element, callback: () => void) {
 
     if (!subscriberMap.has(element)) {
         subscriberMap.set(element, new Set())
-        observer.observe(element)
+
+        observer.observe(element, { box: "border-box" })
     }
     subscriberMap.get(element)?.add(callback)
 
@@ -70,74 +98,53 @@ function parseQuery(query: string | number) {
         : { num: parseFloat(query) || 0, unit: "px" }
 }
 
-function calculatePixelThreshold(
-    num: number,
-    unit: string,
-    element: HTMLElement
-) {
+function calculatePixelThreshold(num: number, unit: string) {
     switch (unit) {
         case "rem":
-            return (
-                num *
-                parseFloat(
-                    getComputedStyle(document.documentElement).fontSize ||
-                        BASE_FONT_SIZE.toString()
-                )
-            )
+            return num * getRootFontSize()
         case "px":
             return num
-        case "em":
-            return (
-                num *
-                parseFloat(
-                    getComputedStyle(element).fontSize ||
-                        BASE_FONT_SIZE.toString()
-                )
-            )
         case "vw":
-            return num * (window.innerWidth / 100)
+            windowWidthCache ??= window.innerWidth
+            return num * (windowWidthCache / 100)
         case "vh":
-            return num * (window.innerHeight / 100)
+            windowHeightCache ??= window.innerHeight
+            return num * (windowHeightCache / 100)
         default:
             return num
     }
 }
 
-export function useContainerQuery(
+function useContainerQuery(
     ref: RefObject<HTMLElement | null>,
     query: string | number,
     options: UseContainerQueryOptions = DEFAULT_OPTIONS
 ): boolean {
     const parsed = useMemo(() => parseQuery(query), [query])
-    const thresholdRef = useRef(0)
 
-    useLayoutEffect(() => {
-        if (ref.current) {
-            thresholdRef.current = calculatePixelThreshold(
-                parsed.num,
-                parsed.unit,
-                ref.current
-            )
-        }
-    }, [parsed, ref])
-
-    const subscribe = useMemo(() => {
-        return (onStoreChange: () => void) => {
+    const subscribe = useCallback(
+        (onStoreChange: () => void) => {
             if (!ref.current) return () => {}
             return subscribeElement(ref.current, onStoreChange)
-        }
-    }, [ref])
+        },
+        [ref]
+    )
 
-    const getSnapshot = () => {
+    const getSnapshot = useCallback(() => {
         if (!ref.current) return false
 
         const currentWidth = sizeCache.get(ref.current)
+
         if (currentWidth === undefined) return false
 
+        const threshold = calculatePixelThreshold(parsed.num, parsed.unit)
+
         return options.type === "max"
-            ? currentWidth <= thresholdRef.current
-            : currentWidth >= thresholdRef.current
-    }
+            ? currentWidth <= threshold
+            : currentWidth >= threshold
+    }, [ref, parsed, options.type])
 
     return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
+
+export { useContainerQuery }

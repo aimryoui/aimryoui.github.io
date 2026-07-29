@@ -73,7 +73,6 @@ function TableOfContents({ mode, items }: TocProps) {
                 value={query}
                 onChange={setQuery}
                 onClear={handleClearSearch}
-                cursorTarget
                 containerClassName="lg:hidden"
             />
             <SectionLine

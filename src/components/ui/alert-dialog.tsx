@@ -3,6 +3,7 @@
 import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog"
 
 import { Button } from "@/components/ui/button"
+import { playHoverSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 
 function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
@@ -62,14 +63,24 @@ function AlertDialogContent({
             <AlertDialogPrimitive.Popup
                 data-slot="alert-dialog-content"
                 data-size={size}
-                // data-cursor="ignore"
+                data-cursor="input"
+                onMouseEnter={() => {
+                    playHoverSound("tick")
+                }}
                 className={cn(
-                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-90 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl bg-popover px-4 py-3 text-popover-foreground ring ring-stroke outline-none duration-250",
+                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-90 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl px-4 py-3 text-popover-foreground outline-none duration-250",
                     {
                         "data-starting-style": "scale-95 opacity-0",
                         "data-ending-style": "scale-95 opacity-0",
                         "data-[size=default]": "max-w-sm sm:max-w-xs",
-                        "data-[size=sm]": "max-w-xs"
+                        "data-[size=sm]": "max-w-xs",
+                        before: "pointer-events-none absolute -inset-4.5 -z-20 bg-background bg-[repeating-linear-gradient(315deg,var(--color-pattern)_0,var(--color-pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]",
+                        after: [
+                            "pointer-events-none absolute inset-0 -z-10 rounded-inherit bg-popover ring ring-stroke transition-[border-radius] duration-100",
+                            {
+                                hover: "rounded-none duration-200"
+                            }
+                        ]
                     },
                     className
                 )}
@@ -86,7 +97,6 @@ function AlertDialogHeader({
     return (
         <div
             data-slot="alert-dialog-header"
-            data-cursor="ignore"
             className={cn(
                 "grid cursor-auto grid-rows-[auto_1fr] gap-3 p-2",
                 {
@@ -195,6 +205,7 @@ function AlertDialogAction({
     return (
         <Button
             data-slot="alert-dialog-action"
+            data-cursor={false}
             variant={variant}
             haptic={variant === "destructive" ? "error" : "light"}
             className={cn(className)}
@@ -213,6 +224,7 @@ function AlertDialogCancel({
     return (
         <AlertDialogPrimitive.Close
             data-slot="alert-dialog-cancel"
+            data-cursor={false}
             className={cn(className)}
             render={<Button variant={variant} size={size} />}
             {...props}

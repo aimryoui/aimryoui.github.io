@@ -108,13 +108,13 @@ function MobileTocButtonCore() {
                             >
                                 {isTocOpen ? (
                                     <PanelTopOpen
-                                        className="size-8"
-                                        strokeWidth={1.25}
+                                        className="size-[36px]"
+                                        strokeWidth={0.75}
                                     />
                                 ) : (
                                     <PanelTopClose
-                                        className="size-8"
-                                        strokeWidth={1.25}
+                                        className="size-[36px]"
+                                        strokeWidth={0.75}
                                     />
                                 )}
                                 <span className="sr-only">
@@ -170,8 +170,8 @@ function MobileTocButton() {
             aria-expanded={false}
             data-state="closed"
         >
-            <PanelTopClose className="size-8" strokeWidth={1.25} />
-            <span className="sr-only">Table of Contents</span>
+            <PanelTopClose className="size-[36px]" strokeWidth={1.25} />
+            <span className="sr-only">Ta0.75of Contents</span>
         </Button>
     )
 }

@@ -5,6 +5,7 @@ import { Fragment } from "react"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
+import { LinkButton } from "@/components/ui/button"
 import {
     Table,
     TableBody,
@@ -16,7 +17,6 @@ import {
     TableRow
 } from "@/components/ui/table"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
-import { Link } from "@/components/ui/typography"
 import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
@@ -187,11 +187,15 @@ function Software() {
                                                                             tool.label
                                                                         }
                                                                         render={
-                                                                            <Link
-                                                                                openInNewTab
+                                                                            <LinkButton
                                                                                 href={
                                                                                     tool.url
                                                                                 }
+                                                                                openInNewTab
+                                                                                nativeLink
+                                                                                keepFeedback
+                                                                                hoverSound="tick"
+                                                                                pressSound="link"
                                                                             >
                                                                                 {
                                                                                     tool.icon
@@ -201,7 +205,7 @@ function Software() {
                                                                                         tool.label
                                                                                     }
                                                                                 </span>
-                                                                            </Link>
+                                                                            </LinkButton>
                                                                         }
                                                                     />
                                                                 </Fragment>

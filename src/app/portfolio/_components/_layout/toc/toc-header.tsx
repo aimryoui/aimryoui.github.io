@@ -17,7 +17,6 @@ function TocHeader({
     value,
     onChange,
     onClear,
-    cursorTarget,
     ref,
     ...props
 }: TocSearchProps & {
@@ -56,9 +55,6 @@ function TocHeader({
                                 href="/portfolio#design-projects"
                                 variant="outline"
                                 size="icon"
-                                {...(cursorTarget && {
-                                    "data-cursor": "target"
-                                })}
                                 prefetch={false}
                                 scroll={false}
                                 className={cn("pointer-events-auto", {
@@ -79,7 +75,6 @@ function TocHeader({
                     value={value}
                     onChange={onChange}
                     onClear={onClear}
-                    cursorTarget={cursorTarget}
                     {...props}
                 />
             </Tooltip>
