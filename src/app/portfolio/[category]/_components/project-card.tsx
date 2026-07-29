@@ -104,7 +104,7 @@ function ProjectCard({
                     active: "bg-highlighted/10 transition-none"
                 },
                 projectNavigation && {
-                    sm: "flex-wrap gap-x-2"
+                    sm: "flex-wrap gap-x-2 gap-y-0.5"
                 },
                 className
             )}
@@ -138,7 +138,7 @@ function ProjectCard({
                     "flex min-w-0 flex-1 flex-col",
                     navigation === "backward" && "items-end",
                     projectNavigation && {
-                        sm: "order-3 w-full flex-none"
+                        sm: "order-3 w-full flex-none gap-y-0.5"
                     }
                 )}
             >

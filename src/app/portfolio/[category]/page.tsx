@@ -215,7 +215,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 />
                                 <div
                                     className={cn("text-right", {
-                                        sm: "flex flex-col"
+                                        sm: "flex flex-col gap-y-0.5"
                                     })}
                                 >
                                     {prev ? (
@@ -304,7 +304,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                             >
                                 <div
                                     className={cn({
-                                        sm: "flex flex-col"
+                                        sm: "flex flex-col gap-y-0.5"
                                     })}
                                 >
                                     {next ? (

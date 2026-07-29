@@ -221,7 +221,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     />
                                     <div
                                         className={cn("text-end", {
-                                            sm: "flex flex-col"
+                                            sm: "flex flex-col gap-y-0.5"
                                         })}
                                     >
                                         <Text
@@ -288,7 +288,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 >
                                     <div
                                         className={cn({
-                                            sm: "flex flex-col"
+                                            sm: "flex flex-col gap-y-0.5"
                                         })}
                                     >
                                         {nextCategory ? (

@@ -54,6 +54,11 @@ const MobileTocItemRow = memo(
                     pressSound={isProject ? "link" : "button"}
                     haptic={isProject ? "light" : "success"}
                     data-toc-id={item.id}
+                    onClick={(e) => {
+                        if (isSameUrl(href)) {
+                            e.preventDefault()
+                        }
+                    }}
                     onPress={() => {
                         if (isSameUrl(href)) {
                             onSameLinkClick()

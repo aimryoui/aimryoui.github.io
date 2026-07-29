@@ -9,7 +9,6 @@ import { LinkButton } from "@/components/ui/button"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { isSameUrl } from "@/helpers/is-same-url"
-import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
@@ -46,8 +45,6 @@ const TocItemRow = memo(
 
         const isProject = item.depth === 3 && !item.icon
         const isCollapsible = item.depth === 2 && item.id !== "outlines"
-
-        const playPressFeedback = usePressFeedback()
 
         return (
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
@@ -88,6 +85,11 @@ const TocItemRow = memo(
                     hoverSound="tick"
                     pressSound="link"
                     prefetch={false}
+                    onClick={(e) => {
+                        if (isSameUrl(href)) {
+                            e.preventDefault()
+                        }
+                    }}
                     onPress={() => {
                         if (isSameUrl(href)) {
                             onSameLinkClick()
