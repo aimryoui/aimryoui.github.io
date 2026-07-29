@@ -82,11 +82,10 @@ function ProjectHeader({
                 </div>
                 <SvgElementLine className={cn("md:hidden")} />
                 <ElementLine
-                    className={cn({
-                        md: "w-screen border-b border-r-0"
-                    })}
+                    dir="horizontal"
+                    className={cn("w-screen")}
                     containerClassName={cn("hidden", {
-                        md: "block h-0 w-full"
+                        md: "block"
                     })}
                 />
                 <Divider dir="vertical" className={cn("md:hidden")} />
