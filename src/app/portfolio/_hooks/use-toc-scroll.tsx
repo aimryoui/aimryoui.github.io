@@ -1,10 +1,24 @@
 "use client"
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react"
 import { usePathname } from "next/navigation"
+
+import { create } from "zustand"
 
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
+
+interface TocActiveIdStore {
+    activeId: string | null
+    setActiveId: (id: string | null) => void
+}
+
+const useTocActiveId = create<TocActiveIdStore>((set) => ({
+    activeId: null,
+    setActiveId: (id) => {
+        set({ activeId: id })
+    }
+}))
 
 interface UseTocScrollOptions {
     items: { id: string }[]
@@ -22,14 +36,15 @@ function useTocScroll({
     const pathname = usePathname()
     const { isBlink } = useBrowserEngine()
 
-    const scrollContainerRef = useRef<HTMLUListElement>(null)
+    const scrollContainerRef = useRef<HTMLDivElement>(null)
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
     const hasNotifiedActiveRef = useRef(false)
 
-    const allIds = items.map((item) => item.id)
+    const allIds = useMemo(() => items.map((item) => item.id), [items])
     const rawActiveId = useScrollSpy(allIds)
-    const [activeId, setActiveId] = useState(rawActiveId)
+    const activeId = useTocActiveId((s) => s.activeId)
+    const setActiveId = useTocActiveId((s) => s.setActiveId)
     const lastUpdateTimestamp = useRef(0)
 
     const prevQueryRef = useRef(debouncedQuery)
@@ -111,7 +126,7 @@ function useTocScroll({
         return () => {
             clearTimeout(timer)
         }
-    }, [rawActiveId, activeId, pathname, isBlink])
+    }, [rawActiveId, activeId, pathname, isBlink, setActiveId])
 
     // Notify parent that activeId is ready
     useEffect(() => {
@@ -141,6 +156,35 @@ function useTocScroll({
                         behavior: "auto"
                     })
                 } else {
+                    let delay = 0
+                    const groupList = activeElement.closest(
+                        "[data-toc-group-list]"
+                    )
+                    if (
+                        groupList &&
+                        groupList.clientHeight + 2 < groupList.scrollHeight
+                    ) {
+                        delay = 350
+                    }
+
+                    if (delay > 0) {
+                        const timer = setTimeout(() => {
+                            const el =
+                                scrollContainerRef.current?.querySelector(
+                                    `[data-toc-id="${activeId}"]`
+                                )
+                            if (el) {
+                                el.scrollIntoView({
+                                    block: "center",
+                                    behavior: "smooth"
+                                })
+                            }
+                        }, delay)
+
+                        return () => {
+                            clearTimeout(timer)
+                        }
+                    }
                     activeElement.scrollIntoView({
                         block: "center",
                         behavior: "smooth"
@@ -158,4 +202,4 @@ function useTocScroll({
 }
 
 export type { UseTocScrollOptions }
-export { useTocScroll }
+export { useTocActiveId, useTocScroll }

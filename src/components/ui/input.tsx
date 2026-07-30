@@ -1,16 +1,38 @@
 "use client"
 
+
 import { composeRenderProps } from "react-aria-components"
 import { Input as InputPrimitive } from "react-aria-components/Input"
 
+import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 
 type InputProps = React.ComponentProps<typeof InputPrimitive>
 
-function Input({ className, type, ...props }: InputProps) {
+function Input({
+    className,
+    type,
+    onFocus,
+    onPointerDown,
+    ...props
+}: InputProps) {
+
     return (
         <InputPrimitive
             type={type}
+            onFocus={(e) => {
+                playPressSound("input")
+                onFocus?.(e)
+            }}
+            onPointerDown={(e) => {
+                if (
+                    document.activeElement === e.currentTarget &&
+                    !e.currentTarget.value
+                ) {
+                    playPressSound("button")
+                }
+                onPointerDown?.(e)
+            }}
             data-slot="input"
             className={composeRenderProps(className, (className) =>
                 cn(

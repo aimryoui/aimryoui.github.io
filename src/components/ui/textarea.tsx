@@ -1,15 +1,36 @@
 "use client"
 
+
 import { composeRenderProps } from "react-aria-components"
 import { TextArea as TextareaPrimitive } from "react-aria-components/TextArea"
 
+import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 
 type TextareaProps = React.ComponentProps<typeof TextareaPrimitive>
 
-function Textarea({ className, ...props }: TextareaProps) {
+function Textarea({
+    className,
+    onFocus,
+    onPointerDown,
+    ...props
+}: TextareaProps) {
+
     return (
         <TextareaPrimitive
+            onFocus={(e) => {
+                playPressSound("input")
+                onFocus?.(e)
+            }}
+            onPointerDown={(e) => {
+                if (
+                    document.activeElement === e.currentTarget &&
+                    !e.currentTarget.value
+                ) {
+                    playPressSound("button")
+                }
+                onPointerDown?.(e)
+            }}
             data-slot="textarea"
             className={composeRenderProps(className, (className) =>
                 cn(

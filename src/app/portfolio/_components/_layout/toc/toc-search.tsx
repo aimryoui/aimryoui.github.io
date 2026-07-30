@@ -107,7 +107,7 @@ function Addons({
                             </span>
                         ),
                         side: "right",
-                        sideOffset: 6
+                        sideOffset: 8
                     }}
                     render={
                         <Button
@@ -115,6 +115,7 @@ function Addons({
                             size="icon"
                             className="hover:bg-transparent lg:size-[36px]"
                             onPress={onClear}
+                            pressSound={false}
                         >
                             <XCircle className="cursor-pointer lg:size-5.5" />
                             <span className="sr-only">Clear search</span>

@@ -3,27 +3,16 @@
 import type React from "react"
 
 import { cva, type VariantProps } from "class-variance-authority"
-import { usePress } from "react-aria"
 import { Group, type GroupProps } from "react-aria-components/Group"
 
 import { Button, type ButtonProps } from "@/components/ui/button"
 import { Input, type InputProps } from "@/components/ui/input"
 import { Textarea, type TextareaProps } from "@/components/ui/textarea"
-import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
 function InputGroup({ className, ...props }: GroupProps) {
-    const playPressFeedback = usePressFeedback()
-
-    let { pressProps, isPressed } = usePress({
-        onPress: () => {
-            playPressFeedback("input")
-        }
-    })
-
     return (
         <Group
-            {...pressProps}
             data-slot="input-group"
             role="group"
             className={cn(

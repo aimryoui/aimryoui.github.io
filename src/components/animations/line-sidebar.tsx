@@ -31,7 +31,7 @@ const FPS = 60
 const FPS_INTERVAL = 1000 / FPS
 
 function LineSidebar({
-    itemSelector = ":scope > li",
+    itemSelector = ":scope li",
     accentColor = "var(--color-foreground)",
     textColor = "#c4c4c4",
     markerColor = "var(--color-marker)",
@@ -46,14 +46,14 @@ function LineSidebar({
     className,
     ref,
     ...props
-}: React.ComponentProps<"ul"> & LineSidebarProps) {
-    const internalListRef = useRef<HTMLUListElement>(null)
+}: React.ComponentProps<"div"> & LineSidebarProps) {
+    const internalListRef = useRef<HTMLDivElement>(null)
 
     const listItemsRef = useRef<HTMLElement[]>([])
     const itemCentersRef = useRef<number[]>([])
 
     const setListRef = useCallback(
-        (el: HTMLUListElement | null) => {
+        (el: HTMLDivElement | null) => {
             internalListRef.current = el
             if (typeof ref === "function") {
                 ref(el)
@@ -106,6 +106,24 @@ function LineSidebar({
 
         return () => {
             observer.disconnect()
+        }
+    }, [updateCache])
+
+    useEffect(() => {
+        const handleLayoutChange = () => {
+            updateCache()
+        }
+        window.addEventListener("resize", handleLayoutChange)
+        window.addEventListener(
+            "portfolio:sidebar-layout-changed",
+            handleLayoutChange
+        )
+        return () => {
+            window.removeEventListener("resize", handleLayoutChange)
+            window.removeEventListener(
+                "portfolio:sidebar-layout-changed",
+                handleLayoutChange
+            )
         }
     }, [updateCache])
 
@@ -167,6 +185,15 @@ function LineSidebar({
         if (!list) return
 
         const handlePointerMove = (e: PointerEvent) => {
+            if (
+                e.target instanceof Element &&
+                e.target.closest("[data-no-sidebar-effect]")
+            ) {
+                targetsRef.current = targetsRef.current.map(() => 0)
+                startLoop()
+                return
+            }
+
             const listRect = list.getBoundingClientRect()
             const pointerYLocal = e.clientY - listRect.top + list.scrollTop
             const ease = FALLOFF_CURVES[falloff]
@@ -217,7 +244,7 @@ function LineSidebar({
     }, [])
 
     return (
-        <ul
+        <div
             ref={setListRef}
             data-slot="line-sidebar"
             className={cn(

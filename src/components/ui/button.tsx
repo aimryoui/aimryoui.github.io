@@ -17,9 +17,21 @@ import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { type HoverSoundType, type PressSoundType } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 
+const nativeButtonClassName = cn(
+    "shrink-0 cursor-pointer select-none whitespace-nowrap",
+    {
+        "aria-invalid":
+            "border-destructive ring-destructive/20 dark:ring-destructive/40",
+        "focus-visible":
+            "text-foreground shadow-[0_0_0_.3125rem] shadow-highlighted/30 -outline-offset-1 !outline-highlighted outline",
+        disabled: "pointer-events-none cursor-not-allowed opacity-40"
+    }
+)
+
 const buttonVariants = cva(
     cn(
-        "inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-xlg text-sm will-change-transform font-wght-500 outline-none transition-transform",
+        nativeButtonClassName,
+        "inline-flex items-center justify-center gap-2 rounded-xlg text-sm will-change-transform font-wght-500 transition-transform",
         {
             "data-[cursor=target]":
                 "transition-[transform,translate,scale,border-radius] ease-spring duration-200",
@@ -27,10 +39,6 @@ const buttonVariants = cva(
                 "data-[cursor=target]": "rounded-none"
             },
             active: "not-aria-[haspopup]:translate-y-px",
-            "aria-invalid":
-                "border-destructive ring-destructive/20 dark:ring-destructive/40",
-            "focus-visible": "border-ring ring ring-ring/50",
-            disabled: "pointer-events-none cursor-not-allowed opacity-40",
             "[&_svg:not([class*='size-'])]": "size-4",
             "[&_svg]": "pointer-events-none shrink-0"
         }
@@ -143,7 +151,7 @@ function Button({
                 })}
             className={cn(
                 nativeButton
-                    ? className
+                    ? [nativeButtonClassName, className]
                     : buttonVariants({ variant, size, className })
             )}
             {...props}
@@ -176,6 +184,7 @@ function LinkButton({
     mute = false,
     onPress,
     href,
+    scroll = true,
     draggable = false,
     ...props
 }: LinkButtonProps) {
@@ -205,13 +214,17 @@ function LinkButton({
                 })}
             className={cn(
                 nativeLink
-                    ? className
+                    ? [nativeButtonClassName, className]
                     : buttonVariants({ variant, size, className })
             )}
             {...props}
             render={(props) =>
                 "href" in props ? (
-                    <NextLink {...props} draggable={draggable} />
+                    <NextLink
+                        scroll={scroll}
+                        {...props}
+                        draggable={draggable}
+                    />
                 ) : (
                     <span {...props} />
                 )

@@ -3,11 +3,11 @@ import { memo } from "react"
 import { SectionLine } from "@/components/layout/line"
 import { cn } from "@/lib/utils"
 
-const TocDivider = memo(({ className }: React.ComponentProps<"input">) => (
+const TocDivider = memo(({ className }: React.ComponentProps<"div">) => (
     // <ViewTransition name={`toc-divider-${id}`}>
-    <li role="separator" className={cn("my-3 h-px first:hidden", className)}>
+    <div role="separator" className={cn("my-3 h-px first:hidden", className)}>
         <SectionLine fit />
-    </li>
+    </div>
     // </ViewTransition>
 ))
 TocDivider.displayName = "TocDivider"

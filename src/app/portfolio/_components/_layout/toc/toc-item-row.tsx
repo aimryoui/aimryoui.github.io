@@ -6,10 +6,12 @@ import { ChevronDown } from "lucide-react"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
 import { Button, LinkButton } from "@/components/ui/button"
+import { TooltipTrigger } from "@/components/ui/tooltip"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { isSameUrl } from "@/helpers/is-same-url"
 import { cn } from "@/lib/utils"
+import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
 import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocItemProps {
@@ -26,21 +28,24 @@ interface TocItemProps {
 interface TocItemRowProps {
     mode: PortfolioMode
     item: TocItemProps
-    isActive: boolean
     query?: string
     onPress: (item: TocItemProps) => void
     onSameLinkClick: () => void
+    isCollapsed?: boolean
+    onToggle?: () => void
 }
 
 const TocItemRow = memo(
     ({
         mode,
         item,
-        isActive,
         query,
         onPress,
-        onSameLinkClick
+        onSameLinkClick,
+        isCollapsed,
+        onToggle
     }: TocItemRowProps) => {
+        const isActive = useTocActiveId((s) => s.activeId === item.id)
         const href = item.href ?? `#${item.id}`
 
         const isProject = item.depth === 3 && !item.icon
@@ -49,9 +54,12 @@ const TocItemRow = memo(
 
         const isCollapsible = item.depth === 2 && item.id !== "outlines"
 
+        const Comp = isProject ? "li" : "div"
+
         return (
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
-            <li
+            <Comp
+                data-toc-item
                 className={cn(
                     "relative box-content flex h-fit list-inside items-center",
                     {
@@ -175,30 +183,65 @@ const TocItemRow = memo(
                     )}
                 </LinkButton>
                 {isCollapsible && (
-                    <Button
-                        nativeButton
-                        keepFeedback
-                        className={cn(
-                            "group/button pe-5.5 ps-2.5",
-                            "group-has-[input:not(:placeholder-shown)]/sidebar:hidden"
-                        )}
-                    >
-                        <div
-                            data-cursor="lock"
-                            className={cn(
-                                "my-1 grid size-6 place-items-center rounded-full bg-default/5 transition-[border-radius] duration-100",
-                                {
-                                    dark: "bg-default/10",
-                                    "group-hover/button":
-                                        "rounded-none duration-200"
+                    <TooltipTrigger
+                        delay={500}
+                        payload={{
+                            content: (
+                                <span>
+                                    {isCollapsed ? "Expand" : "Collapse"} this
+                                    category
+                                </span>
+                            ),
+                            side: "right",
+                            sideOffset: -14
+                        }}
+                        render={
+                            <Button
+                                nativeButton
+                                keepFeedback
+                                pressSound={
+                                    isCollapsed ? "zoom-out" : "zoom-in"
                                 }
-                            )}
-                        >
-                            <ChevronDown className="size-5 translate-y-[.5px]" />
-                        </div>
-                    </Button>
+                                onPress={onToggle}
+                                data-no-sidebar-effect
+                                className={cn(
+                                    "group/button pe-5.5 ps-2.5",
+                                    "group-has-[input:not(:placeholder-shown)]/sidebar:hidden"
+                                )}
+                            >
+                                <div
+                                    data-cursor="lock"
+                                    className={cn(
+                                        "my-1 grid size-6 place-items-center rounded-[.75rem] !corner-round transition-[border-radius,transform,translate] duration-100",
+                                        isCollapsed
+                                            ? "bg-foreground/40 text-inverted dark:bg-foreground/60"
+                                            : "bg-foreground/10 dark:bg-foreground/15",
+                                        {
+                                            "group-hover/button":
+                                                "rounded-none duration-200",
+                                            "group-active/button":
+                                                "translate-y-0.5"
+                                        }
+                                    )}
+                                >
+                                    <ChevronDown
+                                        className={cn(
+                                            "size-5 transition-transform duration-200",
+                                            isCollapsed
+                                                ? "translate-x-[.5px] -rotate-90 dark:stroke-3"
+                                                : "translate-y-[.5px]"
+                                        )}
+                                    />
+                                </div>
+                                <span className="sr-only">
+                                    {isCollapsed ? "Expand" : "Collapse"} this
+                                    category
+                                </span>
+                            </Button>
+                        }
+                    />
                 )}
-            </li>
+            </Comp>
             // </ViewTransition>
         )
     }

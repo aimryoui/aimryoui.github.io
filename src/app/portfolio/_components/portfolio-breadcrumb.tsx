@@ -112,7 +112,11 @@ function PortfolioBreadcrumb({
                             </filter>
                         </defs>
                     </svg>
-                    <BreadcrumbLink data-cursor="target" href="/portfolio">
+                    <BreadcrumbLink
+                        data-cursor="target"
+                        href="/portfolio"
+                        scroll={false}
+                    >
                         Portfolio
                     </BreadcrumbLink>
                 </BreadcrumbItem>

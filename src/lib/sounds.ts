@@ -1,3 +1,5 @@
+import { useAudioStore } from "@/stores/audio-store"
+
 type AudioContextCtor = typeof AudioContext
 
 function getAudioContextCtor(): AudioContextCtor | undefined {
@@ -351,7 +353,7 @@ function createSoundEngine(): SoundEngine {
 }
 
 function playHoverSound(type: HoverSoundType = "tick") {
-    if (type === false) return
+    if (type === false || !useAudioStore.getState().isAudioEnabled) return
     const engine = createSoundEngine()
     engine.playHover(type)
     setTimeout(() => {
@@ -360,7 +362,7 @@ function playHoverSound(type: HoverSoundType = "tick") {
 }
 
 function playPressSound(type: PressSoundType = "button") {
-    if (type === false) return
+    if (type === false || !useAudioStore.getState().isAudioEnabled) return
     const engine = createSoundEngine()
     engine.playPress(type)
     setTimeout(() => {

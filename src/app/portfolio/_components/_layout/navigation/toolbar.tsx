@@ -1,11 +1,10 @@
 "use client"
 
-import NextLink from "next/link"
-
 import { AudioToggle } from "@/components/audio/audio"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
 import { SettingButton } from "@/components/layout/toolbar/settings-button"
+import { LinkButton } from "@/components/ui/button"
 import { ProgressRoute } from "@/components/ui/progress"
 import { Tooltip } from "@/components/ui/tooltip"
 import { At, Bold } from "@/components/ui/typography"
@@ -53,11 +52,14 @@ function Toolbar({ className }: { className?: string }) {
                 >
                     <Tooltip>
                         <li className="me-auto">
-                            <NextLink
-                                href="/portfolio"
-                                scroll={false}
-                                draggable={false}
+                            <LinkButton
                                 data-cursor="ignore"
+                                href="/portfolio"
+                                nativeLink
+                                keepFeedback
+                                hoverSound="tick"
+                                pressSound="link"
+                                scroll={false}
                                 className={cn(
                                     "group flex items-center gap-x-3",
                                     {
@@ -118,7 +120,7 @@ function Toolbar({ className }: { className?: string }) {
                                         {`${projects.length} PROJECTS`}
                                     </p>
                                 </div>
-                            </NextLink>
+                            </LinkButton>
                         </li>
                         {!isTouchDevice && (
                             <li>

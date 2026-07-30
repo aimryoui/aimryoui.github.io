@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 
 import { SectionLine } from "@/components/layout/line"
+import { Tooltip } from "@/components/ui/tooltip"
 import { useIsMounted } from "@/hooks/use-is-mounted"
 import { cn } from "@/lib/utils"
 import { TocHeader } from "@/portfolio/_components/_layout/toc/toc-header"
@@ -103,17 +104,19 @@ function TableOfContents({ mode, items }: TocProps) {
                         }
                     })}
                 >
-                    {filteredItems.length === 0 ? (
-                        <TocSearchNoResult onClear={handleClearSearch} />
-                    ) : (
-                        <TocList
-                            mode={mode}
-                            items={items}
-                            debouncedQuery={debouncedQuery}
-                            filteredItems={filteredItems}
-                            onActiveReady={handleActiveReady}
-                        />
-                    )}
+                    <Tooltip>
+                        {filteredItems.length === 0 ? (
+                            <TocSearchNoResult onClear={handleClearSearch} />
+                        ) : (
+                            <TocList
+                                mode={mode}
+                                items={items}
+                                debouncedQuery={debouncedQuery}
+                                filteredItems={filteredItems}
+                                onActiveReady={handleActiveReady}
+                            />
+                        )}
+                    </Tooltip>
                 </nav>
             ) : (
                 <div

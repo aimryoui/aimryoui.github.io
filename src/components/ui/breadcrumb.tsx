@@ -3,18 +3,21 @@
 import { createContext, use, useMemo } from "react"
 import NextLink from "next/link"
 
-import { ChevronDownIcon, DotIcon, MoreHorizontalIcon } from "lucide-react"
+import { ChevronDownIcon, MoreHorizontalIcon } from "lucide-react"
 import { composeRenderProps } from "react-aria-components"
 import {
     Breadcrumb as BreadcrumbPrimitive,
     type BreadcrumbProps,
     Breadcrumbs as BreadcrumbsPrimitive,
     type BreadcrumbsProps,
-    Link as LinkPrimitive,
-    type LinkProps
+    Link as LinkPrimitive
 } from "react-aria-components/Breadcrumbs"
 
-import { Button, type ButtonProps } from "@/components/ui/button"
+import {
+    Button,
+    type ButtonProps,
+    type LinkButtonProps
+} from "@/components/ui/button"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
@@ -98,10 +101,10 @@ function BreadcrumbSeparator({
             data-slot="breadcrumb-separator"
             role="presentation"
             aria-hidden={true}
-            className={cn("text-muted-foreground/50", className)}
+            className={cn("grid size-6 place-items-center", className)}
             {...props}
         >
-            <DotIcon className="cn-rtl-flip stroke-3" />
+            <div className="size-1.5 rounded-full bg-muted-foreground/50" />
         </span>
     )
 }
@@ -110,8 +113,9 @@ function BreadcrumbLink({
     className,
     spanClassName,
     onPress,
+    scroll = true,
     ...props
-}: LinkProps & {
+}: LinkButtonProps & {
     spanClassName?: string
 }) {
     const { isCurrent } = use(BreadcrumbItemContext)
@@ -135,7 +139,7 @@ function BreadcrumbLink({
             {...props}
             render={(props) =>
                 "href" in props ? (
-                    <NextLink {...props} draggable={false}>
+                    <NextLink scroll={scroll} {...props} draggable={false}>
                         <span
                             data-cursor="lock"
                             className={cn("px-1.25 md:py-0.5", spanClassName)}

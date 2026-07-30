@@ -26,7 +26,7 @@ export default function Home() {
             <SectionLine />
             <Divider />
             <MediaFrame
-                data-cursor="none"
+                data-cursor={false}
                 flex
                 className={cn("h-full min-h-32")}
             >
