@@ -5,7 +5,7 @@ import { memo } from "react"
 import { ChevronDown } from "lucide-react"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
-import { LinkButton } from "@/components/ui/button"
+import { Button, LinkButton } from "@/components/ui/button"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { isSameUrl } from "@/helpers/is-same-url"
@@ -53,7 +53,7 @@ const TocItemRow = memo(
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
             <li
                 className={cn(
-                    "relative box-content flex h-fit list-inside items-center gap-4",
+                    "relative box-content flex h-fit list-inside items-center",
                     {
                         // Tick
                         after: [
@@ -161,28 +161,42 @@ const TocItemRow = memo(
                     {isActive && (
                         <div
                             className={cn(
-                                "absolute top-1/2 hidden size-5 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                "absolute top-1/2 hidden size-6 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
                                 isCollapsible ? "right-0" : "right-5.5",
                                 "group-hover:grid dark:bg-highlighted/20"
                             )}
                         >
                             {mode === "pages" ? (
-                                <ArrowRight className={cn("size-3")} />
+                                <ArrowRight className={cn("size-3.5")} />
                             ) : (
-                                <ArrowUp className={cn("size-3")} />
+                                <ArrowUp className={cn("size-3.5")} />
                             )}
                         </div>
                     )}
                 </LinkButton>
                 {isCollapsible && (
-                    <div
+                    <Button
+                        nativeButton
+                        keepFeedback
                         className={cn(
-                            "me-5.5 grid size-5 place-items-center rounded-full bg-default/5",
-                            "group-has-[input:not(:placeholder-shown)]/sidebar:hidden dark:bg-default/10"
+                            "group/button pe-5.5 ps-2.5",
+                            "group-has-[input:not(:placeholder-shown)]/sidebar:hidden"
                         )}
                     >
-                        <ChevronDown className="size-4" />
-                    </div>
+                        <div
+                            data-cursor="lock"
+                            className={cn(
+                                "my-1 grid size-6 place-items-center rounded-full bg-default/5 transition-[border-radius] duration-100",
+                                {
+                                    dark: "bg-default/10",
+                                    "group-hover/button":
+                                        "rounded-none duration-200"
+                                }
+                            )}
+                        >
+                            <ChevronDown className="size-5 translate-y-[.5px]" />
+                        </div>
+                    </Button>
                 )}
             </li>
             // </ViewTransition>
