@@ -35,7 +35,6 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
     const [isAtBottom, setIsAtBottom] = useState(false)
 
     const hoverTimeoutRef = useRef<NodeJS.Timeout>(undefined)
-    const hasScrolledRef = useRef(false)
 
     const handleHoverStart = () => {
         if (isExpanded) return
@@ -64,10 +63,6 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
 
             setIsAtBottom(atBottom)
 
-            if (currentScrollY !== lastScrollY) {
-                hasScrolledRef.current = true
-            }
-
             if (atBottom) {
                 setIsExpanded(true)
                 accumulatedScrollUp = 0
@@ -88,10 +83,8 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                             setIsExpanded(true)
                         }
                     }
-                } else {
-                    if (delta !== 0) {
-                        setIsExpanded(false)
-                    }
+                } else if (delta !== 0) {
+                    setIsExpanded(false)
                 }
             }
 
@@ -121,7 +114,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
     }, [isMobile])
 
     useEffect(() => {
-        if (isExpanded && hasScrolledRef.current) {
+        if (isExpanded) {
             const timeout = setTimeout(() => {
                 playPressFeedback("zoom-out")
             }, FEEDBACK_DELAY)

@@ -115,6 +115,7 @@ function AudioToggle({
     const handleToggle = () => {
         if (!isAudioEnabled) {
             playerRef.current?.prepare()
+            playerRef.current?.playPress("button")
         }
         toggleAudio()
     }
@@ -148,15 +149,15 @@ function AudioToggle({
                 >
                     {isAudioEnabled ? (
                         isActive ? (
-                            <Volume2 className="size-5.5 transition-colors" />
+                            <Volume2 className="size-5.5" />
                         ) : (
-                            <Volume1 className="size-5.5 text-muted-foreground transition-colors" />
+                            <Volume1 className="size-5.5" />
                         )
                     ) : (
                         <VolumeX className="size-5.5" />
                     )}
                     <span className="sr-only">
-                        {isAudioEnabled ? "Mute" : "Unmute"}
+                        Press to {isAudioEnabled ? "Mute" : "Unmute"}
                     </span>
                 </Button>
             }

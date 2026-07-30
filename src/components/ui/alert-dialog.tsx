@@ -36,9 +36,9 @@ function AlertDialogOverlay({
         <AlertDialogPrimitive.Backdrop
             data-slot="alert-dialog-overlay"
             className={cn(
-                "fixed inset-0 isolate z-90 bg-black/80 duration-250",
+                "fixed inset-0 isolate z-90 bg-black/40 duration-250",
                 {
-                    dark: "bg-black/40",
+                    dark: "bg-black/50",
                     "supports-[backdrop-filter]": "backdrop-blur-sm",
                     "data-starting-style": "opacity-0 backdrop-blur-0",
                     "data-ending-style": "opacity-0 backdrop-blur-0"
@@ -74,7 +74,12 @@ function AlertDialogContent({
                         "data-ending-style": "scale-95 opacity-0",
                         "data-[size=default]": "max-w-sm sm:max-w-xs",
                         "data-[size=sm]": "max-w-xs",
-                        before: "pointer-events-none absolute -inset-4.5 -z-20 bg-background bg-[repeating-linear-gradient(315deg,var(--color-pattern)_0,var(--color-pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]",
+                        before: [
+                            "pointer-events-none absolute -inset-4 -z-20 bg-[repeating-linear-gradient(315deg,var(--color-pattern)_0,var(--color-pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]",
+                            {
+                                dark: "-inset-4.5 bg-background"
+                            }
+                        ],
                         after: [
                             "pointer-events-none absolute inset-0 -z-10 rounded-inherit bg-popover ring ring-stroke transition-[border-radius] duration-100",
                             {

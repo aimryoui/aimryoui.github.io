@@ -44,6 +44,9 @@ const TocItemRow = memo(
         const href = item.href ?? `#${item.id}`
 
         const isProject = item.depth === 3 && !item.icon
+        const isCategory = !isProject && !item.icon
+        const isAnchor = !isProject && !!item.icon
+
         const isCollapsible = item.depth === 2 && item.id !== "outlines"
 
         return (
@@ -148,7 +151,7 @@ const TocItemRow = memo(
                         data-cursor="lock"
                         className={cn(
                             "block w-fit max-w-full px-1.25",
-                            !isProject && !item.icon && "-ms-1.25",
+                            isCategory && "-ms-1.25",
                             "translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
                         )}
                     >

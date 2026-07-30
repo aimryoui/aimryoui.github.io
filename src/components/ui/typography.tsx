@@ -49,7 +49,7 @@ function H2({
     return (
         <Comp
             className={cn(
-                "text-pretty text-4xl",
+                "text-pretty text-4xl leading-10",
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
                 mono ? "font-mono" : "font-wght-[625]",

@@ -45,7 +45,7 @@ interface PressConfigs {
 const HOVER_PRESETS: Record<Exclude<HoverSoundType, false>, HoverConfigs> = {
     tick: {
         duration: 0.008,
-        gain: 0.045,
+        gain: 0.14,
         transientDecay: 0.0006,
         transientMultiplier: 0.075,
         modes: [
@@ -56,7 +56,7 @@ const HOVER_PRESETS: Record<Exclude<HoverSoundType, false>, HoverConfigs> = {
     },
     button: {
         duration: 0.016,
-        gain: 0.055,
+        gain: 0.18,
         transientDecay: 0.00038,
         transientMultiplier: 0.035,
         modes: [
@@ -70,7 +70,7 @@ const HOVER_PRESETS: Record<Exclude<HoverSoundType, false>, HoverConfigs> = {
 const PRESS_PRESETS: Record<Exclude<PressSoundType, false>, PressConfigs> = {
     button: {
         duration: 0.015,
-        gain: 0.175,
+        gain: 0.7,
         attack: 0.0005,
         release: 0.002,
         pitchSweep: 1050,
@@ -83,7 +83,7 @@ const PRESS_PRESETS: Record<Exclude<PressSoundType, false>, PressConfigs> = {
 
     link: {
         duration: 0.012,
-        gain: 0.18,
+        gain: 0.75,
         attack: 0.0002,
         release: 0.003,
         pitchSweep: 800,
@@ -96,7 +96,7 @@ const PRESS_PRESETS: Record<Exclude<PressSoundType, false>, PressConfigs> = {
 
     input: {
         duration: 0.3,
-        gain: 0.26,
+        gain: 0.5,
         attack: 0.002,
         release: 0.006,
         pitchSweep: 1200,
@@ -109,7 +109,7 @@ const PRESS_PRESETS: Record<Exclude<PressSoundType, false>, PressConfigs> = {
 
     "zoom-in": {
         duration: 0.2,
-        gain: 0.12,
+        gain: 0.2,
         attack: 0.1,
         release: 0.1,
         pitchSweep: 100,
@@ -122,7 +122,7 @@ const PRESS_PRESETS: Record<Exclude<PressSoundType, false>, PressConfigs> = {
 
     "zoom-out": {
         duration: 0.2,
-        gain: 0.12,
+        gain: 0.2,
         attack: 0.1,
         release: 0.1,
         pitchSweep: 100,
