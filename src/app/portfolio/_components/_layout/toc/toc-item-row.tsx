@@ -67,7 +67,7 @@ const TocItemRow = memo(
                             "last:hidden has-[+[role=separator]]:hidden",
                             isProject
                                 ? "w-[calc(var(--marker-length)*var(--tick-scale))] scale-x-[calc(1+var(--effect,0)*1.5)]"
-                                : "w-1.25 scale-x-[--effect,0] group-not-data-expanded/collapsible:hidden"
+                                : "w-1.25 scale-x-[--effect,0] transition-[width] group-not-data-expanded/collapsible:w-0"
                         ]
                     },
                     className

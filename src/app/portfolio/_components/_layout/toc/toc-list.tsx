@@ -9,6 +9,7 @@ import {
     CollapsibleTrigger
 } from "@/components/ui/collapsible"
 import { TooltipTrigger } from "@/components/ui/tooltip"
+import { Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
 import {
@@ -97,8 +98,8 @@ const TocGroup = memo(function TocGroup({
                     payload={{
                         content: (
                             <span>
-                                {isExpanded ? "Collapse" : "Expand"} this
-                                category
+                                {isExpanded ? "Collapse" : "Expand"}{" "}
+                                <Highlight>{header.label}</Highlight> category
                             </span>
                         ),
                         side: "right",
@@ -137,8 +138,8 @@ const TocGroup = memo(function TocGroup({
                                 />
                             </div>
                             <span className="sr-only">
-                                {isExpanded ? "Collapse" : "Expand"} this
-                                category
+                                {isExpanded ? "Collapse" : "Expand"}{" "}
+                                <Highlight>{header.label}</Highlight> category
                             </span>
                         </CollapsibleTrigger>
                     }
