@@ -18,7 +18,7 @@ import { type HoverSoundType, type PressSoundType } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 
 const nativeButtonClassName = cn(
-    "shrink-0 cursor-pointer select-none whitespace-nowrap",
+    "shrink-0 cursor-pointer select-none",
     {
         "aria-invalid":
             "border-destructive ring-destructive/20 dark:ring-destructive/40",
@@ -31,7 +31,7 @@ const nativeButtonClassName = cn(
 const buttonVariants = cva(
     cn(
         nativeButtonClassName,
-        "inline-flex items-center justify-center gap-2 rounded-xlg text-sm will-change-transform font-wght-500 transition-transform",
+        "inline-flex items-center justify-center gap-2 rounded-xlg text-sm whitespace-nowrap will-change-transform font-wght-500 transition-transform",
         {
             "data-[cursor=target]":
                 "transition-[transform,translate,scale,border-radius] ease-spring duration-200",
