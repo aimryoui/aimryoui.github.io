@@ -28,7 +28,7 @@ interface UseTocScrollOptions {
 
 const SCROLL_DELAY = 400
 
-function useTocScroll({
+function useTocScroll<T extends HTMLElement = HTMLDivElement>({
     items,
     debouncedQuery,
     onActiveReady
@@ -36,7 +36,7 @@ function useTocScroll({
     const pathname = usePathname()
     const { isBlink } = useBrowserEngine()
 
-    const scrollContainerRef = useRef<HTMLDivElement>(null)
+    const scrollContainerRef = useRef<T>(null)
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
     const hasNotifiedActiveRef = useRef(false)
@@ -158,7 +158,7 @@ function useTocScroll({
                 } else {
                     let delay = 0
                     const groupList = activeElement.closest(
-                        "[data-toc-group-list]"
+                        '[data-slot="collapsible-content"]'
                     )
                     if (
                         groupList &&

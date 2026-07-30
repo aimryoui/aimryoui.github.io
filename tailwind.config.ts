@@ -28,6 +28,7 @@ import viewTransition from "./src/lib/tailwindcss-plugins/utilities/view-transit
 import all from "./src/lib/tailwindcss-plugins/variants/all"
 import browserEngines from "./src/lib/tailwindcss-plugins/variants/browser-engines"
 import containerQueries from "./src/lib/tailwindcss-plugins/variants/container-queries"
+import groupNot from "./src/lib/tailwindcss-plugins/variants/group-not"
 import has from "./src/lib/tailwindcss-plugins/variants/has"
 import is from "./src/lib/tailwindcss-plugins/variants/is"
 import not from "./src/lib/tailwindcss-plugins/variants/not"
@@ -177,9 +178,13 @@ export default {
             strokeWidth: {
                 px: "var(--px)",
                 1: "1",
+                1.5: "1.5",
                 2: "2",
+                2.5: "2.5",
                 3: "3",
+                3.5: "3.5",
                 4: "4",
+                4.5: "4.5",
                 5: "5"
             },
             backdropBlur: {
@@ -219,6 +224,7 @@ export default {
                 highlighted: "highlighted",
                 entering: "entering",
                 exiting: "exiting",
+                expanded: "expanded=true",
                 inset: "inset",
                 disabled: "disabled",
                 horizontal: "orientation=horizontal",
@@ -382,6 +388,7 @@ export default {
         all,
         browserEngines,
         containerQueries,
+        groupNot,
         has,
         is,
         not,

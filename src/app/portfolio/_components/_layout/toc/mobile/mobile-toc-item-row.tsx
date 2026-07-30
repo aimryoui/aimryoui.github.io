@@ -20,7 +20,9 @@ const MobileTocItemRow = memo(
         query,
         onPress,
         onSameLinkClick
-    }: TocItemRowProps) => {
+    }: TocItemRowProps & {
+        isActive?: boolean
+    }) => {
         const href = item.href ?? `#${item.id}`
 
         const isProject = item.depth === 3 && !item.icon

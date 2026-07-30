@@ -3,8 +3,6 @@ import { useCallback, useEffect, useLayoutEffect, useRef } from "react"
 import { pxToRem } from "@/helpers/px-to-rem"
 import { cn } from "@/lib/utils"
 
-type Falloff = "linear" | "smooth" | "sharp"
-
 interface LineSidebarProps {
     itemSelector?: string
     accentColor?: string
@@ -12,19 +10,12 @@ interface LineSidebarProps {
     markerColor?: string
     proximityRadius?: number
     maxShift?: number
-    falloff?: Falloff
     markerLength?: number
     markerGap?: number
     tickScale?: number
     itemGap?: number
     smoothing?: number
     className?: string
-}
-
-const FALLOFF_CURVES: Record<Falloff, (p: number) => number> = {
-    linear: (p) => p,
-    smooth: (p) => p * p * (3 - 2 * p),
-    sharp: (p) => p * p * p
 }
 
 const FPS = 60
@@ -37,7 +28,6 @@ function LineSidebar({
     markerColor = "var(--color-marker)",
     proximityRadius = 120,
     maxShift = 25,
-    falloff = "smooth",
     markerLength = 24,
     markerGap = 0,
     tickScale = 0.5,
@@ -99,31 +89,34 @@ function LineSidebar({
         if (!list) return
 
         updateCache()
-        const observer = new MutationObserver(() => {
+
+        const resizeObserver = new ResizeObserver(() => {
             updateCache()
         })
-        observer.observe(list, { childList: true, subtree: true })
+
+        // Observe the container (handles resize) and all children (handles height animations)
+        resizeObserver.observe(list)
+        Array.from(list.children).forEach((child) => {
+            resizeObserver.observe(child)
+        })
+
+        // Only use MutationObserver to detect if children are added/removed (React re-renders)
+        const mutationObserver = new MutationObserver((mutations) => {
+            if (mutations.some((m) => m.type === "childList")) {
+                resizeObserver.disconnect()
+                resizeObserver.observe(list)
+                Array.from(list.children).forEach((c) => {
+                    resizeObserver.observe(c)
+                })
+                updateCache()
+            }
+        })
+
+        mutationObserver.observe(list, { childList: true })
 
         return () => {
-            observer.disconnect()
-        }
-    }, [updateCache])
-
-    useEffect(() => {
-        const handleLayoutChange = () => {
-            updateCache()
-        }
-        window.addEventListener("resize", handleLayoutChange)
-        window.addEventListener(
-            "portfolio:sidebar-layout-changed",
-            handleLayoutChange
-        )
-        return () => {
-            window.removeEventListener("resize", handleLayoutChange)
-            window.removeEventListener(
-                "portfolio:sidebar-layout-changed",
-                handleLayoutChange
-            )
+            resizeObserver.disconnect()
+            mutationObserver.disconnect()
         }
     }, [updateCache])
 
@@ -185,33 +178,22 @@ function LineSidebar({
         if (!list) return
 
         const handlePointerMove = (e: PointerEvent) => {
-            if (
-                e.target instanceof Element &&
-                e.target.closest("[data-no-sidebar-effect]")
-            ) {
-                targetsRef.current = targetsRef.current.map(() => 0)
-                startLoop()
-                return
-            }
-
             const listRect = list.getBoundingClientRect()
             const pointerYLocal = e.clientY - listRect.top + list.scrollTop
-            const ease = FALLOFF_CURVES[falloff]
 
             const items = listItemsRef.current
             const centers = itemCentersRef.current
 
             for (let i = 0; i < items.length; i++) {
                 const distance = Math.abs(pointerYLocal - centers[i])
-                targetsRef.current[i] = ease(
-                    Math.max(0, 1 - distance / proximityRadius)
-                )
+                const p = Math.max(0, 1 - distance / proximityRadius)
+                targetsRef.current[i] = p * p * (3 - 2 * p)
             }
             startLoop()
         }
 
         const handlePointerLeave = () => {
-            targetsRef.current = targetsRef.current.map(() => 0)
+            targetsRef.current.fill(0)
             startLoop()
         }
 
@@ -226,7 +208,7 @@ function LineSidebar({
             list.removeEventListener("pointermove", handlePointerMove)
             list.removeEventListener("pointerleave", handlePointerLeave)
         }
-    }, [falloff, proximityRadius, startLoop])
+    }, [proximityRadius, startLoop])
 
     useEffect(() => {
         if (rafRef.current === null) {

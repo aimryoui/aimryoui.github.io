@@ -138,7 +138,6 @@ const PRESS_PRESETS: Record<Exclude<PressSoundType, false>, PressConfigs> = {
 
 let ctx: AudioContext | null = null
 let consumers = 0
-let activeSource: AudioBufferSourceNode | null = null
 
 const buffers = new Map<string, AudioBuffer>()
 const gains = new Map<string, GainNode>()
@@ -304,16 +303,13 @@ function createSoundEngine(): SoundEngine {
         const node = getBufferAndGain(type, isHover)
         if (!ctx || !node) return
 
-        activeSource?.stop()
         const source = ctx.createBufferSource()
         source.buffer = node.buffer
         source.connect(node.gain)
 
         source.onended = () => {
             source.disconnect()
-            if (activeSource === source) activeSource = null
         }
-        activeSource = source
         source.start()
     }
 
@@ -333,8 +329,7 @@ function createSoundEngine(): SoundEngine {
         dispose() {
             if (disposed) return
             disposed = true
-            activeSource?.stop()
-            activeSource = null
+
             consumers = Math.max(0, consumers - 1)
 
             if (consumers === 0 && ctx) {

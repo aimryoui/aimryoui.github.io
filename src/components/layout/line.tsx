@@ -1,6 +1,10 @@
 import { cn } from "@/lib/utils"
 
-function MarginLine({ className, ...props }: React.ComponentProps<"div">) {
+type MarginLineProps = React.ComponentProps<"div"> & {
+    className?: string
+}
+
+function MarginLine({ className, ...props }: MarginLineProps) {
     return (
         <div
             role="separator"
@@ -44,17 +48,19 @@ function Plus({ position }: { position?: "left" | "right" }) {
     )
 }
 
+type SectionLineProps = React.ComponentProps<"hr"> & {
+    containerClassName?: string
+    showDecoration?: boolean
+    fit?: boolean
+}
+
 function SectionLine({
     className,
     containerClassName,
     showDecoration = false,
     fit = false,
     ...props
-}: React.ComponentProps<"hr"> & {
-    containerClassName?: string
-    showDecoration?: boolean
-    fit?: boolean
-}) {
+}: SectionLineProps) {
     return (
         <div
             role="separator"
@@ -82,15 +88,17 @@ function SectionLine({
     )
 }
 
+type ElementLineProps = React.ComponentProps<"div"> & {
+    dir?: "vertical" | "horizontal"
+    containerClassName?: string
+}
+
 function ElementLine({
     className,
     containerClassName,
     dir = "vertical",
     ...props
-}: React.ComponentProps<"div"> & {
-    dir?: "vertical" | "horizontal"
-    containerClassName?: string
-}) {
+}: ElementLineProps) {
     return (
         <div
             className={cn(
@@ -113,13 +121,15 @@ function ElementLine({
     )
 }
 
+type SvgElementLineProps = React.ComponentProps<"svg"> & {
+    dir?: "vertical" | "horizontal"
+}
+
 function SvgElementLine({
     className,
     dir = "vertical",
     ...props
-}: React.ComponentProps<"svg"> & {
-    dir?: "vertical" | "horizontal"
-}) {
+}: SvgElementLineProps) {
     return (
         <div
             role="separator"
@@ -150,4 +160,10 @@ function SvgElementLine({
     )
 }
 
+export type {
+    ElementLineProps,
+    MarginLineProps,
+    SectionLineProps,
+    SvgElementLineProps
+}
 export { ElementLine, MarginLine, SectionLine, SvgElementLine }

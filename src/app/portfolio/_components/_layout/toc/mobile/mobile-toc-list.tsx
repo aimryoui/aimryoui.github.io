@@ -19,7 +19,7 @@ function MobileTocList({
 }: TocListProps & {
     onLinkClick?: () => void
 }) {
-    const { scrollContainerRef, clickedTargetRef, activeId } = useTocScroll({
+    const { scrollContainerRef, clickedTargetRef, activeId } = useTocScroll<HTMLUListElement>({
         items,
         debouncedQuery
     })

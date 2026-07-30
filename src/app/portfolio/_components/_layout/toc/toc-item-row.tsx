@@ -1,12 +1,10 @@
 "use client"
 
+import type React from "react"
 import { memo } from "react"
 
-import { ChevronDown } from "lucide-react"
-
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
-import { Button, LinkButton } from "@/components/ui/button"
-import { TooltipTrigger } from "@/components/ui/tooltip"
+import { LinkButton } from "@/components/ui/button"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { isSameUrl } from "@/helpers/is-same-url"
@@ -25,25 +23,25 @@ interface TocItemProps {
     hidden?: boolean
 }
 
-interface TocItemRowProps {
-    mode: PortfolioMode
-    item: TocItemProps
-    query?: string
-    onPress: (item: TocItemProps) => void
-    onSameLinkClick: () => void
-    isCollapsed?: boolean
-    onToggle?: () => void
-}
+type TocItemRowProps = React.ComponentProps<"li"> &
+    React.ComponentProps<"div"> & {
+        mode: PortfolioMode
+        item: TocItemProps
+        query?: string
+        onPress: (item: TocItemProps) => void
+        onSameLinkClick: () => void
+    }
 
 const TocItemRow = memo(
     ({
+        className,
         mode,
         item,
         query,
         onPress,
         onSameLinkClick,
-        isCollapsed,
-        onToggle
+        children,
+        ...props
     }: TocItemRowProps) => {
         const isActive = useTocActiveId((s) => s.activeId === item.id)
         const href = item.href ?? `#${item.id}`
@@ -69,10 +67,12 @@ const TocItemRow = memo(
                             "last:hidden has-[+[role=separator]]:hidden",
                             isProject
                                 ? "w-[calc(var(--marker-length)*var(--tick-scale))] scale-x-[calc(1+var(--effect,0)*1.5)]"
-                                : "w-1.25 scale-x-[--effect,0]"
+                                : "w-1.25 scale-x-[--effect,0] group-not-data-expanded/collapsible:hidden"
                         ]
-                    }
+                    },
+                    className
                 )}
+                {...props}
             >
                 {/* Marker */}
                 <span
@@ -182,65 +182,7 @@ const TocItemRow = memo(
                         </div>
                     )}
                 </LinkButton>
-                {isCollapsible && (
-                    <TooltipTrigger
-                        delay={500}
-                        payload={{
-                            content: (
-                                <span>
-                                    {isCollapsed ? "Expand" : "Collapse"} this
-                                    category
-                                </span>
-                            ),
-                            side: "right",
-                            sideOffset: -14
-                        }}
-                        render={
-                            <Button
-                                nativeButton
-                                keepFeedback
-                                pressSound={
-                                    isCollapsed ? "zoom-out" : "zoom-in"
-                                }
-                                onPress={onToggle}
-                                data-no-sidebar-effect
-                                className={cn(
-                                    "group/button pe-5.5 ps-2.5",
-                                    "group-has-[input:not(:placeholder-shown)]/sidebar:hidden"
-                                )}
-                            >
-                                <div
-                                    data-cursor="lock"
-                                    className={cn(
-                                        "my-1 grid size-6 place-items-center rounded-[.75rem] !corner-round transition-[border-radius,transform,translate] duration-100",
-                                        isCollapsed
-                                            ? "bg-foreground/40 text-inverted dark:bg-foreground/60"
-                                            : "bg-foreground/10 dark:bg-foreground/15",
-                                        {
-                                            "group-hover/button":
-                                                "rounded-none duration-200",
-                                            "group-active/button":
-                                                "translate-y-0.5"
-                                        }
-                                    )}
-                                >
-                                    <ChevronDown
-                                        className={cn(
-                                            "size-5 transition-transform duration-200",
-                                            isCollapsed
-                                                ? "translate-x-[.5px] -rotate-90 dark:stroke-3"
-                                                : "translate-y-[.5px]"
-                                        )}
-                                    />
-                                </div>
-                                <span className="sr-only">
-                                    {isCollapsed ? "Expand" : "Collapse"} this
-                                    category
-                                </span>
-                            </Button>
-                        }
-                    />
-                )}
+                {children}
             </Comp>
             // </ViewTransition>
         )

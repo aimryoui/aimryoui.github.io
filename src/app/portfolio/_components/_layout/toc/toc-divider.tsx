@@ -1,15 +1,22 @@
 import { memo } from "react"
 
-import { SectionLine } from "@/components/layout/line"
+import { SectionLine, type SectionLineProps } from "@/components/layout/line"
 import { cn } from "@/lib/utils"
 
-const TocDivider = memo(({ className }: React.ComponentProps<"div">) => (
-    // <ViewTransition name={`toc-divider-${id}`}>
-    <div role="separator" className={cn("my-3 h-px first:hidden", className)}>
-        <SectionLine fit />
-    </div>
-    // </ViewTransition>
-))
+const TocDivider = memo(
+    ({ containerClassName, ...props }: SectionLineProps) => (
+        // <ViewTransition name={`toc-divider-${id}`}>
+        <SectionLine
+            fit
+            containerClassName={cn(
+                "my-3 h-px first:hidden",
+                containerClassName
+            )}
+            {...props}
+        />
+        // </ViewTransition>
+    )
+)
 TocDivider.displayName = "TocDivider"
 
 export { TocDivider }

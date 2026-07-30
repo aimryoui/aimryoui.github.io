@@ -1,6 +1,14 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { memo, useCallback, useMemo, useState } from "react"
+
+import { ChevronDown } from "lucide-react"
 
 import { LineSidebar } from "@/components/animations/line-sidebar"
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger
+} from "@/components/ui/collapsible"
+import { TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
 import {
@@ -37,124 +45,122 @@ function handleSameLinkClick() {
     window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
 }
 
-const TocGroup = memo(
-    function TocGroup({
-        header,
-        items,
-        mode,
-        debouncedQuery,
-        onItemPress
-    }: {
-        header: TocItemProps
-        items: TocItemProps[]
-        mode: PortfolioMode
-        debouncedQuery: string
-        onItemPress: (item: TocItemProps) => void
-    }) {
-        const [isCollapsed, setIsCollapsed] = useState(false)
+const TocGroup = memo(function TocGroup({
+    header,
+    items,
+    mode,
+    debouncedQuery,
+    onItemPress
+}: {
+    header: TocItemProps
+    items: TocItemProps[]
+    mode: PortfolioMode
+    debouncedQuery: string
+    onItemPress: (item: TocItemProps) => void
+}) {
+    const [isExpanded, setIsExpanded] = useState(true)
 
-        const handleToggle = useCallback(() => {
-            setIsCollapsed((prev) => !prev)
-        }, [])
+    const handleHeaderPress = useCallback(() => {
+        onItemPress(header)
+    }, [header, onItemPress])
 
-        const handleHeaderPress = useCallback(() => {
-            onItemPress(header)
-        }, [header, onItemPress])
+    const activeChildId = useTocActiveId((s) => {
+        if (s.activeId === header.id) return s.activeId
+        if (items.some((i) => i.id === s.activeId)) return s.activeId
+        return null
+    })
+    const [prevActiveChildId, setPrevActiveChildId] = useState(activeChildId)
 
-        const activeChildId = useTocActiveId((s) => {
-            if (s.activeId === header.id) return s.activeId
-            if (items.some((i) => i.id === s.activeId)) return s.activeId
-            return null
-        })
-        const [prevActiveChildId, setPrevActiveChildId] =
-            useState(activeChildId)
-
-        if (activeChildId !== prevActiveChildId) {
-            setPrevActiveChildId(activeChildId)
-            if (activeChildId !== null && isCollapsed) {
-                setIsCollapsed(false)
-            }
+    if (activeChildId !== prevActiveChildId) {
+        setPrevActiveChildId(activeChildId)
+        if (activeChildId !== null && !isExpanded) {
+            setIsExpanded(true)
         }
-
-        const groupListRef = useRef<HTMLUListElement>(null)
-
-        // Accessibility for browser searching (Ctrl+F)
-        useEffect(() => {
-            const el = groupListRef.current
-            if (!el) return
-
-            const handleBeforeMatch = () => {
-                setIsCollapsed(false)
-            }
-
-            el.addEventListener("beforematch", handleBeforeMatch)
-            return () => {
-                el.removeEventListener("beforematch", handleBeforeMatch)
-            }
-        }, [])
-        useEffect(() => {
-            const el = groupListRef.current
-            if (!el) return
-
-            if (!isCollapsed) {
-                el.removeAttribute("hidden")
-            }
-        }, [isCollapsed])
-
-        return (
-            <div className="flex flex-col">
-                <TocItemRow
-                    mode={mode}
-                    item={header}
-                    query={debouncedQuery}
-                    isCollapsed={isCollapsed}
-                    onToggle={handleToggle}
-                    onPress={handleHeaderPress}
-                    onSameLinkClick={handleSameLinkClick}
-                />
-                <div
-                    onTransitionEnd={(e) => {
-                        if (e.propertyName === "grid-template-rows") {
-                            window.dispatchEvent(
-                                new CustomEvent(
-                                    "portfolio:sidebar-layout-changed"
-                                )
-                            )
-                            /** @see {@link https://github.com/react/react/issues/24740} */
-                            if (isCollapsed && groupListRef.current) {
-                                groupListRef.current.setAttribute(
-                                    "hidden",
-                                    "until-found"
-                                )
-                            }
-                        }
-                    }}
-                    className={cn(
-                        "grid will-change-[grid-template-rows] transition-[grid-template-rows] ease-spring duration-250",
-                        isCollapsed ? "grid-rows-[0fr]" : "grid-rows-[1fr]"
-                    )}
-                >
-                    <ul
-                        ref={groupListRef}
-                        data-toc-group-list
-                        className="flex flex-col overflow-hidden"
-                    >
-                        {items.map((item) => (
-                            <TocItemRow
-                                key={item.id}
-                                mode={mode}
-                                item={item}
-                                query={debouncedQuery}
-                                onPress={onItemPress}
-                                onSameLinkClick={handleSameLinkClick}
-                            />
-                        ))}
-                    </ul>
-                </div>
-            </div>
-        )
     }
-)
+
+    return (
+        <Collapsible
+            defaultExpanded
+            isExpanded={isExpanded}
+            onExpandedChange={setIsExpanded}
+            className="group/collapsible flex flex-col"
+        >
+            <TocItemRow
+                mode={mode}
+                item={header}
+                query={debouncedQuery}
+                onPress={handleHeaderPress}
+                onSameLinkClick={handleSameLinkClick}
+            >
+                <TooltipTrigger
+                    delay={500}
+                    payload={{
+                        content: (
+                            <span>
+                                {isExpanded ? "Collapse" : "Expand"} this
+                                category
+                            </span>
+                        ),
+                        side: "right",
+                        sideOffset: -14
+                    }}
+                    render={
+                        <CollapsibleTrigger
+                            pressSound={isExpanded ? "zoom-out" : "zoom-in"}
+                            className={cn(
+                                "group/collapsibile-trigger pe-5.5 ps-2.5",
+                                "group-has-[input:not(:placeholder-shown)]/sidebar:hidden"
+                            )}
+                        >
+                            <div
+                                data-cursor="lock"
+                                className={cn(
+                                    "my-1 grid size-6 place-items-center rounded-[.75rem] !corner-round transition-[border-radius,transform,translate] duration-100",
+                                    isExpanded
+                                        ? "bg-foreground/10 dark:bg-foreground/15"
+                                        : "bg-foreground/40 text-inverted dark:bg-foreground/60",
+                                    {
+                                        "group-hover/collapsibile-trigger":
+                                            "rounded-none duration-200",
+                                        "group-active/collapsibile-trigger":
+                                            "translate-y-0.5"
+                                    }
+                                )}
+                            >
+                                <ChevronDown
+                                    className={cn(
+                                        "size-5 transition-transform duration-200",
+                                        isExpanded
+                                            ? "translate-y-[.5px]"
+                                            : "translate-x-[.5px] -rotate-90 dark:stroke-2.5"
+                                    )}
+                                />
+                            </div>
+                            <span className="sr-only">
+                                {isExpanded ? "Collapse" : "Expand"} this
+                                category
+                            </span>
+                        </CollapsibleTrigger>
+                    }
+                />
+            </TocItemRow>
+            <CollapsibleContent>
+                <ul className="flex flex-col">
+                    {items.map((item) => (
+                        <TocItemRow
+                            key={item.id}
+                            mode={mode}
+                            item={item}
+                            query={debouncedQuery}
+                            onPress={onItemPress}
+                            onSameLinkClick={handleSameLinkClick}
+                        />
+                    ))}
+                </ul>
+            </CollapsibleContent>
+        </Collapsible>
+    )
+})
 
 function TocList({
     mode,
@@ -261,7 +267,7 @@ function TocList({
     return (
         <LineSidebar
             ref={scrollContainerRef}
-            itemSelector="[data-toc-item]"
+            itemSelector="[data-toc-item]:not([data-expanded='false'] [data-slot='collapsible-content'] *)"
             className={cn(
                 "group block overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-3",
                 "scroll-fade-y scroll-fade-18"
