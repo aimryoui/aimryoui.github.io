@@ -79,7 +79,7 @@ const TocGroup = memo(
                             <CollapsibleTrigger
                                 pressSound={isExpanded ? "zoom-out" : "zoom-in"}
                                 className={cn(
-                                    "group/collapsibile-trigger -mt-3 px-5.5 pb-1 pt-4",
+                                    "group/collapsibile-trigger -mt-3 pb-1 pe-5.5 ps-5 pt-4",
                                     "group-has-[input:not(:placeholder-shown)]/sidebar:hidden",
                                     {
                                         "group-not-data-expanded/collapsible":
