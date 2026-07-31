@@ -467,25 +467,35 @@ function TargetCursor({
         }
         window.addEventListener("blur", blurHandler)
 
-        const scrollHandler = () => {
-            updateOffsetCache()
-            if (!activeTarget) return
-            const offsetX = cachedOffset.current.x
-            const offsetY = cachedOffset.current.y
-            const mouseX = state.mouseX + offsetX
-            const mouseY = state.mouseY + offsetY
-            const elementUnderMouse = document.elementFromPoint(mouseX, mouseY)
-            const isStillOverTarget =
-                elementUnderMouse &&
-                (elementUnderMouse === activeTarget ||
-                    elementUnderMouse.closest(targetSelector) ===
-                        activeTarget ||
-                    (inputSelector
-                        ? elementUnderMouse.closest(inputSelector) ===
-                          activeTarget
-                        : false))
+        let scrollTimeout: ReturnType<typeof setTimeout> | null = null
 
-            if (!isStillOverTarget) doLeave()
+        const scrollHandler = () => {
+            cachedOffset.current = getContainingBlockOffset(
+                containingBlockRef.current
+            )
+
+            if (activeTarget) {
+                doLeave()
+            }
+
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout)
+            }
+
+            scrollTimeout = setTimeout(() => {
+                const offsetX = cachedOffset.current.x
+                const offsetY = cachedOffset.current.y
+                const mouseX = state.mouseX + offsetX
+                const mouseY = state.mouseY + offsetY
+
+                const elementUnderMouse = document.elementFromPoint(
+                    mouseX,
+                    mouseY
+                )
+                if (elementUnderMouse) {
+                    processTarget(elementUnderMouse)
+                }
+            }, 100)
         }
         window.addEventListener("scroll", scrollHandler, { passive: true })
 
@@ -517,8 +527,7 @@ function TargetCursor({
         window.addEventListener("mouseup", mouseUpHandler, { capture: true })
         window.addEventListener("dragend", mouseUpHandler, { capture: true })
 
-        const enterHandler = (e: MouseEvent) => {
-            const directTarget = e.target as Element
+        const processTarget = (directTarget: Element) => {
             const allTargets: Element[] = []
             let current: Element | null = directTarget
 
@@ -582,6 +591,10 @@ function TargetCursor({
             })
         }
 
+        const enterHandler = (e: MouseEvent) => {
+            processTarget(e.target as Element)
+        }
+
         window.addEventListener("mouseover", enterHandler as EventListener)
 
         const resizeHandler = () => {
@@ -590,6 +603,7 @@ function TargetCursor({
         window.addEventListener("resize", resizeHandler)
 
         return () => {
+            if (scrollTimeout) clearTimeout(scrollTimeout)
             gsap.ticker.remove(tickerFn)
             window.removeEventListener("mousemove", moveHandler)
             window.removeEventListener(

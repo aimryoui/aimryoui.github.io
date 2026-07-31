@@ -30,7 +30,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
+import { type AudioState, useAudioStore } from "@/stores/audio-store"
 import {
     type SidebarPosition,
     type ToolbarPosition,
@@ -75,6 +77,9 @@ function SettingButton() {
     )
 
     const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+
+    const audioMode = useAudioStore((state) => state.audioMode)
+    const setAudioMode = useAudioStore((state) => state.setAudioMode)
 
     return (
         <>
@@ -213,6 +218,53 @@ function SettingButton() {
                                                             {isMobile
                                                                 ? "Bottom"
                                                                 : "Right"}
+                                                        </DropdownMenuRadioItem>
+                                                    </DropdownMenuRadioGroup>
+                                                </DropdownMenuSubContent>
+                                            </DropdownMenuSub>
+                                            <DropdownMenuSub>
+                                                <DropdownMenuSubTrigger>
+                                                    Audio mode
+                                                </DropdownMenuSubTrigger>
+                                                <DropdownMenuSubContent>
+                                                    <DropdownMenuRadioGroup
+                                                        value={audioMode}
+                                                        onValueChange={(
+                                                            value
+                                                        ) => {
+                                                            const nextMode =
+                                                                value as AudioState["audioMode"]
+                                                            setAudioMode(
+                                                                nextMode
+                                                            )
+
+                                                            if (
+                                                                nextMode ===
+                                                                "auto"
+                                                            ) {
+                                                                useAudioStore
+                                                                    .getState()
+                                                                    .setIsAudioEnabled(
+                                                                        true
+                                                                    )
+
+                                                                playPressSound(
+                                                                    "button"
+                                                                )
+                                                            }
+                                                        }}
+                                                    >
+                                                        <DropdownMenuRadioItem
+                                                            value="manual"
+                                                            closeOnClick
+                                                        >
+                                                            Manual
+                                                        </DropdownMenuRadioItem>
+                                                        <DropdownMenuRadioItem
+                                                            value="auto"
+                                                            closeOnClick
+                                                        >
+                                                            Auto
                                                         </DropdownMenuRadioItem>
                                                     </DropdownMenuRadioGroup>
                                                 </DropdownMenuSubContent>

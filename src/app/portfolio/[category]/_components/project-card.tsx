@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useEffect, useRef, useState, ViewTransition } from "react"
+import { useEffect, useRef, ViewTransition } from "react"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
@@ -33,7 +33,7 @@ function ProjectCard({
     projectNavigation = false,
     ...props
 }: LinkButtonProps & ProjectCardProps) {
-    const [isHovered, setIsHovered] = useState(false)
+    const compRef = useRef<HTMLAnchorElement>(null)
     const startTimeRef = useRef<number>(0)
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
@@ -61,19 +61,17 @@ function ProjectCard({
         : `/assets/media/${projectPath}/1/1_preview.webp`
 
     const handleMouseEnter = () => {
-        setIsHovered(true)
+        compRef.current?.setAttribute("data-hover", "true")
         startTimeRef.current = Date.now()
         clearTimeout(timeoutRef.current)
     }
 
     const handleMouseLeave = () => {
         clearTimeout(timeoutRef.current)
-
         const elapsed = Date.now() - startTimeRef.current
         const remaining = Math.max(DURATION - elapsed, 0)
-
         timeoutRef.current = setTimeout(() => {
-            setIsHovered(false)
+            compRef.current?.removeAttribute("data-hover")
         }, remaining)
     }
 
@@ -85,10 +83,10 @@ function ProjectCard({
 
     return (
         <Comp
+            ref={compRef}
             data-cursor="target"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            data-hover={isHovered}
             href={href}
             prefetch={!!navigation}
             {...(!navigation && {
@@ -202,7 +200,7 @@ function ProjectCover({
             >
                 <div
                     className={cn(
-                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40 will-change-transform transition-transform ease-in duration-150",
+                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40 transition-transform ease-in duration-150",
                         {
                             "group-hover": "-translate-y-0.5 scale-y-150",
                             "group-active": "-translate-y-0.5 scale-y-150"
@@ -211,7 +209,7 @@ function ProjectCover({
                 />
                 <div
                     className={cn(
-                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70 will-change-transform transition-transform ease-in duration-150",
+                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70 transition-transform ease-in duration-150",
                         {
                             "group-hover": "scale-y-150",
                             "group-active": "scale-y-150"
@@ -220,12 +218,12 @@ function ProjectCover({
                 />
                 <div
                     className={cn(
-                        "relative rounded-xlg will-change-transform transition-transform ease-in duration-150",
+                        "relative rounded-xlg transition-transform ease-in duration-150",
                         {
                             "group-hover": "translate-y-0.5",
                             "group-active": "translate-y-0.5",
                             after: [
-                                "absolute inset-0 size-full rounded-inherit ring-2 ring-inset ring-muted-foreground/80 transition-shadow",
+                                "absolute inset-0 size-full rounded-inherit ring-2 ring-inset ring-muted-foreground/80",
                                 {
                                     "group-hover": "ring-3",
                                     "group-active": "ring-3"
@@ -293,7 +291,7 @@ function ProjectName({
             >
                 <span
                     className={cn(
-                        "w-fit max-w-full translate-y-0 skew-y-0 truncate will-change-transform transition-[transform,opacity] ease-in-out duration-500",
+                        "w-fit max-w-full translate-y-0 skew-y-0 truncate transition-[transform,opacity] ease-in-out duration-500",
                         {
                             "group-data-[hover=true]": [
                                 "-translate-y-full opacity-0",
@@ -315,7 +313,7 @@ function ProjectName({
                 aria-hidden={true}
                 role="presentation"
                 className={cn(
-                    "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0 will-change-transform transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
+                    "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
                     navigation === "backward"
                         ? "origin-right -skew-y-12"
                         : "origin-left skew-y-12",

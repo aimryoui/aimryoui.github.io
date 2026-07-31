@@ -221,6 +221,7 @@ export default {
                 instant: "instant",
                 "starting-style": "starting-style",
                 "ending-style": "ending-style",
+                hovered: "hovered",
                 highlighted: "highlighted",
                 entering: "entering",
                 exiting: "exiting",

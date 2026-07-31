@@ -25,6 +25,33 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
     const lastTargetRef = useRef<Element | null>(null)
     const { isTouchDevice } = useDevice()
 
+    const audioMode = useAudioStore((state) => state.audioMode)
+    const isAudioEnabled = useAudioStore((state) => state.isAudioEnabled)
+    const setIsAudioEnabled = useAudioStore((state) => state.setIsAudioEnabled)
+
+    const hasManuallyToggled = useAudioStore(
+        (state) => state.hasManuallyToggled
+    )
+
+    useEffect(() => {
+        if (audioMode !== "auto" || isAudioEnabled || hasManuallyToggled) return
+
+        const handleFirstInteraction = () => {
+            setIsAudioEnabled(true)
+            playerRef.current?.prepare()
+        }
+
+        const options = { once: true, passive: true, capture: true }
+
+        window.addEventListener("pointerdown", handleFirstInteraction, options)
+        window.addEventListener("keydown", handleFirstInteraction, options)
+
+        return () => {
+            window.removeEventListener("pointerdown", handleFirstInteraction)
+            window.removeEventListener("keydown", handleFirstInteraction)
+        }
+    }, [audioMode, isAudioEnabled, hasManuallyToggled, setIsAudioEnabled])
+
     useEffect(() => {
         if (isTouchDevice) return
 
@@ -81,7 +108,12 @@ function AudioToggle({
     ...props
 }: React.ComponentProps<typeof Button>) {
     const isAudioEnabled = useAudioStore((state) => state.isAudioEnabled)
+    const audioMode = useAudioStore((state) => state.audioMode)
     const toggleAudio = useAudioStore((state) => state.toggleAudio)
+
+    const hasManuallyToggled = useAudioStore(
+        (state) => state.hasManuallyToggled
+    )
 
     const playerRef = useRef<ReturnType<typeof createSoundEngine> | null>(null)
 
@@ -148,12 +180,19 @@ function AudioToggle({
                     {...props}
                 >
                     {isAudioEnabled ? (
+                        // Trường hợp 1: Âm thanh đang MỞ (do chuyển mode Auto hoặc đã qua tương tác đầu tiên)
                         isActive ? (
                             <Volume2 className="size-5.5" />
                         ) : (
+                            // Nếu bạn muốn nó luôn là Volume2 khi mở (bỏ qua hiệu ứng nháy theo âm thanh),
+                            // hãy đổi thẻ này thành <Volume2 className="size-5.5" />
                             <Volume1 className="size-5.5" />
                         )
+                    ) : audioMode === "auto" && !hasManuallyToggled ? (
+                        // Trường hợp 2: Reload trang, đang ở mode Auto, ĐANG CHỜ tương tác đầu tiên
+                        <Volume1 className="size-5.5" />
                     ) : (
+                        // Trường hợp 3: Đã tắt thủ công HOẶC đang ở mode Manual
                         <VolumeX className="size-5.5" />
                     )}
                 </Button>
