@@ -223,9 +223,6 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                             )}
                                         >
                                             {platform.icon}
-                                            <span className="sr-only">
-                                                {platform.title}
-                                            </span>
                                         </LinkButton>
                                     </li>
                                 }

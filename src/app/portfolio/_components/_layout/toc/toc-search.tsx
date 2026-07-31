@@ -118,7 +118,6 @@ function Addons({
                             pressSound={false}
                         >
                             <XCircle className="cursor-pointer lg:size-5.5" />
-                            <span className="sr-only">Clear search</span>
                         </Button>
                     }
                 />

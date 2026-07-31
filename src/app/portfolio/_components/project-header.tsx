@@ -140,9 +140,6 @@ function ProjectHeader({
                                                 pressSound="link"
                                             >
                                                 {tool.icon}
-                                                <span className="sr-only">
-                                                    {tool.label}
-                                                </span>
                                             </LinkButton>
                                         }
                                     />

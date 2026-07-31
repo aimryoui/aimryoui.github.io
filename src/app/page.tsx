@@ -1,4 +1,5 @@
-import { AudioToggle } from "@/components/audio/audio"
+import { AudioButton } from "@/_components/audio-button"
+import { SettingButton } from "@/_components/settings-button"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
@@ -53,10 +54,15 @@ export default function Home() {
                 </LinkButton>
             </MediaFrame>
             <SectionLine />
-            <Space className="flex items-center justify-center gap-3">
+            <Space as="menu" className="flex items-center justify-center gap-3">
                 <Tooltip>
-                    <AudioToggle />
-                    <ModeToggle />
+                    <AudioButton />
+                    <li>
+                        <ModeToggle />
+                    </li>
+                    <li>
+                        <SettingButton />
+                    </li>
                 </Tooltip>
             </Space>
             <SectionLine showDecoration />

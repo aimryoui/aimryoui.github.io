@@ -137,10 +137,6 @@ const TocGroup = memo(function TocGroup({
                                     )}
                                 />
                             </div>
-                            <span className="sr-only">
-                                {isExpanded ? "Collapse" : "Expand"}{" "}
-                                <Highlight>{header.label}</Highlight> category
-                            </span>
                         </CollapsibleTrigger>
                     }
                 />

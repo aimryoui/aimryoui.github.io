@@ -63,9 +63,6 @@ function TocHeader({
                                 })}
                             >
                                 <ArrowLeft className="size-4 lg:size-5" />
-                                <span className="sr-only">
-                                    Back to Portfolio
-                                </span>
                             </LinkButton>
                         }
                     />

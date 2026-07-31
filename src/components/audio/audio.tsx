@@ -156,9 +156,6 @@ function AudioToggle({
                     ) : (
                         <VolumeX className="size-5.5" />
                     )}
-                    <span className="sr-only">
-                        Press to {isAudioEnabled ? "Mute" : "Unmute"}
-                    </span>
                 </Button>
             }
         />

@@ -511,7 +511,6 @@ function CarouselReplay({
                     {...props}
                 >
                     <Refresh className="size-5" />
-                    <span className="sr-only">Scroll to start</span>
                 </Button>
             }
         />
@@ -564,7 +563,6 @@ function CarouselPrevious({
                     {...props}
                 >
                     <ArrowLeft />
-                    <span className="sr-only">Previous slide</span>
                 </Button>
             }
         />
@@ -617,7 +615,6 @@ function CarouselNext({
                     {...props}
                 >
                     <ArrowRight />
-                    <span className="sr-only">Next slide</span>
                 </Button>
             }
         />

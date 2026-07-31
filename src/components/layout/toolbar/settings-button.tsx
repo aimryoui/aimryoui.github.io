@@ -235,7 +235,6 @@ function SettingButton() {
                             }}
                         >
                             <Ellipsis className="size-6" />
-                            <span className="sr-only">Settings</span>
                         </DropdownMenuTrigger>
                     }
                 />
