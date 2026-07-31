@@ -19,10 +19,11 @@ function MobileTocList({
 }: TocListProps & {
     onLinkClick?: () => void
 }) {
-    const { scrollContainerRef, clickedTargetRef, activeId } = useTocScroll<HTMLUListElement>({
-        items,
-        debouncedQuery
-    })
+    const { scrollContainerRef, clickedTargetRef, activeId } =
+        useTocScroll<HTMLUListElement>({
+            items,
+            debouncedQuery
+        })
 
     return (
         <ul
@@ -40,7 +41,7 @@ function MobileTocList({
                         {(item.depth === 2 || item.depth === 4) && (
                             <TocDivider
                                 id={item.id}
-                                className="-mx-6 mb-4 mt-4.5"
+                                containerClassName="-mx-6 mb-4 mt-4.5"
                             />
                         )}
 
