@@ -1,5 +1,5 @@
-import { AudioButton } from "@/_components/audio-button"
-import { SettingButton } from "@/_components/settings-button"
+import { AudioButton } from "@/_components/toolbar/audio-button"
+import { SettingButton } from "@/_components/toolbar/settings-button"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"

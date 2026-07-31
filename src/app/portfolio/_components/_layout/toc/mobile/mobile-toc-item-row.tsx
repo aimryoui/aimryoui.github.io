@@ -1,8 +1,7 @@
 "use client"
 
 import { memo } from "react"
-
-import { ChevronDown } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
 import { LinkButton } from "@/components/ui/button"
@@ -11,26 +10,39 @@ import { highlightQuery } from "@/helpers/highlight-query"
 import { isSameUrl } from "@/helpers/is-same-url"
 import { cn } from "@/lib/utils"
 import { type TocItemRowProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
 
 const MobileTocItemRow = memo(
     ({
         mode,
         item,
-        isActive,
+        variant = "anchor",
         query,
         onPress,
-        onSameLinkClick
-    }: TocItemRowProps & {
-        isActive?: boolean
-    }) => {
+        onSameLinkClick,
+        children
+    }: TocItemRowProps) => {
+        const pathname = usePathname()
+
+        const isActive = useTocActiveId((s) => s.activeId === item.id)
         const href = item.href ?? `#${item.id}`
 
-        const isProject = item.depth === 3 && !item.icon
+        const isCurrent = isActive
+            ? href === pathname
+                ? "page"
+                : "true"
+            : undefined
+
+        const isProject = variant === "project"
+        const isCategory = variant === "category"
+        const isAnchor = variant === "anchor"
+
+        const Comp = isProject || isAnchor ? "li" : "div"
 
         return (
-            <li
+            <Comp
                 className={cn(
-                    "pointer-events-auto relative mx-6 box-content flex h-fit touch-auto list-inside items-center gap-4",
+                    "pointer-events-auto relative mx-6 box-content flex h-fit touch-auto list-inside items-center",
                     isProject && [
                         "border-s-1 border-muted-foreground/20",
                         isActive
@@ -42,20 +54,21 @@ const MobileTocItemRow = memo(
                                       before: "absolute inset-y-0 -left-0.25 w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
                                   },
                                   active: {
-                                      before: "absolute inset-y-0 -left-0.25 w-0.5 bg-highlighted"
+                                      before: "!bg-highlighted"
                                   }
                               }
                     ]
                 )}
             >
                 <LinkButton
+                    data-toc-id={item.id}
+                    aria-current={isCurrent}
                     href={href}
                     nativeLink
                     keepFeedback
                     hoverSound="tick"
                     pressSound={isProject ? "link" : "button"}
                     haptic={isProject ? "light" : "success"}
-                    data-toc-id={item.id}
                     onClick={(e) => {
                         if (isSameUrl(href)) {
                             e.preventDefault()
@@ -76,7 +89,7 @@ const MobileTocItemRow = memo(
                     }}
                     className={cn(
                         "group/link relative flex-1 truncate leading-6",
-                        item.icon
+                        isAnchor
                             ? "flex items-center gap-4 py-2"
                             : "inline-block py-3",
                         isProject
@@ -93,7 +106,7 @@ const MobileTocItemRow = memo(
                               }
                     )}
                 >
-                    {item.icon && (
+                    {isAnchor && (
                         <div
                             className={cn(
                                 "grid size-[36px] place-items-center rounded-full",
@@ -135,17 +148,8 @@ const MobileTocItemRow = memo(
                         </div>
                     )}
                 </LinkButton>
-                {item.depth === 2 && item.id !== "outlines" && (
-                    <div
-                        className={cn(
-                            "grid size-8 place-items-center rounded-full bg-default/5",
-                            "group-has-[input:not(:placeholder-shown)]/sidebar:hidden dark:bg-default/10"
-                        )}
-                    >
-                        <ChevronDown className="mt-[1px] size-6" />
-                    </div>
-                )}
-            </li>
+                {children}
+            </Comp>
         )
     }
 )

@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { memo } from "react"
+import { usePathname } from "next/navigation"
 
 import { ArrowRight, ArrowUp } from "@/components/icons/icons"
 import { LinkButton } from "@/components/ui/button"
@@ -23,8 +24,11 @@ interface TocItemProps {
     hidden?: boolean
 }
 
+type TocItemVariant = "category" | "project" | "anchor"
+
 type TocItemRowProps = React.ComponentProps<"li"> &
     React.ComponentProps<"div"> & {
+        variant?: TocItemVariant
         mode: PortfolioMode
         item: TocItemProps
         query?: string
@@ -35,6 +39,7 @@ type TocItemRowProps = React.ComponentProps<"li"> &
 const TocItemRow = memo(
     ({
         className,
+        variant = "anchor",
         mode,
         item,
         query,
@@ -43,23 +48,29 @@ const TocItemRow = memo(
         children,
         ...props
     }: TocItemRowProps) => {
+        const pathname = usePathname()
+
         const isActive = useTocActiveId((s) => s.activeId === item.id)
         const href = item.href ?? `#${item.id}`
 
-        const isProject = item.depth === 3 && !item.icon
-        const isCategory = !isProject && !item.icon
-        const isAnchor = !isProject && !!item.icon
+        const isCurrent = isActive
+            ? href === pathname
+                ? "page"
+                : "true"
+            : undefined
 
-        const isCollapsible = item.depth === 2 && item.id !== "outlines"
+        const isProject = variant === "project"
+        const isCategory = variant === "category"
+        const isAnchor = variant === "anchor"
 
-        const Comp = isProject ? "li" : "div"
+        const Comp = isProject || isAnchor ? "li" : "div"
 
         return (
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
             <Comp
                 data-toc-item
                 className={cn(
-                    "relative box-content flex h-fit list-inside items-center",
+                    "group/item relative box-content flex h-fit list-inside items-center",
                     {
                         // Tick
                         after: [
@@ -90,6 +101,7 @@ const TocItemRow = memo(
                 <LinkButton
                     data-toc-id={item.id}
                     data-cursor="target"
+                    aria-current={isCurrent}
                     href={href}
                     nativeLink
                     keepFeedback
@@ -112,44 +124,54 @@ const TocItemRow = memo(
                         onPress(item)
                     }}
                     className={cn(
-                        "group/link relative flex-1 truncate leading-6",
-                        item.icon
-                            ? "flex items-center gap-2 py-1.5"
-                            : "inline-block py-1",
+                        "group/link relative flex flex-1 items-center truncate py-1 leading-6",
                         isProject
-                            ? "ps-14 text-foreground dark:text-muted-foreground"
-                            : "ps-6 font-wght-600",
-                        isActive
-                            ? "!text-highlighted font-wght-600"
-                            : {
-                                  "group-hover":
-                                      "transition-[color] duration-100",
-                                  hover: [
-                                      "!transition-none",
-                                      isProject
-                                          ? "text-muted-foreground dark:text-foreground"
-                                          : "text-foreground"
-                                  ],
-                                  "focus-visible": "text-foreground"
-                              }
+                            ? [
+                                  "ps-14 text-foreground dark:text-muted-foreground",
+                                  {
+                                      "group-last-of-type/item": "-mb-3 pb-4"
+                                  }
+                              ]
+                            : "font-wght-600",
+                        isCategory ? "ps-6" : !isProject && "pe-5.5 ps-6",
+                        isAnchor && [
+                            "gap-2",
+                            {
+                                "group-first-of-type/item": "-mt-3 pt-4",
+                                "group-last-of-type/item": "-mb-3 pb-4"
+                            }
+                        ],
+                        {
+                            "group-hover": "transition-[color] duration-100",
+                            hover: [
+                                "!transition-none",
+                                isProject
+                                    ? "text-muted-foreground dark:text-foreground"
+                                    : "text-foreground"
+                            ],
+                            "focus-visible": "text-foreground",
+                            "data-current":
+                                "text-highlighted font-wght-600 dark:text-highlighted",
+                            "group-[>:first-child]/collapsible": "-mt-3 pt-4",
+                            "group-[:not([data-expanded=true])>:first-child]/collapsible":
+                                "-mb-3 pb-4"
+                        }
                     )}
                 >
                     {item.icon && (
                         <div
                             className={cn(
-                                "grid size-6 place-items-center rounded-md",
-                                isActive
-                                    ? "bg-highlighted text-white dark:bg-highlighted/70"
-                                    : [
-                                          "bg-muted-foreground/15 dark:bg-muted-foreground/20",
-                                          {
-                                              "group-hover":
-                                                  "transition-[background-color,color] duration-100",
-                                              "group-hover/link":
-                                                  "bg-muted-foreground/30 text-default !transition-none dark:bg-muted-foreground/40"
-                                          }
-                                      ],
-                                "translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem)*0.9)]"
+                                "my-0.5 grid size-6 place-items-center rounded-md bg-muted-foreground/15",
+                                "translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem)*0.9)]",
+                                {
+                                    dark: "bg-muted-foreground/20",
+                                    "group-hover":
+                                        "transition-[background-color,color] duration-100",
+                                    "group-hover/link":
+                                        "bg-muted-foreground/30 text-default !transition-none dark:bg-muted-foreground/40",
+                                    "group-data-current/link":
+                                        "bg-highlighted text-white dark:bg-highlighted/65"
+                                }
                             )}
                         >
                             {item.icon}
@@ -169,8 +191,7 @@ const TocItemRow = memo(
                     {isActive && (
                         <div
                             className={cn(
-                                "absolute top-1/2 hidden size-6 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
-                                isCollapsible ? "right-0" : "right-5.5",
+                                "ms-auto hidden size-6 place-items-center rounded-full bg-highlighted/10 text-highlighted",
                                 "group-hover:grid dark:bg-highlighted/20"
                             )}
                         >
@@ -190,5 +211,5 @@ const TocItemRow = memo(
 )
 TocItemRow.displayName = "TocItemRow"
 
-export type { TocItemProps, TocItemRowProps }
+export type { TocItemProps, TocItemRowProps, TocItemVariant }
 export { TocItemRow }

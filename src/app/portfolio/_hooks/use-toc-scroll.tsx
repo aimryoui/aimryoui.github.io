@@ -196,8 +196,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
 
     return {
         scrollContainerRef,
-        clickedTargetRef,
-        activeId
+        clickedTargetRef
     }
 }
 

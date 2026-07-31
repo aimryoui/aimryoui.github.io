@@ -8,10 +8,7 @@ const TocDivider = memo(
         // <ViewTransition name={`toc-divider-${id}`}>
         <SectionLine
             fit
-            containerClassName={cn(
-                "my-3 h-px first:hidden",
-                containerClassName
-            )}
+            containerClassName={cn("py-3 first:hidden", containerClassName)}
             {...props}
         />
         // </ViewTransition>

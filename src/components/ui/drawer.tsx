@@ -113,13 +113,13 @@ function DrawerSwipeHandle({
                     "group-data-[swipe-axis=x]/drawer-popup": [
                         "h-full w-3 items-center",
                         {
-                            after: "h-25 w-1.5 lg:h-20 sm:h-16"
+                            after: "h-20 w-1.5 lg:h-16 sm:h-14"
                         }
                     ],
                     "group-data-[swipe-axis=y]/drawer-popup": [
                         "h-3 w-full justify-center",
                         {
-                            after: "h-1 w-25 lg:w-20 sm:w-16"
+                            after: "h-1 w-20 lg:w-16 sm:w-14"
                         }
                     ],
 

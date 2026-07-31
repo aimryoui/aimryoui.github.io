@@ -3,7 +3,6 @@
 import { AudioToggle } from "@/components/audio/audio"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
-import { SettingButton } from "@/components/layout/toolbar/settings-button"
 import { LinkButton } from "@/components/ui/button"
 import { ProgressRoute } from "@/components/ui/progress"
 import { Tooltip } from "@/components/ui/tooltip"
@@ -13,6 +12,7 @@ import { useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import { MobileTocButton } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
+import { SettingButton } from "@/portfolio/_components/_layout/toolbar/settings-button"
 
 import { projects } from "~/.velite"
 
