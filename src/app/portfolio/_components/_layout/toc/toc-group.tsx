@@ -72,7 +72,8 @@ const TocGroup = memo(
                                 </span>
                             ),
                             side: "right",
-                            sideOffset: -14
+                            sideOffset: -14,
+                            alignOffset: 6
                         }}
                         render={
                             <CollapsibleTrigger

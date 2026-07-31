@@ -8,7 +8,10 @@ import { cn } from "@/lib/utils"
 
 type TooltipOptions = {
     content: React.ReactNode
-} & Pick<TooltipPrimitive.Positioner.Props, "side" | "sideOffset">
+} & Pick<
+    TooltipPrimitive.Positioner.Props,
+    "align" | "alignOffset" | "side" | "sideOffset"
+>
 
 type TooltipPayload = React.ReactNode | TooltipOptions
 
@@ -60,6 +63,8 @@ function Tooltip({
                         <TooltipContent
                             sideOffset={options.sideOffset}
                             side={options.side}
+                            align={options.align}
+                            alignOffset={options.alignOffset}
                         >
                             {content}
                         </TooltipContent>
