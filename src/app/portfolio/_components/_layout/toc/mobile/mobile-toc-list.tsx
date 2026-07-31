@@ -41,7 +41,7 @@ function MobileTocList({
                         {(item.depth === 2 || item.depth === 4) && (
                             <TocDivider
                                 id={item.id}
-                                containerClassName="-mx-6 mb-4 mt-4.5"
+                                containerClassName="mb-4 mt-4.5"
                             />
                         )}
 

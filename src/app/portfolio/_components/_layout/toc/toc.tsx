@@ -18,13 +18,15 @@ interface TocProps {
     items: TocItemProps[]
 }
 
+let hasRevealedOnLoad = false
+
 function TableOfContents({ mode, items }: TocProps) {
     const isMounted = useIsMounted()
     const rafRef = useRef<number | null>(null)
 
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const hasRevealed = useRef(false)
+    const hasRevealed = useRef(hasRevealedOnLoad)
 
     const {
         query,
@@ -41,11 +43,12 @@ function TableOfContents({ mode, items }: TocProps) {
     // 'done' = all mask/animation classes removed
     const [navRevealPhase, setNavRevealPhase] = useState<
         "waiting" | "animating" | "done"
-    >("waiting")
+    >(hasRevealedOnLoad ? "done" : "waiting")
 
     const handleActiveReady = () => {
         if (hasRevealed.current) return
         hasRevealed.current = true
+        hasRevealedOnLoad = true
 
         rafRef.current = requestAnimationFrame(() => {
             setNavRevealPhase("animating")
