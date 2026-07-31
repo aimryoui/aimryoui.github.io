@@ -47,18 +47,17 @@ function useTocTree(filteredItems: TocItemProps[]): TocNode[] {
     }, [filteredItems])
 }
 
-function useTocGroup(headerId: string, items: TocItemProps[]) {
+function useTocGroup(items: TocItemProps[]) {
     const [isExpanded, setIsExpanded] = useState(true)
 
     useEffect(() => {
         const unsubscribe = useTocActiveId.subscribe((state) => {
-            const activeId = state.activeId
-            if (activeId === headerId || items.some((i) => i.id === activeId)) {
+            if (items.some((i) => i.id === state.activeId)) {
                 setIsExpanded(true)
             }
         })
         return unsubscribe
-    }, [headerId, items])
+    }, [items])
 
     return { isExpanded, setIsExpanded }
 }

@@ -37,7 +37,7 @@ const TocGroup = memo(
         onItemPress,
         onSameLinkClick
     }: TocGroupProps) => {
-        const { isExpanded, setIsExpanded } = useTocGroup(header.id, items)
+        const { isExpanded, setIsExpanded } = useTocGroup(items)
 
         return (
             <Collapsible

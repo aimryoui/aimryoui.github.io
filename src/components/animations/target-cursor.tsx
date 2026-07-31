@@ -130,6 +130,8 @@ function TargetCursor({
         const dot = dotRef.current
         const state = stateRef.current
 
+        gsap.ticker.fps(120)
+
         gsap.set(root, { autoAlpha: 0 })
 
         const originalCursor = document.body.style.cursor
@@ -467,8 +469,6 @@ function TargetCursor({
         }
         window.addEventListener("blur", blurHandler)
 
-        let scrollTimeout: ReturnType<typeof setTimeout> | null = null
-
         const scrollHandler = () => {
             cachedOffset.current = getContainingBlockOffset(
                 containingBlockRef.current
@@ -477,25 +477,6 @@ function TargetCursor({
             if (activeTarget) {
                 doLeave()
             }
-
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout)
-            }
-
-            scrollTimeout = setTimeout(() => {
-                const offsetX = cachedOffset.current.x
-                const offsetY = cachedOffset.current.y
-                const mouseX = state.mouseX + offsetX
-                const mouseY = state.mouseY + offsetY
-
-                const elementUnderMouse = document.elementFromPoint(
-                    mouseX,
-                    mouseY
-                )
-                if (elementUnderMouse) {
-                    processTarget(elementUnderMouse)
-                }
-            }, 100)
         }
         window.addEventListener("scroll", scrollHandler, { passive: true })
 
@@ -603,7 +584,7 @@ function TargetCursor({
         window.addEventListener("resize", resizeHandler)
 
         return () => {
-            if (scrollTimeout) clearTimeout(scrollTimeout)
+            gsap.ticker.fps(0)
             gsap.ticker.remove(tickerFn)
             window.removeEventListener("mousemove", moveHandler)
             window.removeEventListener(

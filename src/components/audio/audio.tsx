@@ -47,8 +47,16 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
         window.addEventListener("keydown", handleFirstInteraction, options)
 
         return () => {
-            window.removeEventListener("pointerdown", handleFirstInteraction)
-            window.removeEventListener("keydown", handleFirstInteraction)
+            window.removeEventListener(
+                "pointerdown",
+                handleFirstInteraction,
+                options
+            )
+            window.removeEventListener(
+                "keydown",
+                handleFirstInteraction,
+                options
+            )
         }
     }, [audioMode, isAudioEnabled, hasManuallyToggled, setIsAudioEnabled])
 
@@ -179,21 +187,13 @@ function AudioToggle({
                     )}
                     {...props}
                 >
-                    {isAudioEnabled ? (
-                        // Trường hợp 1: Âm thanh đang MỞ (do chuyển mode Auto hoặc đã qua tương tác đầu tiên)
-                        isActive ? (
-                            <Volume2 className="size-5.5" />
-                        ) : (
-                            // Nếu bạn muốn nó luôn là Volume2 khi mở (bỏ qua hiệu ứng nháy theo âm thanh),
-                            // hãy đổi thẻ này thành <Volume2 className="size-5.5" />
-                            <Volume1 className="size-5.5" />
-                        )
-                    ) : audioMode === "auto" && !hasManuallyToggled ? (
-                        // Trường hợp 2: Reload trang, đang ở mode Auto, ĐANG CHỜ tương tác đầu tiên
-                        <Volume1 className="size-5.5" />
-                    ) : (
-                        // Trường hợp 3: Đã tắt thủ công HOẶC đang ở mode Manual
+                    {isAudioEnabled && isActive ? (
+                        <Volume2 className="size-5.5" />
+                    ) : !isAudioEnabled &&
+                      (audioMode === "manual" || hasManuallyToggled) ? (
                         <VolumeX className="size-5.5" />
+                    ) : (
+                        <Volume1 className="size-5.5" />
                     )}
                 </Button>
             }

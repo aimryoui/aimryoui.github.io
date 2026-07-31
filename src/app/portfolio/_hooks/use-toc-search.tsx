@@ -1,3 +1,5 @@
+import { useMemo } from "react"
+
 import { removeDiacritics } from "@/helpers/remove-diacritics"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { useSearch } from "@/portfolio/_hooks/use-search"
@@ -58,16 +60,20 @@ function useTocSearch(
     const { query, setQuery, debouncedQuery, handleClearSearch } =
         useSearch(inputRef)
 
-    const normalizedItems = items.length
-        ? items.map((item) => ({
-              ...item,
-              _normalizedLabel: removeDiacritics(item.label.toLowerCase())
-          }))
-        : []
+    const normalizedItems = useMemo(() => {
+        return items.length
+            ? items.map((item) => ({
+                  ...item,
+                  _normalizedLabel: removeDiacritics(item.label.toLowerCase())
+              }))
+            : []
+    }, [items])
 
-    const filteredItems = items.length
-        ? getFilteredItems(normalizedItems, debouncedQuery)
-        : []
+    const filteredItems = useMemo(() => {
+        return items.length
+            ? getFilteredItems(normalizedItems, debouncedQuery)
+            : []
+    }, [normalizedItems, debouncedQuery, items.length])
 
     return {
         query,
