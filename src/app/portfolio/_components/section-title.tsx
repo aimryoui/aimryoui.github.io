@@ -21,7 +21,7 @@ function SectionTitle({
     return (
         <div
             className={cn(
-                "relative flex min-h-20 items-center bg-background px-6 py-5",
+                "relative flex min-h-space items-center bg-background px-safe-zone py-[calc(var(--spacing-safe-zone)-var(--spacing))]",
                 className
             )}
         >
@@ -29,8 +29,12 @@ function SectionTitle({
                 <span
                     id={noteId}
                     className={cn(
-                        "absolute inset-x-6 bottom-[calc(100%+1rem)] w-fit max-w-full font-mono uppercase leading-normal",
-                        noteId && "scroll-mt-[calc(var(--spacing)*20*2-2.5rem)]"
+                        "absolute bottom-[calc(100%+1rem)] left-safe-zone max-w-[calc(100%-var(--spacing-safe-zone)*2)] font-mono uppercase leading-normal",
+                        noteId &&
+                            "scroll-mt-[calc(var(--spacing)*20*2-2.5rem)]",
+                        {
+                            md: "bottom-[calc(100%+.75rem)] text-sm leading-[1.4]"
+                        }
                     )}
                 >
                     {note}
@@ -57,7 +61,7 @@ function Title({
             <H2
                 id={id}
                 className={cn(
-                    "w-fit text-foreground will-change-[font-variation-settings] transition-[color,font-variation-settings] ease-spring duration-500",
+                    "w-fit text-foreground will-change-[font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
                     {
                         "group-hover":
                             "text-highlighted font-wght-900 transition-[font-variation-settings]",

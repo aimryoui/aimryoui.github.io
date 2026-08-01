@@ -42,7 +42,7 @@ const MobileTocItemRow = memo(
         return (
             <Comp
                 className={cn(
-                    "pointer-events-auto relative mx-6 box-content flex h-fit touch-auto list-inside items-center",
+                    "pointer-events-auto relative mx-safe-zone box-content flex h-fit touch-auto list-inside items-center",
                     isProject && [
                         "border-s-1 border-muted-foreground/20",
                         isActive
@@ -57,7 +57,10 @@ const MobileTocItemRow = memo(
                                       before: "!bg-highlighted"
                                   }
                               }
-                    ]
+                    ],
+                    {
+                        "last-of-type": "mb-1.5"
+                    }
                 )}
             >
                 <LinkButton
@@ -91,12 +94,12 @@ const MobileTocItemRow = memo(
                         "group/link relative flex-1 truncate leading-6",
                         isAnchor
                             ? "flex items-center gap-4 py-2"
-                            : "inline-block py-3",
+                            : "inline-block py-2",
                         isProject
-                            ? "px-6 text-foreground dark:text-muted-foreground"
+                            ? "px-safe-zone text-foreground dark:text-muted-foreground"
                             : "font-wght-500 font-slnt-0",
                         isActive
-                            ? "pe-12 !text-highlighted font-wght-600"
+                            ? "pe-[calc(var(--spacing-safe-zone)+var(--spacing)*7)] !text-highlighted font-wght-600"
                             : {
                                   hover: isProject
                                       ? "text-muted-foreground dark:text-foreground"
@@ -109,7 +112,7 @@ const MobileTocItemRow = memo(
                     {isAnchor && (
                         <div
                             className={cn(
-                                "grid size-[36px] place-items-center rounded-full",
+                                "grid size-9 place-items-center rounded-full",
                                 isActive
                                     ? "bg-highlighted text-white dark:bg-highlighted/70"
                                     : [
@@ -136,14 +139,14 @@ const MobileTocItemRow = memo(
                     {isActive && (
                         <div
                             className={cn(
-                                "absolute right-0 top-1/2 grid size-8 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                "absolute right-0 top-1/2 grid size-7 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
                                 "dark:bg-highlighted/20"
                             )}
                         >
                             {mode === "pages" ? (
-                                <ArrowRight className={cn("size-4.5")} />
+                                <ArrowRight className={cn("size-4")} />
                             ) : (
-                                <ArrowUp className={cn("size-4.5")} />
+                                <ArrowUp className={cn("size-4")} />
                             )}
                         </div>
                     )}

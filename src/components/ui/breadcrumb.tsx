@@ -132,7 +132,8 @@ function BreadcrumbLink({
                 {
                     hover: "text-foreground transition-none",
                     "data-[popup-open]": "text-foreground",
-                    md: "py-2.5"
+                    lg: "text-sm",
+                    md: "py-2"
                 },
                 className
             )}
@@ -186,7 +187,8 @@ function BreadcrumbPage({
             className={cn(
                 "-me-1.25 flex h-full items-center text-foreground",
                 {
-                    md: "py-2.5"
+                    lg: "text-sm",
+                    md: "py-2"
                 },
                 className
             )}
@@ -226,7 +228,8 @@ function BreadcrumbMenu({
                 "group-first:-ms-1.25",
                 {
                     hover: "text-foreground transition-none",
-                    md: "py-2.5"
+                    lg: "text-sm",
+                    md: "py-2"
                 },
                 className
             )}
@@ -284,7 +287,8 @@ function BreadcrumbMenuPage({
             className={cn(
                 "group/trigger -me-1.25 flex h-full items-center text-foreground",
                 {
-                    md: "py-2.5"
+                    lg: "text-sm",
+                    md: "py-2"
                 },
                 className
             )}

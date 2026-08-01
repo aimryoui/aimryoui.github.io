@@ -7,6 +7,7 @@ type MarginLineProps = React.ComponentProps<"div"> & {
 function MarginLine({ className, ...props }: MarginLineProps) {
     return (
         <div
+            data-slot="margin-line"
             role="separator"
             className={cn(
                 "pointer-events-none sticky top-0 z-30 h-dvh w-px",
@@ -34,12 +35,13 @@ function MarginLine({ className, ...props }: MarginLineProps) {
 function Plus({ position }: { position?: "left" | "right" }) {
     return (
         <div
+            data-slot="section-line-plus"
             role="presentation"
             className={cn(
                 "pointer-events-none relative z-40 size-1",
                 {
-                    before: "absolute left-1/2 top-1/2 h-6 w-1 -translate-x-1/2 -translate-y-1/2 bg-highlighted",
-                    after: "absolute left-1/2 top-1/2 h-1 w-6 -translate-x-1/2 -translate-y-1/2 bg-highlighted"
+                    before: "absolute left-1/2 top-1/2 h-safe-zone w-1 -translate-x-1/2 -translate-y-1/2 bg-highlighted",
+                    after: "absolute left-1/2 top-1/2 h-1 w-safe-zone -translate-x-1/2 -translate-y-1/2 bg-highlighted"
                 },
                 position === "left" && "-ml-[.171875rem]",
                 position === "right" && "-mr-[.171875rem]"
@@ -63,6 +65,7 @@ function SectionLine({
 }: SectionLineProps) {
     return (
         <div
+            data-slot="section-line"
             role="separator"
             className={cn(
                 "pointer-events-none relative z-40 h-0 w-full",
@@ -77,7 +80,12 @@ function SectionLine({
                     fit
                         ? "left-1/2 w-full -translate-x-1/2"
                         : [
-                              "-right-6 w-screen group-data-[sidebar-position=right]/html:-left-6"
+                              "-right-safe-zone w-[calc(100vw-var(--px)*2)]",
+                              {
+                                  "group-data-[sidebar-position=right]/html":
+                                      "-left-safe-zone right-auto",
+                                  lg: "-left-safe-zone right-auto"
+                              }
                           ],
                     className
                 )}
@@ -101,6 +109,7 @@ function ElementLine({
 }: ElementLineProps) {
     return (
         <div
+            data-slot="element-line"
             className={cn(
                 "pointer-events-none relative",
                 dir === "vertical" ? "h-full w-0" : "h-0 w-full",
@@ -132,6 +141,7 @@ function SvgElementLine({
 }: SvgElementLineProps) {
     return (
         <div
+            data-slot="svg-element-line"
             role="separator"
             className={cn(
                 "pointer-events-none relative z-1",

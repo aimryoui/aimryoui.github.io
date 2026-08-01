@@ -82,18 +82,15 @@ function Software() {
                     <Fragment key={section.section}>
                         <TableContainer
                             className={cn(
-                                "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-4 bg-background py-4.5",
-                                {
-                                    lg: "pb-4.75 pt-5.5"
-                                }
+                                "grid grid-cols-5 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] gap-y-table-between bg-background py-safe-zone-vertical"
                             )}
                         >
                             <TableCaption
                                 className={cn(
-                                    "absolute left-6 top-4.5 whitespace-pre-line font-wght-500",
+                                    "absolute left-safe-zone top-safe-zone-vertical whitespace-pre-line font-wght-500",
                                     {
                                         "@[46.875rem]":
-                                            "static col-span-full whitespace-normal px-6 font-wght-600"
+                                            "static col-span-full whitespace-normal px-safe-zone font-wght-600"
                                     }
                                 )}
                             >
@@ -102,20 +99,22 @@ function Software() {
                             <Table
                                 aria-label="Software"
                                 className={cn(
-                                    "col-span-full col-start-2 grid table-fixed gap-y-2 pb-1",
+                                    "col-span-full col-start-2 grid table-fixed gap-y-table-between pb-0.75",
                                     index === 0 && {
                                         "@[39.5rem]":
-                                            "pb-[calc(1em*1.3+2px+var(--spacing)*15)]"
+                                            "pb-[calc(1em*1.5+2px+var(--spacing-table-between)*2+var(--spacing)*8+var(--spacing)*.75)]"
                                     },
                                     {
-                                        "@[46.875rem]": "col-start-1 px-6"
+                                        "@[46.875rem]":
+                                            "col-start-1 px-safe-zone",
+                                        md: "text-sm"
                                     }
                                 )}
                             >
                                 <TableHeader
                                     className={cn("grid", {
                                         "[&>tr]":
-                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2+var(--spacing)*.5)]"
                                     })}
                                 >
                                     {section.frequencies.map(
@@ -126,12 +125,12 @@ function Software() {
                                                     frequency.isRowHeader
                                                 }
                                                 className={cn(
-                                                    "col-span-2 px-0",
+                                                    "col-span-2 flex px-0",
                                                     _index === arr.length - 1 &&
-                                                        "pe-6",
+                                                        "pe-safe-zone",
                                                     _index === 1 && {
                                                         "@[39.5rem]":
-                                                            "absolute -bottom-[calc(1em*1.3+2px+var(--spacing)*14)] left-0"
+                                                            "absolute left-0 top-[calc(1em*1.5+2px+var(--spacing-table-between)*2+var(--spacing)*8)]"
                                                     }
                                                 )}
                                             >
@@ -142,14 +141,12 @@ function Software() {
                                 </TableHeader>
 
                                 <TableBody
-                                    className={cn("grid gap-y-2", {
-                                        lg: "gap-y-4"
-                                    })}
+                                    className={cn("grid gap-y-table-between")}
                                 >
                                     <TableRow
                                         id={`software-${slugify(section.section)}`}
                                         className={cn(
-                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]"
+                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]"
                                         )}
                                     >
                                         {section.frequencies.map(
@@ -160,10 +157,10 @@ function Software() {
                                                         "col-span-2 p-0 align-top text-foreground font-wght-600",
                                                         _index ===
                                                             arr.length - 1 &&
-                                                            "pe-6",
+                                                            "pe-safe-zone",
                                                         _index === 1 && {
                                                             "@[39.5rem]":
-                                                                "absolute -bottom-[calc(1em*1.3+2px+var(--spacing)*14)] left-0"
+                                                                "absolute left-0 top-[calc(1em*1.5+2px+var(--spacing-table-between)*2+var(--spacing)*8)]"
                                                         }
                                                     )}
                                                 >

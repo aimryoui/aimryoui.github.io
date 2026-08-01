@@ -130,9 +130,6 @@ function CarouselIndicator({
             className={cn(
                 "grid h-9 select-none place-items-center rounded-xlg border border-default/15 bg-background px-4 font-mono text-sm",
                 (!emblaApi || count === 0) && "opacity-40",
-                {
-                    lg: "h-[36px] text-base"
-                },
                 className
             )}
             {...props}
@@ -358,7 +355,8 @@ function Carousel({
                                 "2xl": "grid-cols-6",
                                 xl: "grid-cols-4",
                                 md: "grid-cols-3",
-                                sm: "grid-cols-2"
+                                sm: "grid-cols-2",
+                                xs: "grid-cols-1"
                             }
                         )}
                     >
@@ -373,7 +371,8 @@ function Carousel({
                                     "2xl": "col-span-4",
                                     xl: "order-first col-span-4 my-2",
                                     md: "col-span-3",
-                                    sm: "col-span-2"
+                                    sm: "col-span-2",
+                                    xs: "col-span-1"
                                 })}
                             />
 
@@ -381,7 +380,8 @@ function Carousel({
                                 className={cn("flex w-full justify-end gap-2", {
                                     xl: "col-start-4",
                                     md: "col-start-3",
-                                    sm: "col-start-2"
+                                    sm: "col-start-2",
+                                    xs: "col-start-1"
                                 })}
                             >
                                 <CarouselPrevious className="flex-1" />

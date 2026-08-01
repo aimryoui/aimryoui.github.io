@@ -96,13 +96,13 @@ function ProjectCard({
                 pressSound: "link"
             })}
             className={cn(
-                "group flex min-h-20 min-w-0 items-center gap-x-4 px-6 py-4 transition-[background-color] duration-100",
+                "group flex min-h-space min-w-0 items-center gap-x-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                 {
                     hover: "bg-highlighted/5 transition-none",
                     active: "bg-highlighted/10 transition-none"
                 },
                 projectNavigation && {
-                    sm: "flex-wrap gap-x-2 gap-y-0.5"
+                    sm: "flex-wrap gap-x-2"
                 },
                 className
             )}
@@ -136,7 +136,7 @@ function ProjectCard({
                     "flex min-w-0 flex-1 flex-col",
                     navigation === "backward" && "items-end",
                     projectNavigation && {
-                        sm: "order-3 w-full flex-none gap-y-0.5"
+                        sm: "order-3 w-full flex-none"
                     }
                 )}
             >
@@ -254,7 +254,10 @@ function ProjectCover({
                         width={56}
                         height={31.5}
                         className={cn(
-                            "aspect-video h-auto w-14 rounded-inherit object-cover"
+                            "aspect-video h-auto w-14 rounded-inherit object-cover",
+                            {
+                                md: "w-13"
+                            }
                         )}
                         loading="lazy"
                         decoding="async"
@@ -282,6 +285,9 @@ function ProjectName({
             className={cn(
                 "relative inline-flex w-fit max-w-full overflow-hidden",
                 isNew && "pe-3",
+                {
+                    md: "text-sm"
+                },
                 className
             )}
             {...props}
@@ -362,7 +368,8 @@ function ProjectCategory({
                     "w-fit max-w-full truncate text-sm transition-[color] duration-100",
                     {
                         "group-hover": "text-foreground transition-none",
-                        "group-active": "text-foreground transition-none"
+                        "group-active": "text-foreground transition-none",
+                        md: "text-xs"
                     },
                     className
                 )}

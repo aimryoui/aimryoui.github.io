@@ -101,8 +101,7 @@ function SettingButton() {
                                     size="icon"
                                     variant="outline"
                                     className={cn({
-                                        dark: "bg-input/25",
-                                        lg: "size-[36px]"
+                                        dark: "bg-input/25"
                                     })}
                                 />
                             }

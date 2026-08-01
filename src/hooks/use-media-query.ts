@@ -61,7 +61,8 @@ const BREAKPOINTS = {
     xl: `(max-width: ${breakpoint("xl")})`,
     lg: `(max-width: ${breakpoint("lg")})`,
     md: `(max-width: ${breakpoint("md")})`,
-    sm: `(max-width: ${breakpoint("sm")})`
+    sm: `(max-width: ${breakpoint("sm")})`,
+    xs: `(max-width: ${breakpoint("xs")})`
 } as const
 
 type BreakpointKey = keyof typeof BREAKPOINTS

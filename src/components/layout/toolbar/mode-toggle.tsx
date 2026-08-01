@@ -42,10 +42,11 @@ function ModeToggle({ className }: React.ComponentProps<"button">) {
             }}
             render={
                 <Button
+                    suppressHydrationWarning
+                    isDisabled={!mounted}
                     variant="outline"
                     size="icon"
                     haptic="success"
-                    isDisabled={!mounted}
                     onPress={() => {
                         setTheme(
                             theme === "light"

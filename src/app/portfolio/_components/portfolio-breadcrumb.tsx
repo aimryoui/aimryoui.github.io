@@ -58,7 +58,7 @@ function PortfolioBreadcrumb({
         <Breadcrumb
             className={cn({
                 md: [
-                    "fixed inset-x-0 bottom-20 h-auto w-full bg-background",
+                    "fixed inset-x-0 bottom-space h-auto w-full bg-background",
                     {
                         before: "absolute inset-0 z-1 bg-input/25"
                     }
@@ -74,7 +74,7 @@ function PortfolioBreadcrumb({
             <BreadcrumbList
                 ref={listRef}
                 className={cn({
-                    md: "z-2 overflow-x-scroll px-6 scroll-fade-x scroll-fade-24 scrollbar-thin"
+                    md: "z-2 overflow-x-scroll px-safe-zone scroll-fade-x scroll-fade-24 scrollbar-thin"
                 })}
             >
                 <BreadcrumbItem

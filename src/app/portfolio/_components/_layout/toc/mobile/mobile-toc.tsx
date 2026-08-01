@@ -108,18 +108,15 @@ function MobileTocButtonCore() {
                             >
                                 {isTocOpen ? (
                                     <PanelTopOpen
-                                        className="size-[36px]"
                                         strokeWidth={0.75}
+                                        className="size-8"
                                     />
                                 ) : (
                                     <PanelTopClose
-                                        className="size-[36px]"
                                         strokeWidth={0.75}
+                                        className="size-8"
                                     />
                                 )}
-                                <span className="sr-only">
-                                    Table of Contents
-                                </span>
                             </Button>
                         }
                     />
@@ -138,7 +135,7 @@ function MobileTocButtonCore() {
                     />
                     <SectionLine fit />
                 </DrawerHeader>
-                <div className="flex flex-col overflow-hidden pb-[calc(env(safe-area-inset-bottom,0px)+theme(spacing.20))] text-2xl">
+                <div className="flex flex-col overflow-hidden pb-[calc(env(safe-area-inset-bottom,0px)+theme(spacing.space))] text-xl">
                     <MobileToc
                         mode={mode}
                         items={tocItems}
@@ -170,8 +167,8 @@ function MobileTocButton() {
             aria-expanded={false}
             data-state="closed"
         >
-            <PanelTopClose className="size-[36px]" strokeWidth={1.25} />
-            <span className="sr-only">Ta0.75of Contents</span>
+            <PanelTopClose strokeWidth={1.25} className="size-8" />
+            <span className="sr-only">Table of Contents</span>
         </Button>
     )
 }

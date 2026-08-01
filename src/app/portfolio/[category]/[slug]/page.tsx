@@ -121,7 +121,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <main className={cn("relative flex-1")}>
             <AmbientStyle project={project} category={category} />
             <FlashOverlay />
-            <Space className={cn("flex items-center justify-start px-6")}>
+            <Space
+                className={cn("flex items-center justify-start px-safe-zone")}
+            >
                 <PortfolioBreadcrumb
                     category={category}
                     categoryTitle={group.title}
@@ -132,17 +134,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 {socialData && (
                     <Space
                         className={cn(
-                            "pointer-events-none fixed top-0 z-60 flex w-[100cqw] items-center justify-end bg-transparent px-6",
+                            "pointer-events-none fixed top-0 z-60 flex w-[100cqw] items-center justify-end bg-transparent px-safe-zone",
                             {
-                                lg: "bottom-20 top-auto px-0",
-                                md: "bottom-[calc(var(--spacing)*31.5+var(--px))]"
+                                lg: "bottom-space top-auto px-0",
+                                md: "bottom-[calc(var(--spacing-space)+2.5625rem+var(--px))]"
                             }
                         )}
                     >
-                        <SocialButton
-                            social={project.social}
-                            className="lg:h-[36px]"
-                        />
+                        <SocialButton social={project.social} />
                     </Space>
                 )}
                 <SectionLine showDecoration />
@@ -172,7 +171,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <Space className={cn("grid place-items-center")}>
                 <Highlight
                     className={cn(
-                        "grid size-full place-items-center bg-highlighted/10 px-6 py-4.5"
+                        "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-4.5"
                     )}
                 >
                     Project ends. What&#39;s next?
@@ -201,7 +200,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     href={getCategoryPath(category)}
                                     label={`Go back to ${group.title} category page`}
                                     className={cn(
-                                        "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 transition-[background-color] duration-100",
+                                        "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-4.5 transition-[background-color] duration-100",
                                         {
                                             hover: "bg-highlighted/5 transition-none",
                                             active: "bg-highlighted/10 transition-none"
@@ -232,7 +231,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                                         "text-foreground transition-none",
                                                     "group-active":
                                                         "text-foreground transition-none",
-                                                    sm: "text-sm"
+                                                    sm: "text-xs"
                                                 }
                                             )}
                                         >
@@ -279,7 +278,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             : "No more projects, contact me"
                                     }
                                     className={cn(
-                                        "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 transition-[background-color] duration-100",
+                                        "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-4.5 transition-[background-color] duration-100",
                                         {
                                             hover: "bg-highlighted/5 transition-none",
                                             active: "bg-highlighted/10 transition-none"
@@ -301,7 +300,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                                                 "text-foreground transition-none",
                                                             "group-active":
                                                                 "text-foreground transition-none",
-                                                            sm: "text-sm"
+                                                            sm: "text-xs"
                                                         }
                                                     )}
                                                 >

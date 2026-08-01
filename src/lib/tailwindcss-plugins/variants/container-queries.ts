@@ -1,16 +1,34 @@
 import plugin from "tailwindcss/plugin"
 
+const UNDERSCORE_REGEX = /_/gu
+const VAR_ENV_REGEX = /(?:var|env)\([^)]+\)/gu
+const OPERATOR_REGEX = /([0-9a-zA-Z%)_])\s*([+-])\s*(?=[0-9a-zA-Z(._-])/gu
+
+function parseContainerValue(value: string) {
+    let parsedValue = value.replace(UNDERSCORE_REGEX, " ")
+    
+    let placeholders: Record<string, string> = {}
+    let counter = 0
+    parsedValue = parsedValue.replace(VAR_ENV_REGEX, match => {
+        let key = `__VAR_${counter++}__`
+        placeholders[key] = match
+        return key
+    })
+
+    parsedValue = parsedValue.replace(OPERATOR_REGEX, "$1 $2 ")
+
+    for (let key in placeholders) {
+        parsedValue = parsedValue.replace(key, placeholders[key])
+    }
+
+    return parsedValue
+}
+
 export default plugin(
     function containerQueries({ matchUtilities, matchVariant, theme }) {
         let values: Record<string, string> = theme("containers")
 
-        function parseValue(value: string) {
-            let numericValue =
-                /^(\d+\.\d+|\d+|\.\d+)\D+/u.exec(value)?.[1] ?? null
-            if (numericValue === null) return null
 
-            return parseFloat(value)
-        }
 
         matchUtilities(
             {
@@ -38,11 +56,8 @@ export default plugin(
         matchVariant(
             "@",
             (value, { modifier }) => {
-                let parsed = parseValue(value)
-
-                return parsed === null
-                    ? []
-                    : `@container ${modifier ?? ""} (max-width: ${value})`
+                const parsedValue = parseContainerValue(value)
+                return `@container ${modifier ?? ""} (max-width: ${parsedValue})`
             },
             {
                 values,

@@ -28,10 +28,7 @@ function TocHeader({
     return (
         <div
             className={cn(
-                "flex gap-3 bg-background px-6 py-5.5",
-                {
-                    lg: "gap-5"
-                },
+                "flex gap-3 bg-background px-safe-zone py-[calc(var(--spacing-safe-zone)-var(--spacing)*.5)]",
                 containerClassName
             )}
             // style={{
@@ -58,11 +55,10 @@ function TocHeader({
                                 prefetch={false}
                                 scroll={false}
                                 className={cn("pointer-events-auto", {
-                                    dark: "bg-input/25",
-                                    lg: "size-[36px]"
+                                    dark: "bg-input/25"
                                 })}
                             >
-                                <ArrowLeft className="size-4 lg:size-5" />
+                                <ArrowLeft className="size-4" />
                             </LinkButton>
                         }
                     />

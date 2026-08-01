@@ -130,7 +130,7 @@ function TargetCursor({
         const dot = dotRef.current
         const state = stateRef.current
 
-        gsap.ticker.fps(120)
+        gsap.ticker.fps(144)
 
         gsap.set(root, { autoAlpha: 0 })
 

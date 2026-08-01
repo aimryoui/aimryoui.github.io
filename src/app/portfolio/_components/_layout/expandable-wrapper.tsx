@@ -77,7 +77,7 @@ export function ExpandableWrapper({
                 {!isExpanded && isOverflowing && (
                     <div
                         className={cn(
-                            "pointer-events-none absolute -bottom-6 z-40 flex h-120 w-full flex-col items-center justify-end bg-gradient-to-t from-background from-10% to-transparent pb-11.5"
+                            "pointer-events-none absolute -bottom-safe-zone z-40 flex h-120 w-full flex-col items-center justify-end bg-gradient-to-t from-background from-10% to-transparent pb-11.5"
                         )}
                     >
                         <Button

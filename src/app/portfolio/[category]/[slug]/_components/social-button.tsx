@@ -30,7 +30,9 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
 
     const playPressFeedback = usePressFeedback()
 
-    const isMobile = useMediaQuery("lg")
+    const isLg = useMediaQuery("lg")
+    const isXs = useMediaQuery("xs")
+
     const [isExpanded, setIsExpanded] = useState(false)
     const [isAtBottom, setIsAtBottom] = useState(false)
 
@@ -72,7 +74,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
             } else {
                 const delta = currentScrollY - lastScrollY
 
-                if (isMobile) {
+                if (isLg) {
                     if (delta > 0) {
                         setIsExpanded(false)
                         accumulatedScrollUp = 0
@@ -111,7 +113,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
             clearTimeout(scrollTimeout)
             window.removeEventListener("scroll", handleScroll)
         }
-    }, [isMobile])
+    }, [isLg])
 
     useEffect(() => {
         if (isExpanded) {
@@ -148,8 +150,8 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                 "will-change-transform transition-transform ease-spring duration-400",
                 {
                     lg: [
-                        "text-base font-wght-600",
-                        isAtBottom && "-translate-x-5.5"
+                        "font-wght-600",
+                        isAtBottom && "-translate-x-safe-zone"
                     ]
                 },
                 className
@@ -164,18 +166,18 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                     "grid-cols-[0fr]",
                     {
                         hover: "underline decoration-solid",
-                        lg: "h-[36px]",
                         "group-hover":
                             "translate-x-0 grid-cols-[1fr] pe-3 ps-3.5 opacity-100 delay-75",
                         "group-data-[expanded=true]":
-                            "translate-x-0 grid-cols-[1fr] pe-3 ps-3.5 opacity-100 delay-75"
+                            "translate-x-0 grid-cols-[1fr] pe-3 ps-3.5 opacity-100 delay-75",
+                        xs: "hidden"
                     }
                 )}
             >
                 <div className="min-w-0">
                     <span className="flex w-max items-center justify-end gap-1.5">
                         {label}
-                        <ExternalLink className="mb-0.75 size-4 lg:size-5" />
+                        <ExternalLink className="mb-0.75 size-4" />
                     </span>
                 </div>
             </div>
@@ -185,16 +187,16 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                     "z-1 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15",
                     "will-change-transform transition-[transform,translate,background-color] duration-100",
                     {
-                        lg: "-mr-[2px] size-[38px]",
                         "group-hover": "animate-social-button-shake-in",
                         "group-data-[expanded=true]":
-                            "animate-social-button-shake-in"
+                            "animate-social-button-shake-in",
+                        xs: "!animate-none"
                     }
                 )}
             >
                 <SocialIcon
                     className={cn(
-                        "size-5.5 lg:size-6",
+                        "size-5.5",
                         type === "behance" && "mb-[1px] ml-[1px]"
                     )}
                 />
@@ -217,7 +219,10 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                 "[filter:drop-shadow(0px_0px_3px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_1.5px_rgba(0,0,0,0.10))]",
                 "will-change-transform transition-transform ease-spring duration-400",
                 {
-                    lg: ["text-base", isAtBottom && "-translate-x-5.5"]
+                    lg: [
+                        "font-wght-600",
+                        isAtBottom && "-translate-x-safe-zone"
+                    ]
                 },
                 className
             )}
@@ -227,7 +232,10 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                 aria-hidden={true}
                 role="presentation"
                 className={cn(
-                    "pointer-events-none absolute inset-0 z-0 flex items-center justify-end gap-1 [filter:url(#metaball)]"
+                    "pointer-events-none absolute inset-0 z-0 flex items-center justify-end gap-1 [filter:url(#metaball)]",
+                    {
+                        xs: "hidden"
+                    }
                 )}
             >
                 <div
@@ -237,7 +245,6 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                         "will-change-[transform,grid-template-columns,padding] transition-[transform,grid-template-columns,padding] ease-spring duration-400",
                         "grid-cols-[0fr]",
                         {
-                            lg: "h-[36px]",
                             "group-hover":
                                 "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75",
                             "group-data-[expanded=true]":
@@ -250,7 +257,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                             <span className="blink:translate-y-[.5px]">
                                 {label}
                             </span>
-                            <div className="size-4 -translate-y-0.25 lg:size-5" />
+                            <div className="size-4 -translate-y-0.25" />
                         </div>
                     </div>
                 </div>
@@ -259,7 +266,6 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                         socialColors,
                         "-mr-0.5 size-9.5 shrink-0 rounded-full will-change-transform",
                         {
-                            lg: "-mr-[2px] size-[38px]",
                             "group-hover": "animate-social-button-shake-in",
                             "group-data-[expanded=true]":
                                 "animate-social-button-shake-in"
@@ -275,11 +281,11 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                     "grid-cols-[0fr]",
                     {
                         hover: "underline decoration-solid",
-                        lg: "h-[36px]",
                         "group-hover":
                             "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75",
                         "group-data-[expanded=true]":
-                            "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75"
+                            "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75",
+                        xs: "hidden"
                     }
                 )}
             >
@@ -296,7 +302,7 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                         <span className="blink:translate-y-[.5px]">
                             {label}
                         </span>
-                        <ExternalLink className="size-4 -translate-y-0.25 lg:size-5" />
+                        <ExternalLink className="size-4 -translate-y-0.25" />
                     </span>
                 </div>
             </div>
@@ -306,17 +312,17 @@ function SocialButton({ className, social, ...props }: SocialButtonProps) {
                     "relative z-20 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15 will-change-transform",
                     "transition-[border-color] duration-1000",
                     {
-                        lg: "-mr-[2px] size-[38px]",
                         "group-hover":
                             "animate-social-button-shake-in border-transparent transition-none",
                         "group-data-[expanded=true]":
-                            "animate-social-button-shake-in border-transparent transition-none"
+                            "animate-social-button-shake-in border-transparent transition-none",
+                        xs: "!animate-none !border-white/15"
                     }
                 )}
             >
                 <SocialIcon
                     className={cn(
-                        "size-5.5 lg:size-6",
+                        "size-5.5",
                         type === "behance" && "mb-[1px] ml-[1px]"
                     )}
                 />

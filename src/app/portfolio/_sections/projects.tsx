@@ -115,7 +115,7 @@ function Projects() {
                             keepFeedback
                             prefetch={false}
                             className={cn(
-                                "group flex items-center justify-between gap-4 pe-6 transition-[background-color] duration-100",
+                                "group flex items-center justify-between gap-4 pe-safe-zone transition-[background-color] duration-100",
                                 {
                                     hover: "bg-highlighted/5 transition-none",
                                     active: "bg-highlighted/10 transition-none"
@@ -158,7 +158,7 @@ function Projects() {
                             {group.projects.map((project, index) => (
                                 <li
                                     key={project.slug}
-                                    className={cn({
+                                    className={cn("group", {
                                         odd: "border-r border-dashed border-stroke",
                                         md: "!border-none"
                                     })}
@@ -168,7 +168,18 @@ function Projects() {
                                         project={project}
                                     />
                                     {index < group.projects.length - 1 && (
-                                        <SectionLine />
+                                        <SectionLine
+                                            className={cn({
+                                                lg: "w-[calc(100%+var(--spacing-safe-zone))]",
+                                                "group-odd": "right-0",
+                                                "group-even": [
+                                                    "w-[calc(100%+var(--spacing-safe-zone))]",
+                                                    {
+                                                        lg: "-right-safe-zone left-auto"
+                                                    }
+                                                ]
+                                            })}
+                                        />
                                     )}
                                 </li>
                             ))}

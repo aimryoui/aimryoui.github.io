@@ -16,7 +16,6 @@ import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useContainerQuery } from "@/hooks/use-container-query"
-import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 import { type SectionProps, sections } from "@/portfolio/_sections/contact"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
@@ -36,8 +35,6 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
     const mode = usePortfolioModeStore((state) => state.mode)
 
     const containerRef = useRef<HTMLElement>(null)
-
-    const playPressFeedback = usePressFeedback()
 
     if (mode === "spread") {
         return (
@@ -97,7 +94,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                         <Fragment key={item.label}>
                             <div
                                 className={cn(
-                                    "relative grid aspect-square w-full place-items-center bg-highlighted/10 p-6"
+                                    "relative grid aspect-square w-full place-items-center bg-highlighted/10 p-safe-zone"
                                 )}
                             >
                                 <img
@@ -155,12 +152,12 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                 className={cn(
                     "hidden",
                     pathName !== "/portfolio" &&
-                        "md:h-[calc(var(--spacing)*31.5+var(--px))]",
+                        "md:h-[calc(var(--spacing-space)+2.5625rem+var(--px))]",
                     {
                         lg: [
                             "block",
                             {
-                                after: "pointer-events-none absolute bottom-0 left-1/2 z-40 h-20 w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent"
+                                after: "pointer-events-none absolute bottom-0 left-1/2 z-40 h-space w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent"
                             }
                         ]
                     }
@@ -174,10 +171,23 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             )}
             <Divider
                 className={cn(
-                    "grid h-auto place-items-center px-6 py-3 text-sm"
+                    "grid h-auto place-items-center px-safe-zone py-3 text-sm",
+                    {
+                        md: "text-xs"
+                    },
+                    hasSocialLinks && {
+                        xs: "place-items-start"
+                    }
                 )}
             >
-                <p className="flex flex-wrap justify-center gap-x-[.2em] text-balance text-center">
+                <p
+                    className={cn(
+                        "flex flex-wrap justify-center gap-x-[.2em] text-center",
+                        hasSocialLinks && {
+                            xs: "justify-start text-right"
+                        }
+                    )}
+                >
                     {`© 2024 - ${CURRENT_YEAR} aimryoui.`}
                     <span>NO AI training allowed.</span>
                     <span>All Rights Reserved.</span>
@@ -187,7 +197,8 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             <Space
                 as="ul"
                 className={cn("flex items-center bg-transparent", {
-                    "@[50.9375rem]": "h-fit min-h-20 flex-wrap"
+                    hover: "text-muted-foreground/40",
+                    "@[50.9375rem]": "h-fit min-h-space flex-wrap"
                 })}
             >
                 <Tooltip>
@@ -202,7 +213,9 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                     <li
                                         className={cn("h-full flex-1", {
                                             "@[50.9375rem]":
-                                                "h-20 basis-[calc(20%-var(--px)*4)]"
+                                                "h-space basis-[calc(20%-var(--px)*4)]",
+                                            "@[19.6875rem]":
+                                                "h-space basis-[calc(50%-var(--px))]"
                                         })}
                                     >
                                         <LinkButton
@@ -214,7 +227,10 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                             hoverSound="tick"
                                             pressSound="link"
                                             className={cn(
-                                                "grid h-full place-items-center bg-background text-muted-foreground/40 transition-[color,background-color] duration-100",
+                                                "grid h-full place-items-center bg-background transition-[color,background-color] duration-100",
+                                                platform.title === "Behance"
+                                                    ? "[&>svg]:size-7 lg:[&>svg]:size-6"
+                                                    : "lg:[&>svg]:size-5",
                                                 {
                                                     hover: "bg-highlighted/5 text-highlighted transition-none",
                                                     active: "bg-highlighted/10 text-highlighted transition-none",
@@ -264,14 +280,26 @@ function FooterSeparator({
                 role="separator"
                 className={cn("z-1 h-full w-0", {
                     "@[50.9375rem]": [
-                        "h-20",
+                        "h-space",
                         {
                             "nth-of-type-10": "h-0 w-full",
                             "[&>*]:nth-of-type-10": "h-0 w-full",
                             "[&_hr]:nth-of-type-10":
                                 "h-auto w-full border-b border-r-0"
                         }
-                    ]
+                    ],
+                    "@[19.6875rem]": {
+                        // Reset
+                        "nth-of-type-10": "h-space w-0",
+                        "[&>*]:nth-of-type-10": "h-full w-0",
+                        "[&_hr]:nth-of-type-10":
+                            "h-full w-auto border-b-0 border-r",
+
+                        "nth-of-type-[4n]": "h-0 w-full",
+                        "[&>*]:nth-of-type-[4n]": "h-0 w-full",
+                        "[&_hr]:nth-of-type-[4n]":
+                            "h-auto w-full border-b border-r-0"
+                    }
                 })}
             >
                 <ElementLine />
@@ -300,7 +328,7 @@ function WebkitFooterSeparator({
             <li
                 role="separator"
                 className={cn("z-1 h-full", {
-                    "@[50.9375rem]": "h-20"
+                    "@[50.9375rem]": "h-space"
                 })}
             >
                 <SvgElementLine />

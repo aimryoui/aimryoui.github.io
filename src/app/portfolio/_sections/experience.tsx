@@ -258,18 +258,15 @@ function Experience() {
                 <Fragment key={section.section}>
                     <TableContainer
                         className={cn(
-                            "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-4 bg-background py-4.5",
-                            {
-                                lg: "py-5.5"
-                            }
+                            "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-table-between bg-background py-safe-zone-vertical"
                         )}
                     >
                         <TableCaption
                             className={cn(
-                                "absolute left-6 top-4.5 whitespace-pre-line font-wght-500",
+                                "absolute left-safe-zone top-safe-zone-vertical whitespace-pre-line font-wght-500",
                                 {
                                     "@[59.375rem]":
-                                        "static col-span-full whitespace-normal px-6 font-wght-600"
+                                        "static col-span-full whitespace-normal px-safe-zone font-wght-600"
                                 }
                             )}
                         >
@@ -278,9 +275,9 @@ function Experience() {
                         <Table
                             aria-label="Experience"
                             className={cn(
-                                "col-span-full col-start-2 grid table-fixed gap-y-2",
+                                "col-span-full col-start-2 grid table-fixed gap-y-table-between",
                                 {
-                                    "@[59.375rem]": "col-start-1 gap-y-4 ps-6"
+                                    "@[59.375rem]": "col-start-1 ps-safe-zone"
                                 }
                             )}
                         >
@@ -289,7 +286,7 @@ function Experience() {
                                     "[&>tr]": [
                                         "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
                                         {
-                                            "last:*": "pe-6"
+                                            "last:*": "pe-safe-zone"
                                         }
                                     ]
                                 })}
@@ -310,18 +307,15 @@ function Experience() {
                                         `${place.startDate} ${place.position} ${place.organization?.text}`
                                     )
                                 }))}
-                                className={cn("grid gap-y-2", {
-                                    "@[50.125rem]": "gap-y-4",
-                                    lg: "gap-y-4"
-                                })}
+                                className={cn("grid gap-y-table-between")}
                             >
                                 {(place) => (
                                     <TableRow
                                         className={cn(
-                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
                                             {
                                                 "@[50.125rem]": "grid-cols-2",
-                                                "last:*": "pe-6"
+                                                "last:*": "pe-safe-zone"
                                             }
                                         )}
                                     >
@@ -350,10 +344,10 @@ function Experience() {
 
                                         <TableCell
                                             className={cn(
-                                                "flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] p-0 align-top text-foreground font-wght-500",
+                                                "flex justify-between gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] p-0 align-top text-foreground font-wght-500",
                                                 {
                                                     "@[50.125rem]":
-                                                        "mt-6 gap-x-2",
+                                                        "mt-[1.5em] gap-x-2",
                                                     lg: "font-wght-600"
                                                 }
                                             )}
@@ -369,7 +363,7 @@ function Experience() {
                                                 "col-span-2 p-0 align-top",
                                                 {
                                                     "@[50.125rem]":
-                                                        "col-span-1 mt-6"
+                                                        "col-span-1 mt-[1.5em]"
                                                 }
                                             )}
                                         >
@@ -404,19 +398,19 @@ function Experience() {
                                     <TableRow
                                         className={cn({
                                             hover: "bg-transparent",
-                                            "last:*": "pe-6"
+                                            "last:*": "pe-safe-zone"
                                         })}
                                     >
                                         <TableCell
                                             colSpan={3}
                                             className={cn(
-                                                "flex flex-col gap-y-4.5 p-0 pt-2.5 align-top",
+                                                "flex flex-col gap-y-safe-zone-vertical p-0 pt-2.5 align-top",
                                                 {
                                                     "@[59.375rem]": "pt-0.5"
                                                 }
                                             )}
                                         >
-                                            <SectionLine />
+                                            <SectionLine className="-right-[calc(var(--spacing-safe-zone)*2)] lg:-left-[calc(var(--spacing-safe-zone)*2)]" />
                                             And a bunch of University course
                                             projects or miscellaneous freelance
                                             jobs on the road...

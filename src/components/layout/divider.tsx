@@ -8,7 +8,9 @@ function Divider({
     return (
         <div
             className={cn(
-                dir === "horizontal" ? "h-6 w-full" : "h-full w-6",
+                dir === "horizontal"
+                    ? "h-safe-zone w-full"
+                    : "h-full w-safe-zone",
                 className
             )}
             {...props}

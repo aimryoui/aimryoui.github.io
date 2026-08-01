@@ -288,15 +288,12 @@ function Contact() {
                     <Fragment key={section.section}>
                         <TableContainer
                             className={cn(
-                                "grid grid-cols-5 gap-[calc(var(--spacing)*6+var(--px)*2)] bg-background py-4.5",
-                                {
-                                    lg: "py-5.5"
-                                }
+                                "grid grid-cols-5 gap-[calc(var(--spacing-safe-zone)+var(--px)*2)] bg-background py-safe-zone-vertical"
                             )}
                         >
                             <TableCaption
                                 className={cn(
-                                    "sr-only absolute left-6 top-4.5 whitespace-pre-line font-wght-500"
+                                    "sr-only absolute left-safe-zone top-safe-zone-vertical whitespace-pre-line font-wght-500"
                                 )}
                             >
                                 {section.section}
@@ -306,16 +303,16 @@ function Contact() {
                                 className={cn(
                                     "col-span-full col-start-2 grid table-fixed gap-y-2.5",
                                     {
-                                        "@[40rem]": "col-start-1 ps-6"
+                                        "@[40rem]": "col-start-1 ps-safe-zone"
                                     }
                                 )}
                             >
                                 <TableHeader
                                     className={cn("sr-only grid", {
                                         "[&>tr]": [
-                                            "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                            "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
                                             {
-                                                "last:*": "pe-6"
+                                                "last:*": "pe-safe-zone"
                                             }
                                         ]
                                     })}
@@ -336,17 +333,15 @@ function Contact() {
                                             id: `contact-${slugify(platform.title)}`
                                         })
                                     )}
-                                    className={cn("grid gap-y-2", {
-                                        "@[50.125rem]": "gap-y-4",
-                                        lg: "gap-y-4"
-                                    })}
+                                    className={cn("grid gap-y-table-between")}
                                 >
                                     {(platform) => (
                                         <TableRow
                                             className={cn(
-                                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
                                                 {
-                                                    "@[32rem]": "flex gap-6"
+                                                    "@[32rem]":
+                                                        "flex gap-safe-zone"
                                                 }
                                             )}
                                         >
@@ -355,7 +350,7 @@ function Contact() {
                                             >
                                                 <span
                                                     className={cn(
-                                                        "absolute left-6 text-highlighted [&>svg]:size-[calc(1em*1.3)]",
+                                                        "absolute left-safe-zone text-highlighted [&>svg]:size-[calc(1em*1.3)]",
                                                         {
                                                             "@[40rem]":
                                                                 "hidden",
@@ -399,7 +394,7 @@ function Contact() {
                                                     "col-span-1 p-0 text-right align-top text-highlighted font-wght-500",
                                                     {
                                                         "@[59.375rem]":
-                                                            "pe-6 text-left",
+                                                            "pe-safe-zone text-left",
                                                         "@[24rem]": "sr-only"
                                                     }
                                                 )}

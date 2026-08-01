@@ -64,7 +64,8 @@ export default {
             xl: { max: "80rem" },
             lg: { max: "72rem" },
             md: { max: "48rem" },
-            sm: { max: "40rem" }
+            sm: { max: "40rem" },
+            xs: { max: "22.5rem" }
         },
         fontFamily: {
             sans: [
@@ -78,7 +79,8 @@ export default {
         extend: {
             fontSize: {
                 xxs: ".5rem",
-                sm: [".875rem", "1.3"],
+                xs: [".75rem", "1.5"],
+                sm: [".875rem", "1.25rem"],
                 md: [".9375rem", "1.3"],
                 base: ["1rem", "1.3"],
                 "2xl": ["1.5rem", "1.3"],
@@ -90,10 +92,13 @@ export default {
                 0.75: ".1875rem",
                 1.25: ".3125rem",
                 1.75: ".4375rem",
+                "table-between": "var(--spacing-table-between)",
                 2.25: ".5625rem",
                 2.75: ".6875rem",
+                "safe-zone-vertical": "var(--spacing-safe-zone-vertical)",
                 3.25: ".8125rem",
                 3.75: ".9375rem",
+                "safe-zone": "var(--spacing-safe-zone)",
                 4.5: "1.125rem",
                 4.75: "1.1875rem",
                 5.5: "1.375rem",
@@ -109,6 +114,7 @@ export default {
                 16.5: "4.125rem",
                 17: "4.25rem",
                 18: "4.5rem",
+                space: "var(--spacing-space)",
                 22: "5.5rem",
                 24.5: "6.125rem",
                 25: "6.25rem",
@@ -118,9 +124,10 @@ export default {
                 31.5: "7.875rem",
                 37.5: "9.375rem",
                 56.25: "14.0625rem",
+                body: "14.75rem",
                 61.25: "15.3125rem",
                 75: "18.75rem",
-                sidebar: "26.25rem",
+                sidebar: "26.5rem",
                 120: "30rem",
                 125: "31.25rem",
                 180: "45rem",

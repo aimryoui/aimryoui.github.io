@@ -91,6 +91,9 @@ function TableHead({ className, ...props }: ColumnProps) {
             data-slot="table-head"
             className={cn(
                 "whitespace-nowrap px-2 text-left align-middle has-[[role=checkbox]]:pr-0",
+                {
+                    md: "text-sm"
+                },
                 className
             )}
             {...props}
@@ -104,6 +107,9 @@ function TableCell({ className, ...props }: CellProps) {
             data-slot="table-cell"
             className={cn(
                 "text-pretty p-2 align-middle has-[[role=checkbox]]:pr-0",
+                {
+                    md: "text-sm"
+                },
                 className
             )}
             {...props}
@@ -118,7 +124,13 @@ function TableCaption({
     return (
         <figcaption
             data-slot="table-caption"
-            className={cn("text-left text-highlighted", className)}
+            className={cn(
+                "text-left text-highlighted",
+                {
+                    md: "text-sm"
+                },
+                className
+            )}
             {...props}
         />
     )

@@ -74,7 +74,7 @@ const TocItemRow = memo(
                     {
                         // Tick
                         after: [
-                            "absolute left-6 top-[calc(100%+var(--item-gap)/2)] h-px origin-left -translate-y-1/2 bg-[--marker-color] opacity-60",
+                            "absolute left-safe-zone top-[calc(100%+var(--item-gap)/2)] h-px origin-left -translate-y-1/2 bg-[--marker-color] opacity-60",
                             "last:hidden has-[+[role=separator]]:hidden",
                             isProject
                                 ? "w-[calc(var(--marker-length)*var(--tick-scale))] scale-x-[calc(1+var(--effect,0)*1.5)]"
@@ -89,7 +89,7 @@ const TocItemRow = memo(
                 <span
                     aria-hidden={true}
                     className={cn(
-                        "absolute left-6 top-1/2 h-px origin-left -translate-y-1/2",
+                        "absolute left-safe-zone top-1/2 h-px origin-left -translate-y-1/2",
                         isActive
                             ? "bg-highlighted"
                             : "bg-[color-mix(in_srgb,var(--accent-color)_calc(var(--effect,0)*100%),var(--marker-color))]",
@@ -133,7 +133,9 @@ const TocItemRow = memo(
                                   }
                               ]
                             : "font-wght-600",
-                        isCategory ? "ps-6" : !isProject && "pe-5.5 ps-6",
+                        isCategory
+                            ? "ps-safe-zone"
+                            : !isProject && "pe-5.5 ps-safe-zone",
                         isAnchor && [
                             "gap-2",
                             {

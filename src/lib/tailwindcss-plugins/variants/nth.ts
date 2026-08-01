@@ -1,17 +1,8 @@
 import plugin from "tailwindcss/plugin"
 
-const sharedValues = {
-    1: "1",
-    2: "2",
-    3: "3",
-    4: "4",
-    5: "5",
-    6: "6",
-    7: "7",
-    8: "8",
-    9: "9",
-    10: "10"
-}
+const sharedValues: Record<string, string> = Object.fromEntries(
+    Array.from({ length: 20 }, (_, i) => [String(i + 1), String(i + 1)])
+)
 
 export default plugin(({ matchVariant }) => {
     matchVariant("nth", (value) => `&:nth-child(${value})`, {

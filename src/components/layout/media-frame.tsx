@@ -55,6 +55,7 @@ function SectionName({
             className={cn(
                 isAnchorTag && "sticky top-3.5 z-50 scroll-mt-6.5",
                 "pointer-events-none grid min-h-13 place-items-center py-2",
+                { md: "top-1.5" },
                 containerClassName
             )}
             {...props}
@@ -77,11 +78,11 @@ function SectionName({
                                 "underline decoration-foreground decoration-solid"
                         }
                     ],
-                    "text-pretty rounded-full bg-background px-3.5 py-1.5 text-center font-mono",
-                    hasSocialLinks ? "mx-17 lg:mx-4" : "mx-4",
+                    "min-h-9 text-pretty rounded-full bg-background px-3.5 py-1.75 text-center font-mono",
+                    hasSocialLinks ? "mx-17 lg:mx-2" : "mx-2",
                     !normalcase && "uppercase",
                     {
-                        lg: "min-h-[36px] px-4.5 py-2.5"
+                        md: "text-sm"
                     },
                     className
                 )}

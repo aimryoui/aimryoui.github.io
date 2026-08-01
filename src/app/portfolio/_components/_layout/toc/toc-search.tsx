@@ -49,9 +49,7 @@ function TocSearch({
             labelFor="toc-search"
             data-cursor="input"
             data-sound="button"
-            className={cn("pointer-events-auto cursor-auto", {
-                lg: "h-[36px]"
-            })}
+            className={cn("pointer-events-auto cursor-auto")}
         >
             <InputGroupInput
                 ref={ref}
@@ -78,7 +76,7 @@ function TocSearch({
                 {...props}
             />
             <InputGroupAddon align="inline-start">
-                <Search className="lg:size-5.5" />
+                <Search />
             </InputGroupAddon>
             <Addons hasValue={hasValue} onClear={onClear} />
         </SearchGroup>
@@ -113,11 +111,11 @@ function Addons({
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="hover:bg-transparent lg:size-[36px]"
+                            className="hover:bg-transparent"
                             onPress={onClear}
                             pressSound={false}
                         >
-                            <XCircle className="cursor-pointer lg:size-5.5" />
+                            <XCircle className="cursor-pointer" />
                         </Button>
                     }
                 />
@@ -152,7 +150,11 @@ function Command({ className, ...props }: React.ComponentProps<"svg">) {
 
 function TocSearchNoResult({ onClear }: { onClear: () => void }) {
     return (
-        <Text className={cn("px-6 py-4")}>
+        <Text
+            className={cn("px-safe-zone py-4", {
+                lg: "py-safe-zone-vertical"
+            })}
+        >
             No results found.{" "}
             <Highlight
                 onClick={onClear}

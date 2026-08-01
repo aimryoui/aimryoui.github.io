@@ -30,7 +30,7 @@ function MobileTocList({
         <div
             ref={scrollContainerRef}
             className={cn(
-                "group overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-5 scrollbar-thin webkit:pointer-events-auto",
+                "group overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-2 scrollbar-thin webkit:pointer-events-auto",
                 "scroll-fade-y scroll-fade-16"
             )}
         >
@@ -40,7 +40,7 @@ function MobileTocList({
                         <TocDivider
                             key={`div-${node.id}`}
                             id={node.id}
-                            containerClassName="pointer-events-auto mb-4 mt-4.5 h-px p-0"
+                            containerClassName="pointer-events-auto my-2 h-px p-0"
                         />
                     )
                 }

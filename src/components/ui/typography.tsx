@@ -79,6 +79,9 @@ function H3({
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
                 mono ? "font-mono" : "font-wght-[625]",
+                {
+                    md: "text-3xl"
+                },
                 className
             )}
             {...props}
@@ -102,6 +105,9 @@ function H4({
                 highlight ? "text-highlighted" : "text-muted-foreground",
                 italic && "italic",
                 mono && "font-mono",
+                {
+                    md: "text-sm"
+                },
                 className
             )}
             {...props}
@@ -123,6 +129,9 @@ function Bold({
                 "text-foreground",
                 italic && "italic",
                 mono ? "font-mono" : "font-wght-600",
+                {
+                    md: "text-sm"
+                },
                 className
             )}
             {...props}
@@ -144,6 +153,9 @@ function Highlight({
                 "text-pretty text-highlighted",
                 italic && "italic",
                 mono ? "font-mono" : "font-wght-600",
+                {
+                    md: "text-sm"
+                },
                 className
             )}
             {...props}
@@ -175,6 +187,9 @@ function Link({
                 highlight && "text-highlighted",
                 italic && "italic",
                 mono ? "font-mono" : "font-wght-500",
+                {
+                    md: "text-sm"
+                },
                 className
             )}
             {...(openInNewTab && { target: "_blank", rel: "noreferrer" })}
@@ -197,6 +212,9 @@ function Text({
                 "text-muted-foreground",
                 italic && "italic",
                 mono && "font-mono",
+                {
+                    md: "text-sm"
+                },
                 className
             )}
             {...props}
@@ -220,6 +238,9 @@ function At({
                     highlight && "text-highlighted",
                     italic && "italic",
                     mono && "font-mono",
+                    {
+                        md: "text-sm"
+                    },
                     className
                 )}
             >

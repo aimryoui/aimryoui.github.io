@@ -28,18 +28,15 @@ function Education() {
             <SectionLine />
             <TableContainer
                 className={cn(
-                    "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-4 bg-background py-4.5",
-                    {
-                        lg: "py-5.5"
-                    }
+                    "grid grid-cols-5 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] gap-y-table-between bg-background py-safe-zone-vertical"
                 )}
             >
                 <TableCaption
                     className={cn(
-                        "absolute left-6 top-4.5 whitespace-pre-line font-wght-500",
+                        "absolute left-safe-zone top-safe-zone-vertical whitespace-pre-line font-wght-500",
                         {
                             "@[50.125rem]":
-                                "static col-span-full whitespace-normal px-6 font-wght-600"
+                                "static col-span-full whitespace-normal px-safe-zone font-wght-600"
                         }
                     )}
                 >
@@ -48,18 +45,19 @@ function Education() {
                 <Table
                     aria-label="Education"
                     className={cn(
-                        "col-span-full col-start-2 grid table-fixed gap-y-2",
+                        "col-span-full col-start-2 grid table-fixed gap-y-table-between",
                         {
-                            "@[50.125rem]": "col-start-1 gap-y-4 px-6"
+                            "@[50.125rem]":
+                                "col-start-1 gap-y-table-between px-safe-zone"
                         }
                     )}
                 >
                     <TableHeader
                         className={cn("sr-only grid", {
                             "[&>tr]": [
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
                                 {
-                                    "last:*": "pe-6"
+                                    "last:*": "pe-safe-zone"
                                 }
                             ]
                         })}
@@ -72,17 +70,17 @@ function Education() {
                     </TableHeader>
 
                     <TableBody
-                        className={cn("grid gap-y-2", {
-                            "@[50.125rem]": "gap-y-4"
+                        className={cn("grid gap-y-table-between", {
+                            "@[50.125rem]": "gap-y-table-between"
                         })}
                     >
                         <TableRow
                             id="education-degree"
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
                                 {
                                     "@[59.375rem]": "grid-cols-2",
-                                    "last:*": "pe-6"
+                                    "last:*": "pe-safe-zone"
                                 }
                             )}
                         >
@@ -96,9 +94,9 @@ function Education() {
 
                             <TableCell
                                 className={cn(
-                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing)*6+var(--px)*2)] text-pretty p-0 align-top text-foreground font-wght-500",
+                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] text-pretty p-0 align-top text-foreground font-wght-500",
                                     {
-                                        "@[59.375rem]": "col-span-1 mt-9",
+                                        "@[59.375rem]": "col-span-1 mt-[2em]",
                                         lg: "font-wght-600"
                                     }
                                 )}
@@ -109,7 +107,7 @@ function Education() {
 
                             <TableCell
                                 className={cn("p-0 align-top", {
-                                    "@[59.375rem]": "mt-9"
+                                    "@[59.375rem]": "mt-[2em]"
                                 })}
                             >
                                 <Link
@@ -126,10 +124,10 @@ function Education() {
                         <TableRow
                             id="education-grade"
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent",
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] border-b-0 hover:bg-transparent",
                                 {
                                     "@[59.375rem]": "grid-cols-2",
-                                    "last:*": "pe-6"
+                                    "last:*": "pe-safe-zone"
                                 }
                             )}
                         >
@@ -159,10 +157,10 @@ function Education() {
                         <TableRow
                             id="education-classification"
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent",
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] border-b-0 hover:bg-transparent",
                                 {
                                     "@[59.375rem]": "grid-cols-2",
-                                    "last:*": "pe-6"
+                                    "last:*": "pe-safe-zone"
                                 }
                             )}
                         >
@@ -192,10 +190,10 @@ function Education() {
                         <TableRow
                             id="education-scholarships"
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)] border-b-0 hover:bg-transparent",
+                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] border-b-0 hover:bg-transparent",
                                 {
                                     "@[59.375rem]": "grid-cols-2",
-                                    "last:*": "pe-6"
+                                    "last:*": "pe-safe-zone"
                                 }
                             )}
                         >

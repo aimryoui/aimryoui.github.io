@@ -37,15 +37,18 @@ function Toolbar({ className }: { className?: string }) {
                 />
             </div>
             <header
-                className={cn("flex h-20 items-center bg-background px-6", {
-                    lg: "py-[17px]"
-                })}
+                className={cn(
+                    "flex h-space min-w-body items-center bg-background px-safe-zone",
+                    {
+                        lg: "py-3.5"
+                    }
+                )}
             >
                 <menu
                     className={cn(
                         "flex w-full items-center gap-3 @container",
                         {
-                            lg: "gap-5"
+                            lg: "gap-safe-zone"
                         },
                         className
                     )}
@@ -60,21 +63,13 @@ function Toolbar({ className }: { className?: string }) {
                                 hoverSound="tick"
                                 pressSound="link"
                                 scroll={false}
-                                className={cn(
-                                    "group flex items-center gap-x-3",
-                                    {
-                                        lg: "gap-x-4"
-                                    }
-                                )}
+                                className={cn("group flex items-center gap-3")}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 48 48"
                                     className={cn(
-                                        "size-9 will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180",
-                                        {
-                                            lg: "size-[34px]"
-                                        }
+                                        "size-9 will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180"
                                     )}
                                 >
                                     <path
@@ -108,15 +103,15 @@ function Toolbar({ className }: { className?: string }) {
                                     className={cn(
                                         "flex flex-col",
                                         isTouchDevice
-                                            ? "sm:@[21.8rem]:hidden"
-                                            : "sm:@[25.7rem]:hidden"
+                                            ? "sm:@[calc(.25rem*9+.25rem*3*4+.25rem*16+.25rem*9*2+5.1rem)]:hidden"
+                                            : "sm:@[calc(.25rem*9+.25rem*3*5+.25rem*16+.25rem*9*3+5.1rem)]:hidden"
                                     )}
                                 >
-                                    <Bold className="text-sm lg:text-base">
+                                    <Bold className="text-sm">
                                         <At className="text-current font-wght-[625]" />
                                         {siteConfig.username}
                                     </Bold>
-                                    <p className="font-mono text-xs lg:text-sm">
+                                    <p className="font-mono text-xs">
                                         {`${projects.length} PROJECTS`}
                                     </p>
                                 </div>
@@ -128,11 +123,7 @@ function Toolbar({ className }: { className?: string }) {
                             </li>
                         )}
                         <li>
-                            <ModeToggle
-                                className={cn({
-                                    lg: "size-[36px]"
-                                })}
-                            />
+                            <ModeToggle />
                         </li>
                         <li>
                             <SettingButton />
@@ -140,7 +131,7 @@ function Toolbar({ className }: { className?: string }) {
                         {isMobile && (
                             <li
                                 className={cn(
-                                    "relative -my-5.5 -me-6 hidden size-20",
+                                    "relative -my-5.5 -me-safe-zone hidden size-space",
                                     {
                                         lg: "block"
                                     }

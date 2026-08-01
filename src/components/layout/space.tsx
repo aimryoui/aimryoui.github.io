@@ -14,7 +14,7 @@ function Space<T extends React.ElementType = "div">({
 
     return (
         <Comp
-            className={cn("h-20 w-full bg-background", className)}
+            className={cn("h-space w-full bg-background", className)}
             {...props}
         />
     )

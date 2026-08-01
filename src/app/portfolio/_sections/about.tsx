@@ -12,35 +12,44 @@ function About() {
         <>
             <div
                 className={cn(
-                    "relative bg-background px-6 pb-[.96875rem] pt-3.75",
+                    "relative bg-background px-safe-zone pb-[.96875rem] pt-3.75",
                     {
-                        lg: "py-4.5"
+                        lg: "py-safe-zone-vertical"
                     }
                 )}
             >
                 <span
                     className={cn(
-                        "absolute bottom-[calc(100%+1rem)] left-6 font-mono uppercase leading-normal"
+                        "absolute bottom-[calc(100%+1rem)] left-safe-zone font-mono uppercase leading-normal",
+                        {
+                            md: "bottom-[calc(100%+.75rem)] text-sm leading-[1.4]"
+                        }
                     )}
                 >
                     About
                 </span>
-                <H1 id="about" className="flex flex-wrap gap-x-[.2em]">
+                <H1
+                    id="about"
+                    className="flex flex-wrap gap-x-[.2em] sm:text-2xl"
+                >
                     Hello there!{" "}
                     <span className="block">
                         I&#39;m{" "}
-                        <Bold className="font-wght-[625]">Hoàng Nhân</Bold>,
+                        <Bold className="font-wght-[625] md:text-3xl sm:text-2xl">
+                            Hoàng Nhân
+                        </Bold>
+                        ,
                     </span>{" "}
                     <span className="flex flex-wrap gap-x-[.2em]">
-                        <span className="block whitespace-nowrap">
+                        <span className="block">
                             a{" "}
-                            <Bold className="font-wght-[625]">
+                            <Bold className="font-wght-[625] md:text-3xl sm:text-2xl">
                                 Creative Designer
                             </Bold>
                         </span>{" "}
                         majoring in{" "}
                         <span className="block">
-                            <Highlight className="font-wght-[625]">
+                            <Highlight className="font-wght-[625] md:text-3xl sm:text-2xl">
                                 UI & UX Design
                             </Highlight>
                             .
@@ -52,9 +61,9 @@ function About() {
             <Divider />
             <SectionLine />
             <div
-                className={cn("relative space-y-2 bg-background px-6 py-4.5", {
-                    lg: "space-y-3.5 py-5.5"
-                })}
+                className={cn(
+                    "relative space-y-2 bg-background px-safe-zone py-safe-zone-vertical"
+                )}
             >
                 <Text className={cn("text-pretty")}>
                     However, I came up from{" "}
@@ -106,11 +115,11 @@ function About() {
             <SectionLine />
             <Divider />
             <SectionLine />
-            <div className={cn("flex flex-wrap bg-background")}>
+            <div className={cn("flex bg-background")}>
                 <Tooltip>
                     {[
                         { value: "2003", label: "Year of birth" },
-                        { value: "45+", label: "Projects" },
+                        { value: "50+", label: "Projects" },
                         { value: "4+", label: "Years as Designer" }
                     ].map((item, index, array) => (
                         <Fragment key={item.label}>
@@ -120,26 +129,41 @@ function About() {
                                 className={cn(
                                     "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                                     {
-                                        md: "min-w-[20%]",
-                                        sm: "h-20"
+                                        md: "pb-4",
+                                        sm: "h-space"
                                     }
                                 )}
                             >
                                 <Highlight
                                     className={cn("text-4xl font-wght-[625]", {
-                                        xl: "text-3xl"
+                                        xl: "text-3xl",
+                                        md: "text-2xl"
                                     })}
                                 >
-                                    {item.value}
+                                    <span
+                                        {...(item.value === "2003" && {
+                                            className: "xs:hidden"
+                                        })}
+                                    >
+                                        {item.value}
+                                    </span>
+                                    {item.value === "2003" && (
+                                        <span className="hidden xs:inline">
+                                            2K3
+                                        </span>
+                                    )}
                                 </Highlight>
                                 <div
                                     className={cn(
-                                        "absolute top-full flex h-4.5 translate-y-0.75 items-center justify-center rounded-md border border-stroke bg-background px-1"
+                                        "absolute top-full flex h-4.5 translate-y-0.75 items-center justify-center rounded-md border border-stroke bg-background px-1",
+                                        {
+                                            md: "bottom-0 top-auto h-[calc(var(--spacing-safe-zone)+var(--px)*2)] w-full translate-y-0 rounded-none border-0 border-t border-dashed px-1.5 pb-0.5"
+                                        }
                                     )}
                                 >
                                     <span
                                         className={cn(
-                                            "text-xxs uppercase font-wght-[625]"
+                                            "max-w-full truncate text-xxs uppercase font-wght-[625]"
                                         )}
                                     >
                                         {item.label}
@@ -148,12 +172,12 @@ function About() {
                             </div>
                             {index < array.length - 1 && (
                                 <>
-                                    <SvgElementLine className="h-24 sm:h-20" />
+                                    <SvgElementLine className="h-24 sm:h-space" />
                                     <Divider
                                         dir="vertical"
-                                        className="h-24 sm:h-20"
+                                        className="h-24 sm:h-space"
                                     />
-                                    <SvgElementLine className="h-24 sm:h-20" />
+                                    <SvgElementLine className="h-24 sm:h-space" />
                                 </>
                             )}
                         </Fragment>
@@ -161,20 +185,20 @@ function About() {
                     <SvgElementLine
                         className={cn("h-24", {
                             md: "hidden",
-                            sm: "h-20"
+                            sm: "h-space"
                         })}
                     />
                     <Divider
                         dir="vertical"
                         className={cn("h-24", {
                             md: "hidden",
-                            sm: "h-20"
+                            sm: "h-space"
                         })}
                     />
                     <SvgElementLine
                         className={cn("h-24", {
                             md: "hidden",
-                            sm: "h-20"
+                            sm: "h-space"
                         })}
                     />
                     <div
@@ -184,7 +208,7 @@ function About() {
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {
                                 md: "hidden",
-                                sm: "h-20"
+                                sm: "h-space"
                             }
                         )}
                     >
@@ -196,7 +220,8 @@ function About() {
                                     openInNewTab
                                     highlight
                                     className={cn("text-4xl", {
-                                        xl: "text-3xl"
+                                        xl: "text-3xl",
+                                        md: "text-2xl"
                                     })}
                                 >
                                     <Highlight
@@ -224,20 +249,20 @@ function About() {
                     <SvgElementLine
                         className={cn("h-24", {
                             md: "hidden",
-                            sm: "h-20"
+                            sm: "h-space"
                         })}
                     />
                     <Divider
                         dir="vertical"
                         className={cn("h-24", {
                             md: "hidden",
-                            sm: "h-20"
+                            sm: "h-space"
                         })}
                     />
                     <SvgElementLine
                         className={cn("h-24", {
                             md: "hidden",
-                            sm: "h-20"
+                            sm: "h-space"
                         })}
                     />
                     <div
@@ -247,7 +272,7 @@ function About() {
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {
                                 md: "hidden",
-                                sm: "h-20"
+                                sm: "h-space"
                             }
                         )}
                     >
@@ -268,7 +293,7 @@ function About() {
                                         className={cn(
                                             "sr-only text-4xl font-wght-[625]",
                                             {
-                                                md: "text-3xl"
+                                                md: "text-2xl"
                                             }
                                         )}
                                     >
@@ -304,11 +329,11 @@ function About() {
             <SectionLine />
             <Space
                 className={cn(
-                    "hidden h-auto min-h-20 flex-col gap-0.5 px-6 py-4.5",
+                    "hidden h-auto min-h-space flex-col gap-0.5 px-safe-zone py-safe-zone-vertical",
                     {
-                        lg: "py-5.5",
+                        lg: "py-safe-zone-vertical",
                         md: "flex",
-                        sm: "gap-3.5"
+                        sm: "gap-2"
                     }
                 )}
             >

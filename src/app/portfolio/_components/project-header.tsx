@@ -44,16 +44,24 @@ function ProjectHeader({
             >
                 <span
                     className={cn(
-                        "absolute bottom-[calc(100%+1rem)] left-6 font-mono uppercase leading-normal"
+                        "absolute bottom-[calc(100%+1rem)] left-safe-zone line-clamp-2 font-mono uppercase leading-normal wrap-anywhere",
+                        {
+                            md: "bottom-[calc(100%+.75rem)] text-sm leading-[1.4]"
+                        }
                     )}
+                    style={{
+                        maxWidth: `calc(100% - var(--spacing-safe-zone) * 2 - var(--spacing) * 2 * ${tools.length} - var(--spacing) * 6 * ${tools.length})`
+                    }}
                 >
                     {type}
                 </span>
                 <div
-                    className={cn("flex flex-1 flex-col gap-2 px-6 py-4.5", {
-                        lg: "pb-5",
-                        md: "gap-2.5"
-                    })}
+                    className={cn(
+                        "flex flex-1 flex-col gap-2 px-safe-zone py-safe-zone-vertical",
+                        {
+                            md: "gap-1.5"
+                        }
+                    )}
                 >
                     <H1
                         id={headerId}
@@ -92,9 +100,8 @@ function ProjectHeader({
                 <SvgElementLine className={cn("md:hidden")} />
                 <div
                     className={cn(
-                        "flex flex-1 flex-col justify-between text-pretty px-6 py-4.5",
+                        "flex flex-1 flex-col justify-between text-pretty px-safe-zone py-safe-zone-vertical",
                         {
-                            lg: "py-5.5",
                             md: "gap-2"
                         }
                     )}
@@ -119,7 +126,10 @@ function ProjectHeader({
                 {tools.length > 0 && (
                     <div
                         className={cn(
-                            "absolute bottom-[calc(100%+1.05rem)] right-6 flex gap-2"
+                            "absolute bottom-[calc(100%+1.05rem)] right-safe-zone flex gap-2",
+                            {
+                                md: "bottom-[calc(100%+.85rem)]"
+                            }
                         )}
                     >
                         <Tooltip>
@@ -153,13 +163,16 @@ function ProjectHeader({
                 <>
                     <SectionLine />
                     <div
-                        className={cn("flex flex-col gap-2 px-6 py-4.5", {
-                            lg: "py-5.5"
-                        })}
+                        className={cn(
+                            "flex flex-col gap-2 px-safe-zone py-safe-zone-vertical"
+                        )}
                     >
                         <h2
                             className={cn(
-                                "text-pretty text-foreground font-wght-600"
+                                "text-pretty text-foreground font-wght-600",
+                                {
+                                    md: "text-sm"
+                                }
                             )}
                         >
                             {formatOrdinals(detail.description)}
@@ -167,7 +180,10 @@ function ProjectHeader({
                         {detail.abbreviation && (
                             <h3
                                 className={cn(
-                                    "text-pretty text-muted-foreground"
+                                    "text-pretty text-muted-foreground",
+                                    {
+                                        md: "text-sm"
+                                    }
                                 )}
                             >
                                 {formatOrdinals(detail.abbreviation)}

@@ -53,13 +53,13 @@ const MobileTocGroup = memo(
                     <CollapsibleTrigger
                         pressSound={isExpanded ? "zoom-out" : "zoom-in"}
                         className={cn(
-                            "group/collapsibile-trigger -me-6 -mt-4 px-6 pb-2 pt-6",
+                            "group/collapsibile-trigger -my-2 -me-safe-zone px-safe-zone py-3.5",
                             "group-has-[input:not(:placeholder-shown)]/sidebar:hidden"
                         )}
                     >
                         <div
                             className={cn(
-                                "grid size-8 place-items-center rounded-full bg-foreground/10 transition-transform",
+                                "grid size-7 place-items-center rounded-full bg-foreground/10 transition-transform",
                                 {
                                     dark: "bg-foreground/15",
                                     "group-hover/collapsibile-trigger":
@@ -76,7 +76,7 @@ const MobileTocGroup = memo(
                                     "size-6 translate-y-[.5px] transition-transform duration-350",
                                     {
                                         "group-not-data-expanded/collapsible":
-                                            "translate-x-[.5px] -rotate-90 dark:stroke-2.5"
+                                            "translate-x-[1px] -rotate-90 dark:stroke-2.5"
                                     }
                                 )}
                             />

@@ -103,7 +103,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         // <ViewTransition name="main">
         <main className={cn("relative flex-1")}>
             <FlashOverlay />
-            <Space className={cn("flex items-center justify-start px-6")}>
+            <Space
+                className={cn("flex items-center justify-start px-safe-zone")}
+            >
                 <PortfolioBreadcrumb
                     category={category}
                     categoryTitle={group.title}
@@ -170,7 +172,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <Space className={cn("grid place-items-center")}>
                 <Highlight
                     className={cn(
-                        "grid size-full place-items-center bg-highlighted/10 px-6 py-4.5"
+                        "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-safe-zone-vertical"
                     )}
                 >
                     Category ends. What&#39;s next?
@@ -195,7 +197,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     label: "Go back to Projects page"
                                 })}
                                 className={cn(
-                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 transition-[background-color] duration-100",
+                                    "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                     {
                                         hover: "bg-highlighted/5 transition-none",
                                         active: "bg-highlighted/10 transition-none"
@@ -240,7 +242,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                         "group-hover":
                                                             "text-foreground transition-none",
                                                         "group-active":
-                                                            "text-foreground transition-none"
+                                                            "text-foreground transition-none",
+                                                        md: "text-xs"
                                                     }
                                                 )}
                                             >
@@ -257,7 +260,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                             "text-foreground transition-none",
                                                         "group-active":
                                                             "text-foreground transition-none",
-                                                        sm: "text-sm"
+                                                        sm: "text-xs"
                                                     }
                                                 )}
                                             >
@@ -295,7 +298,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     label: "No more categories, contact me"
                                 })}
                                 className={cn(
-                                    "group flex min-h-20 min-w-0 items-center justify-between gap-4 px-6 py-4.5 transition-[background-color] duration-100",
+                                    "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                     {
                                         hover: "bg-highlighted/5 transition-none",
                                         active: "bg-highlighted/10 transition-none"
@@ -329,7 +332,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                         "group-hover":
                                                             "text-foreground transition-none",
                                                         "group-active":
-                                                            "text-foreground transition-none"
+                                                            "text-foreground transition-none",
+                                                        md: "text-xs"
                                                     }
                                                 )}
                                             >
@@ -346,7 +350,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                             "text-foreground transition-none",
                                                         "group-active":
                                                             "text-foreground transition-none",
-                                                        sm: "text-sm"
+                                                        sm: "text-xs"
                                                     }
                                                 )}
                                             >

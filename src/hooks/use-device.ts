@@ -1,16 +1,15 @@
 "use client"
 
-import { useState } from "react"
-
-import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
+import { useSyncExternalStore } from "react"
 
 interface DeviceInfo {
     isTouchDevice: boolean
 }
 
 let currentModality: "touch" | "mouse" | null = null
-const listeners = new Set<(isTouch: boolean) => void>()
+const listeners = new Set<() => void>()
 let isGlobalSetup = false
+let cachedInitialGuess: boolean | null = null
 
 function getInitialGuess(): boolean {
     if (typeof window === "undefined") return false
@@ -32,8 +31,8 @@ function setupGlobalModalityListeners() {
         const newModality = isTouch ? "touch" : "mouse"
         if (currentModality !== newModality) {
             currentModality = newModality
-            listeners.forEach((setReactState) => {
-                setReactState(isTouch)
+            listeners.forEach((listener) => {
+                listener()
             })
         }
     }
@@ -63,26 +62,32 @@ function setupGlobalModalityListeners() {
     )
 }
 
+function subscribe(callback: () => void) {
+    setupGlobalModalityListeners()
+    listeners.add(callback)
+    return () => {
+        listeners.delete(callback)
+    }
+}
+
+function getSnapshot() {
+    if (currentModality !== null) {
+        return currentModality === "touch"
+    }
+    cachedInitialGuess ??= getInitialGuess()
+    return cachedInitialGuess
+}
+
+function getServerSnapshot() {
+    return false
+}
+
 function useDevice(): DeviceInfo {
-    const [isTouchDevice, setIsTouchDevice] = useState<boolean>(
-        currentModality === null
-            ? getInitialGuess()
-            : currentModality === "touch"
+    const isTouchDevice = useSyncExternalStore(
+        subscribe,
+        getSnapshot,
+        getServerSnapshot
     )
-
-    useIsomorphicLayoutEffect(() => {
-        setupGlobalModalityListeners()
-
-        listeners.add(setIsTouchDevice)
-
-        if (currentModality !== null) {
-            setIsTouchDevice(currentModality === "touch")
-        }
-
-        return () => {
-            listeners.delete(setIsTouchDevice)
-        }
-    }, [])
 
     return {
         isTouchDevice
