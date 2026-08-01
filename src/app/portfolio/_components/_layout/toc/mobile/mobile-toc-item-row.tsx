@@ -56,11 +56,11 @@ const MobileTocItemRow = memo(
                                   active: {
                                       before: "!bg-highlighted"
                                   }
-                              }
-                    ],
-                    {
-                        "last-of-type": "mb-1.5"
-                    }
+                              },
+                        {
+                            "last-of-type": "mb-1.5"
+                        }
+                    ]
                 )}
             >
                 <LinkButton

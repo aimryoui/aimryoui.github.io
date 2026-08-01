@@ -101,7 +101,7 @@ function Software() {
                                 className={cn(
                                     "col-span-full col-start-2 grid table-fixed gap-y-table-between pb-0.75",
                                     index === 0 && {
-                                        "@[39.5rem]":
+                                        "@[33.25rem]":
                                             "pb-[calc(1em*1.5+2px+var(--spacing-table-between)*2+var(--spacing)*8+var(--spacing)*.75)]"
                                     },
                                     {
@@ -129,7 +129,7 @@ function Software() {
                                                     _index === arr.length - 1 &&
                                                         "pe-safe-zone",
                                                     _index === 1 && {
-                                                        "@[39.5rem]":
+                                                        "@[33.25rem]":
                                                             "absolute left-0 top-[calc(1em*1.5+2px+var(--spacing-table-between)*2+var(--spacing)*8)]"
                                                     }
                                                 )}
@@ -159,14 +159,17 @@ function Software() {
                                                             arr.length - 1 &&
                                                             "pe-safe-zone",
                                                         _index === 1 && {
-                                                            "@[39.5rem]":
+                                                            "@[33.25rem]":
                                                                 "absolute left-0 top-[calc(1em*1.5+2px+var(--spacing-table-between)*2+var(--spacing)*8)]"
                                                         }
                                                     )}
                                                 >
                                                     <div
                                                         className={cn(
-                                                            "flex gap-3"
+                                                            "flex gap-3",
+                                                            {
+                                                                md: "gap-4"
+                                                            }
                                                         )}
                                                     >
                                                         {frequency.tools.map(

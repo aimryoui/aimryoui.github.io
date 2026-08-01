@@ -78,13 +78,14 @@ export default {
         fontWeight: {},
         extend: {
             fontSize: {
-                xxs: ".5rem",
-                xs: [".75rem", "1.5"],
+                xxs: [".5rem", ".875rem"],
+                xs: [".75rem", "1rem"],
                 sm: [".875rem", "1.25rem"],
-                md: [".9375rem", "1.3"],
-                base: ["1rem", "1.3"],
-                "2xl": ["1.5rem", "1.3"],
-                "4xl": ["2.25rem", "1.3"]
+                md: [".9375rem", "1.25rem"],
+                base: ["1rem", "1.25rem"],
+                "2xl": ["1.5rem", "1.875rem"],
+                "3xl": ["1.875rem", "2.25rem"],
+                "4xl": ["2.25rem", "2.625rem"]
             },
             spacing: {
                 px: "var(--px)",
@@ -106,6 +107,7 @@ export default {
                 5.75: "1.4375rem",
                 6.5: "1.75rem",
                 7.5: "1.875rem",
+                8.5: "2.125rem",
                 9.25: "2.3125rem",
                 9.5: "2.375rem",
                 11.5: "2.875rem",

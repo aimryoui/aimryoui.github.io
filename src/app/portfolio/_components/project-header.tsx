@@ -46,7 +46,7 @@ function ProjectHeader({
                     className={cn(
                         "absolute bottom-[calc(100%+1rem)] left-safe-zone line-clamp-2 font-mono uppercase leading-normal wrap-anywhere",
                         {
-                            md: "bottom-[calc(100%+.75rem)] text-sm leading-[1.4]"
+                            md: "bottom-[calc(100%+.75rem)] text-sm"
                         }
                     )}
                     style={{

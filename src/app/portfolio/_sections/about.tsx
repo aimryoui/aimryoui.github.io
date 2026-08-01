@@ -22,7 +22,7 @@ function About() {
                     className={cn(
                         "absolute bottom-[calc(100%+1rem)] left-safe-zone font-mono uppercase leading-normal",
                         {
-                            md: "bottom-[calc(100%+.75rem)] text-sm leading-[1.4]"
+                            md: "bottom-[calc(100%+.75rem)] text-sm"
                         }
                     )}
                 >
@@ -155,15 +155,15 @@ function About() {
                                 </Highlight>
                                 <div
                                     className={cn(
-                                        "absolute top-full flex h-4.5 translate-y-0.75 items-center justify-center rounded-md border border-stroke bg-background px-1",
+                                        "absolute top-full flex translate-y-[.15625rem] items-center justify-center rounded-md border border-stroke bg-background px-1",
                                         {
-                                            md: "bottom-0 top-auto h-[calc(var(--spacing-safe-zone)+var(--px)*2)] w-full translate-y-0 rounded-none border-0 border-t border-dashed px-1.5 pb-0.5"
+                                            md: "bottom-0 top-auto h-[calc(var(--spacing-safe-zone)+var(--px)*2)] w-full translate-y-0 rounded-none border-0 border-t border-dashed px-1.5 pb-px"
                                         }
                                     )}
                                 >
                                     <span
                                         className={cn(
-                                            "max-w-full truncate text-xxs uppercase font-wght-[625]"
+                                            "max-w-full truncate text-xxs uppercase leading-4 font-wght-[625]"
                                         )}
                                     >
                                         {item.label}
@@ -234,12 +234,12 @@ function About() {
                         />
                         <div
                             className={cn(
-                                "absolute top-full flex h-4.5 translate-y-0.75 items-center justify-center rounded-md border border-stroke bg-background px-1"
+                                "absolute top-full flex translate-y-[.15625rem] items-center justify-center rounded-md border border-stroke bg-background px-1"
                             )}
                         >
                             <span
                                 className={cn(
-                                    "text-xxs uppercase font-wght-[625]"
+                                    "text-xxs uppercase leading-4 font-wght-[625]"
                                 )}
                             >
                                 Location
@@ -310,12 +310,12 @@ function About() {
                         />
                         <div
                             className={cn(
-                                "absolute top-full flex h-4.5 translate-y-0.75 items-center justify-center rounded-md border border-stroke bg-background px-1"
+                                "absolute top-full flex translate-y-[.15625rem] items-center justify-center rounded-md border border-stroke bg-background px-1"
                             )}
                         >
                             <span
                                 className={cn(
-                                    "text-xxs uppercase font-wght-[625]"
+                                    "text-xxs uppercase leading-4 font-wght-[625]"
                                 )}
                             >
                                 Native Land

@@ -182,7 +182,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             >
                 <p
                     className={cn(
-                        "flex flex-wrap justify-center gap-x-[.2em] text-center",
+                        "flex flex-wrap justify-center gap-x-[.2em] text-center font-wght-500",
                         hasSocialLinks && {
                             xs: "justify-start text-right"
                         }
@@ -196,7 +196,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             <SectionLine />
             <Space
                 as="ul"
-                className={cn("flex items-center bg-transparent", {
+                className={cn("group flex items-center bg-transparent", {
                     hover: "text-muted-foreground/40",
                     "@[50.9375rem]": "h-fit min-h-space flex-wrap"
                 })}
@@ -227,13 +227,18 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                             hoverSound="tick"
                                             pressSound="link"
                                             className={cn(
-                                                "grid h-full place-items-center bg-background transition-[color,background-color] duration-100",
+                                                "grid h-full place-items-center bg-background transition-[color,background-color] duration-[.35s,.1s]",
                                                 platform.title === "Behance"
                                                     ? "[&>svg]:size-7 lg:[&>svg]:size-6"
-                                                    : "lg:[&>svg]:size-5",
+                                                    : platform.title ===
+                                                        "Telegram"
+                                                      ? "[&>svg]:size-6.5 lg:[&>svg]:size-5.5"
+                                                      : "lg:[&>svg]:size-5",
                                                 {
                                                     hover: "bg-highlighted/5 text-highlighted transition-none",
                                                     active: "bg-highlighted/10 text-highlighted transition-none",
+                                                    "group-hover":
+                                                        "duration-[.35s,.1s]",
                                                     lg: "text-muted-foreground"
                                                 }
                                             )}

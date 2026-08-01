@@ -340,7 +340,7 @@ function Contact() {
                                             className={cn(
                                                 "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
                                                 {
-                                                    "@[32rem]":
+                                                    "@[28rem]":
                                                         "flex gap-safe-zone"
                                                 }
                                             )}
@@ -354,7 +354,7 @@ function Contact() {
                                                         {
                                                             "@[40rem]":
                                                                 "hidden",
-                                                            "@[32rem]":
+                                                            "@[28rem]":
                                                                 "static !block"
                                                         }
                                                     )}
@@ -363,7 +363,7 @@ function Contact() {
                                                 </span>
                                                 <p
                                                     className={cn({
-                                                        "@[32rem]": "sr-only"
+                                                        "@[28rem]": "sr-only"
                                                     })}
                                                 >
                                                     {platform.title}
@@ -395,7 +395,7 @@ function Contact() {
                                                     {
                                                         "@[59.375rem]":
                                                             "pe-safe-zone text-left",
-                                                        "@[24rem]": "sr-only"
+                                                        "@[19.5rem]": "sr-only"
                                                     }
                                                 )}
                                             >

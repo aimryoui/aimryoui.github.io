@@ -69,7 +69,7 @@ function Toolbar({ className }: { className?: string }) {
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 48 48"
                                     className={cn(
-                                        "size-9 will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180"
+                                        "size-8.5 will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180"
                                     )}
                                 >
                                     <path
@@ -103,8 +103,8 @@ function Toolbar({ className }: { className?: string }) {
                                     className={cn(
                                         "flex flex-col",
                                         isTouchDevice
-                                            ? "sm:@[calc(.25rem*9+.25rem*3*4+.25rem*16+.25rem*9*2+5.1rem)]:hidden"
-                                            : "sm:@[calc(.25rem*9+.25rem*3*5+.25rem*16+.25rem*9*3+5.1rem)]:hidden"
+                                            ? "sm:@[calc(.25rem*8.5+.25rem*3*4+.25rem*16+.25rem*9*2+5.1rem)]:hidden"
+                                            : "sm:@[calc(.25rem*8.5+.25rem*3*5+.25rem*16+.25rem*9*3+5.1rem)]:hidden"
                                     )}
                                 >
                                     <Bold className="text-sm">
@@ -131,7 +131,7 @@ function Toolbar({ className }: { className?: string }) {
                         {isMobile && (
                             <li
                                 className={cn(
-                                    "relative -my-5.5 -me-safe-zone hidden size-space",
+                                    "relative -my-5.5 -me-safe-zone ms-0.25 hidden size-space",
                                     {
                                         lg: "block"
                                     }

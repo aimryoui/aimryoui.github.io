@@ -78,7 +78,7 @@ function SectionName({
                                 "underline decoration-foreground decoration-solid"
                         }
                     ],
-                    "min-h-9 text-pretty rounded-full bg-background px-3.5 py-1.75 text-center font-mono",
+                    "grid min-h-9 place-items-center text-pretty rounded-full bg-background px-3.5 py-1.75 text-center font-mono",
                     hasSocialLinks ? "mx-17 lg:mx-2" : "mx-2",
                     !normalcase && "uppercase",
                     {

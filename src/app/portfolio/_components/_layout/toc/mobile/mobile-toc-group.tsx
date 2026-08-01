@@ -51,6 +51,7 @@ const MobileTocGroup = memo(
                     onSameLinkClick={onSameLinkClick}
                 >
                     <CollapsibleTrigger
+                        haptic={isExpanded ? "light" : "nudge"}
                         pressSound={isExpanded ? "zoom-out" : "zoom-in"}
                         className={cn(
                             "group/collapsibile-trigger -my-2 -me-safe-zone px-safe-zone py-3.5",
