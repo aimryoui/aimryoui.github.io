@@ -137,7 +137,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             "pointer-events-none fixed top-0 z-60 flex w-[100cqw] items-center justify-end bg-transparent px-safe-zone",
                             {
                                 lg: "bottom-space top-auto px-0",
-                                md: "bottom-[calc(var(--spacing-space)+2.5625rem+var(--px))]"
+                                md: "bottom-[calc(var(--spacing-space)+2.5625rem)]"
                             }
                         )}
                     >
