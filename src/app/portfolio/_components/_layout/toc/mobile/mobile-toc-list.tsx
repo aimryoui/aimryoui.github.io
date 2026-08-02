@@ -46,7 +46,7 @@ function MobileTocList({
         <div
             ref={scrollContainerRef}
             className={cn(
-                "group overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-2 scrollbar-thin webkit:pointer-events-auto",
+                "group -scroll-mb-[calc(env(safe-area-inset-bottom,0px)+theme(spacing.space))] overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-2 scrollbar-thin webkit:pointer-events-auto",
                 "scroll-fade-y scroll-fade-16"
             )}
         >

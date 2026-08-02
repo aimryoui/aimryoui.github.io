@@ -127,33 +127,38 @@ function Projects() {
                                 }
                             )}
                         >
-                            <SectionTitle
-                                id={group.id}
-                                title={group.title}
-                                noteId={
-                                    group.id === "selected-works"
-                                        ? undefined
-                                        : groupIndex ===
-                                            (projectGroups[0]?.id ===
-                                            "selected-works"
-                                                ? 1
-                                                : 0)
-                                          ? "design-projects"
-                                          : undefined
-                                }
-                                note={
-                                    group.id === "selected-works"
-                                        ? group.note
-                                        : groupIndex ===
-                                            (projectGroups[0]?.id ===
-                                            "selected-works"
-                                                ? 1
-                                                : 0)
-                                          ? "Design Projects"
-                                          : undefined
-                                }
-                                className={cn("flex-1 bg-transparent")}
-                            />
+                            {group.id === "selected-works" ? (
+                                <SectionTitle
+                                    id={group.id}
+                                    title={group.title}
+                                    note={group.note}
+                                    className={cn("flex-1 bg-transparent")}
+                                />
+                            ) : (
+                                <SectionTitle
+                                    id={group.id}
+                                    title={group.title}
+                                    noteId={
+                                        groupIndex ===
+                                        (projectGroups[0]?.id ===
+                                        "selected-works"
+                                            ? 1
+                                            : 0)
+                                            ? "design-projects"
+                                            : undefined
+                                    }
+                                    note={
+                                        groupIndex ===
+                                        (projectGroups[0]?.id ===
+                                        "selected-works"
+                                            ? 1
+                                            : 0)
+                                            ? "Design Projects"
+                                            : undefined
+                                    }
+                                    className={cn("flex-1 bg-transparent")}
+                                />
+                            )}
                             <ArrowRight
                                 className={cn(
                                     "m-1 transition-[color] duration-100",
@@ -180,10 +185,17 @@ function Projects() {
                                         md: "!border-none"
                                     })}
                                 >
-                                    <ProjectCard
-                                        href={getProjectPath(project)}
-                                        project={project}
-                                    />
+                                    {group.id === "selected-works" ? (
+                                        <ProjectCard
+                                            href={getProjectPath(project)}
+                                            project={project}
+                                        />
+                                    ) : (
+                                        <ProjectCard
+                                            href={getProjectPath(project)}
+                                            project={project}
+                                        />
+                                    )}
                                     {index < group.projects.length - 1 && (
                                         <SectionLine
                                             className={cn({
@@ -207,8 +219,7 @@ function Projects() {
                             <>
                                 <SectionLine />
                                 <Divider />
-                                <SectionLine />
-                                <SectionLine />
+                                <SectionLine showDecoration />
                                 <Space>
                                     <Highlight
                                         className={cn(
@@ -220,6 +231,8 @@ function Projects() {
                                     </Highlight>
                                 </Space>
                                 <SectionLine showDecoration />
+                                <Divider />
+                                <SectionLine />
                                 <Space />
                                 <SectionLine />
                             </>

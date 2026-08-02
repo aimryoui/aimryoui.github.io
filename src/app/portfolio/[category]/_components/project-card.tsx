@@ -150,7 +150,7 @@ function ProjectCard({
                     isSelectedWorks={isSelectedWorks}
                     name={project.name}
                     navigation={navigation}
-                    isNew={project.information.newest}
+                    isNew={project.features?.new ?? false}
                     className={cn(navigation === "backward" && "justify-end")}
                 />
                 <ProjectCategory

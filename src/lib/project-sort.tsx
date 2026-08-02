@@ -2,7 +2,6 @@ import { DASHES_REGEX } from "@/helpers/character-regexes"
 import { slugify } from "@/helpers/slugify"
 import { SelectedWorks } from "@/portfolio/_components/_icons/category-icons"
 import { PROJECT_CATEGORIES } from "@/portfolio/_configs/project-categories"
-import { SELECTED_WORKS_IDS } from "@/portfolio/_configs/selected-works"
 
 import { type Project } from "~/.velite"
 
@@ -111,11 +110,17 @@ function groupProjectsByCategory(allProjects: Project[]): ProjectGroup[] {
         []
     )
 
-    const selectedWorksProjects = SELECTED_WORKS_IDS.map((id) => {
-        const p = allProjects.find((p) => p.slug.split("/").pop() === id)
-        if (!p) return null
-        return Object.assign({}, p, { slug: `portfolio/selected-works/${id}` })
-    }).filter(Boolean) as Project[]
+    const selectedWorksProjects = allProjects
+        .filter((project) => project.features?.selected[0])
+        .sort(
+            (a, b) =>
+                (a.features?.selected[1] ?? 0) - (b.features?.selected[1] ?? 0)
+        )
+        .map((p) =>
+            Object.assign({}, p, {
+                slug: `portfolio/selected-works/${p.slug.split("/").pop()}`
+            })
+        )
 
     if (selectedWorksProjects.length > 0) {
         result.unshift({

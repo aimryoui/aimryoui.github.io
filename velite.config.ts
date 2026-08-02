@@ -39,11 +39,15 @@ const projects = defineCollection({
         category: s.string(),
 
         information: s.object({
-            newest: s.boolean().default(false),
             duration: s.string(),
             subject: s.string(),
             place: s.string().optional()
         }),
+
+        features: s.object({
+            new: s.boolean().default(false),
+            selected: s.tuple([s.boolean(), s.number()]).default([false, 0])
+        }).optional(),
 
         social: s
             .object({

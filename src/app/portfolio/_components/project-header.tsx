@@ -27,6 +27,7 @@ function ProjectHeader({
     projectId,
     projectName,
     category,
+    features,
     information,
     tools,
     detail,
@@ -40,6 +41,8 @@ function ProjectHeader({
     isSelectedWorks?: boolean
 }) {
     const headerId = slugify(projectName)
+    const { subject, duration, place } = information
+    const isNew = features?.new ?? false
 
     return (
         <div className={cn("relative bg-background")}>
@@ -122,17 +125,17 @@ function ProjectHeader({
                 >
                     <Highlight
                         className={cn(
-                            !information.newest && "text-transparent md:hidden"
+                            !isNew && "text-transparent md:hidden"
                         )}
                     >
-                        {information.newest ? "Newest" : "Older"}
+                        {isNew ? "New" : "Older"}
                     </Highlight>
-                    <Text>{information.duration}</Text>
+                    <Text>{duration}</Text>
                     <Text className="text-foreground">
-                        {information.subject}{" "}
-                        {information.place && (
+                        {subject}{" "}
+                        {place && (
                             <>
-                                <At /> {information.place}
+                                <At /> {place}
                             </>
                         )}
                     </Text>
