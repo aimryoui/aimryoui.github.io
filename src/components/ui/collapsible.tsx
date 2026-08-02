@@ -13,7 +13,9 @@ import {
 } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-function Collapsible({ className, ...props }: DisclosureProps) {
+type CollapsibleProps = DisclosureProps
+
+function Collapsible({ className, ...props }: CollapsibleProps) {
     return (
         <CollapsiblePrimitive
             data-slot="collapsible"
@@ -23,7 +25,9 @@ function Collapsible({ className, ...props }: DisclosureProps) {
     )
 }
 
-function CollapsibleTrigger({ className, ...props }: ButtonProps) {
+type CollapsibleTriggerProps = ButtonProps
+
+function CollapsibleTrigger({ className, ...props }: CollapsibleTriggerProps) {
     return (
         <CollapsibleTriggerPrimitive
             slot="trigger"
@@ -36,7 +40,9 @@ function CollapsibleTrigger({ className, ...props }: ButtonProps) {
     )
 }
 
-function CollapsibleContent({ className, ...props }: DisclosurePanelProps) {
+type CollapsibleContentProps = DisclosurePanelProps
+
+function CollapsibleContent({ className, ...props }: CollapsibleContentProps) {
     return (
         <CollapsibleContentPrimitive
             data-slot="collapsible-content"
@@ -53,4 +59,9 @@ function CollapsibleContent({ className, ...props }: DisclosurePanelProps) {
     )
 }
 
+export type {
+    CollapsibleContentProps,
+    CollapsibleProps,
+    CollapsibleTriggerProps
+}
 export { Collapsible, CollapsibleContent, CollapsibleTrigger }

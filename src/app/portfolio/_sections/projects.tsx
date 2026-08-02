@@ -7,6 +7,7 @@ import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { LinkButton } from "@/components/ui/button"
+import { Highlight } from "@/components/ui/typography"
 import {
     getCategoryPath,
     getProjectPath,
@@ -61,11 +62,15 @@ function Projects() {
                             <article>
                                 <ProjectHeader
                                     type={project.type}
-                                    projectName={project.projectName}
+                                    projectId={project.id}
+                                    projectName={project.name}
                                     category={project.category}
                                     information={project.information}
                                     tools={project.tools}
                                     detail={project.detail}
+                                    isSelectedWorks={
+                                        group.id === "selected-works"
+                                    }
                                 />
 
                                 <SectionLine />
@@ -73,7 +78,7 @@ function Projects() {
                                 <SectionLine />
 
                                 <ExpandableWrapper
-                                    projectName={project.projectName}
+                                    name={project.name}
                                     forceExpand={
                                         project.override
                                             ? project.override.forceExpand
@@ -126,14 +131,26 @@ function Projects() {
                                 id={group.id}
                                 title={group.title}
                                 noteId={
-                                    groupIndex === 0
-                                        ? "design-projects"
-                                        : undefined
+                                    group.id === "selected-works"
+                                        ? undefined
+                                        : groupIndex ===
+                                            (projectGroups[0]?.id ===
+                                            "selected-works"
+                                                ? 1
+                                                : 0)
+                                          ? "design-projects"
+                                          : undefined
                                 }
                                 note={
-                                    groupIndex === 0
-                                        ? "Design Projects"
-                                        : undefined
+                                    group.id === "selected-works"
+                                        ? group.note
+                                        : groupIndex ===
+                                            (projectGroups[0]?.id ===
+                                            "selected-works"
+                                                ? 1
+                                                : 0)
+                                          ? "Design Projects"
+                                          : undefined
                                 }
                                 className={cn("flex-1 bg-transparent")}
                             />
@@ -186,11 +203,33 @@ function Projects() {
                         </ul>
                     </section>
                     {groupIndex < projectGroups.length - 1 ? (
-                        <>
-                            <SectionLine />
-                            <Divider />
-                            <SectionLine />
-                        </>
+                        group.id === "selected-works" ? (
+                            <>
+                                <SectionLine />
+                                <Divider />
+                                <SectionLine />
+                                <SectionLine />
+                                <Space>
+                                    <Highlight
+                                        className={cn(
+                                            "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-4.5"
+                                        )}
+                                    >
+                                        And below are almost all of my design
+                                        projects.
+                                    </Highlight>
+                                </Space>
+                                <SectionLine showDecoration />
+                                <Space />
+                                <SectionLine />
+                            </>
+                        ) : (
+                            <>
+                                <SectionLine />
+                                <Divider />
+                                <SectionLine />
+                            </>
+                        )
                     ) : (
                         <>
                             <SectionLine />

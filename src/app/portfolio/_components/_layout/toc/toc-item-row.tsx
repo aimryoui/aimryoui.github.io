@@ -62,6 +62,7 @@ const TocItemRow = memo(
         const isProject = variant === "project"
         const isCategory = variant === "category"
         const isAnchor = variant === "anchor"
+        const isSelectedWorks = item.id === "selected-works"
 
         const Comp = isProject || isAnchor ? "li" : "div"
 
@@ -109,7 +110,10 @@ const TocItemRow = memo(
                     pressSound="link"
                     prefetch={false}
                     onClick={(e) => {
-                        if (isSameUrl(href)) {
+                        const targetPath = href.split("#")[0]
+                        const isSamePath =
+                            targetPath === pathname || targetPath === ""
+                        if (isSameUrl(href) || isSamePath) {
                             e.preventDefault()
                         }
                     }}
@@ -119,7 +123,10 @@ const TocItemRow = memo(
                             return
                         }
 
-                        if (item.mode === "route") return
+                        const targetPath = href.split("#")[0]
+                        const isSamePath =
+                            targetPath === pathname || targetPath === ""
+                        if (item.mode === "route" && !isSamePath) return
 
                         onPress(item)
                     }}
@@ -136,7 +143,7 @@ const TocItemRow = memo(
                         isCategory
                             ? "ps-safe-zone"
                             : !isProject && "pe-5.5 ps-safe-zone",
-                        isAnchor && [
+                        (isAnchor || isSelectedWorks) && [
                             "gap-2",
                             {
                                 "group-first-of-type/item": "-mt-3 pt-4",
@@ -183,7 +190,7 @@ const TocItemRow = memo(
                         data-cursor="lock"
                         className={cn(
                             "block w-fit max-w-full px-1.25",
-                            isCategory && "-ms-1.25",
+                            isCategory && !isSelectedWorks && "-ms-1.25",
                             "translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
                         )}
                     >

@@ -12,14 +12,14 @@ import { cn } from "@/lib/utils"
 interface ExpandableWrapperProps {
     children: React.ReactNode
     className?: string
-    projectName?: string
+    name?: string
     forceExpand: boolean
 }
 
 export function ExpandableWrapper({
     children,
     className,
-    projectName,
+    name,
     forceExpand
 }: ExpandableWrapperProps) {
     const [userExpanded, setUserExpanded] = useState(false)
@@ -90,8 +90,7 @@ export function ExpandableWrapper({
                             }}
                         >
                             <span>
-                                Continue reading:{" "}
-                                <Highlight>{projectName}</Highlight>
+                                Continue reading: <Highlight>{name}</Highlight>
                             </span>
                             <ArrowDown className={cn("size-3")} />
                         </Button>

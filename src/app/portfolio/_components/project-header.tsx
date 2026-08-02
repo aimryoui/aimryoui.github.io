@@ -24,12 +24,21 @@ const MEDIA_REGEX = /\.(jpg|png|mp4|mp3)$/u
 
 function ProjectHeader({
     type,
+    projectId,
     projectName,
     category,
     information,
     tools,
-    detail
-}: Omit<(typeof projects)[number], "forceExpand" | "slug" | "code">) {
+    detail,
+    isSelectedWorks = false
+}: Omit<
+    (typeof projects)[number],
+    "id" | "name" | "forceExpand" | "slug" | "code" | "filePath"
+> & {
+    projectId: (typeof projects)[number]["id"]
+    projectName: (typeof projects)[number]["name"]
+    isSelectedWorks?: boolean
+}) {
     const headerId = slugify(projectName)
 
     return (
@@ -69,7 +78,11 @@ function ProjectHeader({
                             "w-fit text-pretty text-foreground wrap-anywhere"
                         )}
                     >
-                        <ProjectName projectName={projectName} />
+                        <ProjectName
+                            projectId={projectId}
+                            projectName={projectName}
+                            isSelectedWorks={isSelectedWorks}
+                        />
                         {!(
                             TRAILING_REGEX.test(projectName) ||
                             MEDIA_REGEX.test(projectName)
@@ -86,6 +99,7 @@ function ProjectHeader({
                     <ProjectCategory
                         projectName={projectName}
                         category={category}
+                        isSelectedWorks={isSelectedWorks}
                     />
                 </div>
                 <SvgElementLine className={cn("md:hidden")} />
@@ -196,11 +210,17 @@ function ProjectHeader({
     )
 }
 
-function ProjectName({ projectName }: { projectName: string }) {
+function ProjectName({
+    projectId,
+    projectName,
+    isSelectedWorks = false
+}: {
+    projectId: string | undefined
+    projectName: string
+    isSelectedWorks?: boolean
+}) {
     return (
-        <ViewTransition
-            name={formatViewTransitionName(`project-${projectName}`)}
-        >
+        <ViewTransition name={`project-${projectId}${isSelectedWorks ? "-selected" : ""}`}>
             <span>{formatOrdinals(projectName)}</span>
         </ViewTransition>
     )
@@ -208,15 +228,17 @@ function ProjectName({ projectName }: { projectName: string }) {
 
 function ProjectCategory({
     projectName,
-    category
+    category,
+    isSelectedWorks = false
 }: {
     projectName: string
     category: string
+    isSelectedWorks?: boolean
 }) {
     return (
         <ViewTransition
             name={formatViewTransitionName(
-                `category-${projectName}-${category}`
+                `category-${projectName}-${category}${isSelectedWorks ? "-selected" : ""}`
             )}
         >
             <Highlight className={cn("w-fit")}>{category}</Highlight>

@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Bold, Text } from "@/components/ui/typography"
+import { TRIM_PROJECT_SLUG_REGEX } from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { cn } from "@/lib/utils"
@@ -25,6 +26,18 @@ interface ProjectCardProps {
 
 const DURATION = 500
 
+function getCoverImagePath(projectPath: string, coverImage?: string) {
+    if (!coverImage) return `/assets/media/${projectPath}/1/1_preview.webp`
+    const lastDotIndex = coverImage.lastIndexOf(".")
+    const pathWithoutExt = coverImage.slice(0, lastDotIndex)
+    const fileName = coverImage.slice(
+        coverImage.lastIndexOf("/") + 1,
+        lastDotIndex
+    )
+
+    return `/assets/media${pathWithoutExt}/${fileName}_preview.webp`
+}
+
 function ProjectCard({
     className,
     href,
@@ -37,7 +50,8 @@ function ProjectCard({
     const startTimeRef = useRef<number>(0)
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
-    const projectPath = href?.replace("/portfolio/", "")
+    const projectPath = project.filePath.replace(TRIM_PROJECT_SLUG_REGEX, "")
+    const isSelectedWorks = project.slug.startsWith("portfolio/selected-works")
 
     useEffect(() => {
         return () => {
@@ -45,20 +59,7 @@ function ProjectCard({
         }
     }, [])
 
-    const coverImage = project.override?.coverImage
-
-    const coverImagePath = coverImage
-        ? (() => {
-              const lastDotIndex = coverImage.lastIndexOf(".")
-              const pathWithoutExt = coverImage.slice(0, lastDotIndex)
-              const fileName = coverImage.slice(
-                  coverImage.lastIndexOf("/") + 1,
-                  lastDotIndex
-              )
-
-              return `/assets/media${pathWithoutExt}/${fileName}_preview.webp`
-          })()
-        : `/assets/media/${projectPath}/1/1_preview.webp`
+    const coverImagePath = getCoverImagePath(projectPath, project.override?.coverImage)
 
     const handleMouseEnter = () => {
         compRef.current?.setAttribute("data-hover", "true")
@@ -117,7 +118,8 @@ function ProjectCard({
                 />
             )}
             <ProjectCover
-                projectName={project.projectName}
+                projectId={project.id}
+                isSelectedWorks={isSelectedWorks}
                 navigation={navigation}
                 src={coverImagePath}
                 social={project.social}
@@ -141,13 +143,16 @@ function ProjectCard({
                 )}
             >
                 <ProjectName
-                    projectName={project.projectName}
+                    projectId={project.id}
+                    isSelectedWorks={isSelectedWorks}
+                    name={project.name}
                     navigation={navigation}
                     isNew={project.information.newest}
                     className={cn(navigation === "backward" && "justify-end")}
                 />
                 <ProjectCategory
-                    projectName={project.projectName}
+                    name={project.name}
+                    isSelectedWorks={isSelectedWorks}
                     category={project.category}
                     className={cn(navigation === "backward" && "text-right")}
                 />
@@ -172,21 +177,25 @@ function ProjectCard({
 
 function ProjectCover({
     className,
-    projectName,
+    projectId,
     navigation,
     social,
     src,
+    isSelectedWorks = false,
     ...props
 }: React.ComponentProps<"div"> &
     Pick<ProjectCardProps, "navigation"> & {
-        projectName: string
+        projectId: string | undefined
         src: string
         social?: SocialData
+        isSelectedWorks?: boolean
     }) {
     const socialData = resolveSocialData(social)
 
     return (
-        <ViewTransition name={formatViewTransitionName(`cover-${projectName}`)}>
+        <ViewTransition
+            name={`cover-${projectId}${isSelectedWorks ? "-selected" : ""}`}
+        >
             <div
                 className={cn(
                     "mb-1 flex h-11 flex-col items-center justify-center gap-0.5",
@@ -271,14 +280,18 @@ function ProjectCover({
 
 function ProjectName({
     className,
-    projectName,
+    projectId,
+    name,
     isNew,
     navigation,
+    isSelectedWorks = false,
     ...props
 }: React.ComponentProps<typeof Bold> &
     Pick<ProjectCardProps, "navigation"> & {
-        projectName: string
+        projectId: string | undefined
+        name: string
         isNew: boolean
+        isSelectedWorks?: boolean
     }) {
     return (
         <Bold
@@ -293,7 +306,7 @@ function ProjectName({
             {...props}
         >
             <ViewTransition
-                name={formatViewTransitionName(`project-${projectName}`)}
+                name={`project-${projectId}${isSelectedWorks ? "-selected" : ""}`}
             >
                 <span
                     className={cn(
@@ -312,7 +325,7 @@ function ProjectName({
                         viewTransitionName: "none !important"
                     }}
                 >
-                    {formatOrdinals(projectName)}
+                    {formatOrdinals(name)}
                 </span>
             </ViewTransition>
             <span
@@ -329,7 +342,7 @@ function ProjectName({
                     }
                 )}
             >
-                {formatOrdinals(projectName)}
+                {formatOrdinals(name)}
             </span>
             {isNew && (
                 <svg
@@ -350,17 +363,19 @@ function ProjectName({
 
 function ProjectCategory({
     className,
-    projectName,
+    name,
     category,
+    isSelectedWorks = false,
     ...props
 }: React.ComponentProps<typeof Text> & {
-    projectName: string
+    name: string
     category: string
+    isSelectedWorks?: boolean
 }) {
     return (
         <ViewTransition
             name={formatViewTransitionName(
-                `category-${projectName}-${category}`
+                `category-${name}-${category}${isSelectedWorks ? "-selected" : ""}`
             )}
         >
             <Text

@@ -65,7 +65,7 @@ export async function generateMetadata({
         return {}
     }
 
-    const SLUG_TITLE = `Project — ${project.projectName} | aimryoui`
+    const SLUG_TITLE = `Project — ${project.name} | aimryoui`
     const SLUG_DESCRIPTION =
         project.detail?.description ?? "Project detail page."
     const portfolioOgImage = `${siteConfig.fullUrl}/portfolio/opengraph-image.jpg`
@@ -104,6 +104,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     )
     const project = projectIndex === -1 ? null : categoryProjects[projectIndex]
 
+    const isSelectedWorks = category === "selected-works"
+
     if (!group || !project) notFound()
 
     const prev = projectIndex > 0 ? categoryProjects[projectIndex - 1] : null
@@ -119,7 +121,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     return (
         // <ViewTransition name="main">
         <main className={cn("relative flex-1")}>
-            <AmbientStyle project={project} category={category} />
+            <AmbientStyle project={project} />
             <FlashOverlay />
             <Space
                 className={cn("flex items-center justify-start px-safe-zone")}
@@ -127,7 +129,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <PortfolioBreadcrumb
                     category={category}
                     categoryTitle={group.title}
-                    projectName={project.projectName}
+                    projectName={project.name}
                 />
             </Space>
             <section className={cn("@container")}>
@@ -137,7 +139,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             "pointer-events-none fixed top-0 z-60 flex w-[100cqw] items-center justify-end bg-transparent px-safe-zone",
                             {
                                 lg: "bottom-space top-auto px-0",
-                                md: "bottom-[calc(var(--spacing-space)+2.5625rem+var(--px))]"
+                                md: "bottom-[calc(var(--spacing-space)+2.5625rem)]"
                             }
                         )}
                     >
@@ -150,11 +152,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <article>
                     <ProjectHeader
                         type={project.type}
-                        projectName={project.projectName}
+                        projectId={project.id}
+                        projectName={project.name}
                         category={project.category}
                         information={project.information}
                         tools={project.tools}
                         detail={project.detail}
+                        isSelectedWorks={isSelectedWorks}
                     />
 
                     <SectionLine />
@@ -168,7 +172,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </article>
             </section>
 
-            <Space className={cn("grid place-items-center")}>
+            <Space>
                 <Highlight
                     className={cn(
                         "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-4.5"

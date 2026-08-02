@@ -25,8 +25,6 @@ function handleItemClick(
 ) {
     const targetId = item.id
 
-    if (item.mode === "route") return
-
     clickedTargetRef.current = targetId
     const el = document.getElementById(targetId)
     if (el) {

@@ -1,7 +1,10 @@
+import { useCallback } from "react"
+
 import { cn } from "@/lib/utils"
 import { MobileTocGroup } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-group"
 import { MobileTocItemRow } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-item-row"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import {
     handleItemClick,
     handleSameLinkClick,
@@ -26,6 +29,19 @@ function MobileTocList({
 
     const tree = useTocTree(filteredItems)
 
+    const handlePress = useCallback(
+        (item: TocItemProps) => {
+            handleItemClick(item, clickedTargetRef)
+            onLinkClick?.()
+        },
+        [clickedTargetRef, onLinkClick]
+    )
+
+    const handleSameClick = useCallback(() => {
+        handleSameLinkClick()
+        onLinkClick?.()
+    }, [onLinkClick])
+
     return (
         <div
             ref={scrollContainerRef}
@@ -39,7 +55,6 @@ function MobileTocList({
                     return (
                         <TocDivider
                             key={`div-${node.id}`}
-                            id={node.id}
                             containerClassName="pointer-events-auto my-2 h-px p-0"
                         />
                     )
@@ -53,14 +68,8 @@ function MobileTocList({
                             items={node.items}
                             mode={mode}
                             debouncedQuery={debouncedQuery}
-                            onItemPress={(item) => {
-                                handleItemClick(item, clickedTargetRef)
-                                onLinkClick?.()
-                            }}
-                            onSameLinkClick={() => {
-                                handleSameLinkClick()
-                                onLinkClick?.()
-                            }}
+                            onItemPress={handlePress}
+                            onSameLinkClick={handleSameClick}
                         />
                     )
                 }

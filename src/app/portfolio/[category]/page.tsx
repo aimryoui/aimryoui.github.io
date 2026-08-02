@@ -91,11 +91,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     const group = groups.find((projectGroup) => projectGroup.id === category)
 
     // Get prev and next category
-    const prev = categoryIndex > 0 ? groups[categoryIndex - 1] : null
+    const prevGroup = categoryIndex > 0 ? groups[categoryIndex - 1] : null
+    const prev = prevGroup?.id === "selected-works" ? null : prevGroup
     const next =
         categoryIndex >= 0 && categoryIndex < groups.length - 1
             ? groups[categoryIndex + 1]
             : null
+
+    const isSelectedWorks = category === "selected-works"
 
     if (!group) notFound()
 
@@ -175,7 +178,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                         "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-safe-zone-vertical"
                     )}
                 >
-                    Category ends. What&#39;s next?
+                    {isSelectedWorks
+                        ? "That's what I've picked. What's next?"
+                        : "Category ends. What's next?"}
                 </Highlight>
             </Space>
             <SectionLine />
@@ -191,10 +196,14 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 href={
                                     prev
                                         ? getCategoryPath(prev.id)
-                                        : "/portfolio#design-projects"
+                                        : isSelectedWorks
+                                          ? "/portfolio#selected-works"
+                                          : "/portfolio#design-projects"
                                 }
                                 {...(!prev && {
-                                    label: "Go back to Projects page"
+                                    label: isSelectedWorks
+                                        ? "Go back to Portfolio"
+                                        : "Go back to Design Projects"
                                 })}
                                 className={cn(
                                     "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
@@ -277,7 +286,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                     }
                                                 )}
                                             >
-                                                Projects
+                                                {isSelectedWorks
+                                                    ? "Portfolio"
+                                                    : "Design Projects"}
                                             </Bold>
                                         </>
                                     )}

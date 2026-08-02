@@ -13,6 +13,7 @@ import {
     DesignProjectsIcon,
     EducationIcon,
     ExperienceIcon,
+    SelectedWorksIcon,
     SoftwareIcon
 } from "@/portfolio/_components/_icons/toc-icons"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
@@ -24,13 +25,24 @@ function useTocItems(mode: PortfolioMode) {
     return useMemo(() => {
         const projectGroups = groupProjectsByCategory(projects)
 
-        const projectItems = projectGroups.flatMap((group) => {
+        const selectedWorksGroup = projectGroups.find(
+            (g) => g.id === "selected-works"
+        )
+        const otherGroups = projectGroups.filter(
+            (g) => g.id !== "selected-works"
+        )
+
+        const createGroupItems = (group: (typeof projectGroups)[0]) => {
             const items: TocItemProps[] = [
                 {
                     id: group.id,
                     label: group.title,
                     depth: 2,
                     kind: "project",
+                    icon:
+                        group.id === "selected-works" ? (
+                            <SelectedWorksIcon />
+                        ) : undefined,
                     mode: mode === "pages" ? "route" : "anchor",
                     href:
                         mode === "pages"
@@ -42,19 +54,26 @@ function useTocItems(mode: PortfolioMode) {
             for (const project of group.projects) {
                 items.push({
                     id: getProjectRouteSlug(project),
-                    label: project.projectName,
+                    label: project.name,
                     depth: 3,
                     kind: "project",
                     mode: mode === "pages" ? "route" : "anchor",
                     href:
                         mode === "pages"
-                            ? getProjectPath(project)
+                            ? group.id === "selected-works"
+                                ? `/portfolio/selected-works/${getProjectRouteSlug(project)}`
+                                : getProjectPath(project)
                             : `#${getProjectRouteSlug(project)}`
                 })
             }
 
             return items
-        })
+        }
+
+        const selectedWorksItems = selectedWorksGroup
+            ? createGroupItems(selectedWorksGroup)
+            : []
+        const designProjectItems = otherGroups.flatMap(createGroupItems)
 
         const staticItemMode = mode === "pages" ? "route" : "anchor"
 
@@ -104,6 +123,7 @@ function useTocItems(mode: PortfolioMode) {
                 mode: staticItemMode,
                 href: mode === "pages" ? "/portfolio#contact" : "#contact"
             },
+            ...selectedWorksItems,
             {
                 id: "design-projects",
                 label: "Design Projects",
@@ -128,7 +148,7 @@ function useTocItems(mode: PortfolioMode) {
                 kind: "static",
                 hidden: mode === "pages"
             },
-            ...projectItems,
+            ...designProjectItems,
             {
                 id: "footer",
                 label: "Footer",

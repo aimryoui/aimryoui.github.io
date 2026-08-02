@@ -1,23 +1,41 @@
+import fs from "node:fs"
+
 import { type Route } from "next"
 
-import { defineCollection, defineConfig, type Schema, s } from "velite"
+import {
+    context,
+    defineCollection,
+    defineConfig,
+    defineSchema,
+    type Schema,
+    s
+} from "velite"
 
 import { TOOL_ICONS, type ToolKey } from "@/portfolio/_configs/tools"
 
 const HEX_COLOR_REGEX = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/u
 
+const fileNameWithoutExt = defineSchema(() =>
+    s.custom<string | undefined>().transform((value) => {
+        if (value !== undefined) return value
+        return context().file.stem
+    })
+)
+
 const projects = defineCollection({
     name: "Project",
     pattern: "projects/**/*.mdx",
     schema: s.object({
+        id: fileNameWithoutExt(),
         slug: s.path(),
+        filePath: s.path(),
         // oxlint-disable-next-line typescript/no-unnecessary-type-assertion
         link: s.string().optional() as Schema<
             Route<"/projects/${string}"> | undefined
         >,
 
         type: s.string(),
-        projectName: s.string(),
+        name: s.string(),
         category: s.string(),
 
         information: s.object({
@@ -70,5 +88,10 @@ export default defineConfig({
     output: {
         clean: true
     },
-    collections: { projects }
+    collections: { projects },
+    prepare: (collections) => {
+        const ids = collections.projects.map((p) => p.id)
+        const typeDefinition = `export type ProjectId =\n    | "${ids.join('"\n    | "')}"\n`
+        fs.writeFileSync("src/types/project-ids.d.ts", typeDefinition)
+    }
 })

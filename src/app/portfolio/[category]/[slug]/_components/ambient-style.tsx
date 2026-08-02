@@ -1,6 +1,8 @@
-import { UPPERCASE_CHARACTERS_REGEX } from "@/helpers/character-regexes"
+import {
+    TRIM_PROJECT_SLUG_REGEX,
+    UPPERCASE_CHARACTERS_REGEX
+} from "@/helpers/character-regexes"
 import colorManifestRaw from "@/lib/color-manifest.json"
-import { getProjectRouteSlug } from "@/lib/project-sort"
 import { type ColorManifest } from "@/scripts/process-colors"
 
 import { type Project } from "~/.velite"
@@ -18,14 +20,8 @@ function applyLightningFallback(colorValue: string) {
     return colorValue
 }
 
-function AmbientStyle({
-    project,
-    category
-}: {
-    project: Project
-    category: string
-}) {
-    const manifestKey = `${category}/${getProjectRouteSlug(project)}`
+function AmbientStyle({ project }: { project: Project }) {
+    const manifestKey = project.filePath.replace(TRIM_PROJECT_SLUG_REGEX, "")
     const projectColor = colorManifest[manifestKey]
 
     let ambientStyles = ""

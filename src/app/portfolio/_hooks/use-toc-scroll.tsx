@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react"
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react"
 import { usePathname } from "next/navigation"
 
 import { create } from "zustand"
@@ -39,6 +39,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
     const scrollContainerRef = useRef<T>(null)
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
+    const hasInitialScrolledRef = useRef(false)
     const hasNotifiedActiveRef = useRef(false)
 
     const allIds = useMemo(() => items.map((item) => item.id), [items])
@@ -48,6 +49,20 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
     const lastUpdateTimestamp = useRef(0)
 
     const prevQueryRef = useRef(debouncedQuery)
+
+    const getActiveElement = useCallback(
+        (id: string | null) => {
+            if (!id || !scrollContainerRef.current) return null
+            let el = scrollContainerRef.current.querySelector(
+                `[data-toc-id="${id}"][href="${pathname}"]`
+            )
+            el ??= scrollContainerRef.current.querySelector(
+                `[data-toc-id="${id}"]`
+            )
+            return el
+        },
+        [pathname]
+    )
 
     // Scroll to top when search results showing
     // and scroll to active item when stop searching
@@ -60,14 +75,12 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
         if (debouncedQuery && scrollContainerRef.current) {
             scrollContainerRef.current.scrollTop = 0
         } else if (!debouncedQuery && scrollContainerRef.current) {
-            const activeEl = scrollContainerRef.current.querySelector(
-                `[data-toc-id="${activeId}"]`
-            )
+            const activeEl = getActiveElement(activeId)
             if (activeEl) {
                 activeEl.scrollIntoView({ block: "center", behavior: "auto" })
             }
         }
-    }, [debouncedQuery, activeId])
+    }, [debouncedQuery, activeId, getActiveElement])
 
     // Compute initial active ID before paint
     useLayoutEffect(() => {
@@ -75,7 +88,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
         if (!container) return
 
         const hash = window.location.hash.slice(1)
-        let initialActiveId = hash && allIds.includes(hash) ? hash : ""
+        let initialActiveId = hash && allIds.includes(hash) ? hash : rawActiveId
 
         if (!initialActiveId) {
             const activePoint = window.innerHeight * 0.4
@@ -93,11 +106,10 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
 
         if (initialActiveId) {
             setActiveId(initialActiveId)
-            const activeEl = container.querySelector(
-                `[data-toc-id="${initialActiveId}"]`
-            )
+            const activeEl = getActiveElement(initialActiveId)
             if (activeEl) {
                 activeEl.scrollIntoView({ block: "center", behavior: "auto" })
+                hasInitialScrolledRef.current = true
                 isFirstRenderRef.current = false
             }
         }
@@ -144,55 +156,70 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                 clickedTargetRef.current = null
             }
 
-            const activeElement = scrollContainerRef.current.querySelector(
-                `[data-toc-id="${activeId}"]`
-            )
+            const activeElement = getActiveElement(activeId)
 
             if (activeElement) {
-                if (isFirstRenderRef.current) {
-                    isFirstRenderRef.current = false
-                    activeElement.scrollIntoView({
-                        block: "center",
-                        behavior: "auto"
-                    })
-                } else {
-                    let delay = 0
-                    const groupList = activeElement.closest(
-                        '[data-slot="collapsible-content"]'
-                    )
-                    if (
-                        groupList &&
-                        groupList.clientHeight + 2 < groupList.scrollHeight
-                    ) {
-                        delay = 350
-                    }
-
-                    if (delay > 0) {
-                        const timer = setTimeout(() => {
-                            const el =
-                                scrollContainerRef.current?.querySelector(
-                                    `[data-toc-id="${activeId}"]`
-                                )
-                            if (el) {
-                                el.scrollIntoView({
-                                    block: "center",
-                                    behavior: "smooth"
-                                })
-                            }
-                        }, delay)
-
-                        return () => {
-                            clearTimeout(timer)
-                        }
-                    }
-                    activeElement.scrollIntoView({
-                        block: "center",
-                        behavior: "smooth"
-                    })
+                if (hasInitialScrolledRef.current) {
+                    hasInitialScrolledRef.current = false
+                    return
                 }
+
+                const elHref = activeElement.getAttribute("href")
+                if (elHref) {
+                    const url = new URL(
+                        elHref,
+                        window.location.origin + pathname
+                    )
+                    if (pathname !== "/portfolio" && url.pathname !== pathname) {
+                        // Prevent scrolling to a stale activeId during navigation on detail pages
+                        return
+                    }
+                }
+
+                const isFirst = isFirstRenderRef.current
+                if (isFirst) {
+                    isFirstRenderRef.current = false
+                }
+
+                let delay = 0
+                const groupList = activeElement.closest(
+                    '[data-slot="collapsible-content"]'
+                )
+                if (
+                    !isFirst &&
+                    groupList &&
+                    groupList.clientHeight + 2 < groupList.scrollHeight
+                ) {
+                    delay = 350
+                }
+
+                const behavior = isFirst ? "auto" : "smooth"
+
+                if (delay > 0) {
+                    const timer = setTimeout(() => {
+                        const el = getActiveElement(activeId)
+                        if (el) {
+                            el.scrollIntoView({
+                                block: "center",
+                                behavior
+                            })
+                        }
+                    }, delay)
+
+                    return () => {
+                        clearTimeout(timer)
+                    }
+                }
+                
+                activeElement.scrollIntoView({
+                    block: "center",
+                    behavior
+                })
             }
         }
-    }, [activeId])
+    }, [activeId, getActiveElement, pathname])
+
+
 
     return {
         scrollContainerRef,

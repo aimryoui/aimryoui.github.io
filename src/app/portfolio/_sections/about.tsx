@@ -106,9 +106,7 @@ function About() {
                 </Text>
                 <Text className={cn("text-pretty")}>
                     From there I can{" "}
-                    <Bold>
-                        easily work and communicate with related positions
-                    </Bold>{" "}
+                    <Bold>easily work and communicate with stakeholders</Bold>{" "}
                     such as developers.
                 </Text>
             </div>
