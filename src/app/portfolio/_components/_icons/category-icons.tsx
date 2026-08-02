@@ -3,6 +3,178 @@
 
 import { cn } from "@/lib/utils"
 
+function SelectedWorks({ className }: React.ComponentProps<"svg">) {
+    return (
+        <>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 600 600"
+                className={cn("h-4/5")}
+                shapeRendering="optimizeSpeed"
+                vectorEffect="non-scaling-stroke"
+            >
+                <path
+                    fill="var(--color-background)"
+                    fillRule="evenodd"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m323.999 388.441 37.412-9.126 69.076-16.79 16.084-3.933-19.614-11.294-131.848-76.185-28.387-125.042-19.462-85.563-19.462 63.126-13.967 45.378-14.42 46.84-151.513-87.428L170.52 299.852l-46.386 147.076 123.126-36.454 123.075 178.588zm-98.302-112.717 21.548-69.955 11.559 50.841 6.084 26.803 3.904 17.196 30.057 17.368 13.501 7.801 8.683 5.017 15.966 9.208-55.197 13.442 20.866 90.344-55.423-80.422-55.447 16.416 20.889-66.232-55.219-77.198z"
+                    clipRule="evenodd"
+                />
+                <path
+                    fill="var(--color-highlighted)"
+                    fillOpacity=".1"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m337.001 339.997-15.966-9.208-39.23 22.65z"
+                />
+                <path
+                    fill="var(--color-highlighted)"
+                    fillOpacity=".1"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="M302.666 443.784 281.8 353.44l39.23-22.65-8.682-5.017-65.106 37.589z"
+                />
+                <path
+                    fill="var(--color-highlighted)"
+                    fillOpacity=".1"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m191.797 379.782 55.446-16.416 65.106-37.588-13.501-7.801zM212.686 313.545l-20.889 66.231 107.051-61.806-30.057-17.368-3.904-17.196z"
+                />
+                <path
+                    fill="var(--color-highlighted)"
+                    fillOpacity=".1"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m157.469 236.352 55.219 77.198 52.201-30.139-6.085-26.802-33.106 19.114z"
+                />
+                <path
+                    fill="var(--color-highlighted)"
+                    fillOpacity=".1"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m258.802 256.607-33.107 19.114 21.548-69.955z"
+                />
+                <path
+                    fill="var(--color-highlighted)"
+                    fillOpacity=".1"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m547.41 308.166-100.838 50.421-19.614-11.294-131.849-76.185 100.841-50.42zM227.798 123.63l-13.967 45.378-14.42 46.841L47.898 128.42 148.74 78zM471.176 538.641l-100.84 50.42L324 388.439l37.412-9.126 69.075-16.79z"
+                />
+                <path
+                    fill="var(--color-highlighted)"
+                    fillOpacity=".1"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m395.947 220.691-100.84 50.42-28.387-125.042-19.462-85.563 100.84-50.42z"
+                />
+            </svg>
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 600 600"
+                className={cn("h-4/5")}
+                shapeRendering="optimizeSpeed"
+                vectorEffect="non-scaling-stroke"
+            >
+                <path
+                    fill="var(--color-background)"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="M265.547 416.249v100l-30.75-127.999v-100zM372.354 299.703v100l-106.799 116.55v-100l26.499-28.949 62.451-68.15 7.35-8z"
+                />
+                <path
+                    fill="var(--color-background)"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="M587.403 320.653v100l-215.051-20.95v-100l13.6 1.301 8.4.85 59.45 5.8z"
+                />
+                <path
+                    fill="var(--color-highlighted)"
+                    fillOpacity=".1"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m492.545 265.903-45.8-26.45-14.65-8.45 113.402-122.1-211.501 65.45-155.3-89.65 35.2 120.3 1.1 3.85-26.851 8.2-174.95 53.5 195.15 15.6 26.451 2.1 30.749 128 26.5-28.95 62.451-68.15 7.35-8 10.499-11.45 13.6 1.3 8.401.85 59.449 5.8 133.602 13zm-128.199-.95-2.5-.25-21.25-2.1-9.501 10.1-34.05 36.25-11.5-50 10.9-6.3 108.951-62.85-43.55 47.55 32 18.5 25.2 14.55z"
+                />
+                <path
+                    fill="var(--color-background)"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m405.397 189.797-43.55 47.55v27.349l-21.25-2.099-9.5 10.1-34.05 36.25-11.5-50 10.9-6.3z"
+                />
+                <path
+                    fill="var(--color-background)"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m419.052 270.402-54.7-5.45-2.5-.251v-27.349l32 18.5zM214.995 208.853l-26.85 8.2-9.45-32.35v-100l35.2 120.3zM234.796 288.247v100l-221.6-17.7v-100l195.149 15.6zM545.502 108.898v100.001l-52.95 57-45.8-26.45-14.65-8.45z"
+                />
+            </svg>
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 600 600"
+                className={cn("h-4/5")}
+                shapeRendering="optimizeSpeed"
+                vectorEffect="non-scaling-stroke"
+            >
+                <path
+                    fill="var(--color-highlighted)"
+                    fillOpacity=".1"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m424.152 300.803 45.95 145.85-122.05-36.1-122.1 177.101 45.95-198.951-37.05-9-68.55-16.7-15.95-3.9 19.45-11.2 130.8-75.55 28.15-124.05 19.3-84.85 19.25 62.6 13.85 45 14.3 46.5 150.248-86.75z"
+                />
+                <path
+                    fill="var(--color-background)"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m545.697 130.797-150.25 86.75-14.301-46.5-13.849-45 78.4-45.25zM271.903 388.7l-45.95 198.95-100-50L166.303 363l68.55 16.7zM300.602 272.352l-130.8 75.55-19.45 11.2-100-50 150.25-86.75z"
+                />
+                <path
+                    fill="var(--color-background)"
+                    stroke="var(--color-highlighted)"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="3"
+                    d="m348.052 63.453-19.3 84.85-28.15 124.05-100-50 47.45-208.9z"
+                />
+            </svg>
+        </>
+    )
+}
+
 function UIUX({ className }: React.ComponentProps<"svg">) {
     return (
         <>
@@ -1687,6 +1859,7 @@ export {
     Miscellaneous,
     OtherCourseProjects,
     Photography,
+    SelectedWorks,
     ShortFilms,
     UIUX,
     Weddings

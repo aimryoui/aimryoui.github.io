@@ -16,7 +16,7 @@ import {
     type SocialData
 } from "@/portfolio/_helpers/resolve-social-data"
 
-import { type Project } from "~/.velite"
+import { type Project, type projects } from "~/.velite"
 
 interface ProjectCardProps {
     project: Project
@@ -59,7 +59,10 @@ function ProjectCard({
         }
     }, [])
 
-    const coverImagePath = getCoverImagePath(projectPath, project.override?.coverImage)
+    const coverImagePath = getCoverImagePath(
+        projectPath,
+        project.override?.coverImage
+    )
 
     const handleMouseEnter = () => {
         compRef.current?.setAttribute("data-hover", "true")
@@ -185,7 +188,7 @@ function ProjectCover({
     ...props
 }: React.ComponentProps<"div"> &
     Pick<ProjectCardProps, "navigation"> & {
-        projectId: string | undefined
+        projectId: (typeof projects)[number]["id"]
         src: string
         social?: SocialData
         isSelectedWorks?: boolean
@@ -242,19 +245,26 @@ function ProjectCover({
                     )}
                 >
                     {socialData && (
-                        <div
-                            className={cn(
-                                socialData.color.default,
-                                "absolute -right-1.5 -top-1 z-1 size-4.5 rounded-full border border-white/15 p-0.5 text-white"
-                            )}
+                        <ViewTransition
+                            name={`project-${projectId}-social-button${isSelectedWorks ? "-selected" : ""}`}
                         >
-                            <socialData.icon
+                            <div
                                 className={cn(
-                                    socialData.type === "behance" &&
-                                        "-translate-y-[.5px] translate-x-[.5px]"
+                                    socialData.color.default,
+                                    "absolute -right-1.5 -top-1 z-1 size-4.5 rounded-full border border-white/15 p-0.5 text-white"
                                 )}
-                            />
-                        </div>
+                                style={{
+                                    viewTransitionName: "none !important"
+                                }}
+                            >
+                                <socialData.icon
+                                    className={cn(
+                                        socialData.type === "behance" &&
+                                            "-translate-y-[.5px] translate-x-[.5px]"
+                                    )}
+                                />
+                            </div>
+                        </ViewTransition>
                     )}
                     {/* oxlint-disable-next-line next/no-img-element */}
                     <img
@@ -288,7 +298,7 @@ function ProjectName({
     ...props
 }: React.ComponentProps<typeof Bold> &
     Pick<ProjectCardProps, "navigation"> & {
-        projectId: string | undefined
+        projectId: (typeof projects)[number]["id"]
         name: string
         isNew: boolean
         isSelectedWorks?: boolean

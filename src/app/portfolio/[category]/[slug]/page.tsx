@@ -143,7 +143,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             }
                         )}
                     >
-                        <SocialButton social={project.social} />
+                        <SocialButton
+                            projectId={project.id}
+                            social={project.social}
+                            isSelectedWorks={isSelectedWorks}
+                        />
                     </Space>
                 )}
                 <SectionLine showDecoration />

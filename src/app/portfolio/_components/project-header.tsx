@@ -215,12 +215,14 @@ function ProjectName({
     projectName,
     isSelectedWorks = false
 }: {
-    projectId: string | undefined
+    projectId: (typeof projects)[number]["id"]
     projectName: string
     isSelectedWorks?: boolean
 }) {
     return (
-        <ViewTransition name={`project-${projectId}${isSelectedWorks ? "-selected" : ""}`}>
+        <ViewTransition
+            name={`project-${projectId}${isSelectedWorks ? "-selected" : ""}`}
+        >
             <span>{formatOrdinals(projectName)}</span>
         </ViewTransition>
     )

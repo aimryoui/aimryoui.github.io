@@ -1,6 +1,6 @@
 import { DASHES_REGEX } from "@/helpers/character-regexes"
 import { slugify } from "@/helpers/slugify"
-import { UIUX } from "@/portfolio/_components/_icons/category-icons"
+import { SelectedWorks } from "@/portfolio/_components/_icons/category-icons"
 import { PROJECT_CATEGORIES } from "@/portfolio/_configs/project-categories"
 import { SELECTED_WORKS_IDS } from "@/portfolio/_configs/selected-works"
 
@@ -122,7 +122,7 @@ function groupProjectsByCategory(allProjects: Project[]): ProjectGroup[] {
             id: "selected-works",
             title: "Selected Works",
             note: "Handpicked Projects",
-            icons: <UIUX />,
+            icons: <SelectedWorks />,
             projects: selectedWorksProjects
         })
     }
