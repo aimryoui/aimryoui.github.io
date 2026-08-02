@@ -226,7 +226,7 @@ function Projects() {
                                             "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-4.5"
                                         )}
                                     >
-                                        And below are almost all of my design
+                                        Below is almost all of my design
                                         projects.
                                     </Highlight>
                                 </Space>
