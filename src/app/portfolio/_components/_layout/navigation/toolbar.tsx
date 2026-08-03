@@ -8,7 +8,6 @@ import { ProgressRoute } from "@/components/ui/progress"
 import { Tooltip } from "@/components/ui/tooltip"
 import { At, Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
-import { useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import { MobileTocButton } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
@@ -18,7 +17,6 @@ import { projects } from "~/.velite"
 
 function Toolbar({ className }: { className?: string }) {
     const isMobile = useMediaQuery("lg", true)
-    const { isTouchDevice } = useDevice()
 
     return (
         <>
@@ -102,9 +100,7 @@ function Toolbar({ className }: { className?: string }) {
                                 <div
                                     className={cn(
                                         "flex flex-col",
-                                        isTouchDevice
-                                            ? "sm:@[calc(.25rem*8.5+.25rem*3*4+.25rem*16+.25rem*9*2+5.1rem)]:hidden"
-                                            : "sm:@[calc(.25rem*8.5+.25rem*3*5+.25rem*16+.25rem*9*3+5.1rem)]:hidden"
+                                        "sm:@[calc(.25rem*8.5+.25rem*3*5+.25rem*16+.25rem*9*3+5.1rem)]:hidden"
                                     )}
                                 >
                                     <Bold className="text-sm">
@@ -117,11 +113,9 @@ function Toolbar({ className }: { className?: string }) {
                                 </div>
                             </LinkButton>
                         </li>
-                        {!isTouchDevice && (
-                            <li>
-                                <AudioToggle />
-                            </li>
-                        )}
+                        <li>
+                            <AudioToggle />
+                        </li>
                         <li>
                             <ModeToggle />
                         </li>

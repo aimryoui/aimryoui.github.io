@@ -1,4 +1,3 @@
-import { AudioButton } from "@/_components/toolbar/audio-button"
 import { SettingButton } from "@/_components/toolbar/settings-button"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -10,6 +9,8 @@ import { LinkButton } from "@/components/ui/button"
 import { Tooltip } from "@/components/ui/tooltip"
 import { H1, Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
+
+import { AudioToggle } from "../components/audio/audio"
 
 export default function Home() {
     return (
@@ -56,7 +57,9 @@ export default function Home() {
             <SectionLine />
             <Space as="menu" className="flex items-center justify-center gap-3">
                 <Tooltip>
-                    <AudioButton />
+                    <li>
+                        <AudioToggle />
+                    </li>
                     <li>
                         <ModeToggle />
                     </li>

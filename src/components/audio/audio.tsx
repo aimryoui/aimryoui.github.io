@@ -7,7 +7,6 @@ import { Volume1, Volume2, VolumeX } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
-import { useDevice } from "@/hooks/use-device"
 import {
     createSoundEngine,
     HOVER_SOUNDS,
@@ -23,7 +22,6 @@ const TARGET_SELECTORS = HOVER_SOUNDS.map(
 function AudioProvider({ children }: { children: React.ReactNode }) {
     const playerRef = useRef<ReturnType<typeof createSoundEngine> | null>(null)
     const lastTargetRef = useRef<Element | null>(null)
-    const { isTouchDevice } = useDevice()
 
     const audioMode = useAudioStore((state) => state.audioMode)
     const isAudioEnabled = useAudioStore((state) => state.isAudioEnabled)
@@ -61,8 +59,6 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
     }, [audioMode, isAudioEnabled, hasManuallyToggled, setIsAudioEnabled])
 
     useEffect(() => {
-        if (isTouchDevice) return
-
         playerRef.current = createSoundEngine()
 
         const handleInteraction = (e: Event) => {
@@ -106,7 +102,7 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
             document.removeEventListener("focusin", handleInteraction)
             playerRef.current?.dispose()
         }
-    }, [isTouchDevice])
+    })
 
     return children
 }

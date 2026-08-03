@@ -41,7 +41,7 @@ function MobileToc({
     return (
         <nav
             aria-label="Table of contents"
-            className={cn("flex flex-col flex-1 min-h-0")}
+            className={cn("flex flex-col overflow-auto")}
         >
             {filteredItems.length === 0 ? (
                 <TocSearchNoResult onClear={handleClearSearch} />
@@ -135,12 +135,7 @@ function MobileTocButtonCore() {
                     />
                     <SectionLine fit />
                 </DrawerHeader>
-                <div
-                    className={cn(
-                        "flex flex-col flex-1 min-h-0 text-xl",
-                        "pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))]"
-                    )}
-                >
+                <div className={cn("flex min-h-0 flex-1 flex-col text-xl")}>
                     <MobileToc
                         mode={mode}
                         items={tocItems}

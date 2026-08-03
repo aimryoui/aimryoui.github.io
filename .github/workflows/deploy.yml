@@ -114,14 +114,14 @@ jobs:
 
       # 6. Save caches
       - name: Save Colors Cache
-        if: always()
+        if: always() && !cancelled()
         uses: actions/cache/save@v6
         with:
           path: src/lib/color-manifest.json
           key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}
 
       - name: Save Videos Cache
-        if: always()
+        if: always() && !cancelled()
         uses: actions/cache/save@v6
         with:
           path: |
@@ -133,7 +133,7 @@ jobs:
           key: ${{ runner.os }}-video-${{ hashFiles('private/media/**/*.{mp4,mov,webm,gif}') }}-${{ hashFiles('private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-videos.ts') }}
 
       - name: Save Images Cache
-        if: always()
+        if: always() && !cancelled()
         uses: actions/cache/save@v6
         with:
           path: |

@@ -64,6 +64,25 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
         [pathname]
     )
 
+    const scrollToCenter = useCallback(
+        (el: Element, behavior: ScrollBehavior = "auto") => {
+            const container = scrollContainerRef.current
+            if (!container || !(el instanceof HTMLElement)) return
+
+            let offsetTop = 0
+            let currentEl: HTMLElement | null = el
+            while (currentEl && currentEl !== container) {
+                offsetTop += currentEl.offsetTop
+                currentEl = currentEl.offsetParent as HTMLElement | null
+            }
+
+            const scrollTarget =
+                offsetTop - container.clientHeight / 2 + el.offsetHeight / 2
+            container.scrollTo({ top: scrollTarget, behavior })
+        },
+        []
+    )
+
     // Scroll to top when search results showing
     // and scroll to active item when stop searching
     useEffect(() => {
@@ -77,10 +96,10 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
         } else if (!debouncedQuery && scrollContainerRef.current) {
             const activeEl = getActiveElement(activeId)
             if (activeEl) {
-                activeEl.scrollIntoView({ block: "center", behavior: "auto" })
+                scrollToCenter(activeEl, "auto")
             }
         }
-    }, [debouncedQuery, activeId, getActiveElement])
+    }, [debouncedQuery, activeId, getActiveElement, scrollToCenter])
 
     // Compute initial active ID before paint
     useLayoutEffect(() => {
@@ -108,7 +127,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
             setActiveId(initialActiveId)
             const activeEl = getActiveElement(initialActiveId)
             if (activeEl) {
-                activeEl.scrollIntoView({ block: "center", behavior: "auto" })
+                scrollToCenter(activeEl, "auto")
                 hasInitialScrolledRef.current = true
                 isFirstRenderRef.current = false
             }
@@ -170,7 +189,10 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                         elHref,
                         window.location.origin + pathname
                     )
-                    if (pathname !== "/portfolio" && url.pathname !== pathname) {
+                    if (
+                        pathname !== "/portfolio" &&
+                        url.pathname !== pathname
+                    ) {
                         // Prevent scrolling to a stale activeId during navigation on detail pages
                         return
                     }
@@ -199,10 +221,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                     const timer = setTimeout(() => {
                         const el = getActiveElement(activeId)
                         if (el) {
-                            el.scrollIntoView({
-                                block: "center",
-                                behavior
-                            })
+                            scrollToCenter(el, behavior)
                         }
                     }, delay)
 
@@ -210,16 +229,11 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                         clearTimeout(timer)
                     }
                 }
-                
-                activeElement.scrollIntoView({
-                    block: "center",
-                    behavior
-                })
+
+                scrollToCenter(activeElement, behavior)
             }
         }
-    }, [activeId, getActiveElement, pathname])
-
-
+    }, [activeId, getActiveElement, pathname, scrollToCenter])
 
     return {
         scrollContainerRef,

@@ -503,6 +503,7 @@ function CarouselReplay({
                     size={size}
                     onPress={scrollStart}
                     isDisabled={!canGoToPrev}
+                    haptic="nudge"
                     className={cn(
                         "border-default/15",
                         orientation === "horizontal" ? "" : "rotate-90",
