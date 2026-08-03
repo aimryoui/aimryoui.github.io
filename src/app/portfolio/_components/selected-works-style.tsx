@@ -49,7 +49,7 @@ function SelectedWorksStyle() {
                 })
                 .join("")
 
-            ambientStyles += `#theme-${project.id}{${hexRules}}@supports (color: oklab(0% 0 0%)){#theme-${project.id}{${oklchRules}}}`
+            ambientStyles += `@media (hover: hover) and (pointer: fine) {#theme-${project.id}:hover{${hexRules}}@supports (color: oklab(0% 0 0%)){#theme-${project.id}:hover{${oklchRules}}}}`
         }
     })
 

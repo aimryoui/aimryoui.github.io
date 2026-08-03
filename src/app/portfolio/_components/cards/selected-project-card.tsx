@@ -48,7 +48,7 @@ function SelectedProjectCard({
 
     const coverImagePath = getCoverImagePath(
         projectPath,
-        project.override?.coverImage
+        project.features?.selectedCover ?? project.override?.coverImage
     )
 
     const handleMouseEnter = () => {
