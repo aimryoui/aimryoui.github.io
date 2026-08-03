@@ -1,3 +1,4 @@
+import type React from "react"
 import { useCallback } from "react"
 
 import { cn } from "@/lib/utils"
@@ -13,15 +14,20 @@ import {
 import { useTocScroll } from "@/portfolio/_hooks/use-toc-scroll"
 import { useTocTree } from "@/portfolio/_hooks/use-toc-tree"
 
+type MobileTocListProps = React.ComponentProps<"div"> &
+    TocListProps & {
+        onLinkClick?: () => void
+    }
+
 function MobileTocList({
+    className,
     mode,
     items,
     filteredItems,
     debouncedQuery,
-    onLinkClick
-}: TocListProps & {
-    onLinkClick?: () => void
-}) {
+    onLinkClick,
+    ...props
+}: MobileTocListProps) {
     const { scrollContainerRef, clickedTargetRef } = useTocScroll({
         items,
         debouncedQuery
@@ -47,8 +53,10 @@ function MobileTocList({
             ref={scrollContainerRef}
             className={cn(
                 "group overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-2 scrollbar-thin webkit:pointer-events-auto",
-                "scroll-fade-y scroll-fade-16"
+                "scroll-fade-y scroll-fade-16",
+                className
             )}
+            {...props}
         >
             {tree.map((node) => {
                 if (node.type === "divider") {

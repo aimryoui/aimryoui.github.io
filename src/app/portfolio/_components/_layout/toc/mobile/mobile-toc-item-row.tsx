@@ -14,13 +14,15 @@ import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
 
 const MobileTocItemRow = memo(
     ({
+        className,
         mode,
         item,
         variant = "anchor",
         query,
         onPress,
         onSameLinkClick,
-        children
+        children,
+        ...props
     }: TocItemRowProps) => {
         const pathname = usePathname()
 
@@ -60,8 +62,10 @@ const MobileTocItemRow = memo(
                         {
                             "last-of-type": "mb-1.5"
                         }
-                    ]
+                    ],
+                    className
                 )}
+                {...props}
             >
                 <LinkButton
                     data-toc-id={item.id}

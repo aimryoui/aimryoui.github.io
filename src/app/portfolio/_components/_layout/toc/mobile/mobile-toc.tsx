@@ -41,7 +41,11 @@ function MobileToc({
     return (
         <nav
             aria-label="Table of contents"
-            className={cn("flex flex-col overflow-auto")}
+            className={cn(
+                "[--safe-area-inset:calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))]",
+                "flex flex-col overflow-auto text-xl",
+                "pb-[--safe-area-inset]"
+            )}
         >
             {filteredItems.length === 0 ? (
                 <TocSearchNoResult onClear={handleClearSearch} />
@@ -52,6 +56,7 @@ function MobileToc({
                     filteredItems={filteredItems}
                     debouncedQuery={debouncedQuery}
                     onLinkClick={onLinkClick}
+                    className="scroll-pb-[--safe-area-inset]"
                 />
             )}
         </nav>
@@ -135,18 +140,16 @@ function MobileTocButtonCore() {
                     />
                     <SectionLine fit />
                 </DrawerHeader>
-                <div className={cn("flex min-h-0 flex-1 flex-col text-xl")}>
-                    <MobileToc
-                        mode={mode}
-                        items={tocItems}
-                        filteredItems={filteredItems}
-                        debouncedQuery={debouncedQuery}
-                        handleClearSearch={handleClearSearch}
-                        onLinkClick={() => {
-                            setIsTocOpen(false)
-                        }}
-                    />
-                </div>
+                <MobileToc
+                    mode={mode}
+                    items={tocItems}
+                    filteredItems={filteredItems}
+                    debouncedQuery={debouncedQuery}
+                    handleClearSearch={handleClearSearch}
+                    onLinkClick={() => {
+                        setIsTocOpen(false)
+                    }}
+                />
             </DrawerContent>
         </Drawer>
     )

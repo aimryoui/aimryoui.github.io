@@ -77,8 +77,9 @@ jobs:
         uses: actions/cache/restore@v6
         with:
           path: src/lib/color-manifest.json
-          key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}
+          key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}-${{ github.run_id }}
           restore-keys: |
+            ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}
             ${{ runner.os }}-color-
 
       - name: Restore Videos Cache
@@ -90,8 +91,9 @@ jobs:
             public/assets/media/**/init.mp4
             public/assets/media/**/*.bin
             public/assets/media/**/*_preview.webp
-          key: ${{ runner.os }}-video-${{ hashFiles('private/media/**/*.{mp4,mov,webm,gif}') }}-${{ hashFiles('private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-videos.ts') }}
+          key: ${{ runner.os }}-video-${{ hashFiles('private/media/**/*.{mp4,mov,webm,gif}') }}-${{ hashFiles('private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-videos.ts') }}-${{ github.run_id }}
           restore-keys: |
+            ${{ runner.os }}-video-${{ hashFiles('private/media/**/*.{mp4,mov,webm,gif}') }}-${{ hashFiles('private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-videos.ts') }}
             ${{ runner.os }}-video-
 
       - name: Restore Images Cache
@@ -101,8 +103,9 @@ jobs:
             src/lib/image-manifest.json
             public/assets/media/**/*_scrambled.webp
             public/assets/media/**/*_preview.webp
-          key: ${{ runner.os }}-image-${{ hashFiles('private/media/**/*.{png,jpg,jpeg,webp}', '!private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-images.ts') }}
+          key: ${{ runner.os }}-image-${{ hashFiles('private/media/**/*.{png,jpg,jpeg,webp}', '!private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-images.ts') }}-${{ github.run_id }}
           restore-keys: |
+            ${{ runner.os }}-image-${{ hashFiles('private/media/**/*.{png,jpg,jpeg,webp}', '!private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-images.ts') }}
             ${{ runner.os }}-image-
 
       # 5. Build
@@ -118,7 +121,7 @@ jobs:
         uses: actions/cache/save@v6
         with:
           path: src/lib/color-manifest.json
-          key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}
+          key: ${{ runner.os }}-color-${{ hashFiles('private/media/**/*') }}-${{ hashFiles('src/content/projects/**/*.mdx') }}-${{ hashFiles('src/scripts/process-colors.ts') }}-${{ github.run_id }}
 
       - name: Save Videos Cache
         if: always() && !cancelled()
@@ -130,7 +133,7 @@ jobs:
             public/assets/media/**/init.mp4
             public/assets/media/**/*.bin
             public/assets/media/**/*_preview.webp
-          key: ${{ runner.os }}-video-${{ hashFiles('private/media/**/*.{mp4,mov,webm,gif}') }}-${{ hashFiles('private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-videos.ts') }}
+          key: ${{ runner.os }}-video-${{ hashFiles('private/media/**/*.{mp4,mov,webm,gif}') }}-${{ hashFiles('private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-videos.ts') }}-${{ github.run_id }}
 
       - name: Save Images Cache
         if: always() && !cancelled()
@@ -140,7 +143,7 @@ jobs:
             src/lib/image-manifest.json
             public/assets/media/**/*_scrambled.webp
             public/assets/media/**/*_preview.webp
-          key: ${{ runner.os }}-image-${{ hashFiles('private/media/**/*.{png,jpg,jpeg,webp}', '!private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-images.ts') }}
+          key: ${{ runner.os }}-image-${{ hashFiles('private/media/**/*.{png,jpg,jpeg,webp}', '!private/media/**/*-poster.webp') }}-${{ hashFiles('src/scripts/process-images.ts') }}-${{ github.run_id }}
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v5
