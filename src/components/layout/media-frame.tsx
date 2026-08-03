@@ -50,11 +50,13 @@ function SectionName({
 
     return (
         <div
-            id={isAnchorTag ? slugify(sectionName) : undefined}
+            {...(isAnchorTag && {
+                id: slugify(sectionName)
+            })}
             className={cn(
-                isAnchorTag && "sticky top-3.5 z-50 scroll-mt-safe-zone",
+                isAnchorTag &&
+                    "sticky top-3.5 z-50 scroll-mt-safe-zone md:top-1.5",
                 "pointer-events-none grid min-h-13 place-items-center py-2",
-                { md: "top-1.5" },
                 containerClassName
             )}
             {...props}
@@ -77,7 +79,7 @@ function SectionName({
                                 "underline decoration-foreground decoration-solid"
                         }
                     ],
-                    "grid min-h-9 place-items-center text-pretty rounded-full bg-background px-3.5 py-1.75 text-center font-mono",
+                    "min-h-9 text-pretty rounded-full bg-background px-3.5 py-2 text-center font-mono text-base",
                     hasSocialLinks ? "mx-17 lg:mx-2" : "mx-2",
                     !normalcase && "uppercase",
                     {
@@ -192,7 +194,7 @@ function MediaFrame({
                                 author={author}
                                 normalcase={normalcase}
                                 hasSocialLinks={hasSocialLinks}
-                                containerClassName="sticky top-3.5 !z-10"
+                                containerClassName="sticky top-3.5 !z-10 md:top-1.5"
                                 className={cn(
                                     "bg-transparent text-transparent shadow-sm outline-default/15 outline"
                                 )}

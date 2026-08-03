@@ -152,7 +152,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                 className={cn(
                     "hidden",
                     pathName !== "/portfolio" &&
-                        "md:h-[calc(var(--spacing-space)+2.5625rem)]",
+                        "md:h-[calc(var(--spacing-space)+var(--spacing)*10+var(--px)/2)]",
                     {
                         lg: [
                             "block",

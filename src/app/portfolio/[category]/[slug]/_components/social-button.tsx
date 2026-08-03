@@ -261,7 +261,7 @@ function SocialButton({
                         <div
                             className={cn(
                                 socialColors,
-                                "grid h-9 translate-x-10 items-center overflow-clip rounded-full px-0 text-transparent",
+                                "grid h-8.5 translate-x-10 items-center overflow-clip rounded-full px-0 text-transparent",
                                 "will-change-[transform,grid-template-columns,padding] transition-[transform,grid-template-columns,padding] ease-spring duration-400",
                                 "grid-cols-[0fr]",
                                 {

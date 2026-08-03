@@ -151,7 +151,7 @@
     h4,
     h5,
     h6 {
-        @apply scroll-mt-[calc(var(--spacing-space)+(var(--spacing-safe-zone)-var(--spacing)))];
+        @apply scroll-mt-[calc(var(--spacing-space)+(var(--spacing-safe-zone)-var(--spacing)/2))];
     }
     hr {
         @apply h-[unset] border-t-0;

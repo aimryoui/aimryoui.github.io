@@ -211,7 +211,6 @@ function BreadcrumbDropdownMenu({
             render={<Comp anchorRef={setAnchor}>{children}</Comp>}
             payload={{
                 anchor,
-                align: "center",
                 sideOffset: 6,
                 className: "min-w-auto",
                 content
