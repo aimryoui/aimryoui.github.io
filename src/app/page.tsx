@@ -66,7 +66,13 @@ export default function Home() {
                 </Tooltip>
             </Space>
             <SectionLine showDecoration />
-            <Space />
+            <Space
+                className={cn({
+                    lg: {
+                        after: "pointer-events-none absolute bottom-0 left-1/2 z-40 h-space w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent"
+                    }
+                })}
+            />
         </main>
     )
 }

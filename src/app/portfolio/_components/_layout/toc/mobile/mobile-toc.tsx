@@ -122,7 +122,10 @@ function MobileTocButtonCore() {
                     />
                 }
             />
-            <DrawerContent data-current-snap-points={snapPoint}>
+            <DrawerContent 
+                data-current-snap-points={snapPoint}
+                className="scroll-pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))]"
+            >
                 <DrawerHeader className="pointer-events-none sticky top-0 p-0">
                     <DrawerTitle className="sr-only">
                         Table of Contents
@@ -138,8 +141,7 @@ function MobileTocButtonCore() {
                 <div
                     className={cn(
                         "flex flex-col overflow-hidden text-xl",
-                        "pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))]",
-                        "scroll-pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))]"
+                        "pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))]"
                     )}
                 >
                     <MobileToc
