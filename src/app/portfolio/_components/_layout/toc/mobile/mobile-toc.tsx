@@ -41,7 +41,7 @@ function MobileToc({
     return (
         <nav
             aria-label="Table of contents"
-            className={cn("flex flex-col overflow-auto")}
+            className={cn("flex flex-col flex-1 min-h-0")}
         >
             {filteredItems.length === 0 ? (
                 <TocSearchNoResult onClear={handleClearSearch} />
@@ -122,10 +122,7 @@ function MobileTocButtonCore() {
                     />
                 }
             />
-            <DrawerContent 
-                data-current-snap-points={snapPoint}
-                className="scroll-pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))]"
-            >
+            <DrawerContent data-current-snap-points={snapPoint}>
                 <DrawerHeader className="pointer-events-none sticky top-0 p-0">
                     <DrawerTitle className="sr-only">
                         Table of Contents
@@ -140,7 +137,7 @@ function MobileTocButtonCore() {
                 </DrawerHeader>
                 <div
                     className={cn(
-                        "flex flex-col overflow-hidden text-xl",
+                        "flex flex-col flex-1 min-h-0 text-xl",
                         "pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))]"
                     )}
                 >
