@@ -44,6 +44,9 @@ type AnimatedMediaProps = {
     rounded?: boolean
     autoplay?: boolean
     mute?: boolean
+    row?: "justified" | "proportional"
+    col?: "justified"
+    limitHeight?: boolean
     isInLightbox?: boolean
 } & React.ComponentProps<"div"> &
     Pick<
@@ -63,6 +66,9 @@ function AnimatedMedia({
     mute,
     controls,
     loop = true,
+    row,
+    col,
+    limitHeight = false,
     isInLightbox = false,
     ref,
     ...props
@@ -290,7 +296,15 @@ function AnimatedMedia({
         <div
             ref={mergeRefs([wrapperRef, ref])}
             className={cn(
-                "relative w-full overflow-hidden content-auto",
+                "relative overflow-hidden content-auto",
+                limitHeight
+                    ? [
+                          "min-w-0 max-w-full md:!w-full",
+                          {
+                              md: "!w-full min-w-unset max-w-unset"
+                          }
+                      ]
+                    : "w-full",
                 rounded && "rounded-2xl md:rounded-xl",
                 {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
@@ -298,7 +312,19 @@ function AnimatedMedia({
                 className
             )}
             style={{
-                aspectRatio
+                "--nhn-aspect-ratio": aspectRatio,
+                ...(!isInLightbox && {
+                    ...(limitHeight && {
+                        width: "calc(max(80vh, calc(var(--spacing) * 125)) * calc(var(--nhn-aspect-ratio)))"
+                    }),
+                    ...(row && {
+                        flex: `${row === "justified" ? "calc(var(--nhn-aspect-ratio))" : exactW} 1 0%`
+                    }),
+                    ...(col && {
+                        width: `calc(${exactW} / 1602 * 100%)`
+                    })
+                }),
+                aspectRatio: "var(--nhn-aspect-ratio)"
             }}
             {...props}
         >

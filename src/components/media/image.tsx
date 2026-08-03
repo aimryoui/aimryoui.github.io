@@ -25,8 +25,8 @@ type GeneralImageProps = React.ComponentProps<"div"> & {
     alt: string
     placeholderPriority?: boolean
     asBackgroundImage?: boolean
-    imageCol?: "justified"
-    imageRow?: "justified" | "proportional"
+    row?: "justified" | "proportional"
+    col?: "justified"
     limitHeight?: boolean
     objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down"
     lightbox?: boolean
@@ -77,8 +77,8 @@ function ImageCore({
     parsedData,
     placeholderPriority = false,
     asBackgroundImage = false,
-    imageCol,
-    imageRow,
+    row,
+    col,
     limitHeight = false,
     rounded = false,
     percentageRounded,
@@ -189,10 +189,10 @@ function ImageCore({
                           ...(limitHeight && {
                               width: "calc(max(80vh, calc(var(--spacing) * 125)) * calc(var(--nhn-aspect-ratio)))"
                           }),
-                          ...(imageRow && {
-                              flex: `${imageRow === "justified" ? "calc(var(--nhn-aspect-ratio))" : exactW} 1 0%`
+                          ...(row && {
+                              flex: `${row === "justified" ? "calc(var(--nhn-aspect-ratio))" : exactW} 1 0%`
                           }),
-                          ...(imageCol && {
+                          ...(col && {
                               width: `calc(${exactW} / 1599 * 100%)`
                           })
                       }),
