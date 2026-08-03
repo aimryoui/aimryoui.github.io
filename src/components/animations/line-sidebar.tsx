@@ -41,6 +41,7 @@ function LineSidebar({
 
     const listItemsRef = useRef<HTMLElement[]>([])
     const itemCentersRef = useRef<number[]>([])
+    const statesRef = useRef(new WeakMap<HTMLElement, { target: number; current: number }>())
 
     const setListRef = useCallback(
         (el: HTMLDivElement | null) => {
@@ -54,8 +55,6 @@ function LineSidebar({
         [ref]
     )
 
-    const targetsRef = useRef<number[]>([])
-    const currentRef = useRef<number[]>([])
     const rafRef = useRef<number | null>(null)
     const lastRef = useRef(0)
     const smoothingRef = useRef(smoothing)
@@ -70,18 +69,28 @@ function LineSidebar({
         const list = internalListRef.current
         if (!list) return
 
-        const items = Array.from(
-            list.querySelectorAll<HTMLElement>(itemSelector)
-        )
-        listItemsRef.current = items
-        itemCentersRef.current = items.map(
-            (el) => el.offsetTop + el.offsetHeight / 2
-        )
+        const allItems = Array.from(list.querySelectorAll<HTMLElement>(itemSelector))
+        const visibleItems: HTMLElement[] = []
+        const centers: number[] = []
 
-        if (targetsRef.current.length !== items.length) {
-            targetsRef.current = new Array<number>(items.length).fill(0)
-            currentRef.current = new Array<number>(items.length).fill(0)
+        for (const el of allItems) {
+            if (el.hasAttribute("hidden") || el.closest("[hidden]")) {
+                // Natively reset CSS variable
+                el.style.setProperty("--effect", "0")
+                // Wipe internal state so it starts from 0 if shown again
+                const state = statesRef.current.get(el)
+                if (state) {
+                    state.target = 0
+                    state.current = 0
+                }
+            } else {
+                visibleItems.push(el)
+                centers.push(el.offsetTop + el.offsetHeight / 2)
+            }
         }
+
+        listItemsRef.current = visibleItems
+        itemCentersRef.current = centers
     }, [itemSelector])
 
     useEffect(() => {
@@ -100,9 +109,15 @@ function LineSidebar({
             resizeObserver.observe(child)
         })
 
-        // Only use MutationObserver to detect if children are added/removed (React re-renders)
+        // Observe mutations for childList AND attributes (hidden)
         const mutationObserver = new MutationObserver((mutations) => {
-            if (mutations.some((m) => m.type === "childList")) {
+            if (
+                mutations.some(
+                    (m) =>
+                        m.type === "childList" ||
+                        (m.type === "attributes" && m.attributeName === "hidden")
+                )
+            ) {
                 resizeObserver.disconnect()
                 resizeObserver.observe(list)
                 Array.from(list.children).forEach((c) => {
@@ -112,7 +127,12 @@ function LineSidebar({
             }
         })
 
-        mutationObserver.observe(list, { childList: true })
+        mutationObserver.observe(list, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ["hidden"]
+        })
 
         return () => {
             resizeObserver.disconnect()
@@ -142,8 +162,15 @@ function LineSidebar({
 
         for (let i = 0; i < listItems.length; i++) {
             const el = listItems[i]
-            const target = Math.max(targetsRef.current[i] || 0)
-            const cur = currentRef.current[i] || 0
+            
+            let state = statesRef.current.get(el)
+            if (!state) {
+                state = { target: 0, current: 0 }
+                statesRef.current.set(el, state)
+            }
+
+            const target = Math.max(state.target)
+            const cur = state.current
 
             if (cur === 0 && target === 0) continue
 
@@ -151,8 +178,8 @@ function LineSidebar({
             const settled = Math.abs(target - next) < 0.0015
             const value = settled ? target : next
 
-            if (currentRef.current[i] !== value) {
-                currentRef.current[i] = value
+            if (state.current !== value) {
+                state.current = value
                 el.style.setProperty("--effect", value.toFixed(2))
             }
             if (!settled) moving = true
@@ -187,13 +214,22 @@ function LineSidebar({
             for (let i = 0; i < items.length; i++) {
                 const distance = Math.abs(pointerYLocal - centers[i])
                 const p = Math.max(0, 1 - distance / proximityRadius)
-                targetsRef.current[i] = p * p * (3 - 2 * p)
+                
+                let state = statesRef.current.get(items[i])
+                if (!state) {
+                    state = { target: 0, current: 0 }
+                    statesRef.current.set(items[i], state)
+                }
+                state.target = p * p * (3 - 2 * p)
             }
             startLoop()
         }
 
         const handlePointerLeave = () => {
-            targetsRef.current.fill(0)
+            for (const el of listItemsRef.current) {
+                const state = statesRef.current.get(el)
+                if (state) state.target = 0
+            }
             startLoop()
         }
 

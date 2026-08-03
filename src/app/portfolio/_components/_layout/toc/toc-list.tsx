@@ -64,7 +64,7 @@ function TocList({
     return (
         <LineSidebar
             ref={scrollContainerRef}
-            itemSelector="[data-toc-item]:not([data-expanded='false'] [data-slot='collapsible-content'] *)"
+            itemSelector="[data-toc-item]"
             className={cn(
                 "group block overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-3",
                 "scroll-fade-y scroll-fade-18"

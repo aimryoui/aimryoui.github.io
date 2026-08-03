@@ -46,7 +46,7 @@ interface PressConfigs {
 
 const HOVER_PRESETS: Record<Exclude<HoverSoundType, false>, HoverConfigs> = {
     tick: {
-        duration: 0.008,
+        duration: 0.016,
         gain: 0.14,
         transientDecay: 0.0006,
         transientMultiplier: 0.075,

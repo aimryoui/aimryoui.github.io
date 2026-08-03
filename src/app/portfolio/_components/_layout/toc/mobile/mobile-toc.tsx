@@ -135,7 +135,7 @@ function MobileTocButtonCore() {
                     />
                     <SectionLine fit />
                 </DrawerHeader>
-                <div className="flex flex-col overflow-hidden pb-[calc(env(safe-area-inset-bottom,0px)+theme(spacing.space))] text-xl">
+                <div className="flex flex-col overflow-hidden pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))] scroll-pb-[calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))] text-xl">
                     <MobileToc
                         mode={mode}
                         items={tocItems}

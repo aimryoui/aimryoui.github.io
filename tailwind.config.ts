@@ -28,8 +28,8 @@ import viewTransition from "./src/lib/tailwindcss-plugins/utilities/view-transit
 import all from "./src/lib/tailwindcss-plugins/variants/all"
 import browserEngines from "./src/lib/tailwindcss-plugins/variants/browser-engines"
 import containerQueries from "./src/lib/tailwindcss-plugins/variants/container-queries"
+import group from "./src/lib/tailwindcss-plugins/variants/group"
 import groupNot from "./src/lib/tailwindcss-plugins/variants/group-not"
-import groupNth from "./src/lib/tailwindcss-plugins/variants/group-nth"
 import has from "./src/lib/tailwindcss-plugins/variants/has"
 import is from "./src/lib/tailwindcss-plugins/variants/is"
 import not from "./src/lib/tailwindcss-plugins/variants/not"
@@ -399,8 +399,8 @@ export default {
         all,
         browserEngines,
         containerQueries,
+        group,
         groupNot,
-        groupNth,
         has,
         is,
         not,

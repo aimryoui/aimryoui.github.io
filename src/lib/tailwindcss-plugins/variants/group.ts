@@ -6,6 +6,17 @@ const sharedValues: Record<string, string> = Object.fromEntries(
 
 export default plugin(({ matchVariant }) => {
     matchVariant(
+        "group-is",
+        (value, { modifier }) =>
+            modifier
+                ? `.group\\/${modifier}:is(${value}) &`
+                : `.group:is(${value}) &`,
+        {
+            values: {}
+        }
+    )
+
+    matchVariant(
         "group-nth",
         (value, { modifier }) =>
             modifier
