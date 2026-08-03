@@ -172,11 +172,16 @@ function ProjectCard({
                     )}
                 />
             )}
-            <SvgElementLine
-                className={cn("absolute inset-y-0 right-0 group-even:hidden", {
-                    md: "hidden"
-                })}
-            />
+            {!navigation && (
+                <SvgElementLine
+                    className={cn(
+                        "absolute inset-y-0 right-0 group-even:hidden",
+                        {
+                            md: "hidden"
+                        }
+                    )}
+                />
+            )}
         </Comp>
     )
 }

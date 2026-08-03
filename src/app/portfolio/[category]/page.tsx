@@ -149,13 +149,28 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     )}
                 >
                     {group.projects.map((project, index) => (
-                        <li key={project.slug} data-cursor="target">
+                        <li
+                            key={project.slug}
+                            data-cursor="target"
+                            className="group"
+                        >
                             <ProjectCard
                                 href={getProjectPath(project)}
                                 project={project}
                             />
                             {index < group.projects.length - 1 && (
-                                <SectionLine />
+                                <SectionLine
+                                    className={cn({
+                                        lg: "w-[calc(100%+var(--spacing-safe-zone))]",
+                                        "group-odd": "right-0",
+                                        "group-even": [
+                                            "w-[calc(100%+var(--spacing-safe-zone))]",
+                                            {
+                                                lg: "-right-safe-zone left-auto"
+                                            }
+                                        ]
+                                    })}
+                                />
                             )}
                         </li>
                     ))}
