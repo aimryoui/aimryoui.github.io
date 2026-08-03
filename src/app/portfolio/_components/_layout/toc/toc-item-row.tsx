@@ -1,6 +1,5 @@
 "use client"
 
-import type React from "react"
 import { memo } from "react"
 import { usePathname } from "next/navigation"
 

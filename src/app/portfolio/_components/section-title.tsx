@@ -21,7 +21,7 @@ function SectionTitle({
     return (
         <div
             className={cn(
-                "relative flex min-h-space items-center bg-background px-safe-zone py-[calc(var(--spacing-safe-zone)-var(--spacing))]",
+                "relative flex min-h-space items-center bg-background px-safe-zone py-[calc(var(--spacing-safe-zone)-var(--spacing)/2)]",
                 className
             )}
         >

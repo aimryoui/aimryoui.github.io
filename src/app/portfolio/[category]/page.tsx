@@ -20,11 +20,11 @@ import {
     groupProjectsByCategory
 } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
+import ProjectCard from "@/portfolio/_components/cards/project-card"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
 import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrumb"
 import SectionTitle from "@/portfolio/_components/section-title"
 import Footer from "@/portfolio/_sections/footer"
-import ProjectCard from "@/portfolio/[category]/_components/project-card"
 
 import { projects } from "~/.velite"
 
@@ -149,15 +149,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     )}
                 >
                     {group.projects.map((project, index) => (
-                        <li
-                            key={project.slug}
-                            data-cursor="target"
-                            className={cn({
-                                "[&:nth-child(odd)]":
-                                    "border-r border-dashed border-stroke",
-                                md: "!border-none"
-                            })}
-                        >
+                        <li key={project.slug} data-cursor="target">
                             <ProjectCard
                                 href={getProjectPath(project)}
                                 project={project}

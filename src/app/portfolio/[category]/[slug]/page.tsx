@@ -21,13 +21,13 @@ import {
     groupProjectsByCategory
 } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
+import ProjectCard from "@/portfolio/_components/cards/project-card"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
 import { MDXContent } from "@/portfolio/_components/mdx-content"
 import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrumb"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import { resolveSocialData } from "@/portfolio/_helpers/resolve-social-data"
 import Footer from "@/portfolio/_sections/footer"
-import ProjectCard from "@/portfolio/[category]/_components/project-card"
 import { AmbientStyle } from "@/portfolio/[category]/[slug]/_components/ambient-style"
 import SocialButton from "@/portfolio/[category]/[slug]/_components/social-button"
 
@@ -179,7 +179,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <Space>
                 <Highlight
                     className={cn(
-                        "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-4.5"
+                        "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-safe-zone-vertical"
                     )}
                 >
                     Project ends. What&#39;s next?
@@ -200,7 +200,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 <ProjectCard
                                     href={getProjectPath(prev)}
                                     project={prev}
-                                    projectNavigation
                                     navigation="backward"
                                 />
                             ) : (
@@ -208,7 +207,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     href={getCategoryPath(category)}
                                     label={`Go back to ${group.title} category page`}
                                     className={cn(
-                                        "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-4.5 transition-[background-color] duration-100",
+                                        "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                         {
                                             hover: "bg-highlighted/5 transition-none",
                                             active: "bg-highlighted/10 transition-none"
@@ -270,7 +269,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 <ProjectCard
                                     href={getProjectPath(next)}
                                     project={next}
-                                    projectNavigation
                                     navigation="forward"
                                 />
                             ) : (
@@ -286,7 +284,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             : "No more projects, contact me"
                                     }
                                     className={cn(
-                                        "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-4.5 transition-[background-color] duration-100",
+                                        "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                         {
                                             hover: "bg-highlighted/5 transition-none",
                                             active: "bg-highlighted/10 transition-none"

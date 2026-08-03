@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { MoreHorizontalIcon } from "lucide-react"
 
 import { LinkButton } from "@/components/ui/button"

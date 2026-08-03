@@ -29,6 +29,7 @@ import all from "./src/lib/tailwindcss-plugins/variants/all"
 import browserEngines from "./src/lib/tailwindcss-plugins/variants/browser-engines"
 import containerQueries from "./src/lib/tailwindcss-plugins/variants/container-queries"
 import groupNot from "./src/lib/tailwindcss-plugins/variants/group-not"
+import groupNth from "./src/lib/tailwindcss-plugins/variants/group-nth"
 import has from "./src/lib/tailwindcss-plugins/variants/has"
 import is from "./src/lib/tailwindcss-plugins/variants/is"
 import not from "./src/lib/tailwindcss-plugins/variants/not"
@@ -85,7 +86,7 @@ export default {
                 base: ["1rem", "1.25rem"],
                 "2xl": ["1.5rem", "1.875rem"],
                 "3xl": ["1.875rem", "2.25rem"],
-                "4xl": ["2.25rem", "2.625rem"]
+                "4xl": ["2.25rem", "2.25rem"]
             },
             spacing: {
                 px: "var(--px)",
@@ -399,6 +400,7 @@ export default {
         browserEngines,
         containerQueries,
         groupNot,
+        groupNth,
         has,
         is,
         not,

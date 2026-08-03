@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { Divider } from "@/components/layout/divider"
 import { MarginLine } from "@/components/layout/line"
 import { useMediaQuery } from "@/hooks/use-media-query"

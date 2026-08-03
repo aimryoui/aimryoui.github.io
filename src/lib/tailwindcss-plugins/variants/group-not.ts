@@ -3,6 +3,10 @@ import plugin from "tailwindcss/plugin"
 // oxlint-disable-next-line @limegrass/import-alias/import-alias
 import tailwindVariants from "../shared/tailwind-variants"
 
+const sharedValues: Record<string, string> = Object.fromEntries(
+    Array.from({ length: 20 }, (_, i) => [String(i + 1), String(i + 1)])
+)
+
 export default plugin(({ matchVariant, theme }) => {
     matchVariant(
         "group-not",
@@ -47,6 +51,47 @@ export default plugin(({ matchVariant, theme }) => {
                 : `.group:not(*[data-${value}]) &`,
         {
             values: theme("data")
+        }
+    )
+
+    matchVariant(
+        "group-not-nth",
+        (value, { modifier }) =>
+            modifier
+                ? `.group\\/${modifier}:not(:nth-child(${value})) &`
+                : `.group:not(:nth-child(${value})) &`,
+        {
+            values: sharedValues
+        }
+    )
+    matchVariant(
+        "group-not-nth-of-type",
+        (value, { modifier }) =>
+            modifier
+                ? `.group\\/${modifier}:not(:nth-of-type(${value})) &`
+                : `.group:not(:nth-of-type(${value})) &`,
+        {
+            values: sharedValues
+        }
+    )
+    matchVariant(
+        "group-not-nth-last",
+        (value, { modifier }) =>
+            modifier
+                ? `.group\\/${modifier}:not(:nth-last-child(${value})) &`
+                : `.group:not(:nth-last-child(${value})) &`,
+        {
+            values: sharedValues
+        }
+    )
+    matchVariant(
+        "group-not-nth-last-of-type",
+        (value, { modifier }) =>
+            modifier
+                ? `.group\\/${modifier}:not(:nth-last-of-type(${value})) &`
+                : `.group:not(:nth-last-of-type(${value})) &`,
+        {
+            values: sharedValues
         }
     )
 })

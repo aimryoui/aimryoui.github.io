@@ -12,10 +12,7 @@ function About() {
         <>
             <div
                 className={cn(
-                    "relative bg-background px-safe-zone pb-[.96875rem] pt-3.75",
-                    {
-                        lg: "py-safe-zone-vertical"
-                    }
+                    "relative bg-background px-safe-zone py-safe-zone-vertical"
                 )}
             >
                 <span
@@ -30,7 +27,7 @@ function About() {
                 </span>
                 <H1
                     id="about"
-                    className="flex flex-wrap gap-x-[.2em] sm:text-2xl"
+                    className="flex flex-wrap gap-x-[.2em] leading-[2.75rem] sm:text-2xl"
                 >
                     Hello there!{" "}
                     <span className="block">

@@ -40,7 +40,7 @@ function Outlines() {
                             <Fragment key={key}>
                                 <div
                                     className={cn(
-                                        "grid grid-cols-3 gap-6 gap-y-3 py-4.5"
+                                        "grid grid-cols-3 gap-6 gap-y-3 py-safe-zone-vertical"
                                     )}
                                 >
                                     <Highlight className={cn("ps-6")}>

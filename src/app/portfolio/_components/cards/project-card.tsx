@@ -1,9 +1,9 @@
 "use client"
 
-import type React from "react"
 import { useEffect, useRef, ViewTransition } from "react"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
+import { SvgElementLine } from "@/components/layout/line"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Bold, Text } from "@/components/ui/typography"
@@ -21,7 +21,6 @@ import { type Project, type projects } from "~/.velite"
 interface ProjectCardProps {
     project: Project
     navigation?: "forward" | "backward"
-    projectNavigation?: boolean
 }
 
 const DURATION = 500
@@ -43,7 +42,6 @@ function ProjectCard({
     href,
     project,
     navigation,
-    projectNavigation = false,
     ...props
 }: LinkButtonProps & ProjectCardProps) {
     const compRef = useRef<HTMLAnchorElement>(null)
@@ -100,12 +98,12 @@ function ProjectCard({
                 pressSound: "link"
             })}
             className={cn(
-                "group flex min-h-space min-w-0 items-center gap-x-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
+                "group relative flex min-h-space min-w-0 items-center gap-x-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                 {
                     hover: "bg-highlighted/5 transition-none",
                     active: "bg-highlighted/10 transition-none"
                 },
-                projectNavigation && {
+                navigation && {
                     sm: "flex-wrap gap-x-2"
                 },
                 className
@@ -114,7 +112,7 @@ function ProjectCard({
         >
             {navigation === "backward" && (
                 <ArrowLeft
-                    className={cn("m-1 transition-[color] duration-100", {
+                    className={cn("transition-[color] duration-100", {
                         "group-hover": "text-highlighted transition-none",
                         "group-active": "text-highlighted transition-none"
                     })}
@@ -127,7 +125,7 @@ function ProjectCard({
                 src={coverImagePath}
                 social={project.social}
                 className={cn(
-                    projectNavigation && navigation === "backward"
+                    navigation && navigation === "backward"
                         ? {
                               sm: "ms-auto"
                           }
@@ -140,7 +138,7 @@ function ProjectCard({
                 className={cn(
                     "flex min-w-0 flex-1 flex-col",
                     navigation === "backward" && "items-end",
-                    projectNavigation && {
+                    navigation && {
                         sm: "order-3 w-full flex-none"
                     }
                 )}
@@ -163,17 +161,22 @@ function ProjectCard({
             {navigation !== "backward" && (
                 <ArrowRight
                     className={cn(
-                        "m-1 transition-[color] duration-100",
+                        "transition-[color] duration-100",
                         {
                             "group-hover": "text-highlighted transition-none",
                             "group-active": "text-highlighted transition-none"
                         },
-                        projectNavigation && {
+                        navigation && {
                             sm: "order-2"
                         }
                     )}
                 />
             )}
+            <SvgElementLine
+                className={cn("absolute inset-y-0 right-0 group-even:hidden", {
+                    md: "hidden"
+                })}
+            />
         </Comp>
     )
 }
@@ -201,8 +204,11 @@ function ProjectCover({
         >
             <div
                 className={cn(
-                    "mb-1 flex h-11 flex-col items-center justify-center gap-0.5",
+                    "flex h-11 -translate-y-0.75 flex-col items-center justify-center gap-0.5",
                     navigation === "backward" && "order-last sm:order-none",
+                    !navigation && {
+                        sm: "-mt-1 translate-y-0"
+                    },
                     className
                 )}
                 style={{
@@ -230,7 +236,7 @@ function ProjectCover({
                 />
                 <div
                     className={cn(
-                        "relative rounded-xlg transition-transform ease-in duration-150",
+                        "relative rounded-xl transition-transform ease-in duration-150",
                         {
                             "group-hover": "translate-y-0.5",
                             "group-active": "translate-y-0.5",
@@ -240,7 +246,8 @@ function ProjectCover({
                                     "group-hover": "ring-3",
                                     "group-active": "ring-3"
                                 }
-                            ]
+                            ],
+                            md: "rounded-xlg"
                         }
                     )}
                 >
@@ -251,7 +258,10 @@ function ProjectCover({
                             <div
                                 className={cn(
                                     socialData.color.default,
-                                    "absolute -right-1.5 -top-1 z-1 size-4.5 rounded-full border border-white/15 p-0.5 text-white"
+                                    "absolute -right-1.5 -top-0.5 z-1 size-5 rounded-full border border-white/15 p-0.5 text-white",
+                                    {
+                                        md: "-top-1 size-4.5"
+                                    }
                                 )}
                                 style={{
                                     viewTransitionName: "none !important"
@@ -270,10 +280,10 @@ function ProjectCover({
                     <img
                         src={src}
                         alt=""
-                        width={56}
-                        height={31.5}
+                        width={64}
+                        height={36}
                         className={cn(
-                            "aspect-video h-auto w-14 rounded-inherit object-cover",
+                            "aspect-video h-auto w-16 rounded-inherit object-cover",
                             {
                                 md: "w-13"
                             }

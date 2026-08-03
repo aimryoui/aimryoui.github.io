@@ -92,7 +92,7 @@ const MobileTocItemRow = memo(
                     }}
                     className={cn(
                         "group/link relative flex-1 truncate leading-6",
-                        isAnchor
+                        item.icon
                             ? "flex items-center gap-4 py-2"
                             : "inline-block py-2",
                         isProject
@@ -109,7 +109,7 @@ const MobileTocItemRow = memo(
                               }
                     )}
                 >
-                    {isAnchor && (
+                    {item.icon && (
                         <div
                             className={cn(
                                 "grid size-9 place-items-center rounded-full",

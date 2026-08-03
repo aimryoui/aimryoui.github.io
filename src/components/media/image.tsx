@@ -361,7 +361,12 @@ function Image({
             )}
         </LightboxItem>
     ) : (
-        <ImageCore parsedData={parsedData} {...props} lightbox={false} />
+        <ImageCore
+            parsedData={parsedData}
+            className={cn(className)}
+            {...props}
+            lightbox={false}
+        />
     )
 }
 

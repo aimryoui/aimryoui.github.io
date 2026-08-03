@@ -183,7 +183,7 @@
         --spacing-space: calc(var(--spacing)*20);
         --spacing-safe-zone: calc(var(--spacing)*6);
         --spacing-safe-zone-vertical: calc(var(--spacing)*4.5);
-        --spacing-table-between: calc(var(--spacing)*2);
+        --spacing-table-between: calc(var(--spacing-safe-zone)/2);
 
         @screen md {
             --radius-media: var(--radius-xl);

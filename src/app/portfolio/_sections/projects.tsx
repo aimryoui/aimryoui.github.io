@@ -4,7 +4,7 @@ import { Fragment } from "react"
 
 import { ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
-import { SectionLine } from "@/components/layout/line"
+import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { LinkButton } from "@/components/ui/button"
 import { Highlight } from "@/components/ui/typography"
@@ -15,10 +15,11 @@ import {
 } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import { ExpandableWrapper } from "@/portfolio/_components/_layout/expandable-wrapper"
+import ProjectCard from "@/portfolio/_components/cards/project-card"
+import SelectedProjectCard from "@/portfolio/_components/cards/selected-project-card"
 import { MDXContent } from "@/portfolio/_components/mdx-content"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import SectionTitle from "@/portfolio/_components/section-title"
-import ProjectCard from "@/portfolio/[category]/_components/project-card"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
@@ -110,147 +111,236 @@ function Projects() {
             <Space />
             <SectionLine />
 
-            {projectGroups.map((group, groupIndex) => (
-                <Fragment key={group.id}>
-                    <section className={cn("bg-background")}>
-                        <LinkButton
-                            data-cursor="target"
-                            href={getCategoryPath(group.id)}
-                            nativeLink
-                            keepFeedback
-                            prefetch={false}
-                            className={cn(
-                                "group flex items-center justify-between gap-4 pe-safe-zone transition-[background-color] duration-100",
-                                {
-                                    hover: "bg-highlighted/5 transition-none",
-                                    active: "bg-highlighted/10 transition-none"
-                                }
-                            )}
-                        >
-                            {group.id === "selected-works" ? (
-                                <SectionTitle
-                                    id={group.id}
-                                    title={group.title}
-                                    note={group.note}
-                                    className={cn("flex-1 bg-transparent")}
-                                />
-                            ) : (
-                                <SectionTitle
-                                    id={group.id}
-                                    title={group.title}
-                                    noteId={
-                                        groupIndex ===
-                                        (projectGroups[0]?.id ===
-                                        "selected-works"
-                                            ? 1
-                                            : 0)
-                                            ? "design-projects"
-                                            : undefined
-                                    }
-                                    note={
-                                        groupIndex ===
-                                        (projectGroups[0]?.id ===
-                                        "selected-works"
-                                            ? 1
-                                            : 0)
-                                            ? "Design Projects"
-                                            : undefined
-                                    }
-                                    className={cn("flex-1 bg-transparent")}
-                                />
-                            )}
-                            <ArrowRight
-                                className={cn(
-                                    "m-1 transition-[color] duration-100",
-                                    {
-                                        "group-hover":
-                                            "text-highlighted transition-none",
-                                        "group-active":
-                                            "text-highlighted transition-none"
-                                    }
-                                )}
-                            />
-                        </LinkButton>
-                        <SectionLine />
-                        <ul
-                            className={cn(
-                                "grid grid-cols-2 bg-background md:grid-cols-1"
-                            )}
-                        >
-                            {group.projects.map((project, index) => (
-                                <li
-                                    key={project.slug}
-                                    className={cn("group", {
-                                        odd: "border-r border-dashed border-stroke",
-                                        md: "!border-none"
-                                    })}
-                                >
-                                    {group.id === "selected-works" ? (
-                                        <ProjectCard
-                                            href={getProjectPath(project)}
-                                            project={project}
-                                        />
-                                    ) : (
-                                        <ProjectCard
-                                            href={getProjectPath(project)}
-                                            project={project}
-                                        />
-                                    )}
-                                    {index < group.projects.length - 1 && (
-                                        <SectionLine
-                                            className={cn({
-                                                lg: "w-[calc(100%+var(--spacing-safe-zone))]",
-                                                "group-odd": "right-0",
-                                                "group-even": [
-                                                    "w-[calc(100%+var(--spacing-safe-zone))]",
-                                                    {
-                                                        lg: "-right-safe-zone left-auto"
-                                                    }
-                                                ]
-                                            })}
-                                        />
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
-                    </section>
-                    {groupIndex < projectGroups.length - 1 ? (
-                        group.id === "selected-works" ? (
-                            <>
-                                <SectionLine />
-                                <Divider />
-                                <SectionLine showDecoration />
-                                <Space>
-                                    <Highlight
+            {projectGroups.map((group, groupIndex) => {
+                const isSelectedWorks = group.id === "selected-works"
+
+                return (
+                    <Fragment key={group.id}>
+                        <section className={cn("bg-background @container")}>
+                            {isSelectedWorks ? (
+                                <>
+                                    <LinkButton
+                                        data-cursor="target"
+                                        href={getCategoryPath(group.id)}
+                                        nativeLink
+                                        keepFeedback
+                                        prefetch={false}
                                         className={cn(
-                                            "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-4.5"
+                                            "group flex items-center justify-between gap-4 pe-safe-zone transition-[background-color] duration-100",
+                                            {
+                                                hover: "bg-highlighted/5 transition-none",
+                                                active: "bg-highlighted/10 transition-none"
+                                            }
                                         )}
                                     >
-                                        And below are almost all of my design
-                                        projects.
-                                    </Highlight>
-                                </Space>
-                                <SectionLine showDecoration />
-                                <Divider />
-                                <SectionLine />
-                                <Space />
-                                <SectionLine />
-                            </>
+                                        <SectionTitle
+                                            id={group.id}
+                                            title={group.title}
+                                            note={group.note}
+                                            className={cn(
+                                                "flex-1 bg-transparent"
+                                            )}
+                                        />
+                                        <ArrowRight
+                                            className={cn(
+                                                "transition-[color] duration-100",
+                                                {
+                                                    "group-hover":
+                                                        "text-highlighted transition-none",
+                                                    "group-active":
+                                                        "text-highlighted transition-none"
+                                                }
+                                            )}
+                                        />
+                                    </LinkButton>
+                                    <SectionLine />
+                                    <ul
+                                        className={cn(
+                                            "grid grid-cols-5 bg-background @3xl:grid-cols-3 @md:grid-cols-2"
+                                        )}
+                                    >
+                                        {group.projects.map(
+                                            (project, index) => (
+                                                <li
+                                                    key={project.slug}
+                                                    className="group relative"
+                                                >
+                                                    <SelectedProjectCard
+                                                        href={getProjectPath(
+                                                            project
+                                                        )}
+                                                        project={project}
+                                                    />
+                                                    {/* Represent border-right */}
+                                                    <SvgElementLine
+                                                        className={cn(
+                                                            "absolute inset-y-0 right-0 group-nth-[5n]:hidden",
+                                                            {
+                                                                "@3xl": "group-nth-[5n]:block group-nth-[3n]:hidden",
+                                                                "@md": "group-even:!hidden group-nth-[3n]:block"
+                                                            }
+                                                        )}
+                                                    />
+                                                    {/* Represent border-bottom */}
+                                                    <SectionLine
+                                                        containerClassName={cn(
+                                                            "absolute inset-x-0 bottom-0 hidden",
+                                                            {
+                                                                lg: [
+                                                                    {
+                                                                        "@3xl": "group-nth-[3n+1]:block"
+                                                                    }
+                                                                ],
+                                                                "@md": "group-not-last:block group-not-nth-last-2:block"
+                                                            }
+                                                        )}
+                                                        className={cn({
+                                                            "@md": {
+                                                                "group-odd":
+                                                                    "-left-safe-zone right-auto",
+                                                                "group-even":
+                                                                    "-right-safe-zone left-auto"
+                                                            }
+                                                        })}
+                                                    />
+                                                    {index === 4 && (
+                                                        <SectionLine
+                                                            className={cn({
+                                                                lg: "-right-safe-zone left-auto",
+                                                                "@md": "hidden"
+                                                            })}
+                                                        />
+                                                    )}
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </>
+                            ) : (
+                                <>
+                                    <LinkButton
+                                        data-cursor="target"
+                                        href={getCategoryPath(group.id)}
+                                        nativeLink
+                                        keepFeedback
+                                        prefetch={false}
+                                        className={cn(
+                                            "group flex items-center justify-between gap-4 pe-safe-zone transition-[background-color] duration-100",
+                                            {
+                                                hover: "bg-highlighted/5 transition-none",
+                                                active: "bg-highlighted/10 transition-none"
+                                            }
+                                        )}
+                                    >
+                                        <SectionTitle
+                                            id={group.id}
+                                            title={group.title}
+                                            noteId={
+                                                groupIndex === 1
+                                                    ? "design-projects"
+                                                    : undefined
+                                            }
+                                            note={
+                                                groupIndex === 1
+                                                    ? "Design Projects"
+                                                    : undefined
+                                            }
+                                            className={cn(
+                                                "flex-1 bg-transparent"
+                                            )}
+                                        />
+                                        <ArrowRight
+                                            className={cn(
+                                                "transition-[color] duration-100",
+                                                {
+                                                    "group-hover":
+                                                        "text-highlighted transition-none",
+                                                    "group-active":
+                                                        "text-highlighted transition-none"
+                                                }
+                                            )}
+                                        />
+                                    </LinkButton>
+                                    <SectionLine />
+                                    <ul
+                                        className={cn(
+                                            "grid grid-cols-2 bg-background md:grid-cols-1"
+                                        )}
+                                    >
+                                        {group.projects.map(
+                                            (project, index) => (
+                                                <li
+                                                    key={project.slug}
+                                                    className="group"
+                                                >
+                                                    <ProjectCard
+                                                        href={getProjectPath(
+                                                            project
+                                                        )}
+                                                        project={project}
+                                                    />
+                                                    {index <
+                                                        group.projects.length -
+                                                            1 && (
+                                                        <SectionLine
+                                                            className={cn({
+                                                                lg: "w-[calc(100%+var(--spacing-safe-zone))]",
+                                                                "group-odd":
+                                                                    "right-0",
+                                                                "group-even": [
+                                                                    "w-[calc(100%+var(--spacing-safe-zone))]",
+                                                                    {
+                                                                        lg: "-right-safe-zone left-auto"
+                                                                    }
+                                                                ]
+                                                            })}
+                                                        />
+                                                    )}
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </>
+                            )}
+                        </section>
+                        {groupIndex < projectGroups.length - 1 ? (
+                            isSelectedWorks ? (
+                                <>
+                                    <SectionLine />
+                                    <Divider />
+                                    <SectionLine showDecoration />
+                                    <Space>
+                                        <Highlight
+                                            className={cn(
+                                                "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-safe-zone-vertical"
+                                            )}
+                                        >
+                                            Below is almost all of my design
+                                            projects.
+                                        </Highlight>
+                                    </Space>
+                                    <SectionLine showDecoration />
+                                    <Divider />
+                                    <SectionLine />
+                                    <Space />
+                                    <SectionLine />
+                                </>
+                            ) : (
+                                <>
+                                    <SectionLine />
+                                    <Divider />
+                                    <SectionLine />
+                                </>
+                            )
                         ) : (
                             <>
                                 <SectionLine />
                                 <Divider />
-                                <SectionLine />
                             </>
-                        )
-                    ) : (
-                        <>
-                            <SectionLine />
-                            <Divider />
-                        </>
-                    )}
-                </Fragment>
-            ))}
+                        )}
+                    </Fragment>
+                )
+            })}
         </>
     )
 }

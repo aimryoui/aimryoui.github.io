@@ -404,13 +404,22 @@ function Experience() {
                                         <TableCell
                                             colSpan={3}
                                             className={cn(
-                                                "flex flex-col gap-y-safe-zone-vertical p-0 pt-2.5 align-top",
-                                                {
-                                                    "@[59.375rem]": "pt-0.5"
-                                                }
+                                                "flex flex-col gap-y-safe-zone-vertical p-0 pt-[calc(var(--spacing-safe-zone-vertical)-var(--spacing-table-between))] align-top"
+                                                // {
+                                                //     "@[59.375rem]": "pt-0.5"
+                                                // }
                                             )}
                                         >
-                                            <SectionLine className="-right-[calc(var(--spacing-safe-zone)*2)] lg:-left-[calc(var(--spacing-safe-zone)*2)]" />
+                                            <SectionLine
+                                                className={cn(
+                                                    "-right-[calc(var(--spacing-safe-zone)*2)]",
+                                                    {
+                                                        lg: [
+                                                            "-right-[calc(var(--spacing-safe-zone)*2)] left-auto"
+                                                        ]
+                                                    }
+                                                )}
+                                            />
                                             And a bunch of University course
                                             projects or miscellaneous freelance
                                             jobs on the road...
