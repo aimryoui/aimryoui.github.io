@@ -159,61 +159,60 @@ function Projects() {
                                             "grid grid-cols-5 bg-background @3xl:grid-cols-3 @md:grid-cols-2"
                                         )}
                                     >
-                                        {group.projects.map(
-                                            (project, index) => (
-                                                <li
-                                                    key={project.slug}
-                                                    className="group relative"
-                                                >
-                                                    <SelectedProjectCard
-                                                        href={getProjectPath(
-                                                            project
-                                                        )}
-                                                        project={project}
-                                                    />
-                                                    {/* Represent border-right */}
-                                                    <SvgElementLine
-                                                        className={cn(
-                                                            "absolute inset-y-0 right-0 group-nth-[5n]:hidden",
-                                                            {
-                                                                "@3xl": "group-nth-[5n]:block group-nth-[3n]:hidden",
-                                                                "@md": "group-even:!hidden group-nth-[3n]:block"
-                                                            }
-                                                        )}
-                                                    />
-                                                    {/* Represent border-bottom */}
-                                                    <SectionLine
-                                                        containerClassName={cn(
-                                                            "absolute inset-x-0 bottom-0 hidden",
-                                                            {
-                                                                lg: [
-                                                                    {
-                                                                        "@3xl": "group-nth-[3n+1]:block"
-                                                                    }
-                                                                ],
-                                                                "@md": "group-not-last:block group-not-nth-last-2:block"
-                                                            }
-                                                        )}
-                                                        className={cn({
-                                                            "@md": {
-                                                                "group-odd":
-                                                                    "-left-safe-zone right-auto",
-                                                                "group-even":
-                                                                    "-right-safe-zone left-auto"
-                                                            }
-                                                        })}
-                                                    />
-                                                    {index === 4 && (
-                                                        <SectionLine
-                                                            className={cn({
-                                                                lg: "-right-safe-zone left-auto",
-                                                                "@md": "hidden"
-                                                            })}
-                                                        />
+                                        {group.projects.map((project) => (
+                                            <li
+                                                key={project.slug}
+                                                className="group relative"
+                                            >
+                                                <SelectedProjectCard
+                                                    href={getProjectPath(
+                                                        project
                                                     )}
-                                                </li>
-                                            )
-                                        )}
+                                                    project={project}
+                                                />
+                                                {/* Represent border-right */}
+                                                <SvgElementLine
+                                                    className={cn(
+                                                        "absolute inset-y-0 right-0 group-nth-[5n]:hidden",
+                                                        {
+                                                            "@3xl": "group-nth-[5n]:block group-nth-[3n]:hidden",
+                                                            "@md": "group-even:!hidden group-nth-[3n]:block"
+                                                        }
+                                                    )}
+                                                />
+                                                {/* Represent border-bottom */}
+                                                <SectionLine
+                                                    containerClassName={cn(
+                                                        "absolute inset-x-0 bottom-0 hidden",
+                                                        {
+                                                            "group-nth-5":
+                                                                "block",
+                                                            "@3xl": "group-nth-5:hidden group-nth-[3n]:block",
+                                                            lg: [
+                                                                {
+                                                                    "@3xl": "group-nth-[3n+1]:block group-nth-[3n]:hidden"
+                                                                }
+                                                            ],
+                                                            "@md": "group-not-last:block group-not-nth-last-2:block"
+                                                        }
+                                                    )}
+                                                    className={cn({
+                                                        lg: [
+                                                            "-right-safe-zone left-auto",
+                                                            {
+                                                                "@3xl": "-left-safe-zone right-auto"
+                                                            }
+                                                        ],
+                                                        "@md": {
+                                                            "group-odd":
+                                                                "-left-safe-zone right-auto",
+                                                            "group-even":
+                                                                "-right-safe-zone left-auto"
+                                                        }
+                                                    })}
+                                                />
+                                            </li>
+                                        ))}
                                     </ul>
                                 </>
                             ) : (
