@@ -3,6 +3,7 @@ import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
 import { cn } from "@/lib/utils"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
+import { SelectedWorksStyle } from "@/portfolio/_components/selected-works-style"
 import About from "@/portfolio/_sections/about"
 import Contact from "@/portfolio/_sections/contact"
 import Education from "@/portfolio/_sections/education"
@@ -49,7 +50,8 @@ export default function Portfolio() {
 
                 <Outlines />
 
-                <Projects />
+                {/* Pass SelectedWorksStyle here because this is Server Component */}
+                <Projects selectedWorksStyle={<SelectedWorksStyle />} />
 
                 <SectionLine />
 

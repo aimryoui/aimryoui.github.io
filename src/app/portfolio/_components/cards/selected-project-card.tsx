@@ -76,6 +76,7 @@ function SelectedProjectCard({
             prefetch={false}
             nativeLink={true}
             keepFeedback={true}
+            id={`theme-${project.id}`}
             className={cn(
                 "group flex h-full min-w-0 flex-col items-center gap-y-[calc(var(--spacing-safe-zone-vertical)/2)] p-safe-zone pb-[calc(var(--spacing-safe-zone-vertical)+var(--spacing)*0.5)] transition-[background-color] duration-100",
                 {
@@ -86,18 +87,19 @@ function SelectedProjectCard({
                         "pointer-events-none absolute inset-[calc(var(--spacing-safe-zone)*1/3-var(--px)/2)] border border-stroke bg-[repeating-linear-gradient(315deg,var(--pattern-color)_0,var(--pattern-color)_.0625rem,transparent_0,transparent_50%)] bg-[length:.375rem_.375rem]",
                         {
                             "group-hover":
-                                "[--pattern-color:theme(colors.highlighted/0.25)]",
+                                "[--pattern-color:var(--color-highlighted)] dark:[--pattern-color:theme(colors.highlighted/0.4)]",
                             "group-active":
-                                "[--pattern-color:theme(colors.highlighted/0.25)]"
+                                "[--pattern-color:var(--color-highlighted)] dark:[--pattern-color:theme(colors.highlighted/0.4)]"
                         }
                     ],
                     after: [
-                        "pointer-events-none absolute inset-[calc(var(--spacing-safe-zone)*2/3-var(--px)/2)] border border-pattern bg-background transition-[background-color,border-color] duration-100",
+                        "[--surface-opacity:0%]",
+                        "pointer-events-none absolute inset-[calc(var(--spacing-safe-zone)*2/3-var(--px)/2)] border border-pattern bg-[color-mix(in_srgb,var(--color-highlighted)_var(--surface-opacity),var(--color-background))] transition-[background-color,border-color] duration-100",
                         {
                             "group-hover":
-                                "border-stroke bg-[color-mix(in_srgb,var(--color-highlighted)_5%,var(--color-background))] transition-none",
+                                "border-stroke transition-none [--surface-opacity:5%]",
                             "group-active":
-                                "border-stroke bg-[color-mix(in_srgb,var(--color-highlighted)_10%,var(--color-background))] transition-none"
+                                "border-stroke transition-none [--surface-opacity:10%]"
                         }
                     ]
                 },

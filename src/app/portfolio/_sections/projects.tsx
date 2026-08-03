@@ -24,7 +24,11 @@ import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
 
-function Projects() {
+function Projects({
+    selectedWorksStyle
+}: {
+    selectedWorksStyle?: React.ReactNode
+}) {
     const mode = usePortfolioModeStore((state) => state.mode)
     const projectGroups = groupProjectsByCategory(projects)
 
@@ -119,6 +123,7 @@ function Projects() {
                         <section className={cn("bg-background @container")}>
                             {isSelectedWorks ? (
                                 <>
+                                    {selectedWorksStyle}
                                     <LinkButton
                                         data-cursor="target"
                                         href={getCategoryPath(group.id)}
