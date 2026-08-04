@@ -195,13 +195,15 @@ function MediaFrame({
                         >
                             <SectionName
                                 as="div"
+                                // Hide from browser Ctrl+F
+                                inert
                                 sectionName={sectionName}
                                 author={author}
                                 normalcase={normalcase}
                                 hasSocialLinks={hasSocialLinks}
                                 containerClassName="sticky top-3.5 !z-10 md:top-1.5"
                                 className={cn(
-                                    "bg-transparent text-transparent shadow-sm outline-default/15 outline"
+                                    "select-none bg-transparent text-transparent shadow-sm outline-default/15 outline"
                                 )}
                             />
                         </div>
