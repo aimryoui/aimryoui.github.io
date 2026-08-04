@@ -117,6 +117,7 @@ function Projects({
 
             {projectGroups.map((group, groupIndex) => {
                 const isSelectedWorks = group.id === "selected-works"
+                const isDesignProjects = groupIndex === 1
 
                 return (
                     <Fragment key={group.id}>
@@ -239,16 +240,12 @@ function Projects({
                                         <SectionTitle
                                             id={group.id}
                                             title={group.title}
-                                            noteId={
-                                                groupIndex === 1
-                                                    ? "design-projects"
-                                                    : undefined
-                                            }
-                                            note={
-                                                groupIndex === 1
-                                                    ? "Design Projects"
-                                                    : undefined
-                                            }
+                                            {...(isDesignProjects && {
+                                                noteId: "design-projects",
+                                                note: "Design Projects",
+                                                noteClassName:
+                                                    "lg:scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5+var(--spacing-safe-zone)*2)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem+var(--spacing-safe-zone)*2)]"
+                                            })}
                                             className={cn(
                                                 "flex-1 bg-transparent"
                                             )}

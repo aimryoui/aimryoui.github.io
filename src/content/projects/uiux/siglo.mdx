@@ -31,8 +31,23 @@ detail:
         lead their audiences like never before.
 ---
 
-<MediaFrame>
-    <Image src="/uiux/siglo/1.jpg" alt="Branding Presentation" rounded />
+<MediaFrame className="flex">
+    <JustifiedColumn className="gap-2">
+        <Image src="/uiux/siglo/0.1.jpg" alt="Index #1" rounded="tl" />
+        <Image src="/uiux/siglo/0.2.jpg" alt="Index #2" rounded="bl" />
+    </JustifiedColumn>
+    <JustifiedColumn className="gap-2">
+        <Image src="/uiux/siglo/0.3.jpg" alt="Index #3" rounded="tr" />
+        <Image src="/uiux/siglo/0.4.jpg" alt="Index #4" />
+        <Image src="/uiux/siglo/0.5.jpg" alt="Index #5" rounded="br" />
+    </JustifiedColumn>
+</MediaFrame>
+
+<MediaFrame className="grid-cols-2">
+    <Image src="/uiux/siglo/0.6.jpg" alt="Index #6" rounded="tl" />
+    <Image src="/uiux/siglo/0.7.jpg" alt="Index #7" rounded="tr" />
+    <Image src="/uiux/siglo/0.8.jpg" alt="Index #8" rounded="bl" />
+    <Image src="/uiux/siglo/0.9.jpg" alt="Index #9" rounded="br" />
 </MediaFrame>
 
 <MediaFrame className="grid-cols-2" sectionName="Logo & Icon Guidelines">
@@ -50,6 +65,10 @@ detail:
 <MediaFrame className="grid-cols-2" sectionName="Colors">
     <Image src="/uiux/siglo/8.jpg" alt="Dark Mode" rounded />
     <Image src="/uiux/siglo/9.jpg" alt="Light Mode" rounded />
+</MediaFrame>
+
+<MediaFrame sectionName="Presentation">
+    <Image src="/uiux/siglo/9.5.jpg" alt="Presentation" rounded />
 </MediaFrame>
 
 <MediaFrame sectionName="Iconography">

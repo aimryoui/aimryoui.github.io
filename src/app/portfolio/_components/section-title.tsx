@@ -6,12 +6,14 @@ import { cn } from "@/lib/utils"
 
 function SectionTitle({
     className,
+    noteClassName,
     id,
     noteId,
     order,
     title,
     note
 }: React.ComponentProps<"div"> & {
+    noteClassName?: string
     id: string
     noteId?: string
     order?: number
@@ -34,7 +36,8 @@ function SectionTitle({
                             "scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem)]",
                         {
                             md: "bottom-[calc(100%+.75rem)] text-sm"
-                        }
+                        },
+                        noteClassName
                     )}
                 >
                     {note}

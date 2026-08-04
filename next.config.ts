@@ -40,7 +40,6 @@ const nextConfig = (phase: string): NextConfig => {
         },
         experimental: {
             useTypeScriptCli: true,
-            viewTransition: true,
             useLightningcss: true,
             lightningCssFeatures: {
                 include: ["light-dark"]

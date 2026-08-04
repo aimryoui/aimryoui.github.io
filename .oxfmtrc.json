@@ -21,7 +21,12 @@
     "jsdoc": { "capitalizeDescriptions": false },
     "sortTailwindcss": {
         "functions": ["cn", "cva", "twg", "twMerge"],
-        "attributes": ["containerClassName", "tw"]
+        "attributes": [
+            "containerClassName",
+            "spanClassName",
+            "noteClassName",
+            "tw"
+        ]
     },
     "overrides": [
         {

@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment, useRef } from "react"
+import { Fragment, useMemo, useRef } from "react"
 
 import { type PhotoSwipeOptions } from "photoswipe"
 import { usePress } from "react-aria"
@@ -120,6 +120,8 @@ function MediaFrameContent({
 }: MediaFrameContentProps & {
     showHideAnimationType?: PhotoSwipeOptions["showHideAnimationType"]
 }) {
+    const options = useMemo(() => ({ showHideAnimationType }), [showHideAnimationType])
+
     return (
         <div
             data-cursor={targetCursor ?? "ignore"}
@@ -130,7 +132,7 @@ function MediaFrameContent({
             )}
             {...props}
         >
-            <Lightbox options={{ showHideAnimationType }}>{children}</Lightbox>
+            <Lightbox options={options}>{children}</Lightbox>
         </div>
     )
 }
@@ -284,7 +286,7 @@ function JustifiedColumn({
 
                     if (Math.abs(currentRatio - x) > 0.0001) {
                         currentRatio = x
-                        el.style.setProperty("--flex-ratio", x.toFixed(5))
+                        el.style.setProperty("--flex-ratio", (x * 100).toFixed(5))
                     }
                 }
             }
@@ -313,7 +315,7 @@ function JustifiedColumn({
             ref={ref}
             className={cn("flex flex-col", className)}
             style={{
-                flex: "var(--flex-ratio, 1) 1 0%",
+                flex: "var(--flex-ratio, 100) 1 0%",
                 ...style
             }}
             {...props}

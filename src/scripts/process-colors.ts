@@ -15,7 +15,7 @@ const MDX_DIR = "src/content/projects"
 const IMAGE_DIR = "private/media"
 const MANIFEST_PATH = "src/lib/color-manifest.json"
 
-const SCRIPT_VERSION = "2"
+const SCRIPT_VERSION = "3"
 
 const BRAND_COLOR = "\x1B[38;2;168;85;247m"
 const RESET = "\x1B[0m"
@@ -178,29 +178,34 @@ async function processColorForFile(
                 const [_, __, h] = chroma(dominantHex).oklch()
                 const finalHue = Number.isNaN(h) ? 0 : h
 
+                let { lLight, cLight, lDark, cDark } = config
+
+                // Boost lightness and chroma for yellow/green-yellow hues (center shifted to 105)
+                // Yellow-green requires higher lightness to not look dull in dark mode
+                const yellowDistance = Math.abs(finalHue - 105)
+                if (yellowDistance < 40) {
+                    const intensity = 1 - yellowDistance / 40
+                    if (key === "highlighted") {
+                        lDark += 0.08 * intensity
+                        cDark += 0.02 * intensity
+                    } else if (key === "ring") {
+                        lDark += 0.08 * intensity
+                    }
+                }
+
                 const lightOklchStr =
-                    `oklch(${config.lLight} ${config.cLight} ${finalHue.toFixed(4)})`.replace(
+                    `oklch(${lLight} ${cLight} ${finalHue.toFixed(4)})`.replace(
                         ZERO_TO_DOT_REGEX,
                         "."
                     )
                 const darkOklchStr =
-                    `oklch(${config.lDark} ${config.cDark} ${finalHue.toFixed(4)})`.replace(
+                    `oklch(${lDark} ${cDark} ${finalHue.toFixed(4)})`.replace(
                         ZERO_TO_DOT_REGEX,
                         "."
                     )
 
-                const lightHex = chroma(
-                    config.lLight,
-                    config.cLight,
-                    finalHue,
-                    "oklch"
-                ).hex()
-                const darkHex = chroma(
-                    config.lDark,
-                    config.cDark,
-                    finalHue,
-                    "oklch"
-                ).hex()
+                const lightHex = chroma(lLight, cLight, finalHue, "oklch").hex()
+                const darkHex = chroma(lDark, cDark, finalHue, "oklch").hex()
 
                 theme[key as keyof typeof COLOR_CONFIG] = {
                     hex: `light-dark(${lightHex}, ${darkHex})`,

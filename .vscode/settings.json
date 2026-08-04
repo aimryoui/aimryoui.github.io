@@ -48,7 +48,7 @@
         "twMerge"
     ],
     "tailwindCSS.emmetCompletions": true,
-    "tailwindCSS.classAttributes": ["className", "containerClassName", "tw"],
+    "tailwindCSS.classAttributes": ["className", ".*ClassName", "tw"],
     // CSS REM
     "cssrem.languages": [
         "html",

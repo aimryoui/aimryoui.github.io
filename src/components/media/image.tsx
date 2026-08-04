@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { memo, useMemo, useRef } from "react"
 import NextImage from "next/image"
 
 import { mergeRefs } from "react-merge-refs"
@@ -33,8 +33,10 @@ type GeneralImageProps = React.ComponentProps<"div"> & {
     isInLightbox?: boolean
 }
 
+type CornerRound = boolean | "t" | "b" | "r" | "l" | "tl" | "tr" | "bl" | "br"
+
 type ImageRoundProps =
-    | { rounded?: boolean; percentageRounded?: never }
+    | { rounded?: CornerRound; percentageRounded?: never }
     | { percentageRounded?: number; rounded?: never }
 
 interface PngProps {
@@ -72,6 +74,85 @@ type ImageCoreProps = GeneralImageProps &
     PngProps &
     ImageBorderProps
 
+function getBorderRadiusShorthand(rounded: CornerRound, radiusVal: string) {
+    if (rounded === true) return radiusVal
+    switch (rounded) {
+        case "t": return `${radiusVal} ${radiusVal} 0 0`
+        case "b": return `0 0 ${radiusVal} ${radiusVal}`
+        case "r": return `0 ${radiusVal} ${radiusVal} 0`
+        case "l": return `${radiusVal} 0 0 ${radiusVal}`
+        case "tl": return `${radiusVal} 0 0 0`
+        case "tr": return `0 ${radiusVal} 0 0`
+        case "bl": return `0 0 0 ${radiusVal}`
+        case "br": return `0 0 ${radiusVal} 0`
+        default: return "0"
+    }
+}
+
+interface ScrambledGridProps {
+    mapping: number[]
+    targetColPct: number
+    targetRowPct: number
+    colPct: number
+    rowPct: number
+    padX: number
+    padY: number
+    basePath: string
+    fileName: string
+    isInLightbox: boolean
+}
+
+const ScrambledGrid = memo(function ScrambledGrid({
+    mapping,
+    targetColPct,
+    targetRowPct,
+    colPct,
+    rowPct,
+    padX,
+    padY,
+    basePath,
+    fileName,
+    isInLightbox
+}: ScrambledGridProps) {
+    const Rows = GRID_ROWS
+    const Cols = GRID_COLS
+
+    return (
+        <>
+            {Array.from({ length: Rows * Cols }).map((_, index) => {
+                const targetC = index % Cols
+                const targetR = Math.floor(index / Cols)
+
+                const scrambledIndex = mapping[index]
+                const sourceC = scrambledIndex % Cols
+                const sourceR = Math.floor(scrambledIndex / Cols)
+
+                const translateX = targetC * targetColPct - sourceC * colPct - padX
+                const translateY = targetR * targetRowPct - sourceR * rowPct - padY
+
+                return (
+                    <img
+                        key={index}
+                        src={`${basePath}/${fileName}_scrambled.webp`}
+                        alt=""
+                        className={cn(
+                            "absolute h-[--h] w-[--w] max-w-none select-none",
+                            isInLightbox && "pswp__img"
+                        )}
+                        style={{
+                            clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(Cols - 1 - sourceC).toString()}) var(--y${(Rows - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
+                            transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
+                        }}
+                        decoding="async"
+                        loading={isInLightbox ? "eager" : "lazy"}
+                        draggable={false}
+                    />
+                )
+            })}
+        </>
+    )
+})
+
 function ImageCore({
     className,
     parsedData,
@@ -103,32 +184,54 @@ function ImageCore({
     const Rows = GRID_ROWS
     const Cols = GRID_COLS
 
-    const spriteW = exactW + Cols * 2 * EDGE_PAD
-    const spriteH = exactH + Rows * 2 * EDGE_PAD
+    const {
+        cssVars,
+        targetColPct,
+        targetRowPct,
+        colPct,
+        rowPct,
+        padX,
+        padY
+    } = useMemo(() => {
+        const spriteW = exactW + Cols * 2 * EDGE_PAD
+        const spriteH = exactH + Rows * 2 * EDGE_PAD
 
-    const imgWidthPercent = (spriteW / exactW) * 100
-    const imgHeightPercent = (spriteH / exactH) * 100
+        const imgWidthPercent = (spriteW / exactW) * 100
+        const imgHeightPercent = (spriteH / exactH) * 100
 
-    const padX = (EDGE_PAD / spriteW) * 100
-    const padY = (EDGE_PAD / spriteH) * 100
+        const padX_val = (EDGE_PAD / spriteW) * 100
+        const padY_val = (EDGE_PAD / spriteH) * 100
 
-    const colPct = 100 / Cols
-    const rowPct = 100 / Rows
+        const colPct_val = 100 / Cols
+        const rowPct_val = 100 / Rows
 
-    const targetColPct = (exactW / spriteW / Cols) * 100
-    const targetRowPct = (exactH / spriteH / Rows) * 100
+        const targetColPct_val = (exactW / spriteW / Cols) * 100
+        const targetRowPct_val = (exactH / spriteH / Rows) * 100
 
-    const cssVars: Record<string, string> = {
-        "--w": `${imgWidthPercent.toString()}%`,
-        "--h": `${imgHeightPercent.toString()}%`
-    }
+        const vars: Record<string, string> = {
+            "--w": `${imgWidthPercent.toString()}%`,
+            "--h": `${imgHeightPercent.toString()}%`
+        }
 
-    for (let i = 0; i < Cols; i++) {
-        cssVars[`--x${i.toString()}`] = `${(i * colPct + padX).toString()}%`
-    }
-    for (let i = 0; i < Rows; i++) {
-        cssVars[`--y${i.toString()}`] = `${(i * rowPct + padY).toString()}%`
-    }
+        for (let i = 0; i < Cols; i++) {
+            vars[`--x${i.toString()}`] = `${(i * colPct_val + padX_val).toString()}%`
+        }
+        for (let i = 0; i < Rows; i++) {
+            vars[`--y${i.toString()}`] = `${(i * rowPct_val + padY_val).toString()}%`
+        }
+
+        return {
+            cssVars: vars,
+            targetColPct: targetColPct_val,
+            targetRowPct: targetRowPct_val,
+            colPct: colPct_val,
+            rowPct: rowPct_val,
+            padX: padX_val,
+            padY: padY_val
+        }
+    }, [exactW, exactH, Cols, Rows])
+
+
 
     return (
         <div
@@ -147,7 +250,8 @@ function ImageCore({
                 asBackgroundImage ? "h-full" : "h-fit",
                 "relative grid place-items-center",
                 !pngBorder && "overflow-hidden",
-                rounded && !percentageRounded && "rounded-media",
+                rounded === true && !percentageRounded && "rounded-media",
+                typeof rounded === "string" && !percentageRounded && `rounded-${rounded}-media`,
                 lightbox && !isInLightbox && "cursor-zoom-in",
                 !noBorder &&
                     !pngBorder &&
@@ -181,8 +285,10 @@ function ImageCore({
                 ...(isInLightbox
                     ? {
                           ...(rounded && {
-                              borderRadius:
+                              borderRadius: getBorderRadiusShorthand(
+                                  rounded,
                                   "calc(var(--radius-media) / var(--nhn-wrap-scale))"
+                              )
                           })
                       }
                     : {
@@ -190,7 +296,7 @@ function ImageCore({
                               width: "calc(max(80vh, calc(var(--spacing) * 125)) * calc(var(--nhn-aspect-ratio)))"
                           }),
                           ...(row && {
-                              flex: `${row === "justified" ? "calc(var(--nhn-aspect-ratio))" : exactW} 1 0%`
+                              flex: `${row === "justified" ? "calc((var(--nhn-aspect-ratio)) * 100)" : exactW} 1 0%`
                           }),
                           ...(col && {
                               width: `calc(${exactW} / 1599 * 100%)`
@@ -257,38 +363,18 @@ function ImageCore({
                     }}
                     aria-hidden={true}
                 >
-                    {Array.from({ length: Rows * Cols }).map((_, index) => {
-                        const targetC = index % Cols
-                        const targetR = Math.floor(index / Cols)
-
-                        const scrambledIndex = metadata.mapping[index]
-                        const sourceC = scrambledIndex % Cols
-                        const sourceR = Math.floor(scrambledIndex / Cols)
-
-                        const translateX =
-                            targetC * targetColPct - sourceC * colPct - padX
-                        const translateY =
-                            targetR * targetRowPct - sourceR * rowPct - padY
-
-                        return (
-                            <img
-                                key={index}
-                                src={`${basePath}/${fileName}_scrambled.webp`}
-                                alt=""
-                                className={cn(
-                                    "absolute h-[--h] w-[--w] max-w-none select-none",
-                                    isInLightbox && "pswp__img"
-                                )}
-                                style={{
-                                    clipPath: `inset(var(--y${sourceR.toString()}) var(--x${(Cols - 1 - sourceC).toString()}) var(--y${(Rows - 1 - sourceR).toString()}) var(--x${sourceC.toString()}))`,
-                                    transform: `translate(${translateX.toString()}%, ${translateY.toString()}%)`
-                                }}
-                                decoding="async"
-                                loading={isInLightbox ? "eager" : "lazy"}
-                                draggable={false}
-                            />
-                        )
-                    })}
+                    <ScrambledGrid
+                        mapping={metadata.mapping}
+                        targetColPct={targetColPct}
+                        targetRowPct={targetRowPct}
+                        colPct={colPct}
+                        rowPct={rowPct}
+                        padX={padX}
+                        padY={padY}
+                        basePath={basePath}
+                        fileName={fileName}
+                        isInLightbox={isInLightbox}
+                    />
                 </div>
             )}
 
@@ -370,5 +456,5 @@ function Image({
     )
 }
 
-export type { ImageBorderProps, ImageProps, ImageRoundProps, PngProps }
-export { Image }
+export type { CornerRound, ImageBorderProps, ImageProps, ImageRoundProps, PngProps }
+export { getBorderRadiusShorthand, Image }

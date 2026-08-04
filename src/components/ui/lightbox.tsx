@@ -9,6 +9,10 @@ import {
     type ItemProps
 } from "react-photoswipe-gallery"
 
+import {
+    type CornerRound,
+    getBorderRadiusShorthand
+} from "@/components/media/image"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
@@ -24,7 +28,7 @@ import { useAudioStore } from "@/stores/audio-store"
 
 interface CustomItemData {
     placeholderAspectRatio: string
-    rounded?: boolean
+    rounded?: CornerRound
     percentageRounded?: number
     noBorder?: boolean
     pngBorder?: boolean
@@ -234,12 +238,15 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
 
                     placeholder.style.aspectRatio = data.placeholderAspectRatio
 
-                    if (data.rounded || data.percentageRounded) {
+                    if (data.rounded === true || data.percentageRounded) {
                         placeholder.classList.add("corner-superellipse")
                     }
                     if (data.rounded) {
                         placeholder.style.borderRadius =
-                            "calc(var(--radius-media) / (var(--nhn-wrap-scale, 1) * var(--nhn-ph-scale, 1)))"
+                            getBorderRadiusShorthand(
+                                data.rounded,
+                                "calc(var(--radius-media) / (var(--nhn-wrap-scale, 1) * var(--nhn-ph-scale, 1)))"
+                            )
                     } else if (data.percentageRounded) {
                         placeholder.style.borderRadius = `calc(${data.percentageRounded.toString()}% * var(--nhn-radius-offset-factor)) / calc(${data.percentageRounded.toString()}% * ${data.placeholderAspectRatio} * var(--nhn-radius-offset-factor))`
                     }

@@ -246,7 +246,7 @@
             "removeDuplicates": false,
             "skipClassAttribute": false,
             "tags": [],
-            "classRegex": "^(class(Name)?|containerClassName|tw)$"
+            "classRegex": "^(class(Name)?|.*ClassName|tw)$"
         }
     }
 }
