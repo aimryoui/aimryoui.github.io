@@ -1,6 +1,5 @@
 "use client"
 
-
 import { composeRenderProps } from "react-aria-components"
 import { TextArea as TextareaPrimitive } from "react-aria-components/TextArea"
 
@@ -15,7 +14,6 @@ function Textarea({
     onPointerDown,
     ...props
 }: TextareaProps) {
-
     return (
         <TextareaPrimitive
             onFocus={(e) => {

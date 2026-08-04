@@ -77,15 +77,24 @@ type ImageCoreProps = GeneralImageProps &
 function getBorderRadiusShorthand(rounded: CornerRound, radiusVal: string) {
     if (rounded === true) return radiusVal
     switch (rounded) {
-        case "t": return `${radiusVal} ${radiusVal} 0 0`
-        case "b": return `0 0 ${radiusVal} ${radiusVal}`
-        case "r": return `0 ${radiusVal} ${radiusVal} 0`
-        case "l": return `${radiusVal} 0 0 ${radiusVal}`
-        case "tl": return `${radiusVal} 0 0 0`
-        case "tr": return `0 ${radiusVal} 0 0`
-        case "bl": return `0 0 0 ${radiusVal}`
-        case "br": return `0 0 ${radiusVal} 0`
-        default: return "0"
+        case "t":
+            return `${radiusVal} ${radiusVal} 0 0`
+        case "b":
+            return `0 0 ${radiusVal} ${radiusVal}`
+        case "r":
+            return `0 ${radiusVal} ${radiusVal} 0`
+        case "l":
+            return `${radiusVal} 0 0 ${radiusVal}`
+        case "tl":
+            return `${radiusVal} 0 0 0`
+        case "tr":
+            return `0 ${radiusVal} 0 0`
+        case "bl":
+            return `0 0 0 ${radiusVal}`
+        case "br":
+            return `0 0 ${radiusVal} 0`
+        default:
+            return "0"
     }
 }
 
@@ -127,8 +136,10 @@ const ScrambledGrid = memo(function ScrambledGrid({
                 const sourceC = scrambledIndex % Cols
                 const sourceR = Math.floor(scrambledIndex / Cols)
 
-                const translateX = targetC * targetColPct - sourceC * colPct - padX
-                const translateY = targetR * targetRowPct - sourceR * rowPct - padY
+                const translateX =
+                    targetC * targetColPct - sourceC * colPct - padX
+                const translateY =
+                    targetR * targetRowPct - sourceR * rowPct - padY
 
                 return (
                     <img
@@ -184,54 +195,47 @@ function ImageCore({
     const Rows = GRID_ROWS
     const Cols = GRID_COLS
 
-    const {
-        cssVars,
-        targetColPct,
-        targetRowPct,
-        colPct,
-        rowPct,
-        padX,
-        padY
-    } = useMemo(() => {
-        const spriteW = exactW + Cols * 2 * EDGE_PAD
-        const spriteH = exactH + Rows * 2 * EDGE_PAD
+    const { cssVars, targetColPct, targetRowPct, colPct, rowPct, padX, padY } =
+        useMemo(() => {
+            const spriteW = exactW + Cols * 2 * EDGE_PAD
+            const spriteH = exactH + Rows * 2 * EDGE_PAD
 
-        const imgWidthPercent = (spriteW / exactW) * 100
-        const imgHeightPercent = (spriteH / exactH) * 100
+            const imgWidthPercent = (spriteW / exactW) * 100
+            const imgHeightPercent = (spriteH / exactH) * 100
 
-        const padX_val = (EDGE_PAD / spriteW) * 100
-        const padY_val = (EDGE_PAD / spriteH) * 100
+            const padX_val = (EDGE_PAD / spriteW) * 100
+            const padY_val = (EDGE_PAD / spriteH) * 100
 
-        const colPct_val = 100 / Cols
-        const rowPct_val = 100 / Rows
+            const colPct_val = 100 / Cols
+            const rowPct_val = 100 / Rows
 
-        const targetColPct_val = (exactW / spriteW / Cols) * 100
-        const targetRowPct_val = (exactH / spriteH / Rows) * 100
+            const targetColPct_val = (exactW / spriteW / Cols) * 100
+            const targetRowPct_val = (exactH / spriteH / Rows) * 100
 
-        const vars: Record<string, string> = {
-            "--w": `${imgWidthPercent.toString()}%`,
-            "--h": `${imgHeightPercent.toString()}%`
-        }
+            const vars: Record<string, string> = {
+                "--w": `${imgWidthPercent.toString()}%`,
+                "--h": `${imgHeightPercent.toString()}%`
+            }
 
-        for (let i = 0; i < Cols; i++) {
-            vars[`--x${i.toString()}`] = `${(i * colPct_val + padX_val).toString()}%`
-        }
-        for (let i = 0; i < Rows; i++) {
-            vars[`--y${i.toString()}`] = `${(i * rowPct_val + padY_val).toString()}%`
-        }
+            for (let i = 0; i < Cols; i++) {
+                vars[`--x${i.toString()}`] =
+                    `${(i * colPct_val + padX_val).toString()}%`
+            }
+            for (let i = 0; i < Rows; i++) {
+                vars[`--y${i.toString()}`] =
+                    `${(i * rowPct_val + padY_val).toString()}%`
+            }
 
-        return {
-            cssVars: vars,
-            targetColPct: targetColPct_val,
-            targetRowPct: targetRowPct_val,
-            colPct: colPct_val,
-            rowPct: rowPct_val,
-            padX: padX_val,
-            padY: padY_val
-        }
-    }, [exactW, exactH, Cols, Rows])
-
-
+            return {
+                cssVars: vars,
+                targetColPct: targetColPct_val,
+                targetRowPct: targetRowPct_val,
+                colPct: colPct_val,
+                rowPct: rowPct_val,
+                padX: padX_val,
+                padY: padY_val
+            }
+        }, [exactW, exactH, Cols, Rows])
 
     return (
         <div
@@ -251,7 +255,9 @@ function ImageCore({
                 "relative grid place-items-center",
                 !pngBorder && "overflow-hidden",
                 rounded === true && !percentageRounded && "rounded-media",
-                typeof rounded === "string" && !percentageRounded && `rounded-${rounded}-media`,
+                typeof rounded === "string" &&
+                    !percentageRounded &&
+                    `rounded-${rounded}-media`,
                 lightbox && !isInLightbox && "cursor-zoom-in",
                 !noBorder &&
                     !pngBorder &&
@@ -456,5 +462,11 @@ function Image({
     )
 }
 
-export type { CornerRound, ImageBorderProps, ImageProps, ImageRoundProps, PngProps }
+export type {
+    CornerRound,
+    ImageBorderProps,
+    ImageProps,
+    ImageRoundProps,
+    PngProps
+}
 export { getBorderRadiusShorthand, Image }

@@ -41,7 +41,9 @@ function LineSidebar({
 
     const listItemsRef = useRef<HTMLElement[]>([])
     const itemCentersRef = useRef<number[]>([])
-    const statesRef = useRef(new WeakMap<HTMLElement, { target: number; current: number }>())
+    const statesRef = useRef(
+        new WeakMap<HTMLElement, { target: number; current: number }>()
+    )
 
     const setListRef = useCallback(
         (el: HTMLDivElement | null) => {
@@ -69,7 +71,9 @@ function LineSidebar({
         const list = internalListRef.current
         if (!list) return
 
-        const allItems = Array.from(list.querySelectorAll<HTMLElement>(itemSelector))
+        const allItems = Array.from(
+            list.querySelectorAll<HTMLElement>(itemSelector)
+        )
         const visibleItems: HTMLElement[] = []
         const centers: number[] = []
 
@@ -115,7 +119,8 @@ function LineSidebar({
                 mutations.some(
                     (m) =>
                         m.type === "childList" ||
-                        (m.type === "attributes" && m.attributeName === "hidden")
+                        (m.type === "attributes" &&
+                            m.attributeName === "hidden")
                 )
             ) {
                 resizeObserver.disconnect()
@@ -162,7 +167,7 @@ function LineSidebar({
 
         for (let i = 0; i < listItems.length; i++) {
             const el = listItems[i]
-            
+
             let state = statesRef.current.get(el)
             if (!state) {
                 state = { target: 0, current: 0 }
@@ -214,7 +219,7 @@ function LineSidebar({
             for (let i = 0; i < items.length; i++) {
                 const distance = Math.abs(pointerYLocal - centers[i])
                 const p = Math.max(0, 1 - distance / proximityRadius)
-                
+
                 let state = statesRef.current.get(items[i])
                 if (!state) {
                     state = { target: 0, current: 0 }

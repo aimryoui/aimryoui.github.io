@@ -124,9 +124,7 @@ function ProjectHeader({
                     )}
                 >
                     <Highlight
-                        className={cn(
-                            !isNew && "text-transparent md:hidden"
-                        )}
+                        className={cn(!isNew && "text-transparent md:hidden")}
                     >
                         {isNew ? "New" : "Older"}
                     </Highlight>

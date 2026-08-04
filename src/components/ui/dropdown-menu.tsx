@@ -1,5 +1,6 @@
 "use client"
 
+import type React from "react"
 import { createContext, isValidElement, useContext, useState } from "react"
 import NextLink from "next/link"
 
@@ -245,6 +246,29 @@ function DropdownMenuLabel({
     )
 }
 
+function DropdownMenuItemDescription({
+    className,
+    inset,
+    ...props
+}: React.ComponentProps<"p"> & {
+    inset?: boolean
+}) {
+    return (
+        <p
+            data-slot="dropdown-menu-item-description"
+            data-inset={inset}
+            className={cn(
+                "order-2 basis-full text-xs text-muted-foreground",
+                {
+                    "data-inset": "pl-7"
+                },
+                className
+            )}
+            {...props}
+        />
+    )
+}
+
 function DropdownMenuItem({
     className,
     inset,
@@ -268,7 +292,7 @@ function DropdownMenuItem({
                 onClick?.(e)
             }}
             className={cn(
-                "group/dropdown-menu-item relative flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "group/dropdown-menu-item relative flex cursor-default select-none flex-wrap items-start gap-x-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
@@ -318,7 +342,7 @@ function DropdownMenuSubTrigger({
                 onClick?.(e)
             }}
             className={cn(
-                "flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "flex cursor-default select-none flex-wrap items-start gap-x-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-open":
@@ -355,7 +379,10 @@ function DropdownMenuSubContent({
             shadow={false}
             isSubMenu={true}
             className={cn(
-                "w-auto min-w-32 rounded-xl bg-background text-foreground",
+                "w-auto min-w-32 max-w-53 rounded-xl bg-background text-foreground",
+                {
+                    sm: "max-w-auto"
+                },
                 className
             )}
             align={align}
@@ -392,7 +419,7 @@ function DropdownMenuLinkItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-2 text-nowrap rounded-lg py-2 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none flex-wrap items-center gap-2 text-nowrap rounded-lg py-2 text-sm outline-hidden",
                 openInNewTab ? "pe-8 ps-3" : "px-3",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
@@ -449,7 +476,7 @@ function DropdownMenuCheckboxItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none flex-wrap items-start gap-x-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
@@ -505,10 +532,9 @@ function DropdownMenuRadioItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none flex-wrap items-start gap-x-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
-                    "data-inset": "pl-7",
                     "data-disabled": "pointer-events-none opacity-50",
                     "[&_svg:not([class*='size-'])]": "size-4",
                     "[&_svg]": "pointer-events-none shrink-0"
@@ -518,7 +544,7 @@ function DropdownMenuRadioItem({
             {...props}
         >
             <span
-                className="pointer-events-none absolute right-3 flex items-center justify-center"
+                className="pointer-events-none order-1 -mr-1 ms-auto flex size-5 items-center justify-center"
                 data-slot="dropdown-menu-radio-item-indicator"
             >
                 <MenuPrimitive.RadioItemIndicator>
@@ -567,6 +593,7 @@ export {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
+    DropdownMenuItemDescription,
     DropdownMenuLabel,
     DropdownMenuLinkItem,
     DropdownMenuPortal,

@@ -6,10 +6,10 @@ const OPERATOR_REGEX = /([0-9a-zA-Z%)_])\s*([+-])\s*(?=[0-9a-zA-Z(._-])/gu
 
 function parseContainerValue(value: string) {
     let parsedValue = value.replace(UNDERSCORE_REGEX, " ")
-    
+
     let placeholders: Record<string, string> = {}
     let counter = 0
-    parsedValue = parsedValue.replace(VAR_ENV_REGEX, match => {
+    parsedValue = parsedValue.replace(VAR_ENV_REGEX, (match) => {
         let key = `__VAR_${counter++}__`
         placeholders[key] = match
         return key
@@ -27,8 +27,6 @@ function parseContainerValue(value: string) {
 export default plugin(
     function containerQueries({ matchUtilities, matchVariant, theme }) {
         let values: Record<string, string> = theme("containers")
-
-
 
         matchUtilities(
             {

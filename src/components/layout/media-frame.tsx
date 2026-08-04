@@ -120,7 +120,10 @@ function MediaFrameContent({
 }: MediaFrameContentProps & {
     showHideAnimationType?: PhotoSwipeOptions["showHideAnimationType"]
 }) {
-    const options = useMemo(() => ({ showHideAnimationType }), [showHideAnimationType])
+    const options = useMemo(
+        () => ({ showHideAnimationType }),
+        [showHideAnimationType]
+    )
 
     return (
         <div
@@ -286,7 +289,10 @@ function JustifiedColumn({
 
                     if (Math.abs(currentRatio - x) > 0.0001) {
                         currentRatio = x
-                        el.style.setProperty("--flex-ratio", (x * 100).toFixed(5))
+                        el.style.setProperty(
+                            "--flex-ratio",
+                            (x * 100).toFixed(5)
+                        )
                     }
                 }
             }

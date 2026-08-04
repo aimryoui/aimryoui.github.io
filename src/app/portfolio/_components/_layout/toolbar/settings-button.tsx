@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuGroup,
+    DropdownMenuItemDescription,
     DropdownMenuLabel,
     DropdownMenuLinkItem,
     DropdownMenuRadioGroup,
@@ -258,12 +259,25 @@ function SettingButton() {
                                                             closeOnClick
                                                         >
                                                             Manual
+                                                            <DropdownMenuItemDescription>
+                                                                Manually press
+                                                                the audio button
+                                                                to turn on
+                                                                audio.
+                                                            </DropdownMenuItemDescription>
                                                         </DropdownMenuRadioItem>
                                                         <DropdownMenuRadioItem
                                                             value="auto"
                                                             closeOnClick
                                                         >
                                                             Auto
+                                                            <DropdownMenuItemDescription>
+                                                                Automatically
+                                                                capture first
+                                                                press
+                                                                interaction and
+                                                                turn on audio.
+                                                            </DropdownMenuItemDescription>
                                                         </DropdownMenuRadioItem>
                                                     </DropdownMenuRadioGroup>
                                                 </DropdownMenuSubContent>

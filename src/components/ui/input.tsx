@@ -1,6 +1,5 @@
 "use client"
 
-
 import { composeRenderProps } from "react-aria-components"
 import { Input as InputPrimitive } from "react-aria-components/Input"
 
@@ -16,7 +15,6 @@ function Input({
     onPointerDown,
     ...props
 }: InputProps) {
-
     return (
         <InputPrimitive
             type={type}
