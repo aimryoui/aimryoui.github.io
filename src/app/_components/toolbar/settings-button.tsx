@@ -88,12 +88,29 @@ function SettingButton() {
                                                     <DropdownMenuRadioItem
                                                         value="manual"
                                                         closeOnClick
+                                                        description={
+                                                            <>
+                                                                Manually press
+                                                                the audio button
+                                                                to turn on
+                                                                audio.
+                                                            </>
+                                                        }
                                                     >
                                                         Manual
                                                     </DropdownMenuRadioItem>
                                                     <DropdownMenuRadioItem
                                                         value="auto"
                                                         closeOnClick
+                                                        description={
+                                                            <>
+                                                                Automatically
+                                                                capture first
+                                                                press
+                                                                interaction and
+                                                                turn on audio.
+                                                            </>
+                                                        }
                                                     >
                                                         Auto
                                                     </DropdownMenuRadioItem>

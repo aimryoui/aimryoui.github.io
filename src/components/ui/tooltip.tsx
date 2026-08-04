@@ -109,7 +109,7 @@ function TooltipContent({
                 side={side}
                 sideOffset={sideOffset}
                 collisionPadding={12}
-                arrowPadding={7}
+                arrowPadding={10}
                 className={cn(
                     "z-90 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width]",
                     "transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350",
@@ -158,7 +158,7 @@ function TooltipArrow({ ...props }: TooltipPrimitive.Arrow.Props) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 10"
                 fill="none"
-                className={cn("h-2.5 w-6 -translate-y-0.75")}
+                className={cn("h-2.5 w-6 -translate-y-0.75 transform-gpu")}
             >
                 <path
                     className={cn("fill-background")}
@@ -167,7 +167,6 @@ function TooltipArrow({ ...props }: TooltipPrimitive.Arrow.Props) {
                 <path
                     className={cn("stroke-muted-foreground")}
                     strokeWidth="1.3"
-                    vectorEffect="non-scaling-stroke"
                     d="M0 2.25h.828c1.538 0 2.306 0 3.026.18a6 6 0 0 1 1.796.781c.623.403 1.147.965 2.196 2.089l1.64 1.756c.873.936 1.31 1.405 1.821 1.578a2.15 2.15 0 0 0 1.386 0c.51-.173.948-.642 1.822-1.578L16.154 5.3c1.049-1.124 1.573-1.686 2.196-2.089a6 6 0 0 1 1.796-.78c.72-.181 1.488-.181 3.026-.181H24"
                 />
             </svg>

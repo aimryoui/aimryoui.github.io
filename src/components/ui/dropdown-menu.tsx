@@ -1,7 +1,12 @@
 "use client"
 
-import type React from "react"
-import { createContext, isValidElement, useContext, useState } from "react"
+import {
+    createContext,
+    Fragment,
+    isValidElement,
+    useContext,
+    useState
+} from "react"
 import NextLink from "next/link"
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
@@ -246,29 +251,6 @@ function DropdownMenuLabel({
     )
 }
 
-function DropdownMenuItemDescription({
-    className,
-    inset,
-    ...props
-}: React.ComponentProps<"p"> & {
-    inset?: boolean
-}) {
-    return (
-        <p
-            data-slot="dropdown-menu-item-description"
-            data-inset={inset}
-            className={cn(
-                "order-2 basis-full text-xs text-muted-foreground",
-                {
-                    "data-inset": "pl-7"
-                },
-                className
-            )}
-            {...props}
-        />
-    )
-}
-
 function DropdownMenuItem({
     className,
     inset,
@@ -292,7 +274,7 @@ function DropdownMenuItem({
                 onClick?.(e)
             }}
             className={cn(
-                "group/dropdown-menu-item relative flex cursor-default select-none flex-wrap items-start gap-x-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "group/dropdown-menu-item relative flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
@@ -342,7 +324,7 @@ function DropdownMenuSubTrigger({
                 onClick?.(e)
             }}
             className={cn(
-                "flex cursor-default select-none flex-wrap items-start gap-x-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-open":
@@ -379,10 +361,7 @@ function DropdownMenuSubContent({
             shadow={false}
             isSubMenu={true}
             className={cn(
-                "w-auto min-w-32 max-w-53 rounded-xl bg-background text-foreground",
-                {
-                    sm: "max-w-auto"
-                },
+                "w-auto min-w-32 max-w-53 rounded-xl bg-background text-foreground sm:max-w-auto",
                 className
             )}
             align={align}
@@ -419,7 +398,7 @@ function DropdownMenuLinkItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none flex-wrap items-center gap-2 text-nowrap rounded-lg py-2 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center gap-2 text-nowrap rounded-lg py-2 text-sm outline-hidden",
                 openInNewTab ? "pe-8 ps-3" : "px-3",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
@@ -476,7 +455,7 @@ function DropdownMenuCheckboxItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none flex-wrap items-start gap-x-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
@@ -514,13 +493,17 @@ function DropdownMenuRadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props) {
 function DropdownMenuRadioItem({
     className,
     children,
+    description,
     inset,
     onClick,
     ...props
 }: MenuPrimitive.RadioItem.Props & {
     inset?: boolean
+    description?: React.ReactNode
 }) {
     const playPressFeedback = usePressFeedback()
+
+    const Comp = description ? "div" : Fragment
 
     return (
         <MenuPrimitive.RadioItem
@@ -532,7 +515,7 @@ function DropdownMenuRadioItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none flex-wrap items-start gap-x-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center justify-between gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-disabled": "pointer-events-none opacity-50",
@@ -543,15 +526,37 @@ function DropdownMenuRadioItem({
             )}
             {...props}
         >
-            <span
-                className="pointer-events-none order-1 -mr-1 ms-auto flex size-5 items-center justify-center"
-                data-slot="dropdown-menu-radio-item-indicator"
+            <Comp
+                {...(description && {
+                    className: "flex flex-col gap-y-0.5"
+                })}
             >
-                <MenuPrimitive.RadioItemIndicator>
-                    <CheckIcon />
-                </MenuPrimitive.RadioItemIndicator>
-            </span>
-            {children}
+                <Comp
+                    {...(description && {
+                        className: "flex gap-1.5 justify-between"
+                    })}
+                >
+                    {children}
+                    <span
+                        className={cn(
+                            "pointer-events-none -me-1 flex size-5 items-center justify-center"
+                        )}
+                        data-slot="dropdown-menu-radio-item-indicator"
+                    >
+                        <MenuPrimitive.RadioItemIndicator>
+                            <CheckIcon />
+                        </MenuPrimitive.RadioItemIndicator>
+                    </span>
+                </Comp>
+                {description && (
+                    <span
+                        className="text-xs text-muted-foreground"
+                        data-slot="dropdown-menu-radio-item-description"
+                    >
+                        {description}
+                    </span>
+                )}
+            </Comp>
         </MenuPrimitive.RadioItem>
     )
 }
@@ -593,7 +598,6 @@ export {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuItemDescription,
     DropdownMenuLabel,
     DropdownMenuLinkItem,
     DropdownMenuPortal,

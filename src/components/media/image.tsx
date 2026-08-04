@@ -254,10 +254,6 @@ function ImageCore({
                 asBackgroundImage ? "h-full" : "h-fit",
                 "relative grid place-items-center",
                 !pngBorder && "overflow-hidden",
-                rounded === true && !percentageRounded && "rounded-media",
-                typeof rounded === "string" &&
-                    !percentageRounded &&
-                    `rounded-${rounded}-media`,
                 lightbox && !isInLightbox && "cursor-zoom-in",
                 !noBorder &&
                     !pngBorder &&
@@ -288,26 +284,27 @@ function ImageCore({
             style={{
                 "--nhn-aspect-ratio": aspectRatio,
 
-                ...(isInLightbox
-                    ? {
-                          ...(rounded && {
-                              borderRadius: getBorderRadiusShorthand(
-                                  rounded,
-                                  "calc(var(--radius-media) / var(--nhn-wrap-scale))"
-                              )
-                          })
-                      }
-                    : {
-                          ...(limitHeight && {
-                              width: "calc(max(80vh, calc(var(--spacing) * 125)) * calc(var(--nhn-aspect-ratio)))"
-                          }),
-                          ...(row && {
-                              flex: `${row === "justified" ? "calc((var(--nhn-aspect-ratio)) * 100)" : exactW} 1 0%`
-                          }),
-                          ...(col && {
-                              width: `calc(${exactW} / 1599 * 100%)`
-                          })
-                      }),
+                ...(rounded &&
+                    !percentageRounded && {
+                        borderRadius: getBorderRadiusShorthand(
+                            rounded,
+                            isInLightbox
+                                ? "calc(var(--radius-media) / var(--nhn-wrap-scale))"
+                                : "var(--radius-media)"
+                        )
+                    }),
+
+                ...(!isInLightbox && {
+                    ...(limitHeight && {
+                        width: "calc(max(80vh, calc(var(--spacing) * 125)) * calc(var(--nhn-aspect-ratio)))"
+                    }),
+                    ...(row && {
+                        flex: `${row === "justified" ? "calc((var(--nhn-aspect-ratio)) * 100)" : exactW} 1 0%`
+                    }),
+                    ...(col && {
+                        width: `calc(${exactW} / 1599 * 100%)`
+                    })
+                }),
 
                 ...(!asBackgroundImage && {
                     aspectRatio: "var(--nhn-aspect-ratio)"

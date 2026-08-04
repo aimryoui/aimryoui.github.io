@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuGroup,
-    DropdownMenuItemDescription,
     DropdownMenuLabel,
     DropdownMenuLinkItem,
     DropdownMenuRadioGroup,
@@ -257,27 +256,33 @@ function SettingButton() {
                                                         <DropdownMenuRadioItem
                                                             value="manual"
                                                             closeOnClick
+                                                            description={
+                                                                <>
+                                                                    Manually
+                                                                    press the
+                                                                    audio button
+                                                                    to turn on
+                                                                    audio.
+                                                                </>
+                                                            }
                                                         >
                                                             Manual
-                                                            <DropdownMenuItemDescription>
-                                                                Manually press
-                                                                the audio button
-                                                                to turn on
-                                                                audio.
-                                                            </DropdownMenuItemDescription>
                                                         </DropdownMenuRadioItem>
                                                         <DropdownMenuRadioItem
                                                             value="auto"
                                                             closeOnClick
+                                                            description={
+                                                                <>
+                                                                    Automatically
+                                                                    capture
+                                                                    first press
+                                                                    interaction
+                                                                    and turn on
+                                                                    audio.
+                                                                </>
+                                                            }
                                                         >
                                                             Auto
-                                                            <DropdownMenuItemDescription>
-                                                                Automatically
-                                                                capture first
-                                                                press
-                                                                interaction and
-                                                                turn on audio.
-                                                            </DropdownMenuItemDescription>
                                                         </DropdownMenuRadioItem>
                                                     </DropdownMenuRadioGroup>
                                                 </DropdownMenuSubContent>
