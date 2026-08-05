@@ -50,7 +50,7 @@ function CollapsibleContent({ className, ...props }: CollapsibleContentProps) {
                 "h-[--disclosure-panel-height] min-h-0 overflow-clip",
                 {
                     "motion-safe":
-                        "transition-[height] ease-spring duration-350"
+                        "transition-[height] ease-spring duration-400"
                 },
                 className
             )}

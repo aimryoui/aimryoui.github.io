@@ -62,11 +62,19 @@ function Education() {
                             ]
                         })}
                     >
-                        <TableHead className="px-0">Period</TableHead>
-                        <TableHead className="col-span-2 px-0" isRowHeader>
+                        <TableHead id="period" className="px-0">
+                            Period
+                        </TableHead>
+                        <TableHead
+                            id="name"
+                            className="col-span-2 px-0"
+                            isRowHeader
+                        >
                             Name
                         </TableHead>
-                        <TableHead className="px-0">Detail</TableHead>
+                        <TableHead id="detail" className="px-0">
+                            Detail
+                        </TableHead>
                     </TableHeader>
 
                     <TableBody

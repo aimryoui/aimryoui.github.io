@@ -112,14 +112,14 @@ function TooltipContent({
                 arrowPadding={10}
                 className={cn(
                     "z-90 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width]",
-                    "transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350",
+                    "transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
                     "data-instant:transition-none"
                 )}
             >
                 <TooltipPrimitive.Popup
                     data-slot="tooltip-content"
                     className={cn(
-                        "relative h-[--popup-height,auto] w-[--popup-width,auto] max-w-125 origin-[--transform-origin] text-balance rounded-xlg bg-background text-sm tracking-tight text-foreground -outline-offset-px outline-muted-foreground outline transition-[width,height,opacity,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350",
+                        "relative h-[--popup-height,auto] w-[--popup-width,auto] max-w-125 origin-[--transform-origin] text-balance rounded-xlg bg-background text-sm tracking-tight text-foreground -outline-offset-px outline-muted-foreground outline transition-[width,height,opacity,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
                         {
                             "data-starting-style": "scale-90 opacity-0",
                             "data-ending-style": "scale-90 opacity-0",
@@ -143,7 +143,7 @@ function TooltipArrow({ ...props }: TooltipPrimitive.Arrow.Props) {
         <TooltipPrimitive.Arrow
             data-slot="tooltip-arrow"
             className={cn(
-                "transition-[left] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350",
+                "transition-[left] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
                 {
                     "data-[side=top]": "bottom-0 translate-y-full",
                     "data-[side=bottom]": "top-0 -translate-y-full rotate-180",
@@ -187,7 +187,7 @@ function TooltipViewport({
                 "has-[kbd]:pr-1",
                 {
                     "[&_:is([data-current],[data-previous])]":
-                        "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.35s,.175s]",
+                        "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.4s,.25s]",
                     "[&_[data-current][data-starting-style]]": [
                         "opacity-0",
                         {

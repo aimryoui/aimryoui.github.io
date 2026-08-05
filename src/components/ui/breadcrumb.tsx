@@ -250,7 +250,7 @@ function BreadcrumbMenu({
                 {children}
                 <ChevronDownIcon
                     className={cn(
-                        "size-4 transition-transform duration-300",
+                        "size-4 transition-transform duration-400",
                         "text-muted-foreground group-hover:text-foreground",
                         {
                             "group-hover/trigger": "text-foreground",

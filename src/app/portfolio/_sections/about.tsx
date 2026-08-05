@@ -17,9 +17,9 @@ function About() {
             >
                 <span
                     className={cn(
-                        "absolute bottom-[calc(100%+1rem)] left-safe-zone font-mono uppercase leading-normal",
+                        "absolute bottom-full left-0 px-safe-zone pb-4 font-mono uppercase leading-normal",
                         {
-                            md: "bottom-[calc(100%+.75rem)] text-sm"
+                            md: "pb-3 text-sm"
                         }
                     )}
                 >
@@ -115,7 +115,7 @@ function About() {
                     {[
                         { value: "2003", label: "Year of birth" },
                         { value: "50+", label: "Projects" },
-                        { value: "4+", label: "Years as Designer" }
+                        { value: "4+", label: "Years as a Designer" }
                     ].map((item, index, array) => (
                         <Fragment key={item.label}>
                             <div
@@ -158,7 +158,7 @@ function About() {
                                 >
                                     <span
                                         className={cn(
-                                            "max-w-full truncate text-xxs uppercase leading-4 font-wght-[625]"
+                                            "inline-block max-w-full truncate text-xxs uppercase leading-4 font-wght-[625]"
                                         )}
                                     >
                                         {item.label}

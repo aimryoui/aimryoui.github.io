@@ -10,13 +10,15 @@ import {
     Weddings
 } from "@/portfolio/_components/_icons/category-icons"
 
-export interface CategoryConfig {
+interface CategoryDetails {
     title: string
     note: string
     icons: React.ReactNode
 }
 
-export const PROJECT_CATEGORIES: Record<string, CategoryConfig> = {
+type CategoryCollection = Record<string, CategoryDetails>
+
+const PROJECT_CATEGORIES: CategoryCollection = {
     uiux: {
         title: "UI & UX",
         note: "Mobile Apps / Websites",
@@ -63,3 +65,6 @@ export const PROJECT_CATEGORIES: Record<string, CategoryConfig> = {
         icons: <Miscellaneous />
     }
 }
+
+export type { CategoryCollection, CategoryDetails }
+export { PROJECT_CATEGORIES }

@@ -17,10 +17,13 @@ import { Highlight } from "@/components/ui/typography"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useContainerQuery } from "@/hooks/use-container-query"
 import { cn } from "@/lib/utils"
-import { type SectionProps, sections } from "@/portfolio/_sections/contact"
+import {
+    CONTACT_METHODS,
+    type ContactMethodDetails
+} from "@/portfolio/_configs/contact-methods"
 import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
-const ALL_PLATFORMS = sections.flatMap((section) => section.platforms)
+const ALL_PLATFORMS = CONTACT_METHODS.flatMap((method) => method.platforms)
 
 const QR_ITEMS = [
     { qrSrc: "/qr/email.webp", label: "Email" },
@@ -268,7 +271,7 @@ function FooterSeparator({
     containerRef
 }: {
     index: number
-    arr: SectionProps[]
+    arr: ContactMethodDetails[]
     containerRef: React.RefObject<HTMLElement | null>
 }) {
     const { isWebKit } = useBrowserEngine()
@@ -319,7 +322,7 @@ function WebkitFooterSeparator({
     containerRef
 }: {
     index: number
-    arr: SectionProps[]
+    arr: ContactMethodDetails[]
     containerRef: React.RefObject<HTMLElement | null>
 }) {
     const isContainerNarrow = useContainerQuery(containerRef, "50.9375rem")

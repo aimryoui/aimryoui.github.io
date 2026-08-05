@@ -146,8 +146,8 @@ function DropdownMenuContent({
                 anchor={anchor ?? undefined}
                 className={cn(
                     "group/dropdown-menu-positioner z-80 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] cursor-auto outline-none",
-                    isSubMenu && "p-0.5",
-                    "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-350 data-instant:transition-none"
+                    isSubMenu && "mt-px",
+                    "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400 data-instant:transition-none"
                 )}
                 align={align}
                 alignOffset={alignOffset}
@@ -162,7 +162,7 @@ function DropdownMenuContent({
                     className={cn(
                         "group/dropdown-menu-popup relative z-50 grid h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
                         "will-change-[width,height,opacity,transform,border-radius] transition-[width,height,opacity,transform,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)]",
-                        isSubMenu ? "duration-100" : "duration-350",
+                        isSubMenu ? "duration-200" : "duration-400",
                         {
                             "group-data-[cursor=target]/dropdown-menu-positioner:group-hover/dropdown-menu-positioner":
                                 "rounded-none",
@@ -201,7 +201,7 @@ function DropdownMenuViewport({
                 {
                     "group-data-[side=top]/dropdown-menu-popup": "justify-end",
                     "[&_:is([data-current],[data-previous])]":
-                        "w-[calc(var(--popup-width)-var(--spacing)*2)] translate-x-0 opacity-100 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.35s,.175s]",
+                        "w-[calc(var(--popup-width)-var(--spacing)*2)] translate-x-0 opacity-100 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.4s,.25s]",
                     "[&_[data-current][data-starting-style]]": {
                         "data-[activation-direction~='left']":
                             "-translate-x-1/2 opacity-0",
@@ -319,6 +319,7 @@ function DropdownMenuSubTrigger({
             data-slot="dropdown-menu-sub-trigger"
             data-inset={inset}
             data-sound="button"
+            delay={0}
             onClick={(e) => {
                 playPressFeedback("button")
                 onClick?.(e)

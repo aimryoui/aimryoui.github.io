@@ -132,6 +132,7 @@
     :root {
         --px: 0.09375rem;
         font-size: 0.937135vw;
+        line-height: 1.25rem;
 
         @apply font-wght-450 2xl:text-base dark:font-wght-400;
     }

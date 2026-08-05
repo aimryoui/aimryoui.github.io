@@ -20,53 +20,7 @@ import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
-import { TOOL_ICONS, type ToolProps } from "@/portfolio/_configs/tools"
-
-interface SectionProps {
-    title: string
-    tools: ToolProps[]
-    isRowHeader?: boolean
-}
-
-interface Section {
-    section: string
-    frequencies: SectionProps[]
-}
-
-const ICON = TOOL_ICONS()
-
-const sections: Section[] = [
-    {
-        section: "Main",
-        frequencies: [
-            {
-                title: "Most frequently used and experienced",
-                tools: [
-                    ICON.figma,
-                    ICON.photoshop,
-                    ICON.illustrator,
-                    ICON.inDesign,
-                    ICON.afterEffects
-                ],
-                isRowHeader: true
-            },
-            {
-                title: "Less experienced",
-                tools: [ICON.blender, ICON.premierePro]
-            }
-        ]
-    },
-    {
-        section: "Outdated",
-        frequencies: [
-            {
-                title: "Used but outdated",
-                tools: [ICON.dreamweaver, ICON.xd, ICON.dimension],
-                isRowHeader: true
-            }
-        ]
-    }
-]
+import { SOFTWARE_SECTIONS } from "@/portfolio/_configs/software-sections"
 
 function Software() {
     return (
@@ -78,7 +32,7 @@ function Software() {
             <Divider />
             <SectionLine />
             <Tooltip>
-                {sections.map((section, index, arr) => (
+                {SOFTWARE_SECTIONS.map((section, index, arr) => (
                     <Fragment key={section.section}>
                         <TableContainer
                             className={cn(

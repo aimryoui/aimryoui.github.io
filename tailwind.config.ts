@@ -215,6 +215,9 @@ export default {
             zIndex: {
                 1: "1",
                 2: "2",
+                3: "3",
+                4: "4",
+                5: "5",
                 60: "60",
                 70: "70",
                 80: "80",
@@ -250,6 +253,9 @@ export default {
                 spinner: "spinner",
                 focus: "focus .2s ease-out forwards",
                 inert: "inert forwards",
+                expand: "expand .4s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+                collapse:
+                    "collapse .4s cubic-bezier(0.22, 1, 0.36, 1) forwards",
                 "toc-reveal":
                     "toc-reveal 1.25s cubic-bezier(.4,0,.6,1) forwards",
                 "toolbar-reveal":
@@ -282,6 +288,22 @@ export default {
                     },
                     "100%": {
                         pointerEvent: "auto"
+                    }
+                },
+                expand: {
+                    "0%": {
+                        gridTemplateRows: "0fr"
+                    },
+                    "100%": {
+                        gridTemplateRows: "1fr"
+                    }
+                },
+                collapse: {
+                    "0%": {
+                        gridTemplateRows: "1fr"
+                    },
+                    "100%": {
+                        gridTemplateRows: "0fr"
                     }
                 },
                 "toc-reveal": {

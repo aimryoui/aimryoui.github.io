@@ -81,7 +81,7 @@ const MobileTocGroup = memo(
                                     "size-6 translate-y-[.5px] transition-transform duration-350",
                                     {
                                         "group-not-data-expanded/collapsible":
-                                            "translate-x-[1px] -rotate-90 dark:stroke-2.5"
+                                            "translate-x-[1px] translate-y-0 -rotate-90 dark:stroke-2.5"
                                     }
                                 )}
                             />

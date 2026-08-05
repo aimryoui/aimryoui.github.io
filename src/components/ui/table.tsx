@@ -1,8 +1,11 @@
 "use client"
 
+import { ChevronDown } from "lucide-react"
+import { composeRenderProps } from "react-aria-components"
 import {
     Cell as CellPrimitive,
     type CellProps,
+    Collection as CollectionPrimitive,
     Column as ColumnPrimitive,
     type ColumnProps,
     Row as RowPrimitive,
@@ -17,6 +20,7 @@ import {
     type TableProps
 } from "react-aria-components/Table"
 
+import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 function TableContainer({
@@ -27,6 +31,25 @@ function TableContainer({
         <figure
             data-slot="table-container"
             className={cn("relative w-full", className)}
+            {...props}
+        />
+    )
+}
+
+function TableCaption({
+    className,
+    ...props
+}: React.ComponentProps<"figcaption">) {
+    return (
+        <figcaption
+            data-slot="table-caption"
+            className={cn(
+                "text-left text-highlighted",
+                {
+                    md: "text-sm"
+                },
+                className
+            )}
             {...props}
         />
     )
@@ -72,16 +95,20 @@ function TableFooter<T>({ className, ...props }: TableFooterProps<T>) {
     )
 }
 
-function TableRow<T>({ className, ...props }: RowProps<T>) {
+function TableRow<T>({ className, columns, children, ...props }: RowProps<T>) {
     return (
         <RowPrimitive
             data-slot="table-row"
             className={cn(
-                "data-[state=selected]:bg-muted has-aria-expanded:bg-muted/50",
+                "group/table-row data-[state=selected]:bg-muted has-aria-expanded:bg-muted/50",
                 className
             )}
             {...props}
-        />
+        >
+            <CollectionPrimitive items={columns}>
+                {children}
+            </CollectionPrimitive>
+        </RowPrimitive>
     )
 }
 
@@ -101,38 +128,97 @@ function TableHead({ className, ...props }: ColumnProps) {
     )
 }
 
-function TableCell({ className, ...props }: CellProps) {
+function TableCell({
+    className,
+    spanClassName,
+    ...props
+}: CellProps & {
+    spanClassName?: string
+}) {
     return (
         <CellPrimitive
             data-slot="table-cell"
             className={cn(
-                "text-pretty p-2 align-middle has-[[role=checkbox]]:pr-0",
+                "group/table-cell text-pretty align-middle text-base has-[[role=checkbox]]:pr-0",
                 {
                     md: "text-sm"
                 },
                 className
             )}
+            // style={({ hasChildItems, isTreeColumn, level }) => ({
+            //     paddingInlineStart: isTreeColumn
+            //         ? 4 + (hasChildItems ? 0 : 20) + (level - 1) * 16
+            //         : undefined
+            // })}
             {...props}
-        />
-    )
-}
+        >
+            {composeRenderProps(
+                props.children,
+                (
+                    children,
+                    { hasChildItems, isTreeColumn, isExpanded, isDisabled }
+                ) => (
+                    <>
+                        {children}
+                        {hasChildItems && isTreeColumn && (
+                            <Button
+                                slot="chevron"
+                                nativeButton
+                                keepFeedback
+                                className={cn(
+                                    "absolute inset-0 z-2 flex items-start text-muted-foreground/80 transition-[color] duration-100 dark:text-muted-foreground/50",
+                                    "-my-[calc(var(--spacing-table-between)/2)] py-[calc(var(--spacing-table-between)/2)]",
+                                    isDisabled
+                                        ? "pointer-events-none"
+                                        : {
+                                              "group-not-[:has(a:hover)]/table-row":
+                                                  {
+                                                      "group-hover/table-cell":
+                                                          "text-muted-foreground transition-none",
+                                                      "group-active/table-cell":
+                                                          "text-foreground transition-none",
+                                                      "group-data-expanded/table-cell":
+                                                          "text-foreground transition-none"
+                                                  },
 
-function TableCaption({
-    className,
-    ...props
-}: React.ComponentProps<"figcaption">) {
-    return (
-        <figcaption
-            data-slot="table-caption"
-            className={cn(
-                "text-left text-highlighted",
-                {
-                    md: "text-sm"
-                },
-                className
+                                              "group-first/table-row":
+                                                  "-mb-[calc(var(--spacing-table-between)/2)] -mt-safe-zone-vertical pb-[calc(var(--spacing-table-between)/2)] pt-safe-zone-vertical",
+                                              "group-last/table-row":
+                                                  "-mb-safe-zone-vertical -mt-[calc(var(--spacing-table-between)/2)] pb-safe-zone-vertical pt-[calc(var(--spacing-table-between)/2)]"
+                                          },
+                                    {
+                                        "@[59.375rem]": "me-safe-zone"
+                                    }
+                                )}
+                            >
+                                <span
+                                    data-cursor="lock"
+                                    className={cn(
+                                        "-ms-1.25 -mt-0.5 inline-flex min-w-[calc(100%-var(--spacing)*2.5)] items-center justify-end py-0.5 text-sm",
+                                        spanClassName
+                                    )}
+                                >
+                                    <span className="@[59.375rem]:hidden">
+                                        Details
+                                    </span>
+                                    <ChevronDown
+                                        aria-hidden
+                                        strokeWidth={1.5}
+                                        className={cn(
+                                            "size-5 -translate-y-[.5px]",
+                                            {
+                                                "motion-safe":
+                                                    "transition-transform duration-300 group-data-expanded/table-cell:-rotate-180"
+                                            }
+                                        )}
+                                    />
+                                </span>
+                            </Button>
+                        )}
+                    </>
+                )
             )}
-            {...props}
-        />
+        </CellPrimitive>
     )
 }
 

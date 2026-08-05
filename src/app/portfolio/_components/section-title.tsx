@@ -31,11 +31,11 @@ function SectionTitle({
                 <span
                     id={noteId}
                     className={cn(
-                        "absolute bottom-[calc(100%+1rem)] left-safe-zone max-w-[calc(100%-var(--spacing-safe-zone)*2)] font-mono uppercase leading-normal",
+                        "absolute bottom-full left-0 max-w-[calc(100%-var(--spacing-safe-zone)*2)] px-safe-zone pb-4 font-mono uppercase leading-normal",
                         noteId &&
                             "scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem)]",
                         {
-                            md: "bottom-[calc(100%+.75rem)] text-sm"
+                            md: "pb-3 text-sm"
                         },
                         noteClassName
                     )}
