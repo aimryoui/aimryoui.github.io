@@ -115,7 +115,7 @@ function Experience() {
                                 }))}
                                 dependencies={[section.items]}
                                 className={cn("grid gap-y-table-between", {
-                                    sm: "gap-y-2.75"
+                                    md: "gap-y-2.75"
                                 })}
                             >
                                 {(place) => (

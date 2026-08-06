@@ -197,7 +197,10 @@ function About() {
                         )}
                     >
                         <TooltipTrigger
-                            payload="Hồ Chí Minh City"
+                            payload={{
+                                content: "Hồ Chí Minh City",
+                                sideOffset: 17
+                            }}
                             render={
                                 <Link
                                     href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"

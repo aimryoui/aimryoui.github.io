@@ -285,10 +285,39 @@ function prepareContext() {
     }
 }
 
+let silentOscillator: OscillatorNode | null = null
+let silentGain: GainNode | null = null
+
+function startSilentLoop() {
+    if (!ctx || silentOscillator) return
+
+    silentOscillator = ctx.createOscillator()
+    silentGain = ctx.createGain()
+
+    silentGain.gain.value = 0
+
+    silentOscillator.connect(silentGain)
+    silentGain.connect(ctx.destination)
+    silentOscillator.start()
+}
+
+function stopSilentLoop() {
+    if (silentOscillator) {
+        silentOscillator.stop()
+        silentOscillator.disconnect()
+        silentOscillator = null
+    }
+    if (silentGain) {
+        silentGain.disconnect()
+        silentGain = null
+    }
+}
+
 interface SoundEngine {
     prepare: () => void
     playHover: (type: HoverSoundType) => void
     playPress: (type: PressSoundType) => void
+    setKeepAwake: (enabled: boolean) => void
     dispose: () => void
     getContext: () => AudioContext | null
 }
@@ -326,6 +355,15 @@ function createSoundEngine(): SoundEngine {
             if (type === false) return
             playSound(type, false)
         },
+        setKeepAwake(enabled: boolean) {
+            if (disposed) return
+            if (enabled) {
+                prepareContext()
+                startSilentLoop()
+            } else {
+                stopSilentLoop()
+            }
+        },
         dispose() {
             if (disposed) return
             disposed = true
@@ -333,6 +371,7 @@ function createSoundEngine(): SoundEngine {
             consumers = Math.max(0, consumers - 1)
 
             if (consumers === 0 && ctx) {
+                stopSilentLoop()
                 void ctx.close()
                 ctx = null
                 buffers.clear()

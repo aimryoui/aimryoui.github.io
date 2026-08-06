@@ -102,7 +102,13 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
             document.removeEventListener("focusin", handleInteraction)
             playerRef.current?.dispose()
         }
-    })
+    }, [])
+
+    useEffect(() => {
+        if (playerRef.current) {
+            playerRef.current.setKeepAwake(isAudioEnabled)
+        }
+    }, [isAudioEnabled])
 
     return children
 }

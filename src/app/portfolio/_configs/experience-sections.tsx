@@ -69,7 +69,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                     url: "https://www.facebook.com/cocsaigonfuhcm"
                 },
                 summary:
-                    "A non-profit University club, one of the largest in Vietnam. Currently as a mentor, providing guidance and feedback on designs for next generations of the organization.",
+                    "Currently as a mentor, providing guidance and feedback on designs for next generations of the organization.",
                 description: [
                     "Supervising, providing feedback on, and monitoring designs, publications, and content in general.",
                     "Serving as a supervisor/mentor for projects whenever guidance and assistance are required.",
@@ -101,7 +101,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                     duplicate: true
                 },
                 summary:
-                    "A non-profit University club, one of the largest in Vietnam. Previously as a leader of the Design Team, divided works among members, gave them feedback.",
+                    "Previously as a leader of the Design Team, divided works among members, provided feedback, shared and carried.",
                 description: [
                     "Executed the team's key activities: recruited personnel for projects; arranged/reassigned personnel to appropriate tasks, projects, annual projects.",
                     "Took on the role of Design Leader for major, critical projects; allow team members to shadow and learn.",
@@ -121,7 +121,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                     duplicate: true
                 },
                 summary:
-                    "Joined a communication club on the very first day of university. With a Graphic Designer role in the Design Team of the Media Department, carrying out assigned tasks.",
+                    "Joined a communication club on the very first day of university. A non-profit University club, one of the largest in Vietnam. With a Graphic Designer role in the Design Team of the Media Department, carrying out assigned tasks.",
                 description: [
                     "Designed basic posters and gradually gained exposure to design print materials.",
                     "Participated in event projects. Took the first project as a Design Leader.",
@@ -243,7 +243,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 description: [
                     "Designed print materials for the project's performances and programs.",
                     "Designed publications and posters for each project phase, incorporated varying colors and elements tailored to specific categories and phases.",
-                    "Designed large-format, text-heavy, and infographic-style publications."
+                    "Designed stage backdrops, side-backdrops, and workshop backgrounds.",
+                    "Designed several large-format, text-heavy, and infographic-style publications."
                 ]
             },
             {
@@ -275,9 +276,10 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 summary:
                     "With team members who founded bédeb Production, started a graduation project for the Multimedia Communications program at FPT University HCMC. A communication campaign to help young people understand and know how to apply Feng Shui to create a harmonious connection between living space and emotions.",
                 description: [
-                    "Commissioned to design the key visual, color palette, and primary typeface for the entire project; choose and place the right elements.",
-                    "Designed print materials for the interactive event, including tickets, wayfinding guides, and invitations.",
-                    "Wrote a script to automate the generation of a large volume of GIF invitations featuring unique guest names and titles, and sorted the individual files into specific folders based on the sender."
+                    "Commissioned to design the key visual, color palette, and primary typeface for the entire project; chose and placed the right elements.",
+                    "Designed posters to present information about the campaign's sub-events.",
+                    "Designed print materials for the interactive event, including tickets, orientation maps, and invitations.",
+                    "Wrote scripts to automate the generation of a large volume of animated GIF invitations featuring unique guest names and titles using FFmpeg; sorted the individual files into specific folders based on the sender."
                 ]
             },
             {
