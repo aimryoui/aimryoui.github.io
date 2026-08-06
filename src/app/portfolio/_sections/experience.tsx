@@ -122,7 +122,7 @@ function Experience() {
                                             place.description && [
                                                 {
                                                     "aria-expanded:before":
-                                                        "border border-muted bg-muted/30 hover:bg-muted/45 active:bg-muted/60"
+                                                        "border border-muted bg-muted/20 hover:bg-muted/45 active:bg-muted/60 dark:bg-muted/30"
                                                 },
                                                 {
                                                     before: [
@@ -131,7 +131,7 @@ function Experience() {
                                                             hover: "bg-muted/45 transition-none",
                                                             active: "bg-muted/60 transition-none",
                                                             md: "-left-[calc(var(--spacing-safe-zone)*1.75/3)] right-[calc(var(--spacing-safe-zone)*1.25/3)]",
-                                                            sm: "-bottom-1.75 -left-[calc(var(--spacing-safe-zone)*2/3)] right-[calc(var(--spacing-safe-zone)*1/3)]",
+                                                            sm: "-bottom-1.5 -left-[calc(var(--spacing-safe-zone)*2/3)] right-[calc(var(--spacing-safe-zone)*1/3)]",
                                                             "@[69rem]":
                                                                 "-left-2 right-3.75"
                                                         }
