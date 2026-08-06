@@ -136,7 +136,7 @@ function Experience() {
                                                             active: "bg-muted/60 transition-none",
 
                                                             "@[69rem]":
-                                                                "-left-2 right-3.75",
+                                                                "-left-[calc(var(--spacing-safe-zone)/2)] right-[calc(var(--spacing-safe-zone)/2)]",
                                                             "@[56.5rem]":
                                                                 "-left-[calc(var(--spacing-safe-zone)/2)] right-[calc(var(--spacing-safe-zone)/2)] rounded-xlg",
 
@@ -205,10 +205,11 @@ function Experience() {
                                             )}
                                             spanClassName={cn({
                                                 "@[69rem]":
-                                                    "min-w-[calc(100%+var(--spacing)*3)]",
+                                                    "-ms-[calc(var(--spacing-safe-zone)*1.1/3)] min-w-[calc(100%+var(--spacing)*4.5)] pe-1",
                                                 "@[56.5rem]":
-                                                    "mt-[calc(var(--spacing)*5+var(--px))] min-w-[calc(100%+var(--spacing)*1.5*2)]",
-                                                md: "-ms-[calc(var(--spacing-safe-zone)*1.25/3)] min-w-[calc(100%+var(--spacing)*1.625*2)] pe-1"
+                                                    "mt-[calc(var(--spacing)*5+var(--px))]",
+                                                md: "-ms-[calc(var(--spacing-safe-zone)*1.25/3)] mt-[calc(var(--spacing)*5)] min-w-[calc(100%+var(--spacing)*1.625*2)] pe-1",
+                                                sm: "mt-[calc(var(--spacing)*5+var(--px))]"
                                             })}
                                         >
                                             {place.organization ? (
