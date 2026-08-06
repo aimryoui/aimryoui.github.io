@@ -47,14 +47,14 @@ function Experience() {
                 <Fragment key={section.section}>
                     <TableContainer
                         className={cn(
-                            "grid grid-cols-5 gap-x-[calc(var(--spacing)*6+var(--px)*2)] gap-y-table-between bg-background py-safe-zone-vertical"
+                            "grid grid-cols-5 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] gap-y-table-between bg-background py-safe-zone-vertical"
                         )}
                     >
                         <TableCaption
                             className={cn(
                                 "sticky top-7.5 z-50 h-fit whitespace-pre-line ps-safe-zone font-wght-500",
                                 {
-                                    "@[59.375rem]":
+                                    "@[69rem]":
                                         "static col-span-full whitespace-normal px-safe-zone font-wght-600",
                                     lg: "top-safe-zone-vertical"
                                 }
@@ -70,14 +70,14 @@ function Experience() {
                             className={cn(
                                 "col-span-full col-start-2 grid table-fixed gap-y-table-between",
                                 {
-                                    "@[59.375rem]": "col-start-1 ps-safe-zone"
+                                    "@[69rem]": "col-start-1 ps-safe-zone"
                                 }
                             )}
                         >
                             <TableHeader
                                 className={cn("sr-only grid", {
                                     "[&>tr]": [
-                                        "grid grid-cols-4 gap-x-[calc(var(--spacing)*6+var(--px)*2)]",
+                                        "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
                                         {
                                             "last:*": "pe-safe-zone"
                                         }
@@ -110,7 +110,9 @@ function Experience() {
                                     )
                                 }))}
                                 dependencies={[section.items]}
-                                className={cn("grid gap-y-table-between")}
+                                className={cn("grid gap-y-table-between", {
+                                    sm: "gap-y-2.75"
+                                })}
                             >
                                 {(place) => (
                                     <TableRow
@@ -120,32 +122,35 @@ function Experience() {
                                             place.description && [
                                                 {
                                                     "aria-expanded:before":
-                                                        "bg-muted/30 hover:bg-muted/45 active:bg-muted/60"
+                                                        "border border-muted bg-muted/30 hover:bg-muted/45 active:bg-muted/60"
                                                 },
                                                 {
                                                     before: [
-                                                        "absolute -inset-y-1.25 -left-2 right-3 rounded-lg transition-[background-color] duration-100",
+                                                        "absolute -inset-y-1.25 -left-2.25 right-2.75 rounded-lg transition-[background-color] duration-100",
                                                         {
                                                             hover: "bg-muted/45 transition-none",
                                                             active: "bg-muted/60 transition-none",
-                                                            md: "-left-safe-zone right-0 rounded-none",
-                                                            "@[59.375rem]":
+                                                            md: "-left-[calc(var(--spacing-safe-zone)*1.75/3)] right-[calc(var(--spacing-safe-zone)*1.25/3)]",
+                                                            sm: "-bottom-1.75 -left-[calc(var(--spacing-safe-zone)*2/3)] right-[calc(var(--spacing-safe-zone)*1/3)]",
+                                                            "@[69rem]":
                                                                 "-left-2 right-3.75"
                                                         }
                                                     ]
                                                 }
                                             ],
                                             {
-                                                "@[50.125rem]": "grid-cols-2",
-                                                "last:*": "pe-safe-zone"
+                                                "last:*": "pe-safe-zone",
+                                                "@[56.5rem]": "grid-cols-2",
+                                                sm: "order-none flex flex-wrap justify-between gap-y-0.5 last-of-type:mb-px"
                                             }
                                         )}
                                     >
                                         <TableCell
                                             className={cn(
-                                                "z-1 p-0 align-top font-mono",
+                                                "z-1 inline-block p-0 align-top font-mono",
                                                 {
-                                                    "@[50.125rem]": "absolute"
+                                                    "@[56.5rem]": "absolute",
+                                                    sm: "static order-1 pe-safe-zone text-[.84375rem]"
                                                 }
                                             )}
                                         >
@@ -168,15 +173,16 @@ function Experience() {
                                             className={cn(
                                                 "z-1 flex justify-between gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] p-0 align-top text-foreground font-wght-500",
                                                 {
-                                                    "@[50.125rem]":
+                                                    "@[56.5rem]":
                                                         "mt-5.5 gap-x-2",
-                                                    lg: "font-wght-600"
+                                                    lg: "font-wght-600",
+                                                    sm: "mt-0"
                                                 }
                                             )}
                                         >
                                             {place.position}{" "}
                                             {place.organization && (
-                                                <At className="float-end" />
+                                                <At className="float-end sm:hidden" />
                                             )}
                                         </TableCell>
 
@@ -184,18 +190,21 @@ function Experience() {
                                             className={cn(
                                                 "col-span-2 p-0 align-top",
                                                 {
-                                                    "@[50.125rem]":
-                                                        "col-span-1 mt-5.5"
+                                                    "@[56.5rem]":
+                                                        "col-span-1 mt-5.5",
+                                                    sm: "order-2 mt-0 inline basis-full"
                                                 }
                                             )}
                                             spanClassName={cn({
-                                                "@[59.375rem]":
-                                                    "min-w-[calc(100%+var(--spacing)*2.75)]",
-                                                "@[50.125rem]":
-                                                    "mt-[calc(var(--spacing)*5.5-var(--spacing)*.5)] min-w-[calc(100%+var(--spacing)*1.25*2)]"
+                                                "@[69rem]":
+                                                    "min-w-[calc(100%+var(--spacing)*3)]",
+                                                "@[56.5rem]":
+                                                    "mt-[calc(var(--spacing)*5.5-var(--spacing)*.5)] min-w-[calc(100%+var(--spacing)*1.5*2)]",
+                                                md: "-ms-[calc(var(--spacing-safe-zone)*1.25/3)] min-w-[calc(100%+var(--spacing)*1.625*2)] pe-1",
+                                                sm: "-ms-[calc(var(--spacing-safe-zone)/2)] min-w-[calc(100%+var(--spacing)*2*2)] pe-1.25"
                                             })}
                                         >
-                                            {place.organization && (
+                                            {place.organization ? (
                                                 <LinkButton
                                                     href={
                                                         place.organization.url
@@ -231,16 +240,20 @@ function Experience() {
 
                                                             lg: "font-wght-600",
                                                             md: "text-sm",
+                                                            sm: "flex w-fit gap-x-1 italic font-wght-450 dark:font-wght-400",
 
-                                                            "@[50.125rem]":
+                                                            "@[56.5rem]":
                                                                 "!m-0 !me-6 !p-0"
                                                         }
                                                     )}
                                                 >
+                                                    <span className="hidden italic text-muted-foreground/50 sm:inline-block">
+                                                        |
+                                                    </span>
                                                     <span
                                                         data-cursor="lock"
                                                         className={cn(
-                                                            "-mx-1 -my-0.5 inline-block text-pretty px-1 py-0.5 underline",
+                                                            "-mx-1.5 -my-0.5 inline-block text-pretty px-1.5 py-0.5 underline",
                                                             {
                                                                 "group-hover":
                                                                     "decoration-current decoration-solid"
@@ -253,23 +266,40 @@ function Experience() {
                                                         }
                                                     </span>
                                                 </LinkButton>
+                                            ) : (
+                                                <span
+                                                    className={cn(
+                                                        "hidden text-base text-muted-foreground font-wght-500",
+                                                        {
+                                                            md: "text-sm",
+                                                            sm: "inline-block"
+                                                        }
+                                                    )}
+                                                >
+                                                    Self-employed
+                                                </span>
                                             )}
                                         </TableCell>
                                         {(!!place.description ||
                                             !!place.summary) && (
                                             <TableRow
                                                 className={cn(
-                                                    "border-b border-dashed border-stroke pe-safe-zone not-last:mb-[calc(var(--spacing-safe-zone-vertical)*1/3)]",
+                                                    "grid grid-cols-4 border-b border-dashed border-stroke pe-safe-zone not-last:mb-[calc(var(--spacing-safe-zone-vertical)*1/3)]",
                                                     {
-                                                        "@[59.375rem]":
+                                                        "@[69rem]":
                                                             "-ms-safe-zone ps-safe-zone",
-                                                        md: "mt-1.5"
+                                                        md: "mt-1",
+                                                        sm: "not-last:mb-0"
                                                     }
                                                 )}
                                             >
                                                 <TableCell
                                                     className={cn(
-                                                        "space-y-1.5 overflow-hidden italic group-not-last/table-row:pb-safe-zone-vertical"
+                                                        "col-span-3 space-y-1.5 overflow-hidden italic group-not-last/table-row:pb-safe-zone-vertical",
+                                                        {
+                                                            "@[69rem]":
+                                                                "col-span-full"
+                                                        }
                                                     )}
                                                 >
                                                     {place.summary && (

@@ -187,18 +187,27 @@ function TableCell({
                                                   "-mb-safe-zone-vertical -mt-[calc(var(--spacing-table-between)/2)] pb-safe-zone-vertical pt-[calc(var(--spacing-table-between)/2)]"
                                           },
                                     {
-                                        "@[59.375rem]": "me-safe-zone"
+                                        "@[69rem]": "pe-safe-zone",
+                                        sm: [
+                                            "-my-[calc(var(--spacing-table-between)/2+var(--spacing)*.75/2)]",
+                                            {
+                                                "group-first/table-row":
+                                                    "-mb-[calc(var(--spacing-table-between)/2+var(--spacing)*.75/2)] -mt-safe-zone-vertical pb-[calc(var(--spacing-table-between)/2+var(--spacing)*.75/2)] pt-safe-zone-vertical",
+                                                "group-last/table-row":
+                                                    "-mb-safe-zone-vertical -mt-[calc(var(--spacing-table-between)/2+var(--spacing)*.75/2)] pb-safe-zone-vertical pt-[calc(var(--spacing-table-between)/2+var(--spacing)*.75/2)]"
+                                            }
+                                        ]
                                     }
                                 )}
                             >
                                 <span
                                     data-cursor="lock"
                                     className={cn(
-                                        "-ms-1.25 -mt-0.5 inline-flex min-w-[calc(100%-var(--spacing)*2.5)] items-center justify-end py-0.5 text-sm",
+                                        "-ms-1.5 -mt-0.5 inline-flex min-w-[calc(100%-var(--spacing)*2)] items-center justify-end py-0.5 text-sm",
                                         spanClassName
                                     )}
                                 >
-                                    <span className="@[59.375rem]:hidden">
+                                    <span className="@[69rem]:hidden">
                                         Details
                                     </span>
                                     <ChevronDown

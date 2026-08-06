@@ -97,7 +97,7 @@ const MobileTocItemRow = memo(
                     className={cn(
                         "group/link relative flex-1 truncate leading-6",
                         item.icon
-                            ? "flex items-center gap-4 py-2"
+                            ? "flex items-center gap-3.5 py-2"
                             : "inline-block py-2",
                         isProject
                             ? "px-safe-zone text-foreground dark:text-muted-foreground"
