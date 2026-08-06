@@ -30,7 +30,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                     url: "https://sandatasystem.com"
                 },
                 summary:
-                    "Contractor position, working remotely on a full-time basis. Work entirely in English, involved interaction with colleagues who were Indian-Americans and Indians.",
+                    "Contractor position, worked remotely on a full-time basis. Worked entirely in English, involved interaction with colleagues who were Indian-Americans and Indians.",
                 description: [
                     "Worked on marketing motion graphic, product launch videos; product instruction, documentation videos using Adobe After Effects and Adobe XD.",
                     "Created design system and component library from scratch; adapted to existing products.",
@@ -273,7 +273,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                     ariaLabel: "Go to the Xoay Vật Chuyển Dòng project fanpage"
                 },
                 summary:
-                    "A graduation project for the Multimedia Communications program at FPT University HCMC. A communication campaign to help young people understand and know how to apply Feng Shui to create a harmonious connection between living space and emotions.",
+                    "With team members who founded bédeb Production, started a graduation project for the Multimedia Communications program at FPT University HCMC. A communication campaign to help young people understand and know how to apply Feng Shui to create a harmonious connection between living space and emotions.",
                 description: [
                     "Commissioned to design the key visual, color palette, and primary typeface for the entire project; choose and place the right elements.",
                     "Designed print materials for the interactive event, including tickets, wayfinding guides, and invitations.",
@@ -310,7 +310,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                     "Developed and defined the art and visual direction for the entire project with the role of an Art Director.",
                     "Designed movie logo, visual identity, typeface, and color palette; presented in a pitch deck.",
                     "Designed print materials, digital assets, presentation slides/decks, and project credits.",
-                    "Design character posters that align with the key visual; hold meetings with the core production team to gather feedback, make revisions, and refine the designs.",
+                    "Designed character posters that aligned with the key visual; hold meetings with the core production team to gathered feedback, made revisions, and refined the designs.",
                     "Designed a visual identity for the project's social media channels."
                 ]
             },
@@ -321,7 +321,15 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 organization: {
                     text: "Đơ Ngã Đỡ Production",
                     url: "https://www.facebook.com/phimnganroi"
-                }
+                },
+                summary:
+                    "Yet another small studio founded by a group of students for a course project. Done some drama movies, earned some awards during their premiere. Paid me nothing for the designs...",
+                description: [
+                    "Redesigned the movie's visual identity. Provide strategic reorientation based on existing materials and assets.",
+                    "Designed movie posters and character posters, adapted appropriate elements and effects after reading and understanding the movie script.",
+                    "Designed direction for the project's print materials.",
+                    "Designed a visual identity for the project's social media channels."
+                ]
             },
             {
                 startDate: "03.2023",
@@ -330,7 +338,14 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 organization: {
                     text: "bédeb Production",
                     url: "https://www.facebook.com/phimngannotket"
-                }
+                },
+                summary:
+                    "A small studio founded by a group of students for a course project; later founded Xoay Vật Chuyển Dòng. Earned some awards during their premiere.",
+                description: [
+                    "Developed and defined the art and visual direction for the entire project after reading and understanding the movie script.",
+                    "Designed movie posters and digital inivitations.",
+                    "Designed a visual identity for the project's social media channels."
+                ]
             },
             {
                 startDate: "02.2023",
@@ -339,7 +354,15 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 organization: {
                     text: "RMIT Vietnam Finance Club",
                     url: "https://www.facebook.com/RMITVietnamResearchChallenge"
-                }
+                },
+                summary:
+                    "A finance club affiliated with a major club at RMIT University. The design and content prioritize English, involved interacting with foreigners and university lecturers.",
+                description: [
+                    "Developed a key visual for the new season's project that stood out and surpassed the work of previous years.",
+                    "Designed the event poster and related print materials.",
+                    "Designed digital assets for use in invitations, registration forms, and competition meetings.",
+                    "Designed a visual identity for the project's social media channels for the new season."
+                ]
             }
         ]
     }

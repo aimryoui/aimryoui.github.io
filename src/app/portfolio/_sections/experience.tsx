@@ -27,7 +27,11 @@ import { EXPERIENCE_SECTIONS } from "@/portfolio/_configs/experience-sections"
 
 function Experience() {
     let [expandedKeys, setExpandedKeys] = useState(
-        new Set<Key>(["12-2025-motion-designer-san-data-systems-inc"])
+        new Set<Key>([
+            "12-2025-motion-designer-san-data-systems-inc",
+            "12-2024-design-team-mentor-coc-sai-gon-communication-club",
+            "10-2023-design-team-lead-coc-sai-gon-communication-club"
+        ])
     )
 
     return (
@@ -130,10 +134,14 @@ function Experience() {
                                                         {
                                                             hover: "bg-muted/45 transition-none",
                                                             active: "bg-muted/60 transition-none",
-                                                            md: "-left-[calc(var(--spacing-safe-zone)*1.75/3)] right-[calc(var(--spacing-safe-zone)*1.25/3)]",
-                                                            sm: "-bottom-1.5 -left-[calc(var(--spacing-safe-zone)*2/3)] right-[calc(var(--spacing-safe-zone)*1/3)]",
+
                                                             "@[69rem]":
-                                                                "-left-2 right-3.75"
+                                                                "-left-2 right-3.75",
+                                                            "@[56.5rem]":
+                                                                "-left-[calc(var(--spacing-safe-zone)/2)] right-[calc(var(--spacing-safe-zone)/2)] rounded-xlg",
+
+                                                            md: "-left-[calc(var(--spacing-safe-zone)*1.75/3)] right-[calc(var(--spacing-safe-zone)*1.25/3)]",
+                                                            sm: "-bottom-1.5 -left-[calc(var(--spacing-safe-zone)*1.75/3)] right-[calc(var(--spacing-safe-zone)*1.25/3)]"
                                                         }
                                                     ]
                                                 }
@@ -240,7 +248,7 @@ function Experience() {
 
                                                             lg: "font-wght-600",
                                                             md: "text-sm",
-                                                            sm: "flex w-fit gap-x-1 italic font-wght-450 dark:font-wght-400",
+                                                            sm: "flex w-fit gap-x-1 italic text-muted-foreground font-wght-450 group-hover/table-row:text-foreground group-active/table-row:text-foreground group-aria-expanded/table-row:text-foreground dark:font-wght-400",
 
                                                             "@[56.5rem]":
                                                                 "!m-0 !me-6 !p-0"
