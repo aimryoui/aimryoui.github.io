@@ -52,7 +52,7 @@ function Experience() {
                     >
                         <TableCaption
                             className={cn(
-                                "sticky top-7.5 h-fit whitespace-pre-line ps-safe-zone font-wght-500",
+                                "sticky top-7.5 z-50 h-fit whitespace-pre-line ps-safe-zone font-wght-500",
                                 {
                                     "@[59.375rem]":
                                         "static col-span-full whitespace-normal px-safe-zone font-wght-600",
@@ -128,7 +128,7 @@ function Experience() {
                                                         {
                                                             hover: "bg-muted/45 transition-none",
                                                             active: "bg-muted/60 transition-none",
-                                                            md: "-left-[calc(var(--spacing-safe-zone)/2)] right-[calc(var(--spacing-safe-zone)/2)]",
+                                                            md: "-left-safe-zone right-0 rounded-none",
                                                             "@[59.375rem]":
                                                                 "-left-2 right-3.75"
                                                         }
@@ -261,7 +261,9 @@ function Experience() {
                                                 className={cn(
                                                     "border-b border-dashed border-stroke pe-safe-zone not-last:mb-[calc(var(--spacing-safe-zone-vertical)*1/3)]",
                                                     {
-                                                        lg: "-ms-safe-zone ps-safe-zone"
+                                                        "@[59.375rem]":
+                                                            "-ms-safe-zone ps-safe-zone",
+                                                        md: "mt-1.5"
                                                     }
                                                 )}
                                             >

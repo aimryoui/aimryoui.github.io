@@ -30,7 +30,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                     url: "https://sandatasystem.com"
                 },
                 summary:
-                    "Contractor position, working remotely on a full-time basis. Work was conducted 100% in English, involved interaction with Indian-Americans and Indians.",
+                    "Contractor position, working remotely on a full-time basis. Work entirely in English, involved interaction with colleagues who were Indian-Americans and Indians.",
                 description: [
                     "Worked on marketing motion graphic, product launch videos; product instruction, documentation videos using Adobe After Effects and Adobe XD.",
                     "Created design system and component library from scratch; adapted to existing products.",

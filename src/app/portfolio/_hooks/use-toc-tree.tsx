@@ -78,9 +78,9 @@ function useTocGroup(items: TocItemProps[], defaultExpanded = true) {
     })
 
     useEffect(() => {
-        const unsubscribe = useTocActiveId.subscribe((state) => {
+        const checkActive = (activeId: string | null) => {
             const match = items.some((i) => {
-                if (i.id !== state.activeId) return false
+                if (i.id !== activeId) return false
                 if (i.href?.startsWith("#")) return true
                 if (i.href === pathname) return true
                 return false
@@ -89,6 +89,12 @@ function useTocGroup(items: TocItemProps[], defaultExpanded = true) {
             if (match) {
                 setIsExpanded(true)
             }
+        }
+
+        checkActive(useTocActiveId.getState().activeId)
+
+        const unsubscribe = useTocActiveId.subscribe((state) => {
+            checkActive(state.activeId)
         })
         return unsubscribe
     }, [items, pathname])
