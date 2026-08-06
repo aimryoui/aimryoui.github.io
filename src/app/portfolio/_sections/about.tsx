@@ -113,7 +113,7 @@ function About() {
             <div className={cn("flex bg-background")}>
                 <Tooltip>
                     {[
-                        { value: "2003", label: "Year of birth" },
+                        { value: "20+", label: "Clients Served" },
                         { value: "50+", label: "Projects" },
                         { value: "4+", label: "Years as a Designer" }
                     ].map((item, index, array) => (
@@ -135,18 +135,7 @@ function About() {
                                         md: "text-2xl"
                                     })}
                                 >
-                                    <span
-                                        {...(item.value === "2003" && {
-                                            className: "xs:hidden"
-                                        })}
-                                    >
-                                        {item.value}
-                                    </span>
-                                    {item.value === "2003" && (
-                                        <span className="hidden xs:inline">
-                                            2K3
-                                        </span>
-                                    )}
+                                    {item.value}
                                 </Highlight>
                                 <div
                                     className={cn(
