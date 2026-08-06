@@ -207,9 +207,8 @@ function Experience() {
                                                 "@[69rem]":
                                                     "min-w-[calc(100%+var(--spacing)*3)]",
                                                 "@[56.5rem]":
-                                                    "mt-[calc(var(--spacing)*5.5-var(--spacing)*.5)] min-w-[calc(100%+var(--spacing)*1.5*2)]",
-                                                md: "-ms-[calc(var(--spacing-safe-zone)*1.25/3)] min-w-[calc(100%+var(--spacing)*1.625*2)] pe-1",
-                                                sm: "-ms-[calc(var(--spacing-safe-zone)/2)] min-w-[calc(100%+var(--spacing)*2*2)] pe-1.25"
+                                                    "mt-[calc(var(--spacing)*5+var(--px))] min-w-[calc(100%+var(--spacing)*1.5*2)]",
+                                                md: "-ms-[calc(var(--spacing-safe-zone)*1.25/3)] min-w-[calc(100%+var(--spacing)*1.625*2)] pe-1"
                                             })}
                                         >
                                             {place.organization ? (
@@ -277,10 +276,10 @@ function Experience() {
                                             ) : (
                                                 <span
                                                     className={cn(
-                                                        "hidden text-base text-muted-foreground font-wght-500",
+                                                        "pointer-events-none relative z-3 hidden text-base text-muted-foreground font-wght-500",
                                                         {
                                                             md: "text-sm",
-                                                            sm: "inline-block"
+                                                            sm: "inline-block group-hover/table-row:text-foreground group-active/table-row:text-foreground"
                                                         }
                                                     )}
                                                 >
