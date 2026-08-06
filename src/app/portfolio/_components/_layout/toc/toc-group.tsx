@@ -37,15 +37,15 @@ const TocGroup = memo(
         onItemPress,
         onSameLinkClick
     }: TocGroupProps) => {
-        const isDefaultExpanded = header.id !== "selected-works"
+        const isSelectedWorks = header.id === "selected-works"
         const { isExpanded, setIsExpanded } = useTocGroup(
             items,
-            isDefaultExpanded
+            !isSelectedWorks
         )
 
         return (
             <Collapsible
-                defaultExpanded={isDefaultExpanded}
+                defaultExpanded={!isSelectedWorks}
                 isExpanded={isExpanded}
                 onExpandedChange={setIsExpanded}
                 className={cn(
@@ -77,7 +77,7 @@ const TocGroup = memo(
                             ),
                             side: "right",
                             sideOffset: -14,
-                            alignOffset: 6
+                            alignOffset: isSelectedWorks ? 0 : 6
                         }}
                         render={
                             <CollapsibleTrigger

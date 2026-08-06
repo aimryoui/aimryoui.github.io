@@ -9,6 +9,7 @@ import {
     CollapsibleContent,
     CollapsibleTrigger
 } from "@/components/ui/collapsible"
+import { Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import { MobileTocItemRow } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-item-row"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
@@ -76,6 +77,10 @@ const MobileTocGroup = memo(
                                 }
                             )}
                         >
+                            <span className="sr-only">
+                                {isExpanded ? "Collapse" : "Expand"}{" "}
+                                <Highlight>{header.label}</Highlight> category
+                            </span>
                             <ChevronDown
                                 className={cn(
                                     "size-6 translate-y-[.5px] transition-transform duration-350",
