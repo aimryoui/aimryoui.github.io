@@ -1,6 +1,9 @@
 import { useCallback } from "react"
 
-import { LineSidebar } from "@/components/animations/line-sidebar"
+import {
+    LineSidebar,
+    type LineSidebarProps
+} from "@/components/animations/line-sidebar"
 import { cn } from "@/lib/utils"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
 import { TocGroup } from "@/portfolio/_components/_layout/toc/toc-group"
@@ -12,7 +15,7 @@ import { useTocScroll } from "@/portfolio/_hooks/use-toc-scroll"
 import { useTocTree } from "@/portfolio/_hooks/use-toc-tree"
 import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
-interface TocListProps {
+interface TocListProps extends LineSidebarProps {
     mode: PortfolioMode
     items: TocItemProps[]
     filteredItems: TocItemProps[]
@@ -38,11 +41,13 @@ function handleSameLinkClick() {
 }
 
 function TocList({
+    className,
     mode,
     items,
     filteredItems,
     debouncedQuery,
-    onActiveReady
+    onActiveReady,
+    ...props
 }: TocListProps & {
     onActiveReady?: () => void
 }) {
@@ -66,9 +71,12 @@ function TocList({
             ref={scrollContainerRef}
             itemSelector="[data-toc-item]"
             className={cn(
-                "group block overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-3",
-                "scroll-fade-y scroll-fade-18"
+                "group block overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-3 scrollbar-none",
+                "scroll-fade-y scroll-fade-18",
+                "hover:scrollbar-thin",
+                className
             )}
+            {...props}
         >
             {tree.map((node) => {
                 if (node.type === "divider") {

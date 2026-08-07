@@ -1,3 +1,5 @@
+"use client"
+
 import { useSyncExternalStore } from "react"
 
 import theme from "@/lib/tailwindcss-plugins/tailwind"

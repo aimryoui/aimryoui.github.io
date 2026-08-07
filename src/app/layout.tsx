@@ -249,7 +249,7 @@ export default function RootLayout({
                                 <PngAntiBleed />
                                 <PngBorder />
                                 <MetaBall />
-                                {/* <TargetCursor /> */}
+                                <TargetCursor />
                             </TooltipProvider>
                         </ProgressRouteProvider>
                         {/* </LazyMotionProvider> */}

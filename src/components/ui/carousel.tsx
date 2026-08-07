@@ -10,6 +10,7 @@ import {
     useState
 } from "react"
 
+import { type EmblaCarouselType } from "embla-carousel"
 import Accessibility from "embla-carousel-accessibility"
 import useEmblaCarousel, {
     type UseEmblaCarouselType
@@ -30,7 +31,6 @@ import { Lightbox } from "@/components/ui/lightbox"
 import { Slider } from "@/components/ui/slider"
 import { Spinner } from "@/components/ui/spinner"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
-import { useAccessibility } from "@/hooks/use-accessibility"
 import { cn } from "@/lib/utils"
 
 type CarouselApi = UseEmblaCarouselType[1]
@@ -65,85 +65,31 @@ function useCarousel() {
     return context
 }
 
-function CarouselIndicator({
-    className,
-    ...props
-}: React.ComponentProps<"div">) {
-    const { emblaApi } = useCarousel()
-    const [count, setCount] = useState(0)
+function setupCarouselAccessibility(emblaApi: EmblaCarouselType) {
+    const accessibility = emblaApi.plugins().accessibility
+    if (!accessibility) return
 
-    const currentRef = useRef<HTMLSpanElement>(null)
+    accessibility.setupLiveRegion("[data-slot='carousel-live-region']")
+    accessibility.setupDotButtons("[data-slot='carousel-dots']")
+    accessibility.setupPrevAndNextButtons(
+        "[data-slot='carousel-previous']",
+        "[data-slot='carousel-next']"
+    )
+}
 
+function useCarouselAccessibility(
+    emblaApi: EmblaCarouselType | undefined
+): void {
     useEffect(() => {
         if (!emblaApi) return
 
-        const updateCarouselState = () => {
-            const snapList = emblaApi.snapList()
-            const total = snapList.length
-
-            setCount((prev) => (prev === total ? prev : total))
-
-            const engine = emblaApi.internalEngine()
-            const currentLocation = engine.location.get()
-
-            const realtimeProgress = engine.scrollProgress.get(currentLocation)
-
-            let closestIndex = 0
-            let minDiff = Infinity
-
-            for (let i = 0; i < snapList.length; i++) {
-                const diff = Math.abs(snapList[i] - realtimeProgress)
-                if (diff < minDiff) {
-                    minDiff = diff
-                    closestIndex = i
-                }
-            }
-
-            if (currentRef.current) {
-                const current = closestIndex + 1
-                const displayCurrent =
-                    total >= 10 && current < 10
-                        ? `0${current}`
-                        : String(current)
-
-                if (currentRef.current.textContent !== displayCurrent) {
-                    currentRef.current.textContent = displayCurrent
-                }
-            }
-        }
-
-        updateCarouselState()
-        emblaApi.on("reinit", updateCarouselState)
-        emblaApi.on("select", updateCarouselState)
-        emblaApi.on("scroll", updateCarouselState)
+        emblaApi.on("reinit", setupCarouselAccessibility)
+        setupCarouselAccessibility(emblaApi)
 
         return () => {
-            emblaApi.off("reinit", updateCarouselState)
-            emblaApi.off("select", updateCarouselState)
-            emblaApi.off("scroll", updateCarouselState)
+            emblaApi.off("reinit", setupCarouselAccessibility)
         }
     }, [emblaApi])
-
-    return (
-        <div
-            data-slot="carousel-indicator"
-            className={cn(
-                "grid h-9 select-none place-items-center rounded-xlg border border-default/15 bg-background px-4 font-mono text-sm",
-                (!emblaApi || count === 0) && "opacity-40",
-                className
-            )}
-            {...props}
-        >
-            {!emblaApi || count === 0 ? (
-                <Spinner />
-            ) : (
-                <p className="truncate">
-                    <span ref={currentRef}>{count < 10 ? "1" : "01"}</span> /{" "}
-                    {count}
-                </p>
-            )}
-        </div>
-    )
 }
 
 const TWEEN_FACTOR_BASE = 0.36
@@ -207,7 +153,7 @@ function Carousel({
             clearTimeout(timer)
         }
     }, [])
-    useAccessibility(emblaApi)
+    useCarouselAccessibility(emblaApi)
     const renderSsrStyles = !emblaApi
 
     const tweenFactor = useRef(0)
@@ -459,6 +405,87 @@ function CarouselItem({
             }
             {...props}
         />
+    )
+}
+
+function CarouselIndicator({
+    className,
+    ...props
+}: React.ComponentProps<"div">) {
+    const { emblaApi } = useCarousel()
+    const [count, setCount] = useState(0)
+
+    const currentRef = useRef<HTMLSpanElement>(null)
+
+    useEffect(() => {
+        if (!emblaApi) return
+
+        const updateCarouselState = () => {
+            const snapList = emblaApi.snapList()
+            const total = snapList.length
+
+            setCount((prev) => (prev === total ? prev : total))
+
+            const engine = emblaApi.internalEngine()
+            const currentLocation = engine.location.get()
+
+            const realtimeProgress = engine.scrollProgress.get(currentLocation)
+
+            let closestIndex = 0
+            let minDiff = Infinity
+
+            for (let i = 0; i < snapList.length; i++) {
+                const diff = Math.abs(snapList[i] - realtimeProgress)
+                if (diff < minDiff) {
+                    minDiff = diff
+                    closestIndex = i
+                }
+            }
+
+            if (currentRef.current) {
+                const current = closestIndex + 1
+                const displayCurrent =
+                    total >= 10 && current < 10
+                        ? `0${current}`
+                        : String(current)
+
+                if (currentRef.current.textContent !== displayCurrent) {
+                    currentRef.current.textContent = displayCurrent
+                }
+            }
+        }
+
+        updateCarouselState()
+        emblaApi.on("reinit", updateCarouselState)
+        emblaApi.on("select", updateCarouselState)
+        emblaApi.on("scroll", updateCarouselState)
+
+        return () => {
+            emblaApi.off("reinit", updateCarouselState)
+            emblaApi.off("select", updateCarouselState)
+            emblaApi.off("scroll", updateCarouselState)
+        }
+    }, [emblaApi])
+
+    return (
+        <div
+            data-slot="carousel-indicator"
+            className={cn(
+                "grid h-9 select-none place-items-center rounded-xlg border border-default/15 bg-background px-4 font-mono text-sm",
+                (!emblaApi || count === 0) && "opacity-40",
+                className
+            )}
+            {...props}
+        >
+            {!emblaApi || count === 0 ? (
+                <Spinner />
+            ) : (
+                <p className="truncate">
+                    <span ref={currentRef}>{count < 10 ? "1" : "01"}</span> /{" "}
+                    {count}
+                </p>
+            )}
+        </div>
     )
 }
 

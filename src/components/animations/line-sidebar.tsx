@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useLayoutEffect, useRef } from "react"
+import { useCallback, useEffect, useRef } from "react"
 
 import { pxToRem } from "@/helpers/px-to-rem"
 import { cn } from "@/lib/utils"
 
-interface LineSidebarProps {
+interface LineSidebarProps extends React.ComponentProps<"div"> {
     itemSelector?: string
     accentColor?: string
     textColor?: string
@@ -36,7 +36,7 @@ function LineSidebar({
     className,
     ref,
     ...props
-}: React.ComponentProps<"div"> & LineSidebarProps) {
+}: LineSidebarProps) {
     const internalListRef = useRef<HTMLDivElement>(null)
 
     const listItemsRef = useRef<HTMLElement[]>([])
@@ -64,8 +64,6 @@ function LineSidebar({
     useEffect(() => {
         smoothingRef.current = smoothing
     }, [smoothing])
-
-    const runFrameRef = useRef<FrameRequestCallback>(() => {})
 
     const updateCache = useCallback(() => {
         const list = internalListRef.current
@@ -145,7 +143,7 @@ function LineSidebar({
         }
     }, [updateCache])
 
-    const runFrame = function frame(now: number) {
+    const runFrame = useCallback(function frame(now: number) {
         if (!internalListRef.current) {
             rafRef.current = null
             return
@@ -165,16 +163,14 @@ function LineSidebar({
         let moving = false
         const listItems = listItemsRef.current
 
-        for (let i = 0; i < listItems.length; i++) {
-            const el = listItems[i]
-
+        for (const el of listItems) {
             let state = statesRef.current.get(el)
             if (!state) {
                 state = { target: 0, current: 0 }
                 statesRef.current.set(el, state)
             }
 
-            const target = Math.max(state.target)
+            const target = state.target
             const cur = state.current
 
             if (cur === 0 && target === 0) continue
@@ -191,19 +187,13 @@ function LineSidebar({
         }
 
         rafRef.current = moving ? requestAnimationFrame(frame) : null
-    }
-
-    useLayoutEffect(() => {
-        runFrameRef.current = runFrame
-    })
+    }, [])
 
     const startLoop = useCallback(() => {
         if (rafRef.current !== null) return
         lastRef.current = performance.now()
-        rafRef.current = requestAnimationFrame((time) => {
-            runFrameRef.current(time)
-        })
-    }, [])
+        rafRef.current = requestAnimationFrame(runFrame)
+    }, [runFrame])
 
     useEffect(() => {
         const list = internalListRef.current
@@ -254,9 +244,7 @@ function LineSidebar({
     useEffect(() => {
         if (rafRef.current === null) {
             lastRef.current = performance.now()
-            rafRef.current = requestAnimationFrame((time) => {
-                runFrameRef.current(time)
-            })
+            rafRef.current = requestAnimationFrame(runFrame)
         }
         return () => {
             if (rafRef.current !== null) {
@@ -264,14 +252,14 @@ function LineSidebar({
                 rafRef.current = null
             }
         }
-    }, [])
+    }, [runFrame])
 
     return (
         <div
             ref={setListRef}
             data-slot="line-sidebar"
             className={cn(
-                "relative flex w-full flex-col gap-[--item-gap] scrollbar-thin",
+                "relative flex w-full flex-col gap-[--item-gap]",
                 className
             )}
             style={{
