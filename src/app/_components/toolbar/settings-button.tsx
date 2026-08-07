@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Ellipsis } from "@/components/icons/icons"
 import { AudioMenu } from "@/components/settings/audio-menu"
 import { EffectsMenu } from "@/components/settings/effects-menu"
+import { MediaMenu } from "@/components/settings/media-menu"
 import { MotionMenu } from "@/components/settings/motion-menu"
 import { Button } from "@/components/ui/button"
 import {
@@ -52,6 +53,7 @@ function SettingButton() {
                                             Settings
                                         </DropdownMenuLabel>
                                         <AudioMenu />
+                                        <MediaMenu />
                                         <MotionMenu />
                                         <EffectsMenu />
                                     </DropdownMenuGroup>

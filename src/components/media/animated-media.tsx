@@ -13,6 +13,7 @@ import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 import { useMediaObserver } from "@/hooks/use-media-observer"
 import { cn } from "@/lib/utils"
 import { type VideoMetadata } from "@/scripts/process-videos"
+import { useMediaStore } from "@/stores/media-store"
 
 let sharedStyleSheet: CSSStyleSheet | null = null
 
@@ -49,6 +50,7 @@ type AnimatedMediaProps = {
     col?: "justified"
     limitHeight?: boolean
     isInLightbox?: boolean
+    forceAutoPlay?: boolean
 } & React.ComponentProps<"div"> &
     Pick<
         React.ComponentProps<"video">,
@@ -72,6 +74,7 @@ function AnimatedMedia({
     col,
     limitHeight = false,
     isInLightbox = false,
+    forceAutoPlay = false,
     ref,
     ...props
 }: AnimatedMediaProps) {
@@ -85,8 +88,13 @@ function AnimatedMedia({
         parsedData
 
     const shouldLoad = useMediaObserver(wrapperRef)
+    const isGlobalAutoPlayEnabled = useMediaStore((state) =>
+        state.hasPreference("autoplay")
+    )
 
-    const shouldAutoPlay = autoPlay ?? autoplay ?? true
+    const shouldAutoPlay =
+        forceAutoPlay ||
+        ((autoPlay ?? autoplay ?? true) && isGlobalAutoPlayEnabled)
     const shouldMute = muted ?? mute ?? true
 
     // #shadow-root (closed) with #adopted-style-sheets
@@ -139,7 +147,7 @@ function AnimatedMedia({
         }
 
         let isReady = false
-        const handleTimeUpdate = () => {
+        const handleReady = () => {
             if (!isReady) {
                 isReady = true
                 setIsVideoReady(true)
@@ -153,11 +161,13 @@ function AnimatedMedia({
         //     }
         // }
 
-        video.addEventListener("timeupdate", handleTimeUpdate)
+        video.addEventListener("timeupdate", handleReady)
+        video.addEventListener("loadeddata", handleReady)
         // video.addEventListener("ended", handleEnded)
 
         return () => {
-            video.removeEventListener("timeupdate", handleTimeUpdate)
+            video.removeEventListener("timeupdate", handleReady)
+            video.removeEventListener("loadeddata", handleReady)
             // video.removeEventListener("ended", handleEnded)
             if (hls) hls.destroy()
         }
@@ -311,6 +321,11 @@ function AnimatedMedia({
                 {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },
+                dim &&
+                    !isInLightbox && {
+                        "group-data-[media~='dim']/html:dark":
+                            "brightness-[0.87] contrast-[1.06] saturate-[1.04]"
+                    },
                 className
             )}
             style={{
@@ -330,16 +345,7 @@ function AnimatedMedia({
             }}
             {...props}
         >
-            <div
-                ref={hostRef}
-                className={cn(
-                    "absolute inset-0 size-full",
-                    dim &&
-                        !isInLightbox && {
-                            dark: "brightness-[0.87] contrast-[1.06] saturate-[1.04]"
-                        }
-                )}
-            />
+            <div ref={hostRef} className={cn("absolute inset-0 size-full")} />
             {shadowRoot &&
                 createPortal(
                     // oxlint-disable-next-line jsx-a11y/media-has-caption
@@ -348,7 +354,7 @@ function AnimatedMedia({
                         poster={
                             posterPath ?? `${basePath}/${fileName}_preview.webp`
                         }
-                        controls={controls}
+                        controls={controls ?? !shouldAutoPlay}
                         disablePictureInPicture
                         autoPlay={shouldAutoPlay}
                         playsInline

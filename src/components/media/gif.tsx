@@ -35,6 +35,7 @@ function GifCore({
             {...props}
             autoplay={true}
             autoPlay={true}
+            forceAutoPlay={true}
             loop={true}
             muted={true}
             mute={true}

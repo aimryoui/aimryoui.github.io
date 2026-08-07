@@ -246,7 +246,7 @@ function ImageCore({
             ref={mergeRefs([containerRef, ref])}
             data-slot="image"
             className={cn(
-                "group/image content-auto",
+                "content-auto",
                 limitHeight
                     ? [
                           "min-w-0 max-w-full md:!w-full",
@@ -284,6 +284,13 @@ function ImageCore({
                     },
                     typeof gradientBorder.width === "string" &&
                         gradientBorder.width
+                ],
+                dim && [
+                    {
+                        "group-data-[media~='dim']/html:dark":
+                            "brightness-[0.87] contrast-[1.06] saturate-[1.04] transition-[filter] duration-350",
+                        "data-[lightbox-active=true]": "!filter-none"
+                    }
                 ],
                 className
             )}
@@ -365,14 +372,7 @@ function ImageCore({
                             "size-auto max-h-full max-w-full",
                         objectFit === "cover" &&
                             "size-auto min-h-full min-w-full",
-                        pngBorder && "blink:[filter:url(#png-border)]",
-                        dim && [
-                            {
-                                dark: "brightness-[0.87] contrast-[1.06] saturate-[1.04] transition-[filter] duration-350",
-                                "group-data-[lightbox-active=true]/image":
-                                    "!filter-none"
-                            }
-                        ]
+                        pngBorder && "blink:[filter:url(#png-border)]"
                     )}
                     style={{
                         aspectRatio

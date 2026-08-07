@@ -15,6 +15,7 @@ import {
 import { ProgressRouteProvider } from "@/components/ui/progress"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { DEFAULT_EFFECTS } from "@/configs/effects.config"
+import { DEFAULT_MEDIA_PREFERENCES } from "@/configs/media.config"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/providers/theme-provider"
@@ -202,6 +203,24 @@ export default function RootLayout({
                         } catch (e) {
                             console.error("Error getting effects preference:", e)
                             htmlElement.setAttribute("data-effects", ${DEFAULT_EFFECTS.length > 0 ? `"${DEFAULT_EFFECTS.join(" ")}"` : '"null"'})
+                        }
+                        // Media preferences
+                        try {
+                            const defaultMediaString = ${DEFAULT_MEDIA_PREFERENCES.length > 0 ? `"${DEFAULT_MEDIA_PREFERENCES.join(" ")}"` : '"null"'}
+                            const mediaSettings = localStorage.getItem("media-settings")
+                            if (mediaSettings) {
+                                const parsed = JSON.parse(mediaSettings)
+                                const prefs = parsed.state.preferences
+                                htmlElement.setAttribute(
+                                    "data-media",
+                                    prefs.length > 0 ? prefs.join(" ") : "null"
+                                )
+                            } else {
+                                htmlElement.setAttribute("data-media", defaultMediaString)
+                            }
+                        } catch (e) {
+                            console.error("Error getting media settings:", e)
+                            htmlElement.setAttribute("data-media", ${DEFAULT_MEDIA_PREFERENCES.length > 0 ? `"${DEFAULT_MEDIA_PREFERENCES.join(" ")}"` : '"null"'})
                         }
                         // Navigation bar position
                         try {
