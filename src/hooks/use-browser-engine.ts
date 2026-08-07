@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"

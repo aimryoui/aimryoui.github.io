@@ -1,5 +1,3 @@
-"use client"
-
 import { useSyncExternalStore } from "react"
 
 import theme from "@/lib/tailwindcss-plugins/tailwind"
@@ -100,5 +98,5 @@ function useMediaQuery(
     return matches
 }
 
-export type { BreakpointKey }
+export type { BreakpointKey, UseMediaQueryOptions }
 export { BREAKPOINTS, useMediaQuery }

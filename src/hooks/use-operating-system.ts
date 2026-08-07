@@ -1,10 +1,8 @@
-"use client"
-
 import { useState } from "react"
 
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 
-export type OperatingSystem =
+type OperatingSystem =
     | "windows"
     | "macOS"
     | "iOS/iPadOS"
@@ -93,4 +91,5 @@ function useOperatingSystem(): OperatingSystemInfo {
     }
 }
 
+export type { OperatingSystem }
 export { useOperatingSystem }

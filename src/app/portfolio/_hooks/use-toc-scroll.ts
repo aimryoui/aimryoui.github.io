@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react"
 import { usePathname } from "next/navigation"
 

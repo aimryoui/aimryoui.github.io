@@ -1,5 +1,3 @@
-"use client"
-
 import { useCallback } from "react"
 
 import { useWebHaptics } from "web-haptics/react"
