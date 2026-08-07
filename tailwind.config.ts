@@ -4,6 +4,7 @@ import { type Config } from "tailwindcss"
 import plugin from "tailwindcss/plugin"
 import { transformer } from "twg/transform"
 
+import { AVAILABLE_EFFECTS } from "./src/configs/effects.config"
 import animate from "./src/lib/tailwindcss-plugins/utilities/animate"
 import backfaceVisibility from "./src/lib/tailwindcss-plugins/utilities/backface-visibility"
 import backgroundClip from "./src/lib/tailwindcss-plugins/utilities/background-clip"
@@ -457,6 +458,12 @@ export default {
                 "@media (prefers-reduced-motion: reduce) { &:where([data-motion=system], [data-motion=system] *) }",
                 "&:where([data-motion=reduced], [data-motion=reduced] *)"
             ])
+            AVAILABLE_EFFECTS.forEach((effect) => {
+                addVariant(`data-${effect}`, [
+                    `@media (prefers-reduced-motion: no-preference) { &:where([data-motion=system], [data-motion=system] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *) }`,
+                    `&:where([data-motion=preferred], [data-motion=preferred] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *)`
+                ])
+            })
             addVariant("starting", ["@starting-style"])
         })
     ]

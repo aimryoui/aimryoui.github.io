@@ -6,6 +6,7 @@ import { Ellipsis } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
+    DropdownMenuCheckboxItem,
     DropdownMenuGroup,
     DropdownMenuLabel,
     DropdownMenuLinkItem,
@@ -18,10 +19,12 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { TooltipTrigger } from "@/components/ui/tooltip"
+import { AVAILABLE_EFFECTS, EFFECT_LABELS } from "@/configs/effects.config"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import { type AudioState, useAudioStore } from "@/stores/audio-store"
+import { useEffectsStore } from "@/stores/effects-store"
 import { type MotionPreference, useMotionStore } from "@/stores/motion-store"
 import {
     type SidebarPosition,
@@ -52,6 +55,9 @@ function SettingButton() {
 
     const motionPreference = useMotionStore((state) => state.preference)
     const setMotionPreference = useMotionStore((state) => state.setPreference)
+
+    const effects = useEffectsStore((state) => state.effects)
+    const toggleEffect = useEffectsStore((state) => state.toggleEffect)
 
     return (
         <>
@@ -293,6 +299,37 @@ function SettingButton() {
                                                             Follow system
                                                         </DropdownMenuRadioItem>
                                                     </DropdownMenuRadioGroup>
+                                                </DropdownMenuSubContent>
+                                            </DropdownMenuSub>
+                                            <DropdownMenuSub>
+                                                <DropdownMenuSubTrigger>
+                                                    Effects
+                                                </DropdownMenuSubTrigger>
+                                                <DropdownMenuSubContent>
+                                                    {AVAILABLE_EFFECTS.map(
+                                                        (effect) => (
+                                                            <DropdownMenuCheckboxItem
+                                                                key={effect}
+                                                                checked={effects.includes(
+                                                                    effect
+                                                                )}
+                                                                onCheckedChange={() => {
+                                                                    toggleEffect(
+                                                                        effect
+                                                                    )
+                                                                }}
+                                                                closeOnClick={
+                                                                    false
+                                                                }
+                                                            >
+                                                                {
+                                                                    EFFECT_LABELS[
+                                                                        effect
+                                                                    ]
+                                                                }
+                                                            </DropdownMenuCheckboxItem>
+                                                        )
+                                                    )}
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuSub>
                                         </DropdownMenuGroup>

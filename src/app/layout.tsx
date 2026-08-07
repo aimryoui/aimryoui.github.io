@@ -14,6 +14,7 @@ import {
 } from "@/components/media/svg-filter"
 import { ProgressRouteProvider } from "@/components/ui/progress"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { DEFAULT_EFFECTS } from "@/configs/effects.config"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/providers/theme-provider"
@@ -183,6 +184,24 @@ export default function RootLayout({
                         } catch (e) {
                             console.error("Error getting motion preference:", e)
                             htmlElement.setAttribute("data-motion", "system")
+                        }
+                        // Effects preferences
+                        try {
+                            const defaultEffectsString = ${DEFAULT_EFFECTS.length > 0 ? `"${DEFAULT_EFFECTS.join(" ")}"` : '"null"'}
+                            const effectsPreference = localStorage.getItem("effects-preference")
+                            if (effectsPreference) {
+                                const parsed = JSON.parse(effectsPreference)
+                                const effects = parsed.state.effects
+                                htmlElement.setAttribute(
+                                    "data-effects",
+                                    effects.length > 0 ? effects.join(" ") : "null"
+                                )
+                            } else {
+                                htmlElement.setAttribute("data-effects", defaultEffectsString)
+                            }
+                        } catch (e) {
+                            console.error("Error getting effects preference:", e)
+                            htmlElement.setAttribute("data-effects", ${DEFAULT_EFFECTS.length > 0 ? `"${DEFAULT_EFFECTS.join(" ")}"` : '"null"'})
                         }
                         // Navigation bar position
                         try {

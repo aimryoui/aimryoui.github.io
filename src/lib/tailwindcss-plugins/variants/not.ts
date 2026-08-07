@@ -1,6 +1,7 @@
+// oxlint-disable @limegrass/import-alias/import-alias
 import plugin from "tailwindcss/plugin"
 
-// oxlint-disable-next-line @limegrass/import-alias/import-alias
+import { AVAILABLE_EFFECTS } from "../../../configs/effects.config"
 import tailwindVariants from "../shared/tailwind-variants"
 
 export default plugin(({ addVariant, matchVariant, theme }) => {
@@ -52,5 +53,13 @@ export default plugin(({ addVariant, matchVariant, theme }) => {
     })
     matchVariant("not-data", (value) => `&:not(*[data-${value}])`, {
         values: theme("data")
+    })
+
+    AVAILABLE_EFFECTS.forEach((effect) => {
+        addVariant(`not-data-${effect}`, [
+            `&:not(:where([data-effects~='${effect}'], [data-effects~='${effect}'] *))`,
+            "&:where([data-motion=reduced], [data-motion=reduced] *)",
+            "@media (prefers-reduced-motion: reduce) { &:where([data-motion=system], [data-motion=system] *) }"
+        ])
     })
 })

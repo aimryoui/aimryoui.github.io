@@ -1,6 +1,7 @@
+// oxlint-disable @limegrass/import-alias/import-alias
 import plugin from "tailwindcss/plugin"
 
-// oxlint-disable-next-line @limegrass/import-alias/import-alias
+import { AVAILABLE_EFFECTS } from "../../../configs/effects.config"
 import tailwindVariants from "../shared/tailwind-variants"
 
 const sharedValues: Record<string, string> = Object.fromEntries(
@@ -94,4 +95,23 @@ export default plugin(({ matchVariant, theme }) => {
             values: sharedValues
         }
     )
+
+    AVAILABLE_EFFECTS.forEach((effect) => {
+        matchVariant(
+            `group-not-data-${effect}`,
+            (_, { modifier }) => {
+                const groupSelector = modifier
+                    ? `:merge(.group\\/${modifier})`
+                    : ":merge(.group)"
+                return [
+                    `${groupSelector}:not(:where([data-effects~='${effect}'], [data-effects~='${effect}'] *)) &`,
+                    `${groupSelector}:where([data-motion=reduced], [data-motion=reduced] *) &`,
+                    `@media (prefers-reduced-motion: reduce) { ${groupSelector}:where([data-motion=system], [data-motion=system] *) & }`
+                ]
+            },
+            {
+                values: { DEFAULT: "" }
+            }
+        )
+    })
 })

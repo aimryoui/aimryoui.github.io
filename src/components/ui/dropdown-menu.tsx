@@ -165,9 +165,8 @@ function DropdownMenuContent({
                     tabIndex={-1}
                     className={cn(
                         "group/dropdown-menu-popup relative z-50 grid h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
+                        "group-data-target-cursor/dropdown-menu-positioner:group-hover/dropdown-menu-positioner:rounded-none",
                         {
-                            "group-data-[cursor=target]/dropdown-menu-positioner:group-hover/dropdown-menu-positioner":
-                                "rounded-none",
                             "motion-preferred": [
                                 "will-change-[width,height,opacity,transform,border-radius] transition-[width,height,opacity,transform,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)]",
                                 isSubMenu ? "duration-200" : "duration-400",
@@ -257,7 +256,7 @@ function DropdownMenuLabel({
             className={cn(
                 "pointer-events-none px-3 py-1.5 text-xs text-muted-foreground",
                 {
-                    "data-inset": "pl-7"
+                    "data-inset": "ps-7"
                 },
                 className
             )}
@@ -292,7 +291,7 @@ function DropdownMenuItem({
                 "group/dropdown-menu-item relative flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
-                    "data-inset": "pl-7",
+                    "data-inset": "ps-7",
                     "data-disabled": "pointer-events-none opacity-50",
                     "data-[variant=destructive]": [
                         "text-destructive",
@@ -347,7 +346,7 @@ function DropdownMenuSubTrigger({
                         "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-popup-open":
                         "bg-accent/60 text-accent-foreground dark:bg-accent",
-                    "data-inset": "pl-7",
+                    "data-inset": "ps-7",
                     "not-data-[variant=destructive]":
                         "focus:**:text-accent-foreground",
                     "[&_svg:not([class*='size-'])]": "size-4",
@@ -418,7 +417,7 @@ function DropdownMenuLinkItem({
                 openInNewTab ? "pe-8 ps-3" : "px-3",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
-                    "data-inset": "pl-7",
+                    "data-inset": "ps-7",
                     "data-disabled": "pointer-events-none opacity-50",
                     "[&_svg]": "pointer-events-none shrink-0",
                     "[&_svg:not([class*='size-'])]": "size-4"
@@ -452,14 +451,18 @@ function DropdownMenuLinkItem({
 function DropdownMenuCheckboxItem({
     className,
     children,
+    description,
     checked,
     inset,
     onClick,
     ...props
 }: MenuPrimitive.CheckboxItem.Props & {
     inset?: boolean
+    description?: React.ReactNode
 }) {
     const playPressFeedback = usePressFeedback()
+
+    const Comp = description ? "div" : Fragment
 
     return (
         <MenuPrimitive.CheckboxItem
@@ -471,10 +474,11 @@ function DropdownMenuCheckboxItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-3 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm outline-hidden",
+                !description && "pe-9.5",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
-                    "data-inset": "pl-7",
+                    "data-inset": "ps-7",
                     "data-disabled": "pointer-events-none opacity-50",
                     "[&_svg:not([class*='size-'])]": "size-4",
                     "[&_svg]": "pointer-events-none shrink-0"
@@ -484,13 +488,35 @@ function DropdownMenuCheckboxItem({
             checked={checked}
             {...props}
         >
-            <MenuPrimitive.CheckboxItemIndicator
-                data-slot="dropdown-menu-checkbox-item-indicator"
-                className="pointer-events-none absolute right-3 flex items-center justify-center"
+            <Comp
+                {...(description && {
+                    className: "flex flex-col gap-y-0.5"
+                })}
             >
-                <CheckIcon />
-            </MenuPrimitive.CheckboxItemIndicator>
-            {children}
+                <Comp
+                    {...(description && {
+                        className: "flex gap-1.5 pe-9.5 justify-between"
+                    })}
+                >
+                    {children}
+                    <MenuPrimitive.CheckboxItemIndicator
+                        data-slot="dropdown-menu-checkbox-item-indicator"
+                        className={cn(
+                            "pointer-events-none absolute right-2 top-2 grid size-5 place-items-center"
+                        )}
+                    >
+                        <CheckIcon />
+                    </MenuPrimitive.CheckboxItemIndicator>
+                </Comp>
+                {description && (
+                    <span
+                        className="text-xs text-muted-foreground"
+                        data-slot="dropdown-menu-checkbox-item-description"
+                    >
+                        {description}
+                    </span>
+                )}
+            </Comp>
         </MenuPrimitive.CheckboxItem>
     )
 }
@@ -530,8 +556,10 @@ function DropdownMenuRadioItem({
             }}
             className={cn(
                 "relative flex cursor-pointer select-none items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm outline-hidden",
+                !description && "pe-9.5",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
+                    "data-inset": "ps-7",
                     "data-disabled": "pointer-events-none opacity-50",
                     "[&_svg:not([class*='size-'])]": "size-4",
                     "[&_svg]": "pointer-events-none shrink-0"
@@ -547,14 +575,14 @@ function DropdownMenuRadioItem({
             >
                 <Comp
                     {...(description && {
-                        className: "flex gap-1.5 justify-between"
+                        className: "flex gap-1.5 pe-9.5 justify-between"
                     })}
                 >
                     {children}
                     <MenuPrimitive.RadioItemIndicator
                         data-slot="dropdown-menu-radio-item-indicator"
                         className={cn(
-                            "pointer-events-none -me-1 flex size-5 items-center justify-center"
+                            "pointer-events-none absolute right-2 top-2 grid size-5 place-items-center"
                         )}
                     >
                         <CheckIcon />

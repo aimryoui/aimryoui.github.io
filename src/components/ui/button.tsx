@@ -30,10 +30,10 @@ const buttonVariants = cva(
         nativeButtonClassName,
         "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xlg text-sm font-wght-500 transition-transform",
         {
-            "data-[cursor=target]":
+            "data-target-cursor":
                 "transition-[transform,translate,scale,border-radius] ease-spring duration-200",
             hover: {
-                "data-[cursor=target]": "rounded-none"
+                "data-target-cursor": "rounded-none"
             },
             active: "not-aria-[haspopup]:motion-preferred:translate-y-px",
             "[&_svg:not([class*='size-'])]": "size-4",

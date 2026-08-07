@@ -8,6 +8,7 @@ import { pxToRem } from "@/helpers/px-to-rem"
 import { useDevice } from "@/hooks/use-device"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { cn } from "@/lib/utils"
+import { useEffectsStore } from "@/stores/effects-store"
 
 import { BASE_FONT_SIZE } from "~/tailwind.config"
 
@@ -95,6 +96,9 @@ function TargetCursor({
 }: React.ComponentProps<"div"> & TargetCursorProps) {
     const { isTouchDevice } = useDevice()
     const reduceMotion = useReducedMotion()
+    const isEffectEnabled = useEffectsStore((state) =>
+        state.hasEffect("target-cursor")
+    )
 
     const rootRef = useRef<HTMLDivElement>(null)
     const dotRef = useRef<HTMLDivElement>(null)
@@ -129,6 +133,7 @@ function TargetCursor({
         if (
             reduceMotion ||
             isTouchDevice ||
+            !isEffectEnabled ||
             !rootRef.current ||
             !wrapperRef.current ||
             !dotRef.current
@@ -315,11 +320,7 @@ function TargetCursor({
             ease: "none"
         })
 
-        if (hasMoved) {
-            gsap.set(wrapper, { x: state.mouseX, y: state.mouseY })
-            gsap.set(dot, { x: state.mouseX, y: state.mouseY })
-            updateVisibility()
-        }
+
 
         const tickerFn = () => {
             if (activeTarget) {
@@ -606,6 +607,38 @@ function TargetCursor({
         }
         window.addEventListener("resize", resizeHandler)
 
+        if (hasMoved) {
+            gsap.set(wrapper, { x: state.mouseX, y: state.mouseY })
+            gsap.set(dot, { x: state.mouseX, y: state.mouseY })
+            updateVisibility()
+
+            const el = document.elementFromPoint(
+                globalMouse.x,
+                globalMouse.y
+            )
+            if (el) {
+                const isIgnored = ignoreSelector
+                    ? el.closest(ignoreSelector) !== null
+                    : false
+                const isInput = inputSelector
+                    ? el.closest(inputSelector) !== null
+                    : false
+
+                let visibilityChanged = false
+                if (isIgnored) {
+                    isHiddenByIgnore = true
+                    visibilityChanged = true
+                }
+                if (isInput) {
+                    isHiddenByInput = true
+                    visibilityChanged = true
+                }
+                if (visibilityChanged) updateVisibility()
+
+                processTarget(el)
+            }
+        }
+
         return () => {
             gsap.ticker.fps(0)
             gsap.ticker.remove(tickerFn)
@@ -652,10 +685,11 @@ function TargetCursor({
         hideDefaultCursor,
         cursorColor,
         isTouchDevice,
-        reduceMotion
+        reduceMotion,
+        isEffectEnabled
     ])
 
-    if (reduceMotion || isTouchDevice) return null
+    if (reduceMotion || isTouchDevice || !isEffectEnabled) return null
 
     return (
         <div
