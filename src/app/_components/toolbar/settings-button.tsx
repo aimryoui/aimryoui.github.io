@@ -3,30 +3,23 @@
 import { useState } from "react"
 
 import { Ellipsis } from "@/components/icons/icons"
+import { AudioMenu } from "@/components/settings/audio-menu"
+import { EffectsMenu } from "@/components/settings/effects-menu"
+import { MotionMenu } from "@/components/settings/motion-menu"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuGroup,
     DropdownMenuLabel,
     DropdownMenuLinkItem,
-    DropdownMenuRadioGroup,
-    DropdownMenuRadioItem,
     DropdownMenuSeparator,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import { TooltipTrigger } from "@/components/ui/tooltip"
-import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
-import { type AudioState, useAudioStore } from "@/stores/audio-store"
 
 function SettingButton() {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false)
-
-    const audioMode = useAudioStore((state) => state.audioMode)
-    const setAudioMode = useAudioStore((state) => state.setAudioMode)
 
     return (
         <DropdownMenu
@@ -58,65 +51,9 @@ function SettingButton() {
                                         <DropdownMenuLabel>
                                             Settings
                                         </DropdownMenuLabel>
-                                        <DropdownMenuSub>
-                                            <DropdownMenuSubTrigger>
-                                                Audio mode
-                                            </DropdownMenuSubTrigger>
-                                            <DropdownMenuSubContent>
-                                                <DropdownMenuRadioGroup
-                                                    value={audioMode}
-                                                    onValueChange={(value) => {
-                                                        const nextMode =
-                                                            value as AudioState["audioMode"]
-                                                        setAudioMode(nextMode)
-
-                                                        if (
-                                                            nextMode === "auto"
-                                                        ) {
-                                                            useAudioStore
-                                                                .getState()
-                                                                .setIsAudioEnabled(
-                                                                    true
-                                                                )
-
-                                                            playPressSound(
-                                                                "button"
-                                                            )
-                                                        }
-                                                    }}
-                                                >
-                                                    <DropdownMenuRadioItem
-                                                        value="manual"
-                                                        closeOnClick
-                                                        description={
-                                                            <>
-                                                                Manually press
-                                                                the audio button
-                                                                to turn on
-                                                                audio.
-                                                            </>
-                                                        }
-                                                    >
-                                                        Manual
-                                                    </DropdownMenuRadioItem>
-                                                    <DropdownMenuRadioItem
-                                                        value="auto"
-                                                        closeOnClick
-                                                        description={
-                                                            <>
-                                                                Automatically
-                                                                capture first
-                                                                press
-                                                                interaction and
-                                                                turn on audio.
-                                                            </>
-                                                        }
-                                                    >
-                                                        Auto
-                                                    </DropdownMenuRadioItem>
-                                                </DropdownMenuRadioGroup>
-                                            </DropdownMenuSubContent>
-                                        </DropdownMenuSub>
+                                        <AudioMenu />
+                                        <MotionMenu />
+                                        <EffectsMenu />
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuGroup>

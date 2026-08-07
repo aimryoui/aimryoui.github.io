@@ -41,6 +41,7 @@ type AnimatedMediaProps = {
     parsedData: ParsedMediaData<VideoMetadata>
     alt: string
     posterPath?: string
+    dim?: boolean
     rounded?: boolean
     autoplay?: boolean
     mute?: boolean
@@ -59,6 +60,7 @@ function AnimatedMedia({
     parsedData,
     alt,
     posterPath,
+    dim = false,
     rounded = false,
     autoPlay,
     autoplay,
@@ -306,6 +308,11 @@ function AnimatedMedia({
                       ]
                     : "w-full",
                 rounded && "rounded-2xl md:rounded-xl",
+                dim &&
+                    !isInLightbox && {
+                        "dark:before":
+                            "pointer-events-none absolute inset-0 z-2 bg-black/15"
+                    },
                 {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },
@@ -318,7 +325,7 @@ function AnimatedMedia({
                         width: "calc(max(80vh, calc(var(--spacing) * 125)) * calc(var(--nhn-aspect-ratio)))"
                     }),
                     ...(row && {
-                        flex: `${row === "justified" ? "calc(var(--nhn-aspect-ratio))" : exactW} 1 0%`
+                        flex: `${row === "justified" ? "calc((var(--nhn-aspect-ratio)) * 100)" : exactW} 1 0%`
                     }),
                     ...(col && {
                         width: `calc(${exactW} / 1602 * 100%)`
@@ -328,7 +335,13 @@ function AnimatedMedia({
             }}
             {...props}
         >
-            <div ref={hostRef} className="absolute inset-0 size-full" />
+            <div
+                ref={hostRef}
+                className={cn(
+                    "absolute inset-0 size-full",
+                    dim && !isInLightbox && { dark: "contrast-[1.08]" }
+                )}
+            />
             {shadowRoot &&
                 createPortal(
                     // oxlint-disable-next-line jsx-a11y/media-has-caption

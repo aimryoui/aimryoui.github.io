@@ -32,6 +32,7 @@ export default function Home() {
                 className={cn("h-full min-h-32")}
             >
                 <Image
+                    dim
                     lightbox={false}
                     placeholderPriority
                     asBackgroundImage

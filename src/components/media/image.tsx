@@ -26,6 +26,7 @@ type GeneralImageProps = React.ComponentProps<"div"> & {
     alt: string
     placeholderPriority?: boolean
     asBackgroundImage?: boolean
+    dim?: boolean
     row?: "justified" | "proportional"
     col?: "justified"
     limitHeight?: boolean
@@ -171,6 +172,7 @@ function ImageCore({
     parsedData,
     placeholderPriority = false,
     asBackgroundImage = false,
+    dim = false,
     row,
     col,
     limitHeight = false,
@@ -257,6 +259,11 @@ function ImageCore({
                 "relative grid place-items-center",
                 !pngBorder && "overflow-hidden",
                 lightbox && !isInLightbox && "cursor-zoom-in",
+                dim &&
+                    !isInLightbox && {
+                        "dark:before":
+                            "pointer-events-none absolute inset-0 z-2 bg-black/15"
+                    },
                 !noBorder &&
                     !pngBorder &&
                     !gradientBorder && {
@@ -361,7 +368,8 @@ function ImageCore({
                             "size-auto max-h-full max-w-full",
                         objectFit === "cover" &&
                             "size-auto min-h-full min-w-full",
-                        pngBorder && "blink:[filter:url(#png-border)]"
+                        pngBorder && "blink:[filter:url(#png-border)]",
+                        dim && !isInLightbox && { dark: "contrast-[1.08]" }
                     )}
                     style={{
                         aspectRatio
