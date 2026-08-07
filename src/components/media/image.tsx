@@ -246,7 +246,7 @@ function ImageCore({
             ref={mergeRefs([containerRef, ref])}
             data-slot="image"
             className={cn(
-                "content-auto",
+                "group/image content-auto",
                 limitHeight
                     ? [
                           "min-w-0 max-w-full md:!w-full",
@@ -259,19 +259,16 @@ function ImageCore({
                 "relative grid place-items-center",
                 !pngBorder && "overflow-hidden",
                 lightbox && !isInLightbox && "cursor-zoom-in",
-                dim &&
-                    !isInLightbox && {
-                        "dark:before":
-                            "pointer-events-none absolute inset-0 z-2 bg-black/15"
-                    },
                 !noBorder &&
                     !pngBorder &&
                     !gradientBorder && {
                         after: [
                             "pointer-events-none absolute inset-0 z-2 rounded-inherit transition-[border-color] duration-250",
-                            isInLightbox
-                                ? "border-media border-white/15"
-                                : "border border-default/15"
+                            "border border-default/15",
+                            {
+                                "data-[lightbox-active=true]":
+                                    "border-media border-white/15"
+                            }
                         ]
                     },
                 gradientBorder && [
@@ -369,7 +366,13 @@ function ImageCore({
                         objectFit === "cover" &&
                             "size-auto min-h-full min-w-full",
                         pngBorder && "blink:[filter:url(#png-border)]",
-                        dim && !isInLightbox && { dark: "contrast-[1.08]" }
+                        dim && [
+                            {
+                                dark: "brightness-[0.87] contrast-[1.06] saturate-[1.04] transition-[filter] duration-350",
+                                "group-data-[lightbox-active=true]/image":
+                                    "!filter-none"
+                            }
+                        ]
                     )}
                     style={{
                         aspectRatio

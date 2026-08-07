@@ -308,11 +308,6 @@ function AnimatedMedia({
                       ]
                     : "w-full",
                 rounded && "rounded-2xl md:rounded-xl",
-                dim &&
-                    !isInLightbox && {
-                        "dark:before":
-                            "pointer-events-none absolute inset-0 z-2 bg-black/15"
-                    },
                 {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },
@@ -339,7 +334,10 @@ function AnimatedMedia({
                 ref={hostRef}
                 className={cn(
                     "absolute inset-0 size-full",
-                    dim && !isInLightbox && { dark: "contrast-[1.08]" }
+                    dim &&
+                        !isInLightbox && {
+                            dark: "brightness-[0.87] contrast-[1.06] saturate-[1.04]"
+                        }
                 )}
             />
             {shadowRoot &&

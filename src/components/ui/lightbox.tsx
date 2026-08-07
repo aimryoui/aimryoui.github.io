@@ -335,10 +335,11 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
 
                     startAFSync()
 
-                    const content = getElements().content()
+                    const content = getElements().content() as
+                        | HTMLElement
+                        | undefined
                     if (content) {
-                        content.classList.remove("after:border-default/15")
-                        content.classList.add("after:border-white/15")
+                        content.dataset.lightboxActive = "true"
                     }
                 })
 
@@ -354,10 +355,11 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 onEvent("closingAnimationStart", () => {
                     startAFSync()
 
-                    const content = getElements().content()
+                    const content = getElements().content() as
+                        | HTMLElement
+                        | undefined
                     if (content) {
-                        content.classList.remove("after:border-white/15")
-                        content.classList.add("after:border-default/15")
+                        delete content.dataset.lightboxActive
                     }
 
                     document.body.style.removeProperty("--color-svg-filter")
