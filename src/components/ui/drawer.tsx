@@ -181,7 +181,14 @@ function DrawerContent({
                             "border border-transparent bg-[image:linear-gradient(var(--color-background),var(--color-background)),linear-gradient(to_bottom,var(--color-stroke)_0%,var(--color-background)_60%)] bg-origin-border bg-clip-[padding-box,border-box]",
 
                             // Animations.
-                            "will-change-transform transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))] transition-[transform,height,opacity,filter,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)] duration-450 [interpolate-size:allow-keywords]",
+                            [
+                                "transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))]",
+                                {
+                                    "not-motion-safe": "transition-none",
+                                    "motion-safe":
+                                        "will-change-transform transition-[transform,height,opacity,filter,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)] duration-450 [interpolate-size:allow-keywords]"
+                                }
+                            ],
                             {
                                 // Nested.
                                 "data-[nested-drawer-open]":
@@ -249,7 +256,7 @@ function DrawerContent({
                                 ],
                                 "data-[nested-drawer-swiping]": "duration-0",
                                 "data-[swiping]":
-                                    "not-data-ending-style:!transition-[border-radius]",
+                                    "not-data-ending-style:motion-safe:!transition-[border-radius]",
 
                                 // Direction: down.
                                 "data-[swipe-direction=down]": [
@@ -292,7 +299,8 @@ function DrawerContent({
                         <DrawerPrimitive.Content
                             data-slot="drawer-content"
                             className={cn(
-                                "pointer-events-none flex min-h-0 flex-1 select-text flex-col overflow-hidden overscroll-contain rounded-inherit transition-opacity ease-[cubic-bezier(0.45,1.005,0,1.005)] duration-300 group-data-[swiping]/drawer-popup:select-none group-data-[nested-drawer-open]/drawer-popup:opacity-0 group-data-[nested-drawer-swiping]/drawer-popup:opacity-100"
+                                "pointer-events-none flex min-h-0 flex-1 select-text flex-col overflow-hidden overscroll-contain rounded-inherit transition-opacity ease-[cubic-bezier(0.45,1.005,0,1.005)] duration-300",
+                                "group-data-[swiping]/drawer-popup:select-none group-data-[nested-drawer-open]/drawer-popup:opacity-0 group-data-[nested-drawer-swiping]/drawer-popup:opacity-100"
                             )}
                         >
                             {children}

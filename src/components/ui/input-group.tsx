@@ -35,8 +35,11 @@ function InputGroup({ className, ...props }: GroupProps) {
 
                     // Focus state.
                     "has-[[data-slot=input-group-control]:focus-visible]": [
-                        "animate-focus ring-ring outline-solid",
+                        "ring-ring outline-solid",
                         {
+                            "not-motion-safe":
+                                "outline-highlighted/30 outline-4",
+                            "motion-safe": "animate-focus",
                             hover: "bg-transparent dark:bg-input/30"
                         }
                     ],

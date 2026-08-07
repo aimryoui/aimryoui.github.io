@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/drawer"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { useIsMounted } from "@/hooks/use-is-mounted"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { cn } from "@/lib/utils"
 import { MobileTocList } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-list"
 import { TocHeader } from "@/portfolio/_components/_layout/toc/toc-header"
@@ -80,6 +81,8 @@ function MobileTocButtonCore() {
         handleClearSearch
     } = useTocSearch(inputRef, tocItems)
 
+    const reduceMotion = useReducedMotion()
+
     const [snapPoint, setSnapPoint] =
         useState<DrawerPrimitive.Root.SnapPoint | null>(snapPoints[0])
 
@@ -104,7 +107,13 @@ function MobileTocButtonCore() {
                                 size="icon"
                                 variant="outline"
                                 haptic="nudge"
-                                pressSound={isTocOpen ? "zoom-out" : "zoom-in"}
+                                pressSound={
+                                    reduceMotion
+                                        ? "button"
+                                        : isTocOpen
+                                          ? "zoom-out"
+                                          : "zoom-in"
+                                }
                                 className={cn(
                                     "!size-full !rounded-none border-0"
                                 )}

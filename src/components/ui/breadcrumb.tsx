@@ -78,7 +78,7 @@ function BreadcrumbItem({ className, children, ...props }: BreadcrumbProps) {
             data-slot="breadcrumb-item"
             data-cursor="target"
             className={cn(
-                "group inline-flex h-full items-center text-nowrap",
+                "group/breadcrumb-item inline-flex h-full items-center text-nowrap",
                 className
             )}
             {...props}
@@ -128,7 +128,7 @@ function BreadcrumbLink({
             data-sound="button"
             className={cn(
                 "flex h-full items-center text-muted-foreground/90 transition-[color] duration-100",
-                "group-first:-ms-1.25",
+                "group-first/breadcrumb-item:-ms-1.25",
                 {
                     hover: "text-foreground transition-none",
                     "data-[popup-open]": "text-foreground",
@@ -187,6 +187,7 @@ function BreadcrumbPage({
             className={cn(
                 "-me-1.25 flex h-full items-center text-foreground",
                 {
+                    active: "not-aria-[haspopup]:motion-safe:translate-y-px",
                     lg: "text-sm",
                     md: "py-2"
                 },
@@ -224,8 +225,8 @@ function BreadcrumbMenu({
             nativeButton
             keepFeedback
             className={cn(
-                "group/trigger flex h-full items-center text-muted-foreground/90 transition-[color] duration-100",
-                "group-first:-ms-1.25",
+                "group/breadcrumb-trigger flex h-full items-center text-muted-foreground/90 transition-[color] duration-100",
+                "group-first/breadcrumb-item:-ms-1.25",
                 {
                     hover: "text-foreground transition-none",
                     lg: "text-sm",
@@ -241,24 +242,15 @@ function BreadcrumbMenu({
                 className={cn(
                     "flex items-center gap-1 pe-0.5 ps-1.25 md:py-0.5",
                     {
-                        "group-data-[popup-open]/trigger": "text-foreground",
+                        "group-data-[popup-open]/breadcrumb-trigger":
+                            "text-foreground",
                         md: "py-0.5"
                     },
                     spanClassName
                 )}
             >
                 {children}
-                <ChevronDownIcon
-                    className={cn(
-                        "size-4 transition-transform duration-400",
-                        "text-muted-foreground group-hover:text-foreground",
-                        {
-                            "group-hover/trigger": "text-foreground",
-                            "group-data-[popup-open]/trigger":
-                                "-rotate-180 text-foreground"
-                        }
-                    )}
-                />
+                <BreadcrumbChevron />
             </span>
             {!isCurrent && <BreadcrumbSeparator />}
         </Button>
@@ -285,7 +277,7 @@ function BreadcrumbMenuPage({
             nativeButton
             keepFeedback
             className={cn(
-                "group/trigger -me-1.25 flex h-full items-center text-foreground",
+                "group/breadcrumb-trigger -me-1.25 flex h-full items-center text-foreground",
                 {
                     lg: "text-sm",
                     md: "py-2"
@@ -303,20 +295,32 @@ function BreadcrumbMenuPage({
                 )}
             >
                 {children}
-                <ChevronDownIcon
-                    className={cn(
-                        "size-4 transition-transform duration-300",
-                        "text-muted-foreground group-hover:text-foreground",
-                        {
-                            "group-hover/trigger": "text-foreground",
-                            "group-data-[popup-open]/trigger":
-                                "-rotate-180 text-foreground"
-                        }
-                    )}
-                />
+                <BreadcrumbChevron />
             </span>
             {!isCurrent && <BreadcrumbSeparator />}
         </Button>
+    )
+}
+
+function BreadcrumbChevron({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
+    return (
+        <ChevronDownIcon
+            className={cn(
+                "size-4 text-muted-foreground",
+                {
+                    "motion-safe": "transition-transform duration-400",
+                    "group-hover/breadcrumb-item": "text-foreground",
+                    "group-hover/breadcrumb-trigger": "text-foreground",
+                    "group-data-[popup-open]/breadcrumb-trigger":
+                        "-rotate-180 text-foreground"
+                },
+                className
+            )}
+            {...props}
+        />
     )
 }
 

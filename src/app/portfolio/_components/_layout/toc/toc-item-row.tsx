@@ -77,8 +77,11 @@ const TocItemRow = memo(
                             "absolute left-safe-zone top-[calc(100%+var(--item-gap)/2)] h-px origin-left -translate-y-1/2 bg-[--marker-color] opacity-60",
                             "last:hidden has-[+[role=separator]]:hidden",
                             isProject
-                                ? "w-[calc(var(--marker-length)*var(--tick-scale))] scale-x-[calc(1+var(--effect,0)*1.5)]"
-                                : "w-1.25 scale-x-[--effect,0] transition-[width] group-not-data-expanded/collapsible:w-0"
+                                ? "w-[calc(var(--marker-length)*var(--tick-scale))] motion-safe:scale-x-[calc(1+var(--effect,0)*1.5)]"
+                                : {
+                                      "motion-safe":
+                                          "w-1.25 scale-x-[--effect,0] transition-[width] group-not-data-expanded/collapsible:w-0"
+                                  }
                         ]
                     },
                     className
@@ -94,8 +97,8 @@ const TocItemRow = memo(
                             ? "bg-highlighted"
                             : "bg-[color-mix(in_srgb,var(--accent-color)_calc(var(--effect,0)*100%),var(--marker-color))]",
                         isProject
-                            ? "w-[--marker-length] scale-x-[calc(1+var(--effect,0))]"
-                            : "w-2.5 scale-x-[--effect,0]"
+                            ? "w-[--marker-length] motion-safe:scale-x-[calc(1+var(--effect,0))]"
+                            : { "motion-safe": "w-2.5 scale-x-[--effect,0]" }
                     )}
                 />
                 <LinkButton
@@ -170,7 +173,7 @@ const TocItemRow = memo(
                         <div
                             className={cn(
                                 "my-0.5 grid size-6 place-items-center rounded-md bg-muted-foreground/15",
-                                "translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem)*0.9)]",
+                                "motion-safe:translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem)*0.9)]",
                                 {
                                     dark: "bg-muted-foreground/20",
                                     "group-hover":
@@ -190,7 +193,7 @@ const TocItemRow = memo(
                         className={cn(
                             "block w-fit max-w-full px-1.25",
                             isCategory && !isSelectedWorks && "-ms-1.25",
-                            "translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
+                            "motion-safe:translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
                         )}
                     >
                         {highlightQuery(item.label, query ?? "") ??

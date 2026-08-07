@@ -112,15 +112,20 @@ function TooltipContent({
                 arrowPadding={10}
                 className={cn(
                     "z-90 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width]",
-                    "transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
-                    "data-instant:transition-none"
+                    {
+                        "motion-safe":
+                            "transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
+                        "data-instant": "transition-none"
+                    }
                 )}
             >
                 <TooltipPrimitive.Popup
                     data-slot="tooltip-content"
                     className={cn(
-                        "relative h-[--popup-height,auto] w-[--popup-width,auto] max-w-125 origin-[--transform-origin] text-balance rounded-xlg bg-background text-sm tracking-tight text-foreground -outline-offset-px outline-muted-foreground outline transition-[width,height,opacity,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
+                        "relative h-[--popup-height,auto] w-[--popup-width,auto] max-w-125 origin-[--transform-origin] text-balance rounded-xlg bg-background text-sm tracking-tight text-foreground -outline-offset-px outline-muted-foreground outline",
                         {
+                            "motion-safe":
+                                "transition-[width,height,opacity,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
                             "data-starting-style": "scale-90 opacity-0",
                             "data-ending-style": "scale-90 opacity-0",
                             "data-instant": "transition-none"
@@ -142,16 +147,15 @@ function TooltipArrow({ ...props }: TooltipPrimitive.Arrow.Props) {
     return (
         <TooltipPrimitive.Arrow
             data-slot="tooltip-arrow"
-            className={cn(
-                "transition-[left] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
-                {
-                    "data-[side=top]": "bottom-0 translate-y-full",
-                    "data-[side=bottom]": "top-0 -translate-y-full rotate-180",
-                    "data-[side=left]": "hidden",
-                    "data-[side=right]": "hidden",
-                    "data-instant": "transition-none"
-                }
-            )}
+            className={cn({
+                "motion-safe":
+                    "transition-[left] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
+                "data-[side=top]": "bottom-0 translate-y-full",
+                "data-[side=bottom]": "top-0 -translate-y-full rotate-180",
+                "data-[side=left]": "hidden",
+                "data-[side=right]": "hidden",
+                "data-instant": "transition-none"
+            })}
             {...props}
         >
             <svg
@@ -186,34 +190,41 @@ function TooltipViewport({
                 "relative size-full overflow-clip px-[--viewport-inline-padding] py-1",
                 "has-[kbd]:pr-1",
                 {
-                    "[&_:is([data-current],[data-previous])]":
-                        "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.4s,.25s]",
-                    "[&_[data-current][data-starting-style]]": [
-                        "opacity-0",
+                    "[&_:is([data-current],[data-previous])]": [
+                        "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-opacity ease-[cubic-bezier(0.22,1,0.36,1)] duration-250",
                         {
-                            "data-[activation-direction~=left]":
-                                "-translate-x-1/2",
-                            "data-[activation-direction~=right]":
-                                "translate-x-1/2",
-                            "data-[activation-direction~=up]":
-                                "-translate-y-[200%]",
-                            "data-[activation-direction~=down]":
-                                "translate-y-[200%]"
+                            "motion-safe":
+                                "transition-[transform,opacity] duration-[.4s,.25s]"
                         }
                     ],
-                    "[&_[data-previous][data-ending-style]]": [
-                        "opacity-0",
-                        {
-                            "data-[activation-direction~=left]":
-                                "translate-x-1/2",
-                            "data-[activation-direction~=right]":
-                                "-translate-x-1/2",
-                            "data-[activation-direction~=up]":
-                                "translate-y-[200%]",
-                            "data-[activation-direction~=down]":
-                                "-translate-y-[200%]"
-                        }
-                    ],
+                    "motion-safe": {
+                        "[&_[data-current][data-starting-style]]": [
+                            "opacity-0",
+                            {
+                                "data-[activation-direction~=left]":
+                                    "-translate-x-1/2",
+                                "data-[activation-direction~=right]":
+                                    "translate-x-1/2",
+                                "data-[activation-direction~=up]":
+                                    "-translate-y-[200%]",
+                                "data-[activation-direction~=down]":
+                                    "translate-y-[200%]"
+                            }
+                        ],
+                        "[&_[data-previous][data-ending-style]]": [
+                            "opacity-0",
+                            {
+                                "data-[activation-direction~=left]":
+                                    "translate-x-1/2",
+                                "data-[activation-direction~=right]":
+                                    "-translate-x-1/2",
+                                "data-[activation-direction~=up]":
+                                    "translate-y-[200%]",
+                                "data-[activation-direction~=down]":
+                                    "-translate-y-[200%]"
+                            }
+                        ]
+                    },
                     "[[data-instant]_&_:is([data-current],[data-previous])]":
                         "transition-none"
                 },

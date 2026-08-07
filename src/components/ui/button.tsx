@@ -28,14 +28,14 @@ const nativeButtonClassName = cn("shrink-0 cursor-pointer select-none", {
 const buttonVariants = cva(
     cn(
         nativeButtonClassName,
-        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xlg text-sm will-change-transform font-wght-500 transition-transform",
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xlg text-sm font-wght-500 transition-transform",
         {
             "data-[cursor=target]":
                 "transition-[transform,translate,scale,border-radius] ease-spring duration-200",
             hover: {
                 "data-[cursor=target]": "rounded-none"
             },
-            active: "not-aria-[haspopup]:translate-y-px",
+            active: "not-aria-[haspopup]:motion-safe:translate-y-px",
             "[&_svg:not([class*='size-'])]": "size-4",
             "[&_svg]": "pointer-events-none shrink-0"
         }

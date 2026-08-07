@@ -64,10 +64,16 @@ function Title({
             <H2
                 id={id}
                 className={cn(
-                    "w-fit text-foreground will-change-[font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
+                    "w-fit text-foreground wrap-anywhere transition-[color] duration-100",
                     {
-                        "group-hover":
-                            "text-highlighted font-wght-900 transition-[font-variation-settings]",
+                        "motion-safe": [
+                            "will-change-[font-variation-settings] transition-[color,font-variation-settings] ease-spring duration-500",
+                            {
+                                "group-hover":
+                                    "transition-[font-variation-settings]"
+                            }
+                        ],
+                        "group-hover": "text-highlighted transition-none",
                         "group-active": "text-highlighted transition-none"
                     }
                 )}

@@ -223,38 +223,54 @@ function ProjectCover({
             >
                 <div
                     className={cn(
-                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40 transition-transform ease-in duration-150",
+                        "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40",
                         {
-                            "group-hover": "-translate-y-0.5 scale-y-150",
-                            "group-active": "-translate-y-0.5 scale-y-150"
-                        }
-                    )}
-                />
-                <div
-                    className={cn(
-                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70 transition-transform ease-in duration-150",
-                        {
-                            "group-hover": "scale-y-150",
-                            "group-active": "scale-y-150"
-                        }
-                    )}
-                />
-                <div
-                    className={cn(
-                        "relative rounded-xl transition-transform ease-in duration-150",
-                        {
-                            "group-hover": "translate-y-0.5",
-                            "group-active": "translate-y-0.5",
-                            after: [
-                                "absolute inset-0 size-full rounded-inherit ring-2 ring-inset ring-muted-foreground/80",
+                            "motion-safe": [
+                                "transition-transform ease-in duration-150",
                                 {
+                                    "group-hover":
+                                        "-translate-y-0.5 scale-y-150",
+                                    "group-active":
+                                        "-translate-y-0.5 scale-y-150"
+                                }
+                            ]
+                        }
+                    )}
+                />
+                <div
+                    className={cn(
+                        "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70",
+                        {
+                            "motion-safe": [
+                                "transition-transform ease-in duration-150",
+                                {
+                                    "group-hover": "scale-y-150",
+                                    "group-active": "scale-y-150"
+                                }
+                            ]
+                        }
+                    )}
+                />
+                <div
+                    className={cn("relative rounded-xl", {
+                        "motion-safe": [
+                            "transition-transform ease-in duration-150",
+                            {
+                                "group-hover": "translate-y-0.5",
+                                "group-active": "translate-y-0.5"
+                            }
+                        ],
+                        after: [
+                            "absolute inset-0 size-full rounded-inherit ring-2 ring-inset ring-muted-foreground/80",
+                            {
+                                "motion-safe": {
                                     "group-hover": "ring-3",
                                     "group-active": "ring-3"
                                 }
-                            ],
-                            md: "rounded-xlg"
-                        }
-                    )}
+                            }
+                        ],
+                        md: "rounded-xlg"
+                    })}
                 >
                     {socialData && (
                         <ViewTransition
@@ -335,13 +351,19 @@ function ProjectName({
             >
                 <span
                     className={cn(
-                        "w-fit max-w-full translate-y-0 skew-y-0 truncate transition-[transform,opacity] ease-in-out duration-500",
+                        "w-fit max-w-full translate-y-0 skew-y-0 truncate",
                         {
-                            "group-data-[hover=true]": [
-                                "-translate-y-full opacity-0",
-                                navigation === "backward"
-                                    ? "-skew-y-12"
-                                    : "skew-y-12"
+                            "not-motion-safe": "group-hover:text-highlighted",
+                            "motion-safe": [
+                                "transition-[transform,opacity] ease-in-out duration-500",
+                                {
+                                    "group-data-[hover=true]": [
+                                        "-translate-y-full opacity-0",
+                                        navigation === "backward"
+                                            ? "-skew-y-12"
+                                            : "skew-y-12"
+                                    ]
+                                }
                             ],
                             "group-active": "text-highlighted"
                         }
@@ -357,13 +379,19 @@ function ProjectName({
                 aria-hidden={true}
                 role="presentation"
                 className={cn(
-                    "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
-                    navigation === "backward"
-                        ? "origin-right -skew-y-12"
-                        : "origin-left skew-y-12",
+                    "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0",
                     {
-                        "group-data-[hover=true]":
-                            "translate-y-0 skew-y-0 opacity-100 delay-0"
+                        "not-motion-safe": "hidden",
+                        "motion-safe": [
+                            "transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
+                            navigation === "backward"
+                                ? "origin-right -skew-y-12"
+                                : "origin-left skew-y-12",
+                            {
+                                "group-data-[hover=true]":
+                                    "translate-y-0 skew-y-0 opacity-100 delay-0"
+                            }
+                        ]
                     }
                 )}
             >

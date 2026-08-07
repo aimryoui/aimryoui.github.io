@@ -12,7 +12,7 @@ import {
     PaginationNext,
     PaginationPrevious
 } from "@/components/ui/pagination"
-import { Bold, Highlight, Text } from "@/components/ui/typography"
+import { Highlight } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import {
     getCategoryPath,
@@ -28,6 +28,7 @@ import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrum
 import ProjectHeader from "@/portfolio/_components/project-header"
 import { resolveSocialData } from "@/portfolio/_helpers/resolve-social-data"
 import Footer from "@/portfolio/_sections/footer"
+import { BoldPart, TextPart } from "@/portfolio/[category]/_components/shared"
 import { AmbientStyle } from "@/portfolio/[category]/[slug]/_components/ambient-style"
 import SocialButton from "@/portfolio/[category]/[slug]/_components/social-button"
 
@@ -227,36 +228,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                     />
                                     <div
                                         className={cn("text-end", {
-                                            sm: "flex flex-col gap-y-0.5"
+                                            sm: "flex flex-col"
                                         })}
                                     >
-                                        <Text
-                                            className={cn(
-                                                "inline wrap-anywhere transition-[color] duration-100",
-                                                {
-                                                    "group-hover":
-                                                        "text-foreground transition-none",
-                                                    "group-active":
-                                                        "text-foreground transition-none",
-                                                    sm: "text-xs"
-                                                }
-                                            )}
-                                        >
-                                            Back to
-                                        </Text>{" "}
-                                        <Bold
-                                            className={cn(
-                                                "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
-                                                {
-                                                    "group-hover":
-                                                        "text-highlighted font-wght-900 transition-[font-variation-settings]",
-                                                    "group-active":
-                                                        "text-highlighted transition-none"
-                                                }
-                                            )}
-                                        >
-                                            {group.title}
-                                        </Bold>
+                                        <TextPart>Back to</TextPart>{" "}
+                                        <BoldPart>{group.title}</BoldPart>
                                     </div>
                                 </PaginationPrevious>
                             )}
@@ -293,68 +269,22 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 >
                                     <div
                                         className={cn({
-                                            sm: "flex flex-col gap-y-0.5"
+                                            sm: "flex flex-col"
                                         })}
                                     >
                                         {nextCategory ? (
                                             <>
-                                                <Text
-                                                    className={cn(
-                                                        "inline wrap-anywhere transition-[color] duration-100",
-                                                        {
-                                                            "group-hover":
-                                                                "text-foreground transition-none",
-                                                            "group-active":
-                                                                "text-foreground transition-none",
-                                                            sm: "text-xs"
-                                                        }
-                                                    )}
-                                                >
-                                                    Next to
-                                                </Text>{" "}
-                                                <Bold
-                                                    className={cn(
-                                                        "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
-                                                        {
-                                                            "group-hover":
-                                                                "text-highlighted font-wght-900 transition-[font-variation-settings]",
-                                                            "group-active":
-                                                                "text-highlighted transition-none"
-                                                        }
-                                                    )}
-                                                >
+                                                <TextPart>Next to</TextPart>{" "}
+                                                <BoldPart>
                                                     {nextCategory.title}
-                                                </Bold>
+                                                </BoldPart>
                                             </>
                                         ) : (
                                             <>
-                                                <Text
-                                                    className={cn(
-                                                        "inline wrap-anywhere transition-[color] duration-100",
-                                                        {
-                                                            "group-hover":
-                                                                "text-foreground transition-none",
-                                                            "group-active":
-                                                                "text-foreground transition-none",
-                                                            sm: "text-sm"
-                                                        }
-                                                    )}
-                                                >
+                                                <TextPart>
                                                     No more projects.
-                                                </Text>{" "}
-                                                <Bold
-                                                    className={cn(
-                                                        "will-change-[color,font-variation-settings] wrap-anywhere transition-[color,font-variation-settings] ease-spring duration-500",
-                                                        {
-                                                            "group-hover":
-                                                                "text-highlighted font-wght-900 transition-[font-variation-settings]",
-                                                            "group-active":
-                                                                "text-highlighted transition-none"
-                                                        }
-                                                    )}
-                                                >
-                                                    Contact me
-                                                </Bold>
+                                                </TextPart>{" "}
+                                                <BoldPart>Contact me</BoldPart>
                                             </>
                                         )}
                                     </div>

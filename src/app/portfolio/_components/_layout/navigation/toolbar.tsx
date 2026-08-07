@@ -66,9 +66,10 @@ function Toolbar({ className }: { className?: string }) {
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 48 48"
-                                    className={cn(
-                                        "size-8.5 will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180"
-                                    )}
+                                    className={cn("size-8.5", {
+                                        "motion-safe":
+                                            "will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180"
+                                    })}
                                 >
                                     <path
                                         className="fill-highlighted"

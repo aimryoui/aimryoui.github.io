@@ -100,7 +100,7 @@ const TocGroup = memo(
                                             "group-hover/collapsibile-trigger":
                                                 "rounded-none bg-foreground/20 dark:bg-foreground/25",
                                             "group-active/collapsibile-trigger":
-                                                "translate-y-0.5",
+                                                "motion-safe:translate-y-0.5",
                                             "group-not-data-expanded/collapsible":
                                                 "bg-foreground/40 text-inverted dark:bg-foreground/60"
                                         }

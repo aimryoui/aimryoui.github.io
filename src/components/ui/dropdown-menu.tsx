@@ -147,7 +147,11 @@ function DropdownMenuContent({
                 className={cn(
                     "group/dropdown-menu-positioner z-80 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] cursor-auto outline-none",
                     isSubMenu && "mt-px",
-                    "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400 data-instant:transition-none"
+                    {
+                        "motion-safe":
+                            "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
+                        "data-instant": "transition-none"
+                    }
                 )}
                 align={align}
                 alignOffset={alignOffset}
@@ -161,20 +165,25 @@ function DropdownMenuContent({
                     tabIndex={-1}
                     className={cn(
                         "group/dropdown-menu-popup relative z-50 grid h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
-                        "will-change-[width,height,opacity,transform,border-radius] transition-[width,height,opacity,transform,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)]",
-                        isSubMenu ? "duration-200" : "duration-400",
                         {
                             "group-data-[cursor=target]/dropdown-menu-positioner:group-hover/dropdown-menu-positioner":
                                 "rounded-none",
-                            "data-starting-style": [
-                                isSubMenu ? "scale-95" : "scale-50",
-                                "opacity-0"
+                            "motion-safe": [
+                                "will-change-[width,height,opacity,transform,border-radius] transition-[width,height,opacity,transform,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)]",
+                                isSubMenu ? "duration-200" : "duration-400",
+                                {
+                                    "data-starting-style": [
+                                        isSubMenu ? "scale-95" : "scale-50",
+                                        "opacity-0"
+                                    ],
+                                    "data-ending-style": [
+                                        isSubMenu ? "scale-95" : "scale-0",
+                                        "opacity-0"
+                                    ],
+                                    "data-instant": "transition-[border-radius]"
+                                }
                             ],
-                            "data-ending-style": [
-                                isSubMenu ? "scale-95" : "scale-0",
-                                "opacity-0"
-                            ],
-                            "data-instant": "transition-[border-radius]"
+                            "data-instant": "transition-none"
                         },
                         className
                     )}
@@ -200,19 +209,25 @@ function DropdownMenuViewport({
                 "relative flex size-full flex-col overflow-y-auto overflow-x-hidden p-1 scrollbar-none",
                 {
                     "group-data-[side=top]/dropdown-menu-popup": "justify-end",
-                    "[&_:is([data-current],[data-previous])]":
-                        "w-[calc(var(--popup-width)-var(--spacing)*2)] translate-x-0 opacity-100 transition-[transform,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.4s,.25s]",
-                    "[&_[data-current][data-starting-style]]": {
-                        "data-[activation-direction~='left']":
-                            "-translate-x-1/2 opacity-0",
-                        "data-[activation-direction~='right']":
-                            "translate-x-1/2 opacity-0"
-                    },
-                    "[&_[data-previous][data-ending-style]]": {
-                        "data-[activation-direction~='left']":
-                            "translate-x-1/2 opacity-0",
-                        "data-[activation-direction~='right']":
-                            "-translate-x-1/2 opacity-0"
+                    "[&_:is([data-current],[data-previous])]": [
+                        "w-[calc(var(--popup-width)-var(--spacing)*2)] translate-x-0 opacity-100 transition-opacity ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.4s,.25s]",
+                        {
+                            "motion-safe": "transition-[transform,opacity]"
+                        }
+                    ],
+                    "motion-safe": {
+                        "[&_[data-current][data-starting-style]]": {
+                            "data-[activation-direction~='left']":
+                                "-translate-x-1/2 opacity-0",
+                            "data-[activation-direction~='right']":
+                                "translate-x-1/2 opacity-0"
+                        },
+                        "[&_[data-previous][data-ending-style]]": {
+                            "data-[activation-direction~='left']":
+                                "translate-x-1/2 opacity-0",
+                            "data-[activation-direction~='right']":
+                                "-translate-x-1/2 opacity-0"
+                        }
                     },
                     "[[data-instant]_&_:is([data-current],[data-previous])]":
                         "transition-none"

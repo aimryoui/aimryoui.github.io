@@ -13,6 +13,7 @@ import {
 } from "@/helpers/get-parsed-media-data"
 import { useMediaObserver } from "@/hooks/use-media-observer"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import imageManifestRaw from "@/lib/image-manifest.json"
 import { cn } from "@/lib/utils"
 import {
@@ -93,6 +94,7 @@ function getBorderRadiusShorthand(rounded: CornerRound, radiusVal: string) {
             return `0 0 0 ${radiusVal}`
         case "br":
             return `0 0 ${radiusVal} 0`
+        case false:
         default:
             return "0"
     }
@@ -409,6 +411,7 @@ function Image({
 }: ImageProps) {
     const parsedData = getParsedMediaData(props.src, imageManifest)
 
+    const reduceMotion = useReducedMotion()
     const playPressFeedback = usePressFeedback()
 
     if (!parsedData) return null
@@ -439,7 +442,7 @@ function Image({
                     parsedData={parsedData}
                     ref={mergeRefs([ref, lightboxRef])}
                     onClick={(e) => {
-                        playPressFeedback("zoom-in")
+                        playPressFeedback(reduceMotion ? "button" : "zoom-in")
                         open(e)
 
                         onClick?.(e)

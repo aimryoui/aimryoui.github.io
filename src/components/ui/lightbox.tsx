@@ -17,6 +17,7 @@ import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { playHoverSound } from "@/lib/sounds"
 import {
     ChevronBackward,
@@ -79,16 +80,17 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
         "(max-width: 48rem) and (orientation: portrait)"
     )
     const { isTouchDevice } = useDevice()
-    const playPressFeedback = usePressFeedback()
-
     const { isWebKit } = useBrowserEngine()
+    const reduceMotion = useReducedMotion()
+
+    const playPressFeedback = usePressFeedback()
 
     return (
         <Gallery
             data-slot="lightbox"
             data-cursor="ignore"
             options={{
-                showHideAnimationType: "zoom",
+                showHideAnimationType: reduceMotion ? "fade" : "zoom",
                 wheelToZoom: true,
                 secondaryZoomLevel: isMobilePortrait ? 0.75 : 2,
                 easing: isWebKit
