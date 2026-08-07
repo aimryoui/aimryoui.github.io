@@ -87,8 +87,8 @@ export const siteConfig = {
     analytics: {
         googleVerification: "eQWQgOEPxHImqJ2L8COXOXrRvoG51zYXxSX6OwSPyUo",
         yandexVerification: "fb6729bde7a90a52",
-        googleTagManager: "GTM-TVP4K3H6",
-        googleAnalytics: "G-M8GZQ7E1MD",
+        googleTagManager: "GTM-W4QDGLNW",
+        googleAnalytics: "G-WVVBY9RZ4W",
         cloudFlareInsights: "{'token':'d03afe61bd644ac6b165fe710cece3a8'}"
     }
 }
