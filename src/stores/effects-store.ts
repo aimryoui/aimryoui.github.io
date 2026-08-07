@@ -1,7 +1,17 @@
+import { z } from "zod"
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
 
-import { DEFAULT_EFFECTS, type Effect } from "@/configs/effects.config"
+import {
+    AVAILABLE_EFFECTS,
+    DEFAULT_EFFECTS,
+    type Effect
+} from "@/configs/effects.config"
+
+const effectSchema = z.enum(AVAILABLE_EFFECTS)
+const effectsStoreSchema = z.object({
+    effects: z.array(effectSchema)
+})
 
 interface EffectsStore {
     effects: Effect[]
@@ -34,7 +44,14 @@ const useEffectsStore = create<EffectsStore>()(
         }),
         {
             name: "effects-preference",
-            storage: createJSONStorage(() => localStorage)
+            storage: createJSONStorage(() => localStorage),
+            merge: (persistedState, currentState) => {
+                const parsed = effectsStoreSchema.safeParse(persistedState)
+                return {
+                    ...currentState,
+                    ...(parsed.success ? parsed.data : {})
+                }
+            }
         }
     )
 )

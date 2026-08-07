@@ -1,7 +1,13 @@
+import { z } from "zod"
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
 
-type MotionPreference = "system" | "preferred" | "reduced"
+const motionPreferenceSchema = z.enum(["system", "preferred", "reduced"])
+type MotionPreference = z.infer<typeof motionPreferenceSchema>
+
+const motionStoreSchema = z.object({
+    preference: motionPreferenceSchema
+})
 
 interface MotionStore {
     preference: MotionPreference
@@ -24,7 +30,14 @@ const useMotionStore = create<MotionStore>()(
         }),
         {
             name: "motion-preference",
-            storage: createJSONStorage(() => localStorage)
+            storage: createJSONStorage(() => localStorage),
+            merge: (persistedState, currentState) => {
+                const parsed = motionStoreSchema.safeParse(persistedState)
+                return {
+                    ...currentState,
+                    ...(parsed.success ? parsed.data : {})
+                }
+            }
         }
     )
 )

@@ -1,7 +1,13 @@
+import { z } from "zod"
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
 
-type SidebarPosition = "left" | "right"
+const sidebarPositionSchema = z.enum(["left", "right"])
+type SidebarPosition = z.infer<typeof sidebarPositionSchema>
+
+const sidebarStoreSchema = z.object({
+    position: sidebarPositionSchema
+})
 
 interface SidebarPositionStore {
     position: SidebarPosition
@@ -25,12 +31,24 @@ const useSidebarPositionStore = create<SidebarPositionStore>()(
         }),
         {
             name: "sidebar-position",
-            storage: createJSONStorage(() => localStorage)
+            storage: createJSONStorage(() => localStorage),
+            merge: (persistedState, currentState) => {
+                const parsed = sidebarStoreSchema.safeParse(persistedState)
+                return {
+                    ...currentState,
+                    ...(parsed.success ? parsed.data : {})
+                }
+            }
         }
     )
 )
 
-type ToolbarPosition = "top" | "bottom"
+const toolbarPositionSchema = z.enum(["top", "bottom"])
+type ToolbarPosition = z.infer<typeof toolbarPositionSchema>
+
+const toolbarStoreSchema = z.object({
+    position: toolbarPositionSchema
+})
 
 interface ToolbarPositionStore {
     position: ToolbarPosition
@@ -54,7 +72,14 @@ const useToolbarPositionStore = create<ToolbarPositionStore>()(
         }),
         {
             name: "toolbar-position",
-            storage: createJSONStorage(() => localStorage)
+            storage: createJSONStorage(() => localStorage),
+            merge: (persistedState, currentState) => {
+                const parsed = toolbarStoreSchema.safeParse(persistedState)
+                return {
+                    ...currentState,
+                    ...(parsed.success ? parsed.data : {})
+                }
+            }
         }
     )
 )

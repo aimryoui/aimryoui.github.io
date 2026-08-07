@@ -1,9 +1,16 @@
+import { z } from "zod"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
+const audioModeSchema = z.enum(["manual", "auto"])
+
+const audioStoreSchema = z.object({
+    audioMode: audioModeSchema
+})
+
 interface AudioState {
     isAudioEnabled: boolean
-    audioMode: "manual" | "auto"
+    audioMode: z.infer<typeof audioModeSchema>
     hasManuallyToggled: boolean
     toggleAudio: () => void
     setAudioMode: (mode: "manual" | "auto") => void
@@ -32,7 +39,14 @@ const useAudioStore = create<AudioState>()(
         {
             name: "audio-mode",
 
-            partialize: (state) => ({ audioMode: state.audioMode })
+            partialize: (state) => ({ audioMode: state.audioMode }),
+            merge: (persistedState, currentState) => {
+                const parsed = audioStoreSchema.safeParse(persistedState)
+                return {
+                    ...currentState,
+                    ...(parsed.success ? parsed.data : {})
+                }
+            }
         }
     )
 )
