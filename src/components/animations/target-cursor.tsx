@@ -6,6 +6,7 @@ import { gsap } from "gsap"
 
 import { pxToRem } from "@/helpers/px-to-rem"
 import { useDevice } from "@/hooks/use-device"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { cn } from "@/lib/utils"
 
 import { BASE_FONT_SIZE } from "~/tailwind.config"
@@ -40,14 +41,6 @@ function getContainingBlockOffset(block: HTMLElement | null): {
     if (!block) return { x: 0, y: 0 }
     const rect = block.getBoundingClientRect()
     return { x: rect.left + block.clientLeft, y: rect.top + block.clientTop }
-}
-
-function shouldDisable(isTouchDevice: boolean): boolean {
-    if (typeof window === "undefined") return false
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return true
-    }
-    return isTouchDevice
 }
 
 interface TargetCursorProps {
@@ -86,6 +79,7 @@ function TargetCursor({
     ...props
 }: React.ComponentProps<"div"> & TargetCursorProps) {
     const { isTouchDevice } = useDevice()
+    const reduceMotion = useReducedMotion()
 
     const rootRef = useRef<HTMLDivElement>(null)
     const dotRef = useRef<HTMLDivElement>(null)
@@ -118,7 +112,8 @@ function TargetCursor({
 
     useEffect(() => {
         if (
-            shouldDisable(isTouchDevice) ||
+            reduceMotion ||
+            isTouchDevice ||
             !rootRef.current ||
             !wrapperRef.current ||
             !dotRef.current
@@ -628,7 +623,8 @@ function TargetCursor({
         spinDuration,
         hideDefaultCursor,
         cursorColor,
-        isTouchDevice
+        isTouchDevice,
+        reduceMotion
     ])
 
     return (

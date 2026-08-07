@@ -25,7 +25,7 @@ function Contact() {
     return (
         <section className="@container">
             <Space />
-            <SectionLine />
+            <SectionLine containerClassName="z-55" />
             <SectionTitle
                 id="contact"
                 title="Contact"
