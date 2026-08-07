@@ -42,8 +42,9 @@ function Experience() {
                 id="experience"
                 title="Experience"
                 note="Information"
+                className="sticky top-0 z-50"
             />
-            <SectionLine />
+            <SectionLine containerClassName="sticky top-space z-50" />
             <Divider />
             <SectionLine />
 
@@ -56,11 +57,10 @@ function Experience() {
                     >
                         <TableCaption
                             className={cn(
-                                "sticky top-7.5 z-50 h-fit whitespace-pre-line ps-safe-zone font-wght-500",
+                                "sticky top-[calc(var(--spacing-space)+var(--spacing-safe-zone-vertical))] z-45 h-fit whitespace-pre-line ps-safe-zone font-wght-500",
                                 {
                                     "@[69rem]":
-                                        "static col-span-full whitespace-normal px-safe-zone font-wght-600",
-                                    lg: "top-safe-zone-vertical"
+                                        "static col-span-full whitespace-normal px-safe-zone font-wght-600"
                                 }
                             )}
                         >

@@ -22,8 +22,12 @@ function Education() {
         <section className="@container">
             <Space />
             <SectionLine />
-            <SectionTitle id="education" title="Education" />
-            <SectionLine />
+            <SectionTitle
+                id="education"
+                title="Education"
+                className="sticky top-0 z-50"
+            />
+            <SectionLine containerClassName="sticky top-space z-50" />
             <Divider />
             <SectionLine />
             <TableContainer
@@ -33,7 +37,7 @@ function Education() {
             >
                 <TableCaption
                     className={cn(
-                        "absolute left-safe-zone top-safe-zone-vertical whitespace-pre-line font-wght-500",
+                        "sticky top-[calc(var(--spacing-space)+var(--spacing-safe-zone-vertical))] z-45 h-fit whitespace-pre-line ps-safe-zone font-wght-500",
                         {
                             "@[50.125rem]":
                                 "static col-span-full whitespace-normal px-safe-zone font-wght-600"

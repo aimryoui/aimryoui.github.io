@@ -132,10 +132,13 @@ function Projects({
                                         keepFeedback
                                         prefetch={false}
                                         className={cn(
-                                            "group flex items-center justify-between gap-4 pe-safe-zone transition-[background-color] duration-100",
+                                            "group sticky top-0 z-50 flex items-center justify-between gap-4 bg-background pe-safe-zone",
                                             {
-                                                hover: "bg-highlighted/5 transition-none",
-                                                active: "bg-highlighted/10 transition-none"
+                                                "hover:before":
+                                                    "bg-highlighted/5 transition-none",
+                                                "active:before":
+                                                    "bg-highlighted/10 transition-none",
+                                                before: "absolute inset-0 transition-[background-color] duration-100"
                                             }
                                         )}
                                     >
@@ -159,7 +162,7 @@ function Projects({
                                             )}
                                         />
                                     </LinkButton>
-                                    <SectionLine />
+                                    <SectionLine containerClassName="sticky top-space z-50" />
                                     <ul
                                         className={cn(
                                             "grid grid-cols-5 bg-background @3xl:grid-cols-3 @md:grid-cols-2"
@@ -230,10 +233,13 @@ function Projects({
                                         keepFeedback
                                         prefetch={false}
                                         className={cn(
-                                            "group flex items-center justify-between gap-4 pe-safe-zone transition-[background-color] duration-100",
+                                            "group sticky top-0 z-50 flex items-center justify-between gap-4 bg-background pe-safe-zone",
                                             {
-                                                hover: "bg-highlighted/5 transition-none",
-                                                active: "bg-highlighted/10 transition-none"
+                                                "hover:before":
+                                                    "bg-highlighted/5 transition-none",
+                                                "active:before":
+                                                    "bg-highlighted/10 transition-none",
+                                                before: "absolute inset-0 transition-[background-color] duration-100"
                                             }
                                         )}
                                     >
@@ -247,12 +253,12 @@ function Projects({
                                                     "lg:scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5+var(--spacing-safe-zone)*2)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem+var(--spacing-safe-zone)*2)]"
                                             })}
                                             className={cn(
-                                                "flex-1 bg-transparent"
+                                                "z-1 flex-1 bg-transparent"
                                             )}
                                         />
                                         <ArrowRight
                                             className={cn(
-                                                "transition-[color] duration-100",
+                                                "z-1 transition-[color] duration-100",
                                                 {
                                                     "group-hover":
                                                         "text-highlighted transition-none",
@@ -262,7 +268,7 @@ function Projects({
                                             )}
                                         />
                                     </LinkButton>
-                                    <SectionLine />
+                                    <SectionLine containerClassName="sticky top-space z-50" />
                                     <ul
                                         className={cn(
                                             "grid grid-cols-2 bg-background md:grid-cols-1"

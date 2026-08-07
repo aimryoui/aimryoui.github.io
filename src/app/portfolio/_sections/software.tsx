@@ -27,8 +27,12 @@ function Software() {
         <section className="@container">
             <Space />
             <SectionLine />
-            <SectionTitle id="software" title="Software" />
-            <SectionLine />
+            <SectionTitle
+                id="software"
+                title="Software"
+                className="sticky top-0 z-50"
+            />
+            <SectionLine containerClassName="sticky top-space z-50" />
             <Divider />
             <SectionLine />
             <Tooltip>
@@ -41,7 +45,7 @@ function Software() {
                         >
                             <TableCaption
                                 className={cn(
-                                    "absolute left-safe-zone top-safe-zone-vertical whitespace-pre-line font-wght-500",
+                                    "sticky top-[calc(var(--spacing-space)+var(--spacing-safe-zone-vertical))] z-45 h-fit whitespace-pre-line ps-safe-zone font-wght-500",
                                     {
                                         "@[46.875rem]":
                                             "static col-span-full whitespace-normal px-safe-zone font-wght-600"

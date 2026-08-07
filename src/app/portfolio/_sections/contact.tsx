@@ -26,8 +26,12 @@ function Contact() {
         <section className="@container">
             <Space />
             <SectionLine />
-            <SectionTitle id="contact" title="Contact" />
-            <SectionLine />
+            <SectionTitle
+                id="contact"
+                title="Contact"
+                className="sticky top-0 z-50"
+            />
+            <SectionLine containerClassName="sticky top-space z-50" />
             <Divider />
             <SectionLine />
             <address>
