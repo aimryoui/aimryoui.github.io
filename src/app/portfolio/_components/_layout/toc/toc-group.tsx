@@ -17,12 +17,10 @@ import {
     TocItemRow
 } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { useTocGroup } from "@/portfolio/_hooks/use-toc-tree"
-import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocGroupProps {
     header: TocItemProps
     items: TocItemProps[]
-    mode: PortfolioMode
     debouncedQuery: string
     onItemPress: (item: TocItemProps) => void
     onSameLinkClick: () => void
@@ -32,7 +30,6 @@ const TocGroup = memo(
     ({
         header,
         items,
-        mode,
         debouncedQuery,
         onItemPress,
         onSameLinkClick
@@ -52,14 +49,13 @@ const TocGroup = memo(
                     "group/collapsible flex flex-col",
                     isExpanded && "-mb-3",
                     {
-                        "motion-safe":
+                        "motion-preferred":
                             "transition-[margin] ease-spring duration-350"
                     }
                 )}
             >
                 <TocItemRow
                     variant="category"
-                    mode={mode}
                     item={header}
                     query={debouncedQuery}
                     onPress={onItemPress}
@@ -100,7 +96,7 @@ const TocGroup = memo(
                                             "group-hover/collapsibile-trigger":
                                                 "rounded-none bg-foreground/20 dark:bg-foreground/25",
                                             "group-active/collapsibile-trigger":
-                                                "motion-safe:translate-y-0.5",
+                                                "motion-preferred:translate-y-0.5",
                                             "group-not-data-expanded/collapsible":
                                                 "bg-foreground/40 text-inverted dark:bg-foreground/60"
                                         }
@@ -126,7 +122,6 @@ const TocGroup = memo(
                             <TocItemRow
                                 key={item.id}
                                 variant="project"
-                                mode={mode}
                                 item={item}
                                 query={debouncedQuery}
                                 onPress={onItemPress}

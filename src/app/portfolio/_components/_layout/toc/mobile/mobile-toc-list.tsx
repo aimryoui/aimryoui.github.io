@@ -21,7 +21,6 @@ type MobileTocListProps = React.ComponentProps<"div"> &
 
 function MobileTocList({
     className,
-    mode,
     items,
     filteredItems,
     debouncedQuery,
@@ -74,7 +73,6 @@ function MobileTocList({
                             key={`group-${node.header.id}`}
                             header={node.header}
                             items={node.items}
-                            mode={mode}
                             debouncedQuery={debouncedQuery}
                             onItemPress={handlePress}
                             onSameLinkClick={handleSameClick}
@@ -91,7 +89,6 @@ function MobileTocList({
                             <MobileTocItemRow
                                 key={item.id}
                                 variant="anchor"
-                                mode={mode}
                                 item={item}
                                 query={debouncedQuery}
                                 onPress={(item) => {

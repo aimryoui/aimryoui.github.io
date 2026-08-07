@@ -3,7 +3,7 @@
 import { memo } from "react"
 import { usePathname } from "next/navigation"
 
-import { ArrowRight, ArrowUp } from "@/components/icons/icons"
+import { ArrowRight } from "@/components/icons/icons"
 import { LinkButton } from "@/components/ui/button"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
@@ -15,7 +15,6 @@ import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
 const MobileTocItemRow = memo(
     ({
         className,
-        mode,
         item,
         variant = "anchor",
         query,
@@ -147,11 +146,7 @@ const MobileTocItemRow = memo(
                                 "dark:bg-highlighted/20"
                             )}
                         >
-                            {mode === "pages" ? (
-                                <ArrowRight className={cn("size-4")} />
-                            ) : (
-                                <ArrowUp className={cn("size-4")} />
-                            )}
+                            <ArrowRight className={cn("size-4")} />
                         </div>
                     )}
                 </LinkButton>

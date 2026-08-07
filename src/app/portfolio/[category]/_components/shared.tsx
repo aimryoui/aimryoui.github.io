@@ -7,7 +7,7 @@ function BoldPart({ className, ...props }: React.ComponentProps<typeof Bold>) {
             className={cn(
                 "wrap-anywhere transition-[color] duration-100",
                 {
-                    "motion-safe": [
+                    "motion-preferred": [
                         "will-change-[font-variation-settings] transition-[color,font-variation-settings] ease-spring duration-500",
                         {
                             "group-hover":

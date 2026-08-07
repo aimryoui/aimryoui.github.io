@@ -14,13 +14,9 @@ import {
     groupProjectsByCategory
 } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
-import { ExpandableWrapper } from "@/portfolio/_components/_layout/expandable-wrapper"
 import ProjectCard from "@/portfolio/_components/cards/project-card"
 import SelectedProjectCard from "@/portfolio/_components/cards/selected-project-card"
-import { MDXContent } from "@/portfolio/_components/mdx-content"
-import ProjectHeader from "@/portfolio/_components/project-header"
 import SectionTitle from "@/portfolio/_components/section-title"
-import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 import { projects } from "~/.velite"
 
@@ -29,83 +25,7 @@ function Projects({
 }: {
     selectedWorksStyle?: React.ReactNode
 }) {
-    const mode = usePortfolioModeStore((state) => state.mode)
     const projectGroups = groupProjectsByCategory(projects)
-
-    if (mode === "spread") {
-        return projectGroups.map((group, index) => (
-            <Fragment key={group.id}>
-                <section>
-                    <Space />
-                    <SectionLine showDecoration />
-                    <Space />
-                    <SectionLine />
-                    <SectionTitle
-                        id={group.id}
-                        order={index + 1}
-                        title={group.title}
-                        note={group.note}
-                    />
-                    <SectionLine />
-                    <div className={cn("bg-background")}>
-                        <div className={cn("bg-highlighted/10 p-2")}>
-                            <div
-                                className={cn(
-                                    "flex aspect-3 size-full items-center justify-evenly rounded-2xl border border-highlighted bg-background",
-                                    "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]"
-                                )}
-                            >
-                                {group.icons}
-                            </div>
-                        </div>
-                    </div>
-                    <SectionLine />
-                    <Space />
-                    {group.projects.map((project, index) => (
-                        <Fragment key={project.slug}>
-                            <SectionLine />
-                            <article>
-                                <ProjectHeader
-                                    type={project.type}
-                                    projectId={project.id}
-                                    projectName={project.name}
-                                    category={project.category}
-                                    information={project.information}
-                                    tools={project.tools}
-                                    detail={project.detail}
-                                    isSelectedWorks={
-                                        group.id === "selected-works"
-                                    }
-                                />
-
-                                <SectionLine />
-                                <Divider />
-                                <SectionLine />
-
-                                <ExpandableWrapper
-                                    name={project.name}
-                                    forceExpand={
-                                        project.override
-                                            ? project.override.forceExpand
-                                            : false
-                                    }
-                                >
-                                    <MDXContent code={project.code} />
-                                </ExpandableWrapper>
-                                {index < group.projects.length - 1 && (
-                                    <>
-                                        <SectionLine />
-                                        <Space />
-                                    </>
-                                )}
-                            </article>
-                        </Fragment>
-                    ))}
-                </section>
-                {index < projectGroups.length - 1 && <SectionLine />}
-            </Fragment>
-        ))
-    }
 
     return (
         <>

@@ -67,7 +67,7 @@ function Toolbar({ className }: { className?: string }) {
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 48 48"
                                     className={cn("size-8.5", {
-                                        "motion-safe":
+                                        "motion-preferred":
                                             "will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180"
                                     })}
                                 >

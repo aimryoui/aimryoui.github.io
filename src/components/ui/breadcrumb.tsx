@@ -187,7 +187,7 @@ function BreadcrumbPage({
             className={cn(
                 "-me-1.25 flex h-full items-center text-foreground",
                 {
-                    active: "not-aria-[haspopup]:motion-safe:translate-y-px",
+                    active: "not-aria-[haspopup]:motion-preferred:translate-y-px",
                     lg: "text-sm",
                     md: "py-2"
                 },
@@ -311,7 +311,7 @@ function BreadcrumbChevron({
             className={cn(
                 "size-4 text-muted-foreground",
                 {
-                    "motion-safe": "transition-transform duration-400",
+                    "motion-preferred": "transition-transform duration-400",
                     "group-hover/breadcrumb-item": "text-foreground",
                     "group-hover/breadcrumb-trigger": "text-foreground",
                     "group-data-[popup-open]/breadcrumb-trigger":

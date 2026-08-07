@@ -13,10 +13,8 @@ import {
 } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { useTocScroll } from "@/portfolio/_hooks/use-toc-scroll"
 import { useTocTree } from "@/portfolio/_hooks/use-toc-tree"
-import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocListProps extends LineSidebarProps {
-    mode: PortfolioMode
     items: TocItemProps[]
     filteredItems: TocItemProps[]
     debouncedQuery: string
@@ -42,7 +40,6 @@ function handleSameLinkClick() {
 
 function TocList({
     className,
-    mode,
     items,
     filteredItems,
     debouncedQuery,
@@ -89,7 +86,6 @@ function TocList({
                             key={`group-${node.header.id}`}
                             header={node.header}
                             items={node.items}
-                            mode={mode}
                             debouncedQuery={debouncedQuery}
                             onItemPress={handlePress}
                             onSameLinkClick={handleSameLinkClick}
@@ -106,7 +102,6 @@ function TocList({
                             <TocItemRow
                                 key={item.id}
                                 variant="anchor"
-                                mode={mode}
                                 item={item}
                                 query={debouncedQuery}
                                 onPress={handlePress}

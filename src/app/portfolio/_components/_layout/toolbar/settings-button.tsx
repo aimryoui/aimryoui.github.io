@@ -1,19 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { usePathname, useRouter } from "next/navigation"
 
 import { Ellipsis } from "@/components/icons/icons"
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle
-} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -33,38 +22,18 @@ import { useMediaQuery } from "@/hooks/use-media-query"
 import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import { type AudioState, useAudioStore } from "@/stores/audio-store"
+import { type MotionPreference, useMotionStore } from "@/stores/motion-store"
 import {
     type SidebarPosition,
     type ToolbarPosition,
     useSidebarPositionStore,
     useToolbarPositionStore
 } from "@/stores/navigation-bar-position-store"
-import {
-    type PortfolioMode,
-    usePortfolioModeStore
-} from "@/stores/portfolio-mode-store"
 
 function SettingButton() {
-    const mode = usePortfolioModeStore((state) => state.mode)
-    const router = useRouter()
-    const pathname = usePathname()
-    const setMode = usePortfolioModeStore((state) => state.setMode)
-
     const isMobile = useMediaQuery("lg")
 
     const [alertDialogOpen, setAlertDialogOpen] = useState(false)
-
-    // Navigate back to the `/portfolio` page if mode is set to "spread"
-    // and the current URL is not `/portfolio`
-    const handleModeChange = (nextMode: PortfolioMode) => {
-        setMode(nextMode)
-
-        if (nextMode === "spread") {
-            if (pathname !== "/portfolio") {
-                router.push("/portfolio")
-            }
-        }
-    }
 
     const sidebarPosition = useSidebarPositionStore((state) => state.position)
     const setSidebarPosition = useSidebarPositionStore(
@@ -80,6 +49,9 @@ function SettingButton() {
 
     const audioMode = useAudioStore((state) => state.audioMode)
     const setAudioMode = useAudioStore((state) => state.setAudioMode)
+
+    const motionPreference = useMotionStore((state) => state.preference)
+    const setMotionPreference = useMotionStore((state) => state.setPreference)
 
     return (
         <>
@@ -112,7 +84,7 @@ function SettingButton() {
                                             <DropdownMenuLabel>
                                                 Settings
                                             </DropdownMenuLabel>
-                                            <DropdownMenuSub>
+                                            {/* <DropdownMenuSub>
                                                 <DropdownMenuSubTrigger>
                                                     View mode
                                                 </DropdownMenuSubTrigger>
@@ -145,7 +117,7 @@ function SettingButton() {
                                                         </DropdownMenuRadioItem>
                                                     </DropdownMenuRadioGroup>
                                                 </DropdownMenuSubContent>
-                                            </DropdownMenuSub>
+                                            </DropdownMenuSub> */}
                                             <DropdownMenuSub>
                                                 <DropdownMenuSubTrigger>
                                                     {isMobile
@@ -287,6 +259,42 @@ function SettingButton() {
                                                     </DropdownMenuRadioGroup>
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuSub>
+                                            <DropdownMenuSub>
+                                                <DropdownMenuSubTrigger>
+                                                    Motion
+                                                </DropdownMenuSubTrigger>
+                                                <DropdownMenuSubContent>
+                                                    <DropdownMenuRadioGroup
+                                                        value={motionPreference}
+                                                        onValueChange={(
+                                                            value
+                                                        ) => {
+                                                            setMotionPreference(
+                                                                value as MotionPreference
+                                                            )
+                                                        }}
+                                                    >
+                                                        <DropdownMenuRadioItem
+                                                            value="preferred"
+                                                            closeOnClick
+                                                        >
+                                                            Preferred
+                                                        </DropdownMenuRadioItem>
+                                                        <DropdownMenuRadioItem
+                                                            value="reduced"
+                                                            closeOnClick
+                                                        >
+                                                            Reduced
+                                                        </DropdownMenuRadioItem>
+                                                        <DropdownMenuRadioItem
+                                                            value="system"
+                                                            closeOnClick
+                                                        >
+                                                            Follow system
+                                                        </DropdownMenuRadioItem>
+                                                    </DropdownMenuRadioGroup>
+                                                </DropdownMenuSubContent>
+                                            </DropdownMenuSub>
                                         </DropdownMenuGroup>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuGroup>
@@ -310,7 +318,7 @@ function SettingButton() {
                 />
             </DropdownMenu>
 
-            <AlertDialog
+            {/* <AlertDialog
                 open={alertDialogOpen}
                 onOpenChange={setAlertDialogOpen}
             >
@@ -346,7 +354,7 @@ function SettingButton() {
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
-            </AlertDialog>
+            </AlertDialog> */}
         </>
     )
 }

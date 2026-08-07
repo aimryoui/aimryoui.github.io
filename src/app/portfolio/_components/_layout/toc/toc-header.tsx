@@ -10,7 +10,6 @@ import {
     TocSearch,
     type TocSearchProps
 } from "@/portfolio/_components/_layout/toc/toc-search"
-import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 function TocHeader({
     containerClassName,
@@ -23,7 +22,6 @@ function TocHeader({
     containerClassName?: string
 }) {
     const pathname = usePathname()
-    const mode = usePortfolioModeStore((state) => state.mode)
 
     return (
         <div
@@ -36,7 +34,7 @@ function TocHeader({
             // }}
         >
             <Tooltip>
-                {mode === "pages" && pathname !== "/portfolio" && (
+                {pathname !== "/portfolio" && (
                     <TooltipTrigger
                         delay={500}
                         payload={{

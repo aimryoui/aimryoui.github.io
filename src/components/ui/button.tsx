@@ -35,7 +35,7 @@ const buttonVariants = cva(
             hover: {
                 "data-[cursor=target]": "rounded-none"
             },
-            active: "not-aria-[haspopup]:motion-safe:translate-y-px",
+            active: "not-aria-[haspopup]:motion-preferred:translate-y-px",
             "[&_svg:not([class*='size-'])]": "size-4",
             "[&_svg]": "pointer-events-none shrink-0"
         }

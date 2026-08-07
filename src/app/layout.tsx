@@ -171,24 +171,18 @@ export default function RootLayout({
                             ? "mac"
                             : "win"
                         )
-                        // Portfolio mode
+                        // Motion preference
                         try {
-                            const portfolioMode = localStorage.getItem("portfolio-mode")
-                            if (portfolioMode) {
-                                const parsed = JSON.parse(portfolioMode)
-                                htmlElement.setAttribute(
-                                    "data-portfolio-mode",
-                                    parsed.state.mode
-                                )
+                            const motionPref = localStorage.getItem("motion-preference")
+                            if (motionPref) {
+                                const parsed = JSON.parse(motionPref)
+                                htmlElement.setAttribute("data-motion", parsed.state.preference)
                             } else {
-                                htmlElement.setAttribute(
-                                    "data-portfolio-mode",
-                                    "pages"
-                                )
+                                htmlElement.setAttribute("data-motion", "system")
                             }
                         } catch (e) {
-                            console.error("Error getting portfolio mode:", e)
-                            htmlElement.setAttribute("data-portfolio-mode", "pages")
+                            console.error("Error getting motion preference:", e)
+                            htmlElement.setAttribute("data-motion", "system")
                         }
                         // Navigation bar position
                         try {

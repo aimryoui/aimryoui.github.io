@@ -216,7 +216,7 @@ function TableCell({
                                         className={cn(
                                             "size-5 -translate-y-[.5px]",
                                             {
-                                                "motion-safe":
+                                                "motion-preferred":
                                                     "transition-transform duration-300 group-data-expanded/table-cell:-rotate-180"
                                             }
                                         )}

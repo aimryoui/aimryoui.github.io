@@ -184,8 +184,8 @@ function DrawerContent({
                             [
                                 "transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))]",
                                 {
-                                    "not-motion-safe": "transition-none",
-                                    "motion-safe":
+                                    "motion-reduced": "transition-none",
+                                    "motion-preferred":
                                         "will-change-transform transition-[transform,height,opacity,filter,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)] duration-450 [interpolate-size:allow-keywords]"
                                 }
                             ],
@@ -256,7 +256,7 @@ function DrawerContent({
                                 ],
                                 "data-[nested-drawer-swiping]": "duration-0",
                                 "data-[swiping]":
-                                    "not-data-ending-style:motion-safe:!transition-[border-radius]",
+                                    "not-data-ending-style:motion-preferred:!transition-[border-radius]",
 
                                 // Direction: down.
                                 "data-[swipe-direction=down]": [

@@ -11,16 +11,14 @@ import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-
 import { TocList } from "@/portfolio/_components/_layout/toc/toc-list"
 import { TocSearchNoResult } from "@/portfolio/_components/_layout/toc/toc-search"
 import { useTocSearch } from "@/portfolio/_hooks/use-toc-search"
-import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocProps {
-    mode: PortfolioMode
     items: TocItemProps[]
 }
 
 let hasRevealedOnLoad = false
 
-function TableOfContents({ mode, items }: TocProps) {
+function TableOfContents({ items }: TocProps) {
     const isMounted = useIsMounted()
     const rafRef = useRef<number | null>(null)
 
@@ -112,7 +110,6 @@ function TableOfContents({ mode, items }: TocProps) {
                             <TocSearchNoResult onClear={handleClearSearch} />
                         ) : (
                             <TocList
-                                mode={mode}
                                 items={items}
                                 debouncedQuery={debouncedQuery}
                                 filteredItems={filteredItems}

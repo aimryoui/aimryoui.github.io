@@ -449,6 +449,14 @@ export default {
             addVariant("win", [
                 "&:where([data-platform=win], [data-platform=win] *)"
             ])
+            addVariant("motion-preferred", [
+                "@media (prefers-reduced-motion: no-preference) { &:where([data-motion=system], [data-motion=system] *) }",
+                "&:where([data-motion=preferred], [data-motion=preferred] *)"
+            ])
+            addVariant("motion-reduced", [
+                "@media (prefers-reduced-motion: reduce) { &:where([data-motion=system], [data-motion=system] *) }",
+                "&:where([data-motion=reduced], [data-motion=reduced] *)"
+            ])
             addVariant("starting", ["@starting-style"])
         })
     ]

@@ -148,7 +148,7 @@ function DropdownMenuContent({
                     "group/dropdown-menu-positioner z-80 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] cursor-auto outline-none",
                     isSubMenu && "mt-px",
                     {
-                        "motion-safe":
+                        "motion-preferred":
                             "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
                         "data-instant": "transition-none"
                     }
@@ -168,7 +168,7 @@ function DropdownMenuContent({
                         {
                             "group-data-[cursor=target]/dropdown-menu-positioner:group-hover/dropdown-menu-positioner":
                                 "rounded-none",
-                            "motion-safe": [
+                            "motion-preferred": [
                                 "will-change-[width,height,opacity,transform,border-radius] transition-[width,height,opacity,transform,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)]",
                                 isSubMenu ? "duration-200" : "duration-400",
                                 {
@@ -212,10 +212,10 @@ function DropdownMenuViewport({
                     "[&_:is([data-current],[data-previous])]": [
                         "w-[calc(var(--popup-width)-var(--spacing)*2)] translate-x-0 opacity-100 transition-opacity ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.4s,.25s]",
                         {
-                            "motion-safe": "transition-[transform,opacity]"
+                            "motion-preferred": "transition-[transform,opacity]"
                         }
                     ],
-                    "motion-safe": {
+                    "motion-preferred": {
                         "[&_[data-current][data-starting-style]]": {
                             "data-[activation-direction~='left']":
                                 "-translate-x-1/2 opacity-0",
@@ -340,7 +340,7 @@ function DropdownMenuSubTrigger({
                 onClick?.(e)
             }}
             className={cn(
-                "flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "flex cursor-default select-none items-center gap-3 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-open":
@@ -438,8 +438,8 @@ function DropdownMenuLinkItem({
         >
             {openInNewTab && (
                 <span
-                    className="pointer-events-none absolute right-3 flex items-center justify-center"
                     data-slot="dropdown-menu-link-item-indicator"
+                    className="pointer-events-none absolute right-3 flex items-center justify-center"
                 >
                     <ArrowUpRight className="size-4" />
                 </span>
@@ -471,7 +471,7 @@ function DropdownMenuCheckboxItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center gap-3 rounded-lg px-3 py-2 pr-8 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "pl-7",
@@ -484,14 +484,12 @@ function DropdownMenuCheckboxItem({
             checked={checked}
             {...props}
         >
-            <span
-                className="pointer-events-none absolute right-3 flex items-center justify-center"
+            <MenuPrimitive.CheckboxItemIndicator
                 data-slot="dropdown-menu-checkbox-item-indicator"
+                className="pointer-events-none absolute right-3 flex items-center justify-center"
             >
-                <MenuPrimitive.CheckboxItemIndicator>
-                    <CheckIcon />
-                </MenuPrimitive.CheckboxItemIndicator>
-            </span>
+                <CheckIcon />
+            </MenuPrimitive.CheckboxItemIndicator>
             {children}
         </MenuPrimitive.CheckboxItem>
     )
@@ -531,7 +529,7 @@ function DropdownMenuRadioItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center justify-between gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-disabled": "pointer-events-none opacity-50",
@@ -553,16 +551,14 @@ function DropdownMenuRadioItem({
                     })}
                 >
                     {children}
-                    <span
+                    <MenuPrimitive.RadioItemIndicator
+                        data-slot="dropdown-menu-radio-item-indicator"
                         className={cn(
                             "pointer-events-none -me-1 flex size-5 items-center justify-center"
                         )}
-                        data-slot="dropdown-menu-radio-item-indicator"
                     >
-                        <MenuPrimitive.RadioItemIndicator>
-                            <CheckIcon />
-                        </MenuPrimitive.RadioItemIndicator>
-                    </span>
+                        <CheckIcon />
+                    </MenuPrimitive.RadioItemIndicator>
                 </Comp>
                 {description && (
                     <span

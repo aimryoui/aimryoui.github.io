@@ -225,7 +225,7 @@ function ProjectCover({
                     className={cn(
                         "h-0.5 w-1/3 rounded-t-full bg-muted-foreground opacity-40",
                         {
-                            "motion-safe": [
+                            "motion-preferred": [
                                 "transition-transform ease-in duration-150",
                                 {
                                     "group-hover":
@@ -241,7 +241,7 @@ function ProjectCover({
                     className={cn(
                         "h-0.5 w-3/5 rounded-t-full bg-muted-foreground opacity-70",
                         {
-                            "motion-safe": [
+                            "motion-preferred": [
                                 "transition-transform ease-in duration-150",
                                 {
                                     "group-hover": "scale-y-150",
@@ -253,7 +253,7 @@ function ProjectCover({
                 />
                 <div
                     className={cn("relative rounded-xl", {
-                        "motion-safe": [
+                        "motion-preferred": [
                             "transition-transform ease-in duration-150",
                             {
                                 "group-hover": "translate-y-0.5",
@@ -263,7 +263,7 @@ function ProjectCover({
                         after: [
                             "absolute inset-0 size-full rounded-inherit ring-2 ring-inset ring-muted-foreground/80",
                             {
-                                "motion-safe": {
+                                "motion-preferred": {
                                     "group-hover": "ring-3",
                                     "group-active": "ring-3"
                                 }
@@ -353,8 +353,8 @@ function ProjectName({
                     className={cn(
                         "w-fit max-w-full translate-y-0 skew-y-0 truncate",
                         {
-                            "not-motion-safe": "group-hover:text-highlighted",
-                            "motion-safe": [
+                            "motion-reduced": "group-hover:text-highlighted",
+                            "motion-preferred": [
                                 "transition-[transform,opacity] ease-in-out duration-500",
                                 {
                                     "group-data-[hover=true]": [
@@ -381,8 +381,8 @@ function ProjectName({
                 className={cn(
                     "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0",
                     {
-                        "not-motion-safe": "hidden",
-                        "motion-safe": [
+                        "motion-reduced": "hidden",
+                        "motion-preferred": [
                             "transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
                             navigation === "backward"
                                 ? "origin-right -skew-y-12"

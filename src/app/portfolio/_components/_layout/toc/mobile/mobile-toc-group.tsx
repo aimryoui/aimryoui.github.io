@@ -14,12 +14,10 @@ import { cn } from "@/lib/utils"
 import { MobileTocItemRow } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-item-row"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { useTocGroup } from "@/portfolio/_hooks/use-toc-tree"
-import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface MobileTocGroupProps {
     header: TocItemProps
     items: TocItemProps[]
-    mode: PortfolioMode
     debouncedQuery: string
     onItemPress: (item: TocItemProps) => void
     onSameLinkClick: () => void
@@ -29,7 +27,6 @@ const MobileTocGroup = memo(
     ({
         header,
         items,
-        mode,
         debouncedQuery,
         onItemPress,
         onSameLinkClick
@@ -49,7 +46,6 @@ const MobileTocGroup = memo(
             >
                 <MobileTocItemRow
                     variant="category"
-                    mode={mode}
                     item={header}
                     query={debouncedQuery}
                     onPress={onItemPress}
@@ -71,7 +67,7 @@ const MobileTocGroup = memo(
                                     "group-hover/collapsibile-trigger":
                                         "bg-foreground/20 dark:bg-foreground/25",
                                     "group-active/collapsibile-trigger":
-                                        "motion-safe:translate-y-0.5",
+                                        "motion-preferred:translate-y-0.5",
                                     "group-not-data-expanded/collapsible":
                                         "bg-foreground/40 text-inverted dark:bg-foreground/60"
                                 }
@@ -99,7 +95,6 @@ const MobileTocGroup = memo(
                             <MobileTocItemRow
                                 key={item.id}
                                 variant="project"
-                                mode={mode}
                                 item={item}
                                 query={debouncedQuery}
                                 onPress={onItemPress}

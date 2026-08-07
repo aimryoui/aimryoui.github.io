@@ -17,6 +17,15 @@ export default plugin(({ addVariant, matchVariant, theme }) => {
         "not-motion-reduce",
         "@media not (prefers-reduced-motion: reduce)"
     )
+    addVariant("not-motion-preferred", [
+        "@media (prefers-reduced-motion: reduce) { &:where([data-motion=system], [data-motion=system] *) }",
+        "&:where([data-motion=reduced], [data-motion=reduced] *)"
+    ])
+
+    addVariant("not-motion-reduced", [
+        "@media (prefers-reduced-motion: no-preference) { &:where([data-motion=system], [data-motion=system] *) }",
+        "&:where([data-motion=preferred], [data-motion=preferred] *)"
+    ])
     addVariant("not-contrast-more", "@media not (prefers-contrast: more)")
     addVariant("not-contrast-less", "@media not (prefers-contrast: less)")
     addVariant("not-2xl", "@media not (max-width: 96rem)")

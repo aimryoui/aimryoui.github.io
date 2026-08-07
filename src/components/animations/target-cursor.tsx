@@ -67,6 +67,21 @@ const REST_POSITIONS = [
     { x: -REST_OFFSET, y: REST_OFFSET - REST_CORNER_SIZE }
 ] as const
 
+const globalMouse = { x: 0, y: 0, moved: false }
+if (typeof window !== "undefined") {
+    window.addEventListener(
+        "pointerdown",
+        (e) => {
+            if (e.pointerType === "mouse") {
+                globalMouse.x = e.clientX
+                globalMouse.y = e.clientY
+                globalMouse.moved = true
+            }
+        },
+        { passive: true, capture: true }
+    )
+}
+
 function TargetCursor({
     className,
     targetSelector = "[data-cursor='target']",
@@ -170,7 +185,11 @@ function TargetCursor({
         let activeLockEl: Element | null = null
         let resumeTimeout: ReturnType<typeof setTimeout> | null = null
 
-        let hasMoved = false
+        let hasMoved = globalMouse.moved
+        if (hasMoved) {
+            state.mouseX = globalMouse.x - cachedOffset.current.x
+            state.mouseY = globalMouse.y - cachedOffset.current.y
+        }
         let isHiddenByIgnore = false
         let isHiddenByLeave = false
         let isHiddenByInput = false
@@ -286,12 +305,21 @@ function TargetCursor({
         }
 
         if (state.spinTl) state.spinTl.kill()
-        if (state.resumeTween) state.resumeTween.kill()
+        if (state.resumeTween) {
+            state.resumeTween.kill()
+            state.resumeTween = null
+        }
         state.spinTl = gsap.timeline({ repeat: -1, paused: true }).to(wrapper, {
             rotation: "+=360",
             duration: spinDuration,
             ease: "none"
         })
+
+        if (hasMoved) {
+            gsap.set(wrapper, { x: state.mouseX, y: state.mouseY })
+            gsap.set(dot, { x: state.mouseX, y: state.mouseY })
+            updateVisibility()
+        }
 
         const tickerFn = () => {
             if (activeTarget) {
@@ -626,6 +654,8 @@ function TargetCursor({
         isTouchDevice,
         reduceMotion
     ])
+
+    if (reduceMotion || isTouchDevice) return null
 
     return (
         <div

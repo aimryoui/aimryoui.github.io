@@ -1,4 +1,5 @@
 import { SettingButton } from "@/_components/toolbar/settings-button"
+import { AudioToggle } from "@/components/audio/audio"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { MediaFrame } from "@/components/layout/media-frame"
@@ -9,8 +10,6 @@ import { LinkButton } from "@/components/ui/button"
 import { Tooltip } from "@/components/ui/tooltip"
 import { H1, Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
-
-import { AudioToggle } from "../components/audio/audio"
 
 export default function Home() {
     return (

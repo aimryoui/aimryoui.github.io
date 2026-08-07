@@ -3,14 +3,13 @@
 import { memo } from "react"
 import { usePathname } from "next/navigation"
 
-import { ArrowRight, ArrowUp } from "@/components/icons/icons"
+import { ArrowRight } from "@/components/icons/icons"
 import { LinkButton } from "@/components/ui/button"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { isSameUrl } from "@/helpers/is-same-url"
 import { cn } from "@/lib/utils"
 import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
-import { type PortfolioMode } from "@/stores/portfolio-mode-store"
 
 interface TocItemProps {
     id: string
@@ -28,7 +27,6 @@ type TocItemVariant = "category" | "project" | "anchor"
 type TocItemRowProps = React.ComponentProps<"li"> &
     React.ComponentProps<"div"> & {
         variant?: TocItemVariant
-        mode: PortfolioMode
         item: TocItemProps
         query?: string
         onPress: (item: TocItemProps) => void
@@ -39,7 +37,6 @@ const TocItemRow = memo(
     ({
         className,
         variant = "anchor",
-        mode,
         item,
         query,
         onPress,
@@ -77,9 +74,9 @@ const TocItemRow = memo(
                             "absolute left-safe-zone top-[calc(100%+var(--item-gap)/2)] h-px origin-left -translate-y-1/2 bg-[--marker-color] opacity-60",
                             "last:hidden has-[+[role=separator]]:hidden",
                             isProject
-                                ? "w-[calc(var(--marker-length)*var(--tick-scale))] motion-safe:scale-x-[calc(1+var(--effect,0)*1.5)]"
+                                ? "w-[calc(var(--marker-length)*var(--tick-scale))] motion-preferred:scale-x-[calc(1+var(--effect,0)*1.5)]"
                                 : {
-                                      "motion-safe":
+                                      "motion-preferred":
                                           "w-1.25 scale-x-[--effect,0] transition-[width] group-not-data-expanded/collapsible:w-0"
                                   }
                         ]
@@ -97,8 +94,11 @@ const TocItemRow = memo(
                             ? "bg-highlighted"
                             : "bg-[color-mix(in_srgb,var(--accent-color)_calc(var(--effect,0)*100%),var(--marker-color))]",
                         isProject
-                            ? "w-[--marker-length] motion-safe:scale-x-[calc(1+var(--effect,0))]"
-                            : { "motion-safe": "w-2.5 scale-x-[--effect,0]" }
+                            ? "w-[--marker-length] motion-preferred:scale-x-[calc(1+var(--effect,0))]"
+                            : {
+                                  "motion-preferred":
+                                      "w-2.5 scale-x-[--effect,0]"
+                              }
                     )}
                 />
                 <LinkButton
@@ -173,7 +173,7 @@ const TocItemRow = memo(
                         <div
                             className={cn(
                                 "my-0.5 grid size-6 place-items-center rounded-md bg-muted-foreground/15",
-                                "motion-safe:translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem)*0.9)]",
+                                "motion-preferred:translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem)*0.9)]",
                                 {
                                     dark: "bg-muted-foreground/20",
                                     "group-hover":
@@ -193,7 +193,7 @@ const TocItemRow = memo(
                         className={cn(
                             "block w-fit max-w-full px-1.25",
                             isCategory && !isSelectedWorks && "-ms-1.25",
-                            "motion-safe:translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
+                            "motion-preferred:translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
                         )}
                     >
                         {highlightQuery(item.label, query ?? "") ??
@@ -206,11 +206,7 @@ const TocItemRow = memo(
                                 "group-hover:grid dark:bg-highlighted/20"
                             )}
                         >
-                            {mode === "pages" ? (
-                                <ArrowRight className={cn("size-3.5")} />
-                            ) : (
-                                <ArrowUp className={cn("size-3.5")} />
-                            )}
+                            <ArrowRight className={cn("size-3.5")} />
                         </div>
                     )}
                 </LinkButton>

@@ -7,12 +7,10 @@ import { cn } from "@/lib/utils"
 import Toolbar from "@/portfolio/_components/_layout/navigation/toolbar"
 import { TableOfContents } from "@/portfolio/_components/_layout/toc/toc"
 import { useTocItems } from "@/portfolio/_hooks/use-toc-items"
-import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
     const isMobile = useMediaQuery("lg")
-    const mode = usePortfolioModeStore((state) => state.mode)
-    const tocItems = useTocItems(mode)
+    const tocItems = useTocItems()
 
     return (
         <>
@@ -28,7 +26,7 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
                 )}
                 {...props}
             >
-                {!isMobile && <TableOfContents mode={mode} items={tocItems} />}
+                {!isMobile && <TableOfContents items={tocItems} />}
                 <Toolbar />
             </aside>
             <MarginLine

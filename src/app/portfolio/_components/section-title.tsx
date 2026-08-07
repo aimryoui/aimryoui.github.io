@@ -66,7 +66,7 @@ function Title({
                 className={cn(
                     "w-fit text-foreground wrap-anywhere transition-[color] duration-100",
                     {
-                        "motion-safe": [
+                        "motion-preferred": [
                             "will-change-[font-variation-settings] transition-[color,font-variation-settings] ease-spring duration-500",
                             {
                                 "group-hover":

@@ -24,10 +24,8 @@ import { type TocListProps } from "@/portfolio/_components/_layout/toc/toc-list"
 import { TocSearchNoResult } from "@/portfolio/_components/_layout/toc/toc-search"
 import { useTocItems } from "@/portfolio/_hooks/use-toc-items"
 import { useTocSearch } from "@/portfolio/_hooks/use-toc-search"
-import { usePortfolioModeStore } from "@/stores/portfolio-mode-store"
 
 function MobileToc({
-    mode,
     items,
     filteredItems,
     debouncedQuery,
@@ -52,7 +50,6 @@ function MobileToc({
                 <TocSearchNoResult onClear={handleClearSearch} />
             ) : (
                 <MobileTocList
-                    mode={mode}
                     items={items}
                     filteredItems={filteredItems}
                     debouncedQuery={debouncedQuery}
@@ -69,8 +66,7 @@ const snapPoints = [0.85, 1]
 function MobileTocButtonCore() {
     const [isTocOpen, setIsTocOpen] = useState(false)
 
-    const mode = usePortfolioModeStore((state) => state.mode)
-    const tocItems = useTocItems(mode)
+    const tocItems = useTocItems()
 
     const inputRef = useRef<HTMLInputElement>(null)
     const {
@@ -150,7 +146,6 @@ function MobileTocButtonCore() {
                     <SectionLine fit />
                 </DrawerHeader>
                 <MobileToc
-                    mode={mode}
                     items={tocItems}
                     filteredItems={filteredItems}
                     debouncedQuery={debouncedQuery}

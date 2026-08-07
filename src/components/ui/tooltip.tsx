@@ -113,7 +113,7 @@ function TooltipContent({
                 className={cn(
                     "z-90 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width]",
                     {
-                        "motion-safe":
+                        "motion-preferred":
                             "transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
                         "data-instant": "transition-none"
                     }
@@ -124,7 +124,7 @@ function TooltipContent({
                     className={cn(
                         "relative h-[--popup-height,auto] w-[--popup-width,auto] max-w-125 origin-[--transform-origin] text-balance rounded-xlg bg-background text-sm tracking-tight text-foreground -outline-offset-px outline-muted-foreground outline",
                         {
-                            "motion-safe":
+                            "motion-preferred":
                                 "transition-[width,height,opacity,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
                             "data-starting-style": "scale-90 opacity-0",
                             "data-ending-style": "scale-90 opacity-0",
@@ -148,7 +148,7 @@ function TooltipArrow({ ...props }: TooltipPrimitive.Arrow.Props) {
         <TooltipPrimitive.Arrow
             data-slot="tooltip-arrow"
             className={cn({
-                "motion-safe":
+                "motion-preferred":
                     "transition-[left] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
                 "data-[side=top]": "bottom-0 translate-y-full",
                 "data-[side=bottom]": "top-0 -translate-y-full rotate-180",
@@ -193,11 +193,11 @@ function TooltipViewport({
                     "[&_:is([data-current],[data-previous])]": [
                         "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-opacity ease-[cubic-bezier(0.22,1,0.36,1)] duration-250",
                         {
-                            "motion-safe":
+                            "motion-preferred":
                                 "transition-[transform,opacity] duration-[.4s,.25s]"
                         }
                     ],
-                    "motion-safe": {
+                    "motion-preferred": {
                         "[&_[data-current][data-starting-style]]": [
                             "opacity-0",
                             {

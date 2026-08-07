@@ -162,7 +162,7 @@ function SocialButton({
                     className={cn(
                         "group pointer-events-auto flex h-9 w-fit items-center justify-end gap-2 text-sm text-white font-wght-500",
                         {
-                            "motion-safe":
+                            "motion-preferred":
                                 "transition-transform ease-spring duration-400",
                             lg: [
                                 "font-wght-600",
@@ -183,7 +183,7 @@ function SocialButton({
                             "grid-cols-[0fr]",
                             {
                                 hover: "underline decoration-solid",
-                                "motion-safe": [
+                                "motion-preferred": [
                                     "will-change-[transform,grid-template-columns,opacity,padding] transition-[transform,grid-template-columns,opacity,padding] ease-spring duration-400",
                                     {
                                         "group-hover": "delay-75",
@@ -212,7 +212,7 @@ function SocialButton({
                             "z-1 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15",
                             "will-change-transform transition-[transform,translate,background-color] duration-100",
                             {
-                                "motion-safe": {
+                                "motion-preferred": {
                                     "group-hover":
                                         "animate-social-button-shake-in",
                                     "group-data-[expanded=true]":
@@ -246,7 +246,7 @@ function SocialButton({
                         "group pointer-events-auto relative flex h-9 w-fit items-center justify-end gap-1 text-sm text-white font-wght-500",
                         "[filter:drop-shadow(0px_0px_3px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_1.5px_rgba(0,0,0,0.10))]",
                         {
-                            "motion-safe":
+                            "motion-preferred":
                                 "transition-transform ease-spring duration-400",
                             lg: [
                                 "font-wght-600",
@@ -277,7 +277,7 @@ function SocialButton({
                                 "will-change-[transform,grid-template-columns,padding] transition-[transform,grid-template-columns,padding] ease-spring duration-400",
                                 "grid-cols-[0fr]",
                                 {
-                                    "not-motion-safe": "transition-none",
+                                    "motion-reduced": "transition-none",
                                     "group-hover":
                                         "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75",
                                     "group-data-[expanded=true]":
@@ -297,7 +297,7 @@ function SocialButton({
                                 socialColors,
                                 "-mr-0.5 size-9.5 shrink-0 rounded-full will-change-transform",
                                 {
-                                    "motion-safe": {
+                                    "motion-preferred": {
                                         "group-hover":
                                             "animate-social-button-shake-in",
                                         "group-data-[expanded=true]":
@@ -314,7 +314,7 @@ function SocialButton({
                             "grid-cols-[0fr]",
                             {
                                 hover: "underline decoration-solid",
-                                "motion-safe": [
+                                "motion-preferred": [
                                     "will-change-[transform,grid-template-columns,padding] transition-[transform,grid-template-columns,padding] ease-spring duration-400",
                                     {
                                         "group-hover": "delay-75",
@@ -334,7 +334,7 @@ function SocialButton({
                                 className={cn(
                                     "flex w-max items-center justify-end gap-1.5 opacity-0",
                                     {
-                                        "motion-safe":
+                                        "motion-preferred":
                                             "transition-opacity ease-spring duration-400",
                                         "group-hover": "opacity-100",
                                         "group-data-[expanded=true]":
@@ -354,7 +354,7 @@ function SocialButton({
                             "relative z-20 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15 will-change-transform",
                             "transition-[border-color] duration-1000",
                             {
-                                "motion-safe": {
+                                "motion-preferred": {
                                     "group-hover":
                                         "animate-social-button-shake-in",
                                     "group-data-[expanded=true]":
