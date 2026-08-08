@@ -70,7 +70,7 @@ function Title({
                             "will-change-[font-variation-settings] transition-[color,font-variation-settings] ease-spring duration-500",
                             {
                                 "group-hover":
-                                    "transition-[font-variation-settings]"
+                                    "font-wght-900 transition-[font-variation-settings]"
                             }
                         ],
                         "group-hover": "text-highlighted transition-none",

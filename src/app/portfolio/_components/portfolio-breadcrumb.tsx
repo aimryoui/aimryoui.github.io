@@ -42,6 +42,8 @@ function PortfolioBreadcrumb({
 
     const [menuHandle] = useState(createDropdownMenuHandle)
 
+    const isSelectedWorks = category === "selected-works"
+
     useEffect(() => {
         const rafId = requestAnimationFrame(() => {
             listRef.current?.scroll({
@@ -125,59 +127,79 @@ function PortfolioBreadcrumb({
                     <BreadcrumbDropdownMenu
                         handle={menuHandle}
                         content={
-                            <>
+                            isSelectedWorks ? (
                                 <DropdownMenuGroup>
+                                    <DropdownMenuLinkItem href="/portfolio#design-projects">
+                                        Design Projects
+                                    </DropdownMenuLinkItem>
                                     <DropdownMenuItem disabled>
                                         Coding Projects
                                     </DropdownMenuItem>
                                 </DropdownMenuGroup>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuGroup>
-                                    <DropdownMenuLinkItem href="/portfolio#design-projects">
-                                        <ArrowLeft className="-ms-0.25 size-3" />
-                                        Design Projects
-                                    </DropdownMenuLinkItem>
-                                </DropdownMenuGroup>
-                            </>
+                            ) : (
+                                <>
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuLinkItem href="/portfolio/selected-works">
+                                            Selected Works
+                                        </DropdownMenuLinkItem>
+                                        <DropdownMenuItem disabled>
+                                            Coding Projects
+                                        </DropdownMenuItem>
+                                    </DropdownMenuGroup>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuLinkItem href="/portfolio#design-projects">
+                                            <ArrowLeft className="-ms-0.25 size-3" />
+                                            Design Projects
+                                        </DropdownMenuLinkItem>
+                                    </DropdownMenuGroup>
+                                </>
+                            )
                         }
                     >
-                        Design Projects
+                        {isSelectedWorks ? "Selected Works" : "Coding Projects"}
                     </BreadcrumbDropdownMenu>
                 </BreadcrumbItem>
 
-                <BreadcrumbItem>
-                    <BreadcrumbDropdownMenu
-                        handle={menuHandle}
-                        isPage={!projectName}
-                        content={
-                            <>
-                                <DropdownMenuGroup>
-                                    {groupProjectsByCategory(projects)
-                                        .filter((g) => g.id !== category)
-                                        .map((g) => (
-                                            <DropdownMenuLinkItem
-                                                key={g.id}
-                                                href={getCategoryPath(g.id)}
-                                            >
-                                                {g.title}
-                                            </DropdownMenuLinkItem>
-                                        ))}
-                                </DropdownMenuGroup>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuGroup>
-                                    <DropdownMenuLinkItem
-                                        href={getCategoryPath(category)}
-                                    >
-                                        <ArrowLeft className="-ms-0.25 size-3" />
-                                        {categoryTitle}
-                                    </DropdownMenuLinkItem>
-                                </DropdownMenuGroup>
-                            </>
-                        }
-                    >
-                        {categoryTitle}
-                    </BreadcrumbDropdownMenu>
-                </BreadcrumbItem>
+                {category !== "selected-works" && (
+                    <BreadcrumbItem>
+                        <BreadcrumbDropdownMenu
+                            handle={menuHandle}
+                            isPage={!projectName}
+                            content={
+                                <>
+                                    <DropdownMenuGroup>
+                                        {groupProjectsByCategory(projects)
+                                            .filter(
+                                                (g) =>
+                                                    g.id !== category &&
+                                                    g.id !== "selected-works"
+                                            )
+                                            .map((g) => (
+                                                <DropdownMenuLinkItem
+                                                    key={g.id}
+                                                    href={getCategoryPath(g.id)}
+                                                >
+                                                    {g.title}
+                                                </DropdownMenuLinkItem>
+                                            ))}
+                                    </DropdownMenuGroup>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuLinkItem
+                                            href={getCategoryPath(category)}
+                                        >
+                                            <ArrowLeft className="-ms-0.25 size-3" />
+                                            {categoryTitle}
+                                        </DropdownMenuLinkItem>
+                                    </DropdownMenuGroup>
+                                </>
+                            }
+                        >
+                            {categoryTitle}
+                        </BreadcrumbDropdownMenu>
+                    </BreadcrumbItem>
+                )}
 
                 {projectName && (
                     <BreadcrumbItem>
