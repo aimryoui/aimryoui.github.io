@@ -86,7 +86,7 @@ export const siteConfig = {
     // Analytics ID
     analytics: {
         googleVerification: "eQWQgOEPxHImqJ2L8COXOXrRvoG51zYXxSX6OwSPyUo",
-        yandexVerification: "fb6729bde7a90a52",
+        yandexVerification: "ba39782377ba35bc",
         googleTagManager: "GTM-PJNJ98HF",
         googleAnalytics: "G-SY6F622NVD",
         cloudFlareInsights: "{'token':'d03afe61bd644ac6b165fe710cece3a8'}",
