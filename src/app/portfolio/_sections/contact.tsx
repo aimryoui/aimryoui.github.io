@@ -169,10 +169,13 @@ function Contact() {
                                                     openInNewTab
                                                     translate="no"
                                                     tracking={{
-                                                        eventName: "click_contact_link",
+                                                        eventName:
+                                                            "click_contact_link",
                                                         eventParams: {
-                                                            platform: platform.title,
-                                                            url: platform.links.url
+                                                            platform:
+                                                                platform.title,
+                                                            url: platform.links
+                                                                .url
                                                         }
                                                     }}
                                                     className={cn(

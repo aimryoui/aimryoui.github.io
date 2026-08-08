@@ -42,6 +42,9 @@ function ProjectCard({
     href,
     project,
     navigation,
+    onMouseEnter,
+    onMouseLeave,
+    tracking,
     ...props
 }: LinkButtonProps & ProjectCardProps) {
     const compRef = useRef<HTMLAnchorElement>(null)
@@ -62,19 +65,21 @@ function ProjectCard({
         project.override?.coverImage
     )
 
-    const handleMouseEnter = () => {
-        compRef.current?.setAttribute("data-hover", "true")
-        startTimeRef.current = Date.now()
+    const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
         clearTimeout(timeoutRef.current)
+        startTimeRef.current = Date.now()
+        compRef.current?.setAttribute("data-hover", "true")
+        onMouseEnter?.(e)
     }
 
-    const handleMouseLeave = () => {
+    const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
         clearTimeout(timeoutRef.current)
         const elapsed = Date.now() - startTimeRef.current
         const remaining = Math.max(DURATION - elapsed, 0)
         timeoutRef.current = setTimeout(() => {
             compRef.current?.removeAttribute("data-hover")
         }, remaining)
+        onMouseLeave?.(e)
     }
 
     const Comp = navigation
@@ -98,14 +103,15 @@ function ProjectCard({
                 pressSound: "link"
             })}
             tracking={{
-                eventName: navigation ? "navigate_project" : "select_project",
+                eventName: tracking?.eventName ?? (navigation ? "navigate_project" : "select_project"),
                 eventParams: {
                     project_name: project.name,
                     project_slug: project.slug,
                     direction: navigation ?? "direct_click",
                     section: isSelectedWorks
                         ? "selected_works"
-                        : "all_design_works"
+                        : "all_design_works",
+                    ...tracking?.eventParams
                 }
             }}
             className={cn(

@@ -35,6 +35,9 @@ function SocialButton({
     projectId,
     social,
     isSelectedWorks,
+    onHoverStart,
+    onHoverEnd,
+    tracking,
     ...props
 }: SocialButtonProps) {
     const { isWebKit } = useBrowserEngine()
@@ -48,16 +51,20 @@ function SocialButton({
 
     const hoverTimeoutRef = useRef<NodeJS.Timeout>(undefined)
 
-    const handleHoverStart = () => {
+    const handleHoverStart: SocialButtonProps["onHoverStart"] = (e) => {
         if (isExpanded) return
 
         hoverTimeoutRef.current = setTimeout(() => {
             playPressFeedback("zoom-out")
         }, FEEDBACK_DELAY)
+
+        onHoverStart?.(e)
     }
 
-    const handleHoverEnd = () => {
+    const handleHoverEnd: SocialButtonProps["onHoverEnd"] = (e) => {
         clearTimeout(hoverTimeoutRef.current)
+
+        onHoverEnd?.(e)
     }
 
     useEffect(() => {
@@ -160,11 +167,12 @@ function SocialButton({
                     onHoverStart={handleHoverStart}
                     onHoverEnd={handleHoverEnd}
                     tracking={{
-                        eventName: "click_social_button",
+                        eventName: tracking?.eventName ?? "click_social_button",
                         eventParams: {
                             platform: type,
                             url,
-                            ...(projectId && { project_id: projectId })
+                            ...(projectId && { project_id: projectId }),
+                            ...tracking?.eventParams
                         }
                     }}
                     className={cn(
@@ -251,11 +259,12 @@ function SocialButton({
                     onHoverStart={handleHoverStart}
                     onHoverEnd={handleHoverEnd}
                     tracking={{
-                        eventName: "click_social_button",
+                        eventName: tracking?.eventName ?? "click_social_button",
                         eventParams: {
                             platform: type,
                             url,
-                            ...(projectId && { project_id: projectId })
+                            ...(projectId && { project_id: projectId }),
+                            ...tracking?.eventParams
                         }
                     }}
                     className={cn(

@@ -2,7 +2,7 @@
 
 import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog"
 
-import { Button } from "@/components/ui/button"
+import { Button, type ButtonProps } from "@/components/ui/button"
 import { playHoverSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 
@@ -202,11 +202,7 @@ function AlertDialogDescription({
     )
 }
 
-function AlertDialogAction({
-    className,
-    variant,
-    ...props
-}: React.ComponentProps<typeof Button>) {
+function AlertDialogAction({ className, variant, ...props }: ButtonProps) {
     return (
         <Button
             data-slot="alert-dialog-action"
@@ -224,8 +220,7 @@ function AlertDialogCancel({
     variant = "tinted",
     size = "default",
     ...props
-}: AlertDialogPrimitive.Close.Props &
-    Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
+}: AlertDialogPrimitive.Close.Props & Pick<ButtonProps, "variant" | "size">) {
     return (
         <AlertDialogPrimitive.Close
             data-slot="alert-dialog-cancel"

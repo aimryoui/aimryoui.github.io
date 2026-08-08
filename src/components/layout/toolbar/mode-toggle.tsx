@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes"
 
 import { Moon, Sun, System } from "@/components/icons/icons"
-import { Button } from "@/components/ui/button"
+import { Button, type ButtonProps } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
@@ -24,7 +24,7 @@ function ThemedIcon() {
     }
 }
 
-function ModeToggle({ className }: React.ComponentProps<"button">) {
+function ModeToggle({ className, onPress, tracking, ...props }: ButtonProps) {
     const { theme, setTheme } = useTheme()
 
     const mounted = useIsMounted()
@@ -51,13 +51,16 @@ function ModeToggle({ className }: React.ComponentProps<"button">) {
                     variant="outline"
                     size="icon"
                     haptic="success"
-                    onPress={() => {
+                    onPress={(e) => {
                         setTheme(newTheme)
+
+                        onPress?.(e)
                     }}
                     tracking={{
-                        eventName: "toggle_theme",
+                        eventName: tracking?.eventName ?? "toggle_theme",
                         eventParams: {
-                            theme: newTheme
+                            theme: newTheme,
+                            ...tracking?.eventParams
                         }
                     }}
                     className={cn(
@@ -67,6 +70,7 @@ function ModeToggle({ className }: React.ComponentProps<"button">) {
                         },
                         className
                     )}
+                    {...props}
                 >
                     {mounted ? <ThemedIcon /> : <Spinner />}
                     <span className="sr-only">Toggle theme</span>

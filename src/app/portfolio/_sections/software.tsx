@@ -2,7 +2,6 @@
 
 import { Fragment } from "react"
 
-
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
@@ -156,11 +155,14 @@ function Software() {
                                                                                 hoverSound="tick"
                                                                                 pressSound="link"
                                                                                 tracking={{
-                                                                                    eventName: "click_software_link",
-                                                                                    eventParams: {
-                                                                                        software: tool.label,
-                                                                                        url: tool.url
-                                                                                    }
+                                                                                    eventName:
+                                                                                        "click_software_link",
+                                                                                    eventParams:
+                                                                                        {
+                                                                                            software:
+                                                                                                tool.label,
+                                                                                            url: tool.url
+                                                                                        }
                                                                                 }}
                                                                             >
                                                                                 {

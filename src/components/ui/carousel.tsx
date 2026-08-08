@@ -26,7 +26,7 @@ import {
     type ImageRoundProps,
     type PngProps
 } from "@/components/media/image"
-import { Button } from "@/components/ui/button"
+import { Button, type ButtonProps } from "@/components/ui/button"
 import { Lightbox } from "@/components/ui/lightbox"
 import { Slider } from "@/components/ui/slider"
 import { Spinner } from "@/components/ui/spinner"
@@ -493,8 +493,9 @@ function CarouselReplay({
     className,
     variant = "outline",
     size = "icon",
+    onPress,
     ...props
-}: React.ComponentProps<typeof Button>) {
+}: ButtonProps) {
     const { orientation, emblaApi } = useCarousel()
 
     const [canGoToPrev, setCanGoToPrev] = useState(false)
@@ -528,7 +529,10 @@ function CarouselReplay({
                     data-cursor={undefined}
                     variant={variant}
                     size={size}
-                    onPress={scrollStart}
+                    onPress={(e) => {
+                        scrollStart()
+                        onPress?.(e)
+                    }}
                     isDisabled={!canGoToPrev}
                     haptic="nudge"
                     className={cn(
@@ -549,8 +553,9 @@ function CarouselPrevious({
     className,
     variant = "outline",
     size = "icon",
+    onPress,
     ...props
-}: React.ComponentProps<typeof Button>) {
+}: ButtonProps) {
     const { orientation, goToPrev, emblaApi } = useCarousel()
 
     const [canGoToPrev, setCanGoToPrev] = useState(false)
@@ -581,7 +586,10 @@ function CarouselPrevious({
                     data-cursor={undefined}
                     variant={variant}
                     size={size}
-                    onPress={goToPrev}
+                    onPress={(e) => {
+                        goToPrev()
+                        onPress?.(e)
+                    }}
                     isDisabled={!canGoToPrev}
                     className={cn(
                         "border-default/15",
@@ -601,8 +609,9 @@ function CarouselNext({
     className,
     variant = "outline",
     size = "icon",
+    onPress,
     ...props
-}: React.ComponentProps<typeof Button>) {
+}: ButtonProps) {
     const { orientation, goToNext, emblaApi } = useCarousel()
 
     const [canGoToNext, setCanGoToNext] = useState(false)
@@ -633,7 +642,10 @@ function CarouselNext({
                     data-cursor={undefined}
                     variant={variant}
                     size={size}
-                    onPress={goToNext}
+                    onPress={(e) => {
+                        goToNext()
+                        onPress?.(e)
+                    }}
                     isDisabled={!canGoToNext}
                     className={cn(
                         "border-default/15",

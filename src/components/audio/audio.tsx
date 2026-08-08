@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { Volume1, Volume2, VolumeX } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
+import { Button, type ButtonProps } from "@/components/ui/button"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
 import {
@@ -113,11 +113,7 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
     return children
 }
 
-function AudioToggle({
-    className,
-    onPress,
-    ...props
-}: React.ComponentProps<typeof Button>) {
+function AudioToggle({ className, onPress, tracking, ...props }: ButtonProps) {
     const isAudioEnabled = useAudioStore((state) => state.isAudioEnabled)
     const audioMode = useAudioStore((state) => state.audioMode)
     const toggleAudio = useAudioStore((state) => state.toggleAudio)
@@ -186,9 +182,10 @@ function AudioToggle({
                         onPress?.(e)
                     }}
                     tracking={{
-                        eventName: "toggle_audio",
+                        eventName: tracking?.eventName ?? "toggle_audio",
                         eventParams: {
-                            audio_enabled: !isAudioEnabled
+                            audio_enabled: !isAudioEnabled,
+                            ...tracking?.eventParams
                         }
                     }}
                     className={cn(

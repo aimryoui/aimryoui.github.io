@@ -212,12 +212,16 @@ function Experience() {
                                                 sm: "mt-[calc(var(--spacing)*5+var(--px))]"
                                             })}
                                             tracking={{
-                                                eventName: "toggle_experience_details",
+                                                eventName:
+                                                    "toggle_experience_details",
                                                 eventParams: {
                                                     experience_id: place.id,
                                                     position: place.position,
-                                                    ...(place.organization?.text && {
-                                                        organization: place.organization.text
+                                                    ...(place.organization
+                                                        ?.text && {
+                                                        organization:
+                                                            place.organization
+                                                                .text
                                                     })
                                                 }
                                             }}
@@ -238,10 +242,16 @@ function Experience() {
                                                     openInNewTab
                                                     translate="no"
                                                     tracking={{
-                                                        eventName: "click_experience_link",
+                                                        eventName:
+                                                            "click_experience_link",
                                                         eventParams: {
-                                                            organization: place.organization.text,
-                                                            url: place.organization.url
+                                                            organization:
+                                                                place
+                                                                    .organization
+                                                                    .text,
+                                                            url: place
+                                                                .organization
+                                                                .url
                                                         }
                                                     }}
                                                     className={cn(

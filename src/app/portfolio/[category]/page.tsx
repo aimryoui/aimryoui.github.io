@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
+import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
 import {
     Pagination,
@@ -12,7 +13,6 @@ import {
     PaginationNext,
     PaginationPrevious
 } from "@/components/ui/pagination"
-import { Highlight } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import {
     getCategoryPath,
@@ -180,17 +180,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <SectionLine />
             <Divider />
             <SectionLine />
-            <Space className={cn("grid place-items-center")}>
-                <Highlight
-                    className={cn(
-                        "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-safe-zone-vertical"
-                    )}
-                >
-                    {isSelectedWorks
-                        ? "That's what I've picked. What's next?"
-                        : "Category ends. What's next?"}
-                </Highlight>
-            </Space>
+            <Note bold>
+                {isSelectedWorks
+                    ? "That's what I've picked. What's next?"
+                    : "Category ends. What's next?"}
+            </Note>
             <SectionLine />
             <section className={cn("bg-background")}>
                 <Pagination>

@@ -1,13 +1,13 @@
 "use client"
 
 import { ChevronDown } from "lucide-react"
-import { composeRenderProps } from "react-aria-components"
 import {
     Cell as CellPrimitive,
     type CellProps,
     Collection as CollectionPrimitive,
     Column as ColumnPrimitive,
     type ColumnProps,
+    composeRenderProps,
     Row as RowPrimitive,
     type RowProps,
     TableBody as TableBodyPrimitive,

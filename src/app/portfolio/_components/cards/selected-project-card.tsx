@@ -32,7 +32,9 @@ function SelectedProjectCard({
     className,
     href,
     project,
-    onPress,
+    onMouseEnter,
+    onMouseLeave,
+    tracking,
     ...props
 }: LinkButtonProps & SelectedProjectCardProps) {
     const compRef = useRef<HTMLAnchorElement>(null)
@@ -52,19 +54,21 @@ function SelectedProjectCard({
         project.features?.selectedCover ?? project.override?.coverImage
     )
 
-    const handleMouseEnter = () => {
-        compRef.current?.setAttribute("data-hover", "true")
-        startTimeRef.current = Date.now()
+    const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
         clearTimeout(timeoutRef.current)
+        startTimeRef.current = Date.now()
+        compRef.current?.setAttribute("data-hover", "true")
+        onMouseEnter?.(e)
     }
 
-    const handleMouseLeave = () => {
+    const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
         clearTimeout(timeoutRef.current)
         const elapsed = Date.now() - startTimeRef.current
         const remaining = Math.max(DURATION - elapsed, 0)
         timeoutRef.current = setTimeout(() => {
             compRef.current?.removeAttribute("data-hover")
         }, remaining)
+        onMouseLeave?.(e)
     }
 
     return (
@@ -78,12 +82,13 @@ function SelectedProjectCard({
             nativeLink={true}
             keepFeedback={true}
             tracking={{
-                eventName: "handpicked_project",
+                eventName: tracking?.eventName ?? "handpicked_project",
                 eventParams: {
                     project_name: project.name,
                     project_slug: project.slug,
                     direction: "direct_click",
-                    section: "selected_works"
+                    section: "selected_works",
+                    ...tracking?.eventParams
                 }
             }}
             id={`theme-${project.id}`}
