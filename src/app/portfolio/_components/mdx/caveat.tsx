@@ -9,7 +9,7 @@ function CaveatLightness() {
             className={cn("flex flex-col items-start justify-start text-start")}
         >
             <div className="mb-0.5 flex items-center gap-1 self-start">
-                <FileExclamationPoint className="size-4 -translate-y-0.25" />
+                <FileExclamationPoint className="size-4.5 -translate-y-0.25" />
                 <strong>Caveat:</strong>
             </div>
             <span>

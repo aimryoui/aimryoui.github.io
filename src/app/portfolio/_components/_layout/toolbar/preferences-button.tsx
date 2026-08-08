@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 
+import { CodeXml } from "lucide-react"
+
 import { Ellipsis } from "@/components/icons/icons"
 import { AudioMenu } from "@/components/preferences/audio-menu"
 import { EffectsMenu } from "@/components/preferences/effects-menu"
@@ -68,6 +70,7 @@ function PreferencesButton() {
                                             href="https://github.com/aimryoui/aimryoui.github.io"
                                             openInNewTab
                                         >
+                                            <CodeXml />
                                             Source code
                                         </DropdownMenuLinkItem>
                                     </DropdownMenuGroup>

@@ -1,4 +1,5 @@
 import { sendGAEvent } from "@next/third-parties/google"
+import { MousePointerClick, Palette, Sparkles } from "lucide-react"
 
 import {
     DropdownMenuCheckboxItem,
@@ -6,12 +7,29 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
-import {
-    AVAILABLE_EFFECTS,
-    EFFECT_DESCRIPTIONS,
-    EFFECT_LABELS
-} from "@/configs/effects.config"
+import { AVAILABLE_EFFECTS, type Effect } from "@/configs/effects.config"
 import { useEffectsStore } from "@/stores/effects-store"
+
+interface EffectConfig {
+    label: string
+    description: React.ReactNode
+    icon?: React.ReactNode
+}
+
+const EFFECTS: Record<Effect, EffectConfig> = {
+    "target-cursor": {
+        label: "Target cursor",
+        description:
+            "Use custom cursor that snappy-snaps to clickable elements",
+        icon: <MousePointerClick />
+    },
+    "ambient-colors": {
+        label: "Ambient colors",
+        description:
+            "Use project vibrant-based colors instead of default colors",
+        icon: <Palette />
+    }
+}
 
 function EffectsMenu() {
     const effects = useEffectsStore((state) => state.effects)
@@ -19,7 +37,10 @@ function EffectsMenu() {
 
     return (
         <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Effects</DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger>
+                <Sparkles />
+                Effects
+            </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 {AVAILABLE_EFFECTS.map((effect) => (
                     <DropdownMenuCheckboxItem
@@ -33,9 +54,10 @@ function EffectsMenu() {
                             sendGAEvent("event", eventName, eventParams)
                         }}
                         closeOnClick={false}
-                        description={EFFECT_DESCRIPTIONS[effect]}
+                        description={EFFECTS[effect].description}
                     >
-                        {EFFECT_LABELS[effect]}
+                        {EFFECTS[effect].icon}
+                        {EFFECTS[effect].label}
                     </DropdownMenuCheckboxItem>
                 ))}
             </DropdownMenuSubContent>

@@ -339,7 +339,7 @@ function DropdownMenuSubTrigger({
                 onClick?.(e)
             }}
             className={cn(
-                "flex cursor-default select-none items-center gap-3 rounded-lg py-2 pe-2 ps-3 text-sm outline-hidden",
+                "flex cursor-default select-none items-center gap-1.5 rounded-lg py-2 pe-2 ps-3 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-open":
@@ -413,7 +413,7 @@ function DropdownMenuLinkItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-2 text-nowrap rounded-lg py-2 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center gap-1.5 text-nowrap rounded-lg py-2 text-sm outline-hidden",
                 openInNewTab ? "pe-8 ps-3" : "px-3",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
@@ -474,7 +474,7 @@ function DropdownMenuCheckboxItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 !description && "pe-9.5",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
@@ -495,7 +495,7 @@ function DropdownMenuCheckboxItem({
             >
                 <Comp
                     {...(description && {
-                        className: "flex gap-1.5 pe-9.5 justify-between"
+                        className: "flex gap-1.5 items-center pe-9.5"
                     })}
                 >
                     {children}
@@ -555,7 +555,7 @@ function DropdownMenuRadioItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 !description && "pe-9.5",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
@@ -575,7 +575,7 @@ function DropdownMenuRadioItem({
             >
                 <Comp
                     {...(description && {
-                        className: "flex gap-1.5 pe-9.5 justify-between"
+                        className: "flex gap-1.5 items-center pe-9.5"
                     })}
                 >
                     {children}

@@ -1,4 +1,5 @@
 import { sendGAEvent } from "@next/third-parties/google"
+import { ImagePlay, Images, Sunset } from "lucide-react"
 
 import {
     DropdownMenuCheckboxItem,
@@ -8,10 +9,28 @@ import {
 } from "@/components/ui/dropdown-menu"
 import {
     AVAILABLE_MEDIA_PREFERENCES,
-    MEDIA_PREFERENCE_DESCRIPTIONS,
-    MEDIA_PREFERENCE_LABELS
+    type MediaPreference
 } from "@/configs/media.config"
 import { useMediaStore } from "@/stores/media-store"
+
+interface MediaPreferenceConfig {
+    label: string
+    description: React.ReactNode
+    icon?: React.ReactNode
+}
+
+const MEDIA_PREFERENCES: Record<MediaPreference, MediaPreferenceConfig> = {
+    dim: {
+        label: "Dim white point",
+        description: "Reduce white point brightness of media on dark mode",
+        icon: <Sunset />
+    },
+    autoplay: {
+        label: "Auto-play media",
+        description: "Auto-play videos when in view, does not affect GIFs",
+        icon: <ImagePlay />
+    }
+}
 
 function MediaMenu() {
     const preferences = useMediaStore((state) => state.preferences)
@@ -19,7 +38,10 @@ function MediaMenu() {
 
     return (
         <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Media</DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger>
+                <Images />
+                Media
+            </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 {AVAILABLE_MEDIA_PREFERENCES.map((preference) => (
                     <DropdownMenuCheckboxItem
@@ -33,9 +55,10 @@ function MediaMenu() {
                             sendGAEvent("event", eventName, eventParams)
                         }}
                         closeOnClick={false}
-                        description={MEDIA_PREFERENCE_DESCRIPTIONS[preference]}
+                        description={MEDIA_PREFERENCES[preference].description}
                     >
-                        {MEDIA_PREFERENCE_LABELS[preference]}
+                        {MEDIA_PREFERENCES[preference].icon}
+                        {MEDIA_PREFERENCES[preference].label}
                     </DropdownMenuCheckboxItem>
                 ))}
             </DropdownMenuSubContent>

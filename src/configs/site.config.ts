@@ -8,7 +8,7 @@ const YEAR_REGEX = /\d{4}/u
 const PHONE_NUMBER_REGEX = /(\d{3})(\d{3})(\d{3})/u
 const LEADING_ZERO_REGEX = /^0?/u
 
-export const siteConfig = {
+const siteConfig = {
     // Base links
     url: APP_BASE_URL,
     fullUrl: APP_BASE_URL + APP_BASE_PATH,
@@ -98,3 +98,4 @@ export const siteConfig = {
 }
 
 export type SiteConfig = typeof siteConfig
+export { siteConfig }

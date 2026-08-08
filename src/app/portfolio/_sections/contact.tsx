@@ -2,7 +2,7 @@
 
 import { Fragment } from "react"
 
-import { CircleAlert } from "lucide-react"
+import { BadgeInfo } from "lucide-react"
 
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -43,7 +43,7 @@ function Contact() {
                 )}
             >
                 <div className="mb-0.5 flex items-center gap-1 self-start">
-                    <CircleAlert className="size-4" />
+                    <BadgeInfo className="size-4.5" />
                     <strong>Disclaimer:</strong>
                 </div>
                 <span>

@@ -1,4 +1,5 @@
 import { sendGAEvent } from "@next/third-parties/google"
+import { AudioLines, Loader, ToggleLeft } from "lucide-react"
 
 import {
     DropdownMenuRadioGroup,
@@ -16,7 +17,10 @@ function AudioMenu() {
 
     return (
         <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Audio mode</DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger>
+                <AudioLines />
+                Sound
+            </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup
                     value={audioMode}
@@ -40,10 +44,12 @@ function AudioMenu() {
                         closeOnClick
                         description={
                             <>
-                                Manually press the audio button to turn on audio
+                                Manually press the volume button to toggle sound
+                                effects
                             </>
                         }
                     >
+                        <ToggleLeft />
                         Manual
                     </DropdownMenuRadioItem>
                     <DropdownMenuRadioItem
@@ -51,11 +57,12 @@ function AudioMenu() {
                         closeOnClick
                         description={
                             <>
-                                Automatically capture first press interaction
-                                and turn on audio
+                                Automatically capture first global press
+                                interaction and turn on sound effects
                             </>
                         }
                     >
+                        <Loader />
                         Auto
                     </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>

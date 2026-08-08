@@ -1,5 +1,7 @@
 import { sendGAEvent } from "@next/third-parties/google"
+import { FileStack, OctagonMinus, ThumbsUp } from "lucide-react"
 
+import { System } from "@/components/icons/icons"
 import {
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
@@ -15,7 +17,10 @@ function MotionMenu() {
 
     return (
         <DropdownMenuSub>
-            <DropdownMenuSubTrigger>Motion</DropdownMenuSubTrigger>
+            <DropdownMenuSubTrigger>
+                <FileStack />
+                Motion
+            </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup
                     value={motionPreference}
@@ -28,12 +33,15 @@ function MotionMenu() {
                     }}
                 >
                     <DropdownMenuRadioItem value="preferred" closeOnClick>
+                        <ThumbsUp />
                         Preferred
                     </DropdownMenuRadioItem>
                     <DropdownMenuRadioItem value="reduced" closeOnClick>
+                        <OctagonMinus />
                         Reduced
                     </DropdownMenuRadioItem>
                     <DropdownMenuRadioItem value="system" closeOnClick>
+                        <System className="size-4.5" />
                         Follow system
                     </DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
