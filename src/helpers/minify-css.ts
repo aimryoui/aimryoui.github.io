@@ -2,7 +2,7 @@ const cache = new Map<string, string>()
 
 const REMOVE_COMMENTS_REGEX = /\/\*[\s\S]*?\*\//gu
 const COLLAPSE_WHITESPACE_REGEX = /\s+/gu
-const REMOVE_SEPARATOR_SPACES_REGEX = / ?([{}();:,]) ?/gu
+const REMOVE_SEPARATOR_SPACES_REGEX = / ?([{};,]) ?/gu
 
 function minifyCss(css: string) {
     if (cache.has(css)) {

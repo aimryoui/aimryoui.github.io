@@ -2,17 +2,11 @@
 
 import { Fragment } from "react"
 
-import { ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { LinkButton } from "@/components/ui/button"
 import { Highlight } from "@/components/ui/typography"
-import {
-    getCategoryPath,
-    getProjectPath,
-    groupProjectsByCategory
-} from "@/lib/project-sort"
+import { getProjectPath, groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/portfolio/_components/cards/project-card"
 import SelectedProjectCard from "@/portfolio/_components/cards/selected-project-card"
@@ -45,50 +39,12 @@ function Projects({
                             {isSelectedWorks ? (
                                 <>
                                     {selectedWorksStyle}
-                                    <LinkButton
-                                        data-cursor="target"
-                                        href={getCategoryPath(group.id)}
-                                        nativeLink
-                                        keepFeedback
-                                        prefetch={false}
-                                        className={cn(
-                                            "group sticky top-0 z-50 flex flex-col items-center bg-background",
-                                            {
-                                                "hover:before":
-                                                    "bg-highlighted/5 transition-none",
-                                                "active:before":
-                                                    "bg-highlighted/10 transition-none",
-                                                before: "absolute inset-0 transition-[background-color] duration-100"
-                                            }
-                                        )}
-                                    >
-                                        <div
-                                            className={cn(
-                                                "flex w-full items-center justify-between gap-4 pe-safe-zone"
-                                            )}
-                                        >
-                                            <SectionTitle
-                                                id={group.id}
-                                                title={group.title}
-                                                note={group.note}
-                                                className={cn(
-                                                    "flex-1 bg-transparent"
-                                                )}
-                                            />
-                                            <ArrowRight
-                                                className={cn(
-                                                    "transition-[color] duration-100",
-                                                    {
-                                                        "group-hover":
-                                                            "text-highlighted transition-none",
-                                                        "group-active":
-                                                            "text-highlighted transition-none"
-                                                    }
-                                                )}
-                                            />
-                                        </div>
-                                        <SectionLine containerClassName="sticky top-space z-50" />
-                                    </LinkButton>
+                                    <SectionTitle
+                                        id={group.id}
+                                        title={group.title}
+                                        note={group.note}
+                                        link="route"
+                                    />
                                     <ul
                                         className={cn(
                                             "grid grid-cols-5 bg-background @3xl:grid-cols-3 @md:grid-cols-2"
@@ -152,55 +108,17 @@ function Projects({
                                 </>
                             ) : (
                                 <>
-                                    <LinkButton
-                                        data-cursor="target"
-                                        href={getCategoryPath(group.id)}
-                                        nativeLink
-                                        keepFeedback
-                                        prefetch={false}
-                                        className={cn(
-                                            "group sticky top-0 z-50 flex flex-col items-center bg-background",
-                                            {
-                                                "hover:before":
-                                                    "bg-highlighted/5 transition-none",
-                                                "active:before":
-                                                    "bg-highlighted/10 transition-none",
-                                                before: "absolute inset-0 transition-[background-color] duration-100"
-                                            }
-                                        )}
-                                    >
-                                        <div
-                                            className={cn(
-                                                "flex w-full items-center justify-between gap-4 pe-safe-zone"
-                                            )}
-                                        >
-                                            <SectionTitle
-                                                id={group.id}
-                                                title={group.title}
-                                                {...(isDesignProjects && {
-                                                    noteId: "design-projects",
-                                                    note: "Design Projects",
-                                                    noteClassName:
-                                                        "lg:scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5+var(--spacing-safe-zone)*2)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem+var(--spacing-safe-zone)*2)]"
-                                                })}
-                                                className={cn(
-                                                    "z-1 flex-1 bg-transparent"
-                                                )}
-                                            />
-                                            <ArrowRight
-                                                className={cn(
-                                                    "z-1 transition-[color] duration-100",
-                                                    {
-                                                        "group-hover":
-                                                            "text-highlighted transition-none",
-                                                        "group-active":
-                                                            "text-highlighted transition-none"
-                                                    }
-                                                )}
-                                            />
-                                        </div>
-                                        <SectionLine containerClassName="sticky top-space" />
-                                    </LinkButton>
+                                    <SectionTitle
+                                        id={group.id}
+                                        title={group.title}
+                                        link="route"
+                                        {...(isDesignProjects && {
+                                            noteId: "design-projects",
+                                            note: "Design Projects",
+                                            noteClassName:
+                                                "lg:scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5+var(--spacing-safe-zone)*2)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem+var(--spacing-safe-zone)*2)]"
+                                        })}
+                                    />
                                     <ul
                                         className={cn(
                                             "grid grid-cols-2 bg-background md:grid-cols-1"

@@ -20,6 +20,7 @@ function H1({
     ...props
 }: React.ComponentProps<"h1"> & TextProps) {
     const Comp = asChild ? Slot : "h1"
+
     return (
         <Comp
             className={cn(
@@ -46,6 +47,7 @@ function H2({
     ...props
 }: React.ComponentProps<"h2"> & TextProps) {
     const Comp = asChild ? Slot : "h2"
+
     return (
         <Comp
             className={cn(
@@ -72,6 +74,7 @@ function H3({
     ...props
 }: React.ComponentProps<"h3"> & TextProps) {
     const Comp = asChild ? Slot : "h3"
+
     return (
         <Comp
             className={cn(
@@ -98,6 +101,7 @@ function H4({
     ...props
 }: React.ComponentProps<"h4"> & TextProps) {
     const Comp = asChild ? Slot : "h4"
+
     return (
         <Comp
             className={cn(
@@ -123,6 +127,7 @@ function Bold({
     ...props
 }: React.ComponentProps<"b"> & Omit<TextProps, "highlight">) {
     const Comp = asChild ? Slot : "b"
+
     return (
         <Comp
             className={cn(
@@ -147,6 +152,7 @@ function Highlight({
     ...props
 }: React.ComponentProps<"b"> & Omit<TextProps, "highlight">) {
     const Comp = asChild ? Slot : "b"
+
     return (
         <Comp
             className={cn(
@@ -176,6 +182,7 @@ function Link({
         openInNewTab?: boolean
     }) {
     const Comp = asChild ? Slot : "a"
+
     return (
         <Comp
             className={cn(
@@ -206,6 +213,7 @@ function Text({
     ...props
 }: React.ComponentProps<"p"> & Omit<TextProps, "highlight">) {
     const Comp = asChild ? Slot : "p"
+
     return (
         <Comp
             className={cn(

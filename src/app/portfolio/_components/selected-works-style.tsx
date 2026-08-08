@@ -15,10 +15,7 @@ const selectedWorksProjects = projects.filter(
 let ambientStyles = ""
 
 selectedWorksProjects.forEach((project) => {
-    const manifestKey = project.filePath.replace(
-        TRIM_PROJECT_SLUG_REGEX,
-        ""
-    )
+    const manifestKey = project.filePath.replace(TRIM_PROJECT_SLUG_REGEX, "")
     const projectColor = colorManifest[manifestKey]
 
     if (projectColor?.theme && project.id) {

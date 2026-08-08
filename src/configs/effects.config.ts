@@ -16,7 +16,7 @@ const EFFECT_DESCRIPTIONS: Record<Effect, string> = {
     "target-cursor":
         "Use custom cursor that snappy-snaps to clickable elements",
     "ambient-colors":
-        "Use project vibrant-based color instead of default colors"
+        "Use project vibrant-based colors instead of default colors"
 }
 
 export type { Effect }

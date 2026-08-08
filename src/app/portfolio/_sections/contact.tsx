@@ -29,9 +29,9 @@ function Contact() {
             <SectionTitle
                 id="contact"
                 title="Contact"
+                link="hash"
                 className="sticky top-0 z-50"
             />
-            <SectionLine containerClassName="sticky top-space z-50" />
             <Divider />
             <SectionLine />
             <address>

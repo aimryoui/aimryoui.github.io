@@ -1,31 +1,55 @@
 import { ViewTransition } from "react"
 
+import { ArrowRight } from "@/components/icons/icons"
+import { SectionLine } from "@/components/layout/line"
+import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { H2, Highlight } from "@/components/ui/typography"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
+import { getCategoryPath } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
+
+type SectionTitleProps = React.ComponentProps<"div"> &
+    React.ComponentProps<"a"> &
+    LinkButtonProps & {
+        link?: "route" | "hash"
+        noteClassName?: string
+        id: string
+        noteId?: string
+        order?: number
+        title: string
+        note?: string
+    }
 
 function SectionTitle({
     className,
+    link,
     noteClassName,
     id,
     noteId,
     order,
     title,
-    note
-}: React.ComponentProps<"div"> & {
-    noteClassName?: string
-    id: string
-    noteId?: string
-    order?: number
-    title: string
-    note?: string
-}) {
+    note,
+    ...props
+}: SectionTitleProps) {
+    const Comp = link === "route" ? LinkButton : link === "hash" ? "a" : "div"
+
     return (
-        <div
+        <Comp
+            {...(link && {
+                href:
+                    link === "route" ? getCategoryPath(id) : `/portfolio#${id}`
+            })}
+            {...(link === "route" && {
+                nativeLink: true,
+                keepFeedback: true,
+                prefetch: false
+            })}
+            data-cursor={link === "route" ? "target" : "ignore"}
             className={cn(
-                "relative flex min-h-space items-center bg-background px-safe-zone py-[calc(var(--spacing-safe-zone)-var(--spacing)/2)]",
+                "group sticky top-0 z-50 flex min-h-space flex-col items-center bg-background",
                 className
             )}
+            {...props}
         >
             {note && (
                 <span
@@ -43,19 +67,54 @@ function SectionTitle({
                     {note}
                 </span>
             )}
-            <Title id={id} order={order} title={title} />
-        </div>
+            <div
+                className={cn(
+                    "flex w-full items-center justify-between gap-4 px-safe-zone py-[calc(var(--spacing-safe-zone)-var(--spacing)/2)]",
+                    link === "route" && [
+                        "transition-[background-color] duration-100",
+                        {
+                            "group-hover": "bg-highlighted/5 transition-none",
+                            "group-active": "bg-highlighted/10 transition-none"
+                        }
+                    ]
+                )}
+            >
+                <Title id={id} order={order} title={title} link={link} />
+                {link === "route" ? (
+                    <ArrowRight
+                        className={cn("z-1 transition-[color] duration-100", {
+                            "group-hover": "text-highlighted transition-none",
+                            "group-active": "text-highlighted transition-none"
+                        })}
+                    />
+                ) : (
+                    link === "hash" && (
+                        <span
+                            aria-hidden
+                            className={cn("text-xl text-muted-foreground", {
+                                "group-hover": "text-foreground"
+                            })}
+                        >
+                            #
+                        </span>
+                    )
+                )}
+            </div>
+            <SectionLine containerClassName="sticky top-space" />
+        </Comp>
     )
 }
 
 function Title({
     id,
     order,
-    title
+    title,
+    link
 }: {
     id: string
     order?: number
     title: string
+    link?: SectionTitleProps["link"]
 }) {
     return (
         <ViewTransition
@@ -65,17 +124,23 @@ function Title({
                 id={id}
                 className={cn(
                     "w-fit text-foreground wrap-anywhere transition-[color] duration-100",
-                    {
-                        "motion-preferred": [
-                            "will-change-[font-variation-settings] transition-[color,font-variation-settings] ease-spring duration-500",
-                            {
-                                "group-hover":
-                                    "font-wght-900 transition-[font-variation-settings]"
-                            }
-                        ],
-                        "group-hover": "text-highlighted transition-none",
-                        "group-active": "text-highlighted transition-none"
-                    }
+                    link === "hash"
+                        ? {
+                              "group-hover":
+                                  "underline decoration-current decoration-solid decoration-1",
+                              "group-focus-visible": "text-highlighted"
+                          }
+                        : link === "route" && {
+                              "motion-preferred": [
+                                  "will-change-[font-variation-settings] transition-[color,font-variation-settings] ease-spring duration-500",
+                                  {
+                                      "group-hover":
+                                          "font-wght-900 transition-[font-variation-settings]"
+                                  }
+                              ],
+                              "group-hover": "text-highlighted transition-none",
+                              "group-active": "text-highlighted transition-none"
+                          }
                 )}
             >
                 {order && (
