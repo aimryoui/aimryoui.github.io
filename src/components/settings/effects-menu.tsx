@@ -4,7 +4,11 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
-import { AVAILABLE_EFFECTS, EFFECT_LABELS } from "@/configs/effects.config"
+import {
+    AVAILABLE_EFFECTS,
+    EFFECT_DESCRIPTIONS,
+    EFFECT_LABELS
+} from "@/configs/effects.config"
 import { useEffectsStore } from "@/stores/effects-store"
 
 function EffectsMenu() {
@@ -23,6 +27,7 @@ function EffectsMenu() {
                             toggleEffect(effect)
                         }}
                         closeOnClick={false}
+                        description={EFFECT_DESCRIPTIONS[effect]}
                     >
                         {EFFECT_LABELS[effect]}
                     </DropdownMenuCheckboxItem>

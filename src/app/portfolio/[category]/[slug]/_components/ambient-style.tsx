@@ -40,7 +40,7 @@ function AmbientStyle({ project }: { project: Project }) {
             })
             .join("")
 
-        ambientStyles = `:root{${hexRules}}@supports (color: oklab(0% 0 0%)){:root{${oklchRules}}}`
+        ambientStyles = `:root:where([data-effects~='ambient-colors']){${hexRules}}@supports (color: oklab(0% 0 0%)){:root:where([data-effects~='ambient-colors']){${oklchRules}}}`
     }
 
     if (ambientStyles)

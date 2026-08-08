@@ -15,8 +15,8 @@ const MEDIA_PREFERENCE_LABELS: Record<MediaPreference, string> = {
 
 const MEDIA_PREFERENCE_DESCRIPTIONS: Record<MediaPreference, React.ReactNode> =
     {
-        dim: "Reduce white point brightness of media on dark mode.",
-        autoplay: "Auto-play videos when in view, does not affect GIFs."
+        dim: "Reduce white point brightness of media on dark mode",
+        autoplay: "Auto-play videos when in view, does not affect GIFs"
     }
 
 export {

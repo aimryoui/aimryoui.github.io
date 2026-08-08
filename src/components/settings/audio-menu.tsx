@@ -34,8 +34,7 @@ function AudioMenu() {
                         closeOnClick
                         description={
                             <>
-                                Manually press the audio button to turn on
-                                audio.
+                                Manually press the audio button to turn on audio
                             </>
                         }
                     >
@@ -47,7 +46,7 @@ function AudioMenu() {
                         description={
                             <>
                                 Automatically capture first press interaction
-                                and turn on audio.
+                                and turn on audio
                             </>
                         }
                     >

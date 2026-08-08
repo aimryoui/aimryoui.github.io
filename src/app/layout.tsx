@@ -17,6 +17,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { DEFAULT_EFFECTS } from "@/configs/effects.config"
 import { DEFAULT_MEDIA_PREFERENCES } from "@/configs/media.config"
 import { siteConfig } from "@/configs/site.config"
+import { minifyScript } from "@/helpers/minify-script"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/providers/theme-provider"
 
@@ -165,7 +166,7 @@ export default function RootLayout({
             <head>
                 <script
                     dangerouslySetInnerHTML={{
-                        __html: /* js */ `
+                        __html: minifyScript(/* js */ `
                         const htmlElement = document.documentElement
                         // Platform detection
                         htmlElement.setAttribute("data-platform",
@@ -255,7 +256,7 @@ export default function RootLayout({
                             htmlElement.setAttribute("data-sidebar-position", "left")
                             htmlElement.setAttribute("data-toolbar-position", "bottom")
                         }
-                    `
+                    `)
                     }}
                 />
             </head>

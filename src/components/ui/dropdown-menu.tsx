@@ -339,7 +339,7 @@ function DropdownMenuSubTrigger({
                 onClick?.(e)
             }}
             className={cn(
-                "flex cursor-default select-none items-center gap-3 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "flex cursor-default select-none items-center gap-3 rounded-lg py-2 pe-2 ps-3 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-open":
@@ -438,7 +438,7 @@ function DropdownMenuLinkItem({
             {openInNewTab && (
                 <span
                     data-slot="dropdown-menu-link-item-indicator"
-                    className="pointer-events-none absolute right-3 flex items-center justify-center"
+                    className="pointer-events-none absolute right-2 flex items-center justify-center"
                 >
                     <ArrowUpRight className="size-4" />
                 </span>
