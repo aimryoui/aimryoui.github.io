@@ -85,11 +85,10 @@ export const siteConfig = {
 
     // Analytics ID
     analytics: {
-        googleVerification: "eQWQgOEPxHImqJ2L8COXOXrRvoG51zYXxSX6OwSPyUo",
+        googleVerification: "4kSbFYVXEAsfbwR6ZCTrj1Hc9vIbiklyVdYZkRah974",
         yandexVerification: "ba39782377ba35bc",
         googleTagManager: "GTM-PJNJ98HF",
         googleAnalytics: "G-SY6F622NVD",
-        cloudFlareInsights: "{'token':'d03afe61bd644ac6b165fe710cece3a8'}",
 
         portfolio: {
             googleTagManager: "GTM-W4QDGLNW",

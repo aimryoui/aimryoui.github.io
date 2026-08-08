@@ -2,7 +2,7 @@
 
 import { ViewTransition } from "react"
 
-import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+import { sendGAEvent } from "@next/third-parties/google"
 import { type PressEvent, usePress } from "react-aria"
 
 import { ArrowRight } from "@/components/icons/icons"
@@ -52,7 +52,6 @@ function SectionTitle({
                 category_title: title
             }
             sendGAEvent("event", eventName, eventParams)
-            sendGTMEvent({ event: eventName, ...eventParams })
         }
         onPress?.(e)
     }

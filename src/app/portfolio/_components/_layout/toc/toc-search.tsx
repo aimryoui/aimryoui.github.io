@@ -1,6 +1,6 @@
 "use client"
 
-import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+import { sendGAEvent } from "@next/third-parties/google"
 
 import { Search, XCircle } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
@@ -66,7 +66,6 @@ function TocSearch({
                     if (!value) {
                         const eventName = "focus_toc_search"
                         sendGAEvent("event", eventName)
-                        sendGTMEvent({ event: eventName })
                     }
                 }}
                 onChange={(e) => {

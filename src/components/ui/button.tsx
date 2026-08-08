@@ -2,7 +2,7 @@
 
 import NextLink from "next/link"
 
-import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+import { sendGAEvent } from "@next/third-parties/google"
 import { cva, type VariantProps } from "class-variance-authority"
 import {
     Button as ButtonPrimitive,
@@ -164,10 +164,6 @@ function Button({
                         tracking.eventName,
                         tracking.eventParams ?? {}
                     )
-                    sendGTMEvent({
-                        event: tracking.eventName,
-                        ...(tracking.eventParams ?? {})
-                    })
                 }
 
                 onPress?.(e)
@@ -243,10 +239,6 @@ function LinkButton({
                         tracking.eventName,
                         tracking.eventParams ?? {}
                     )
-                    sendGTMEvent({
-                        event: tracking.eventName,
-                        ...(tracking.eventParams ?? {})
-                    })
                 }
 
                 onPress?.(e)

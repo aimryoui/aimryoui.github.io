@@ -1,4 +1,4 @@
-import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+import { sendGAEvent } from "@next/third-parties/google"
 
 import {
     DropdownMenuCheckboxItem,
@@ -31,7 +31,6 @@ function EffectsMenu() {
                             const eventName = "change_effects_preference"
                             const eventParams = { effect, enabled: checked }
                             sendGAEvent("event", eventName, eventParams)
-                            sendGTMEvent({ event: eventName, ...eventParams })
                         }}
                         closeOnClick={false}
                         description={EFFECT_DESCRIPTIONS[effect]}

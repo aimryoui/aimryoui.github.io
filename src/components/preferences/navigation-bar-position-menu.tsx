@@ -1,4 +1,4 @@
-import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+import { sendGAEvent } from "@next/third-parties/google"
 
 import {
     DropdownMenuRadioGroup,
@@ -49,7 +49,6 @@ function NavigationBarPositionMenu() {
                             is_mobile: isMobile
                         }
                         sendGAEvent("event", eventName, eventParams)
-                        sendGTMEvent({ event: eventName, ...eventParams })
                     }}
                 >
                     <DropdownMenuRadioItem

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
-import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+import { sendGAEvent } from "@next/third-parties/google"
 
 import { SectionLine } from "@/components/layout/line"
 import { Tooltip } from "@/components/ui/tooltip"
@@ -73,7 +73,6 @@ function TableOfContents({ items }: TocProps) {
             const eventName = "search_toc_no_result"
             const eventParams = { search_query: debouncedQuery }
             sendGAEvent("event", eventName, eventParams)
-            sendGTMEvent({ event: eventName, ...eventParams })
         }
     }, [debouncedQuery, filteredItems.length])
 

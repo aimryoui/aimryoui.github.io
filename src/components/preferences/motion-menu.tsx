@@ -1,4 +1,4 @@
-import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+import { sendGAEvent } from "@next/third-parties/google"
 
 import {
     DropdownMenuRadioGroup,
@@ -25,7 +25,6 @@ function MotionMenu() {
                         const eventName = "change_motion_preference"
                         const eventParams = { motion_preference: value }
                         sendGAEvent("event", eventName, eventParams)
-                        sendGTMEvent({ event: eventName, ...eventParams })
                     }}
                 >
                     <DropdownMenuRadioItem value="preferred" closeOnClick>

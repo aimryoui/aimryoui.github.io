@@ -103,7 +103,9 @@ function ProjectCard({
                 pressSound: "link"
             })}
             tracking={{
-                eventName: tracking?.eventName ?? (navigation ? "navigate_project" : "select_project"),
+                eventName:
+                    tracking?.eventName ??
+                    (navigation ? "navigate_project" : "select_project"),
                 eventParams: {
                     project_name: project.name,
                     project_slug: project.slug,

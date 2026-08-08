@@ -1,9 +1,6 @@
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
-
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
 import { SelectedWorksStyle } from "@/portfolio/_components/selected-works-style"
@@ -58,12 +55,6 @@ export default function Portfolio() {
                 <Footer />
             </main>
             {/* </ViewTransition> */}
-            <GoogleTagManager
-                gtmId={siteConfig.analytics.portfolio.googleTagManager}
-            />
-            <GoogleAnalytics
-                gaId={siteConfig.analytics.portfolio.googleAnalytics}
-            />
         </>
     )
 }

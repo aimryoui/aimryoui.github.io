@@ -1,4 +1,4 @@
-import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+import { sendGAEvent } from "@next/third-parties/google"
 
 import {
     DropdownMenuRadioGroup,
@@ -27,7 +27,6 @@ function AudioMenu() {
                         const eventName = "change_audio_preference"
                         const eventParams = { audio_mode: nextMode }
                         sendGAEvent("event", eventName, eventParams)
-                        sendGTMEvent({ event: eventName, ...eventParams })
 
                         if (nextMode === "auto") {
                             useAudioStore.getState().setIsAudioEnabled(true)
