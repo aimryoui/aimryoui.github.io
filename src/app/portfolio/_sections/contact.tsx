@@ -5,6 +5,7 @@ import { Fragment } from "react"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
+import { LinkButton } from "@/components/ui/button"
 import {
     Table,
     TableBody,
@@ -15,7 +16,6 @@ import {
     TableHeader,
     TableRow
 } from "@/components/ui/table"
-import { Link } from "@/components/ui/typography"
 import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
@@ -134,18 +134,48 @@ function Contact() {
                                                     "@[59.375rem]": "col-span-2"
                                                 })}
                                             >
-                                                <Link
+                                                <LinkButton
                                                     href={platform.links.url}
+                                                    nativeLink
+                                                    keepFeedback
+                                                    hoverSound="tick"
+                                                    pressSound="link"
                                                     openInNewTab
                                                     translate="no"
                                                     className={cn(
+                                                        "[--space-between:calc(var(--spacing-table-between)/2)]",
                                                         platform.links.hidden &&
                                                             "text-transparent",
-                                                        "lg:font-wght-600"
+                                                        "group relative inline-block w-full text-base text-foreground font-wght-500",
+                                                        "-my-[--space-between] py-[--space-between]",
+                                                        {
+                                                            "focus-visible":
+                                                                "text-highlighted",
+                                                            "group-first/table-row":
+                                                                "-mb-[--space-between] -mt-safe-zone-vertical pb-[--space-between] pt-safe-zone-vertical",
+                                                            "group-only/table-row":
+                                                                "-my-safe-zone-vertical py-safe-zone-vertical",
+                                                            "group-last/table-row":
+                                                                "-mb-safe-zone-vertical -mt-[--space-between] pb-safe-zone-vertical pt-[--space-between]",
+
+                                                            lg: "font-wght-600",
+                                                            md: "text-sm"
+                                                        }
                                                     )}
                                                 >
-                                                    {platform.links.text}
-                                                </Link>
+                                                    <span
+                                                        data-cursor="lock"
+                                                        className={cn(
+                                                            "-mx-1.5 -my-0.5 inline-block text-pretty px-1.5 py-0.5 underline",
+                                                            {
+                                                                "group-hover":
+                                                                    "decoration-current decoration-solid"
+                                                            }
+                                                        )}
+                                                    >
+                                                        {platform.links.text}
+                                                    </span>
+                                                </LinkButton>
                                             </TableCell>
 
                                             <TableCell

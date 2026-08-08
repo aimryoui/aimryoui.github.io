@@ -183,6 +183,8 @@ function TableCell({
 
                                               "group-first/table-row":
                                                   "-mb-[calc(var(--spacing-table-between)/2)] -mt-safe-zone-vertical pb-[calc(var(--spacing-table-between)/2)] pt-safe-zone-vertical",
+                                              "group-only/table-row":
+                                                  "-my-safe-zone-vertical py-safe-zone-vertical",
                                               "group-last/table-row":
                                                   "-mb-safe-zone-vertical -mt-[calc(var(--spacing-table-between)/2)] pb-safe-zone-vertical pt-[calc(var(--spacing-table-between)/2)]"
                                           },

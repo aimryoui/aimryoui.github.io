@@ -3,6 +3,7 @@
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
+import { LinkButton } from "@/components/ui/button"
 import {
     Table,
     TableBody,
@@ -13,7 +14,7 @@ import {
     TableHeader,
     TableRow
 } from "@/components/ui/table"
-import { At, Link } from "@/components/ui/typography"
+import { At } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
 
@@ -122,14 +123,46 @@ function Education() {
                                     "@[59.375rem]": "mt-[2em]"
                                 })}
                             >
-                                <Link
+                                <LinkButton
                                     href="https://daihoc.fpt.edu.vn/hcm/"
+                                    nativeLink
+                                    keepFeedback
+                                    hoverSound="tick"
+                                    pressSound="link"
                                     openInNewTab
                                     aria-label="Go to the FPT University website"
-                                    className="lg:font-wght-600"
+                                    translate="no"
+                                    className={cn(
+                                        "[--space-between:calc(var(--spacing-table-between)/2)]",
+                                        "group relative inline-block w-full text-base text-foreground font-wght-500",
+                                        "-my-[--space-between] py-[--space-between]",
+                                        {
+                                            "focus-visible": "text-highlighted",
+                                            "group-first/table-row":
+                                                "-mb-[--space-between] -mt-safe-zone-vertical pb-[--space-between] pt-safe-zone-vertical",
+                                            "group-only/table-row":
+                                                "-my-safe-zone-vertical py-safe-zone-vertical",
+                                            "group-last/table-row":
+                                                "-mb-safe-zone-vertical -mt-[--space-between] pb-safe-zone-vertical pt-[--space-between]",
+
+                                            lg: "font-wght-600",
+                                            md: "text-sm"
+                                        }
+                                    )}
                                 >
-                                    FPT University HCMC
-                                </Link>
+                                    <span
+                                        data-cursor="lock"
+                                        className={cn(
+                                            "-mx-1.5 -my-0.5 inline-block text-pretty px-1.5 py-0.5 underline",
+                                            {
+                                                "group-hover":
+                                                    "decoration-current decoration-solid"
+                                            }
+                                        )}
+                                    >
+                                        FPT University HCMC
+                                    </span>
+                                </LinkButton>
                             </TableCell>
                         </TableRow>
 

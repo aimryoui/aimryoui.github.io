@@ -42,7 +42,7 @@ function SectionName({
 
     const playPressFeedback = usePressFeedback()
 
-    let { pressProps, isPressed } = usePress({
+    let { pressProps } = usePress({
         onPress: () => {
             playPressFeedback("link")
         }
@@ -75,6 +75,7 @@ function SectionName({
                         "pointer-events-auto",
                         {
                             hover: "underline decoration-foreground",
+                            active: "underline decoration-foreground",
                             "focus-visible":
                                 "underline decoration-foreground decoration-solid"
                         }

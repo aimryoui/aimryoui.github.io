@@ -243,6 +243,8 @@ function Experience() {
                                                                 "text-highlighted",
                                                             "group-first/table-row":
                                                                 "-mb-[--space-between] -mt-safe-zone-vertical pb-[--space-between] pt-safe-zone-vertical",
+                                                            "group-only/table-row":
+                                                                "-my-safe-zone-vertical py-safe-zone-vertical",
                                                             "group-last/table-row":
                                                                 "-mb-safe-zone-vertical -mt-[--space-between] pb-safe-zone-vertical pt-[--space-between]",
 

@@ -2,6 +2,8 @@
 
 import { ViewTransition } from "react"
 
+import { usePress } from "react-aria"
+
 import { ArrowRight } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
@@ -32,12 +34,18 @@ function SectionTitle({
     order,
     title,
     note,
-    onClick,
     ...props
 }: SectionTitleProps) {
     const playPressFeedback = usePressFeedback()
 
-    const Comp = link === "route" ? LinkButton : link === "hash" ? "a" : "div"
+    const Comp: React.ElementType =
+        link === "route" ? LinkButton : link === "hash" ? "a" : "div"
+
+    let { pressProps } = usePress({
+        onPress: () => {
+            playPressFeedback("link")
+        }
+    })
 
     return (
         <Comp
@@ -52,12 +60,8 @@ function SectionTitle({
             })}
             data-cursor={link === "route" ? "target" : "ignore"}
             {...(link === "hash" && {
-                "data-sound": "tick",
-                onClick: (e) => {
-                    playPressFeedback("link", "light")
-
-                    onClick?.(e)
-                }
+                ...pressProps,
+                "data-sound": "tick"
             })}
             className={cn(
                 "group sticky top-0 z-50 flex min-h-space flex-col items-center bg-background",
@@ -84,12 +88,22 @@ function SectionTitle({
             <div
                 className={cn(
                     "flex w-full items-center justify-between gap-4 px-safe-zone py-[calc(var(--spacing-safe-zone)-var(--spacing)/2)]",
-                    link === "route" && [
+                    link && [
                         "transition-[background-color] duration-100",
-                        {
-                            "group-hover": "bg-highlighted/5 transition-none",
-                            "group-active": "bg-highlighted/10 transition-none"
-                        }
+                        link === "route"
+                            ? [
+                                  {
+                                      "group-hover":
+                                          "bg-highlighted/5 transition-none",
+                                      "group-active":
+                                          "bg-highlighted/10 transition-none"
+                                  }
+                              ]
+                            : {
+                                  "group-hover":
+                                      "bg-element-hover transition-none",
+                                  "group-active": "bg-muted transition-none"
+                              }
                     ]
                 )}
             >
@@ -141,6 +155,8 @@ function Title({
                     link === "hash"
                         ? {
                               "group-hover":
+                                  "underline decoration-current decoration-solid decoration-1",
+                              "group-active":
                                   "underline decoration-current decoration-solid decoration-1",
                               "group-focus-visible": "text-highlighted"
                           }
