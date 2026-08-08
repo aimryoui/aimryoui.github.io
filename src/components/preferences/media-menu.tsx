@@ -1,3 +1,5 @@
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+
 import {
     DropdownMenuCheckboxItem,
     DropdownMenuSub,
@@ -23,8 +25,13 @@ function MediaMenu() {
                     <DropdownMenuCheckboxItem
                         key={preference}
                         checked={preferences.includes(preference)}
-                        onCheckedChange={() => {
+                        onCheckedChange={(checked) => {
                             togglePreference(preference)
+
+                            const eventName = "change_media_preference"
+                            const eventParams = { preference, enabled: checked }
+                            sendGAEvent("event", eventName, eventParams)
+                            sendGTMEvent({ event: eventName, ...eventParams })
                         }}
                         closeOnClick={false}
                         description={MEDIA_PREFERENCE_DESCRIPTIONS[preference]}

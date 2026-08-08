@@ -159,6 +159,14 @@ function SocialButton({
                     pressSound="link"
                     onHoverStart={handleHoverStart}
                     onHoverEnd={handleHoverEnd}
+                    tracking={{
+                        eventName: "click_social_button",
+                        eventParams: {
+                            platform: type,
+                            url,
+                            ...(projectId && { project_id: projectId })
+                        }
+                    }}
                     className={cn(
                         "group pointer-events-auto flex h-9 w-fit items-center justify-end gap-2 text-sm text-white font-wght-500",
                         {
@@ -242,6 +250,14 @@ function SocialButton({
                     pressSound="link"
                     onHoverStart={handleHoverStart}
                     onHoverEnd={handleHoverEnd}
+                    tracking={{
+                        eventName: "click_social_button",
+                        eventParams: {
+                            platform: type,
+                            url,
+                            ...(projectId && { project_id: projectId })
+                        }
+                    }}
                     className={cn(
                         "group pointer-events-auto relative flex h-9 w-fit items-center justify-end gap-1 text-sm text-white font-wght-500",
                         "[filter:drop-shadow(0px_0px_3px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_1.5px_rgba(0,0,0,0.10))]",

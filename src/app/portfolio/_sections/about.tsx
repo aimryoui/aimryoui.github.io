@@ -3,6 +3,7 @@ import { Fragment } from "react"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
+import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
@@ -186,8 +187,6 @@ function About() {
                         })}
                     />
                     <div
-                        data-cursor="target"
-                        data-sound="button"
                         className={cn(
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {
@@ -198,25 +197,37 @@ function About() {
                     >
                         <TooltipTrigger
                             payload={{
-                                content: "Hồ Chí Minh City",
-                                sideOffset: 17
+                                content: "Hồ Chí Minh City"
                             }}
                             render={
-                                <Link
+                                <LinkButton
                                     href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
+                                    nativeLink
+                                    keepFeedback
                                     openInNewTab
-                                    highlight
-                                    className={cn("text-4xl", {
-                                        xl: "text-3xl",
-                                        md: "text-2xl"
-                                    })}
+                                    tracking={{
+                                        eventName: "click_about_link",
+                                        eventParams: {
+                                            link_name: "Ho_Chi_Minh_City",
+                                            url: "https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
+                                        }
+                                    }}
+                                    className={cn(
+                                        "grid size-full place-items-center text-4xl text-highlighted underline",
+                                        {
+                                            hover: "decoration-current decoration-solid",
+                                            "focus-visible": "text-highlighted",
+                                            xl: "text-3xl",
+                                            md: "text-2xl"
+                                        }
+                                    )}
                                 >
                                     <Highlight
                                         className={cn("font-wght-[625]")}
                                     >
                                         HCMC
                                     </Highlight>
-                                </Link>
+                                </LinkButton>
                             }
                         />
                         <div
@@ -265,15 +276,22 @@ function About() {
                     >
                         <TooltipTrigger
                             payload={{
-                                content: "Việt Nam",
-                                sideOffset: 19
+                                content: "Việt Nam"
                             }}
                             render={
-                                <Link
+                                <LinkButton
                                     href="https://wikipedia.org/wiki/Vietnam"
+                                    nativeLink
                                     openInNewTab
+                                    tracking={{
+                                        eventName: "click_about_link",
+                                        eventParams: {
+                                            link_name: "Vietnam",
+                                            url: "https://wikipedia.org/wiki/Vietnam"
+                                        }
+                                    }}
                                     className={cn(
-                                        "grid aspect-3/2 w-[--w] place-items-center bg-[#da251d] [--w:calc(var(--spacing)*12)]"
+                                        "grid size-full place-items-center"
                                     )}
                                 >
                                     <Highlight
@@ -289,10 +307,16 @@ function About() {
                                     {/* https://css-shape.com/star/ */}
                                     <div
                                         className={cn(
-                                            "aspect-square w-[calc(var(--w)/5*2)] bg-[#ffff00] clip-star"
+                                            "grid aspect-3/2 w-[--w] place-items-center bg-[#da251d] [--w:calc(var(--spacing)*12)]"
                                         )}
-                                    />
-                                </Link>
+                                    >
+                                        <div
+                                            className={cn(
+                                                "aspect-square w-[calc(var(--w)/5*2)] bg-[#ffff00] clip-star"
+                                            )}
+                                        />
+                                    </div>
+                                </LinkButton>
                             }
                         />
                         <div

@@ -114,6 +114,13 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                             keepFeedback
                                             hoverSound="tick"
                                             pressSound="link"
+                                            tracking={{
+                                                eventName: "click_footer_link",
+                                                eventParams: {
+                                                    platform: platform.title,
+                                                    url: platform.links.url
+                                                }
+                                            }}
                                             className={cn(
                                                 "grid h-full place-items-center bg-background transition-[color,background-color] duration-[.35s,.1s]",
                                                 platform.title === "Behance"

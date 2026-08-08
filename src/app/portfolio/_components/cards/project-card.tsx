@@ -97,6 +97,17 @@ function ProjectCard({
                 hoverSound: "tick",
                 pressSound: "link"
             })}
+            tracking={{
+                eventName: navigation ? "navigate_project" : "select_project",
+                eventParams: {
+                    project_name: project.name,
+                    project_slug: project.slug,
+                    direction: navigation ?? "direct_click",
+                    section: isSelectedWorks
+                        ? "selected_works"
+                        : "all_design_works"
+                }
+            }}
             className={cn(
                 "group relative flex min-h-space min-w-0 items-center gap-x-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                 {

@@ -209,6 +209,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 <PaginationPrevious
                                     href={getCategoryPath(category)}
                                     label={`Go back to ${group.title} category page`}
+                                    tracking={{
+                                        eventName: "navigate_category",
+                                        eventParams: {
+                                            category_id: category,
+                                            category_title: group.title,
+                                            direction: "backward"
+                                        }
+                                    }}
                                     className={cn(
                                         "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                         {
@@ -261,6 +269,20 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             ? `Go next to ${nextCategory.title} category page`
                                             : "No more projects, contact me"
                                     }
+                                    tracking={{
+                                        eventName: nextCategory
+                                            ? "navigate_category"
+                                            : "navigate_hash",
+                                        eventParams: {
+                                            category_id: nextCategory
+                                                ? nextCategory.id
+                                                : "contact",
+                                            category_title: nextCategory
+                                                ? nextCategory.title
+                                                : "Contact",
+                                            direction: "forward"
+                                        }
+                                    }}
                                     className={cn(
                                         "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                         {

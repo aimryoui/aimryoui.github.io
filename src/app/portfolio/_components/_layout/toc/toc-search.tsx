@@ -1,5 +1,7 @@
 "use client"
 
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+
 import { Search, XCircle } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
 import {
@@ -60,6 +62,13 @@ function TocSearch({
                 placeholder="Search for sections..."
                 autoComplete="off"
                 value={value}
+                onFocus={() => {
+                    if (!value) {
+                        const eventName = "focus_toc_search"
+                        sendGAEvent("event", eventName)
+                        sendGTMEvent({ event: eventName })
+                    }
+                }}
                 onChange={(e) => {
                     onChange(e.target.value)
                 }}
@@ -113,6 +122,9 @@ function Addons({
                             size="icon"
                             className="hover:bg-transparent"
                             onPress={onClear}
+                            tracking={{
+                                eventName: "clear_toc_search"
+                            }}
                             pressSound={false}
                         >
                             <XCircle className="cursor-pointer" />

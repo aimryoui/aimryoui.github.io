@@ -29,14 +29,18 @@ function ModeToggle({ className }: React.ComponentProps<"button">) {
 
     const mounted = useIsMounted()
 
+    const newTheme =
+        theme === "light" ? "dark" : theme === "dark" ? "system" : "light"
+
     return (
         <TooltipTrigger
             delay={500}
             payload={{
                 content: (
                     <span>
-                        Theme:{" "}
-                        <Highlight className="capitalize">{theme}</Highlight>
+                        Switch to{" "}
+                        <Highlight className="capitalize">{newTheme}</Highlight>{" "}
+                        theme
                     </span>
                 )
             }}
@@ -48,13 +52,13 @@ function ModeToggle({ className }: React.ComponentProps<"button">) {
                     size="icon"
                     haptic="success"
                     onPress={() => {
-                        setTheme(
-                            theme === "light"
-                                ? "dark"
-                                : theme === "dark"
-                                  ? "system"
-                                  : "light"
-                        )
+                        setTheme(newTheme)
+                    }}
+                    tracking={{
+                        eventName: "toggle_theme",
+                        eventParams: {
+                            theme: newTheme
+                        }
                     }}
                     className={cn(
                         {

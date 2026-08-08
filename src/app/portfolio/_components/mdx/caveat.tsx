@@ -17,7 +17,8 @@ function CaveatLightness() {
                 which will be <strong>dimmed</strong> on dark mode.{" "}
                 <strong>Opt-out</strong> by turning off the{" "}
                 <code>Media &gt; Dim white point</code> preference or press on
-                the media to go into its <code>Lightbox</code> mode.
+                the media to go into its <code>Lightbox</code> mode with
+                original colors.
             </span>
         </Note>
     )

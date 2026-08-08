@@ -32,6 +32,7 @@ function SelectedProjectCard({
     className,
     href,
     project,
+    onPress,
     ...props
 }: LinkButtonProps & SelectedProjectCardProps) {
     const compRef = useRef<HTMLAnchorElement>(null)
@@ -76,6 +77,15 @@ function SelectedProjectCard({
             prefetch={false}
             nativeLink={true}
             keepFeedback={true}
+            tracking={{
+                eventName: "handpicked_project",
+                eventParams: {
+                    project_name: project.name,
+                    project_slug: project.slug,
+                    direction: "direct_click",
+                    section: "selected_works"
+                }
+            }}
             id={`theme-${project.id}`}
             className={cn(
                 "group flex h-full min-w-0 flex-col items-center gap-y-[calc(var(--spacing-safe-zone-vertical)/2)] p-safe-zone pb-[calc(var(--spacing-safe-zone-vertical)+var(--spacing)*0.5)] transition-[background-color] duration-100",

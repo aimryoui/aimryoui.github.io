@@ -2,7 +2,8 @@
 
 import { ViewTransition } from "react"
 
-import { usePress } from "react-aria"
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+import { type PressEvent, usePress } from "react-aria"
 
 import { ArrowRight } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
@@ -34,6 +35,7 @@ function SectionTitle({
     order,
     title,
     note,
+    onPress,
     ...props
 }: SectionTitleProps) {
     const playPressFeedback = usePressFeedback()
@@ -41,9 +43,24 @@ function SectionTitle({
     const Comp: React.ElementType =
         link === "route" ? LinkButton : link === "hash" ? "a" : "div"
 
+    const handlePress = (e: PressEvent) => {
+        if (link) {
+            const eventName =
+                link === "route" ? "navigate_category" : "navigate_hash"
+            const eventParams = {
+                category_id: id,
+                category_title: title
+            }
+            sendGAEvent("event", eventName, eventParams)
+            sendGTMEvent({ event: eventName, ...eventParams })
+        }
+        onPress?.(e)
+    }
+
     let { pressProps } = usePress({
-        onPress: () => {
+        onPress: (e) => {
             playPressFeedback("link")
+            handlePress(e)
         }
     })
 
@@ -56,7 +73,8 @@ function SectionTitle({
             {...(link === "route" && {
                 nativeLink: true,
                 keepFeedback: true,
-                prefetch: false
+                prefetch: false,
+                onPress: handlePress
             })}
             data-cursor={link === "route" ? "target" : "ignore"}
             {...(link === "hash" && {

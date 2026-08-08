@@ -1,3 +1,5 @@
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+
 import {
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
@@ -34,12 +36,20 @@ function NavigationBarPositionMenu() {
             <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup
                     value={isMobile ? toolbarPosition : sidebarPosition}
-                    onValueChange={(value) => {
+                    onValueChange={(value: string) => {
                         if (isMobile) {
                             setToolbarPosition(value as ToolbarPosition)
                         } else {
                             setSidebarPosition(value as SidebarPosition)
                         }
+
+                        const eventName = "change_navigation_position"
+                        const eventParams = {
+                            position: value,
+                            is_mobile: isMobile
+                        }
+                        sendGAEvent("event", eventName, eventParams)
+                        sendGTMEvent({ event: eventName, ...eventParams })
                     }}
                 >
                     <DropdownMenuRadioItem

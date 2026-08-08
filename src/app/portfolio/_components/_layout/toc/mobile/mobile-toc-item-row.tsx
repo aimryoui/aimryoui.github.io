@@ -80,6 +80,17 @@ const MobileTocItemRow = memo(
                             e.preventDefault()
                         }
                     }}
+                    tracking={{
+                        eventName: "click_toc_link",
+                        eventParams: {
+                            toc_item_id: item.id,
+                            toc_item_label: item.label,
+                            toc_variant: variant,
+                            is_mobile: true,
+                            ...(item.mode && { toc_mode: item.mode }),
+                            ...(query && { search_query: query })
+                        }
+                    }}
                     onPress={() => {
                         if (isSameUrl(href)) {
                             onSameLinkClick()

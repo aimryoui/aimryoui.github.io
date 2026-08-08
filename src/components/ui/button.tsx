@@ -2,6 +2,7 @@
 
 import NextLink from "next/link"
 
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
 import { cva, type VariantProps } from "class-variance-authority"
 import {
     Button as ButtonPrimitive,
@@ -109,6 +110,11 @@ interface ButtonFeedback {
     pressSound?: PressSoundType
 }
 
+interface TrackingData {
+    eventName: string
+    eventParams?: Record<string, string | number | boolean>
+}
+
 type ButtonProps = NativeButtonType &
     ButtonPrimitiveProps &
     ButtonVariantsType &
@@ -116,6 +122,7 @@ type ButtonProps = NativeButtonType &
         nativeButton?: boolean
         keepFeedback?: boolean
         mute?: boolean
+        tracking?: TrackingData
     }
 
 function Button({
@@ -128,6 +135,7 @@ function Button({
     hoverSound = "button",
     pressSound = "button",
     mute = false,
+    tracking,
     onPress,
     ...props
 }: ButtonProps) {
@@ -143,13 +151,27 @@ function Button({
             data-cursor="target"
             {...(!mute &&
                 (!nativeButton || keepFeedback) && {
-                    "data-sound": hoverSound,
-                    onPress: (e) => {
-                        playPressFeedback(pressSound, haptic)
-
-                        onPress?.(e)
-                    }
+                    "data-sound": hoverSound
                 })}
+            onPress={(e) => {
+                if (!mute && (!nativeButton || keepFeedback)) {
+                    playPressFeedback(pressSound, haptic)
+                }
+
+                if (tracking) {
+                    sendGAEvent(
+                        "event",
+                        tracking.eventName,
+                        tracking.eventParams ?? {}
+                    )
+                    sendGTMEvent({
+                        event: tracking.eventName,
+                        ...(tracking.eventParams ?? {})
+                    })
+                }
+
+                onPress?.(e)
+            }}
             className={cn(
                 nativeButton
                     ? [nativeButtonClassName, className]
@@ -170,6 +192,7 @@ type LinkButtonProps = LinkPrimitiveProps &
         keepFeedback?: boolean
         openInNewTab?: boolean
         mute?: boolean
+        tracking?: TrackingData
     }
 
 function LinkButton({
@@ -183,6 +206,7 @@ function LinkButton({
     hoverSound = "button",
     pressSound = "button",
     mute = false,
+    tracking,
     onPress,
     href,
     scroll = true,
@@ -206,13 +230,27 @@ function LinkButton({
             })}
             {...(!mute &&
                 (!nativeLink || keepFeedback) && {
-                    "data-sound": hoverSound,
-                    onPress: (e) => {
-                        playPressFeedback(pressSound, haptic)
-
-                        onPress?.(e)
-                    }
+                    "data-sound": hoverSound
                 })}
+            onPress={(e) => {
+                if (!mute && (!nativeLink || keepFeedback)) {
+                    playPressFeedback(pressSound, haptic)
+                }
+
+                if (tracking) {
+                    sendGAEvent(
+                        "event",
+                        tracking.eventName,
+                        tracking.eventParams ?? {}
+                    )
+                    sendGTMEvent({
+                        event: tracking.eventName,
+                        ...(tracking.eventParams ?? {})
+                    })
+                }
+
+                onPress?.(e)
+            }}
             className={cn(
                 nativeLink
                     ? [nativeButtonClassName, className]
@@ -234,5 +272,5 @@ function LinkButton({
     )
 }
 
-export type { ButtonProps, HapticVariantsType, LinkButtonProps }
+export type { ButtonProps, HapticVariantsType, LinkButtonProps, TrackingData }
 export { Button, buttonVariants, LinkButton }

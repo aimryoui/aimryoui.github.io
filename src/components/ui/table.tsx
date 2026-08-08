@@ -18,9 +18,9 @@ import {
     type TableHeaderProps,
     Table as TablePrimitive,
     type TableProps
-} from "react-aria-components/Table"
+} from "react-aria-components"
 
-import { Button } from "@/components/ui/button"
+import { Button, type TrackingData } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 function TableContainer({
@@ -131,9 +131,11 @@ function TableHead({ className, ...props }: ColumnProps) {
 function TableCell({
     className,
     spanClassName,
+    tracking,
     ...props
 }: CellProps & {
     spanClassName?: string
+    tracking?: TrackingData
 }) {
     return (
         <CellPrimitive
@@ -165,6 +167,19 @@ function TableCell({
                                 slot="chevron"
                                 nativeButton
                                 keepFeedback
+                                tracking={
+                                    tracking
+                                        ? {
+                                              eventName: tracking.eventName,
+                                              eventParams: {
+                                                  ...tracking.eventParams,
+                                                  action: isExpanded
+                                                      ? "collapse"
+                                                      : "expand"
+                                              }
+                                          }
+                                        : undefined
+                                }
                                 className={cn(
                                     "absolute inset-0 z-2 flex items-start text-muted-foreground/80 transition-[color] duration-100 dark:text-muted-foreground/50",
                                     "-my-[calc(var(--spacing-table-between)/2)] py-[calc(var(--spacing-table-between)/2)]",

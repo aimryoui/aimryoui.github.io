@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react"
 
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google"
+
 import { SectionLine } from "@/components/layout/line"
 import { Tooltip } from "@/components/ui/tooltip"
 import { useIsMounted } from "@/hooks/use-is-mounted"
@@ -65,6 +67,15 @@ function TableOfContents({ items }: TocProps) {
         },
         []
     )
+
+    useEffect(() => {
+        if (debouncedQuery && filteredItems.length === 0) {
+            const eventName = "search_toc_no_result"
+            const eventParams = { search_query: debouncedQuery }
+            sendGAEvent("event", eventName, eventParams)
+            sendGTMEvent({ event: eventName, ...eventParams })
+        }
+    }, [debouncedQuery, filteredItems.length])
 
     if (items.length === 0) return null
 

@@ -213,6 +213,24 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                         ? "Go back to Portfolio"
                                         : "Go back to Design Projects"
                                 })}
+                                tracking={{
+                                    eventName: prev
+                                        ? "navigate_category"
+                                        : "navigate_hash",
+                                    eventParams: {
+                                        category_id: prev
+                                            ? prev.id
+                                            : isSelectedWorks
+                                              ? "selected-works"
+                                              : "design-projects",
+                                        category_title: prev
+                                            ? prev.title
+                                            : isSelectedWorks
+                                              ? "Portfolio"
+                                              : "Design Projects",
+                                        direction: "backward"
+                                    }
+                                }}
                                 className={cn(
                                     "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                     {
@@ -270,6 +288,18 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 {...(!next && {
                                     label: "No more categories, contact me"
                                 })}
+                                tracking={{
+                                    eventName: next
+                                        ? "navigate_category"
+                                        : "navigate_hash",
+                                    eventParams: {
+                                        category_id: next ? next.id : "contact",
+                                        category_title: next
+                                            ? next.title
+                                            : "Contact",
+                                        direction: "forward"
+                                    }
+                                }}
                                 className={cn(
                                     "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                     {

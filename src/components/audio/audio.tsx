@@ -115,6 +115,7 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
 
 function AudioToggle({
     className,
+    onPress,
     ...props
 }: React.ComponentProps<typeof Button>) {
     const isAudioEnabled = useAudioStore((state) => state.isAudioEnabled)
@@ -179,7 +180,17 @@ function AudioToggle({
                 <Button
                     variant="outline"
                     size="icon"
-                    onPress={handleToggle}
+                    onPress={(e) => {
+                        handleToggle()
+
+                        onPress?.(e)
+                    }}
+                    tracking={{
+                        eventName: "toggle_audio",
+                        eventParams: {
+                            audio_enabled: !isAudioEnabled
+                        }
+                    }}
                     className={cn(
                         {
                             dark: "bg-input/25",

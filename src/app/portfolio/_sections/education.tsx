@@ -132,6 +132,13 @@ function Education() {
                                     openInNewTab
                                     aria-label="Go to the FPT University website"
                                     translate="no"
+                                    tracking={{
+                                        eventName: "click_education_link",
+                                        eventParams: {
+                                            institution: "FPT University HCMC",
+                                            url: "https://daihoc.fpt.edu.vn/hcm/"
+                                        }
+                                    }}
                                     className={cn(
                                         "[--space-between:calc(var(--spacing-table-between)/2)]",
                                         "group relative inline-block w-full text-base text-foreground font-wght-500",

@@ -49,7 +49,7 @@ function Contact() {
                 <span>
                     I have listed all my contact details so that{" "}
                     <strong>anyone can reach me</strong>. I am not a fan of
-                    social media, so do not judge. <br className="sm:hidden" />
+                    social media, so do not judge. <br className="md:hidden" />
                     <strong>
                         All contact methods below are used solely for
                         communication purposes
@@ -168,6 +168,13 @@ function Contact() {
                                                     pressSound="link"
                                                     openInNewTab
                                                     translate="no"
+                                                    tracking={{
+                                                        eventName: "click_contact_link",
+                                                        eventParams: {
+                                                            platform: platform.title,
+                                                            url: platform.links.url
+                                                        }
+                                                    }}
                                                     className={cn(
                                                         "[--space-between:calc(var(--spacing-table-between)/2)]",
                                                         platform.links.hidden &&

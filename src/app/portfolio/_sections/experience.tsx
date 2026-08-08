@@ -211,6 +211,16 @@ function Experience() {
                                                 md: "-ms-[calc(var(--spacing-safe-zone)*1.25/3)] mt-[calc(var(--spacing)*5)] min-w-[calc(100%+var(--spacing)*1.625*2)] pe-1",
                                                 sm: "mt-[calc(var(--spacing)*5+var(--px))]"
                                             })}
+                                            tracking={{
+                                                eventName: "toggle_experience_details",
+                                                eventParams: {
+                                                    experience_id: place.id,
+                                                    position: place.position,
+                                                    ...(place.organization?.text && {
+                                                        organization: place.organization.text
+                                                    })
+                                                }
+                                            }}
                                         >
                                             {place.organization ? (
                                                 <LinkButton
@@ -227,6 +237,13 @@ function Experience() {
                                                     pressSound="link"
                                                     openInNewTab
                                                     translate="no"
+                                                    tracking={{
+                                                        eventName: "click_experience_link",
+                                                        eventParams: {
+                                                            organization: place.organization.text,
+                                                            url: place.organization.url
+                                                        }
+                                                    }}
                                                     className={cn(
                                                         "[--space-between:calc(var(--spacing-table-between)/2)]",
                                                         "group relative z-3 inline-block text-base text-foreground font-wght-500",
