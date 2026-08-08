@@ -157,7 +157,7 @@ function PortfolioBreadcrumb({
                             )
                         }
                     >
-                        {isSelectedWorks ? "Selected Works" : "Coding Projects"}
+                        {isSelectedWorks ? "Selected Works" : "Design Projects"}
                     </BreadcrumbDropdownMenu>
                 </BreadcrumbItem>
 
