@@ -87,9 +87,14 @@ export const siteConfig = {
     analytics: {
         googleVerification: "eQWQgOEPxHImqJ2L8COXOXrRvoG51zYXxSX6OwSPyUo",
         yandexVerification: "fb6729bde7a90a52",
-        googleTagManager: "GTM-W4QDGLNW",
-        googleAnalytics: "G-WVVBY9RZ4W",
-        cloudFlareInsights: "{'token':'d03afe61bd644ac6b165fe710cece3a8'}"
+        googleTagManager: "GTM-PJNJ98HF",
+        googleAnalytics: "G-SY6F622NVD",
+        cloudFlareInsights: "{'token':'d03afe61bd644ac6b165fe710cece3a8'}",
+
+        portfolio: {
+            googleTagManager: "GTM-W4QDGLNW",
+            googleAnalytics: "G-WVVBY9RZ4W"
+        }
     }
 }
 

@@ -4,6 +4,8 @@ import { type Metadata, type Viewport } from "next"
 import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
 
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google"
+
 import { TargetCursor } from "@/components/animations/target-cursor"
 import { AudioProvider } from "@/components/audio/audio"
 import { MarginLine } from "@/components/layout/line"
@@ -289,6 +291,8 @@ export default async function RootLayout({
                     </ThemeProvider>
                 </AudioProvider>
             </body>
+            <GoogleTagManager gtmId={siteConfig.analytics.googleTagManager} />
+            <GoogleAnalytics gaId={siteConfig.analytics.googleAnalytics} />
         </html>
     )
 }

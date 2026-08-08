@@ -58,8 +58,12 @@ export default function Portfolio() {
                 <Footer />
             </main>
             {/* </ViewTransition> */}
-            <GoogleTagManager gtmId={siteConfig.analytics.googleTagManager} />
-            <GoogleAnalytics gaId={siteConfig.analytics.googleAnalytics} />
+            <GoogleTagManager
+                gtmId={siteConfig.analytics.portfolio.googleTagManager}
+            />
+            <GoogleAnalytics
+                gaId={siteConfig.analytics.portfolio.googleAnalytics}
+            />
         </>
     )
 }
