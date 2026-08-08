@@ -117,7 +117,7 @@
         "@stylistic/eslint-plugin": "^5.10.0",
         "@toolwind/anchors": "^1.0.10",
         "@types/chroma-js": "^3.1.2",
-        "@types/node": "^26.1.2",
+        "@types/node": "^26.2.0",
         "@types/react": "^19.2.18",
         "@types/react-dom": "^19.2.4",
         "babel-plugin-react-compiler": "^1.0.0",
@@ -140,7 +140,7 @@
         "postcss-load-config": "^6.0.1",
         "sharp": "^0.35.3",
         "tailwindcss": "3.4.19",
-        "tsx": "^4.23.10",
+        "tsx": "^4.23.11",
         "typescript": "^7.0.2",
         "velite": "^0.4.0"
     },

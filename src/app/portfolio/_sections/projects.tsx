@@ -33,7 +33,7 @@ function Projects({
             <SectionLine showDecoration />
 
             <Space />
-            <SectionLine />
+            <SectionLine containerClassName="z-55" />
 
             {projectGroups.map((group, groupIndex) => {
                 const isSelectedWorks = group.id === "selected-works"
@@ -52,7 +52,7 @@ function Projects({
                                         keepFeedback
                                         prefetch={false}
                                         className={cn(
-                                            "group sticky top-0 z-50 flex items-center justify-between gap-4 bg-background pe-safe-zone",
+                                            "group sticky top-0 z-50 flex flex-col items-center bg-background",
                                             {
                                                 "hover:before":
                                                     "bg-highlighted/5 transition-none",
@@ -62,27 +62,33 @@ function Projects({
                                             }
                                         )}
                                     >
-                                        <SectionTitle
-                                            id={group.id}
-                                            title={group.title}
-                                            note={group.note}
+                                        <div
                                             className={cn(
-                                                "flex-1 bg-transparent"
+                                                "flex w-full items-center justify-between gap-4 pe-safe-zone"
                                             )}
-                                        />
-                                        <ArrowRight
-                                            className={cn(
-                                                "transition-[color] duration-100",
-                                                {
-                                                    "group-hover":
-                                                        "text-highlighted transition-none",
-                                                    "group-active":
-                                                        "text-highlighted transition-none"
-                                                }
-                                            )}
-                                        />
+                                        >
+                                            <SectionTitle
+                                                id={group.id}
+                                                title={group.title}
+                                                note={group.note}
+                                                className={cn(
+                                                    "flex-1 bg-transparent"
+                                                )}
+                                            />
+                                            <ArrowRight
+                                                className={cn(
+                                                    "transition-[color] duration-100",
+                                                    {
+                                                        "group-hover":
+                                                            "text-highlighted transition-none",
+                                                        "group-active":
+                                                            "text-highlighted transition-none"
+                                                    }
+                                                )}
+                                            />
+                                        </div>
+                                        <SectionLine containerClassName="sticky top-space z-50" />
                                     </LinkButton>
-                                    <SectionLine containerClassName="sticky top-space z-50" />
                                     <ul
                                         className={cn(
                                             "grid grid-cols-5 bg-background @3xl:grid-cols-3 @md:grid-cols-2"
@@ -153,7 +159,7 @@ function Projects({
                                         keepFeedback
                                         prefetch={false}
                                         className={cn(
-                                            "group sticky top-0 z-50 flex items-center justify-between gap-4 bg-background pe-safe-zone",
+                                            "group sticky top-0 z-50 flex flex-col items-center bg-background",
                                             {
                                                 "hover:before":
                                                     "bg-highlighted/5 transition-none",
@@ -163,32 +169,38 @@ function Projects({
                                             }
                                         )}
                                     >
-                                        <SectionTitle
-                                            id={group.id}
-                                            title={group.title}
-                                            {...(isDesignProjects && {
-                                                noteId: "design-projects",
-                                                note: "Design Projects",
-                                                noteClassName:
-                                                    "lg:scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5+var(--spacing-safe-zone)*2)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem+var(--spacing-safe-zone)*2)]"
-                                            })}
+                                        <div
                                             className={cn(
-                                                "z-1 flex-1 bg-transparent"
+                                                "flex w-full items-center justify-between gap-4 pe-safe-zone"
                                             )}
-                                        />
-                                        <ArrowRight
-                                            className={cn(
-                                                "z-1 transition-[color] duration-100",
-                                                {
-                                                    "group-hover":
-                                                        "text-highlighted transition-none",
-                                                    "group-active":
-                                                        "text-highlighted transition-none"
-                                                }
-                                            )}
-                                        />
+                                        >
+                                            <SectionTitle
+                                                id={group.id}
+                                                title={group.title}
+                                                {...(isDesignProjects && {
+                                                    noteId: "design-projects",
+                                                    note: "Design Projects",
+                                                    noteClassName:
+                                                        "lg:scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5+var(--spacing-safe-zone)*2)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem+var(--spacing-safe-zone)*2)]"
+                                                })}
+                                                className={cn(
+                                                    "z-1 flex-1 bg-transparent"
+                                                )}
+                                            />
+                                            <ArrowRight
+                                                className={cn(
+                                                    "z-1 transition-[color] duration-100",
+                                                    {
+                                                        "group-hover":
+                                                            "text-highlighted transition-none",
+                                                        "group-active":
+                                                            "text-highlighted transition-none"
+                                                    }
+                                                )}
+                                            />
+                                        </div>
+                                        <SectionLine containerClassName="sticky top-space" />
                                     </LinkButton>
-                                    <SectionLine containerClassName="sticky top-space z-50" />
                                     <ul
                                         className={cn(
                                             "grid grid-cols-2 bg-background md:grid-cols-1"
@@ -250,13 +262,13 @@ function Projects({
                                     <Divider />
                                     <SectionLine />
                                     <Space />
-                                    <SectionLine />
+                                    <SectionLine containerClassName="z-55" />
                                 </>
                             ) : (
                                 <>
                                     <SectionLine />
                                     <Divider />
-                                    <SectionLine />
+                                    <SectionLine containerClassName="z-55" />
                                 </>
                             )
                         ) : (
