@@ -1,3 +1,5 @@
+"use client"
+
 import { ViewTransition } from "react"
 
 import { ArrowRight } from "@/components/icons/icons"
@@ -5,6 +7,7 @@ import { SectionLine } from "@/components/layout/line"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { H2, Highlight } from "@/components/ui/typography"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
+import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { getCategoryPath } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 
@@ -29,8 +32,11 @@ function SectionTitle({
     order,
     title,
     note,
+    onClick,
     ...props
 }: SectionTitleProps) {
+    const playPressFeedback = usePressFeedback()
+
     const Comp = link === "route" ? LinkButton : link === "hash" ? "a" : "div"
 
     return (
@@ -45,6 +51,14 @@ function SectionTitle({
                 prefetch: false
             })}
             data-cursor={link === "route" ? "target" : "ignore"}
+            {...(link === "hash" && {
+                "data-sound": "tick",
+                onClick: (e) => {
+                    playPressFeedback("link", "light")
+
+                    onClick?.(e)
+                }
+            })}
             className={cn(
                 "group sticky top-0 z-50 flex min-h-space flex-col items-center bg-background",
                 className
