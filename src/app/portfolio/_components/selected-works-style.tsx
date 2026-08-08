@@ -49,7 +49,7 @@ function SelectedWorksStyle() {
                 })
                 .join("")
 
-            ambientStyles += `#theme-${project.id}:hover,#theme-${project.id}:active{${hexRules}}@supports (color: oklab(0% 0 0%)){#theme-${project.id}:hover,#theme-${project.id}:active{${oklchRules}}}`
+            ambientStyles += `:root:where([data-effects~='ambient-colors']) #theme-${project.id}:hover,:root:where([data-effects~='ambient-colors']) #theme-${project.id}:active{${hexRules}}@supports (color: oklab(0% 0 0%)){:root:where([data-effects~='ambient-colors']) #theme-${project.id}:hover,:root:where([data-effects~='ambient-colors']) #theme-${project.id}:active{${oklchRules}}}`
         }
     })
 
