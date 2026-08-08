@@ -19,12 +19,9 @@ export default function robots(): MetadataRoute.Robots {
             {
                 userAgent: [
                     "anthropic-ai",
-                    "Applebot",
-                    "Bingbot",
                     "CCBot",
                     "Google-Extended",
-                    "GPTBot",
-                    "Twitterbot"
+                    "GPTBot"
                 ],
                 disallow: ["/"]
             }
