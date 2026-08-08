@@ -1,4 +1,4 @@
-import { SettingButton } from "@/_components/toolbar/settings-button"
+import { PreferencesButton } from "@/_components/toolbar/preferences-button"
 import { AudioToggle } from "@/components/audio/audio"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -64,7 +64,7 @@ export default function Home() {
                         <ModeToggle />
                     </li>
                     <li>
-                        <SettingButton />
+                        <PreferencesButton />
                     </li>
                 </Tooltip>
             </Space>

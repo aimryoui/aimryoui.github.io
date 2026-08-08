@@ -3,10 +3,11 @@
 import { useState } from "react"
 
 import { Ellipsis } from "@/components/icons/icons"
-import { AudioMenu } from "@/components/settings/audio-menu"
-import { EffectsMenu } from "@/components/settings/effects-menu"
-import { MediaMenu } from "@/components/settings/media-menu"
-import { MotionMenu } from "@/components/settings/motion-menu"
+import { AudioMenu } from "@/components/preferences/audio-menu"
+import { EffectsMenu } from "@/components/preferences/effects-menu"
+import { MediaMenu } from "@/components/preferences/media-menu"
+import { MotionMenu } from "@/components/preferences/motion-menu"
+import { NavigationBarPositionMenu } from "@/components/preferences/navigation-bar-position-menu"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -19,20 +20,20 @@ import {
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 
-function SettingButton() {
-    const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+function PreferencesButton() {
+    const [isPreferencesOpen, setIsPreferencesOpen] = useState(false)
 
     return (
         <DropdownMenu
             onOpenChange={(open) => {
-                setIsSettingsOpen(open)
+                setIsPreferencesOpen(open)
             }}
         >
             <TooltipTrigger
                 delay={500}
-                disabled={isSettingsOpen}
+                disabled={isPreferencesOpen}
                 payload={{
-                    content: <span>Settings</span>
+                    content: <span>Preferences</span>
                 }}
                 render={
                     <DropdownMenuTrigger
@@ -50,8 +51,9 @@ function SettingButton() {
                                 <>
                                     <DropdownMenuGroup>
                                         <DropdownMenuLabel>
-                                            Settings
+                                            Preferences
                                         </DropdownMenuLabel>
+                                        <NavigationBarPositionMenu />
                                         <AudioMenu />
                                         <MediaMenu />
                                         <MotionMenu />
@@ -70,8 +72,7 @@ function SettingButton() {
                                         </DropdownMenuLinkItem>
                                     </DropdownMenuGroup>
                                 </>
-                            ),
-                            side: "top"
+                            )
                         }}
                     >
                         <Ellipsis className="size-6" />
@@ -82,4 +83,4 @@ function SettingButton() {
     )
 }
 
-export { SettingButton }
+export { PreferencesButton }

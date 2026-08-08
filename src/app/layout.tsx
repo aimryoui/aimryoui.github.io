@@ -208,9 +208,9 @@ export default async function RootLayout({
                         // Media preferences
                         try {
                             const defaultMediaString = ${DEFAULT_MEDIA_PREFERENCES.length > 0 ? `"${DEFAULT_MEDIA_PREFERENCES.join(" ")}"` : '"null"'}
-                            const mediaSettings = localStorage.getItem("media-settings")
-                            if (mediaSettings) {
-                                const parsed = JSON.parse(mediaSettings)
+                            const mediaPreferences = localStorage.getItem("media-preferences")
+                            if (mediaPreferences) {
+                                const parsed = JSON.parse(mediaPreferences)
                                 const prefs = parsed.state.preferences
                                 htmlElement.setAttribute(
                                     "data-media",
@@ -220,7 +220,7 @@ export default async function RootLayout({
                                 htmlElement.setAttribute("data-media", defaultMediaString)
                             }
                         } catch (e) {
-                            console.error("Error getting media settings:", e)
+                            console.error("Error getting media preferences:", e)
                             htmlElement.setAttribute("data-media", ${DEFAULT_MEDIA_PREFERENCES.length > 0 ? `"${DEFAULT_MEDIA_PREFERENCES.join(" ")}"` : '"null"'})
                         }
                         // Navigation bar position

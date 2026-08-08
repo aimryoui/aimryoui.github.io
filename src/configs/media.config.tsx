@@ -9,7 +9,7 @@ const DEFAULT_MEDIA_PREFERENCES: MediaPreference[] =
     )
 
 const MEDIA_PREFERENCE_LABELS: Record<MediaPreference, string> = {
-    dim: "Dim media white point",
+    dim: "Dim white point",
     autoplay: "Auto-play media"
 }
 

@@ -143,7 +143,7 @@ function BreadcrumbLink({
                     <NextLink scroll={scroll} {...props} draggable={false}>
                         <span
                             data-cursor="lock"
-                            className={cn("px-1.25 md:py-0.5", spanClassName)}
+                            className={cn("px-1.25 py-0.5", spanClassName)}
                         >
                             {props.children}
                         </span>
@@ -197,7 +197,7 @@ function BreadcrumbPage({
         >
             <span
                 data-cursor="lock"
-                className={cn("px-1.25 md:py-0.5", spanClassName)}
+                className={cn("px-1.25 py-0.5", spanClassName)}
             >
                 {children}
             </span>
@@ -240,11 +240,10 @@ function BreadcrumbMenu({
                 ref={anchorRef}
                 data-cursor="lock"
                 className={cn(
-                    "flex items-center gap-1 pe-0.5 ps-1.25 md:py-0.5",
+                    "flex items-center gap-1 py-0.5 pe-0.5 ps-1.25",
                     {
                         "group-data-[popup-open]/breadcrumb-trigger":
-                            "text-foreground",
-                        md: "py-0.5"
+                            "text-foreground"
                     },
                     spanClassName
                 )}
@@ -290,7 +289,7 @@ function BreadcrumbMenuPage({
                 ref={anchorRef}
                 data-cursor="lock"
                 className={cn(
-                    "flex items-center gap-1 pe-0.5 ps-1.25 md:py-0.5",
+                    "flex items-center gap-1 py-0.5 pe-0.5 ps-1.25",
                     spanClassName
                 )}
             >

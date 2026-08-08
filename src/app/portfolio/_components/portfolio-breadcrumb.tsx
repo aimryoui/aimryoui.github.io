@@ -135,6 +135,17 @@ function PortfolioBreadcrumb({
                                     <DropdownMenuItem disabled>
                                         Coding Projects
                                     </DropdownMenuItem>
+                                    {projectName && (
+                                        <>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuGroup>
+                                                <DropdownMenuLinkItem href="/portfolio/selected-works">
+                                                    <ArrowLeft className="-ms-0.25 size-3" />
+                                                    Selected Works
+                                                </DropdownMenuLinkItem>
+                                            </DropdownMenuGroup>
+                                        </>
+                                    )}
                                 </DropdownMenuGroup>
                             ) : (
                                 <>

@@ -40,10 +40,11 @@ const useMediaStore = create<MediaStore>()(
                     : [...current, preference]
                 get().setPreferences(next)
             },
-            hasPreference: (preference) => get().preferences.includes(preference)
+            hasPreference: (preference) =>
+                get().preferences.includes(preference)
         }),
         {
-            name: "media-settings",
+            name: "media-preferences",
             storage: createJSONStorage(() => localStorage),
             merge: (persistedState, currentState) => {
                 const parsed = mediaStoreSchema.safeParse(persistedState)

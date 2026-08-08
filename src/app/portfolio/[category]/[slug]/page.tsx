@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
+import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
 import {
     Pagination,
@@ -12,7 +13,6 @@ import {
     PaginationNext,
     PaginationPrevious
 } from "@/components/ui/pagination"
-import { Highlight } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import {
     getCategoryPath,
@@ -23,7 +23,8 @@ import {
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/portfolio/_components/cards/project-card"
 import FlashOverlay from "@/portfolio/_components/flash-overlay"
-import { MDXContent } from "@/portfolio/_components/mdx-content"
+import { CaveatLightness } from "@/portfolio/_components/mdx/caveat"
+import { MDXContent } from "@/portfolio/_components/mdx/mdx-content"
 import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrumb"
 import ProjectHeader from "@/portfolio/_components/project-header"
 import { resolveSocialData } from "@/portfolio/_helpers/resolve-social-data"
@@ -170,6 +171,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <Divider />
                     <SectionLine />
 
+                    {project.caveat?.lightness && (
+                        <>
+                            <CaveatLightness />
+                            <SectionLine />
+                            <Divider />
+                            <SectionLine />
+                        </>
+                    )}
+
                     <MDXContent
                         code={project.code}
                         hasSocialLinks={!!socialData}
@@ -177,15 +187,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </article>
             </section>
 
-            <Space>
-                <Highlight
-                    className={cn(
-                        "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-safe-zone-vertical"
-                    )}
-                >
-                    Project ends. What&#39;s next?
-                </Highlight>
-            </Space>
+            <Note bold>Project ends. What&#39;s next?</Note>
 
             <SectionLine />
 

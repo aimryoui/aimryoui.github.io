@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react"
 
 import { gsap } from "gsap"
 
+import { minifyCss } from "@/helpers/minify-css"
 import { pxToRem } from "@/helpers/px-to-rem"
 import { useDevice } from "@/hooks/use-device"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
@@ -153,15 +154,17 @@ function TargetCursor({
         let styleEl: HTMLStyleElement | null = null
         if (hideDefaultCursor) {
             styleEl = document.createElement("style")
-            styleEl.textContent = `
+            styleEl.textContent = minifyCss(/* css */ `
                 body,
                 body *:not(
                     ${ignoreSelector}, ${ignoreSelector} *,
                     ${inputSelector}, ${inputSelector} *,
                     .pswp, .pswp *,
                     input, input *
-                ) { cursor: none; }
-            `
+                ) {
+                    cursor: none;
+                }
+            `)
             document.head.appendChild(styleEl)
         }
 
@@ -319,8 +322,6 @@ function TargetCursor({
             duration: spinDuration,
             ease: "none"
         })
-
-
 
         const tickerFn = () => {
             if (activeTarget) {
@@ -612,10 +613,7 @@ function TargetCursor({
             gsap.set(dot, { x: state.mouseX, y: state.mouseY })
             updateVisibility()
 
-            const el = document.elementFromPoint(
-                globalMouse.x,
-                globalMouse.y
-            )
+            const el = document.elementFromPoint(globalMouse.x, globalMouse.y)
             if (el) {
                 const isIgnored = ignoreSelector
                     ? el.closest(ignoreSelector) !== null

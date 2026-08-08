@@ -75,9 +75,9 @@ function SectionName({
                         "pointer-events-auto",
                         {
                             hover: "underline decoration-foreground",
-                            active: "underline decoration-foreground",
+                            active: "underline decoration-foreground decoration-solid",
                             "focus-visible":
-                                "underline decoration-foreground decoration-solid"
+                                "text-highlighted underline decoration-highlighted decoration-solid"
                         }
                     ],
                     "min-h-9 text-pretty rounded-full bg-background px-3.5 py-2 text-center font-mono text-base",

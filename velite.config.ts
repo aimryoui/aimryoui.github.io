@@ -14,6 +14,7 @@ import {
 import { TOOL_ICONS, type ToolKey } from "@/portfolio/_configs/tools"
 
 const HEX_COLOR_REGEX = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/u
+const DIM_PROP_REGEX = /<[^>]+?\bdim\b[^>]*?>/u
 
 const fileNameWithoutExt = defineSchema(() =>
     s.custom<string | undefined>().transform((value) => {
@@ -87,6 +88,18 @@ const projects = defineCollection({
                 abbreviation: s.string().optional()
             })
             .optional(),
+
+        caveat: s
+            .object({
+                lightness: s.boolean().default(false)
+            })
+            .optional()
+            .transform((value, { meta }) => {
+                if (meta.content && DIM_PROP_REGEX.test(meta.content)) {
+                    return { lightness: true, ...value }
+                }
+                return value
+            }),
 
         code: s.mdx()
     })

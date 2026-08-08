@@ -94,11 +94,17 @@ const TocGroup = memo(
                                         {
                                             dark: "bg-foreground/15",
                                             "group-hover/collapsibile-trigger":
-                                                "rounded-none bg-foreground/20 dark:bg-foreground/25",
+                                                "bg-foreground/20 data-target-cursor:rounded-none dark:bg-foreground/25",
                                             "group-active/collapsibile-trigger":
                                                 "motion-preferred:translate-y-0.5",
                                             "group-not-data-expanded/collapsible":
-                                                "bg-foreground/40 text-inverted dark:bg-foreground/60"
+                                                [
+                                                    "bg-foreground/40 text-inverted dark:bg-foreground/60",
+                                                    {
+                                                        "group-hover/collapsibile-trigger":
+                                                            "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/50"
+                                                    }
+                                                ]
                                         }
                                     )}
                                 >

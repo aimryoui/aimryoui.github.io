@@ -114,7 +114,7 @@ function About() {
                 <Tooltip>
                     {[
                         { value: "20+", label: "Clients Served" },
-                        { value: "50+", label: "Projects" },
+                        { value: "55+", label: "Projects" },
                         { value: "4+", label: "Years as a Designer" }
                     ].map((item, index, array) => (
                         <Fragment key={item.label}>

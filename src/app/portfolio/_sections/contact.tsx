@@ -2,8 +2,11 @@
 
 import { Fragment } from "react"
 
+import { CircleAlert } from "lucide-react"
+
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
+import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
 import { LinkButton } from "@/components/ui/button"
 import {
@@ -32,6 +35,29 @@ function Contact() {
                 link="hash"
                 className="sticky top-0 z-50"
             />
+            <Divider />
+            <SectionLine />
+            <Note
+                className={cn(
+                    "flex flex-col items-start justify-start text-start"
+                )}
+            >
+                <div className="mb-0.5 flex items-center gap-1 self-start">
+                    <CircleAlert className="size-4" />
+                    <strong>Disclaimer:</strong>
+                </div>
+                <span>
+                    I have listed all my contact details so that{" "}
+                    <strong>anyone can reach me</strong>. I am not a fan of
+                    social media, so do not judge. <br className="sm:hidden" />
+                    <strong>
+                        All contact methods below are used solely for
+                        communication purposes
+                    </strong>
+                    .
+                </span>
+            </Note>
+            <SectionLine />
             <Divider />
             <SectionLine />
             <address>

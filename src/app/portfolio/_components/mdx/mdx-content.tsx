@@ -7,6 +7,7 @@ import {
     MediaFrameContent,
     type MediaFrameProps
 } from "@/components/layout/media-frame"
+import { Note } from "@/components/layout/note"
 import { Gif } from "@/components/media/gif"
 import { Image } from "@/components/media/image"
 import { Video } from "@/components/media/video"
@@ -20,6 +21,7 @@ const sharedComponents = {
     Carousel,
     CarouselItem,
     CarouselImage,
+    Note,
     Masonry,
     MediaFrame,
     MediaFrameContent,
@@ -39,7 +41,7 @@ interface MDXModule {
 
 type MDXFactory = (r: typeof runtime) => MDXModule
 
-const useMDXComponent = (code: string) => {
+function useMDXComponent(code: string) {
     const fn = new Function(code) as MDXFactory
     return fn({ ...runtime }).default
 }
@@ -50,7 +52,7 @@ interface MDXProps {
     hasSocialLinks?: MediaFrameProps["hasSocialLinks"]
 }
 
-const MDXContent = ({ code, components, hasSocialLinks }: MDXProps) => {
+function MDXContent({ code, components, hasSocialLinks }: MDXProps) {
     const Component = useMDXComponent(code)
 
     const customComponents = {

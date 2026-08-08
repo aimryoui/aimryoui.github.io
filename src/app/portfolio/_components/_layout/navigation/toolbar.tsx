@@ -1,5 +1,6 @@
 "use client"
 
+import { PreferencesButton } from "@/_components/toolbar/preferences-button"
 import { AudioToggle } from "@/components/audio/audio"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
@@ -11,7 +12,6 @@ import { siteConfig } from "@/configs/site.config"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import { MobileTocButton } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
-import { SettingButton } from "@/portfolio/_components/_layout/toolbar/settings-button"
 
 import { projects } from "~/.velite"
 
@@ -121,7 +121,7 @@ function Toolbar({ className }: { className?: string }) {
                             <ModeToggle />
                         </li>
                         <li>
-                            <SettingButton />
+                            <PreferencesButton />
                         </li>
                         {isMobile && (
                             <li
