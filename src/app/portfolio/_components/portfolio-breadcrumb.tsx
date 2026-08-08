@@ -184,15 +184,21 @@ function PortfolioBreadcrumb({
                                                 </DropdownMenuLinkItem>
                                             ))}
                                     </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuLinkItem
-                                            href={getCategoryPath(category)}
-                                        >
-                                            <ArrowLeft className="-ms-0.25 size-3" />
-                                            {categoryTitle}
-                                        </DropdownMenuLinkItem>
-                                    </DropdownMenuGroup>
+                                    {!!projectName && (
+                                        <>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuGroup>
+                                                <DropdownMenuLinkItem
+                                                    href={getCategoryPath(
+                                                        category
+                                                    )}
+                                                >
+                                                    <ArrowLeft className="-ms-0.25 size-3" />
+                                                    {categoryTitle}
+                                                </DropdownMenuLinkItem>
+                                            </DropdownMenuGroup>
+                                        </>
+                                    )}
                                 </>
                             }
                         >
