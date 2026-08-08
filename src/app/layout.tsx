@@ -17,7 +17,7 @@ import { TooltipProvider } from "@/components/ui/tooltip"
 import { DEFAULT_EFFECTS } from "@/configs/effects.config"
 import { DEFAULT_MEDIA_PREFERENCES } from "@/configs/media.config"
 import { siteConfig } from "@/configs/site.config"
-import { minifyScript } from "@/helpers/minify-script"
+import { minifyJs } from "@/helpers/minify-js"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/providers/theme-provider"
 
@@ -146,7 +146,7 @@ const sfMono = localFont({
     variable: "--font-sf-mono"
 })
 
-export default function RootLayout({
+export default async function RootLayout({
     children
 }: Readonly<{
     children: React.ReactNode
@@ -166,7 +166,7 @@ export default function RootLayout({
             <head>
                 <script
                     dangerouslySetInnerHTML={{
-                        __html: minifyScript(/* js */ `
+                        __html: await minifyJs(/* js */ `
                         const htmlElement = document.documentElement
                         // Platform detection
                         htmlElement.setAttribute("data-platform",
