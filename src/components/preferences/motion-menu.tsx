@@ -25,20 +25,20 @@ const MOTION_PREFERENCES: Record<MotionPreference, MotionPreferenceConfig> = {
         value: "preferred",
         label: "Preferred",
         description:
-            "Enable all motion effects, ignore system motion preferences",
+            "Enable all motion effects, ignore system motion preferences.",
         icon: <ThumbsUp />
     },
     reduced: {
         value: "reduced",
         label: "Reduced",
         description:
-            "Reduce motion effects that may be problematic for some users",
+            "Reduce motion effects that may be problematic for some users.",
         icon: <OctagonMinus />
     },
     system: {
         value: "system",
         label: "Follow system",
-        description: "Follow system motion preferences",
+        description: "Follow system motion preferences.",
         icon: <System className="size-4.5" />
     }
 }

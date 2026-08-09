@@ -7,8 +7,8 @@ type Effect = (typeof AVAILABLE_EFFECTS)[number]
 
 const DISABLED_BY_DEFAULT: Effect[] = []
 
-const DEFAULT_EFFECTS: Effect[] = AVAILABLE_EFFECTS.filter(
+const DEFAULT_EFFECTS_PREFERENCES: Effect[] = AVAILABLE_EFFECTS.filter(
     (effect) => !DISABLED_BY_DEFAULT.includes(effect)
 )
 
-export { AVAILABLE_EFFECTS, DEFAULT_EFFECTS, type Effect }
+export { AVAILABLE_EFFECTS, DEFAULT_EFFECTS_PREFERENCES, type Effect }

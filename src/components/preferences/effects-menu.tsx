@@ -1,7 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
-
 import { sendGAEvent } from "@next/third-parties/google"
 import {
     MousePointerClick,
@@ -64,22 +62,10 @@ const EFFECTS: Record<Effect, EffectConfig> = {
 function EffectsMenu() {
     const effects = useEffectsStore((state) => state.effects)
     const toggleEffect = useEffectsStore((state) => state.toggleEffect)
-    const setEffects = useEffectsStore((state) => state.setEffects)
 
-    const device = useDevice()
+    const isTouchDevice = useDevice()
     const isLg = useMediaQuery("lg")
     const reduceMotion = useReducedMotion()
-
-    useEffect(() => {
-        const disableCtx = { device, isLg, reduceMotion }
-        const nextEffects = effects.filter(
-            (effect) => !EFFECTS[effect].shouldDisable?.(disableCtx)
-        )
-
-        if (nextEffects.length !== effects.length) {
-            setEffects(nextEffects)
-        }
-    }, [device, isLg, reduceMotion, effects, setEffects])
 
     return (
         <DropdownMenuSub>
@@ -100,7 +86,7 @@ function EffectsMenu() {
                             sendGAEvent("event", eventName, eventParams)
                         }}
                         disabled={EFFECTS[effect].shouldDisable?.({
-                            device,
+                            device: isTouchDevice,
                             isLg,
                             reduceMotion
                         })}

@@ -16,7 +16,7 @@ import {
 } from "@/components/media/svg-filter"
 import { ProgressRouteProvider } from "@/components/ui/progress"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { DEFAULT_EFFECTS } from "@/configs/effects.config"
+import { DEFAULT_EFFECTS_PREFERENCES } from "@/configs/effects.config"
 import { DEFAULT_MEDIA_PREFERENCES } from "@/configs/media.config"
 import { siteConfig } from "@/configs/site.config"
 import { minifyJs } from "@/helpers/minify-js"
@@ -191,7 +191,7 @@ export default async function RootLayout({
                         }
                         // Effects preferences
                         try {
-                            const defaultEffectsString = ${DEFAULT_EFFECTS.length > 0 ? `"${DEFAULT_EFFECTS.join(" ")}"` : '"null"'}
+                            const defaultEffectsString = ${DEFAULT_EFFECTS_PREFERENCES.length > 0 ? `"${DEFAULT_EFFECTS_PREFERENCES.join(" ")}"` : '"null"'}
                             const effectsPreference = localStorage.getItem("effects-preference")
                             if (effectsPreference) {
                                 const parsed = JSON.parse(effectsPreference)
@@ -205,7 +205,7 @@ export default async function RootLayout({
                             }
                         } catch (e) {
                             console.error("Error getting effects preference:", e)
-                            htmlElement.setAttribute("data-effects", ${DEFAULT_EFFECTS.length > 0 ? `"${DEFAULT_EFFECTS.join(" ")}"` : '"null"'})
+                            htmlElement.setAttribute("data-effects", ${DEFAULT_EFFECTS_PREFERENCES.length > 0 ? `"${DEFAULT_EFFECTS_PREFERENCES.join(" ")}"` : '"null"'})
                         }
                         // Media preferences
                         try {

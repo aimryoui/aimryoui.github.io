@@ -2,8 +2,11 @@ import { z } from "zod"
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
 
-const motionPreferenceSchema = z.enum(["system", "preferred", "reduced"])
-type MotionPreference = z.infer<typeof motionPreferenceSchema>
+import {
+    DEFAULT_MOTION_PREFERENCES,
+    type MotionPreference,
+    motionPreferenceSchema
+} from "@/configs/motion.config"
 
 const motionStoreSchema = z.object({
     preference: motionPreferenceSchema
@@ -17,7 +20,7 @@ interface MotionStore {
 const useMotionStore = create<MotionStore>()(
     persist(
         (set) => ({
-            preference: "system",
+            preference: DEFAULT_MOTION_PREFERENCES,
             setPreference: (preference) => {
                 set({ preference })
                 if (typeof document !== "undefined") {

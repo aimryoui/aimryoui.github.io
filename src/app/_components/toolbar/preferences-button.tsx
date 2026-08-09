@@ -7,6 +7,10 @@ import { AudioMenu } from "@/components/preferences/audio-menu"
 import { EffectsMenu } from "@/components/preferences/effects-menu"
 import { MediaMenu } from "@/components/preferences/media-menu"
 import { MotionMenu } from "@/components/preferences/motion-menu"
+import {
+    ResetMenuItem,
+    ResetPreferenceAlertDialog
+} from "@/components/preferences/reset-menu-item"
 import { SourceCodeMenu } from "@/components/preferences/source-code-menu"
 import { Button } from "@/components/ui/button"
 import {
@@ -21,59 +25,71 @@ import { cn } from "@/lib/utils"
 
 function PreferencesButton() {
     const [isPreferencesOpen, setIsPreferencesOpen] = useState(false)
+    const [isResetDialogOpen, setIsResetDialogOpen] = useState(false)
 
     return (
-        <DropdownMenu
-            onOpenChange={(open) => {
-                setIsPreferencesOpen(open)
-            }}
-        >
-            <TooltipTrigger
-                delay={500}
-                disabled={isPreferencesOpen}
-                payload={{
-                    content: <span>Preferences</span>
+        <>
+            <DropdownMenu
+                onOpenChange={(open) => {
+                    setIsPreferencesOpen(open)
                 }}
-                render={
-                    <DropdownMenuTrigger
-                        render={
-                            <Button
-                                size="icon"
-                                variant="outline"
-                                className={cn({
-                                    dark: "bg-input/25"
-                                })}
-                            />
-                        }
-                        payload={{
-                            content: (
-                                <>
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuLabel>
-                                            Preferences
-                                        </DropdownMenuLabel>
-                                        <AudioMenu />
-                                        <MediaMenu />
-                                        <MotionMenu />
-                                        <EffectsMenu />
-                                    </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuLabel>
-                                            About
-                                        </DropdownMenuLabel>
-                                        <SourceCodeMenu />
-                                    </DropdownMenuGroup>
-                                </>
-                            ),
-                            side: "top"
-                        }}
-                    >
-                        <Ellipsis className="size-6" />
-                    </DropdownMenuTrigger>
-                }
+            >
+                <TooltipTrigger
+                    delay={500}
+                    disabled={isPreferencesOpen}
+                    payload={{
+                        content: <span>Preferences</span>
+                    }}
+                    render={
+                        <DropdownMenuTrigger
+                            render={
+                                <Button
+                                    size="icon"
+                                    variant="outline"
+                                    className={cn({
+                                        dark: "bg-input/25"
+                                    })}
+                                />
+                            }
+                            payload={{
+                                content: (
+                                    <>
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuLabel>
+                                                Preferences
+                                            </DropdownMenuLabel>
+                                            <AudioMenu />
+                                            <MediaMenu />
+                                            <MotionMenu />
+                                            <EffectsMenu />
+                                            <ResetMenuItem
+                                                onClick={() => {
+                                                    setIsResetDialogOpen(true)
+                                                }}
+                                            />
+                                        </DropdownMenuGroup>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuLabel>
+                                                About
+                                            </DropdownMenuLabel>
+                                            <SourceCodeMenu />
+                                        </DropdownMenuGroup>
+                                    </>
+                                ),
+                                side: "top"
+                            }}
+                        >
+                            <Ellipsis className="size-6" />
+                        </DropdownMenuTrigger>
+                    }
+                />
+            </DropdownMenu>
+            <ResetPreferenceAlertDialog
+                open={isResetDialogOpen}
+                onOpenChange={setIsResetDialogOpen}
             />
-        </DropdownMenu>
+        </>
     )
 }
 

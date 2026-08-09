@@ -2,7 +2,7 @@ import { z } from "zod"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
-const audioModeSchema = z.enum(["manual", "auto"])
+import { audioModeSchema, DEFAULT_AUDIO_PREFERENCES } from "@/configs/audio.config"
 
 const audioStoreSchema = z.object({
     audioMode: audioModeSchema
@@ -20,8 +20,8 @@ interface AudioState {
 const useAudioStore = create<AudioState>()(
     persist(
         (set) => ({
-            isAudioEnabled: false,
-            audioMode: "manual",
+            isAudioEnabled: DEFAULT_AUDIO_PREFERENCES.isAudioEnabled,
+            audioMode: DEFAULT_AUDIO_PREFERENCES.audioMode,
             hasManuallyToggled: false,
             toggleAudio: () => {
                 set((state) => ({

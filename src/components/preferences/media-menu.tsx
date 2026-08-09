@@ -1,7 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
-
 import { sendGAEvent } from "@next/third-parties/google"
 import { ImagePlay, Images, Sunset } from "lucide-react"
 
@@ -45,20 +43,8 @@ const MEDIA_PREFERENCES: Record<MediaPreference, MediaPreferenceConfig> = {
 function MediaMenu() {
     const preferences = useMediaStore((state) => state.preferences)
     const togglePreference = useMediaStore((state) => state.togglePreference)
-    const setPreferences = useMediaStore((state) => state.setPreferences)
 
     const reduceMotion = useReducedMotion()
-
-    useEffect(() => {
-        const nextPreferences = preferences.filter(
-            (preference) =>
-                !MEDIA_PREFERENCES[preference].shouldDisable?.(reduceMotion)
-        )
-
-        if (nextPreferences.length !== preferences.length) {
-            setPreferences(nextPreferences)
-        }
-    }, [reduceMotion, preferences, setPreferences])
 
     return (
         <DropdownMenuSub>

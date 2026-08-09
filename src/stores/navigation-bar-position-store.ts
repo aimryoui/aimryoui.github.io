@@ -2,8 +2,14 @@ import { z } from "zod"
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
 
-const sidebarPositionSchema = z.enum(["left", "right"])
-type SidebarPosition = z.infer<typeof sidebarPositionSchema>
+import {
+    DEFAULT_SIDEBAR_PREFERENCES,
+    DEFAULT_TOOLBAR_PREFERENCES,
+    type SidebarPosition,
+    sidebarPositionSchema,
+    type ToolbarPosition,
+    toolbarPositionSchema
+} from "@/configs/navigation.config"
 
 const sidebarStoreSchema = z.object({
     position: sidebarPositionSchema
@@ -17,7 +23,7 @@ interface SidebarPositionStore {
 const useSidebarPositionStore = create<SidebarPositionStore>()(
     persist(
         (set) => ({
-            position: "left",
+            position: DEFAULT_SIDEBAR_PREFERENCES,
             setPosition: (position) => {
                 set({ position })
 
@@ -43,9 +49,6 @@ const useSidebarPositionStore = create<SidebarPositionStore>()(
     )
 )
 
-const toolbarPositionSchema = z.enum(["top", "bottom"])
-type ToolbarPosition = z.infer<typeof toolbarPositionSchema>
-
 const toolbarStoreSchema = z.object({
     position: toolbarPositionSchema
 })
@@ -58,7 +61,7 @@ interface ToolbarPositionStore {
 const useToolbarPositionStore = create<ToolbarPositionStore>()(
     persist(
         (set) => ({
-            position: "bottom",
+            position: DEFAULT_TOOLBAR_PREFERENCES,
             setPosition: (position) => {
                 set({ position })
 

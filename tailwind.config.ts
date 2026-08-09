@@ -459,9 +459,14 @@ export default {
                 "&:where([data-motion=reduced], [data-motion=reduced] *)"
             ])
             AVAILABLE_EFFECTS.forEach((effect) => {
+                const isTargetCursor = effect === "target-cursor"
+                const excludeFalseCursor = isTargetCursor
+                    ? ":not([data-cursor='false']):not([data-cursor='false'] *)"
+                    : ""
+
                 addVariant(`data-${effect}`, [
-                    `@media (prefers-reduced-motion: no-preference) { &:where([data-motion=system], [data-motion=system] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *) }`,
-                    `&:where([data-motion=preferred], [data-motion=preferred] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *)`
+                    `@media (prefers-reduced-motion: no-preference) { &:where([data-motion=system], [data-motion=system] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *)${excludeFalseCursor} }`,
+                    `&:where([data-motion=preferred], [data-motion=preferred] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *)${excludeFalseCursor}`
                 ])
             })
             addVariant("starting", ["@starting-style"])

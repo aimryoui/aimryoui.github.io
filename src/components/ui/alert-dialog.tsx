@@ -77,7 +77,7 @@ function AlertDialogContent({
                         before: [
                             "pointer-events-none absolute -inset-4 -z-20 bg-[repeating-linear-gradient(315deg,var(--color-pattern)_0,var(--color-pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]",
                             {
-                                dark: "-inset-4.5 bg-background"
+                                dark: "bg-background"
                             }
                         ],
                         after: [

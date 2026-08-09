@@ -4,7 +4,9 @@ import {
     createContext,
     Fragment,
     isValidElement,
+    useCallback,
     useContext,
+    useMemo,
     useState
 } from "react"
 import NextLink from "next/link"
@@ -290,7 +292,7 @@ function DropdownMenuItem({
                 onClick?.(e)
             }}
             className={cn(
-                "group/dropdown-menu-item relative flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "group/dropdown-menu-item relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
@@ -313,9 +315,61 @@ function DropdownMenuItem({
     )
 }
 
-function DropdownMenuSub({ ...props }: MenuPrimitive.SubmenuRoot.Props) {
+const DropdownMenuSubContext = createContext<{
+    open: boolean
+    setOpen: (open: boolean) => void
+} | null>(null)
+
+function DropdownMenuSub({
+    open: openProp,
+    onOpenChange,
+    ...props
+}: MenuPrimitive.SubmenuRoot.Props) {
+    const [internalOpen, setInternalOpen] = useState(false)
+    const open = openProp ?? internalOpen
+
+    const handleBaseUIOpenChange = useCallback(
+        (
+            newOpen: boolean,
+            eventDetails: MenuPrimitive.SubmenuRoot.ChangeEventDetails
+        ) => {
+            if (eventDetails.reason === "trigger-press") {
+                return
+            }
+
+            setInternalOpen(newOpen)
+            onOpenChange?.(newOpen, eventDetails)
+        },
+        [onOpenChange]
+    )
+
+    const forceSetOpen = useCallback(
+        (newOpen: boolean) => {
+            setInternalOpen(newOpen)
+            if (onOpenChange) {
+                onOpenChange(
+                    newOpen,
+                    undefined as unknown as MenuPrimitive.SubmenuRoot.ChangeEventDetails
+                )
+            }
+        },
+        [onOpenChange]
+    )
+
+    const contextValue = useMemo(
+        () => ({ open, setOpen: forceSetOpen }),
+        [open, forceSetOpen]
+    )
+
     return (
-        <MenuPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />
+        <DropdownMenuSubContext.Provider value={contextValue}>
+            <MenuPrimitive.SubmenuRoot
+                data-slot="dropdown-menu-sub"
+                open={open}
+                onOpenChange={handleBaseUIOpenChange}
+                {...props}
+            />
+        </DropdownMenuSubContext.Provider>
     )
 }
 
@@ -329,6 +383,7 @@ function DropdownMenuSubTrigger({
     inset?: boolean
 }) {
     const playPressFeedback = usePressFeedback()
+    const context = useContext(DropdownMenuSubContext)
 
     return (
         <MenuPrimitive.SubmenuTrigger
@@ -338,6 +393,9 @@ function DropdownMenuSubTrigger({
             delay={0}
             onClick={(e) => {
                 playPressFeedback("button")
+                if (context) {
+                    context.setOpen(!context.open)
+                }
                 onClick?.(e)
             }}
             className={cn(

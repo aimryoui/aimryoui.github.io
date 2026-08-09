@@ -4,7 +4,7 @@ import { createJSONStorage, persist } from "zustand/middleware"
 
 import {
     AVAILABLE_EFFECTS,
-    DEFAULT_EFFECTS,
+    DEFAULT_EFFECTS_PREFERENCES,
     type Effect
 } from "@/configs/effects.config"
 
@@ -23,7 +23,7 @@ interface EffectsStore {
 const useEffectsStore = create<EffectsStore>()(
     persist(
         (set, get) => ({
-            effects: DEFAULT_EFFECTS,
+            effects: DEFAULT_EFFECTS_PREFERENCES,
             setEffects: (effects) => {
                 set({ effects })
                 if (typeof document !== "undefined") {

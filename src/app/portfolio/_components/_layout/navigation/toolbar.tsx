@@ -61,7 +61,9 @@ function Toolbar({ className }: { className?: string }) {
                                 hoverSound="tick"
                                 pressSound="link"
                                 scroll={false}
-                                className={cn("group flex items-center gap-3")}
+                                className={cn(
+                                    "group flex items-center gap-[calc(var(--spacing-safe-zone)/2)]"
+                                )}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
