@@ -84,8 +84,9 @@ export const metadata: Metadata = {
     verification: {
         google: siteConfig.analytics.googleVerification,
         yandex: siteConfig.analytics.yandexVerification,
+        me: [siteConfig.email.work, APP_BASE_URL],
         other: {
-            me: [siteConfig.email.work, APP_BASE_URL]
+            bing: siteConfig.analytics.bingVerification
         }
     },
     openGraph: {

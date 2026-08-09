@@ -9,10 +9,11 @@ export default function robots(): MetadataRoute.Robots {
         rules: [
             {
                 userAgent: "*",
+                allow: ["/"],
                 disallow: ["/private/"]
             },
             {
-                userAgent: "Googlebot",
+                userAgent: ["Googlebot", "Bingbot", "Applebot"],
                 allow: ["/"],
                 disallow: "/private/"
             },
