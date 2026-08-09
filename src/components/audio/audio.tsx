@@ -40,21 +40,25 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
         }
 
         const options = { once: true, passive: true, capture: true }
+        const interactionEvents = [
+            "pointerup",
+            "touchend",
+            "click",
+            "keydown"
+        ]
 
-        window.addEventListener("pointerdown", handleFirstInteraction, options)
-        window.addEventListener("keydown", handleFirstInteraction, options)
+        interactionEvents.forEach((event) => {
+            window.addEventListener(event, handleFirstInteraction, options)
+        })
 
         return () => {
-            window.removeEventListener(
-                "pointerdown",
-                handleFirstInteraction,
-                options
-            )
-            window.removeEventListener(
-                "keydown",
-                handleFirstInteraction,
-                options
-            )
+            interactionEvents.forEach((event) => {
+                window.removeEventListener(
+                    event,
+                    handleFirstInteraction,
+                    options
+                )
+            })
         }
     }, [audioMode, isAudioEnabled, hasManuallyToggled, setIsAudioEnabled])
 

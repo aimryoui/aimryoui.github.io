@@ -35,7 +35,7 @@ const AUDIO_PREFERENCES: Record<
         value: "auto",
         label: "Auto",
         description:
-            "Automatically capture first global press interaction and turn on sound effects.",
+            "Automatically capture first global interaction and turn on sound effects.",
         icon: <Loader />
     }
 }
