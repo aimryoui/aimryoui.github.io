@@ -16,6 +16,8 @@ interface EffectConfig {
     icon?: React.ReactNode
 }
 
+const MENU_NAME = "Visual effects"
+
 const EFFECTS: Record<Effect, EffectConfig> = {
     "target-cursor": {
         label: "Target cursor",
@@ -39,7 +41,7 @@ function EffectsMenu() {
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
                 <Sparkles />
-                Effects
+                {MENU_NAME}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 {AVAILABLE_EFFECTS.map((effect) => (

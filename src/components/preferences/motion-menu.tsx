@@ -1,5 +1,5 @@
 import { sendGAEvent } from "@next/third-parties/google"
-import { FileStack, OctagonMinus, ThumbsUp } from "lucide-react"
+import { OctagonMinus, SquareStack, ThumbsUp } from "lucide-react"
 
 import { System } from "@/components/icons/icons"
 import {
@@ -11,6 +11,38 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { type MotionPreference, useMotionStore } from "@/stores/motion-store"
 
+interface MotionPreferenceConfig {
+    value: MotionPreference
+    label: string
+    description: React.ReactNode
+    icon?: React.ReactNode
+}
+
+const MENU_NAME = "Motion"
+
+const MOTION_PREFERENCES: Record<MotionPreference, MotionPreferenceConfig> = {
+    preferred: {
+        value: "preferred",
+        label: "Preferred",
+        description:
+            "Enable all motion effects, ignore system motion preferences",
+        icon: <ThumbsUp />
+    },
+    reduced: {
+        value: "reduced",
+        label: "Reduced",
+        description:
+            "Reduce motion effects that may be problematic for some users",
+        icon: <OctagonMinus />
+    },
+    system: {
+        value: "system",
+        label: "Follow system",
+        description: "Follow system motion preferences",
+        icon: <System className="size-4.5" />
+    }
+}
+
 function MotionMenu() {
     const motionPreference = useMotionStore((state) => state.preference)
     const setMotionPreference = useMotionStore((state) => state.setPreference)
@@ -18,7 +50,7 @@ function MotionMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <FileStack />
+                <SquareStack />
                 Motion
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
@@ -32,22 +64,22 @@ function MotionMenu() {
                         sendGAEvent("event", eventName, eventParams)
                     }}
                 >
-                    <DropdownMenuRadioItem value="preferred" closeOnClick>
-                        <ThumbsUp />
-                        Preferred
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="reduced" closeOnClick>
-                        <OctagonMinus />
-                        Reduced
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="system" closeOnClick>
-                        <System className="size-4.5" />
-                        Follow system
-                    </DropdownMenuRadioItem>
+                    {Object.values(MOTION_PREFERENCES).map((preference) => (
+                        <DropdownMenuRadioItem
+                            key={preference.value}
+                            value={preference.value}
+                            closeOnClick
+                            description={preference.description}
+                            srOnlyDescription
+                        >
+                            {preference.icon}
+                            {preference.label}
+                        </DropdownMenuRadioItem>
+                    ))}
                 </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
         </DropdownMenuSub>
     )
 }
 
-export { MotionMenu }
+export { MENU_NAME, MOTION_PREFERENCES, MotionMenu }

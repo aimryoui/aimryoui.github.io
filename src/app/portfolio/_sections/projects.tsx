@@ -4,8 +4,8 @@ import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
+import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
-import { Highlight } from "@/components/ui/typography"
 import { getProjectPath, groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/portfolio/_components/cards/project-card"
@@ -166,16 +166,10 @@ function Projects({
                                     <SectionLine />
                                     <Divider />
                                     <SectionLine showDecoration />
-                                    <Space>
-                                        <Highlight
-                                            className={cn(
-                                                "grid size-full place-items-center bg-highlighted/10 px-safe-zone py-safe-zone-vertical"
-                                            )}
-                                        >
-                                            Below is almost all of my design
-                                            projects.
-                                        </Highlight>
-                                    </Space>
+                                    <Note bold>
+                                        Below is almost all of my design
+                                        projects.
+                                    </Note>
                                     <SectionLine showDecoration />
                                     <Divider />
                                     <SectionLine />

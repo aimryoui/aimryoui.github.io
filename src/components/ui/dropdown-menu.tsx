@@ -145,12 +145,14 @@ function DropdownMenuContent({
                 data-cursor="target"
                 anchor={anchor ?? undefined}
                 className={cn(
-                    "group/dropdown-menu-positioner z-80 h-[--positioner-height] w-[--positioner-width] max-w-[--available-width] cursor-auto outline-none",
+                    "group/dropdown-menu-positioner z-80 h-[--positioner-height] w-[--positioner-width] max-w-53 cursor-auto outline-none",
                     isSubMenu && "mt-px",
                     {
                         "motion-preferred":
                             "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
-                        "data-instant": "transition-none"
+                        "data-instant": "transition-none",
+
+                        sm: "max-w-[--available-width]"
                     }
                 )}
                 align={align}
@@ -339,7 +341,7 @@ function DropdownMenuSubTrigger({
                 onClick?.(e)
             }}
             className={cn(
-                "flex cursor-default select-none items-center gap-1.5 rounded-lg py-2 pe-2 ps-3 text-sm outline-hidden",
+                "flex cursor-default select-none items-center gap-1.5 rounded-lg py-2 pe-2.5 ps-3 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-open":
@@ -392,16 +394,22 @@ function DropdownMenuLinkItem({
     className,
     children,
     href,
+    description,
+    srOnlyDescription,
     openInNewTab,
     inset,
     onClick,
     ...props
 }: Omit<MenuPrimitive.LinkItem.Props, "href"> &
     Pick<React.ComponentProps<typeof NextLink>, "href"> & {
+        description?: React.ReactNode
+        srOnlyDescription?: boolean
         openInNewTab?: boolean
         inset?: boolean
     }) {
     const playPressFeedback = usePressFeedback()
+
+    const Comp = description ? "div" : Fragment
 
     return (
         <MenuPrimitive.LinkItem
@@ -414,7 +422,7 @@ function DropdownMenuLinkItem({
             }}
             className={cn(
                 "relative flex cursor-pointer select-none items-center gap-1.5 text-nowrap rounded-lg py-2 text-sm outline-hidden",
-                openInNewTab ? "pe-8 ps-3" : "px-3",
+                openInNewTab && !description ? "pe-10 ps-3" : "px-3",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
@@ -435,15 +443,41 @@ function DropdownMenuLinkItem({
             }
             {...props}
         >
-            {openInNewTab && (
-                <span
-                    data-slot="dropdown-menu-link-item-indicator"
-                    className="pointer-events-none absolute right-2 flex items-center justify-center"
+            <Comp
+                {...(description && {
+                    className: "flex flex-col gap-y-0.5"
+                })}
+            >
+                <Comp
+                    {...(description && {
+                        className: cn(
+                            "flex items-center gap-1.5",
+                            openInNewTab && "pe-10"
+                        )
+                    })}
                 >
-                    <ArrowUpRight className="size-4" />
-                </span>
-            )}
-            {children}
+                    {children}
+                    {openInNewTab && (
+                        <span
+                            data-slot="dropdown-menu-link-item-indicator"
+                            className="pointer-events-none absolute right-2.75 flex items-center justify-center"
+                        >
+                            <ArrowUpRight className="size-4" />
+                        </span>
+                    )}
+                </Comp>
+                {description && (
+                    <span
+                        className={cn(
+                            "text-wrap text-xs text-muted-foreground",
+                            srOnlyDescription && "sr-only"
+                        )}
+                        data-slot="dropdown-menu-link-item-description"
+                    >
+                        {description}
+                    </span>
+                )}
+            </Comp>
         </MenuPrimitive.LinkItem>
     )
 }
@@ -452,13 +486,15 @@ function DropdownMenuCheckboxItem({
     className,
     children,
     description,
+    srOnlyDescription,
     checked,
     inset,
     onClick,
     ...props
 }: MenuPrimitive.CheckboxItem.Props & {
-    inset?: boolean
     description?: React.ReactNode
+    srOnlyDescription?: boolean
+    inset?: boolean
 }) {
     const playPressFeedback = usePressFeedback()
 
@@ -475,7 +511,7 @@ function DropdownMenuCheckboxItem({
             }}
             className={cn(
                 "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
-                !description && "pe-9.5",
+                !description && "pe-10",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
@@ -495,7 +531,7 @@ function DropdownMenuCheckboxItem({
             >
                 <Comp
                     {...(description && {
-                        className: "flex gap-1.5 items-center pe-9.5"
+                        className: "flex gap-1.5 items-center pe-10"
                     })}
                 >
                     {children}
@@ -510,7 +546,10 @@ function DropdownMenuCheckboxItem({
                 </Comp>
                 {description && (
                     <span
-                        className="text-xs text-muted-foreground"
+                        className={cn(
+                            "text-xs text-muted-foreground",
+                            srOnlyDescription && "sr-only"
+                        )}
                         data-slot="dropdown-menu-checkbox-item-description"
                     >
                         {description}
@@ -534,12 +573,14 @@ function DropdownMenuRadioItem({
     className,
     children,
     description,
+    srOnlyDescription,
     inset,
     onClick,
     ...props
 }: MenuPrimitive.RadioItem.Props & {
-    inset?: boolean
     description?: React.ReactNode
+    srOnlyDescription?: boolean
+    inset?: boolean
 }) {
     const playPressFeedback = usePressFeedback()
 
@@ -556,7 +597,7 @@ function DropdownMenuRadioItem({
             }}
             className={cn(
                 "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
-                !description && "pe-9.5",
+                !description && "pe-10",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
@@ -575,7 +616,7 @@ function DropdownMenuRadioItem({
             >
                 <Comp
                     {...(description && {
-                        className: "flex gap-1.5 items-center pe-9.5"
+                        className: "flex gap-1.5 items-center pe-10"
                     })}
                 >
                     {children}
@@ -590,7 +631,10 @@ function DropdownMenuRadioItem({
                 </Comp>
                 {description && (
                     <span
-                        className="text-xs text-muted-foreground"
+                        className={cn(
+                            "text-xs text-muted-foreground",
+                            srOnlyDescription && "sr-only"
+                        )}
                         data-slot="dropdown-menu-radio-item-description"
                     >
                         {description}

@@ -1,6 +1,10 @@
 import { FileExclamationPoint } from "lucide-react"
 
 import { Note } from "@/components/layout/note"
+import {
+    MEDIA_PREFERENCES,
+    MENU_NAME
+} from "@/components/preferences/media-menu"
 import { cn } from "@/lib/utils"
 
 function CaveatLightness() {
@@ -16,9 +20,11 @@ function CaveatLightness() {
                 This project has some <strong>high brightness</strong> media,
                 which will be <strong>dimmed</strong> on dark mode.{" "}
                 <strong>Opt-out</strong> by turning off the{" "}
-                <code>Media &gt; Dim white point</code> preference or press on
-                the media to go into its <code>Lightbox</code> mode with
-                original colors.
+                <code>
+                    {MENU_NAME} &gt; {MEDIA_PREFERENCES.dim.label}
+                </code>{" "}
+                preference or press on the media to go into its{" "}
+                <code>Lightbox</code> mode with original colors.
             </span>
         </Note>
     )

@@ -19,6 +19,8 @@ interface MediaPreferenceConfig {
     icon?: React.ReactNode
 }
 
+const MENU_NAME = "Media"
+
 const MEDIA_PREFERENCES: Record<MediaPreference, MediaPreferenceConfig> = {
     dim: {
         label: "Dim white point",
@@ -40,7 +42,7 @@ function MediaMenu() {
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
                 <Images />
-                Media
+                {MENU_NAME}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 {AVAILABLE_MEDIA_PREFERENCES.map((preference) => (
@@ -66,4 +68,4 @@ function MediaMenu() {
     )
 }
 
-export { MediaMenu }
+export { MEDIA_PREFERENCES, MENU_NAME, MediaMenu }

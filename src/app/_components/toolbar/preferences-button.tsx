@@ -2,19 +2,17 @@
 
 import { useState } from "react"
 
-import { CodeXml } from "lucide-react"
-
 import { Ellipsis } from "@/components/icons/icons"
 import { AudioMenu } from "@/components/preferences/audio-menu"
 import { EffectsMenu } from "@/components/preferences/effects-menu"
 import { MediaMenu } from "@/components/preferences/media-menu"
 import { MotionMenu } from "@/components/preferences/motion-menu"
+import { SourceCodeMenu } from "@/components/preferences/source-code-menu"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuGroup,
     DropdownMenuLabel,
-    DropdownMenuLinkItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
@@ -64,13 +62,7 @@ function PreferencesButton() {
                                         <DropdownMenuLabel>
                                             About
                                         </DropdownMenuLabel>
-                                        <DropdownMenuLinkItem
-                                            href="https://github.com/aimryoui/aimryoui.github.io"
-                                            openInNewTab
-                                        >
-                                            <CodeXml />
-                                            Source code
-                                        </DropdownMenuLinkItem>
+                                        <SourceCodeMenu />
                                     </DropdownMenuGroup>
                                 </>
                             ),

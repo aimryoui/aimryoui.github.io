@@ -11,6 +11,34 @@ import {
 import { playPressSound } from "@/lib/sounds"
 import { type AudioState, useAudioStore } from "@/stores/audio-store"
 
+interface AudioPreferenceConfig {
+    value: AudioState["audioMode"]
+    label: string
+    description: React.ReactNode
+    icon?: React.ReactNode
+}
+
+const MENU_NAME = "Sound effects"
+
+const AUDIO_PREFERENCES: Record<
+    AudioState["audioMode"],
+    AudioPreferenceConfig
+> = {
+    manual: {
+        value: "manual",
+        label: "Manual",
+        description: "Manually press the volume button to toggle sound effects",
+        icon: <ToggleLeft />
+    },
+    auto: {
+        value: "auto",
+        label: "Auto",
+        description:
+            "Automatically capture first global press interaction and turn on sound effects",
+        icon: <Loader />
+    }
+}
+
 function AudioMenu() {
     const audioMode = useAudioStore((state) => state.audioMode)
     const setAudioMode = useAudioStore((state) => state.setAudioMode)
@@ -19,7 +47,7 @@ function AudioMenu() {
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
                 <AudioLines />
-                Sound
+                {MENU_NAME}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup
@@ -39,36 +67,21 @@ function AudioMenu() {
                         }
                     }}
                 >
-                    <DropdownMenuRadioItem
-                        value="manual"
-                        closeOnClick
-                        description={
-                            <>
-                                Manually press the volume button to toggle sound
-                                effects
-                            </>
-                        }
-                    >
-                        <ToggleLeft />
-                        Manual
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem
-                        value="auto"
-                        closeOnClick
-                        description={
-                            <>
-                                Automatically capture first global press
-                                interaction and turn on sound effects
-                            </>
-                        }
-                    >
-                        <Loader />
-                        Auto
-                    </DropdownMenuRadioItem>
+                    {Object.values(AUDIO_PREFERENCES).map((preference) => (
+                        <DropdownMenuRadioItem
+                            key={preference.value}
+                            value={preference.value}
+                            closeOnClick
+                            description={preference.description}
+                        >
+                            {preference.icon}
+                            {preference.label}
+                        </DropdownMenuRadioItem>
+                    ))}
                 </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
         </DropdownMenuSub>
     )
 }
 
-export { AudioMenu }
+export { AUDIO_PREFERENCES, AudioMenu, MENU_NAME }

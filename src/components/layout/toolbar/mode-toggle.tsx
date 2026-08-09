@@ -38,9 +38,8 @@ function ModeToggle({ className, onPress, tracking, ...props }: ButtonProps) {
             payload={{
                 content: (
                     <span>
-                        Switch to{" "}
-                        <Highlight className="capitalize">{newTheme}</Highlight>{" "}
-                        theme
+                        Theme:{" "}
+                        <Highlight className="capitalize">{theme}</Highlight>
                     </span>
                 )
             }}
