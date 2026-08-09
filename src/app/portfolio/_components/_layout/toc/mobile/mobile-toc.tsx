@@ -1,8 +1,9 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { type Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
+import { sendGAEvent } from "@next/third-parties/google"
 import { PanelTopClose, PanelTopOpen } from "lucide-react"
 
 import { SectionLine } from "@/components/layout/line"
@@ -35,6 +36,14 @@ function MobileToc({
     handleClearSearch: () => void
     onLinkClick?: () => void
 }) {
+    useEffect(() => {
+        if (debouncedQuery && filteredItems.length === 0) {
+            const eventName = "search_toc_no_result"
+            const eventParams = { search_query: debouncedQuery }
+            sendGAEvent("event", eventName, eventParams)
+        }
+    }, [debouncedQuery, filteredItems.length])
+
     if (items.length === 0) return null
 
     return (
