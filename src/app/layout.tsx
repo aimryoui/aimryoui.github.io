@@ -71,7 +71,9 @@ export const metadata: Metadata = {
         "dcterms.modified": lastModified,
         bingbot:
             "index, max-video-preview:-1, max-image-preview:standard, max-snippet:-1",
-        robots: "noimageai, noai"
+        robots: "noimageai, noai",
+
+        "msvalidate.01": siteConfig.analytics.bingVerification
     },
     appLinks: {
         web: {

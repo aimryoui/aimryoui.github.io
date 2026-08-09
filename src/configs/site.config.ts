@@ -85,8 +85,10 @@ const siteConfig = {
 
     // Analytics ID
     analytics: {
+        bingVerification: "1BA65EC7661F29EBFFAD6C55B3C9F052",
         googleVerification: "4kSbFYVXEAsfbwR6ZCTrj1Hc9vIbiklyVdYZkRah974",
         yandexVerification: "ba39782377ba35bc",
+
         googleTagManager: "GTM-PJNJ98HF",
         googleAnalytics: "G-SY6F622NVD",
 
