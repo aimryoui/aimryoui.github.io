@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef } from "react"
 
 import { pxToRem } from "@/helpers/px-to-rem"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { cn } from "@/lib/utils"
+import { useEffectsStore } from "@/stores/effects-store"
 
 interface LineSidebarProps extends React.ComponentProps<"div"> {
     itemSelector?: string
@@ -38,6 +40,12 @@ function LineSidebar({
     ...props
 }: LineSidebarProps) {
     const internalListRef = useRef<HTMLDivElement>(null)
+
+    const isEffectEnabled = useEffectsStore((state) =>
+        state.hasEffect("line-sidebar")
+    )
+    const reduceMotion = useReducedMotion()
+    const isActive = isEffectEnabled && !reduceMotion
 
     const listItemsRef = useRef<HTMLElement[]>([])
     const itemCentersRef = useRef<number[]>([])
@@ -96,6 +104,8 @@ function LineSidebar({
     }, [itemSelector])
 
     useEffect(() => {
+        if (!isActive) return
+
         const list = internalListRef.current
         if (!list) return
 
@@ -141,7 +151,7 @@ function LineSidebar({
             resizeObserver.disconnect()
             mutationObserver.disconnect()
         }
-    }, [updateCache])
+    }, [updateCache, isActive])
 
     const runFrame = useCallback(function frame(now: number) {
         if (!internalListRef.current) {
@@ -196,6 +206,8 @@ function LineSidebar({
     }, [runFrame])
 
     useEffect(() => {
+        if (!isActive) return
+
         const list = internalListRef.current
         if (!list) return
 
@@ -239,9 +251,11 @@ function LineSidebar({
             list.removeEventListener("pointermove", handlePointerMove)
             list.removeEventListener("pointerleave", handlePointerLeave)
         }
-    }, [proximityRadius, startLoop])
+    }, [proximityRadius, startLoop, isActive])
 
     useEffect(() => {
+        if (!isActive) return
+
         if (rafRef.current === null) {
             lastRef.current = performance.now()
             rafRef.current = requestAnimationFrame(runFrame)
@@ -252,7 +266,7 @@ function LineSidebar({
                 rafRef.current = null
             }
         }
-    }, [runFrame])
+    }, [runFrame, isActive])
 
     return (
         <div

@@ -16,13 +16,21 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { AVAILABLE_EFFECTS, type Effect } from "@/configs/effects.config"
 import { type DeviceInfo, useDevice } from "@/hooks/use-device"
+import { useMediaQuery } from "@/hooks/use-media-query"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { useEffectsStore } from "@/stores/effects-store"
+
+interface EffectDisableContext {
+    device: DeviceInfo
+    isLg: boolean
+    reduceMotion: boolean
+}
 
 interface EffectConfig {
     label: string
     description: React.ReactNode
     icon?: React.ReactNode
-    shouldDisable?: (device: DeviceInfo) => boolean
+    shouldDisable?: (ctx: EffectDisableContext) => boolean
 }
 
 const MENU_NAME = "Visual effects"
@@ -33,13 +41,14 @@ const EFFECTS: Record<Effect, EffectConfig> = {
         description:
             "Use custom cursor that snappy-snaps to clickable elements. Not available on touch devices.",
         icon: <MousePointerClick />,
-        shouldDisable: (device) => device.isTouchDevice
+        shouldDisable: (ctx) => ctx.device.isTouchDevice
     },
     "line-sidebar": {
         label: "Line sidebar",
-        description: "Magnifying lines effect on desktop sidebar.",
+        description:
+            "Magnifying lines effect on sidebar. Not available on small screen and touch devices, or with motion-reduced preference.",
         icon: <TextAlignStart />,
-        shouldDisable: () => true
+        shouldDisable: (ctx) => ctx.device.isTouchDevice || ctx.reduceMotion || ctx.isLg
     },
     "ambient-colors": {
         label: "Ambient colors",
@@ -53,17 +62,21 @@ function EffectsMenu() {
     const effects = useEffectsStore((state) => state.effects)
     const toggleEffect = useEffectsStore((state) => state.toggleEffect)
     const setEffects = useEffectsStore((state) => state.setEffects)
+    
     const device = useDevice()
+    const isLg = useMediaQuery("lg")
+    const reduceMotion = useReducedMotion()
 
     useEffect(() => {
+        const disableCtx = { device, isLg, reduceMotion }
         const nextEffects = effects.filter(
-            (effect) => !EFFECTS[effect].shouldDisable?.(device)
+            (effect) => !EFFECTS[effect].shouldDisable?.(disableCtx)
         )
 
         if (nextEffects.length !== effects.length) {
             setEffects(nextEffects)
         }
-    }, [device, effects, setEffects])
+    }, [device, isLg, reduceMotion, effects, setEffects])
 
     return (
         <DropdownMenuSub>
@@ -83,7 +96,11 @@ function EffectsMenu() {
                             const eventParams = { effect, enabled: checked }
                             sendGAEvent("event", eventName, eventParams)
                         }}
-                        disabled={EFFECTS[effect].shouldDisable?.(device)}
+                        disabled={EFFECTS[effect].shouldDisable?.({
+                            device,
+                            isLg,
+                            reduceMotion
+                        })}
                         closeOnClick={false}
                         description={EFFECTS[effect].description}
                     >
