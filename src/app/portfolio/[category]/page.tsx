@@ -121,6 +121,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <section>
                 <SectionTitle
                     id={group.id}
+                    headingLevel="1"
                     title={group.title}
                     note={group.note}
                 />

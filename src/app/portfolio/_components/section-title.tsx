@@ -8,7 +8,7 @@ import { type PressEvent, usePress } from "react-aria"
 import { ArrowRight } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
-import { H2, Highlight } from "@/components/ui/typography"
+import { H1, H2, Highlight } from "@/components/ui/typography"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { getCategoryPath } from "@/lib/project-sort"
@@ -20,6 +20,7 @@ type SectionTitleProps = React.ComponentProps<"div"> &
         link?: "route" | "hash"
         noteClassName?: string
         id: string
+        headingLevel?: "1" | "2"
         noteId?: string
         order?: number
         title: string
@@ -31,6 +32,7 @@ function SectionTitle({
     link,
     noteClassName,
     id,
+    headingLevel = "2",
     noteId,
     order,
     title,
@@ -124,7 +126,13 @@ function SectionTitle({
                     ]
                 )}
             >
-                <Title id={id} order={order} title={title} link={link} />
+                <Title
+                    id={id}
+                    headingLevel={headingLevel}
+                    order={order}
+                    title={title}
+                    link={link}
+                />
                 {link === "route" ? (
                     <ArrowRight
                         className={cn("z-1 transition-[color] duration-100", {
@@ -152,20 +160,23 @@ function SectionTitle({
 
 function Title({
     id,
+    headingLevel = "2",
     order,
     title,
     link
 }: {
     id: string
+    headingLevel?: SectionTitleProps["headingLevel"]
     order?: number
     title: string
     link?: SectionTitleProps["link"]
 }) {
+    const Comp = headingLevel === "1" ? H1 : H2
     return (
         <ViewTransition
             name={formatViewTransitionName(`overall-category-${title}`)}
         >
-            <H2
+            <Comp
                 id={id}
                 className={cn(
                     "w-fit text-foreground wrap-anywhere transition-[color] duration-100",
@@ -194,7 +205,7 @@ function Title({
                     <Highlight>{String(order).padStart(2, "0")}.</Highlight>
                 )}{" "}
                 {title}.
-            </H2>
+            </Comp>
         </ViewTransition>
     )
 }

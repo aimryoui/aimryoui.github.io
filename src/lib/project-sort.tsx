@@ -152,9 +152,21 @@ function getCategoryPath(category: string): string {
     return `/portfolio/${category}`
 }
 
+function getProject(
+    projects: Project[],
+    category: string,
+    slug: string
+): Project | undefined {
+    const groups = groupProjectsByCategory(projects)
+    return groups
+        .find((g) => g.id === category)
+        ?.projects.find((p) => getProjectRouteSlug(p) === slug)
+}
+
 export type { ProjectGroup }
 export {
     getCategoryPath,
+    getProject,
     getProjectPath,
     getProjectRouteSlug,
     groupProjectsByCategory
