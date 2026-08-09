@@ -1,4 +1,8 @@
-const AVAILABLE_EFFECTS = ["target-cursor", "ambient-colors"] as const
+const AVAILABLE_EFFECTS = [
+    "target-cursor",
+    "line-sidebar",
+    "ambient-colors"
+] as const
 type Effect = (typeof AVAILABLE_EFFECTS)[number]
 
 const DISABLED_BY_DEFAULT: Effect[] = []

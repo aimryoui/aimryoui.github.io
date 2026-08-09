@@ -27,14 +27,15 @@ const AUDIO_PREFERENCES: Record<
     manual: {
         value: "manual",
         label: "Manual",
-        description: "Manually press the volume button to toggle sound effects",
+        description:
+            "Manually press the volume button to toggle sound effects.",
         icon: <ToggleLeft />
     },
     auto: {
         value: "auto",
         label: "Auto",
         description:
-            "Automatically capture first global press interaction and turn on sound effects",
+            "Automatically capture first global press interaction and turn on sound effects.",
         icon: <Loader />
     }
 }

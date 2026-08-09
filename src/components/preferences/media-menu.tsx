@@ -24,12 +24,12 @@ const MENU_NAME = "Media"
 const MEDIA_PREFERENCES: Record<MediaPreference, MediaPreferenceConfig> = {
     dim: {
         label: "Dim white point",
-        description: "Reduce white point brightness of media on dark mode",
+        description: "Reduce white point brightness of media on dark mode.",
         icon: <Sunset />
     },
     autoplay: {
         label: "Auto-play media",
-        description: "Auto-play videos when in view, does not affect GIFs",
+        description: "Auto-play videos when in view, does not affect GIFs.",
         icon: <ImagePlay />
     }
 }

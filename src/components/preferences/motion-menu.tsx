@@ -51,7 +51,7 @@ function MotionMenu() {
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
                 <SquareStack />
-                Motion
+                {MENU_NAME}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup
