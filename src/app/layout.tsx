@@ -70,7 +70,7 @@ export const metadata: Metadata = {
         revised: lastModified,
         "dcterms.modified": lastModified,
         bingbot:
-            "index, nofollow, noarchive, notranslate, max-video-preview:-1, max-image-preview:standard, max-snippet:-1",
+            "index, max-video-preview:-1, max-image-preview:standard, max-snippet:-1",
         robots: "noimageai, noai"
     },
     appLinks: {
@@ -106,10 +106,7 @@ export const metadata: Metadata = {
         nocache: true,
         googleBot: {
             index: true,
-            follow: false,
-            noarchive: true,
-            notranslate: true,
-            nositelinkssearchbox: false,
+            follow: true,
             "max-video-preview": -1,
             "max-image-preview": "standard",
             "max-snippet": -1
