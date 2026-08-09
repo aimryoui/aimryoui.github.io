@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react"
 
 import { sendGAEvent } from "@next/third-parties/google"
@@ -39,16 +41,17 @@ const EFFECTS: Record<Effect, EffectConfig> = {
     "target-cursor": {
         label: "Target cursor",
         description:
-            "Use custom cursor that snappy-snaps to clickable elements. Not available on touch devices.",
+            "Use custom cursor that snappy-snaps to clickable elements. Not available on touch devices. Disabled with reduced motion.",
         icon: <MousePointerClick />,
-        shouldDisable: (ctx) => ctx.device.isTouchDevice
+        shouldDisable: (ctx) => ctx.device.isTouchDevice || ctx.reduceMotion
     },
     "line-sidebar": {
         label: "Line sidebar",
         description:
-            "Magnifying lines effect on sidebar. Not available on small screen and touch devices, or with motion-reduced preference.",
+            "Magnifying lines effect on sidebar. Not available on small screen or touch devices. Disabled with reduced motion.",
         icon: <TextAlignStart />,
-        shouldDisable: (ctx) => ctx.device.isTouchDevice || ctx.reduceMotion || ctx.isLg
+        shouldDisable: (ctx) =>
+            ctx.device.isTouchDevice || ctx.reduceMotion || ctx.isLg
     },
     "ambient-colors": {
         label: "Ambient colors",
@@ -62,7 +65,7 @@ function EffectsMenu() {
     const effects = useEffectsStore((state) => state.effects)
     const toggleEffect = useEffectsStore((state) => state.toggleEffect)
     const setEffects = useEffectsStore((state) => state.setEffects)
-    
+
     const device = useDevice()
     const isLg = useMediaQuery("lg")
     const reduceMotion = useReducedMotion()

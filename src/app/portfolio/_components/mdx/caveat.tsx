@@ -1,3 +1,5 @@
+"use client"
+
 import { FileExclamationPoint } from "lucide-react"
 
 import { Note } from "@/components/layout/note"
