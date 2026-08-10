@@ -16,6 +16,7 @@ import {
 import { siteConfig } from "@/configs/site.config"
 import {
     getCategoryPath,
+    getProject,
     getProjectPath,
     getProjectRouteSlug,
     groupProjectsByCategory
@@ -58,19 +59,15 @@ export async function generateMetadata({
     params
 }: ProjectPageProps): Promise<Metadata> {
     const { category, slug } = await params
-    const groups = groupProjectsByCategory(projects)
-    const project = groups
-        .find((g) => g.id === category)
-        ?.projects.find((p) => getProjectRouteSlug(p) === slug)
+    const project = getProject(projects, category, slug)
 
     if (!project) {
         return {}
     }
 
-    const SLUG_TITLE = `Project — ${project.name} | aimryoui`
+    const SLUG_TITLE = `${project.type} — ${project.name} | aimryoui`
     const SLUG_DESCRIPTION =
         project.detail?.description ?? "Project detail page."
-    const portfolioOgImage = `${siteConfig.fullUrl}/portfolio/opengraph-image.jpg`
 
     return {
         title: SLUG_TITLE,
@@ -81,15 +78,13 @@ export async function generateMetadata({
             type: "website",
             url: APP_FULL_URL + APP_BASE_PATH,
             siteName: siteConfig.domain,
-            locale: "vi_VN",
-            images: [{ url: portfolioOgImage }]
+            locale: "vi_VN"
         },
         twitter: {
             card: "summary_large_image",
             title: SLUG_TITLE,
             description: SLUG_DESCRIPTION,
-            site: APP_FULL_URL + APP_BASE_PATH,
-            images: [portfolioOgImage]
+            site: APP_FULL_URL + APP_BASE_PATH
         }
     }
 }
@@ -120,222 +115,236 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
     const socialData = resolveSocialData(project.social)
 
+    const OG_ALT = `${project.type} — ${project.name}`
+
     return (
-        // <ViewTransition name="main">
-        <main className={cn("relative flex-1")}>
-            <AmbientStyle project={project} />
-            <FlashOverlay />
-            <Space
-                className={cn("flex items-center justify-start px-safe-zone")}
-            >
-                <PortfolioBreadcrumb
-                    category={category}
-                    categoryTitle={group.title}
-                    projectName={project.name}
-                />
-            </Space>
-            <section className={cn("@container")}>
-                {socialData && (
-                    <Space
-                        className={cn(
-                            "pointer-events-none fixed top-0 z-60 flex w-[100cqw] items-center justify-end bg-transparent px-safe-zone",
-                            {
-                                lg: "bottom-space top-auto px-0",
-                                md: "bottom-[calc(var(--spacing-space)+var(--spacing)*10+var(--px)/2)]"
-                            }
-                        )}
-                    >
-                        <SocialButton
+        <>
+            <head>
+                <meta property="og:image:alt" content={OG_ALT} />
+                <meta name="twitter:image:alt" content={OG_ALT} />
+            </head>
+            {/* <ViewTransition name="main"> */}
+            <main className={cn("relative flex-1")}>
+                <AmbientStyle project={project} />
+                <FlashOverlay />
+                <Space
+                    className={cn(
+                        "flex items-center justify-start px-safe-zone"
+                    )}
+                >
+                    <PortfolioBreadcrumb
+                        category={category}
+                        categoryTitle={group.title}
+                        projectName={project.name}
+                    />
+                </Space>
+                <section className={cn("@container")}>
+                    {socialData && (
+                        <Space
+                            className={cn(
+                                "pointer-events-none fixed top-0 z-60 flex w-[100cqw] items-center justify-end bg-transparent px-safe-zone",
+                                {
+                                    lg: "bottom-space top-auto px-0",
+                                    md: "bottom-[calc(var(--spacing-space)+var(--spacing)*10+var(--px)/2)]"
+                                }
+                            )}
+                        >
+                            <SocialButton
+                                projectId={project.id}
+                                social={project.social}
+                                isSelectedWorks={isSelectedWorks}
+                            />
+                        </Space>
+                    )}
+                    <SectionLine showDecoration />
+                    <Space />
+                    <SectionLine />
+                    <article>
+                        <ProjectHeader
+                            type={project.type}
                             projectId={project.id}
-                            social={project.social}
+                            projectName={project.name}
+                            category={project.category}
+                            information={project.information}
+                            tools={project.tools}
+                            detail={project.detail}
                             isSelectedWorks={isSelectedWorks}
                         />
-                    </Space>
-                )}
-                <SectionLine showDecoration />
-                <Space />
-                <SectionLine />
-                <article>
-                    <ProjectHeader
-                        type={project.type}
-                        projectId={project.id}
-                        projectName={project.name}
-                        category={project.category}
-                        information={project.information}
-                        tools={project.tools}
-                        detail={project.detail}
-                        isSelectedWorks={isSelectedWorks}
-                    />
 
-                    <SectionLine />
-                    <Divider />
-                    <SectionLine />
+                        <SectionLine />
+                        <Divider />
+                        <SectionLine />
 
-                    {project.caveat?.lightness && (
-                        <>
-                            <CaveatLightness />
-                            <SectionLine />
-                            <Divider />
-                            <SectionLine />
-                        </>
-                    )}
-
-                    <MDXContent
-                        code={project.code}
-                        hasSocialLinks={!!socialData}
-                    />
-                </article>
-            </section>
-
-            <Note bold>Project ends. What&#39;s next?</Note>
-
-            <SectionLine />
-
-            <section className={cn("bg-background")}>
-                <Pagination>
-                    <PaginationContent
-                        className={cn(
-                            "grid grid-cols-[1fr_0_1fr] items-center"
+                        {project.caveat?.lightness && (
+                            <>
+                                <CaveatLightness />
+                                <SectionLine />
+                                <Divider />
+                                <SectionLine />
+                            </>
                         )}
-                    >
-                        <PaginationItem>
-                            {prev ? (
-                                <ProjectCard
-                                    href={getProjectPath(prev)}
-                                    project={prev}
-                                    navigation="backward"
-                                />
-                            ) : (
-                                <PaginationPrevious
-                                    href={getCategoryPath(category)}
-                                    label={`Go back to ${group.title} category page`}
-                                    tracking={{
-                                        eventName: "navigate_category",
-                                        eventParams: {
-                                            category_id: category,
-                                            category_title: group.title,
-                                            direction: "backward"
-                                        }
-                                    }}
-                                    className={cn(
-                                        "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
-                                        {
-                                            hover: "bg-highlighted/5 transition-none",
-                                            active: "bg-highlighted/10 transition-none"
-                                        }
-                                    )}
-                                >
-                                    <ArrowLeft
+
+                        <MDXContent
+                            code={project.code}
+                            hasSocialLinks={!!socialData}
+                        />
+                    </article>
+                </section>
+
+                <Note bold>Project ends. What&#39;s next?</Note>
+
+                <SectionLine />
+
+                <section className={cn("bg-background")}>
+                    <Pagination>
+                        <PaginationContent
+                            className={cn(
+                                "grid grid-cols-[1fr_0_1fr] items-center"
+                            )}
+                        >
+                            <PaginationItem>
+                                {prev ? (
+                                    <ProjectCard
+                                        href={getProjectPath(prev)}
+                                        project={prev}
+                                        navigation="backward"
+                                    />
+                                ) : (
+                                    <PaginationPrevious
+                                        href={getCategoryPath(category)}
+                                        label={`Go back to ${group.title} category page`}
+                                        tracking={{
+                                            eventName: "navigate_category",
+                                            eventParams: {
+                                                category_id: category,
+                                                category_title: group.title,
+                                                direction: "backward"
+                                            }
+                                        }}
                                         className={cn(
-                                            "m-1 transition-[color] duration-100",
+                                            "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                             {
-                                                "group-hover":
-                                                    "text-highlighted transition-none",
-                                                "group-active":
-                                                    "text-highlighted transition-none"
+                                                hover: "bg-highlighted/5 transition-none",
+                                                active: "bg-highlighted/10 transition-none"
                                             }
                                         )}
+                                    >
+                                        <ArrowLeft
+                                            className={cn(
+                                                "m-1 transition-[color] duration-100",
+                                                {
+                                                    "group-hover":
+                                                        "text-highlighted transition-none",
+                                                    "group-active":
+                                                        "text-highlighted transition-none"
+                                                }
+                                            )}
+                                        />
+                                        <div
+                                            className={cn("text-end", {
+                                                sm: "flex flex-col"
+                                            })}
+                                        >
+                                            <TextPart>Back to</TextPart>{" "}
+                                            <BoldPart>{group.title}</BoldPart>
+                                        </div>
+                                    </PaginationPrevious>
+                                )}
+                            </PaginationItem>
+                            <li className="h-full">
+                                <SvgElementLine />
+                            </li>
+                            <PaginationItem>
+                                {next ? (
+                                    <ProjectCard
+                                        href={getProjectPath(next)}
+                                        project={next}
+                                        navigation="forward"
                                     />
-                                    <div
-                                        className={cn("text-end", {
-                                            sm: "flex flex-col"
-                                        })}
-                                    >
-                                        <TextPart>Back to</TextPart>{" "}
-                                        <BoldPart>{group.title}</BoldPart>
-                                    </div>
-                                </PaginationPrevious>
-                            )}
-                        </PaginationItem>
-                        <li className="h-full">
-                            <SvgElementLine />
-                        </li>
-                        <PaginationItem>
-                            {next ? (
-                                <ProjectCard
-                                    href={getProjectPath(next)}
-                                    project={next}
-                                    navigation="forward"
-                                />
-                            ) : (
-                                <PaginationNext
-                                    href={
-                                        nextCategory
-                                            ? getCategoryPath(nextCategory.id)
-                                            : "/portfolio#contact"
-                                    }
-                                    label={
-                                        nextCategory
-                                            ? `Go next to ${nextCategory.title} category page`
-                                            : "No more projects, contact me"
-                                    }
-                                    tracking={{
-                                        eventName: nextCategory
-                                            ? "navigate_category"
-                                            : "navigate_hash",
-                                        eventParams: {
-                                            category_id: nextCategory
-                                                ? nextCategory.id
-                                                : "contact",
-                                            category_title: nextCategory
-                                                ? nextCategory.title
-                                                : "Contact",
-                                            direction: "forward"
+                                ) : (
+                                    <PaginationNext
+                                        href={
+                                            nextCategory
+                                                ? getCategoryPath(
+                                                      nextCategory.id
+                                                  )
+                                                : "/portfolio#contact"
                                         }
-                                    }}
-                                    className={cn(
-                                        "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
-                                        {
-                                            hover: "bg-highlighted/5 transition-none",
-                                            active: "bg-highlighted/10 transition-none"
+                                        label={
+                                            nextCategory
+                                                ? `Go next to ${nextCategory.title} category page`
+                                                : "No more projects, contact me"
                                         }
-                                    )}
-                                >
-                                    <div
-                                        className={cn({
-                                            sm: "flex flex-col"
-                                        })}
-                                    >
-                                        {nextCategory ? (
-                                            <>
-                                                <TextPart>Next to</TextPart>{" "}
-                                                <BoldPart>
-                                                    {nextCategory.title}
-                                                </BoldPart>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <TextPart>
-                                                    No more projects.
-                                                </TextPart>{" "}
-                                                <BoldPart>Contact me</BoldPart>
-                                            </>
-                                        )}
-                                    </div>
-                                    <ArrowRight
+                                        tracking={{
+                                            eventName: nextCategory
+                                                ? "navigate_category"
+                                                : "navigate_hash",
+                                            eventParams: {
+                                                category_id: nextCategory
+                                                    ? nextCategory.id
+                                                    : "contact",
+                                                category_title: nextCategory
+                                                    ? nextCategory.title
+                                                    : "Contact",
+                                                direction: "forward"
+                                            }
+                                        }}
                                         className={cn(
-                                            "m-1 transition-[color] duration-100",
+                                            "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                             {
-                                                "group-hover":
-                                                    "text-highlighted transition-none",
-                                                "group-active":
-                                                    "text-highlighted transition-none"
+                                                hover: "bg-highlighted/5 transition-none",
+                                                active: "bg-highlighted/10 transition-none"
                                             }
                                         )}
-                                    />
-                                </PaginationNext>
-                            )}
-                        </PaginationItem>
-                    </PaginationContent>
-                </Pagination>
-            </section>
+                                    >
+                                        <div
+                                            className={cn({
+                                                sm: "flex flex-col"
+                                            })}
+                                        >
+                                            {nextCategory ? (
+                                                <>
+                                                    <TextPart>Next to</TextPart>{" "}
+                                                    <BoldPart>
+                                                        {nextCategory.title}
+                                                    </BoldPart>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <TextPart>
+                                                        No more projects.
+                                                    </TextPart>{" "}
+                                                    <BoldPart>
+                                                        Contact me
+                                                    </BoldPart>
+                                                </>
+                                            )}
+                                        </div>
+                                        <ArrowRight
+                                            className={cn(
+                                                "m-1 transition-[color] duration-100",
+                                                {
+                                                    "group-hover":
+                                                        "text-highlighted transition-none",
+                                                    "group-active":
+                                                        "text-highlighted transition-none"
+                                                }
+                                            )}
+                                        />
+                                    </PaginationNext>
+                                )}
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </section>
 
-            <SectionLine />
-            <Divider />
-            <SectionLine />
+                <SectionLine />
+                <Divider />
+                <SectionLine />
 
-            <Footer hasSocialLinks={!!socialData} />
-        </main>
-        // </ViewTransition>
+                <Footer hasSocialLinks={!!socialData} />
+            </main>
+            {/* </ViewTransition> */}
+        </>
     )
 }

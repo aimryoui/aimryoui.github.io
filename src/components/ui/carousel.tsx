@@ -526,7 +526,7 @@ function CarouselReplay({
             render={
                 <Button
                     data-slot="carousel-replay"
-                    data-cursor={undefined}
+                    data-cursor={null}
                     variant={variant}
                     size={size}
                     onPress={(e) => {
@@ -583,7 +583,7 @@ function CarouselPrevious({
             render={
                 <Button
                     data-slot="carousel-previous"
-                    data-cursor={undefined}
+                    data-cursor={null}
                     variant={variant}
                     size={size}
                     onPress={(e) => {
@@ -639,7 +639,7 @@ function CarouselNext({
             render={
                 <Button
                     data-slot="carousel-next"
-                    data-cursor={undefined}
+                    data-cursor={null}
                     variant={variant}
                     size={size}
                     onPress={(e) => {

@@ -288,8 +288,8 @@ function ImageCore({
                 dim && [
                     {
                         "group-data-[media~='dim']/html:dark":
-                            "brightness-[0.87] contrast-[1.06] saturate-[1.04] transition-[filter] duration-350",
-                        "data-[lightbox-active=true]": "!filter-none"
+                            "opacity-85 transition-opacity duration-350",
+                        "data-[lightbox-active=true]": "!opacity-100"
                     }
                 ],
                 className

@@ -15,7 +15,10 @@ import {
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { DEFAULT_AUDIO_PREFERENCES } from "@/configs/audio.config"
 import { DEFAULT_EFFECTS_PREFERENCES } from "@/configs/effects.config"
-import { DEFAULT_MEDIA_PREFERENCES } from "@/configs/media.config"
+import {
+    DEFAULT_AUTOPLAY_PREFERENCE,
+    DEFAULT_MEDIA_PREFERENCES
+} from "@/configs/media.config"
 import { DEFAULT_MOTION_PREFERENCES } from "@/configs/motion.config"
 import {
     DEFAULT_SIDEBAR_PREFERENCES,
@@ -55,6 +58,7 @@ function ResetPreferenceAlertDialog({
             .setIsAudioEnabled(DEFAULT_AUDIO_PREFERENCES.isAudioEnabled)
         useEffectsStore.getState().setEffects(DEFAULT_EFFECTS_PREFERENCES)
         useMediaStore.getState().setPreferences(DEFAULT_MEDIA_PREFERENCES)
+        useMediaStore.getState().setAutoplay(DEFAULT_AUTOPLAY_PREFERENCE)
         useMotionStore.getState().setPreference(DEFAULT_MOTION_PREFERENCES)
         useSidebarPositionStore
             .getState()

@@ -117,6 +117,7 @@ function DropdownMenuContent({
     shadow = true,
     isSubMenu = false,
     className,
+    positionerClassName,
     viewportClassName,
     children,
     ...props
@@ -128,7 +129,8 @@ function DropdownMenuContent({
         anchor?: HTMLElement | null
         shadow?: boolean
         isSubMenu?: boolean
-        viewportClassName?: Pick<MenuPrimitive.Viewport.Props, "className">
+        positionerClassName?: MenuPrimitive.Positioner.Props["className"]
+        viewportClassName?: MenuPrimitive.Viewport.Props["className"]
     }) {
     return (
         <DropdownMenuPortal
@@ -147,15 +149,14 @@ function DropdownMenuContent({
                 data-cursor="target"
                 anchor={anchor ?? undefined}
                 className={cn(
-                    "group/dropdown-menu-positioner z-80 h-[--positioner-height] w-[--positioner-width] max-w-53 cursor-auto outline-none",
+                    "group/dropdown-menu-positioner z-80 h-[--positioner-height] w-[--positioner-width] cursor-auto outline-none",
                     isSubMenu && "mt-px",
                     {
                         "motion-preferred":
                             "will-change-[top,left,right,bottom,transform] transition-[top,left,right,bottom,transform] ease-[cubic-bezier(0.22,1,0.36,1)] duration-400",
-                        "data-instant": "transition-none",
-
-                        sm: "max-w-[--available-width]"
-                    }
+                        "data-instant": "transition-none"
+                    },
+                    positionerClassName
                 )}
                 align={align}
                 alignOffset={alignOffset}
@@ -168,7 +169,7 @@ function DropdownMenuContent({
                     data-cursor="lock"
                     tabIndex={-1}
                     className={cn(
-                        "group/dropdown-menu-popup relative z-50 grid h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
+                        "group/dropdown-menu-popup relative z-50 grid h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 max-w-56 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
                         "group-data-target-cursor/dropdown-menu-positioner:group-hover/dropdown-menu-positioner:rounded-none",
                         {
                             "motion-preferred": [
@@ -186,7 +187,9 @@ function DropdownMenuContent({
                                     "data-instant": "transition-[border-radius]"
                                 }
                             ],
-                            "data-instant": "transition-none"
+                            "data-instant": "transition-none",
+
+                            sm: "max-w-[--available-width]"
                         },
                         className
                     )}
@@ -375,15 +378,21 @@ function DropdownMenuSub({
 
 function DropdownMenuSubTrigger({
     className,
+    description,
+    srOnlyDescription,
     inset,
     onClick,
     children,
     ...props
 }: MenuPrimitive.SubmenuTrigger.Props & {
+    description?: string
+    srOnlyDescription?: string
     inset?: boolean
 }) {
     const playPressFeedback = usePressFeedback()
     const context = useContext(DropdownMenuSubContext)
+
+    const Comp = description ? "div" : Fragment
 
     return (
         <MenuPrimitive.SubmenuTrigger
@@ -399,7 +408,7 @@ function DropdownMenuSubTrigger({
                 onClick?.(e)
             }}
             className={cn(
-                "flex cursor-default select-none items-center gap-1.5 rounded-lg py-2 pe-2.5 ps-3 text-sm outline-hidden",
+                "relative flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-open":
@@ -416,8 +425,38 @@ function DropdownMenuSubTrigger({
             )}
             {...props}
         >
-            {children}
-            <ChevronRightIcon className="cn-rtl-flip ml-auto" />
+            <Comp
+                {...(description && {
+                    className: "flex flex-col gap-y-0.5"
+                })}
+            >
+                <Comp
+                    {...(description && {
+                        className: cn("flex items-center gap-1.5 pe-10")
+                    })}
+                >
+                    {children}
+                    <span
+                        data-slot="dropdown-menu-sub-trigger-indicator"
+                        className={cn(
+                            "pointer-events-none absolute right-2 top-2 grid size-5 place-items-center"
+                        )}
+                    >
+                        <ChevronRightIcon className="cn-rtl-flip" />
+                    </span>
+                </Comp>
+                {description && (
+                    <span
+                        className={cn(
+                            "text-wrap text-xs text-muted-foreground",
+                            srOnlyDescription && "sr-only"
+                        )}
+                        data-slot="dropdown-menu-sub-trigger-description"
+                    >
+                        {description}
+                    </span>
+                )}
+            </Comp>
         </MenuPrimitive.SubmenuTrigger>
     )
 }
@@ -436,7 +475,7 @@ function DropdownMenuSubContent({
             shadow={false}
             isSubMenu={true}
             className={cn(
-                "w-auto min-w-32 max-w-53 rounded-xl bg-background text-foreground sm:max-w-auto",
+                "w-auto min-w-32 rounded-xl bg-background text-foreground",
                 className
             )}
             align={align}
@@ -518,7 +557,7 @@ function DropdownMenuLinkItem({
                     {openInNewTab && (
                         <span
                             data-slot="dropdown-menu-link-item-indicator"
-                            className="pointer-events-none absolute right-2.75 flex items-center justify-center"
+                            className="pointer-events-none absolute right-2.75 grid place-items-center"
                         >
                             <ArrowUpRight className="size-4" />
                         </span>

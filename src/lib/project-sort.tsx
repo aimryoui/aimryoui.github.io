@@ -1,3 +1,5 @@
+import { cache } from "react"
+
 import { DASHES_REGEX } from "@/helpers/character-regexes"
 import { slugify } from "@/helpers/slugify"
 import { SelectedWorks } from "@/portfolio/_components/_icons/category-icons"
@@ -77,63 +79,66 @@ interface ProjectGroup {
     icons: React.ReactNode
 }
 
-function groupProjectsByCategory(allProjects: Project[]): ProjectGroup[] {
-    const sortedAll = sortProjects(allProjects)
+const groupProjectsByCategory = cache(
+    (allProjects: Project[]): ProjectGroup[] => {
+        const sortedAll = sortProjects(allProjects)
 
-    const groups: Record<string, Project[] | undefined> = {}
+        const groups: Record<string, Project[] | undefined> = {}
 
-    sortedAll.forEach((project) => {
-        const parts = project.slug.split("/")
-        const categorySlug = parts.length > 1 ? parts[1] : null
+        sortedAll.forEach((project) => {
+            const parts = project.slug.split("/")
+            const categorySlug = parts.length > 1 ? parts[1] : null
 
-        if (!categorySlug) return
+            if (!categorySlug) return
 
-        groups[categorySlug] ??= []
+            groups[categorySlug] ??= []
 
-        groups[categorySlug].push(project)
-    })
-
-    const result = Object.keys(PROJECT_CATEGORIES).reduce<ProjectGroup[]>(
-        (acc, cat) => {
-            if (groups[cat] && groups[cat].length > 0) {
-                const config = PROJECT_CATEGORIES[cat]
-                acc.push({
-                    id: cat,
-                    title: config.title,
-                    note: config.note,
-                    icons: config.icons,
-                    projects: groups[cat] ?? []
-                })
-            }
-            return acc
-        },
-        []
-    )
-
-    const selectedWorksProjects = allProjects
-        .filter((project) => project.features?.selected[0])
-        .sort(
-            (a, b) =>
-                (a.features?.selected[1] ?? 0) - (b.features?.selected[1] ?? 0)
-        )
-        .map((p) =>
-            Object.assign({}, p, {
-                slug: `portfolio/selected-works/${p.slug.split("/").pop()}`
-            })
-        )
-
-    if (selectedWorksProjects.length > 0) {
-        result.unshift({
-            id: "selected-works",
-            title: "Selected Works",
-            note: "Handpicked Projects",
-            icons: <SelectedWorks />,
-            projects: selectedWorksProjects
+            groups[categorySlug].push(project)
         })
-    }
 
-    return result
-}
+        const result = Object.keys(PROJECT_CATEGORIES).reduce<ProjectGroup[]>(
+            (acc, cat) => {
+                if (groups[cat] && groups[cat].length > 0) {
+                    const config = PROJECT_CATEGORIES[cat]
+                    acc.push({
+                        id: cat,
+                        title: config.title,
+                        note: config.note,
+                        icons: config.icons,
+                        projects: groups[cat] ?? []
+                    })
+                }
+                return acc
+            },
+            []
+        )
+
+        const selectedWorksProjects = allProjects
+            .filter((project) => project.features?.selected[0])
+            .sort(
+                (a, b) =>
+                    (a.features?.selected[1] ?? 0) -
+                    (b.features?.selected[1] ?? 0)
+            )
+            .map((p) =>
+                Object.assign({}, p, {
+                    slug: `portfolio/selected-works/${p.slug.split("/").pop()}`
+                })
+            )
+
+        if (selectedWorksProjects.length > 0) {
+            result.unshift({
+                id: "selected-works",
+                title: "Selected Works",
+                note: "Handpicked Projects",
+                icons: <SelectedWorks />,
+                projects: selectedWorksProjects
+            })
+        }
+
+        return result
+    }
+)
 
 function getProjectRouteSlug(project: Project): string {
     return slugify(project.name)

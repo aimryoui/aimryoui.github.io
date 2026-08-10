@@ -216,7 +216,9 @@ function About() {
                                         "grid size-full place-items-center text-4xl text-highlighted underline",
                                         {
                                             hover: "decoration-current decoration-solid",
+                                            active: "decoration-current decoration-solid",
                                             "focus-visible": "text-highlighted",
+
                                             xl: "text-3xl",
                                             md: "text-2xl"
                                         }

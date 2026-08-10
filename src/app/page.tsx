@@ -27,7 +27,7 @@ export default function Home() {
             <SectionLine />
             <Divider />
             <MediaFrame
-                data-cursor={false}
+                data-cursor={null}
                 flex
                 className={cn("h-full min-h-32")}
             >
@@ -42,7 +42,6 @@ export default function Home() {
                 />
                 <LinkButton
                     href="/portfolio"
-                    data-cursor="target"
                     variant="outline"
                     scroll={false}
                     className={cn(

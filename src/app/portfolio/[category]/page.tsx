@@ -117,7 +117,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </Space>
             <SectionLine showDecoration />
             <Space />
-            <SectionLine />
+            <SectionLine containerClassName="z-55" />
             <section>
                 <SectionTitle
                     id={group.id}

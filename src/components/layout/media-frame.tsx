@@ -5,7 +5,6 @@ import { Fragment, useMemo, useRef } from "react"
 import { type PhotoSwipeOptions } from "photoswipe"
 import { usePress } from "react-aria"
 
-import { type CursorSelector } from "@/components/animations/target-cursor"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Lightbox } from "@/components/ui/lightbox"
@@ -107,13 +106,11 @@ function SectionName({
 }
 
 interface MediaFrameContentProps extends React.ComponentProps<"div"> {
-    targetCursor?: CursorSelector
     widthFit?: boolean
 }
 
 function MediaFrameContent({
     className,
-    targetCursor,
     showHideAnimationType = "zoom",
     widthFit = false,
     children,
@@ -128,7 +125,7 @@ function MediaFrameContent({
 
     return (
         <div
-            data-cursor={targetCursor ?? "ignore"}
+            data-cursor="ignore"
             className={cn(
                 "relative grid cursor-auto grid-cols-1 justify-items-center gap-2 overflow-clip bg-stroke p-2 md:grid-cols-1",
                 widthFit ? "w-fit md:w-full" : "w-full",
@@ -158,7 +155,6 @@ function MediaFrame({
     flex,
     continuous,
     hasSocialLinks,
-    targetCursor,
     children,
     ...props
 }: MediaFrameProps) {
@@ -246,11 +242,7 @@ function MediaFrame({
                     {continuous ? (
                         children
                     ) : (
-                        <MediaFrameContent
-                            targetCursor={targetCursor}
-                            className={cn(className)}
-                            {...props}
-                        >
+                        <MediaFrameContent className={cn(className)} {...props}>
                             {children}
                         </MediaFrameContent>
                     )}

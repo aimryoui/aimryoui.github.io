@@ -166,15 +166,15 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     const currentEl = slide.data.element
 
                     if (liftedOffEl && liftedOffEl !== currentEl) {
-                        liftedOffEl.style.removeProperty("opacity")
+                        liftedOffEl.style.removeProperty("visibility")
                     }
 
                     liftedOffEl = currentEl
-                    liftedOffEl.style.opacity = "0"
+                    liftedOffEl.style.visibility = "hidden"
                 }
                 const showOriginal = () => {
                     if (liftedOffEl) {
-                        liftedOffEl.style.removeProperty("opacity")
+                        liftedOffEl.style.removeProperty("visibility")
                         liftedOffEl = null
                     }
                 }

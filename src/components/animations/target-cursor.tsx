@@ -13,7 +13,14 @@ import { useEffectsStore } from "@/stores/effects-store"
 
 import { BASE_FONT_SIZE } from "~/tailwind.config"
 
-type CursorSelector = "target" | "lock" | "input" | "ignore" | "corner" | false
+type CursorSelector =
+    | "target"
+    | "lock"
+    | "input"
+    | "ignore"
+    | "corner"
+    | false
+    | null
 
 const CONTAIN_STYLE_REGEX = /\b(paint|layout|strict|content)\b/u
 const WILL_CHANGE_REGEX = /\b(transform|perspective|filter)\b/u

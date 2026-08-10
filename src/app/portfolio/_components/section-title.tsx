@@ -42,8 +42,10 @@ function SectionTitle({
 }: SectionTitleProps) {
     const playPressFeedback = usePressFeedback()
 
-    const Comp: React.ElementType =
+    const ContainerComp: React.ElementType =
         link === "route" ? LinkButton : link === "hash" ? "a" : "div"
+
+    const NoteComp: React.ElementType = headingLevel === "1" ? "h2" : "span"
 
     const handlePress = (e: PressEvent) => {
         if (link) {
@@ -66,7 +68,7 @@ function SectionTitle({
     })
 
     return (
-        <Comp
+        <ContainerComp
             {...(link && {
                 href:
                     link === "route" ? getCategoryPath(id) : `/portfolio#${id}`
@@ -89,7 +91,7 @@ function SectionTitle({
             {...props}
         >
             {note && (
-                <span
+                <NoteComp
                     id={noteId}
                     className={cn(
                         "absolute bottom-full left-0 max-w-[calc(100%-var(--spacing-safe-zone)*2)] px-safe-zone pb-4 font-mono uppercase leading-normal",
@@ -102,7 +104,7 @@ function SectionTitle({
                     )}
                 >
                     {note}
-                </span>
+                </NoteComp>
             )}
             <div
                 className={cn(
@@ -154,7 +156,7 @@ function SectionTitle({
                 )}
             </div>
             <SectionLine containerClassName="sticky top-space" />
-        </Comp>
+        </ContainerComp>
     )
 }
 

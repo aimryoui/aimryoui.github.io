@@ -11,6 +11,8 @@ import { Spinner } from "@/components/ui/spinner"
 import { type ParsedMediaData } from "@/helpers/get-parsed-media-data"
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 import { useMediaObserver } from "@/hooks/use-media-observer"
+import { useNetwork } from "@/hooks/use-network"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { cn } from "@/lib/utils"
 import { type VideoMetadata } from "@/scripts/process-videos"
 import { useMediaStore } from "@/stores/media-store"
@@ -88,9 +90,19 @@ function AnimatedMedia({
         parsedData
 
     const shouldLoad = useMediaObserver(wrapperRef)
-    const isGlobalAutoPlayEnabled = useMediaStore((state) =>
-        state.hasPreference("autoplay")
-    )
+    const autoplayPreference = useMediaStore((state) => state.autoplay)
+    const reduceMotion = useReducedMotion()
+    const network = useNetwork()
+
+    const isWifiOrBetter =
+        network.type !== "cellular" &&
+        network.type !== "bluetooth" &&
+        !network.saveData
+
+    const isGlobalAutoPlayEnabled =
+        !reduceMotion &&
+        (autoplayPreference === "always" ||
+            (autoplayPreference === "wifi" && isWifiOrBetter))
 
     const shouldAutoPlay =
         forceAutoPlay ||
@@ -321,11 +333,13 @@ function AnimatedMedia({
                 {
                     after: "pointer-events-none absolute inset-0 z-2 rounded-inherit border border-default/15"
                 },
-                dim &&
-                    !isInLightbox && {
+                dim && [
+                    {
                         "group-data-[media~='dim']/html:dark":
-                            "brightness-[0.87] contrast-[1.06] saturate-[1.04]"
-                    },
+                            "opacity-85 transition-opacity duration-350",
+                        "data-[lightbox-active=true]": "!opacity-100"
+                    }
+                ],
                 className
             )}
             style={{

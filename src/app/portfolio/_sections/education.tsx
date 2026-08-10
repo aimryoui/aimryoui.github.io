@@ -163,6 +163,8 @@ function Education() {
                                             "-mx-1.5 -my-0.5 inline-block text-pretty px-1.5 py-0.5 underline",
                                             {
                                                 "group-hover":
+                                                    "decoration-current decoration-solid",
+                                                "group-active":
                                                     "decoration-current decoration-solid"
                                             }
                                         )}

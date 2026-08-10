@@ -189,6 +189,7 @@ function Link({
                 "w-fit cursor-pointer text-pretty text-foreground underline",
                 {
                     hover: "decoration-current decoration-solid",
+                    active: "decoration-current decoration-solid",
                     "focus-visible": "text-highlighted"
                 },
                 highlight && "text-highlighted",
