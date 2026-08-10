@@ -5,13 +5,7 @@ import { join } from "node:path"
 
 import { ImageResponse } from "next/og"
 
-import { TRIM_PROJECT_SLUG_REGEX } from "@/helpers/character-regexes"
-import colorManifestRaw from "@/lib/color-manifest.json"
-import {
-    getProject,
-    getProjectRouteSlug,
-    groupProjectsByCategory
-} from "@/lib/project-sort"
+import { groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import {
     CornerBackgroundLayer,
@@ -20,7 +14,6 @@ import {
     LogoLayer
 } from "@/portfolio/[category]/_components/og/layers"
 import { Layer } from "@/portfolio/[category]/_components/og/og-components"
-import { type ColorManifest } from "@/scripts/process-colors"
 
 import { projects } from "~/.velite"
 
@@ -34,17 +27,13 @@ export const size = {
 export const contentType = "image/png"
 
 export function generateStaticParams() {
-    return groupProjectsByCategory(projects).flatMap((group) =>
-        group.projects.map((project) => ({
-            category: group.id,
-            slug: getProjectRouteSlug(project)
-        }))
-    )
+    return groupProjectsByCategory(projects).map((group) => ({
+        category: group.id
+    }))
 }
 
 const TRAILING_REGEX = /[.!?]$/u
 const MEDIA_REGEX = /\.(jpg|png|mp4|mp3)$/u
-const LIGHT_DARK_REGEX = /light-dark\((#[A-Fa-f0-9]+),\s*(#[A-Fa-f0-9]+)\)/u
 
 const googleSansFlexMedium = await readFile(
     join(process.cwd(), "public/fonts/GoogleSansFlex_36pt-Medium.ttf")
@@ -57,46 +46,25 @@ const googleSansFlexSemiBold = await readFile(
 export default async function Image({
     params
 }: {
-    params: Promise<{ category: string; slug: string }>
+    params: Promise<{ category: string }>
 }) {
-    const { category, slug } = await params
+    const { category } = await params
 
-    const project = getProject(projects, category, slug)
-    const description = project?.detail?.description ?? "Project detail page."
+    const groups = groupProjectsByCategory(projects)
+    const group = groups.find((g) => g.id === category)
+    const note = group?.note ?? "Category detail page."
 
-    const projectName = project?.name ?? "Aimryoui"
+    const title = group?.title ?? "Aimryoui"
 
-    const finalProjectName =
-        TRAILING_REGEX.test(projectName) || MEDIA_REGEX.test(projectName)
-            ? projectName
-            : `${projectName}.`
+    const finalTitle =
+        TRAILING_REGEX.test(title) || MEDIA_REGEX.test(title)
+            ? title
+            : `${title}.`
 
-    const manifestKey = project?.filePath.replace(TRIM_PROJECT_SLUG_REGEX, "")
-    const projectColor = manifestKey
-        ? (colorManifestRaw as ColorManifest)[manifestKey]?.theme
-        : undefined
-
-    const themeMode = {
-        light: 1,
-        dark: 2
-    }
-
-    const extractLightHex = (lightDarkStr?: string) => {
-        if (!lightDarkStr) return undefined
-        const match = LIGHT_DARK_REGEX.exec(lightDarkStr)
-        return match ? match[themeMode.light] : undefined
-    }
-
-    const bgHex = extractLightHex(projectColor?.background.hex) ?? "#ebecee"
-    const highlightedHex =
-        extractLightHex(projectColor?.highlighted.hex) ?? "#009ee7"
-    const foregroundHex =
-        extractLightHex(projectColor?.foreground.hex) ?? "#363b45"
-    const mutedForegroundHex =
-        extractLightHex(projectColor?.mutedForeground.hex) ?? "#72767f"
-
-    const patternHex = extractLightHex(projectColor?.pattern.hex) ?? "#d4d6d9"
-    const strokeHex = extractLightHex(projectColor?.stroke.hex) ?? "#ccced1"
+    const numProjects = group?.projects.length ?? 0
+    const formattedNum =
+        numProjects < 10 ? `0${numProjects}` : numProjects.toString()
+    const projectsCountText = `Category • ${formattedNum} Project${numProjects === 1 ? "" : "s"}`
 
     return new ImageResponse(
         <div
@@ -104,13 +72,13 @@ export default async function Image({
                 "flex h-full w-full flex-col items-center justify-center p-0"
             )}
             style={{
-                "--background": bgHex,
-                "--highlighted": highlightedHex,
-                "--foreground": foregroundHex,
-                "--muted-foreground": mutedForegroundHex,
+                "--background": "#ebecee",
+                "--highlighted": "#009ee7",
+                "--foreground": "#363b45",
+                "--muted-foreground": "#72767f",
 
-                "--pattern": patternHex,
-                "--stroke": strokeHex,
+                "--pattern": "#d4d6d9",
+                "--stroke": "#ccced1",
 
                 "--stroke-width": "2px",
 
@@ -126,7 +94,7 @@ export default async function Image({
             <CornerBackgroundLayer />
             <LineLayer />
             <DecorationLayer />
-            <LogoLayer color={highlightedHex} />
+            <LogoLayer color="#009ee7" />
 
             {/* Text */}
             <Layer>
@@ -147,7 +115,7 @@ export default async function Image({
                         paddingRight: "120px"
                     }}
                 >
-                    {`${project?.type ?? "Project"}${project?.category && ` • ${project.category}`}`}
+                    {projectsCountText}
                 </div>
                 <div
                     tw="absolute flex w-full flex-col"
@@ -173,7 +141,7 @@ export default async function Image({
                             lineClamp: 2
                         }}
                     >
-                        {finalProjectName}
+                        {finalTitle}
                     </div>
                     <div
                         tw="w-full"
@@ -185,7 +153,7 @@ export default async function Image({
                             lineClamp: '2 "… [See more]"'
                         }}
                     >
-                        {description}
+                        {note}
                     </div>
                 </div>
             </Layer>

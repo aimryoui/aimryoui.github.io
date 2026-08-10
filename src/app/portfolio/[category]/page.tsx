@@ -59,7 +59,6 @@ export async function generateMetadata({
 
     const CATEGORY_TITLE = `${group.title} Projects | aimryoui`
     const CATEGORY_DESCRIPTION = `${group.title} Category detail page.`
-    const portfolioOgImage = `${siteConfig.fullUrl}/portfolio/opengraph-image.jpg`
 
     return {
         title: CATEGORY_TITLE,
@@ -70,15 +69,13 @@ export async function generateMetadata({
             type: "website",
             url: APP_FULL_URL + APP_BASE_PATH,
             siteName: siteConfig.domain,
-            locale: "vi_VN",
-            images: [{ url: portfolioOgImage }]
+            locale: "vi_VN"
         },
         twitter: {
             card: "summary_large_image",
             title: CATEGORY_TITLE,
             description: CATEGORY_DESCRIPTION,
-            site: APP_FULL_URL + APP_BASE_PATH,
-            images: [portfolioOgImage]
+            site: APP_FULL_URL + APP_BASE_PATH
         }
     }
 }
