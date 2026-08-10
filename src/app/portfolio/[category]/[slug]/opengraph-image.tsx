@@ -36,7 +36,7 @@ const TRAILING_REGEX = /[.!?]$/u
 const MEDIA_REGEX = /\.(jpg|png|mp4|mp3)$/u
 
 const backgroundData = await readFile(
-    join(process.cwd(), "public/assets/og-background.png"),
+    join(process.cwd(), "public/images/og-background.png"),
     "base64"
 )
 const backgroundSrc = `data:image/png;base64,${backgroundData}`
@@ -105,33 +105,9 @@ export default async function Image({
                 {`${project?.type ?? "Project"}${project?.category && ` • ${project.category}`}`}
             </div>
             <div
-                tw="absolute w-full"
+                tw="absolute flex w-full flex-col"
                 style={{
-                    display: "block",
-                    fontSize: "85px",
-                    fontWeight: 600,
-                    lineHeight: 1,
-                    color: "var(--highlighted)",
-                    lineClamp: 2,
-
-                    bottom: "230px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-
-                    paddingLeft: "120px",
-                    paddingRight: "120px"
-                }}
-            >
-                {finalProjectName}
-            </div>
-            <div
-                tw="absolute w-full"
-                style={{
-                    display: "block",
-                    fontSize: "32px",
-                    lineHeight: 1.3,
-                    color: "var(--muted-foreground)",
-                    lineClamp: '2 "… [See more]"',
+                    gap: "20px",
 
                     bottom: "104px",
                     left: "50%",
@@ -141,7 +117,31 @@ export default async function Image({
                     paddingRight: "120px"
                 }}
             >
-                {description}
+                <div
+                    tw="w-full"
+                    style={{
+                        display: "block",
+                        fontSize: "85px",
+                        fontWeight: 600,
+                        lineHeight: 1,
+                        color: "var(--highlighted)",
+                        lineClamp: 2
+                    }}
+                >
+                    {finalProjectName}
+                </div>
+                <div
+                    tw="w-full"
+                    style={{
+                        display: "block",
+                        fontSize: "32px",
+                        lineHeight: 1.3,
+                        color: "var(--muted-foreground)",
+                        lineClamp: '2 "… [See more]"'
+                    }}
+                >
+                    {description}
+                </div>
             </div>
         </div>,
         {
