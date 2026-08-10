@@ -3,7 +3,6 @@
 import { useState } from "react"
 
 import { Ellipsis } from "@/components/icons/icons"
-import { AudioMenu } from "@/components/preferences/audio-menu"
 import { EffectsMenu } from "@/components/preferences/effects-menu"
 import { MediaMenu } from "@/components/preferences/media-menu"
 import { MotionMenu } from "@/components/preferences/motion-menu"
@@ -12,6 +11,7 @@ import {
     ResetMenuItem,
     ResetPreferenceAlertDialog
 } from "@/components/preferences/reset-menu-item"
+import { SoundsHapticsMenu } from "@/components/preferences/sounds-haptics-menu"
 import { SourceCodeMenuLinkItem } from "@/components/preferences/source-code-menu-link-item"
 import { Button } from "@/components/ui/button"
 import {
@@ -60,7 +60,7 @@ function PreferencesButton() {
                                                 Preferences
                                             </DropdownMenuLabel>
                                             <NavigationBarPositionMenu />
-                                            <AudioMenu />
+                                            <SoundsHapticsMenu />
                                             <MediaMenu />
                                             <EffectsMenu />
                                             <MotionMenu />

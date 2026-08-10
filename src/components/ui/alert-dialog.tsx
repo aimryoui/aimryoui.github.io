@@ -36,12 +36,17 @@ function AlertDialogOverlay({
         <AlertDialogPrimitive.Backdrop
             data-slot="alert-dialog-overlay"
             className={cn(
-                "fixed inset-0 isolate z-90 bg-black/40 duration-250",
+                "fixed inset-0 isolate z-90 bg-black/40",
                 {
                     dark: "bg-black/50",
                     "supports-[backdrop-filter]": "backdrop-blur-sm",
-                    "data-starting-style": "opacity-0 backdrop-blur-0",
-                    "data-ending-style": "opacity-0 backdrop-blur-0"
+                    "motion-preferred": [
+                        "duration-250",
+                        {
+                            "data-starting-style": "opacity-0 backdrop-blur-0",
+                            "data-ending-style": "opacity-0 backdrop-blur-0"
+                        }
+                    ]
                 },
                 className
             )}
@@ -55,7 +60,7 @@ function AlertDialogContent({
     size = "default",
     ...props
 }: AlertDialogPrimitive.Popup.Props & {
-    size?: "default" | "sm"
+    size?: "xl" | "lg" | "md" | "default" | "sm"
 }) {
     return (
         <AlertDialogPortal>
@@ -68,11 +73,19 @@ function AlertDialogContent({
                     playHoverSound("tick")
                 }}
                 className={cn(
-                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-90 grid w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl px-4 py-3 text-popover-foreground outline-none duration-250",
+                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-90 grid max-h-[calc(100dvh-var(--spacing)*4*2)] w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl px-4 py-3 text-popover-foreground outline-none",
                     {
-                        "data-starting-style": "scale-95 opacity-0",
-                        "data-ending-style": "scale-95 opacity-0",
-                        "data-[size=default]": "max-w-sm sm:max-w-xs",
+                        "motion-preferred": [
+                            "duration-250",
+                            {
+                                "data-starting-style": "scale-95 opacity-0",
+                                "data-ending-style": "scale-95 opacity-0"
+                            }
+                        ],
+                        "data-[size=xl]": "max-w-xl",
+                        "data-[size=lg]": "max-w-lg",
+                        "data-[size=md]": "max-w-md",
+                        "data-[size=default]": "max-w-sm",
                         "data-[size=sm]": "max-w-xs",
                         before: [
                             "pointer-events-none absolute -inset-4 -z-20 bg-[repeating-linear-gradient(315deg,var(--color-pattern)_0,var(--color-pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]",
@@ -81,11 +94,16 @@ function AlertDialogContent({
                             }
                         ],
                         after: [
-                            "pointer-events-none absolute inset-0 -z-10 rounded-inherit bg-popover ring ring-stroke transition-[border-radius] duration-100",
+                            "pointer-events-none absolute inset-0 -z-10 rounded-inherit bg-popover ring ring-stroke",
                             {
-                                hover: "rounded-none duration-200"
+                                "motion-preferred":
+                                    "transition-[border-radius] duration-100",
+                                "hover:data-target-cursor":
+                                    "rounded-none duration-200"
                             }
-                        ]
+                        ],
+
+                        sm: "max-w-[calc(100vw-var(--spacing)*4*2)]"
                     },
                     className
                 )}

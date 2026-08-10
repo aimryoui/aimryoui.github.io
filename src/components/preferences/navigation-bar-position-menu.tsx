@@ -1,4 +1,5 @@
 import { sendGAEvent } from "@next/third-parties/google"
+import { AppWindow } from "lucide-react"
 
 import {
     DropdownMenuRadioGroup,
@@ -14,6 +15,11 @@ import {
     useSidebarPositionStore,
     useToolbarPositionStore
 } from "@/stores/navigation-bar-position-store"
+
+const MENU_CONFIG = {
+    name: "Navigation",
+    icon: AppWindow
+}
 
 function NavigationBarPositionMenu() {
     const isMobile = useMediaQuery("lg")
@@ -31,6 +37,7 @@ function NavigationBarPositionMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
+                <MENU_CONFIG.icon />
                 {isMobile ? "Toolbar position" : "Sidebar position"}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
@@ -82,4 +89,4 @@ function NavigationBarPositionMenu() {
     )
 }
 
-export { NavigationBarPositionMenu }
+export { MENU_CONFIG, NavigationBarPositionMenu }

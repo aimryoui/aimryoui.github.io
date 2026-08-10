@@ -33,7 +33,10 @@ interface EffectConfig {
     shouldDisable?: (ctx: EffectDisableContext) => boolean
 }
 
-const MENU_NAME = "Visual effects"
+const MENU_CONFIG = {
+    name: "Visual effects",
+    icon: Sparkles
+}
 
 const EFFECTS: Record<Effect, EffectConfig> = {
     "target-cursor": {
@@ -70,8 +73,8 @@ function EffectsMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <Sparkles />
-                {MENU_NAME}
+                <MENU_CONFIG.icon />
+                {MENU_CONFIG.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 {AVAILABLE_EFFECTS.map((effect) => (
@@ -102,4 +105,4 @@ function EffectsMenu() {
     )
 }
 
-export { EffectsMenu }
+export { EFFECTS, EffectsMenu, MENU_CONFIG }

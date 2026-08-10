@@ -297,7 +297,8 @@ function DropdownMenuItem({
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
-                    "data-disabled": "pointer-events-none opacity-50",
+                    "data-disabled":
+                        "cursor-not-allowed bg-transparent opacity-50",
                     "data-[variant=destructive]": [
                         "text-destructive",
                         {
@@ -524,7 +525,8 @@ function DropdownMenuLinkItem({
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
-                    "data-disabled": "pointer-events-none opacity-50",
+                    "data-disabled":
+                        "cursor-not-allowed bg-transparent opacity-50",
                     "[&_svg]": "pointer-events-none shrink-0",
                     "[&_svg:not([class*='size-'])]": "size-4"
                 },
@@ -613,7 +615,8 @@ function DropdownMenuCheckboxItem({
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
-                    "data-disabled": "pointer-events-none opacity-50",
+                    "data-disabled":
+                        "cursor-not-allowed bg-transparent opacity-50",
                     "[&_svg:not([class*='size-'])]": "size-4",
                     "[&_svg]": "pointer-events-none shrink-0"
                 },
@@ -699,7 +702,8 @@ function DropdownMenuRadioItem({
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
-                    "data-disabled": "pointer-events-none opacity-50",
+                    "data-disabled":
+                        "cursor-not-allowed bg-transparent opacity-50",
                     "[&_svg:not([class*='size-'])]": "size-4",
                     "[&_svg]": "pointer-events-none shrink-0"
                 },

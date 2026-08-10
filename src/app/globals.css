@@ -121,9 +121,8 @@
             oklch(0.3112 0.0162 252.5)
         ); /* NHN */
 
-        --color-element-hover: light-dark(
-            oklch(from var(--color-background) calc(l - 0.015) c h),
-            oklch(from var(--color-background) calc(l + 0.05) c h)
+        --color-element-hover: oklch(
+            from var(--color-default) l c h / 0.1
         ); /* NHN */
     }
 }

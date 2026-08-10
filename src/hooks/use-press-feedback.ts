@@ -6,6 +6,7 @@ import { type HapticVariantsType } from "@/components/ui/button"
 import { useDevice } from "@/hooks/use-device"
 import { type PressSoundType, playPressSound } from "@/lib/sounds"
 import { useAudioStore } from "@/stores/audio-store"
+import { useHapticsStore } from "@/stores/haptics-store"
 
 function usePressFeedback() {
     const { trigger } = useWebHaptics()
@@ -20,7 +21,7 @@ function usePressFeedback() {
                 playPressSound(soundType)
             }
 
-            if (isTouchDevice) {
+            if (isTouchDevice && useHapticsStore.getState().isHapticEnabled) {
                 void trigger(hapticType)
             }
         },

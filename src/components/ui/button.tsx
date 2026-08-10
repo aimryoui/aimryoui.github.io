@@ -66,7 +66,7 @@ const buttonVariants = cva(
                     "aria-expanded": "bg-muted text-foreground"
                 }),
                 destructive: cn("bg-destructive text-white", {
-                    hover: "bg-destructive/90",
+                    hover: "bg-destructive/60",
                     "focus-visible": "ring-destructive/20",
                     dark: [
                         "bg-destructive/80",

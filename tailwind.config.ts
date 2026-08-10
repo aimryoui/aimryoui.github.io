@@ -395,7 +395,7 @@ export default {
             pattern: colorMix("--color-pattern"),
             stroke: colorMix("--color-stroke"),
 
-            "element-hover": "var(--color-element-hover)"
+            "element-hover": colorMix("--color-element-hover")
         }
     },
     plugins: [

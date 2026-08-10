@@ -27,7 +27,10 @@ interface MediaPreferenceConfig {
     shouldDisable?: (reduceMotion: boolean) => boolean
 }
 
-const MENU_NAME = "Media"
+const MENU_CONFIG = {
+    name: "Media",
+    icon: Images
+}
 
 const MEDIA_PREFERENCES: Record<MediaPreference, MediaPreferenceConfig> = {
     dim: {
@@ -66,8 +69,8 @@ function MediaMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <Images />
-                {MENU_NAME}
+                <MENU_CONFIG.icon />
+                {MENU_CONFIG.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 {AVAILABLE_MEDIA_PREFERENCES.map((preference) => (
@@ -129,4 +132,4 @@ function MediaMenu() {
     )
 }
 
-export { MEDIA_PREFERENCES, MENU_NAME, MediaMenu }
+export { AUTOPLAY_OPTIONS, MEDIA_PREFERENCES, MENU_CONFIG, MediaMenu }

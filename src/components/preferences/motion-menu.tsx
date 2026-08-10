@@ -18,7 +18,10 @@ interface MotionPreferenceConfig {
     icon?: React.ReactNode
 }
 
-const MENU_NAME = "Motion"
+const MENU_CONFIG = {
+    name: "Motion",
+    icon: SquareStack
+}
 
 const MOTION_PREFERENCES: Record<MotionPreference, MotionPreferenceConfig> = {
     preferred: {
@@ -50,8 +53,8 @@ function MotionMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <SquareStack />
-                {MENU_NAME}
+                <MENU_CONFIG.icon />
+                {MENU_CONFIG.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup
@@ -82,4 +85,4 @@ function MotionMenu() {
     )
 }
 
-export { MENU_NAME, MOTION_PREFERENCES, MotionMenu }
+export { MENU_CONFIG, MOTION_PREFERENCES, MotionMenu }
