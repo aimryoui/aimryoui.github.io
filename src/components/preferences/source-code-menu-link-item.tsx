@@ -18,7 +18,7 @@ const SOURCE_CODE_MENU: SourceCodeMenuConfig = {
     icon: <CodeXml />
 }
 
-function SourceCodeMenu() {
+function SourceCodeMenuLinkItem() {
     return (
         <DropdownMenuLinkItem
             href={SOURCE_CODE_MENU.href}
@@ -32,4 +32,4 @@ function SourceCodeMenu() {
     )
 }
 
-export { MENU_NAME, SOURCE_CODE_MENU, SourceCodeMenu }
+export { MENU_NAME, SOURCE_CODE_MENU, SourceCodeMenuLinkItem }

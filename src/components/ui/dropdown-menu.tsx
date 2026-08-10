@@ -187,9 +187,7 @@ function DropdownMenuContent({
                                     "data-instant": "transition-[border-radius]"
                                 }
                             ],
-                            "data-instant": "transition-none",
-
-                            sm: "max-w-[--available-width]"
+                            "data-instant": "transition-none"
                         },
                         className
                     )}
@@ -442,7 +440,10 @@ function DropdownMenuSubTrigger({
                             "pointer-events-none absolute right-2 top-2 grid size-5 place-items-center"
                         )}
                     >
-                        <ChevronRightIcon className="cn-rtl-flip" />
+                        <ChevronRightIcon
+                            strokeWidth={1.5}
+                            className="cn-rtl-flip size-5"
+                        />
                     </span>
                 </Comp>
                 {description && (
