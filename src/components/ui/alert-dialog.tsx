@@ -103,7 +103,8 @@ function AlertDialogContent({
                             }
                         ],
 
-                        sm: "max-w-[calc(100vw-var(--spacing)*4*2)]"
+                        "data-[size]:sm":
+                            "max-w-[calc(100vw-var(--spacing)*4*2)]"
                     },
                     className
                 )}
