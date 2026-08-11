@@ -13,15 +13,14 @@ import {
     resolveSocialData,
     type SocialData
 } from "@/portfolio/_helpers/resolve-social-data"
-
-import { type projects } from "~/.velite"
+import { type ProjectId } from "@/types/project-ids"
 
 interface SocialType {
     socialType?: "behance" | "dribbble" | "product-website"
 }
 
 interface SocialButtonProps extends Omit<LinkButtonProps, "href"> {
-    projectId: (typeof projects)[number]["id"]
+    projectId: ProjectId
     social?: SocialData
     isSelectedWorks: boolean
 }

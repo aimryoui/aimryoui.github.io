@@ -14,6 +14,7 @@ import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 import { TOOL_ICONS } from "@/portfolio/_configs/tools"
+import { type ProjectId } from "@/types/project-ids"
 
 import { type projects } from "~/.velite"
 
@@ -36,7 +37,7 @@ function ProjectHeader({
     (typeof projects)[number],
     "id" | "name" | "forceExpand" | "slug" | "code" | "filePath"
 > & {
-    projectId: (typeof projects)[number]["id"]
+    projectId: ProjectId
     projectName: (typeof projects)[number]["name"]
     isSelectedWorks?: boolean
 }) {
@@ -216,7 +217,7 @@ function ProjectName({
     projectName,
     isSelectedWorks = false
 }: {
-    projectId: (typeof projects)[number]["id"]
+    projectId: ProjectId
     projectName: string
     isSelectedWorks?: boolean
 }) {

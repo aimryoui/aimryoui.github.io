@@ -12,6 +12,7 @@ import {
 } from "velite"
 
 import { TOOL_ICONS, type ToolKey } from "@/portfolio/_configs/tools"
+import { type ProjectId } from "@/types/project-ids"
 
 const HEX_COLOR_REGEX = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/u
 const DIM_PROP_REGEX = /<[^>]+?\bdim\b[^>]*?>/u
@@ -27,7 +28,7 @@ const projects = defineCollection({
     name: "Project",
     pattern: "projects/**/*.mdx",
     schema: s.object({
-        id: fileNameWithoutExt(),
+        id: fileNameWithoutExt() as Schema<ProjectId>,
         slug: s.path(),
         filePath: s.path(),
         // oxlint-disable-next-line typescript/no-unnecessary-type-assertion

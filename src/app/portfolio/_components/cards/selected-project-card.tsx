@@ -13,8 +13,9 @@ import {
     resolveSocialData,
     type SocialData
 } from "@/portfolio/_helpers/resolve-social-data"
+import { type ProjectId } from "@/types/project-ids"
 
-import { type Project, type projects } from "~/.velite"
+import { type Project } from "~/.velite"
 
 interface SelectedProjectCardProps {
     project: Project
@@ -154,7 +155,7 @@ function ProjectCover({
     src,
     ...props
 }: React.ComponentProps<"div"> & {
-    projectId: (typeof projects)[number]["id"]
+    projectId: ProjectId
     src: string
     social?: SocialData
 }) {
@@ -176,6 +177,7 @@ function ProjectCover({
             >
                 <Image
                     lightbox={false}
+                    dim={projectId === "bean-jr"}
                     src={src}
                     alt=""
                     asBackgroundImage
@@ -194,7 +196,7 @@ function ProjectName({
     isNew,
     ...props
 }: React.ComponentProps<typeof Bold> & {
-    projectId: (typeof projects)[number]["id"]
+    projectId: ProjectId
     name: string
     isNew: boolean
 }) {

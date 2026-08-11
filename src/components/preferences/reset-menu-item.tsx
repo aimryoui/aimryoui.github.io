@@ -276,13 +276,13 @@ function ResetPreferenceAlertDialog({
                                                                             }
                                                                             className={cn(
                                                                                 "relative flex items-baseline gap-2 text-muted-foreground",
-                                                                                "[--indent:-14.5px] [--line-width:var(--px)] [--top-offset:var(--spacing)]",
+                                                                                "[--indent:-0.90625rem] [--line-width:var(--px)] [--top-offset:var(--spacing)]",
                                                                                 {
                                                                                     before: [
                                                                                         "absolute left-[--indent] w-2.5 rounded-bl-sm border-b border-l border-stroke",
                                                                                         isFirst
                                                                                             ? "-top-[--top-offset] h-[calc(theme(fontSize.sm.1)/2+var(--line-width)/2+var(--top-offset))]"
-                                                                                            : "top-0 h-[10.5px]"
+                                                                                            : "top-0 h-[.65625rem]"
                                                                                     ],
                                                                                     after: !isLast && [
                                                                                         "absolute left-[--indent] w-[--line-width] bg-stroke",
@@ -343,7 +343,7 @@ function ResetPreferenceAlertDialog({
                                                                                         change.from
                                                                                     }
                                                                                 </span>
-                                                                                <ArrowRight className="mx-1.5 mb-[2px] inline-block size-3 align-middle text-muted-foreground" />
+                                                                                <ArrowRight className="mx-1.5 mb-0.5 inline-block size-3 align-middle text-muted-foreground" />
                                                                                 <span className="text-primary font-wght-600">
                                                                                     {
                                                                                         change.to
