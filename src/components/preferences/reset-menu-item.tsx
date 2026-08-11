@@ -399,7 +399,14 @@ function ResetPreferenceAlertDialog({
                                                                     }
                                                                 </span>
                                                             </div>
-                                                            <ul className="flex flex-col gap-[--gap] pl-5.5">
+                                                            <ul
+                                                                className={cn(
+                                                                    // 4 is icon size, 1.5 is the gap between icon and label
+                                                                    "[--indent:calc(var(--spacing)*4+var(--spacing)*1.5)]",
+                                                                    "[--line-indent:calc(var(--indent)-var(--spacing)*4/2+var(--line-width)/3)] [--line-width:var(--px)] [--top-offset:calc(var(--gap)-var(--spacing)*.5)]",
+                                                                    "flex flex-col gap-[--gap] pl-[--indent]"
+                                                                )}
+                                                            >
                                                                 {group.changes.map(
                                                                     (
                                                                         change,
@@ -427,16 +434,15 @@ function ResetPreferenceAlertDialog({
                                                                                 }
                                                                                 className={cn(
                                                                                     "relative flex items-baseline gap-2",
-                                                                                    "[--indent:-0.90625rem] [--line-width:var(--px)] [--top-offset:calc(var(--gap)-var(--spacing)*.5)]",
                                                                                     {
                                                                                         before: [
-                                                                                            "absolute left-[--indent] w-2 rounded-bl-sm border-b-[length:--line-width] border-l-[length:--line-width] border-stroke",
+                                                                                            "absolute -left-[--line-indent] w-2.25 rounded-bl-sm border-b-[length:--line-width] border-l-[length:--line-width] border-stroke",
                                                                                             isFirst
                                                                                                 ? "-top-[--top-offset] h-[calc(theme(fontSize.sm.1)/2+var(--line-width)/2+var(--top-offset))]"
                                                                                                 : "top-0 h-[.65625rem]"
                                                                                         ],
                                                                                         after: !isLast && [
-                                                                                            "absolute left-[--indent] border-l-[length:--line-width] border-stroke",
+                                                                                            "absolute -left-[--line-indent] border-l-[length:--line-width] border-stroke",
                                                                                             isFirst
                                                                                                 ? "-top-[--top-offset]"
                                                                                                 : "top-0",
@@ -446,7 +452,7 @@ function ResetPreferenceAlertDialog({
                                                                                 )}
                                                                             >
                                                                                 {/* <svg
-                                                                                    className="absolute left-[--indent] w-2.5 overflow-visible text-stroke pointer-events-none"
+                                                                                    className="absolute -left-[--line-indent] w-2.5 overflow-visible text-stroke pointer-events-none"
                                                                                     style={{
                                                                                         top: isFirst ? "calc(-1 * var(--top-offset))" : "0",
                                                                                         height: isLast
