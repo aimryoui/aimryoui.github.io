@@ -8,10 +8,10 @@ import {
 } from "@/components/media/animated-media"
 import { LightboxItem } from "@/components/ui/lightbox"
 import { getParsedMediaData } from "@/helpers/get-parsed-media-data"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { cn } from "@/lib/utils"
 import videoManifestRaw from "@/lib/video-manifest.json"
 import { type VideoManifest } from "@/scripts/process-videos"
+import { useMediaStore } from "@/stores/media-store"
 
 interface GifCoreProps extends AnimatedMediaProps {
     lightbox?: boolean
@@ -25,7 +25,7 @@ function GifCore({
     ref,
     ...props
 }: GifCoreProps) {
-    const reduceMotion = useReducedMotion()
+    const autoplayTypes = useMediaStore((state) => state.autoplayTypes)
 
     return (
         <AnimatedMedia
@@ -36,13 +36,10 @@ function GifCore({
             rounded={rounded}
             className={cn("cursor-zoom-in", className)}
             {...props}
-            autoplay={!reduceMotion}
-            autoPlay={!reduceMotion}
-            forceAutoPlay={!reduceMotion}
+            autoPlay={autoplayTypes.includes("gifs")}
             loop={true}
             muted={true}
             mute={true}
-            controls={reduceMotion}
         />
     )
 }

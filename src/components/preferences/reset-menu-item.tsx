@@ -38,8 +38,10 @@ import {
     DEFAULT_EFFECTS_PREFERENCES
 } from "@/configs/effects.config"
 import {
+    AUTOPLAY_TYPES,
     AVAILABLE_MEDIA_PREFERENCES,
     DEFAULT_AUTOPLAY_PREFERENCE,
+    DEFAULT_AUTOPLAY_TYPES,
     DEFAULT_MEDIA_PREFERENCES
 } from "@/configs/media.config"
 import { DEFAULT_MOTION_PREFERENCES } from "@/configs/motion.config"
@@ -146,6 +148,18 @@ const getPreferenceChanges = () => {
         })
     }
 
+    AUTOPLAY_TYPES.forEach((type) => {
+        const current = mediaState.autoplayTypes.includes(type)
+        const def = DEFAULT_AUTOPLAY_TYPES.includes(type)
+        if (current !== def) {
+            categoriesMap[MEDIA_MENU.name].changes.push({
+                name: `Auto-play ${type}`,
+                from: current ? "On" : "Off",
+                to: def ? "On" : "Off"
+            })
+        }
+    })
+
     const motionState = useMotionStore.getState()
     if (motionState.preference !== DEFAULT_MOTION_PREFERENCES) {
         categoriesMap[MOTION_MENU.name].changes.push({
@@ -204,6 +218,7 @@ function ResetPreferenceAlertDialog({
         useEffectsStore.getState().setEffects(DEFAULT_EFFECTS_PREFERENCES)
         useMediaStore.getState().setPreferences(DEFAULT_MEDIA_PREFERENCES)
         useMediaStore.getState().setAutoplay(DEFAULT_AUTOPLAY_PREFERENCE)
+        useMediaStore.getState().setAutoplayTypes(DEFAULT_AUTOPLAY_TYPES)
         useHapticsStore.getState().setIsHapticEnabled(true)
         useMotionStore.getState().setPreference(DEFAULT_MOTION_PREFERENCES)
         useSidebarPositionStore

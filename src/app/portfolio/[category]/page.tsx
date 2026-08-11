@@ -100,249 +100,265 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
     if (!group) notFound()
 
+    const OG_ALT = `${group.title} Projects`
+
     return (
-        // <ViewTransition name="main">
-        <main className={cn("relative flex-1")}>
-            <FlashOverlay />
-            <Space
-                className={cn("flex items-center justify-start px-safe-zone")}
-            >
-                <PortfolioBreadcrumb
-                    category={category}
-                    categoryTitle={group.title}
-                />
-            </Space>
-            <SectionLine showDecoration />
-            <Space />
-            <SectionLine containerClassName="z-55" />
-            <section>
-                <SectionTitle
-                    id={group.id}
-                    headingLevel="1"
-                    title={group.title}
-                    note={group.note}
-                />
-                <SectionLine />
-                <div className={cn("bg-background")}>
-                    <div className={cn("bg-highlighted/10 p-2")}>
-                        <div
-                            className={cn(
-                                "flex aspect-3 size-full items-center justify-evenly rounded-2xl border border-highlighted bg-background",
-                                "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]",
-                                {
-                                    md: "rounded-xl",
-                                    sm: "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.09375rem,transparent_.09375rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.09375rem,transparent_.09375rem)] bg-[length:.5625rem_.5625rem] bg-[position:0_0,.28125rem_.28125rem]"
-                                }
-                            )}
-                        >
-                            {group.icons}
+        <>
+            <head>
+                <meta property="og:image:alt" content={OG_ALT} />
+                <meta name="twitter:image:alt" content={OG_ALT} />
+            </head>
+            {/* <ViewTransition name="main"> */}
+            <main className={cn("relative flex-1")}>
+                <FlashOverlay />
+                <Space
+                    className={cn(
+                        "flex items-center justify-start px-safe-zone"
+                    )}
+                >
+                    <PortfolioBreadcrumb
+                        category={category}
+                        categoryTitle={group.title}
+                    />
+                </Space>
+                <SectionLine showDecoration />
+                <Space />
+                <SectionLine containerClassName="z-55" />
+                <section>
+                    <SectionTitle
+                        id={group.id}
+                        headingLevel="1"
+                        title={group.title}
+                        note={group.note}
+                    />
+                    <SectionLine />
+                    <div className={cn("bg-background")}>
+                        <div className={cn("bg-highlighted/10 p-2")}>
+                            <div
+                                className={cn(
+                                    "flex aspect-3 size-full items-center justify-evenly rounded-2xl border border-highlighted bg-background",
+                                    "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]",
+                                    {
+                                        md: "rounded-xl",
+                                        sm: "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.09375rem,transparent_.09375rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.09375rem,transparent_.09375rem)] bg-[length:.5625rem_.5625rem] bg-[position:0_0,.28125rem_.28125rem]"
+                                    }
+                                )}
+                            >
+                                {group.icons}
+                            </div>
                         </div>
                     </div>
-                </div>
+                    <SectionLine />
+                    <Divider />
+                    <SectionLine />
+                    <ul
+                        className={cn(
+                            "grid grid-cols-2 bg-background md:grid-cols-1"
+                        )}
+                    >
+                        {group.projects.map((project, index) => (
+                            <li
+                                key={project.slug}
+                                data-cursor="target"
+                                className="group"
+                            >
+                                <ProjectCard
+                                    href={getProjectPath(project)}
+                                    project={project}
+                                />
+                                {index < group.projects.length - 1 && (
+                                    <SectionLine
+                                        className={cn({
+                                            lg: "w-[calc(100%+var(--spacing-safe-zone))]",
+                                            "group-odd": "right-0",
+                                            "group-even": [
+                                                "w-[calc(100%+var(--spacing-safe-zone))]",
+                                                {
+                                                    lg: "-right-safe-zone left-auto"
+                                                }
+                                            ]
+                                        })}
+                                    />
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </section>
                 <SectionLine />
                 <Divider />
                 <SectionLine />
-                <ul
-                    className={cn(
-                        "grid grid-cols-2 bg-background md:grid-cols-1"
-                    )}
-                >
-                    {group.projects.map((project, index) => (
-                        <li
-                            key={project.slug}
-                            data-cursor="target"
-                            className="group"
-                        >
-                            <ProjectCard
-                                href={getProjectPath(project)}
-                                project={project}
-                            />
-                            {index < group.projects.length - 1 && (
-                                <SectionLine
-                                    className={cn({
-                                        lg: "w-[calc(100%+var(--spacing-safe-zone))]",
-                                        "group-odd": "right-0",
-                                        "group-even": [
-                                            "w-[calc(100%+var(--spacing-safe-zone))]",
-                                            {
-                                                lg: "-right-safe-zone left-auto"
-                                            }
-                                        ]
-                                    })}
-                                />
+                <Note bold>
+                    {isSelectedWorks
+                        ? "That's what I've picked. What's next?"
+                        : "Category ends. What's next?"}
+                </Note>
+                <SectionLine />
+                <section className={cn("bg-background")}>
+                    <Pagination>
+                        <PaginationContent
+                            className={cn(
+                                "grid grid-cols-[1fr_0_1fr] items-center"
                             )}
-                        </li>
-                    ))}
-                </ul>
-            </section>
-            <SectionLine />
-            <Divider />
-            <SectionLine />
-            <Note bold>
-                {isSelectedWorks
-                    ? "That's what I've picked. What's next?"
-                    : "Category ends. What's next?"}
-            </Note>
-            <SectionLine />
-            <section className={cn("bg-background")}>
-                <Pagination>
-                    <PaginationContent
-                        className={cn(
-                            "grid grid-cols-[1fr_0_1fr] items-center"
-                        )}
-                    >
-                        <PaginationItem>
-                            <PaginationPrevious
-                                href={
-                                    prev
-                                        ? getCategoryPath(prev.id)
-                                        : isSelectedWorks
-                                          ? "/portfolio#selected-works"
-                                          : "/portfolio#design-projects"
-                                }
-                                {...(!prev && {
-                                    label: isSelectedWorks
-                                        ? "Go back to Portfolio"
-                                        : "Go back to Design Projects"
-                                })}
-                                tracking={{
-                                    eventName: prev
-                                        ? "navigate_category"
-                                        : "navigate_hash",
-                                    eventParams: {
-                                        category_id: prev
-                                            ? prev.id
+                        >
+                            <PaginationItem>
+                                <PaginationPrevious
+                                    href={
+                                        prev
+                                            ? getCategoryPath(prev.id)
                                             : isSelectedWorks
-                                              ? "selected-works"
-                                              : "design-projects",
-                                        category_title: prev
-                                            ? prev.title
-                                            : isSelectedWorks
-                                              ? "Portfolio"
-                                              : "Design Projects",
-                                        direction: "backward"
+                                              ? "/portfolio#selected-works"
+                                              : "/portfolio#design-projects"
                                     }
-                                }}
-                                className={cn(
-                                    "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
-                                    {
-                                        hover: "bg-highlighted/5 transition-none",
-                                        active: "bg-highlighted/10 transition-none"
-                                    }
-                                )}
-                            >
-                                <ArrowLeft
+                                    {...(!prev && {
+                                        label: isSelectedWorks
+                                            ? "Go back to Portfolio"
+                                            : "Go back to Design Projects"
+                                    })}
+                                    tracking={{
+                                        eventName: prev
+                                            ? "navigate_category"
+                                            : "navigate_hash",
+                                        eventParams: {
+                                            category_id: prev
+                                                ? prev.id
+                                                : isSelectedWorks
+                                                  ? "selected-works"
+                                                  : "design-projects",
+                                            category_title: prev
+                                                ? prev.title
+                                                : isSelectedWorks
+                                                  ? "Portfolio"
+                                                  : "Design Projects",
+                                            direction: "backward"
+                                        }
+                                    }}
                                     className={cn(
-                                        "m-1 transition-[color] duration-100",
+                                        "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                         {
-                                            "group-hover":
-                                                "text-highlighted transition-none",
-                                            "group-active":
-                                                "text-highlighted transition-none"
+                                            hover: "bg-highlighted/5 transition-none",
+                                            active: "bg-highlighted/10 transition-none"
                                         }
                                     )}
-                                />
-                                <div
-                                    className={cn("text-right", {
-                                        sm: "flex flex-col"
-                                    })}
                                 >
-                                    {prev ? (
-                                        <>
-                                            <BoldPart>{prev.title}</BoldPart>
-                                            <TextPart secodary>
-                                                {prev.note}
-                                            </TextPart>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <TextPart>Back to</TextPart>{" "}
-                                            <BoldPart>
-                                                {isSelectedWorks
-                                                    ? "Portfolio"
-                                                    : "Design Projects"}
-                                            </BoldPart>
-                                        </>
-                                    )}
-                                </div>
-                            </PaginationPrevious>
-                        </PaginationItem>
-                        <li className="h-full">
-                            <SvgElementLine />
-                        </li>
-                        <PaginationItem>
-                            <PaginationNext
-                                href={
-                                    next
-                                        ? getCategoryPath(next.id)
-                                        : "/portfolio#contact"
-                                }
-                                {...(!next && {
-                                    label: "No more categories, contact me"
-                                })}
-                                tracking={{
-                                    eventName: next
-                                        ? "navigate_category"
-                                        : "navigate_hash",
-                                    eventParams: {
-                                        category_id: next ? next.id : "contact",
-                                        category_title: next
-                                            ? next.title
-                                            : "Contact",
-                                        direction: "forward"
+                                    <ArrowLeft
+                                        className={cn(
+                                            "m-1 transition-[color] duration-100",
+                                            {
+                                                "group-hover":
+                                                    "text-highlighted transition-none",
+                                                "group-active":
+                                                    "text-highlighted transition-none"
+                                            }
+                                        )}
+                                    />
+                                    <div
+                                        className={cn("text-right", {
+                                            sm: "flex flex-col"
+                                        })}
+                                    >
+                                        {prev ? (
+                                            <>
+                                                <BoldPart>
+                                                    {prev.title}
+                                                </BoldPart>
+                                                <TextPart secodary>
+                                                    {prev.note}
+                                                </TextPart>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <TextPart>Back to</TextPart>{" "}
+                                                <BoldPart>
+                                                    {isSelectedWorks
+                                                        ? "Portfolio"
+                                                        : "Design Projects"}
+                                                </BoldPart>
+                                            </>
+                                        )}
+                                    </div>
+                                </PaginationPrevious>
+                            </PaginationItem>
+                            <li className="h-full">
+                                <SvgElementLine />
+                            </li>
+                            <PaginationItem>
+                                <PaginationNext
+                                    href={
+                                        next
+                                            ? getCategoryPath(next.id)
+                                            : "/portfolio#contact"
                                     }
-                                }}
-                                className={cn(
-                                    "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
-                                    {
-                                        hover: "bg-highlighted/5 transition-none",
-                                        active: "bg-highlighted/10 transition-none"
-                                    }
-                                )}
-                            >
-                                <div
-                                    className={cn({
-                                        sm: "flex flex-col"
+                                    {...(!next && {
+                                        label: "No more categories, contact me"
                                     })}
-                                >
-                                    {next ? (
-                                        <>
-                                            <BoldPart>{next.title}</BoldPart>
-                                            <TextPart secodary>
-                                                {next.note}
-                                            </TextPart>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <TextPart>
-                                                No more categories.
-                                            </TextPart>{" "}
-                                            <BoldPart>Contact me</BoldPart>
-                                        </>
-                                    )}
-                                </div>
-                                <ArrowRight
+                                    tracking={{
+                                        eventName: next
+                                            ? "navigate_category"
+                                            : "navigate_hash",
+                                        eventParams: {
+                                            category_id: next
+                                                ? next.id
+                                                : "contact",
+                                            category_title: next
+                                                ? next.title
+                                                : "Contact",
+                                            direction: "forward"
+                                        }
+                                    }}
                                     className={cn(
-                                        "m-1 transition-[color] duration-100",
+                                        "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
                                         {
-                                            "group-hover":
-                                                "text-highlighted transition-none",
-                                            "group-active":
-                                                "text-highlighted transition-none"
+                                            hover: "bg-highlighted/5 transition-none",
+                                            active: "bg-highlighted/10 transition-none"
                                         }
                                     )}
-                                />
-                            </PaginationNext>
-                        </PaginationItem>
-                    </PaginationContent>
-                </Pagination>
-            </section>
-            <SectionLine />
-            <Divider />
-            <SectionLine />
+                                >
+                                    <div
+                                        className={cn({
+                                            sm: "flex flex-col"
+                                        })}
+                                    >
+                                        {next ? (
+                                            <>
+                                                <BoldPart>
+                                                    {next.title}
+                                                </BoldPart>
+                                                <TextPart secodary>
+                                                    {next.note}
+                                                </TextPart>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <TextPart>
+                                                    No more categories.
+                                                </TextPart>{" "}
+                                                <BoldPart>Contact me</BoldPart>
+                                            </>
+                                        )}
+                                    </div>
+                                    <ArrowRight
+                                        className={cn(
+                                            "m-1 transition-[color] duration-100",
+                                            {
+                                                "group-hover":
+                                                    "text-highlighted transition-none",
+                                                "group-active":
+                                                    "text-highlighted transition-none"
+                                            }
+                                        )}
+                                    />
+                                </PaginationNext>
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
+                </section>
+                <SectionLine />
+                <Divider />
+                <SectionLine />
 
-            <Footer />
-        </main>
-        // </ViewTransition>
+                <Footer />
+            </main>
+            {/* </ViewTransition> */}
+        </>
     )
 }

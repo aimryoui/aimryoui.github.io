@@ -101,6 +101,54 @@ function getBorderRadiusShorthand(rounded: CornerRound, radiusVal: string) {
     }
 }
 
+function removeBackground(e: React.SyntheticEvent<HTMLImageElement>) {
+    e.currentTarget.style.background = ""
+}
+
+function calculateImageGridVars(exactW: number, exactH: number) {
+    const Rows = GRID_ROWS
+    const Cols = GRID_COLS
+
+    const spriteW = exactW + Cols * 2 * EDGE_PAD
+    const spriteH = exactH + Rows * 2 * EDGE_PAD
+
+    const imgWidthPercent = (spriteW / exactW) * 100
+    const imgHeightPercent = (spriteH / exactH) * 100
+
+    const padX_val = (EDGE_PAD / spriteW) * 100
+    const padY_val = (EDGE_PAD / spriteH) * 100
+
+    const colPct_val = 100 / Cols
+    const rowPct_val = 100 / Rows
+
+    const targetColPct_val = (exactW / spriteW / Cols) * 100
+    const targetRowPct_val = (exactH / spriteH / Rows) * 100
+
+    const vars: Record<string, string> = {
+        "--w": `${imgWidthPercent.toString()}%`,
+        "--h": `${imgHeightPercent.toString()}%`
+    }
+
+    for (let i = 0; i < Cols; i++) {
+        vars[`--x${i.toString()}`] =
+            `${(i * colPct_val + padX_val).toString()}%`
+    }
+    for (let i = 0; i < Rows; i++) {
+        vars[`--y${i.toString()}`] =
+            `${(i * rowPct_val + padY_val).toString()}%`
+    }
+
+    return {
+        cssVars: vars,
+        targetColPct: targetColPct_val,
+        targetRowPct: targetRowPct_val,
+        colPct: colPct_val,
+        rowPct: rowPct_val,
+        padX: padX_val,
+        padY: padY_val
+    }
+}
+
 interface ScrambledGridProps {
     mapping: number[]
     targetColPct: number
@@ -196,50 +244,8 @@ function ImageCore({
     const { metadata, exactW, exactH, aspectRatio, basePath, fileName } =
         parsedData
 
-    const Rows = GRID_ROWS
-    const Cols = GRID_COLS
-
     const { cssVars, targetColPct, targetRowPct, colPct, rowPct, padX, padY } =
-        useMemo(() => {
-            const spriteW = exactW + Cols * 2 * EDGE_PAD
-            const spriteH = exactH + Rows * 2 * EDGE_PAD
-
-            const imgWidthPercent = (spriteW / exactW) * 100
-            const imgHeightPercent = (spriteH / exactH) * 100
-
-            const padX_val = (EDGE_PAD / spriteW) * 100
-            const padY_val = (EDGE_PAD / spriteH) * 100
-
-            const colPct_val = 100 / Cols
-            const rowPct_val = 100 / Rows
-
-            const targetColPct_val = (exactW / spriteW / Cols) * 100
-            const targetRowPct_val = (exactH / spriteH / Rows) * 100
-
-            const vars: Record<string, string> = {
-                "--w": `${imgWidthPercent.toString()}%`,
-                "--h": `${imgHeightPercent.toString()}%`
-            }
-
-            for (let i = 0; i < Cols; i++) {
-                vars[`--x${i.toString()}`] =
-                    `${(i * colPct_val + padX_val).toString()}%`
-            }
-            for (let i = 0; i < Rows; i++) {
-                vars[`--y${i.toString()}`] =
-                    `${(i * rowPct_val + padY_val).toString()}%`
-            }
-
-            return {
-                cssVars: vars,
-                targetColPct: targetColPct_val,
-                targetRowPct: targetRowPct_val,
-                colPct: colPct_val,
-                rowPct: rowPct_val,
-                padX: padX_val,
-                padY: padY_val
-            }
-        }, [exactW, exactH, Cols, Rows])
+        useMemo(() => calculateImageGridVars(exactW, exactH), [exactW, exactH])
 
     return (
         <div
@@ -355,9 +361,7 @@ function ImageCore({
                     }}
                     draggable={false}
                     loading={placeholderPriority ? "eager" : "lazy"}
-                    onLoad={(e) => {
-                        e.currentTarget.style.background = ""
-                    }}
+                    onLoad={removeBackground}
                 />
             )}
 

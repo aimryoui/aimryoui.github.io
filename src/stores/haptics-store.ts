@@ -1,5 +1,10 @@
+import { z } from "zod"
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
+
+const hapticsStoreSchema = z.object({
+    isHapticEnabled: z.boolean().catch(true)
+})
 
 interface HapticsStore {
     isHapticEnabled: boolean
@@ -16,7 +21,14 @@ const useHapticsStore = create<HapticsStore>()(
         }),
         {
             name: "haptics-preferences",
-            storage: createJSONStorage(() => localStorage)
+            storage: createJSONStorage(() => localStorage),
+            merge: (persistedState, currentState) => {
+                const parsed = hapticsStoreSchema.safeParse(persistedState)
+                return {
+                    ...currentState,
+                    ...(parsed.success ? parsed.data : {})
+                }
+            }
         }
     )
 )

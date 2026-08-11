@@ -210,7 +210,7 @@ async function processVideo(
         }
     }
 
-    let type: "short" | "long" = "long"
+    let type: VideoMetadata["type"] = "long"
     let duration = 0
 
     if (requiresVideoProcessing) {

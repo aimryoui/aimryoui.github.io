@@ -298,7 +298,7 @@ function DropdownMenuItem({
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
                     "data-disabled":
-                        "cursor-not-allowed bg-transparent opacity-50",
+                        "cursor-not-allowed !bg-transparent opacity-50",
                     "data-[variant=destructive]": [
                         "text-destructive",
                         {
@@ -520,13 +520,13 @@ function DropdownMenuLinkItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-1.5 text-nowrap rounded-lg py-2 text-sm outline-hidden",
+                "group/dropdown-link-item relative flex cursor-pointer select-none items-center gap-1.5 text-nowrap rounded-lg py-2 text-sm outline-hidden",
                 openInNewTab && !description ? "pe-10 ps-3" : "px-3",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
                     "data-disabled":
-                        "cursor-not-allowed bg-transparent opacity-50",
+                        "cursor-not-allowed !bg-transparent opacity-50",
                     "[&_svg]": "pointer-events-none shrink-0",
                     "[&_svg:not([class*='size-'])]": "size-4"
                 },
@@ -570,7 +570,8 @@ function DropdownMenuLinkItem({
                     <span
                         className={cn(
                             "text-wrap text-xs text-muted-foreground",
-                            srOnlyDescription && "sr-only"
+                            srOnlyDescription && "sr-only",
+                            "group-data-disabled/dropdown-menu-link-item:text-foreground"
                         )}
                         data-slot="dropdown-menu-link-item-description"
                     >
@@ -610,13 +611,13 @@ function DropdownMenuCheckboxItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "group/dropdown-menu-checkbox-item relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 !description && "pe-10",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
                     "data-disabled":
-                        "cursor-not-allowed bg-transparent opacity-50",
+                        "cursor-not-allowed !bg-transparent opacity-50",
                     "[&_svg:not([class*='size-'])]": "size-4",
                     "[&_svg]": "pointer-events-none shrink-0"
                 },
@@ -649,7 +650,8 @@ function DropdownMenuCheckboxItem({
                     <span
                         className={cn(
                             "text-xs text-muted-foreground",
-                            srOnlyDescription && "sr-only"
+                            srOnlyDescription && "sr-only",
+                            "group-data-disabled/dropdown-menu-checkbox-item:text-foreground"
                         )}
                         data-slot="dropdown-menu-checkbox-item-description"
                     >
@@ -697,13 +699,13 @@ function DropdownMenuRadioItem({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "group/dropdown-menu-radio-item relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
                 !description && "pe-10",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
                     "data-inset": "ps-7",
                     "data-disabled":
-                        "cursor-not-allowed bg-transparent opacity-50",
+                        "cursor-not-allowed !bg-transparent opacity-50",
                     "[&_svg:not([class*='size-'])]": "size-4",
                     "[&_svg]": "pointer-events-none shrink-0"
                 },
@@ -735,7 +737,8 @@ function DropdownMenuRadioItem({
                     <span
                         className={cn(
                             "text-xs text-muted-foreground",
-                            srOnlyDescription && "sr-only"
+                            srOnlyDescription && "sr-only",
+                            "group-data-disabled/dropdown-menu-radio-item:text-foreground"
                         )}
                         data-slot="dropdown-menu-radio-item-description"
                     >

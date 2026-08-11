@@ -5,14 +5,18 @@ import { ImagePlay, Images, Play, PlayOff, Sunset, Wifi } from "lucide-react"
 
 import {
     DropdownMenuCheckboxItem,
+    DropdownMenuGroup,
+    DropdownMenuLabel,
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
+    DropdownMenuSeparator,
     DropdownMenuSub,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
 import {
     AUTOPLAY_PREFERENCES,
+    AUTOPLAY_TYPES,
     type AutoplayPreference,
     AVAILABLE_MEDIA_PREFERENCES,
     type MediaPreference
@@ -63,6 +67,10 @@ function MediaMenu() {
     const togglePreference = useMediaStore((state) => state.togglePreference)
     const autoplay = useMediaStore((state) => state.autoplay)
     const setAutoplay = useMediaStore((state) => state.setAutoplay)
+    const autoplayTypes = useMediaStore((state) => state.autoplayTypes)
+    const toggleAutoplayType = useMediaStore(
+        (state) => state.toggleAutoplayType
+    )
 
     const reduceMotion = useReducedMotion()
 
@@ -97,13 +105,40 @@ function MediaMenu() {
 
                 <DropdownMenuSub>
                     <DropdownMenuSubTrigger
-                        disabled={reduceMotion}
-                        description="Auto-play videos when in view, does not affect GIFs. Disabled with reduced motion, include GIFs."
+                        description="Play animated media when in view. Disabled with reduced motion."
                     >
                         <ImagePlay />
-                        Auto-play videos
+                        Auto-play
                     </DropdownMenuSubTrigger>
                     <DropdownMenuSubContent className="max-w-64">
+                        <DropdownMenuGroup>
+                            <DropdownMenuLabel>Applying to</DropdownMenuLabel>
+                            {AUTOPLAY_TYPES.map((type) => (
+                                <DropdownMenuCheckboxItem
+                                    key={type}
+                                    checked={autoplayTypes.includes(type)}
+                                    onCheckedChange={(checked) => {
+                                        toggleAutoplayType(type)
+
+                                        const eventName = "change_autoplay_type"
+                                        const eventParams = {
+                                            type,
+                                            enabled: checked
+                                        }
+                                        sendGAEvent(
+                                            "event",
+                                            eventName,
+                                            eventParams
+                                        )
+                                    }}
+                                    closeOnClick={false}
+                                    disabled={reduceMotion}
+                                >
+                                    {type === "videos" ? "Videos" : "GIFs"}
+                                </DropdownMenuCheckboxItem>
+                            ))}
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
                         <DropdownMenuRadioGroup
                             value={autoplay}
                             onValueChange={(value: string) => {
@@ -119,6 +154,7 @@ function MediaMenu() {
                                     key={preference}
                                     value={preference}
                                     closeOnClick={false}
+                                    disabled={reduceMotion || autoplayTypes.length === 0}
                                 >
                                     {AUTOPLAY_OPTIONS[preference].icon}
                                     {AUTOPLAY_OPTIONS[preference].label}

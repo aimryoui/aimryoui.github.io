@@ -40,6 +40,27 @@ function getSharedStyleSheet() {
     return sharedStyleSheet
 }
 
+const PLAYBACK_BLOCKING_SELECTORS = [
+    "[data-slot='alert-dialog-content']",
+    "[data-slot='drawer-content']"
+]
+
+function isPlaybackObscured(isInLightbox: boolean) {
+    const isLightboxObscuring =
+        !isInLightbox &&
+        document.body.querySelector(":scope > div.pswp") !== null
+
+    if (isLightboxObscuring) return true
+
+    return PLAYBACK_BLOCKING_SELECTORS.some(
+        (selector) => document.body.querySelector(selector) !== null
+    )
+}
+
+function removeBackground(e: React.SyntheticEvent<HTMLImageElement>) {
+    e.currentTarget.style.background = ""
+}
+
 type AnimatedMediaProps = {
     parsedData: ParsedMediaData<VideoMetadata>
     alt: string
@@ -194,15 +215,16 @@ function AnimatedMedia({
         let isIntersecting = false
         let userPaused = false
         let pausingByScroll = false
-        let pausingByLightbox = false
+        let pausingByBlockingOverlay = false
 
-        const isLightboxOpen = () =>
-            !isInLightbox &&
-            document.body.querySelector(":scope > div.pswp") !== null
+        if (!shouldAutoPlay && !video.paused) {
+            pausingByScroll = true
+            video.pause()
+        }
 
         const tryPlay = () => {
             if (userPaused) return
-            if (isLightboxOpen()) return
+            if (isPlaybackObscured(isInLightbox)) return
             if (video.paused && !document.hidden && shouldAutoPlay) {
                 video.play().catch((error: unknown) => {
                     if (error instanceof Error) {
@@ -221,11 +243,11 @@ function AnimatedMedia({
         }
 
         const handlePause = () => {
-            if (!pausingByScroll && !pausingByLightbox) {
+            if (!pausingByScroll && !pausingByBlockingOverlay) {
                 userPaused = true
             }
             pausingByScroll = false
-            pausingByLightbox = false
+            pausingByBlockingOverlay = false
         }
 
         const handlePlay = () => {
@@ -278,21 +300,19 @@ function AnimatedMedia({
 
         // Watch for PhotoSwipe (div.pswp) appearing/disappearing as direct child of body
         // Only relevant for videos that are NOT inside the lightbox itself
-        const mutationObserver = isInLightbox
-            ? null
-            : new MutationObserver(() => {
-                  if (isLightboxOpen()) {
-                      // Lightbox opened — pause video without marking it as user-paused
-                      if (!video.paused) {
-                          pausingByLightbox = true
-                          video.pause()
-                      }
-                  } else if (isIntersecting) {
-                      tryPlay()
-                  }
-              })
+        const mutationObserver = new MutationObserver(() => {
+            if (isPlaybackObscured(isInLightbox)) {
+                // Overlay opened — pause video without marking it as user-paused
+                if (!video.paused) {
+                    pausingByBlockingOverlay = true
+                    video.pause()
+                }
+            } else if (isIntersecting) {
+                tryPlay()
+            }
+        })
 
-        mutationObserver?.observe(document.body, { childList: true })
+        mutationObserver.observe(document.body, { childList: true })
 
         return () => {
             video.removeEventListener("pause", handlePause)
@@ -304,7 +324,7 @@ function AnimatedMedia({
             )
             window.removeEventListener("blur", handleWindowBlur)
             window.removeEventListener("focus", handleWindowFocus)
-            mutationObserver?.disconnect()
+            mutationObserver.disconnect()
         }
     }, [shouldAutoPlay, shadowRoot, isInLightbox])
 
@@ -397,9 +417,7 @@ function AnimatedMedia({
                         style={{
                             background: `url("${metadata.blurDataURL}") center / cover no-repeat`
                         }}
-                        onLoad={(e) => {
-                            e.currentTarget.style.background = ""
-                        }}
+                        onLoad={removeBackground}
                     />
                     {/* Loading overlay with spinner */}
                     <div
