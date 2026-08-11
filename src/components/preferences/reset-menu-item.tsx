@@ -317,6 +317,18 @@ function ResetPreferenceAlertDialog({
     const ResetIcon = RESET_MENU_CONFIG.icon
 
     const handleReset = () => {
+        ;[
+            useAudioStore,
+            useEffectsStore,
+            useHapticsStore,
+            useMediaStore,
+            useMotionStore,
+            useSidebarPositionStore,
+            useToolbarPositionStore
+        ].forEach((store) => {
+            store.persist.clearStorage()
+        })
+
         useAudioStore
             .getState()
             .setAudioMode(DEFAULT_AUDIO_PREFERENCES.audioMode)
@@ -347,7 +359,7 @@ function ResetPreferenceAlertDialog({
             >
                 <AlertDialogHeader
                     className={cn("min-h-0", {
-                        sm: "place-items-start text-start"
+                        sm: "place-items-stretch text-start"
                     })}
                 >
                     <AlertDialogTitle>Reset all preferences?</AlertDialogTitle>
