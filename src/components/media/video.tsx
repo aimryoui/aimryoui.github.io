@@ -1,3 +1,5 @@
+"use client"
+
 import {
     AnimatedMedia,
     type AnimatedMediaProps
