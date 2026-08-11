@@ -25,7 +25,7 @@ function GifCore({
     ref,
     ...props
 }: GifCoreProps) {
-    const autoplayTypes = useMediaStore((state) => state.autoplayTypes)
+    const gifAutoplay = useMediaStore((state) => state.gifAutoplay)
 
     return (
         <AnimatedMedia
@@ -36,7 +36,7 @@ function GifCore({
             rounded={rounded}
             className={cn("cursor-zoom-in", className)}
             {...props}
-            autoPlay={autoplayTypes.includes("gifs")}
+            autoPlayPreference={gifAutoplay}
             loop={true}
             muted={true}
             mute={true}

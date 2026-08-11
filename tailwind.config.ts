@@ -102,6 +102,7 @@ export default {
                 3.25: ".8125rem",
                 3.75: ".9375rem",
                 "safe-zone": "var(--spacing-safe-zone)",
+                4.25: "1.0625rem",
                 4.5: "1.125rem",
                 4.75: "1.1875rem",
                 5.5: "1.375rem",
@@ -441,15 +442,20 @@ export default {
                     "--spacing": `${(4 / BASE_FONT_SIZE).toString()}rem` // 0.25rem ~ 4px
                 }
             })
+
             addVariant("light", [
                 "&:where([data-theme=light], [data-theme=light] *)"
             ])
+
             addVariant("mac", [
                 "&:where([data-platform=mac], [data-platform=mac] *)"
             ])
             addVariant("win", [
                 "&:where([data-platform=win], [data-platform=win] *)"
             ])
+
+            addVariant("starting", ["@starting-style"])
+
             addVariant("motion-preferred", [
                 "@media (prefers-reduced-motion: no-preference) { &:where([data-motion=system], [data-motion=system] *) }",
                 "&:where([data-motion=preferred], [data-motion=preferred] *)"
@@ -458,6 +464,7 @@ export default {
                 "@media (prefers-reduced-motion: reduce) { &:where([data-motion=system], [data-motion=system] *) }",
                 "&:where([data-motion=reduced], [data-motion=reduced] *)"
             ])
+
             AVAILABLE_EFFECTS.forEach((effect) => {
                 const isTargetCursor = effect === "target-cursor"
                 const targetCursorAdditions = isTargetCursor
@@ -469,7 +476,6 @@ export default {
                     `&:where([data-motion=preferred], [data-motion=preferred] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *)${targetCursorAdditions}`
                 ])
             })
-            addVariant("starting", ["@starting-style"])
         })
     ]
 } satisfies Config

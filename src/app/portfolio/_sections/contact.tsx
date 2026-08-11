@@ -218,10 +218,10 @@ function Contact() {
 
                                             <TableCell
                                                 className={cn(
-                                                    "col-span-1 p-0 text-right align-top text-highlighted font-wght-500",
+                                                    "col-span-1 p-0 text-end align-top text-highlighted font-wght-500",
                                                     {
                                                         "@[59.375rem]":
-                                                            "pe-safe-zone text-left",
+                                                            "pe-safe-zone text-start",
                                                         "@[19.5rem]": "sr-only"
                                                     }
                                                 )}

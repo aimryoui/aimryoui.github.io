@@ -18,7 +18,7 @@ interface VideoProps extends Omit<AnimatedMediaProps, "parsedData"> {
 function Video({ ...props }: VideoProps) {
     const parsedData = getParsedMediaData(props.src, videoManifest)
 
-    const autoplayTypes = useMediaStore((state) => state.autoplayTypes)
+    const videoAutoplay = useMediaStore((state) => state.videoAutoplay)
 
     if (!parsedData) return null
 
@@ -27,7 +27,7 @@ function Video({ ...props }: VideoProps) {
             parsedData={parsedData}
             {...props}
             data-slot="video"
-            autoPlay={autoplayTypes.includes("videos")}
+            autoPlayPreference={videoAutoplay}
         />
     )
 }

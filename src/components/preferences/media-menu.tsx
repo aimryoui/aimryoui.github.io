@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import {
     AUTOPLAY_PREFERENCES,
-    AUTOPLAY_TYPES,
     type AutoplayPreference,
     AVAILABLE_MEDIA_PREFERENCES,
     type MediaPreference
@@ -65,12 +64,10 @@ const AUTOPLAY_OPTIONS: Record<
 function MediaMenu() {
     const preferences = useMediaStore((state) => state.preferences)
     const togglePreference = useMediaStore((state) => state.togglePreference)
-    const autoplay = useMediaStore((state) => state.autoplay)
-    const setAutoplay = useMediaStore((state) => state.setAutoplay)
-    const autoplayTypes = useMediaStore((state) => state.autoplayTypes)
-    const toggleAutoplayType = useMediaStore(
-        (state) => state.toggleAutoplayType
-    )
+    const videoAutoplay = useMediaStore((state) => state.videoAutoplay)
+    const setVideoAutoplay = useMediaStore((state) => state.setVideoAutoplay)
+    const gifAutoplay = useMediaStore((state) => state.gifAutoplay)
+    const setGifAutoplay = useMediaStore((state) => state.setGifAutoplay)
 
     const reduceMotion = useReducedMotion()
 
@@ -104,63 +101,66 @@ function MediaMenu() {
                 ))}
 
                 <DropdownMenuSub>
-                    <DropdownMenuSubTrigger
-                        description="Play animated media when in view. Disabled with reduced motion."
-                    >
+                    <DropdownMenuSubTrigger description="Play animated media when in view. Disabled with reduced motion.">
                         <ImagePlay />
                         Auto-play
                     </DropdownMenuSubTrigger>
                     <DropdownMenuSubContent className="max-w-64">
                         <DropdownMenuGroup>
-                            <DropdownMenuLabel>Applying to</DropdownMenuLabel>
-                            {AUTOPLAY_TYPES.map((type) => (
-                                <DropdownMenuCheckboxItem
-                                    key={type}
-                                    checked={autoplayTypes.includes(type)}
-                                    onCheckedChange={(checked) => {
-                                        toggleAutoplayType(type)
+                            <DropdownMenuLabel>Videos</DropdownMenuLabel>
+                            <DropdownMenuRadioGroup
+                                value={videoAutoplay}
+                                onValueChange={(value: string) => {
+                                    setVideoAutoplay(
+                                        value as AutoplayPreference
+                                    )
 
-                                        const eventName = "change_autoplay_type"
-                                        const eventParams = {
-                                            type,
-                                            enabled: checked
-                                        }
-                                        sendGAEvent(
-                                            "event",
-                                            eventName,
-                                            eventParams
-                                        )
-                                    }}
-                                    closeOnClick={false}
-                                    disabled={reduceMotion}
-                                >
-                                    {type === "videos" ? "Videos" : "GIFs"}
-                                </DropdownMenuCheckboxItem>
-                            ))}
+                                    const eventName =
+                                        "change_video_autoplay_preference"
+                                    const eventParams = { autoplay: value }
+                                    sendGAEvent("event", eventName, eventParams)
+                                }}
+                            >
+                                {AUTOPLAY_PREFERENCES.map((preference) => (
+                                    <DropdownMenuRadioItem
+                                        key={preference}
+                                        value={preference}
+                                        closeOnClick={false}
+                                        disabled={reduceMotion}
+                                    >
+                                        {AUTOPLAY_OPTIONS[preference].icon}
+                                        {AUTOPLAY_OPTIONS[preference].label}
+                                    </DropdownMenuRadioItem>
+                                ))}
+                            </DropdownMenuRadioGroup>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuRadioGroup
-                            value={autoplay}
-                            onValueChange={(value: string) => {
-                                setAutoplay(value as AutoplayPreference)
+                        <DropdownMenuGroup>
+                            <DropdownMenuLabel>GIFs</DropdownMenuLabel>
+                            <DropdownMenuRadioGroup
+                                value={gifAutoplay}
+                                onValueChange={(value: string) => {
+                                    setGifAutoplay(value as AutoplayPreference)
 
-                                const eventName = "change_autoplay_preference"
-                                const eventParams = { autoplay: value }
-                                sendGAEvent("event", eventName, eventParams)
-                            }}
-                        >
-                            {AUTOPLAY_PREFERENCES.map((preference) => (
-                                <DropdownMenuRadioItem
-                                    key={preference}
-                                    value={preference}
-                                    closeOnClick={false}
-                                    disabled={reduceMotion || autoplayTypes.length === 0}
-                                >
-                                    {AUTOPLAY_OPTIONS[preference].icon}
-                                    {AUTOPLAY_OPTIONS[preference].label}
-                                </DropdownMenuRadioItem>
-                            ))}
-                        </DropdownMenuRadioGroup>
+                                    const eventName =
+                                        "change_gif_autoplay_preference"
+                                    const eventParams = { autoplay: value }
+                                    sendGAEvent("event", eventName, eventParams)
+                                }}
+                            >
+                                {AUTOPLAY_PREFERENCES.map((preference) => (
+                                    <DropdownMenuRadioItem
+                                        key={preference}
+                                        value={preference}
+                                        closeOnClick={false}
+                                        disabled={reduceMotion}
+                                    >
+                                        {AUTOPLAY_OPTIONS[preference].icon}
+                                        {AUTOPLAY_OPTIONS[preference].label}
+                                    </DropdownMenuRadioItem>
+                                ))}
+                            </DropdownMenuRadioGroup>
+                        </DropdownMenuGroup>
                     </DropdownMenuSubContent>
                 </DropdownMenuSub>
             </DropdownMenuSubContent>

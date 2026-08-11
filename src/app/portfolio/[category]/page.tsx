@@ -252,7 +252,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                         )}
                                     />
                                     <div
-                                        className={cn("text-right", {
+                                        className={cn("text-end", {
                                             sm: "flex flex-col"
                                         })}
                                     >

@@ -175,7 +175,7 @@ function ProjectCard({
                     name={project.name}
                     isSelectedWorks={isSelectedWorks}
                     category={project.category}
-                    className={cn(navigation === "backward" && "text-right")}
+                    className={cn(navigation === "backward" && "text-end")}
                 />
             </div>
             {navigation !== "backward" && (

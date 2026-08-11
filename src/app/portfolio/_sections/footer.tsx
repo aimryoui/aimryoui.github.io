@@ -72,7 +72,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                     className={cn(
                         "flex flex-wrap justify-center gap-x-[.2em] text-center font-wght-500",
                         hasSocialLinks && {
-                            xs: "justify-start text-right"
+                            xs: "justify-start text-end"
                         }
                     )}
                 >

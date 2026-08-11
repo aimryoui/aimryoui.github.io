@@ -19,7 +19,8 @@ function InputGroup({ className, ...props }: GroupProps) {
                     hover: [
                         "bg-element-hover",
                         {
-                            "data-[cursor=input]": "rounded-none"
+                            "data-target-cursor:data-[cursor=input]":
+                                "rounded-none"
                         }
                     ],
                     dark: "bg-input/25",

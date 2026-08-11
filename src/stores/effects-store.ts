@@ -45,20 +45,6 @@ const useEffectsStore = create<EffectsStore>()(
         {
             name: "effects-preference",
             storage: createJSONStorage(() => localStorage),
-            version: 2,
-            migrate: (persistedState: unknown, version: number) => {
-                const state = persistedState as { effects?: string[] } | null
-                if (version < 2) {
-                    if (
-                        state &&
-                        Array.isArray(state.effects) &&
-                        !state.effects.includes("line-sidebar")
-                    ) {
-                        state.effects.push("line-sidebar")
-                    }
-                }
-                return state
-            },
             merge: (persistedState, currentState) => {
                 const parsed = effectsStoreSchema.safeParse(persistedState)
                 return {

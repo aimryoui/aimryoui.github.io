@@ -29,10 +29,10 @@ const nativeButtonClassName = cn("shrink-0 cursor-pointer select-none", {
 const buttonVariants = cva(
     cn(
         nativeButtonClassName,
-        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xlg text-sm font-wght-500 transition-transform",
+        "inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-xlg text-sm font-wght-500 transition-[transform,translate,background-color] duration-100",
         {
             "data-target-cursor":
-                "transition-[transform,translate,scale,border-radius] ease-spring duration-200",
+                "transition-[transform,translate,scale,background-color,border-radius] ease-[linear,linear,linear,linear,cubic-bezier(0.22,1,0.36,1)] duration-[.1s,.1s,.1s,.1s,.2s]",
             hover: {
                 "data-target-cursor": "rounded-none"
             },
@@ -56,14 +56,20 @@ const buttonVariants = cva(
                     active: "bg-muted",
                     "aria-expanded": "bg-muted text-foreground"
                 }),
-                tinted: cn("bg-default/10", {
-                    hover: "bg-default/15 text-foreground",
-                    active: "bg-default/20",
+                tinted: cn("bg-default/5 dark:bg-default/10", {
+                    hover: "bg-default/10 text-foreground dark:bg-default/15",
+                    active: "bg-default/15 dark:bg-default/20",
                     "aria-expanded": "bg-default/20 text-foreground"
                 }),
-                ghost: cn({
-                    hover: "bg-accent text-foreground",
+                ghost: cn("text-muted-foreground", {
+                    hover: "bg-accent/60 text-foreground dark:bg-accent",
+                    active: "bg-accent/60 text-foreground dark:bg-accent",
                     "aria-expanded": "bg-muted text-foreground"
+                }),
+                "ghost-highlighted": cn("text-highlighted", {
+                    hover: "bg-highlighted/10 transition-none",
+                    active: "bg-highlighted/20 transition-none",
+                    "aria-expanded": "bg-highlighted/30"
                 }),
                 destructive: cn("bg-destructive text-white", {
                     hover: "bg-destructive/60",
@@ -84,10 +90,10 @@ const buttonVariants = cva(
                 default: "h-9 min-w-9 px-4 py-2 has-[>svg]:px-3",
                 lg: "h-10 min-w-10 rounded-md px-6 has-[>svg]:px-4",
                 sm: "h-8 min-w-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5",
-                icon: "size-9 text-muted-foreground",
-                "icon-sm": "size-8 text-muted-foreground",
-                "icon-lg": "size-10 text-muted-foreground",
-                "icon-xl": "size-12 text-muted-foreground"
+                icon: "size-9",
+                "icon-sm": "size-8",
+                "icon-lg": "size-10",
+                "icon-xl": "size-12"
             }
         },
         defaultVariants: {

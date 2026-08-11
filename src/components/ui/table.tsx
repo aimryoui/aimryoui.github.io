@@ -44,7 +44,7 @@ function TableCaption({
         <figcaption
             data-slot="table-caption"
             className={cn(
-                "text-left text-highlighted",
+                "text-start text-highlighted",
                 {
                     md: "text-sm"
                 },
@@ -117,7 +117,7 @@ function TableHead({ className, ...props }: ColumnProps) {
         <ColumnPrimitive
             data-slot="table-head"
             className={cn(
-                "whitespace-nowrap px-2 text-left align-middle has-[[role=checkbox]]:pr-0",
+                "whitespace-nowrap px-2 text-start align-middle has-[[role=checkbox]]:pr-0",
                 {
                     md: "text-sm"
                 },

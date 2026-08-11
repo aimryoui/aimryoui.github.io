@@ -127,7 +127,7 @@ function AlertDialogHeader({
                     "has-data-[slot=alert-dialog-media]":
                         "grid-rows-[auto_auto_1fr] gap-x-4",
                     "group-data-[size=default]/alert-dialog-content": [
-                        "place-items-start text-left",
+                        "place-items-start text-start",
                         {
                             "has-data-[slot=alert-dialog-media]":
                                 "grid-rows-[auto_1fr]"
@@ -191,7 +191,7 @@ function AlertDialogTitle({
         <AlertDialogPrimitive.Title
             data-slot="alert-dialog-title"
             className={cn(
-                "text-pretty text-base font-wght-500",
+                "text-pretty text-base font-wght-600",
                 "group-data-[size=default]/alert-dialog-content:group-has-[[data-slot=alert-dialog-media]]/alert-dialog-content:col-start-2",
                 className
             )}

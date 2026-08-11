@@ -8,6 +8,7 @@ import Hls from "hls.js"
 import { mergeRefs } from "react-merge-refs"
 
 import { Spinner } from "@/components/ui/spinner"
+import { type AutoplayPreference } from "@/configs/media.config"
 import { type ParsedMediaData } from "@/helpers/get-parsed-media-data"
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 import { useMediaObserver } from "@/hooks/use-media-observer"
@@ -15,7 +16,6 @@ import { useNetwork } from "@/hooks/use-network"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { cn } from "@/lib/utils"
 import { type VideoMetadata } from "@/scripts/process-videos"
-import { useMediaStore } from "@/stores/media-store"
 
 let sharedStyleSheet: CSSStyleSheet | null = null
 
@@ -74,6 +74,7 @@ type AnimatedMediaProps = {
     limitHeight?: boolean
     isInLightbox?: boolean
     forceAutoPlay?: boolean
+    autoPlayPreference?: AutoplayPreference
 } & React.ComponentProps<"div"> &
     Pick<
         React.ComponentProps<"video">,
@@ -89,6 +90,7 @@ function AnimatedMedia({
     rounded = false,
     autoPlay,
     autoplay,
+    autoPlayPreference,
     muted,
     mute,
     controls,
@@ -111,7 +113,6 @@ function AnimatedMedia({
         parsedData
 
     const shouldLoad = useMediaObserver(wrapperRef)
-    const autoplayPreference = useMediaStore((state) => state.autoplay)
     const reduceMotion = useReducedMotion()
     const network = useNetwork()
 
@@ -120,10 +121,12 @@ function AnimatedMedia({
         network.type !== "bluetooth" &&
         !network.saveData
 
+    const resolvedPreference = autoPlayPreference ?? "always"
+
     const isGlobalAutoPlayEnabled =
         !reduceMotion &&
-        (autoplayPreference === "always" ||
-            (autoplayPreference === "wifi" && isWifiOrBetter))
+        (resolvedPreference === "always" ||
+            (resolvedPreference === "wifi" && isWifiOrBetter))
 
     const shouldAutoPlay =
         forceAutoPlay ||
