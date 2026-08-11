@@ -152,8 +152,9 @@ const getPreferenceChanges = () => {
         const current = mediaState.autoplayTypes.includes(type)
         const def = DEFAULT_AUTOPLAY_TYPES.includes(type)
         if (current !== def) {
+            const typeLabel = type === "videos" ? "Videos" : "GIFs"
             categoriesMap[MEDIA_MENU.name].changes.push({
-                name: `Auto-play ${type}`,
+                name: `Auto-play ${typeLabel}`,
                 from: current ? "On" : "Off",
                 to: def ? "On" : "Off"
             })
