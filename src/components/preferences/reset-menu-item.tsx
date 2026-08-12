@@ -513,7 +513,13 @@ function ResetPreferenceAlertDialog({
                                                                                 />
                                                                                 <span
                                                                                     className={cn(
-                                                                                        "text-end text-foreground"
+                                                                                        "text-end text-foreground",
+                                                                                        (change.name.startsWith(
+                                                                                            "Auto-play"
+                                                                                        ) ||
+                                                                                            change.name ===
+                                                                                                "Preference") &&
+                                                                                            "sm:text-xs"
                                                                                     )}
                                                                                 >
                                                                                     {!isReset && (
@@ -587,7 +593,7 @@ function ResetPreferenceAlertDialog({
                                                                                         >
                                                                                             {isReset ? (
                                                                                                 <Undo2
-                                                                                                    className="size-4.5"
+                                                                                                    className="size-4.5 -translate-x-[1px] -translate-y-[1px]"
                                                                                                     strokeWidth={
                                                                                                         1.5
                                                                                                     }
