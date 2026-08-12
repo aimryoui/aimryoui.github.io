@@ -375,13 +375,16 @@ function ResetPreferenceAlertDialog({
                                             "-mx-2 -mb-2 mt-4 flex min-h-0 shrink flex-col rounded-xlg border border-dashed border-stroke bg-element-hover/30 text-sm",
                                             {
                                                 dark: "bg-element-hover/50",
-                                                sm: "-mx-6 rounded-none border-x-0"
+                                                sm: "-mx-6 mt-4.5 rounded-none border-x-0"
                                             }
                                         )}
                                     >
                                         <h4
                                             className={cn(
-                                                "shrink-0 rounded-t-inherit border-b border-dashed border-stroke bg-stroke/40 px-4 py-2.5 text-foreground font-wght-600"
+                                                "shrink-0 rounded-t-inherit border-b border-dashed border-stroke bg-stroke/40 px-4 py-2.5 text-foreground font-wght-600",
+                                                {
+                                                    sm: "px-6"
+                                                }
                                             )}
                                         >
                                             Changes to be made:
@@ -390,7 +393,9 @@ function ResetPreferenceAlertDialog({
                                             <ul
                                                 className={cn(
                                                     "flex-1 space-y-3 overflow-y-auto px-4 py-3.5 scroll-fade-y scroll-fade-16 scrollbar-thin",
-                                                    "sm:space-y-5"
+                                                    {
+                                                        sm: "space-y-5 px-5.75 py-5.5"
+                                                    }
                                                 )}
                                             >
                                                 {changes.map((group) => {
@@ -581,7 +586,12 @@ function ResetPreferenceAlertDialog({
                                                                                             }}
                                                                                         >
                                                                                             {isReset ? (
-                                                                                                <Undo2 className="size-4.25" />
+                                                                                                <Undo2
+                                                                                                    className="size-4.5"
+                                                                                                    strokeWidth={
+                                                                                                        1.5
+                                                                                                    }
+                                                                                                />
                                                                                             ) : (
                                                                                                 <ResetIcon />
                                                                                             )}
