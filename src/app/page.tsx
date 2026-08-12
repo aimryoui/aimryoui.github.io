@@ -24,7 +24,7 @@ export default function Home() {
                 )}
             >
                 <H1>Nguyễn Hoàng Nhân</H1>
-                <Highlight>Creative Designer & UI/UX Designer</Highlight>
+                <Highlight>Product Designer - UI/UX Designer</Highlight>
             </div>
             <SectionLine />
             <Divider />
