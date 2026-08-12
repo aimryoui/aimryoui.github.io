@@ -5,6 +5,7 @@ import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog
 import { Button, type ButtonProps } from "@/components/ui/button"
 import { playHoverSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
+import { useMotionStore } from "@/stores/motion-store"
 
 function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
     return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
@@ -62,6 +63,8 @@ function AlertDialogContent({
 }: AlertDialogPrimitive.Popup.Props & {
     size?: "xl" | "lg" | "md" | "default" | "sm"
 }) {
+    const motionPreference = useMotionStore((state) => state.preference)
+
     return (
         <AlertDialogPortal>
             <AlertDialogOverlay />
@@ -69,9 +72,11 @@ function AlertDialogContent({
                 data-slot="alert-dialog-content"
                 data-size={size}
                 data-cursor="input"
-                onMouseEnter={() => {
-                    playHoverSound("tick")
-                }}
+                {...(motionPreference === "preferred" && {
+                    onMouseEnter: () => {
+                        playHoverSound("tick")
+                    }
+                })}
                 className={cn(
                     "group/alert-dialog-content fixed left-1/2 top-1/2 z-90 grid max-h-[calc(100dvh-var(--spacing)*4*2)] w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl px-4 py-3 text-popover-foreground outline-none",
                     {

@@ -1,3 +1,5 @@
+"use client"
+
 import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
@@ -7,8 +9,11 @@ import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
+import { useMotionStore } from "@/stores/motion-store"
 
 function About() {
+    const motionPreference = useMotionStore((state) => state.preference)
+
     return (
         <>
             <div
@@ -121,7 +126,11 @@ function About() {
                         <Fragment key={item.label}>
                             <div
                                 data-cursor="target"
-                                data-sound="button"
+                                data-sound={
+                                    motionPreference === "preferred"
+                                        ? "button"
+                                        : false
+                                }
                                 className={cn(
                                     "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                                     {
@@ -204,6 +213,11 @@ function About() {
                                     href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
                                     nativeLink
                                     keepFeedback
+                                    data-sound={
+                                        motionPreference === "preferred"
+                                            ? "button"
+                                            : false
+                                    }
                                     openInNewTab
                                     tracking={{
                                         eventName: "click_about_link",
@@ -267,7 +281,9 @@ function About() {
                     />
                     <div
                         data-cursor="target"
-                        data-sound="button"
+                        data-sound={
+                            motionPreference === "preferred" ? "button" : false
+                        }
                         className={cn(
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {

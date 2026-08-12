@@ -13,10 +13,10 @@ function useReducedMotion(
         initialValue,
         options
     )
-    const preference = useMotionStore((state) => state.preference)
+    const motionPreference = useMotionStore((state) => state.preference)
 
-    if (preference === "reduced") return true
-    if (preference === "preferred") return false
+    if (motionPreference === "reduced") return true
+    if (motionPreference === "preferred") return false
     return systemReduced
 }
 
