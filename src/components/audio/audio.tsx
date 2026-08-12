@@ -65,7 +65,19 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         playerRef.current = createSoundEngine()
 
+        let isScrolling = false
+        let scrollTimeout: NodeJS.Timeout
+
+        const handleScroll = () => {
+            isScrolling = true
+            clearTimeout(scrollTimeout)
+            scrollTimeout = setTimeout(() => {
+                isScrolling = false
+            }, 150)
+        }
+
         const handleInteraction = (e: Event) => {
+            if (isScrolling) return
             if (!useAudioStore.getState().isAudioEnabled) return
 
             const target = (e.target as Element).closest(TARGET_SELECTORS)
@@ -94,6 +106,10 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
             lastTargetRef.current = target
         }
 
+        window.addEventListener("scroll", handleScroll, {
+            passive: true,
+            capture: true
+        })
         document.addEventListener("pointerover", handleInteraction, {
             passive: true
         })
@@ -102,6 +118,10 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
         })
 
         return () => {
+            window.removeEventListener("scroll", handleScroll, {
+                capture: true
+            })
+            clearTimeout(scrollTimeout)
             document.removeEventListener("pointerover", handleInteraction)
             document.removeEventListener("focusin", handleInteraction)
             playerRef.current?.dispose()
