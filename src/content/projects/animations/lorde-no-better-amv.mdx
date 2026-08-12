@@ -23,9 +23,11 @@ detail:
         the welcome overstayed".
 ---
 
+export const basePath = "/animations/lorde-no-better-amv"
+
 <MediaFrame sectionName="Thumbnail">
     <Image
-        src="/animations/lorde-no-better-amv/1.jpg"
+        src={`${basePath}/1.jpg`}
         alt="Thumbnail"
         dim
         rounded
@@ -34,7 +36,7 @@ detail:
 
 <MediaFrame sectionName="Final Animated Video">
     <Video
-        src="/animations/lorde-no-better-amv/2.mp4"
+        src={`${basePath}/2.mp4`}
         alt="Final Animated Video"
         dim
         rounded

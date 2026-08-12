@@ -17,15 +17,17 @@ detail:
         but was cancelled.
 ---
 
+export const basePath = "/events/fotomarathon-2023"
+
 <MediaFrame sectionName="Offcial Poster & Standee" className="flex">
     <Image
-        src="/events/fotomarathon-2023/1.jpg"
+        src={`${basePath}/1.jpg`}
         alt="Offcial Poster"
         dim
         row="justified"
     />
     <Image
-        src="/events/fotomarathon-2023/2.jpg"
+        src={`${basePath}/2.jpg`}
         alt="Standee"
         dim
         row="justified"

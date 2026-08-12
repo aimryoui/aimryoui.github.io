@@ -21,25 +21,27 @@ detail:
         colouring.
 ---
 
+export const basePath = "/photography/macaron"
+
 <MediaFrame>
-    <Image src="/photography/macaron/1.jpg" alt="Cover" />
+    <Image src={`${basePath}/1.jpg`} alt="Cover" />
 </MediaFrame>
 
 <MediaFrame sectionName="Details">
-    <Image src="/photography/macaron/2.jpg" alt="Image #1" />
+    <Image src={`${basePath}/2.jpg`} alt="Image #1" />
     <div className="w-full flex gap-2 md:flex-col">
-        <Image src="/photography/macaron/3.jpg" alt="Image #2" />
-        <Image src="/photography/macaron/4.jpg" alt="Image #3" />
+        <Image src={`${basePath}/3.jpg`} alt="Image #2" />
+        <Image src={`${basePath}/4.jpg`} alt="Image #3" />
     </div>
     <div className="w-full flex gap-2 md:flex-col">
         <Image
-            src="/photography/macaron/5.jpg"
+            src={`${basePath}/5.jpg`}
             className="md:!flex-none"
             alt="Image #4"
             row="justified"
         />
         <Image
-            src="/photography/macaron/6.jpg"
+            src={`${basePath}/6.jpg`}
             className="md:!flex-none"
             alt="Image #5"
             row="justified"

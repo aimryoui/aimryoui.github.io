@@ -15,9 +15,11 @@ detail:
         The club's recruitment for members and collaborators in the second half of 2022.
 ---
 
+export const basePath = "/events/recruiting-collaborators-2022"
+
 <MediaFrame sectionName="Mail Reminder Poster" widthFit>
     <Image
-        src="/events/recruiting-collaborators-2022/1.jpg"
+        src={`${basePath}/1.jpg`}
         alt="Mail Reminder Poster"
         limitHeight
     />
@@ -25,7 +27,7 @@ detail:
 
 <MediaFrame sectionName="Time Reminder Poster" widthFit>
     <Image
-        src="/events/recruiting-collaborators-2022/2.jpg"
+        src={`${basePath}/2.jpg`}
         alt="Time Reminder Poster"
         limitHeight
     />
@@ -33,7 +35,7 @@ detail:
 
 <MediaFrame sectionName="Roll Call Reminder Poster">
     <Image
-        src="/events/recruiting-collaborators-2022/3.jpg"
+        src={`${basePath}/3.jpg`}
         alt="Roll Call Reminder Poster"
         dim
     />
@@ -41,12 +43,12 @@ detail:
 
 <MediaFrame sectionName="Group Chat Avatar" className="flex">
     <Image
-        src="/events/recruiting-collaborators-2022/4.jpg"
+        src={`${basePath}/4.jpg`}
         alt="Group Chat Avatar #1"
         dim
     />
     <Image
-        src="/events/recruiting-collaborators-2022/5.jpg"
+        src={`${basePath}/5.jpg`}
         alt="Group Chat Avatar #2"
         dim
     />

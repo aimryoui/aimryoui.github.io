@@ -22,13 +22,15 @@ detail:
         the brand strives to be the ultimate trusted partner for food and beverage businesses at any hour.
 ---
 
+export const basePath = "/branding/nguyen-lieu-24h"
+
 <MediaFrame className="grid-cols-2">
-    <Image src="/branding/nguyen-lieu-24h/1.jpg" alt="Concept 1" />
-    <Image src="/branding/nguyen-lieu-24h/2.jpg" alt="Concept 2" />
-    <Image src="/branding/nguyen-lieu-24h/3.jpg" alt="Concept 3" />
-    <Image src="/branding/nguyen-lieu-24h/4.jpg" alt="Concept 4" />
+    <Image src={`${basePath}/1.jpg`} alt="Concept 1" />
+    <Image src={`${basePath}/2.jpg`} alt="Concept 2" />
+    <Image src={`${basePath}/3.jpg`} alt="Concept 3" />
+    <Image src={`${basePath}/4.jpg`} alt="Concept 4" />
     <Image
-        src="/branding/nguyen-lieu-24h/5.jpg"
+        src={`${basePath}/5.jpg`}
         alt="Cover"
         dim
         className="col-span-2 md:col-span-1"
@@ -38,10 +40,10 @@ detail:
 <MediaFrame sectionName="Concept #1">
     <Carousel slideCount={12}>
         <CarouselItem>
-            <Image src="/branding/nguyen-lieu-24h/6.jpg" alt="Cover" />
+            <Image src={`${basePath}/6.jpg`} alt="Cover" />
         </CarouselItem>
         <CarouselImage
-            srcPattern="/branding/nguyen-lieu-24h/{7-17}.jpg"
+            srcPattern={`${basePath}/{7-17}.jpg`}
             alt="Concept #1"
             dim
         />
@@ -51,10 +53,10 @@ detail:
 <MediaFrame sectionName="Concept #2">
     <Carousel slideCount={9}>
         <CarouselItem>
-            <Image src="/branding/nguyen-lieu-24h/18.jpg" alt="Cover" />
+            <Image src={`${basePath}/18.jpg`} alt="Cover" />
         </CarouselItem>
         <CarouselImage
-            srcPattern="/branding/nguyen-lieu-24h/{19-26}.jpg"
+            srcPattern={`${basePath}/{19-26}.jpg`}
             alt="Concept #2"
             dim
         />
@@ -64,10 +66,10 @@ detail:
 <MediaFrame sectionName="Concept #3">
     <Carousel slideCount={9}>
         <CarouselItem>
-            <Image src="/branding/nguyen-lieu-24h/27.jpg" alt="Cover" />
+            <Image src={`${basePath}/27.jpg`} alt="Cover" />
         </CarouselItem>
         <CarouselImage
-            srcPattern="/branding/nguyen-lieu-24h/{28-35}.jpg"
+            srcPattern={`${basePath}/{28-35}.jpg`}
             alt="Concept #3"
             dim
         />
@@ -76,7 +78,7 @@ detail:
 
 <MediaFrame sectionName="First 3 Concepts Comparison">
     <Image
-        src="/branding/nguyen-lieu-24h/36.jpg"
+        src={`${basePath}/36.jpg`}
         alt="First 3 Concepts Comparison"
         dim
     />
@@ -85,10 +87,10 @@ detail:
 <MediaFrame sectionName="Concept #4">
     <Carousel slideCount={9}>
         <CarouselItem>
-            <Image src="/branding/nguyen-lieu-24h/37.jpg" alt="Cover" />
+            <Image src={`${basePath}/37.jpg`} alt="Cover" />
         </CarouselItem>
         <CarouselImage
-            srcPattern="/branding/nguyen-lieu-24h/{38-45}.jpg"
+            srcPattern={`${basePath}/{38-45}.jpg`}
             alt="Concept #4"
             dim
         />

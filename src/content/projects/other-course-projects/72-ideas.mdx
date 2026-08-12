@@ -18,14 +18,16 @@ detail:
         72 Ideas of Lady with an Ermine painting.
 ---
 
+export const basePath = "/other-course-projects/72-ideas"
+
 <MediaFrame className="flex">
     <Image
-        src="/other-course-projects/72-ideas/1.jpg"
+        src={`${basePath}/1.jpg`}
         alt="Reference"
         row="justified"
     />
     <Image
-        src="/other-course-projects/72-ideas/2.jpg"
+        src={`${basePath}/2.jpg`}
         alt="Final Poster"
         dim
         row="justified"
@@ -34,15 +36,15 @@ detail:
 
 <MediaFrame sectionName="Final Printed" className="flex">
     <Image
-        src="/other-course-projects/72-ideas/3.jpg"
+        src={`${basePath}/3.jpg`}
         alt="Final Printed"
         dim
     />
 </MediaFrame>
 
 <MediaFrame sectionName="Variants" className="grid-cols-2">
-    <Image src="/other-course-projects/72-ideas/4.jpg" alt="Variant #1" dim />
-    <Image src="/other-course-projects/72-ideas/5.jpg" alt="Variant #2" dim />
-    <Image src="/other-course-projects/72-ideas/6.jpg" alt="Variant #3" dim />
-    <Image src="/other-course-projects/72-ideas/7.jpg" alt="Variant #4" dim />
+    <Image src={`${basePath}/4.jpg`} alt="Variant #1" dim />
+    <Image src={`${basePath}/5.jpg`} alt="Variant #2" dim />
+    <Image src={`${basePath}/6.jpg`} alt="Variant #3" dim />
+    <Image src={`${basePath}/7.jpg`} alt="Variant #4" dim />
 </MediaFrame>

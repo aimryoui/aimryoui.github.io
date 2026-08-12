@@ -10,9 +10,11 @@ tools:
     - "illustrator"
 ---
 
+export const basePath = "/weddings/tuan-long-yen-nhi"
+
 <MediaFrame sectionName="Poster Version #1" widthFit>
     <Image
-        src="/weddings/tuan-long-yen-nhi/1.jpg"
+        src={`${basePath}/1.jpg`}
         alt="Version #1"
         limitHeight
     />
@@ -20,7 +22,7 @@ tools:
 
 <MediaFrame sectionName="Poster Version #2" widthFit>
     <Image
-        src="/weddings/tuan-long-yen-nhi/2.jpg"
+        src={`${basePath}/2.jpg`}
         alt="Version #2"
         limitHeight
     />
@@ -30,20 +32,20 @@ tools:
     sectionName="Invitations Version #2"
     className="px-[22.5%] md:px-2 flex"
 >
-    <Image src="/weddings/tuan-long-yen-nhi/3.jpg" alt="Day 1" />
-    <Image src="/weddings/tuan-long-yen-nhi/4.jpg" alt="Day 2" />
+    <Image src={`${basePath}/3.jpg`} alt="Day 1" />
+    <Image src={`${basePath}/4.jpg`} alt="Day 2" />
 </MediaFrame>
 
 <MediaFrame sectionName="Invitations Version #3" className="px-[18%] md:px-2">
-    <Image src="/weddings/tuan-long-yen-nhi/5.png" alt="Day 1" dim pngBorder />
-    <Image src="/weddings/tuan-long-yen-nhi/6.png" alt="Day 2" dim pngBorder />
+    <Image src={`${basePath}/5.png`} alt="Day 1" dim pngBorder />
+    <Image src={`${basePath}/6.png`} alt="Day 2" dim pngBorder />
 </MediaFrame>
 
 <MediaFrame sectionName="Newspaper Invitation Version #4">
-    <Image src="/weddings/tuan-long-yen-nhi/7.jpg" alt="Front Side" />
-    <Image src="/weddings/tuan-long-yen-nhi/8.jpg" alt="Back Side" />
+    <Image src={`${basePath}/7.jpg`} alt="Front Side" />
+    <Image src={`${basePath}/8.jpg`} alt="Back Side" />
 </MediaFrame>
 
 <MediaFrame sectionName="Envelope Version #4">
-    <Image src="/weddings/tuan-long-yen-nhi/9.jpg" alt="Envelope" />
+    <Image src={`${basePath}/9.jpg`} alt="Envelope" />
 </MediaFrame>

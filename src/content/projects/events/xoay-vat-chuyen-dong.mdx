@@ -24,9 +24,11 @@ detail:
         helping the residents of the "Mát Mát" region enjoy the complete comfort.
 ---
 
+export const basePath = "/events/xoay-vat-chuyen-dong"
+
 <MediaFrame sectionName="Official Poster" widthFit>
     <Image
-        src="/events/xoay-vat-chuyen-dong/1.jpg"
+        src={`${basePath}/1.jpg`}
         alt="Official Poster"
         dim
         limitHeight
@@ -35,7 +37,7 @@ detail:
 
 <MediaFrame sectionName="Event #1 — Poster" widthFit>
     <Image
-        src="/events/xoay-vat-chuyen-dong/2.jpg"
+        src={`${basePath}/2.jpg`}
         alt="Event #1 Poster"
         dim
         limitHeight
@@ -44,7 +46,7 @@ detail:
 
 <MediaFrame sectionName="Event #2 — Poster" widthFit>
     <Image
-        src="/events/xoay-vat-chuyen-dong/3.jpg"
+        src={`${basePath}/3.jpg`}
         alt="Event #2 Poster"
         dim
         limitHeight
@@ -53,13 +55,13 @@ detail:
 
 <MediaFrame sectionName="Interactive Event Brochure" className="grid-cols-2">
     <Image
-        src="/events/xoay-vat-chuyen-dong/4.jpg"
+        src={`${basePath}/4.jpg`}
         alt="Front Side"
         dim
         rounded
     />
     <Image
-        src="/events/xoay-vat-chuyen-dong/5.jpg"
+        src={`${basePath}/5.jpg`}
         alt="Back Side"
         dim
         rounded
@@ -71,10 +73,10 @@ detail:
     showHideAnimationType="fade"
     className="flex"
 >
-    <Gif src="/events/xoay-vat-chuyen-dong/6.gif" alt="Mr. Duy Hải" dim />
-    <Gif src="/events/xoay-vat-chuyen-dong/7.gif" alt="Mr. Hữu Phát" dim />
+    <Gif src={`${basePath}/6.gif`} alt="Mr. Duy Hải" dim />
+    <Gif src={`${basePath}/7.gif`} alt="Mr. Hữu Phát" dim />
     <Gif
-        src="/events/xoay-vat-chuyen-dong/8.gif"
+        src={`${basePath}/8.gif`}
         alt="Mr. Bình Phương & Ms. Khánh Đoan"
         dim
     />

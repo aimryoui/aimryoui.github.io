@@ -22,9 +22,11 @@ detail:
         explore the most famous and legendary pirate ships in the One Piece world.
 ---
 
+export const basePath = "/events/bon-voyage"
+
 <MediaFrame sectionName="Official Poster" widthFit>
     <Image
-        src="/events/bon-voyage/1.jpg"
+        src={`${basePath}/1.jpg`}
         alt="Official Poster"
         dim
         limitHeight
@@ -36,18 +38,18 @@ detail:
     className="grid-cols-3 md:grid-cols-3"
 >
     <Image
-        src="/events/bon-voyage/2.jpg"
+        src={`${basePath}/2.jpg`}
         alt="Image #1"
         className="col-span-3"
     />
-    <Image src="/events/bon-voyage/3.jpg" alt="Image #2" />
-    <Image src="/events/bon-voyage/4.jpg" alt="Image #3" />
-    <Image src="/events/bon-voyage/5.jpg" alt="Image #4" />
+    <Image src={`${basePath}/3.jpg`} alt="Image #2" />
+    <Image src={`${basePath}/4.jpg`} alt="Image #3" />
+    <Image src={`${basePath}/5.jpg`} alt="Image #4" />
 </MediaFrame>
 
 <MediaFrame sectionName="Reminder Poster" widthFit>
     <Image
-        src="/events/bon-voyage/6.jpg"
+        src={`${basePath}/6.jpg`}
         alt="Reminder Poster"
         dim
         limitHeight
@@ -55,13 +57,13 @@ detail:
 </MediaFrame>
 
 <MediaFrame sectionName="Backdrop">
-    <Image src="/events/bon-voyage/7.jpg" alt="Backdrop" dim />
-    <Image src="/events/bon-voyage/8.jpg" alt="Backdrop Mockup" dim />
+    <Image src={`${basePath}/7.jpg`} alt="Backdrop" dim />
+    <Image src={`${basePath}/8.jpg`} alt="Backdrop Mockup" dim />
 </MediaFrame>
 
 <MediaFrame sectionName="Social Media" widthFit className="bg-transparent">
     <Image
-        src="/events/bon-voyage/9.png"
+        src={`${basePath}/9.png`}
         alt="Social Media"
         dim
         pngBorder

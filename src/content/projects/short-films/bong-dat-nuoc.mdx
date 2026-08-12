@@ -20,27 +20,29 @@ detail:
         spread by the enemy.
 ---
 
+export const basePath = "/short-films/bong-dat-nuoc"
+
 <MediaFrame sectionName="Avatar & Cover" className="flex md:flex-col">
     <Image
-        src="/short-films/bong-dat-nuoc/1.jpg"
+        src={`${basePath}/1.jpg`}
         alt="Avatar"
         row="justified"
     />
-    <Image src="/short-films/bong-dat-nuoc/2.jpg" alt="Cover" row="justified" />
+    <Image src={`${basePath}/2.jpg`} alt="Cover" row="justified" />
 </MediaFrame>
 
 <MediaFrame sectionName="Official Poster" widthFit>
     <Image
-        src="/short-films/bong-dat-nuoc/3.jpg"
+        src={`${basePath}/3.jpg`}
         alt="Official Poster"
         limitHeight
     />
 </MediaFrame>
 
 <MediaFrame sectionName="Project Identity">
-    <Image src="/short-films/bong-dat-nuoc/4.jpg" alt="Logo" dim />
-    <Image src="/short-films/bong-dat-nuoc/5.jpg" alt="Logo Grid System" />
-    <Image src="/short-films/bong-dat-nuoc/6.jpg" alt="Logo Story" />
-    <Image src="/short-films/bong-dat-nuoc/7.jpg" alt="Color Palette" />
-    <Image src="/short-films/bong-dat-nuoc/8.jpg" alt="Typography" />
+    <Image src={`${basePath}/4.jpg`} alt="Logo" dim />
+    <Image src={`${basePath}/5.jpg`} alt="Logo Grid System" />
+    <Image src={`${basePath}/6.jpg`} alt="Logo Story" />
+    <Image src={`${basePath}/7.jpg`} alt="Color Palette" />
+    <Image src={`${basePath}/8.jpg`} alt="Typography" />
 </MediaFrame>

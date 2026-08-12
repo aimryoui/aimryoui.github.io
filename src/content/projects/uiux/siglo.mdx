@@ -31,6 +31,8 @@ detail:
         lead their audiences like never before.
 ---
 
+export const basePath = "/uiux/siglo"
+
 <Note spaceAround className="md:text-start">
     This project is better presented on{" "}
     <a
@@ -46,48 +48,48 @@ detail:
 
 <MediaFrame className="flex">
     <JustifiedColumn className="gap-2">
-        <Image src="/uiux/siglo/0.1.jpg" alt="Index #1" rounded="tl" />
-        <Image src="/uiux/siglo/0.2.jpg" alt="Index #2" rounded="bl" />
+        <Image src={`${basePath}/0.1.jpg`} alt="Index #1" rounded="tl" />
+        <Image src={`${basePath}/0.2.jpg`} alt="Index #2" rounded="bl" />
     </JustifiedColumn>
     <JustifiedColumn className="gap-2">
-        <Image src="/uiux/siglo/0.3.jpg" alt="Index #3" rounded="tr" />
-        <Image src="/uiux/siglo/0.4.jpg" alt="Index #4" />
-        <Image src="/uiux/siglo/0.5.jpg" alt="Index #5" rounded="br" />
+        <Image src={`${basePath}/0.3.jpg`} alt="Index #3" rounded="tr" />
+        <Image src={`${basePath}/0.4.jpg`} alt="Index #4" />
+        <Image src={`${basePath}/0.5.jpg`} alt="Index #5" rounded="br" />
     </JustifiedColumn>
 </MediaFrame>
 
 <MediaFrame className="grid-cols-2 md:grid-cols-2">
-    <Image src="/uiux/siglo/0.6.jpg" alt="Index #6" rounded="tl" />
-    <Image src="/uiux/siglo/0.7.jpg" alt="Index #7" rounded="tr" />
-    <Image src="/uiux/siglo/0.8.jpg" alt="Index #8" rounded="bl" />
-    <Image src="/uiux/siglo/0.9.jpg" alt="Index #9" rounded="br" />
+    <Image src={`${basePath}/0.6.jpg`} alt="Index #6" rounded="tl" />
+    <Image src={`${basePath}/0.7.jpg`} alt="Index #7" rounded="tr" />
+    <Image src={`${basePath}/0.8.jpg`} alt="Index #8" rounded="bl" />
+    <Image src={`${basePath}/0.9.jpg`} alt="Index #9" rounded="br" />
 </MediaFrame>
 
 <MediaFrame className="grid-cols-2" sectionName="Logo & Icon Guidelines">
-    <Image src="/uiux/siglo/2.jpg" alt="System" rounded />
-    <Image src="/uiux/siglo/3.jpg" alt="Safe Zone" rounded />
-    <Image src="/uiux/siglo/4.jpg" alt="Logo Mark" rounded />
-    <Image src="/uiux/siglo/5.jpg" alt="App Icon" rounded />
+    <Image src={`${basePath}/2.jpg`} alt="System" rounded />
+    <Image src={`${basePath}/3.jpg`} alt="Safe Zone" rounded />
+    <Image src={`${basePath}/4.jpg`} alt="Logo Mark" rounded />
+    <Image src={`${basePath}/5.jpg`} alt="App Icon" rounded />
 </MediaFrame>
 
 <MediaFrame className="grid-cols-2" sectionName="Typography">
-    <Image src="/uiux/siglo/6.jpg" alt="Primary Typeface" rounded />
-    <Image src="/uiux/siglo/7.jpg" alt="Secondary Typeface" rounded />
+    <Image src={`${basePath}/6.jpg`} alt="Primary Typeface" rounded />
+    <Image src={`${basePath}/7.jpg`} alt="Secondary Typeface" rounded />
 </MediaFrame>
 
 <MediaFrame className="grid-cols-2" sectionName="Colors">
-    <Image src="/uiux/siglo/8.jpg" alt="Dark Mode" rounded />
-    <Image src="/uiux/siglo/9.jpg" alt="Light Mode" rounded />
+    <Image src={`${basePath}/8.jpg`} alt="Dark Mode" rounded />
+    <Image src={`${basePath}/9.jpg`} alt="Light Mode" rounded />
 </MediaFrame>
 
 <MediaFrame sectionName="Logo Presentation">
-    <Image src="/uiux/siglo/9.5.jpg" alt="Logo Presentation" rounded />
+    <Image src={`${basePath}/9.5.jpg`} alt="Logo Presentation" rounded />
 </MediaFrame>
 
 <MediaFrame sectionName="Iconography">
     <Carousel slideCount={7}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{10-16}.jpg"
+            srcPattern={`${basePath}/{10-16}.jpg`}
             alt="Iconography"
             rounded
         />
@@ -97,7 +99,7 @@ detail:
 <MediaFrame sectionName="Components">
     <Carousel slideCount={20}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{17-36}.jpg"
+            srcPattern={`${basePath}/{17-36}.jpg`}
             alt="Components"
             rounded
         />
@@ -107,7 +109,7 @@ detail:
 <MediaFrame sectionName="User Interface > Welcome">
     <Carousel slideCount={1}>
         <CarouselImage
-            srcPattern="/uiux/siglo/37.png"
+            srcPattern={`${basePath}/37.png`}
             alt="Welcome"
             noBorder
             pngAntiBleed
@@ -119,7 +121,7 @@ detail:
 <MediaFrame sectionName="User Interface > Sign In">
     <Carousel slideCount={3}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{38-40}.png"
+            srcPattern={`${basePath}/{38-40}.png`}
             alt="Sign In"
             noBorder
             pngAntiBleed
@@ -131,7 +133,7 @@ detail:
 <MediaFrame sectionName="User Interface > Authentication">
     <Carousel slideCount={4}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{41-44}.png"
+            srcPattern={`${basePath}/{41-44}.png`}
             alt="Authentication"
             noBorder
             pngAntiBleed
@@ -143,7 +145,7 @@ detail:
 <MediaFrame sectionName="User Interface > Survey & Actions">
     <Carousel slideCount={2}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{45-46}.png"
+            srcPattern={`${basePath}/{45-46}.png`}
             alt="Survey & Actions"
             noBorder
             pngAntiBleed
@@ -155,7 +157,7 @@ detail:
 <MediaFrame sectionName="User Interface > Tab Pages">
     <Carousel slideCount={2}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{47-48}.png"
+            srcPattern={`${basePath}/{47-48}.png`}
             alt="Tab Pages"
             noBorder
             pngAntiBleed
@@ -167,7 +169,7 @@ detail:
 <MediaFrame sectionName="User Interface > Chat > Chat Box">
     <Carousel slideCount={3}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{49-51}.png"
+            srcPattern={`${basePath}/{49-51}.png`}
             alt="Chat Box"
             noBorder
             pngAntiBleed
@@ -179,7 +181,7 @@ detail:
 <MediaFrame sectionName="User Interface > Chat > Chat Box > Message Thread">
     <Carousel slideCount={4}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{52-55}.png"
+            srcPattern={`${basePath}/{52-55}.png`}
             alt="Message Thread"
             noBorder
             pngAntiBleed
@@ -191,7 +193,7 @@ detail:
 <MediaFrame sectionName="User Interface > Profile">
     <Carousel slideCount={4}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{56-59}.png"
+            srcPattern={`${basePath}/{56-59}.png`}
             alt="Profile"
             noBorder
             pngAntiBleed
@@ -203,7 +205,7 @@ detail:
 <MediaFrame sectionName="User Interface > Dashboard">
     <Carousel slideCount={2}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{60-61}.png"
+            srcPattern={`${basePath}/{60-61}.png`}
             alt="Dashboard"
             noBorder
             pngAntiBleed
@@ -215,7 +217,7 @@ detail:
 <MediaFrame sectionName="User Interface > Discovery">
     <Carousel slideCount={1}>
         <CarouselImage
-            srcPattern="/uiux/siglo/62.png"
+            srcPattern={`${basePath}/62.png`}
             alt="Discovery"
             noBorder
             pngAntiBleed
@@ -227,7 +229,7 @@ detail:
 <MediaFrame sectionName="User Interface > Media">
     <Carousel slideCount={1}>
         <CarouselImage
-            srcPattern="/uiux/siglo/63.png"
+            srcPattern={`${basePath}/63.png`}
             alt="Media"
             noBorder
             pngAntiBleed
@@ -239,7 +241,7 @@ detail:
 <MediaFrame sectionName="User Interface > Activities">
     <Carousel slideCount={3}>
         <CarouselImage
-            srcPattern="/uiux/siglo/{64-66}.png"
+            srcPattern={`${basePath}/{64-66}.png`}
             alt="Activities"
             noBorder
             pngAntiBleed
@@ -250,7 +252,7 @@ detail:
 
 <MediaFrame sectionName="550+ Screens">
     <Image
-        src="/uiux/siglo/67.png"
+        src={`${basePath}/67.png`}
         alt="550+ Screens"
         percentageRounded={0.8}
         noBorder
@@ -260,97 +262,97 @@ detail:
 </MediaFrame>
 
 <MediaFrame sectionName="Landing Page">
-    <Image src="/uiux/siglo/68.jpg" alt="Desktop" rounded />
-    <Image src="/uiux/siglo/69.jpg" alt="Mobile" rounded />
+    <Image src={`${basePath}/68.jpg`} alt="Desktop" rounded />
+    <Image src={`${basePath}/69.jpg`} alt="Mobile" rounded />
 </MediaFrame>
 
 <MediaFrame sectionName="Printed Matters" className="flex flex-col gap-2">
     <div className="w-full flex gap-2">
         <JustifiedColumn className="gap-2">
-            <Image src="/uiux/siglo/70.jpg" alt="Layout Board" />
+            <Image src={`${basePath}/70.jpg`} alt="Layout Board" />
             <div className="flex gap-2">
-                <Image src="/uiux/siglo/71.jpg" alt="Business Card - Back" />
-                <Image src="/uiux/siglo/72.jpg" alt="Business Card - Front" />
+                <Image src={`${basePath}/71.jpg`} alt="Business Card - Back" />
+                <Image src={`${basePath}/72.jpg`} alt="Business Card - Front" />
             </div>
         </JustifiedColumn>
         <JustifiedColumn className="gap-2">
-            <Image src="/uiux/siglo/73.jpg" alt="Brochure - Outer Side" />
-            <Image src="/uiux/siglo/74.jpg" alt="Brochure - Inner Side" />
+            <Image src={`${basePath}/73.jpg`} alt="Brochure - Outer Side" />
+            <Image src={`${basePath}/74.jpg`} alt="Brochure - Inner Side" />
         </JustifiedColumn>
-        <Image src="/uiux/siglo/75.jpg" alt="Standee" row="justified" />
+        <Image src={`${basePath}/75.jpg`} alt="Standee" row="justified" />
     </div>
     <div className="w-full flex gap-2">
         <JustifiedColumn className="gap-2">
             <div className="flex gap-2">
                 <Image
-                    src="/uiux/siglo/76.jpg"
+                    src={`${basePath}/76.jpg`}
                     alt="Employee Name Card - Back Side"
                 />
                 <Image
-                    src="/uiux/siglo/77.jpg"
+                    src={`${basePath}/77.jpg`}
                     alt="Employee Name Card - Staff"
                 />
                 <Image
-                    src="/uiux/siglo/78.jpg"
+                    src={`${basePath}/78.jpg`}
                     alt="Employee Name Card - Manager"
                 />
                 <Image
-                    src="/uiux/siglo/79.jpg"
+                    src={`${basePath}/79.jpg`}
                     alt="Employee Name Card - Supervisor"
                 />
             </div>
             <div className="flex gap-2">
-                <Image src="/uiux/siglo/80.jpg" alt="Tent Card - Main" />
-                <Image src="/uiux/siglo/81.jpg" alt="Tent Card - QR" />
+                <Image src={`${basePath}/80.jpg`} alt="Tent Card - Main" />
+                <Image src={`${basePath}/81.jpg`} alt="Tent Card - QR" />
             </div>
             <div className="flex gap-2">
-                <Image src="/uiux/siglo/82.jpg" alt="Letterhead - Back Side" />
-                <Image src="/uiux/siglo/83.jpg" alt="Letterhead - Front Side" />
+                <Image src={`${basePath}/82.jpg`} alt="Letterhead - Back Side" />
+                <Image src={`${basePath}/83.jpg`} alt="Letterhead - Front Side" />
             </div>
         </JustifiedColumn>
         <JustifiedColumn className="gap-2">
             <div className="flex gap-2">
-                <Image src="/uiux/siglo/84.jpg" alt="Leaflet - Back Side" />
-                <Image src="/uiux/siglo/85.jpg" alt="Leaflet - Front Side" />
+                <Image src={`${basePath}/84.jpg`} alt="Leaflet - Back Side" />
+                <Image src={`${basePath}/85.jpg`} alt="Leaflet - Front Side" />
             </div>
-            <Image src="/uiux/siglo/86.jpg" alt="Letter" />
-            <Image src="/uiux/siglo/87.jpg" alt="Envelope - Small" />
+            <Image src={`${basePath}/86.jpg`} alt="Letter" />
+            <Image src={`${basePath}/87.jpg`} alt="Envelope - Small" />
         </JustifiedColumn>
     </div>
     <div className="flex gap-2">
         <Image
-            src="/uiux/siglo/88.jpg"
+            src={`${basePath}/88.jpg`}
             alt="Envelope - Big - Front Side"
             row="justified"
         />
         <Image
-            src="/uiux/siglo/89.jpg"
+            src={`${basePath}/89.jpg`}
             alt="Envelope - Big - Back Side"
             row="justified"
         />
-        <Image src="/uiux/siglo/90.jpg" alt="Strap - Short" row="justified" />
+        <Image src={`${basePath}/90.jpg`} alt="Strap - Short" row="justified" />
     </div>
-    <Image src="/uiux/siglo/91.jpg" alt="Strap - Long" />
+    <Image src={`${basePath}/91.jpg`} alt="Strap - Long" />
 </MediaFrame>
 
 <MediaFrame sectionName="Booth Display" className="flex flex-col">
     <div className="flex gap-2 w-full md:flex-wrap">
         <Image
-            src="/uiux/siglo/92.jpg"
+            src={`${basePath}/92.jpg`}
             alt="Overall"
             rounded
             row="justified"
             className="md:min-w-full"
         />
         <Image
-            src="/uiux/siglo/93.jpg"
+            src={`${basePath}/93.jpg`}
             alt="Standee"
             rounded
             row="justified"
             className="md:-order-2"
         />
         <Image
-            src="/uiux/siglo/94.jpg"
+            src={`${basePath}/94.jpg`}
             alt="Table"
             rounded
             row="justified"
@@ -359,19 +361,19 @@ detail:
     </div>
     <div className="flex gap-2 w-full md:flex-wrap">
         <Image
-            src="/uiux/siglo/95.jpg"
+            src={`${basePath}/95.jpg`}
             alt="Table - 1"
             rounded
             row="justified"
         />
         <Image
-            src="/uiux/siglo/96.jpg"
+            src={`${basePath}/96.jpg`}
             alt="Table - 2"
             rounded
             row="justified"
         />
         <Image
-            src="/uiux/siglo/97.jpg"
+            src={`${basePath}/97.jpg`}
             alt="Table - 3"
             rounded
             row="justified"
@@ -381,16 +383,16 @@ detail:
 </MediaFrame>
 
 <MediaFrame sectionName="Presentation Deck #0">
-    <Image src="/uiux/siglo/98.png" alt="0% Presentation" noBorder pngBorder />
+    <Image src={`${basePath}/98.png`} alt="0% Presentation" noBorder pngBorder />
 </MediaFrame>
 
 <MediaFrame sectionName="Presentation Deck #30">
-    <Image src="/uiux/siglo/99.png" alt="30% Presentation" noBorder pngBorder />
+    <Image src={`${basePath}/99.png`} alt="30% Presentation" noBorder pngBorder />
 </MediaFrame>
 
 <MediaFrame sectionName="Presentation Deck #70">
     <Image
-        src="/uiux/siglo/100.png"
+        src={`${basePath}/100.png`}
         alt="70% Presentation"
         noBorder
         pngBorder
@@ -399,7 +401,7 @@ detail:
 
 <MediaFrame sectionName="Presentation Deck #100">
     <Image
-        src="/uiux/siglo/101.png"
+        src={`${basePath}/101.png`}
         alt="100% Presentation"
         noBorder
         pngBorder

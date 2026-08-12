@@ -15,14 +15,16 @@ detail:
         work to the development of young people in Vietnam.
 ---
 
+export const basePath = "/short-films/me-oii"
+
 <MediaFrame sectionName="Avatar & Cover" className="flex md:flex-col">
-    <Image src="/short-films/me-oii/1.jpg" alt="Avatar" dim row="justified" />
-    <Image src="/short-films/me-oii/2.jpg" alt="Cover" dim row="justified" />
+    <Image src={`${basePath}/1.jpg`} alt="Avatar" dim row="justified" />
+    <Image src={`${basePath}/2.jpg`} alt="Cover" dim row="justified" />
 </MediaFrame>
 
 <MediaFrame sectionName="Official Poster" widthFit>
     <Image
-        src="/short-films/me-oii/3.jpg"
+        src={`${basePath}/3.jpg`}
         alt="Official Poster"
         dim
         limitHeight
@@ -30,14 +32,14 @@ detail:
 </MediaFrame>
 
 <MediaFrame sectionName="Character Posters" className="grid-cols-2">
-    <Image src="/short-films/me-oii/4.jpg" alt="Ms. Minh Châu (Daughter)" dim />
-    <Image src="/short-films/me-oii/5.jpg" alt="Ms. Thanh Dung (Mom)" dim />
+    <Image src={`${basePath}/4.jpg`} alt="Ms. Minh Châu (Daughter)" dim />
+    <Image src={`${basePath}/5.jpg`} alt="Ms. Thanh Dung (Mom)" dim />
 </MediaFrame>
 
 <MediaFrame sectionName="Standee & Seminar LED" className="flex">
-    <Image src="/short-films/me-oii/6.jpg" alt="Standee" dim row="justified" />
+    <Image src={`${basePath}/6.jpg`} alt="Standee" dim row="justified" />
     <Image
-        src="/short-films/me-oii/7.jpg"
+        src={`${basePath}/7.jpg`}
         alt="Seminar LED"
         dim
         row="justified"
@@ -45,19 +47,19 @@ detail:
 </MediaFrame>
 
 <MediaFrame sectionName="Sponsor Gratitude LED" className="grid-cols-2">
-    <Image src="/short-films/me-oii/8.jpg" alt="Vanmiu Beauty Academy" dim />
-    <Image src="/short-films/me-oii/9.jpg" alt="NET English" dim />
-    <Image src="/short-films/me-oii/10.jpg" alt="Camellia Studio" dim />
-    <Image src="/short-films/me-oii/11.jpg" alt="Mr. Brown" dim />
-    <Image src="/short-films/me-oii/12.jpg" alt="Poem Flowers" dim />
-    <Image src="/short-films/me-oii/13.jpg" alt="YBox & Made By VietNam" dim />
+    <Image src={`${basePath}/8.jpg`} alt="Vanmiu Beauty Academy" dim />
+    <Image src={`${basePath}/9.jpg`} alt="NET English" dim />
+    <Image src={`${basePath}/10.jpg`} alt="Camellia Studio" dim />
+    <Image src={`${basePath}/11.jpg`} alt="Mr. Brown" dim />
+    <Image src={`${basePath}/12.jpg`} alt="Poem Flowers" dim />
+    <Image src={`${basePath}/13.jpg`} alt="YBox & Made By VietNam" dim />
 </MediaFrame>
 
 <MediaFrame sectionName="Project Identity">
-    <Image src="/short-films/me-oii/14.jpg" alt="Logo" dim />
-    <Image src="/short-films/me-oii/15.jpg" alt="Logo Grid System" />
-    <Image src="/short-films/me-oii/16.jpg" alt="Logo Story" />
-    <Image src="/short-films/me-oii/17.jpg" alt="Color Palette" />
-    <Image src="/short-films/me-oii/18.jpg" alt="Typography" />
-    <Image src="/short-films/me-oii/19.jpg" alt="Mood Board" />
+    <Image src={`${basePath}/14.jpg`} alt="Logo" dim />
+    <Image src={`${basePath}/15.jpg`} alt="Logo Grid System" />
+    <Image src={`${basePath}/16.jpg`} alt="Logo Story" />
+    <Image src={`${basePath}/17.jpg`} alt="Color Palette" />
+    <Image src={`${basePath}/18.jpg`} alt="Typography" />
+    <Image src={`${basePath}/19.jpg`} alt="Mood Board" />
 </MediaFrame>

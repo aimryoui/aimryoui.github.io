@@ -17,9 +17,11 @@ detail:
         Weekly exercises to practice using Adobe After Effects and animation.
 ---
 
+export const basePath = "/animations/basic-animations-mp4"
+
 <MediaFrame sectionName="morphing.mp4" showHideAnimationType="fade" normalcase>
     <Gif
-        src="/animations/basic-animations-mp4/1.gif"
+        src={`${basePath}/1.gif`}
         alt="morphing.gif"
         dim
         rounded
@@ -28,7 +30,7 @@ detail:
 
 <MediaFrame sectionName="camera_3d.mp4" normalcase>
     <Video
-        src="/animations/basic-animations-mp4/2.mp4"
+        src={`${basePath}/2.mp4`}
         alt="camera_3d.mp4"
         dim
         rounded
@@ -38,7 +40,7 @@ detail:
 
 <MediaFrame sectionName="hooman_walking.mp4" normalcase>
     <Video
-        src="/animations/basic-animations-mp4/3.mp4"
+        src={`${basePath}/3.mp4`}
         alt="hooman_walking.mp4"
         dim
         rounded

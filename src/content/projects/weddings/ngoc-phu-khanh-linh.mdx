@@ -18,9 +18,11 @@ detail:
         Congratulations to my sister and brother-in-law 😊.
 ---
 
+export const basePath = "/weddings/ngoc-phu-khanh-linh"
+
 <MediaFrame sectionName="Passport Invitation > Cover">
     <Image
-        src="/weddings/ngoc-phu-khanh-linh/1.jpg"
+        src={`${basePath}/1.jpg`}
         alt="Cover"
         percentageRounded={6.5}
     />
@@ -28,7 +30,7 @@ detail:
 
 <MediaFrame sectionName="Passport Invitation > Content">
     <Image
-        src="/weddings/ngoc-phu-khanh-linh/2.jpg"
+        src={`${basePath}/2.jpg`}
         alt="Content"
         dim
         percentageRounded={6.5}
@@ -37,12 +39,12 @@ detail:
 
 <MediaFrame sectionName="Airline Ticket Invitation">
     <Image
-        src="/weddings/ngoc-phu-khanh-linh/3.jpg"
+        src={`${basePath}/3.jpg`}
         alt="Front Side"
         percentageRounded={3.4}
     />
     <Image
-        src="/weddings/ngoc-phu-khanh-linh/4.jpg"
+        src={`${basePath}/4.jpg`}
         alt="Back Side"
         dim
         percentageRounded={3.4}
@@ -52,7 +54,7 @@ detail:
 <MediaFrame sectionName="Mockups">
     <div className="w-full flex gap-2 md:flex-col">
         <Image
-            src="/weddings/ngoc-phu-khanh-linh/5.jpg"
+            src={`${basePath}/5.jpg`}
             className="md:!flex-none"
             alt="Ticket"
             dim
@@ -60,7 +62,7 @@ detail:
             rounded
         />
         <Image
-            src="/weddings/ngoc-phu-khanh-linh/6.jpg"
+            src={`${basePath}/6.jpg`}
             className="md:!flex-none"
             alt="Passport"
             dim
@@ -68,12 +70,12 @@ detail:
             rounded
         />
     </div>
-    <Image src="/weddings/ngoc-phu-khanh-linh/7.jpg" alt="Passport" rounded />
+    <Image src={`${basePath}/7.jpg`} alt="Passport" rounded />
 </MediaFrame>
 
 <MediaFrame sectionName="Envelope">
     <Image
-        src="/weddings/ngoc-phu-khanh-linh/8.jpg"
+        src={`${basePath}/8.jpg`}
         alt="Envelope"
         dim
         rounded
@@ -82,20 +84,20 @@ detail:
 
 <MediaFrame sectionName="Printed Invitations" className="grid-cols-2">
     <Image
-        src="/weddings/ngoc-phu-khanh-linh/9.jpg"
+        src={`${basePath}/9.jpg`}
         alt="Envelopes"
         dim
         className="col-span-2 md:col-span-1"
         rounded
     />
     <Image
-        src="/weddings/ngoc-phu-khanh-linh/10.jpg"
+        src={`${basePath}/10.jpg`}
         alt="Passports"
         dim
         rounded
     />
     <Image
-        src="/weddings/ngoc-phu-khanh-linh/11.jpg"
+        src={`${basePath}/11.jpg`}
         alt="Tickets"
         dim
         rounded

@@ -18,7 +18,7 @@ selectedWorksProjects.forEach((project) => {
     const manifestKey = project.filePath.replace(TRIM_PROJECT_SLUG_REGEX, "")
     const projectColor = colorManifest[manifestKey]
 
-    if (projectColor?.theme && project.id) {
+    if (projectColor?.theme) {
         const hexRules = generateColorRules(projectColor.theme, "hex")
         const oklchRules = generateColorRules(projectColor.theme, "oklch")
 

@@ -17,13 +17,15 @@ detail:
         Weekly exercises to practice using Adobe After Effects and animation.
 ---
 
+export const basePath = "/animations/basic-animations-2-mp4"
+
 <MediaFrame
     sectionName="rectangle_jump.mp4"
     showHideAnimationType="fade"
     normalcase
 >
     <Gif
-        src="/animations/basic-animations-2-mp4/1.gif"
+        src={`${basePath}/1.gif`}
         alt="rectangle_jump.gif"
         dim
         rounded
@@ -32,7 +34,7 @@ detail:
 
 <MediaFrame sectionName="ball_bounce.mp4" normalcase>
     <Video
-        src="/animations/basic-animations-2-mp4/2.mp4"
+        src={`${basePath}/2.mp4`}
         alt="ball_bounce.mp4"
         dim
         rounded
@@ -42,7 +44,7 @@ detail:
 
 <MediaFrame sectionName="octopus_tentacle.mp4" normalcase>
     <Video
-        src="/animations/basic-animations-2-mp4/3.mp4"
+        src={`${basePath}/3.mp4`}
         alt="octopus_tentacle.mp4"
         dim
         rounded
@@ -52,7 +54,7 @@ detail:
 
 <MediaFrame sectionName="animated_text.mp4" normalcase>
     <Video
-        src="/animations/basic-animations-2-mp4/4.mp4"
+        src={`${basePath}/4.mp4`}
         alt="animated_text.mp4"
         rounded
         controls

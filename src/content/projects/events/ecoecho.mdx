@@ -23,23 +23,25 @@ detail:
         also an opportunity for us to bring these values into our daily lives.
 ---
 
+export const basePath = "/events/ecoecho"
+
 <MediaFrame sectionName="Avatar" className="grid-cols-2">
     <Image
-        src="/events/ecoecho/1.jpg"
+        src={`${basePath}/1.jpg`}
         alt="Cóc Sài Gòn Communication Club's Avatar"
         rounded
     />
-    <Image src="/events/ecoecho/2.jpg" alt="FPT Around's Avatar" rounded />
+    <Image src={`${basePath}/2.jpg`} alt="FPT Around's Avatar" rounded />
 </MediaFrame>
 
 <MediaFrame sectionName="Official Poster" widthFit>
-    <Image src="/events/ecoecho/3.jpg" alt="Official Poster" dim limitHeight />
+    <Image src={`${basePath}/3.jpg`} alt="Official Poster" dim limitHeight />
 </MediaFrame>
 
 <MediaFrame sectionName="Event #1 Poster" widthFit>
-    <Image src="/events/ecoecho/4.jpg" alt="Event #1 Poster" dim limitHeight />
+    <Image src={`${basePath}/4.jpg`} alt="Event #1 Poster" dim limitHeight />
 </MediaFrame>
 
 <MediaFrame sectionName="Event #2 Poster" widthFit>
-    <Image src="/events/ecoecho/5.jpg" alt="Event #2 Poster" dim limitHeight />
+    <Image src={`${basePath}/5.jpg`} alt="Event #2 Poster" dim limitHeight />
 </MediaFrame>

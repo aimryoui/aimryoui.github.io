@@ -27,14 +27,16 @@ detail:
         ending, there is a new beginning".
 ---
 
+export const basePath = "/short-films/not-ket"
+
 <MediaFrame sectionName="Avatar & Cover" className="flex md:flex-col">
-    <Image src="/short-films/not-ket/1.jpg" alt="Avatar" dim row="justified" />
-    <Image src="/short-films/not-ket/2.jpg" alt="Cover" row="justified" />
+    <Image src={`${basePath}/1.jpg`} alt="Avatar" dim row="justified" />
+    <Image src={`${basePath}/2.jpg`} alt="Cover" row="justified" />
 </MediaFrame>
 
 <MediaFrame sectionName="Official Poster" widthFit>
     <Image
-        src="/short-films/not-ket/3.jpg"
+        src={`${basePath}/3.jpg`}
         alt="Official Poster"
         dim
         percentageRounded={5.7}
@@ -44,7 +46,7 @@ detail:
 
 <MediaFrame sectionName="Invitation">
     <Image
-        src="/short-films/not-ket/4.jpg"
+        src={`${basePath}/4.jpg`}
         alt="Invitation"
         dim
         percentageRounded={4}

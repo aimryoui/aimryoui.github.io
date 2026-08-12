@@ -593,7 +593,7 @@ function ResetPreferenceAlertDialog({
                                                                                         >
                                                                                             {isReset ? (
                                                                                                 <Undo2
-                                                                                                    className="size-4.5 -translate-x-[1px] -translate-y-[1px]"
+                                                                                                    className="-m-0.25 size-4.5 -translate-y-[1px]"
                                                                                                     strokeWidth={
                                                                                                         1.5
                                                                                                     }

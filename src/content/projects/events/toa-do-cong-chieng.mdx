@@ -23,8 +23,10 @@ detail:
         experiences along with a unique communication campaign.
 ---
 
+export const basePath = "/events/toa-do-cong-chieng"
+
 <MediaFrame sectionName="Phase #1 — Backdrop">
-    <Image src="/events/toa-do-cong-chieng/1.jpg" alt="Backdrop" dim rounded />
+    <Image src={`${basePath}/1.jpg`} alt="Backdrop" dim rounded />
 </MediaFrame>
 
 <MediaFrame
@@ -32,13 +34,13 @@ detail:
     className="grid-cols-2"
 >
     <Image
-        src="/events/toa-do-cong-chieng/2.jpg"
+        src={`${basePath}/2.jpg`}
         alt="Left Side-Backdrop"
         dim
         rounded
     />
     <Image
-        src="/events/toa-do-cong-chieng/3.jpg"
+        src={`${basePath}/3.jpg`}
         alt="Right Side-Backdrop"
         dim
         rounded
@@ -47,7 +49,7 @@ detail:
 
 <MediaFrame sectionName="Phase #2 — Fashion Backdrop">
     <Image
-        src="/events/toa-do-cong-chieng/4.jpg"
+        src={`${basePath}/4.jpg`}
         alt="Fashion Backdrop"
         dim
         rounded
@@ -56,7 +58,7 @@ detail:
 
 <MediaFrame sectionName="Phase #2 — Producer Backdrop">
     <Image
-        src="/events/toa-do-cong-chieng/5.jpg"
+        src={`${basePath}/5.jpg`}
         alt="Fashion Backdrop"
         dim
         rounded
@@ -65,7 +67,7 @@ detail:
 
 <MediaFrame sectionName="Phase #2 — Infographic Backdrop">
     <Image
-        src="/events/toa-do-cong-chieng/6.jpg"
+        src={`${basePath}/6.jpg`}
         alt="Infographic Backdrop"
         dim
         rounded
