@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react"
-import { usePathname, useSearchParams } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
 
 type TocNode =
@@ -64,8 +65,7 @@ function useTocTree(filteredItems: TocItemProps[]): TocNode[] {
 
 function useTocGroup(items: TocItemProps[], defaultExpanded = true) {
     const pathname = usePathname()
-    const searchParams = useSearchParams()
-    const isFeatureSelected = searchParams.get("feature") === "selected"
+    const isFeatureSelected = useFeatureQuery((s) => s.isFeatureSelected)
 
     const [isExpanded, setIsExpanded] = useState(() => {
         if (defaultExpanded) return true
@@ -90,7 +90,8 @@ function useTocGroup(items: TocItemProps[], defaultExpanded = true) {
                 if (i.href?.startsWith("#")) return true
                 const hrefPathname = i.href?.split("?")[0]
                 if (hrefPathname !== pathname) return false
-                const hrefHasFeature = i.href?.includes("feature=selected") ?? false
+                const hrefHasFeature =
+                    i.href?.includes("feature=selected") ?? false
                 return hrefHasFeature === isFeatureSelected
             })
 

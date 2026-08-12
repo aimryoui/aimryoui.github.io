@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState, ViewTransition } from "react"
-import { useSearchParams } from "next/navigation"
 
 import { ExternalLink } from "lucide-react"
 
@@ -10,6 +9,7 @@ import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
+import { useIsMounted } from "@/hooks/use-is-mounted"
 import { cn } from "@/lib/utils"
 import {
     resolveSocialData,
@@ -37,11 +37,14 @@ function SocialButton({
     onHoverStart,
     onHoverEnd,
     tracking,
+    isSelectedWorks: isSelectedWorksProp = false,
     ...props
-}: SocialButtonProps) {
+}: SocialButtonProps & { isSelectedWorks?: boolean }) {
     const { isWebKit } = useBrowserEngine()
-    const searchParams = useSearchParams()
-    const isSelectedWorks = searchParams.get("feature") === "selected"
+    const isMounted = useIsMounted()
+    const isSelectedWorks =
+        isSelectedWorksProp ||
+        (isMounted && window.location.search.includes("feature=selected"))
 
     const playPressFeedback = usePressFeedback()
     const isReducedMotion = useReducedMotion()

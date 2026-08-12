@@ -5,6 +5,7 @@ import { create } from "zustand"
 
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
+import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 
 interface TocActiveIdStore {
     activeId: string | null
@@ -29,24 +30,12 @@ const SCROLL_DELAY = 400
 function getActiveElement(
     container: HTMLElement | null,
     id: string | null,
-    pathname: string
+    fullPath: string
 ) {
     if (!id || !container) return null
 
-    // When navigated with ?feature=selected, prioritize the Selected Works TOC
-    // item (whose href contains feature=selected) over the original category item
-    const isFeatureSelected =
-        typeof window !== "undefined" &&
-        window.location.search.includes("feature=selected")
-    if (isFeatureSelected) {
-        const selectedEl = container.querySelector(
-            `[data-toc-id="${id}"][href*="feature=selected"]`
-        )
-        if (selectedEl) return selectedEl
-    }
-
     let el = container.querySelector(
-        `[data-toc-id="${id}"][href="${pathname}"]`
+        `[data-toc-id="${id}"][href="${fullPath}"]`
     )
     el ??= container.querySelector(`[data-toc-id="${id}"]`)
     return el
@@ -58,6 +47,8 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
     onActiveReady
 }: UseTocScrollOptions) {
     const pathname = usePathname()
+    const isFeatureSelected = useFeatureQuery((s) => s.isFeatureSelected)
+    const fullPath = pathname + (isFeatureSelected ? "?feature=selected" : "")
     const { isBlink } = useBrowserEngine()
 
     const scrollContainerRef = useRef<T>(null)
@@ -88,13 +79,13 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
             const activeEl = getActiveElement(
                 scrollContainerRef.current,
                 activeId,
-                pathname
+                fullPath
             )
             if (activeEl) {
                 activeEl.scrollIntoView({ block: "center", behavior: "auto" })
             }
         }
-    }, [debouncedQuery, activeId, pathname])
+    }, [debouncedQuery, activeId, fullPath])
 
     // Compute initial active ID before paint
     useLayoutEffect(() => {
@@ -123,7 +114,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
             const activeEl = getActiveElement(
                 scrollContainerRef.current,
                 initialActiveId,
-                pathname
+                fullPath
             )
             if (activeEl) {
                 activeEl.scrollIntoView({ block: "center", behavior: "auto" })
@@ -156,7 +147,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
         return () => {
             clearTimeout(timer)
         }
-    }, [rawActiveId, activeId, pathname, isBlink, setActiveId])
+    }, [rawActiveId, activeId, pathname, fullPath, isBlink, setActiveId])
 
     // Notify parent that activeId is ready
     useEffect(() => {
@@ -177,7 +168,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
             const activeElement = getActiveElement(
                 scrollContainerRef.current,
                 activeId,
-                pathname
+                fullPath
             )
 
             if (activeElement) {
@@ -225,7 +216,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                         const el = getActiveElement(
                             scrollContainerRef.current,
                             activeId,
-                            pathname
+                            fullPath
                         )
                         if (el) {
                             el.scrollIntoView({
@@ -246,7 +237,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                 })
             }
         }
-    }, [activeId, pathname])
+    }, [activeId, pathname, fullPath])
 
     return {
         scrollContainerRef,

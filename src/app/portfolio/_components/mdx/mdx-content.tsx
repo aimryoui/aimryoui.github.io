@@ -1,3 +1,4 @@
+import { Lightbulb } from "lucide-react"
 import * as runtime from "react/jsx-runtime"
 
 import { SectionLine } from "@/components/layout/line"
@@ -26,7 +27,10 @@ const sharedComponents = {
     MediaFrame,
     MediaFrameContent,
     JustifiedColumn,
-    SectionLine
+    SectionLine,
+
+    // Icons
+    Lightbulb
 }
 
 declare global {

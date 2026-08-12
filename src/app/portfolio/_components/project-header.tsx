@@ -1,7 +1,6 @@
 "use client"
 
 import { ViewTransition } from "react"
-import { useSearchParams } from "next/navigation"
 
 import { Divider } from "@/components/layout/divider"
 import {
@@ -15,6 +14,7 @@ import { At, H1, Highlight, Text } from "@/components/ui/typography"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { slugify } from "@/helpers/slugify"
+import { useIsMounted } from "@/hooks/use-is-mounted"
 import { cn } from "@/lib/utils"
 import { TOOL_ICONS } from "@/portfolio/_configs/tools"
 import { type ProjectId } from "@/types/project-ids"
@@ -48,9 +48,10 @@ function ProjectHeader({
     const { subject, duration, place } = information
     const isNew = features?.new ?? false
 
-    const searchParams = useSearchParams()
+    const isMounted = useIsMounted()
     const isSelectedWorks =
-        isSelectedWorksProp || searchParams.get("feature") === "selected"
+        isSelectedWorksProp ||
+        (isMounted && window.location.search.includes("feature=selected"))
 
     return (
         <div className={cn("relative bg-background")}>
