@@ -78,13 +78,12 @@ const MobileTocGroup = memo(
                                 <Highlight>{header.label}</Highlight> category
                             </span>
                             <ChevronDown
-                                className={cn(
-                                    "size-6 translate-y-[.5px] transition-transform duration-350",
-                                    {
-                                        "group-not-data-expanded/collapsible":
-                                            "translate-x-[1px] translate-y-0 -rotate-90 dark:stroke-2.5"
-                                    }
-                                )}
+                                className={cn("size-6 translate-y-[.5px]", {
+                                    "motion-preferred":
+                                        "transition-transform duration-350",
+                                    "group-not-data-expanded/collapsible":
+                                        "translate-x-[1px] translate-y-0 -rotate-90 dark:stroke-2.5"
+                                })}
                             />
                         </div>
                     </CollapsibleTrigger>

@@ -110,8 +110,10 @@ const TocGroup = memo(
                                 >
                                     <ChevronDown
                                         className={cn(
-                                            "size-5 translate-y-[.5px] transition-transform duration-350",
+                                            "size-5 translate-y-[.5px]",
                                             {
+                                                "motion-preferred":
+                                                    "transition-transform duration-350",
                                                 "group-not-data-expanded/collapsible":
                                                     "translate-x-[.5px] translate-y-0 -rotate-90 dark:stroke-2.5"
                                             }

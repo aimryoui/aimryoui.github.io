@@ -234,7 +234,9 @@ function TableCell({
                                             "size-5 -translate-y-[.5px]",
                                             {
                                                 "motion-preferred":
-                                                    "transition-transform duration-300 group-data-expanded/table-cell:-rotate-180"
+                                                    "transition-transform duration-300",
+                                                "group-data-expanded/table-cell":
+                                                    "-rotate-180"
                                             }
                                         )}
                                     />
