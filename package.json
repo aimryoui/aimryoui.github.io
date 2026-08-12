@@ -91,7 +91,7 @@
         "embla-carousel-ssr": "9.0.0-rc02",
         "embla-carousel-wheel-gestures": "9.0.0-rc01",
         "gsap": "^3.15.0",
-        "hls.js": "^1.6.17",
+        "hls.js": "^1.6.18",
         "lucide-react": "^1.31.0",
         "motion": "^13.1.0",
         "next": "^16.3.0",
@@ -110,7 +110,7 @@
         "zustand": "^5.0.14"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.5.7",
+        "@biomejs/biome": "^2.5.8",
         "@csstools/postcss-oklab-function": "^5.0.7",
         "@eslint/css": "^1.4.0",
         "@limegrass/eslint-plugin-import-alias": "^1.6.1",
@@ -140,7 +140,7 @@
         "postcss-load-config": "^6.0.1",
         "sharp": "^0.35.3",
         "tailwindcss": "3.4.19",
-        "terser": "^5.49.2",
+        "terser": "^5.50.0",
         "tsx": "^4.23.12",
         "typescript": "^7.0.2",
         "velite": "^0.4.0"
