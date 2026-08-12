@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { usePathname } from "next/navigation"
 
 import { create } from "zustand"
@@ -87,8 +87,8 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
         }
     }, [debouncedQuery, activeId, fullPath])
 
-    // Compute initial active ID before paint
-    useLayoutEffect(() => {
+    // Compute initial active ID after paint to prevent React from aborting View Transitions
+    useEffect(() => {
         const container = scrollContainerRef.current
         if (!container) return
 
