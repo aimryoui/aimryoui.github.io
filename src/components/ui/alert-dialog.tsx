@@ -88,10 +88,7 @@ function AlertDialogContent({
                         "data-[size=default]": "max-w-sm",
                         "data-[size=sm]": "max-w-xs",
                         before: [
-                            "pointer-events-none absolute -inset-4 -z-20 bg-[repeating-linear-gradient(315deg,var(--color-pattern)_0,var(--color-pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]",
-                            {
-                                dark: "bg-background"
-                            }
+                            "pointer-events-none absolute -inset-4 -z-20 bg-[repeating-linear-gradient(315deg,var(--color-stroke)_0,var(--color-stroke)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]"
                         ],
                         after: [
                             "pointer-events-none absolute inset-0 -z-10 rounded-inherit bg-popover ring ring-stroke",
