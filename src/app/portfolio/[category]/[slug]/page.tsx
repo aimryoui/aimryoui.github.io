@@ -119,10 +119,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
     return (
         <>
-            <head>
-                <meta property="og:image:alt" content={OG_ALT} />
-                <meta name="twitter:image:alt" content={OG_ALT} />
-            </head>
+            <meta property="og:image:alt" content={OG_ALT} />
+            <meta name="twitter:image:alt" content={OG_ALT} />
             {/* <ViewTransition name="main"> */}
             <main className={cn("relative flex-1")}>
                 <AmbientStyle project={project} />
