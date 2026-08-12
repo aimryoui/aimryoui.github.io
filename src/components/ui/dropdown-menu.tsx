@@ -379,6 +379,7 @@ function DropdownMenuSubTrigger({
     className,
     description,
     srOnlyDescription,
+    disabled,
     inset,
     onClick,
     children,
@@ -397,7 +398,8 @@ function DropdownMenuSubTrigger({
         <MenuPrimitive.SubmenuTrigger
             data-slot="dropdown-menu-sub-trigger"
             data-inset={inset}
-            data-sound="button"
+            data-sound={disabled ? false : "button"}
+            disabled={disabled}
             delay={0}
             onClick={(e) => {
                 playPressFeedback("button")
@@ -588,6 +590,7 @@ function DropdownMenuCheckboxItem({
     children,
     description,
     srOnlyDescription,
+    disabled,
     checked,
     inset,
     onClick,
@@ -605,7 +608,8 @@ function DropdownMenuCheckboxItem({
         <MenuPrimitive.CheckboxItem
             data-slot="dropdown-menu-checkbox-item"
             data-inset={inset}
-            data-sound="tick"
+            data-sound={disabled ? false : "tick"}
+            disabled={disabled}
             onClick={(e) => {
                 playPressFeedback("button")
                 onClick?.(e)
@@ -677,6 +681,7 @@ function DropdownMenuRadioItem({
     children,
     description,
     srOnlyDescription,
+    disabled,
     inset,
     onClick,
     ...props
@@ -693,7 +698,8 @@ function DropdownMenuRadioItem({
         <MenuPrimitive.RadioItem
             data-slot="dropdown-menu-radio-item"
             data-inset={inset}
-            data-sound="tick"
+            data-sound={disabled ? false : "tick"}
+            disabled={disabled}
             onClick={(e) => {
                 playPressFeedback("button")
                 onClick?.(e)

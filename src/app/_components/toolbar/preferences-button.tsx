@@ -10,6 +10,7 @@ import {
     ResetMenuItem,
     ResetPreferenceAlertDialog
 } from "@/components/preferences/reset-menu-item"
+import { ResumeDownloadMenuLinkItem } from "@/components/preferences/resume-download-menu-link-item"
 import { SoundsHapticsMenu } from "@/components/preferences/sounds-haptics-menu"
 import { SourceCodeMenuLinkItem } from "@/components/preferences/source-code-menu-link-item"
 import { Button } from "@/components/ui/button"
@@ -73,6 +74,7 @@ function PreferencesButton() {
                                             <DropdownMenuLabel>
                                                 About
                                             </DropdownMenuLabel>
+                                            <ResumeDownloadMenuLinkItem />
                                             <SourceCodeMenuLinkItem />
                                         </DropdownMenuGroup>
                                     </>

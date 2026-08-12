@@ -1,3 +1,5 @@
+import { ArrowUpRight } from "lucide-react"
+
 import { PreferencesButton } from "@/_components/toolbar/preferences-button"
 import { AudioToggle } from "@/components/audio/audio"
 import { Divider } from "@/components/layout/divider"
@@ -7,7 +9,7 @@ import { Space } from "@/components/layout/space"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
 import { Image } from "@/components/media/image"
 import { LinkButton } from "@/components/ui/button"
-import { Tooltip } from "@/components/ui/tooltip"
+import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { H1, Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
@@ -61,6 +63,24 @@ export default function Home() {
                     </li>
                     <li>
                         <ModeToggle />
+                    </li>
+                    <li>
+                        <TooltipTrigger
+                            delay={500}
+                            payload={{
+                                content: <span>Download my Resume</span>
+                            }}
+                            render={
+                                <LinkButton
+                                    href="/Resume_Product-Designer_Nguyen-Hoang-Nhan.pdf"
+                                    variant="outline"
+                                    className="dark:bg-input/25"
+                                >
+                                    Resume
+                                    <ArrowUpRight className="-me-1" />
+                                </LinkButton>
+                            }
+                        />
                     </li>
                     <li>
                         <PreferencesButton />

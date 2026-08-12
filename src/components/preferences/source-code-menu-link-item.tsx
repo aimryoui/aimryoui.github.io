@@ -13,9 +13,9 @@ interface SourceCodeMenuConfig {
 
 const SOURCE_CODE_MENU: SourceCodeMenuConfig = {
     href: "https://github.com/aimryoui/aimryoui.github.io",
-    label: "Source code",
+    label: MENU_NAME,
     description: "View the source code of this website on GitHub.",
-    icon: <CodeXml />
+    icon: <CodeXml className="-translate-y-[.5px]" />
 }
 
 function SourceCodeMenuLinkItem() {
