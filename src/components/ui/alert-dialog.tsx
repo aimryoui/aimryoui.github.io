@@ -3,9 +3,9 @@
 import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog"
 
 import { Button, type ButtonProps } from "@/components/ui/button"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { playHoverSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
-import { useMotionStore } from "@/stores/motion-store"
 
 function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
     return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
@@ -63,7 +63,7 @@ function AlertDialogContent({
 }: AlertDialogPrimitive.Popup.Props & {
     size?: "xl" | "lg" | "md" | "default" | "sm"
 }) {
-    const motionPreference = useMotionStore((state) => state.preference)
+    const isReducedMotion = useReducedMotion()
 
     return (
         <AlertDialogPortal>
@@ -72,7 +72,7 @@ function AlertDialogContent({
                 data-slot="alert-dialog-content"
                 data-size={size}
                 data-cursor="input"
-                {...(motionPreference === "preferred" && {
+                {...(!isReducedMotion && {
                     onMouseEnter: () => {
                         playHoverSound("tick")
                     }

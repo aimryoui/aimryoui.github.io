@@ -8,11 +8,11 @@ import { Space } from "@/components/layout/space"
 import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
+import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { cn } from "@/lib/utils"
-import { useMotionStore } from "@/stores/motion-store"
 
 function About() {
-    const motionPreference = useMotionStore((state) => state.preference)
+    const isReducedMotion = useReducedMotion()
 
     return (
         <>
@@ -126,11 +126,7 @@ function About() {
                         <Fragment key={item.label}>
                             <div
                                 data-cursor="target"
-                                data-sound={
-                                    motionPreference === "preferred"
-                                        ? "button"
-                                        : false
-                                }
+                                data-sound={isReducedMotion ? false : "button"}
                                 className={cn(
                                     "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                                     {
@@ -214,9 +210,7 @@ function About() {
                                     nativeLink
                                     keepFeedback
                                     data-sound={
-                                        motionPreference === "preferred"
-                                            ? "button"
-                                            : false
+                                        isReducedMotion ? false : "button"
                                     }
                                     openInNewTab
                                     tracking={{
@@ -281,9 +275,7 @@ function About() {
                     />
                     <div
                         data-cursor="target"
-                        data-sound={
-                            motionPreference === "preferred" ? "button" : false
-                        }
+                        data-sound={isReducedMotion ? false : "button"}
                         className={cn(
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {
