@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
@@ -64,14 +64,22 @@ function useTocTree(filteredItems: TocItemProps[]): TocNode[] {
 
 function useTocGroup(items: TocItemProps[], defaultExpanded = true) {
     const pathname = usePathname()
+    const searchParams = useSearchParams()
+    const isFeatureSelected = searchParams.get("feature") === "selected"
+
     const [isExpanded, setIsExpanded] = useState(() => {
         if (defaultExpanded) return true
         const activeId = useTocActiveId.getState().activeId
         return items.some((i) => {
             if (i.id !== activeId) return false
             if (i.href?.startsWith("#")) return true
-            if (i.href === pathname) return true
-            return false
+            // Match pathname AND feature param to ensure only the correct group expands.
+            // e.g. when ?feature=selected, only the Selected Works item matches;
+            // the regular category item (no query) does NOT expand.
+            const hrefPathname = i.href?.split("?")[0]
+            if (hrefPathname !== pathname) return false
+            const hrefHasFeature = i.href?.includes("feature=selected") ?? false
+            return hrefHasFeature === isFeatureSelected
         })
     })
 
@@ -80,8 +88,10 @@ function useTocGroup(items: TocItemProps[], defaultExpanded = true) {
             const match = items.some((i) => {
                 if (i.id !== activeId) return false
                 if (i.href?.startsWith("#")) return true
-                if (i.href === pathname) return true
-                return false
+                const hrefPathname = i.href?.split("?")[0]
+                if (hrefPathname !== pathname) return false
+                const hrefHasFeature = i.href?.includes("feature=selected") ?? false
+                return hrefHasFeature === isFeatureSelected
             })
 
             if (match) {
@@ -95,7 +105,7 @@ function useTocGroup(items: TocItemProps[], defaultExpanded = true) {
             checkActive(state.activeId)
         })
         return unsubscribe
-    }, [items, pathname])
+    }, [items, pathname, isFeatureSelected])
 
     return { isExpanded, setIsExpanded }
 }

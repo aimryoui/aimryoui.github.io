@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState, ViewTransition } from "react"
+import { useSearchParams } from "next/navigation"
 
 import { ExternalLink } from "lucide-react"
 
@@ -23,7 +24,6 @@ interface SocialType {
 interface SocialButtonProps extends Omit<LinkButtonProps, "href"> {
     projectId: ProjectId
     social?: SocialData
-    isSelectedWorks: boolean
 }
 
 const INITIAL_DELAY = 1000
@@ -34,13 +34,14 @@ function SocialButton({
     className,
     projectId,
     social,
-    isSelectedWorks,
     onHoverStart,
     onHoverEnd,
     tracking,
     ...props
 }: SocialButtonProps) {
     const { isWebKit } = useBrowserEngine()
+    const searchParams = useSearchParams()
+    const isSelectedWorks = searchParams.get("feature") === "selected"
 
     const playPressFeedback = usePressFeedback()
     const isReducedMotion = useReducedMotion()

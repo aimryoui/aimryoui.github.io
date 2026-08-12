@@ -36,10 +36,10 @@ function MobileTocList({
 
     const handlePress = useCallback(
         (item: TocItemProps) => {
-            handleItemClick(item, clickedTargetRef)
+            handleItemClick(item, clickedTargetRef, scrollContainerRef.current)
             onLinkClick?.()
         },
-        [clickedTargetRef, onLinkClick]
+        [clickedTargetRef, onLinkClick, scrollContainerRef]
     )
 
     const handleSameClick = useCallback(() => {
@@ -92,7 +92,7 @@ function MobileTocList({
                                 item={item}
                                 query={debouncedQuery}
                                 onPress={(item) => {
-                                    handleItemClick(item, clickedTargetRef)
+                                    handleItemClick(item, clickedTargetRef, scrollContainerRef.current)
                                     onLinkClick?.()
                                 }}
                                 onSameLinkClick={() => {

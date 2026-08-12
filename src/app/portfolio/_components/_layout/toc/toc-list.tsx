@@ -22,16 +22,32 @@ interface TocListProps extends LineSidebarProps {
 
 function handleItemClick(
     item: TocItemProps,
-    clickedTargetRef: React.RefObject<string | null>
+    clickedTargetRef: React.RefObject<string | null>,
+    tocContainer?: HTMLElement | null
 ) {
     const targetId = item.id
 
-    clickedTargetRef.current = targetId
-    const el = document.getElementById(targetId)
-    if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" })
+    if (item.mode === "route" && item.href) {
+        // For same-pathname route items: update URL first so window.location.search
+        // reflects the new query, then scroll TOC to the exact matching element.
+        // Do NOT scroll the page — content doesn't change.
+        clickedTargetRef.current = null
+        window.history.pushState(null, "", item.href)
+        const tocEl = tocContainer?.querySelector(
+            `[data-toc-id="${targetId}"][href="${item.href}"]`
+        )
+        if (tocEl) {
+            tocEl.scrollIntoView({ block: "center", behavior: "smooth" })
+        }
+    } else {
+        // Anchor mode: scroll page to the heading element
+        clickedTargetRef.current = targetId
+        const el = document.getElementById(targetId)
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
+        window.history.pushState(null, "", `#${targetId}`)
     }
-    window.history.pushState(null, "", `#${targetId}`)
 }
 
 function handleSameLinkClick() {
@@ -56,9 +72,9 @@ function TocList({
 
     const handlePress = useCallback(
         (item: TocItemProps) => {
-            handleItemClick(item, clickedTargetRef)
+            handleItemClick(item, clickedTargetRef, scrollContainerRef.current)
         },
-        [clickedTargetRef]
+        [clickedTargetRef, scrollContainerRef]
     )
 
     const tree = useTocTree(filteredItems)

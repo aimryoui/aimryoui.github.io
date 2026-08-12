@@ -6,7 +6,7 @@ import { Divider } from "@/components/layout/divider"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
-import { getProjectPath, groupProjectsByCategory } from "@/lib/project-sort"
+import { getProjectPath, getSelectedProjectPath, groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/portfolio/_components/cards/project-card"
 import SelectedProjectCard from "@/portfolio/_components/cards/selected-project-card"
@@ -56,7 +56,7 @@ function Projects({
                                                 className="group relative"
                                             >
                                                 <SelectedProjectCard
-                                                    href={getProjectPath(
+                                                    href={getSelectedProjectPath(
                                                         project
                                                     )}
                                                     project={project}

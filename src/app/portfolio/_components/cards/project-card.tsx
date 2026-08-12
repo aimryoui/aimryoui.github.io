@@ -53,7 +53,7 @@ function ProjectCard({
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
     const projectPath = project.filePath.replace(TRIM_PROJECT_SLUG_REGEX, "")
-    const isSelectedWorks = project.slug.startsWith("portfolio/selected-works")
+    const isSelectedWorks = href?.toString().includes("feature=selected") ?? false
 
     useEffect(() => {
         return () => {

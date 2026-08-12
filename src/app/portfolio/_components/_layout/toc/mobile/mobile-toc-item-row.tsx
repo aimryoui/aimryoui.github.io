@@ -76,7 +76,11 @@ const MobileTocItemRow = memo(
                     pressSound={isProject ? "link" : "button"}
                     haptic={isProject ? "light" : "success"}
                     onClick={(e) => {
-                        if (isSameUrl(href)) {
+                        // Strip query AND hash to compare only the pathname
+                        const hrefPathname = href.split("?")[0].split("#")[0]
+                        const isSamePath =
+                            hrefPathname === pathname || hrefPathname === ""
+                        if (isSameUrl(href) || isSamePath) {
                             e.preventDefault()
                         }
                     }}
@@ -97,12 +101,20 @@ const MobileTocItemRow = memo(
                             return
                         }
 
-                        if (item.mode === "route") {
-                            onPress(item)
+                        // Strip query AND hash to compare only the pathname.
+                        const hrefPathname = href.split("?")[0].split("#")[0]
+                        const isSamePath =
+                            hrefPathname === pathname || hrefPathname === ""
+                        if (item.mode === "route" && !isSamePath) {
+                            // Let the native link navigation happen
                             return
                         }
 
                         onPress(item)
+
+                        if (isSamePath && item.mode === "route") {
+                            onSameLinkClick()
+                        }
                     }}
                     className={cn(
                         "group/link relative flex-1 truncate leading-6",

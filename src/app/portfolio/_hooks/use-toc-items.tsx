@@ -4,6 +4,7 @@ import {
     getCategoryPath,
     getProjectPath,
     getProjectRouteSlug,
+    getSelectedProjectPath,
     groupProjectsByCategory
 } from "@/lib/project-sort"
 import {
@@ -55,7 +56,7 @@ function useTocItems() {
                     mode: "route",
                     href:
                         group.id === "selected-works"
-                            ? `/portfolio/selected-works/${getProjectRouteSlug(project)}`
+                            ? getSelectedProjectPath(project)
                             : getProjectPath(project)
                 })
             }

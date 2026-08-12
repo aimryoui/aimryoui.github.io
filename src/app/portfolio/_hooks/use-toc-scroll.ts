@@ -32,6 +32,19 @@ function getActiveElement(
     pathname: string
 ) {
     if (!id || !container) return null
+
+    // When navigated with ?feature=selected, prioritize the Selected Works TOC
+    // item (whose href contains feature=selected) over the original category item
+    const isFeatureSelected =
+        typeof window !== "undefined" &&
+        window.location.search.includes("feature=selected")
+    if (isFeatureSelected) {
+        const selectedEl = container.querySelector(
+            `[data-toc-id="${id}"][href*="feature=selected"]`
+        )
+        if (selectedEl) return selectedEl
+    }
+
     let el = container.querySelector(
         `[data-toc-id="${id}"][href="${pathname}"]`
     )

@@ -136,9 +136,10 @@ const TocItemRow = memo(
                     pressSound="link"
                     prefetch={false}
                     onClick={(e) => {
-                        const targetPath = href.split("#")[0]
+                        // Strip query AND hash to compare only the pathname
+                        const hrefPathname = href.split("?")[0].split("#")[0]
                         const isSamePath =
-                            targetPath === pathname || targetPath === ""
+                            hrefPathname === pathname || hrefPathname === ""
                         if (isSameUrl(href) || isSamePath) {
                             e.preventDefault()
                         }
@@ -160,12 +161,20 @@ const TocItemRow = memo(
                             return
                         }
 
-                        const targetPath = href.split("#")[0]
+                        // Strip query AND hash to compare only the pathname.
+                        // This treats /path and /path?feature=selected as the same route.
+                        const hrefPathname = href.split("?")[0].split("#")[0]
                         const isSamePath =
-                            targetPath === pathname || targetPath === ""
+                            hrefPathname === pathname || hrefPathname === ""
                         if (item.mode === "route" && !isSamePath) return
 
                         onPress(item)
+
+                        // For same-pathname route items (different query = same page content),
+                        // also fire the flash since the user is already on this page.
+                        if (isSamePath && item.mode === "route") {
+                            onSameLinkClick()
+                        }
                     }}
                     className={cn(
                         "group/link relative flex flex-1 items-center truncate py-1 leading-6",

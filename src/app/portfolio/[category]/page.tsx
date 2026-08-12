@@ -17,6 +17,7 @@ import { siteConfig } from "@/configs/site.config"
 import {
     getCategoryPath,
     getProjectPath,
+    getSelectedProjectPath,
     groupProjectsByCategory
 } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
@@ -161,7 +162,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 className="group"
                             >
                                 <ProjectCard
-                                    href={getProjectPath(project)}
+                                    href={
+                                        isSelectedWorks
+                                            ? getSelectedProjectPath(project)
+                                            : getProjectPath(project)
+                                    }
                                     project={project}
                                 />
                                 {index < group.projects.length - 1 && (

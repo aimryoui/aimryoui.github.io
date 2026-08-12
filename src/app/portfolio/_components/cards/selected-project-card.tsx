@@ -167,9 +167,7 @@ function ProjectCover({
                 className={cn(
                     "relative w-full",
                     {
-                        after: [
-                            "absolute inset-0 size-full border border-default/15"
-                        ]
+                        after: "absolute inset-0 size-full border border-default/15"
                     },
                     className
                 )}

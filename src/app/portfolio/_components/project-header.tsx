@@ -1,4 +1,7 @@
+"use client"
+
 import { ViewTransition } from "react"
+import { useSearchParams } from "next/navigation"
 
 import { Divider } from "@/components/layout/divider"
 import {
@@ -32,7 +35,7 @@ function ProjectHeader({
     information,
     tools,
     detail,
-    isSelectedWorks = false
+    isSelectedWorks: isSelectedWorksProp = false
 }: Omit<
     (typeof projects)[number],
     "id" | "name" | "forceExpand" | "slug" | "code" | "filePath"
@@ -44,6 +47,10 @@ function ProjectHeader({
     const headerId = slugify(projectName)
     const { subject, duration, place } = information
     const isNew = features?.new ?? false
+
+    const searchParams = useSearchParams()
+    const isSelectedWorks =
+        isSelectedWorksProp || searchParams.get("feature") === "selected"
 
     return (
         <div className={cn("relative bg-background")}>
@@ -215,11 +222,11 @@ function ProjectHeader({
 function ProjectName({
     projectId,
     projectName,
-    isSelectedWorks = false
+    isSelectedWorks
 }: {
     projectId: ProjectId
     projectName: string
-    isSelectedWorks?: boolean
+    isSelectedWorks: boolean
 }) {
     return (
         <ViewTransition
@@ -233,11 +240,11 @@ function ProjectName({
 function ProjectCategory({
     projectName,
     category,
-    isSelectedWorks = false
+    isSelectedWorks
 }: {
     projectName: string
     category: string
-    isSelectedWorks?: boolean
+    isSelectedWorks: boolean
 }) {
     return (
         <ViewTransition

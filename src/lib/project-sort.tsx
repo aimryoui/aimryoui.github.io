@@ -120,11 +120,6 @@ const groupProjectsByCategory = cache(
                     (a.features?.selected[1] ?? 0) -
                     (b.features?.selected[1] ?? 0)
             )
-            .map((p) =>
-                Object.assign({}, p, {
-                    slug: `portfolio/selected-works/${p.slug.split("/").pop()}`
-                })
-            )
 
         if (selectedWorksProjects.length > 0) {
             result.unshift({
@@ -153,6 +148,10 @@ function getProjectPath(project: Project): string {
     return `/portfolio/${category}/${getProjectRouteSlug(project)}`
 }
 
+function getSelectedProjectPath(project: Project): string {
+    return `${getProjectPath(project)}?feature=selected`
+}
+
 function getCategoryPath(category: string): string {
     return `/portfolio/${category}`
 }
@@ -174,5 +173,6 @@ export {
     getProject,
     getProjectPath,
     getProjectRouteSlug,
+    getSelectedProjectPath,
     groupProjectsByCategory
 }
