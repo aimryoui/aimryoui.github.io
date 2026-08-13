@@ -1,6 +1,7 @@
 const AVAILABLE_EFFECTS = [
     "target-cursor",
     "line-sidebar",
+    "page-transition",
     "ambient-colors"
 ] as const
 type Effect = (typeof AVAILABLE_EFFECTS)[number]

@@ -1,10 +1,9 @@
 "use client"
 
-import { ViewTransition } from "react"
-
 import { sendGAEvent } from "@next/third-parties/google"
 import { type PressEvent, usePress } from "react-aria"
 
+import { ViewTransition } from "@/components/animations/view-transition"
 import { ArrowRight } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"

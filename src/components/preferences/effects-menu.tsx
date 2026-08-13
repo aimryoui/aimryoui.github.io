@@ -4,6 +4,7 @@ import { sendGAEvent } from "@next/third-parties/google"
 import {
     MousePointerClick,
     Palette,
+    ReplaceAll,
     Sparkles,
     TextAlignStart
 } from "lucide-react"
@@ -59,6 +60,13 @@ const EFFECTS: Record<Effect, EffectConfig> = {
         description:
             "Use project vibrant-based colors instead of default colors.",
         icon: <Palette />
+    },
+    "page-transition": {
+        label: "Page transition",
+        description:
+            "Enable browser's native view-transition API when navigating between pages. Disabled with reduced motion.",
+        icon: <ReplaceAll />,
+        shouldDisable: (ctx) => ctx.reduceMotion
     }
 }
 

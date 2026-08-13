@@ -1,7 +1,6 @@
 "use client"
 
-import { ViewTransition } from "react"
-
+import { ViewTransition } from "@/components/animations/view-transition"
 import { Divider } from "@/components/layout/divider"
 import {
     ElementLine,

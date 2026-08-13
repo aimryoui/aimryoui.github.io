@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useRef, ViewTransition } from "react"
+import { useEffect, useRef } from "react"
 
+import { ViewTransition } from "@/components/animations/view-transition"
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { SvgElementLine } from "@/components/layout/line"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
@@ -53,7 +54,8 @@ function ProjectCard({
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
     const projectPath = project.filePath.replace(TRIM_PROJECT_SLUG_REGEX, "")
-    const isSelectedWorks = href?.toString().includes("feature=selected") ?? false
+    const isSelectedWorks =
+        href?.toString().includes("feature=selected") ?? false
 
     useEffect(() => {
         return () => {

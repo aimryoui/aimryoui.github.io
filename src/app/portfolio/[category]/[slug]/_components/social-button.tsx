@@ -1,15 +1,16 @@
 "use client"
 
-import { useEffect, useRef, useState, ViewTransition } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { ExternalLink } from "lucide-react"
 
+import { ViewTransition } from "@/components/animations/view-transition"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
+import { useIsMounted } from "@/hooks/use-is-mounted"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { useReducedMotion } from "@/hooks/use-reduced-motion"
-import { useIsMounted } from "@/hooks/use-is-mounted"
 import { cn } from "@/lib/utils"
 import {
     resolveSocialData,

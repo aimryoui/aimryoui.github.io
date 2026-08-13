@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useRef, ViewTransition } from "react"
+import { useEffect, useRef } from "react"
 
+import { ViewTransition } from "@/components/animations/view-transition"
 import { Image } from "@/components/media/image"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { Bold, Text } from "@/components/ui/typography"
