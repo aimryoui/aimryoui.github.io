@@ -2,7 +2,10 @@ import { z } from "zod"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
-import { audioModeSchema, DEFAULT_AUDIO_PREFERENCES } from "@/configs/audio.config"
+import {
+    audioModeSchema,
+    DEFAULT_AUDIO_PREFERENCES
+} from "@/configs/audio.config"
 
 const audioStoreSchema = z.object({
     audioMode: audioModeSchema

@@ -92,7 +92,11 @@ function MobileTocList({
                                 item={item}
                                 query={debouncedQuery}
                                 onPress={(item) => {
-                                    handleItemClick(item, clickedTargetRef, scrollContainerRef.current)
+                                    handleItemClick(
+                                        item,
+                                        clickedTargetRef,
+                                        scrollContainerRef.current
+                                    )
                                     onLinkClick?.()
                                 }}
                                 onSameLinkClick={() => {

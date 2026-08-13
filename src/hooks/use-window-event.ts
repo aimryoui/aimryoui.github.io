@@ -12,7 +12,11 @@ function useWindowEvent<K extends string>(
     useEffect(() => {
         window.addEventListener(type, stableListener as EventListener, options)
         return () => {
-            window.removeEventListener(type, stableListener as EventListener, options)
+            window.removeEventListener(
+                type,
+                stableListener as EventListener,
+                options
+            )
         }
     }, [type, options])
 }
