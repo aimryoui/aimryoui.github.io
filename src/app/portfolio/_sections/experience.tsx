@@ -28,7 +28,7 @@ import { EXPERIENCE_SECTIONS } from "@/portfolio/_configs/experience-sections"
 function Experience() {
     let [expandedKeys, setExpandedKeys] = useState(
         new Set<Key>([
-            "12-2025-motion-designer-san-data-systems-inc",
+            "12-2025-uiux-motion-designer-san-data-systems-inc",
             "12-2024-design-team-mentor-coc-sai-gon-communication-club",
             "10-2023-design-team-lead-coc-sai-gon-communication-club"
         ])

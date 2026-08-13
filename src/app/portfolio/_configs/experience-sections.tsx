@@ -24,7 +24,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
             {
                 startDate: "12.2025",
                 endDate: "07.2026",
-                position: "Motion Designer",
+                position: "UI/UX & Motion Designer",
                 organization: {
                     text: "SAN Data Systems Inc.",
                     url: "https://sandatasystem.com"
