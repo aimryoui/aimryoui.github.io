@@ -56,7 +56,7 @@ const buttonVariants = cva(
                     active: "bg-muted",
                     "aria-expanded": "bg-muted text-foreground"
                 }),
-                tinted: cn("bg-default/5 dark:bg-default/10", {
+                tinted: cn("bg-default/[0.075] dark:bg-default/10", {
                     hover: "bg-default/10 text-foreground dark:bg-default/15",
                     active: "bg-default/15 dark:bg-default/20",
                     "aria-expanded": "bg-default/20 text-foreground"

@@ -345,16 +345,16 @@ function ResetPreferenceAlertDialog({
                                 {changes.length > 0 && (
                                     <div
                                         className={cn(
-                                            "-mx-2 -mb-2 mt-4 flex min-h-0 shrink flex-col rounded-xlg border border-dashed border-stroke bg-element-hover/30 text-sm",
+                                            "-mx-2 -mb-2 mt-4 flex min-h-0 shrink flex-col rounded-xlg border border-dashed border-stroke text-sm",
                                             {
-                                                dark: "bg-element-hover/50",
+                                                dark: "bg-element-hover/25",
                                                 sm: "-mx-6 mt-4.5 rounded-none border-x-0"
                                             }
                                         )}
                                     >
                                         <h4
                                             className={cn(
-                                                "shrink-0 rounded-t-inherit border-b border-dashed border-stroke bg-stroke/40 px-4 py-2.5 text-foreground font-wght-600",
+                                                "shrink-0 rounded-t-inherit border-b border-dashed border-stroke bg-default/5 px-4 py-2.5 text-foreground font-wght-600 dark:bg-default/[0.075]",
                                                 {
                                                     sm: "px-6"
                                                 }
