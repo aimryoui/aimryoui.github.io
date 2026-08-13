@@ -6,6 +6,7 @@ import localFont from "next/font/local"
 
 import { GoogleAnalytics } from "@next/third-parties/google"
 
+import { RouteProgressProvider } from "@/components/animations/route-progress"
 import { TargetCursor } from "@/components/animations/target-cursor"
 import { AudioProvider } from "@/components/audio/audio"
 import { MarginLine } from "@/components/layout/line"
@@ -14,7 +15,6 @@ import {
     PngAntiBleed,
     PngBorder
 } from "@/components/media/svg-filter"
-import { ProgressRouteProvider } from "@/components/ui/progress"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { DEFAULT_EFFECTS_PREFERENCES } from "@/configs/effects.config"
 import { DEFAULT_MEDIA_PREFERENCES } from "@/configs/media.config"
@@ -276,7 +276,7 @@ export default async function RootLayout({
                 <AudioProvider>
                     <ThemeProvider disableTransitionOnChange>
                         {/* <LazyMotionProvider> */}
-                        <ProgressRouteProvider>
+                        <RouteProgressProvider>
                             <TooltipProvider>
                                 <MarginLine />
                                 <MarginLine className="order-last" />
@@ -286,7 +286,7 @@ export default async function RootLayout({
                                 <MetaBall />
                                 <TargetCursor />
                             </TooltipProvider>
-                        </ProgressRouteProvider>
+                        </RouteProgressProvider>
                         {/* </LazyMotionProvider> */}
                     </ThemeProvider>
                 </AudioProvider>

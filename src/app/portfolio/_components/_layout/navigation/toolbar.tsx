@@ -1,11 +1,11 @@
 "use client"
 
 import { PreferencesButton } from "@/_components/toolbar/preferences-button"
+import { RouteProgress } from "@/components/animations/route-progress"
 import { AudioToggle } from "@/components/audio/audio"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
 import { LinkButton } from "@/components/ui/button"
-import { ProgressRoute } from "@/components/ui/progress"
 import { Tooltip } from "@/components/ui/tooltip"
 import { At, Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
@@ -26,7 +26,7 @@ function Toolbar({ className }: { className?: string }) {
                 //     viewTransitionName: "progress-bar"
                 // }}
             >
-                <ProgressRoute />
+                <RouteProgress />
                 <SectionLine
                     fit
                     // style={{

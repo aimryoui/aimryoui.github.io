@@ -2,8 +2,6 @@
 
 import { createContext, useContext, useMemo } from "react"
 
-import { Bar, Progress as BProgress, type ProgressProps } from "@bprogress/next"
-import { ProgressProvider as AppProgressProvider } from "@bprogress/next/app"
 import {
     Label as LabelPrimitive,
     type LabelProps
@@ -145,45 +143,11 @@ function ProgressValue({
     )
 }
 
-function ProgressRouteProvider({ children }: { children: React.ReactNode }) {
-    return (
-        <AppProgressProvider
-            disableStyle
-            options={{ showSpinner: false, template: null }}
-            shallowRouting
-            startOnLoad
-        >
-            {children}
-        </AppProgressProvider>
-    )
-}
-
-function ProgressRoute({ className, ...props }: ProgressProps) {
-    return (
-        <BProgress
-            data-slot="progress"
-            className={cn(
-                "absolute inset-x-0 -top-px z-50 h-0.75 w-full overflow-hidden",
-                className
-            )}
-            {...props}
-        >
-            <Bar
-                data-slot="progress-bar"
-                role="progressbar"
-                className={cn("size-full bg-highlighted")}
-            />
-        </BProgress>
-    )
-}
-
 export {
     Progress,
     ProgressContent,
     ProgressIndicator,
     ProgressLabel,
-    ProgressRoute,
-    ProgressRouteProvider,
     ProgressTrack,
     ProgressValue
 }
