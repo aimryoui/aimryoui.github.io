@@ -272,6 +272,7 @@ function DropdownMenuLabel({
 
 function DropdownMenuItem({
     className,
+    disabled,
     inset,
     onClick,
     variant = "default",
@@ -287,7 +288,8 @@ function DropdownMenuItem({
             data-slot="dropdown-menu-item"
             data-inset={inset}
             data-variant={variant}
-            data-sound="button"
+            data-sound={disabled ? false : "button"}
+            disabled={disabled}
             onClick={(e) => {
                 playPressFeedback("button")
                 onClick?.(e)

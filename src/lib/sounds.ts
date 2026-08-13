@@ -321,6 +321,8 @@ interface SoundEngine {
     dispose: () => void
     getContext: () => AudioContext | null
 }
+const lastPlayTimes = new Map<string, number>()
+const THROTTLE_MS = 24
 
 function createSoundEngine(): SoundEngine {
     consumers++
@@ -349,6 +351,11 @@ function createSoundEngine(): SoundEngine {
         },
         playHover(type: HoverSoundType) {
             if (type === false) return
+
+            const now = Date.now()
+            if (now - (lastPlayTimes.get(type) ?? 0) < THROTTLE_MS) return
+            lastPlayTimes.set(type, now)
+
             playSound(type, true)
         },
         playPress(type: PressSoundType) {
@@ -385,9 +392,9 @@ function createSoundEngine(): SoundEngine {
         }
     }
 }
-
 function playHoverSound(type: HoverSoundType = "tick") {
     if (type === false || !useAudioStore.getState().isAudioEnabled) return
+
     const engine = createSoundEngine()
     engine.playHover(type)
     setTimeout(() => {

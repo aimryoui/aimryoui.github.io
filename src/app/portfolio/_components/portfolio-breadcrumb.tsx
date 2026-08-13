@@ -139,7 +139,10 @@ function PortfolioBreadcrumb({
                                         <>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuGroup>
-                                                <DropdownMenuLinkItem href="/portfolio/selected-works">
+                                                <DropdownMenuLinkItem
+                                                    href="/portfolio/selected-works"
+                                                    className="gap-2"
+                                                >
                                                     <ArrowLeft className="-ms-0.25 size-3" />
                                                     Selected Works
                                                 </DropdownMenuLinkItem>
@@ -159,7 +162,10 @@ function PortfolioBreadcrumb({
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuGroup>
-                                        <DropdownMenuLinkItem href="/portfolio#design-projects">
+                                        <DropdownMenuLinkItem
+                                            href="/portfolio#design-projects"
+                                            className="gap-2"
+                                        >
                                             <ArrowLeft className="-ms-0.25 size-3" />
                                             Design Projects
                                         </DropdownMenuLinkItem>
@@ -203,6 +209,7 @@ function PortfolioBreadcrumb({
                                                     href={getCategoryPath(
                                                         category
                                                     )}
+                                                    className="gap-2"
                                                 >
                                                     <ArrowLeft className="-ms-0.25 size-3" />
                                                     {categoryTitle}

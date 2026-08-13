@@ -15,7 +15,7 @@ const RESUME_DOWNLOAD_MENU: SourceCodeMenuConfig = {
     href: "/Resume_Product-Designer_Nguyen-Hoang-Nhan.pdf",
     label: MENU_NAME,
     description: "Download my resume.",
-    icon: <FileDown className="-translate-y-[.5px]" />
+    icon: <FileDown />
 }
 
 function ResumeDownloadMenuLinkItem() {

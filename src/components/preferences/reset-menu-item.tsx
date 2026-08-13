@@ -365,7 +365,7 @@ function ResetPreferenceAlertDialog({
                                         <Tooltip>
                                             <ul
                                                 className={cn(
-                                                    "flex-1 space-y-3 overflow-y-auto px-4 py-3.5 scroll-fade-y scroll-fade-16 scrollbar-thin",
+                                                    "flex-1 space-y-3 overflow-y-auto px-4 py-3.75 scroll-fade-y scroll-fade-16 scrollbar-thin",
                                                     {
                                                         sm: "space-y-5 px-5.75 py-5.5"
                                                     }

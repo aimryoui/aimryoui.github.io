@@ -133,6 +133,7 @@ export default {
                 56.25: "14.0625rem",
                 body: "14.75rem",
                 61.25: "15.3125rem",
+                66: "16.5rem",
                 75: "18.75rem",
                 sidebar: "26.5rem",
                 120: "30rem",

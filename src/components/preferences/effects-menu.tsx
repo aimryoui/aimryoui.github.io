@@ -4,7 +4,7 @@ import { sendGAEvent } from "@next/third-parties/google"
 import {
     MousePointerClick,
     Palette,
-    ReplaceAll,
+    Replace,
     Sparkles,
     TextAlignStart
 } from "lucide-react"
@@ -65,7 +65,7 @@ const EFFECTS: Record<Effect, EffectConfig> = {
         label: "Page transition",
         description:
             "Enable browser's native view-transition API when navigating between pages. Disabled with reduced motion.",
-        icon: <ReplaceAll />,
+        icon: <Replace />,
         shouldDisable: (ctx) => ctx.motionReduced
     }
 }
@@ -84,7 +84,7 @@ function EffectsMenu() {
                 <MENU_CONFIG.icon />
                 {MENU_CONFIG.name}
             </DropdownMenuSubTrigger>
-            <DropdownMenuSubContent>
+            <DropdownMenuSubContent className="max-w-66">
                 {AVAILABLE_EFFECTS.map((effect) => (
                     <DropdownMenuCheckboxItem
                         key={effect}
