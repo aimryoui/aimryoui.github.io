@@ -7,6 +7,7 @@ import { Volume1, Volume2, VolumeX } from "lucide-react"
 import { Button, type ButtonProps } from "@/components/ui/button"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
+import { usePreference } from "@/hooks/use-preference"
 import {
     createSoundEngine,
     HOVER_SOUNDS,
@@ -23,8 +24,7 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
     const playerRef = useRef<ReturnType<typeof createSoundEngine> | null>(null)
     const lastTargetRef = useRef<Element | null>(null)
 
-    const audioMode = useAudioStore((state) => state.audioMode)
-    const isAudioEnabled = useAudioStore((state) => state.isAudioEnabled)
+    const { audioMode, isAudioEnabled } = usePreference()
     const setIsAudioEnabled = useAudioStore((state) => state.setIsAudioEnabled)
 
     const hasManuallyToggled = useAudioStore(
@@ -40,12 +40,7 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
         }
 
         const options = { once: true, passive: true, capture: true }
-        const interactionEvents = [
-            "pointerup",
-            "touchend",
-            "click",
-            "keydown"
-        ]
+        const interactionEvents = ["pointerup", "touchend", "click", "keydown"]
 
         interactionEvents.forEach((event) => {
             window.addEventListener(event, handleFirstInteraction, options)
@@ -138,8 +133,7 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
 }
 
 function AudioToggle({ className, onPress, tracking, ...props }: ButtonProps) {
-    const isAudioEnabled = useAudioStore((state) => state.isAudioEnabled)
-    const audioMode = useAudioStore((state) => state.audioMode)
+    const { isAudioEnabled, audioMode } = usePreference()
     const toggleAudio = useAudioStore((state) => state.toggleAudio)
 
     const hasManuallyToggled = useAudioStore(

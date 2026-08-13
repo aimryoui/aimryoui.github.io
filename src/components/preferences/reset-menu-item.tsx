@@ -53,6 +53,7 @@ import {
     DEFAULT_TOOLBAR_PREFERENCES
 } from "@/configs/navigation.config"
 import { cn } from "@/lib/utils"
+import { PREFERENCE_STORES } from "@/stores"
 import { useAudioStore } from "@/stores/audio-store"
 import { useEffectsStore } from "@/stores/effects-store"
 import { useHapticsStore } from "@/stores/haptics-store"
@@ -317,38 +318,10 @@ function ResetPreferenceAlertDialog({
     const ResetIcon = RESET_MENU_CONFIG.icon
 
     const handleReset = () => {
-        ;[
-            useAudioStore,
-            useEffectsStore,
-            useHapticsStore,
-            useMediaStore,
-            useMotionStore,
-            useSidebarPositionStore,
-            useToolbarPositionStore
-        ].forEach((store) => {
+        PREFERENCE_STORES.forEach((store) => {
             store.persist.clearStorage()
+            store.getState().reset()
         })
-
-        useAudioStore
-            .getState()
-            .setAudioMode(DEFAULT_AUDIO_PREFERENCES.audioMode)
-        useAudioStore
-            .getState()
-            .setIsAudioEnabled(DEFAULT_AUDIO_PREFERENCES.isAudioEnabled)
-        useEffectsStore.getState().setEffects(DEFAULT_EFFECTS_PREFERENCES)
-        useMediaStore.getState().setPreferences(DEFAULT_MEDIA_PREFERENCES)
-        useMediaStore
-            .getState()
-            .setVideoAutoplay(DEFAULT_VIDEO_AUTOPLAY_PREFERENCE)
-        useMediaStore.getState().setGifAutoplay(DEFAULT_GIF_AUTOPLAY_PREFERENCE)
-        useHapticsStore.getState().setIsHapticEnabled(true)
-        useMotionStore.getState().setPreference(DEFAULT_MOTION_PREFERENCES)
-        useSidebarPositionStore
-            .getState()
-            .setPosition(DEFAULT_SIDEBAR_PREFERENCES)
-        useToolbarPositionStore
-            .getState()
-            .setPosition(DEFAULT_TOOLBAR_PREFERENCES)
     }
 
     return (

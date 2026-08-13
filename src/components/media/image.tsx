@@ -12,8 +12,8 @@ import {
     type ParsedMediaData
 } from "@/helpers/get-parsed-media-data"
 import { useMediaObserver } from "@/hooks/use-media-observer"
+import { usePreference } from "@/hooks/use-preference"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import imageManifestRaw from "@/lib/image-manifest.json"
 import { cn } from "@/lib/utils"
 import {
@@ -426,7 +426,7 @@ function Image({
 }: ImageProps) {
     const parsedData = getParsedMediaData(props.src, imageManifest)
 
-    const reduceMotion = useReducedMotion()
+    const { motionReduced } = usePreference()
     const playPressFeedback = usePressFeedback()
 
     if (!parsedData) return null
@@ -457,7 +457,7 @@ function Image({
                     parsedData={parsedData}
                     ref={mergeRefs([ref, lightboxRef])}
                     onClick={(e) => {
-                        playPressFeedback(reduceMotion ? "button" : "zoom-in")
+                        playPressFeedback(motionReduced ? "button" : "zoom-in")
                         open(e)
 
                         onClick?.(e)

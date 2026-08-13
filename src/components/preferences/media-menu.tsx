@@ -20,14 +20,14 @@ import {
     AVAILABLE_MEDIA_PREFERENCES,
     type MediaPreference
 } from "@/configs/media.config"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
+import { usePreference } from "@/hooks/use-preference"
 import { useMediaStore } from "@/stores/media-store"
 
 interface MediaPreferenceConfig {
     label: string
     description: React.ReactNode
     icon?: React.ReactNode
-    shouldDisable?: (reduceMotion: boolean) => boolean
+    shouldDisable?: (motionReduced: boolean) => boolean
 }
 
 const MENU_CONFIG = {
@@ -69,7 +69,7 @@ function MediaMenu() {
     const gifAutoplay = useMediaStore((state) => state.gifAutoplay)
     const setGifAutoplay = useMediaStore((state) => state.setGifAutoplay)
 
-    const reduceMotion = useReducedMotion()
+    const { motionReduced } = usePreference()
 
     return (
         <DropdownMenuSub>
@@ -90,7 +90,7 @@ function MediaMenu() {
                             sendGAEvent("event", eventName, eventParams)
                         }}
                         disabled={MEDIA_PREFERENCES[preference].shouldDisable?.(
-                            reduceMotion
+                            motionReduced
                         )}
                         closeOnClick={false}
                         description={MEDIA_PREFERENCES[preference].description}
@@ -126,7 +126,7 @@ function MediaMenu() {
                                         key={preference}
                                         value={preference}
                                         closeOnClick={false}
-                                        disabled={reduceMotion}
+                                        disabled={motionReduced}
                                     >
                                         {AUTOPLAY_OPTIONS[preference].icon}
                                         {AUTOPLAY_OPTIONS[preference].label}
@@ -153,7 +153,7 @@ function MediaMenu() {
                                         key={preference}
                                         value={preference}
                                         closeOnClick={false}
-                                        disabled={reduceMotion}
+                                        disabled={motionReduced}
                                     >
                                         {AUTOPLAY_OPTIONS[preference].icon}
                                         {AUTOPLAY_OPTIONS[preference].label}

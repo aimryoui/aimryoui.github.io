@@ -7,9 +7,8 @@ import { gsap } from "gsap"
 import { minifyCss } from "@/helpers/minify-css"
 import { pxToRem } from "@/helpers/px-to-rem"
 import { useDevice } from "@/hooks/use-device"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
+import { usePreference } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
-import { useEffectsStore } from "@/stores/effects-store"
 
 import { BASE_FONT_SIZE } from "~/tailwind.config"
 
@@ -103,10 +102,8 @@ function TargetCursor({
     ...props
 }: React.ComponentProps<"div"> & TargetCursorProps) {
     const { isTouchDevice } = useDevice()
-    const reduceMotion = useReducedMotion()
-    const isEffectEnabled = useEffectsStore((state) =>
-        state.hasEffect("target-cursor")
-    )
+    const { motionReduced } = usePreference()
+    const isEffectEnabled = usePreference().effectTargetCursor
 
     const rootRef = useRef<HTMLDivElement>(null)
     const dotRef = useRef<HTMLDivElement>(null)
@@ -139,7 +136,7 @@ function TargetCursor({
 
     useEffect(() => {
         if (
-            reduceMotion ||
+            motionReduced ||
             isTouchDevice ||
             !isEffectEnabled ||
             !rootRef.current ||
@@ -690,11 +687,11 @@ function TargetCursor({
         hideDefaultCursor,
         cursorColor,
         isTouchDevice,
-        reduceMotion,
+        motionReduced,
         isEffectEnabled
     ])
 
-    if (reduceMotion || isTouchDevice || !isEffectEnabled) return null
+    if (motionReduced || isTouchDevice || !isEffectEnabled) return null
 
     return (
         <div

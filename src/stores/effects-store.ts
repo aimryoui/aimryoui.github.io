@@ -18,6 +18,7 @@ interface EffectsStore {
     setEffects: (effects: Effect[]) => void
     toggleEffect: (effect: Effect) => void
     hasEffect: (effect: Effect) => boolean
+    reset: () => void
 }
 
 const useEffectsStore = create<EffectsStore>()(
@@ -40,7 +41,10 @@ const useEffectsStore = create<EffectsStore>()(
                     : [...current, effect]
                 get().setEffects(next)
             },
-            hasEffect: (effect) => get().effects.includes(effect)
+            hasEffect: (effect) => get().effects.includes(effect),
+            reset: () => {
+                get().setEffects(DEFAULT_EFFECTS_PREFERENCES)
+            }
         }),
         {
             name: "nhn-effects-preference",

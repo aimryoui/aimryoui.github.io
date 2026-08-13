@@ -13,6 +13,7 @@ import {
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
 import { useDevice } from "@/hooks/use-device"
+import { usePreference } from "@/hooks/use-preference"
 import { playPressSound } from "@/lib/sounds"
 import { type AudioState, useAudioStore } from "@/stores/audio-store"
 import { useHapticsStore } from "@/stores/haptics-store"
@@ -50,7 +51,7 @@ const AUDIO_PREFERENCES: Record<
 }
 
 function SoundsHapticsMenu() {
-    const audioMode = useAudioStore((state) => state.audioMode)
+    const { audioMode } = usePreference()
     const setAudioMode = useAudioStore((state) => state.setAudioMode)
 
     const isHapticEnabled = useHapticsStore((state) => state.isHapticEnabled)

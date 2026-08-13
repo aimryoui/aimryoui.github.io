@@ -15,11 +15,12 @@ const motionStoreSchema = z.object({
 interface MotionStore {
     preference: MotionPreference
     setPreference: (preference: MotionPreference) => void
+    reset: () => void
 }
 
 const useMotionStore = create<MotionStore>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             preference: DEFAULT_MOTION_PREFERENCES,
             setPreference: (preference) => {
                 set({ preference })
@@ -29,6 +30,9 @@ const useMotionStore = create<MotionStore>()(
                         preference
                     )
                 }
+            },
+            reset: () => {
+                get().setPreference(DEFAULT_MOTION_PREFERENCES)
             }
         }),
         {

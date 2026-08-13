@@ -8,11 +8,11 @@ import { Space } from "@/components/layout/space"
 import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
+import { usePreference } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
 
 function About() {
-    const isReducedMotion = useReducedMotion()
+    const { motionReduced, effectTargetCursor } = usePreference()
 
     return (
         <>
@@ -126,7 +126,11 @@ function About() {
                         <Fragment key={item.label}>
                             <div
                                 data-cursor="target"
-                                data-sound={isReducedMotion ? false : "button"}
+                                data-sound={
+                                    motionReduced || !effectTargetCursor
+                                        ? false
+                                        : "button"
+                                }
                                 className={cn(
                                     "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                                     {
@@ -210,7 +214,7 @@ function About() {
                                     nativeLink
                                     keepFeedback
                                     data-sound={
-                                        isReducedMotion ? false : "button"
+                                        motionReduced ? false : "button"
                                     }
                                     openInNewTab
                                     tracking={{
@@ -275,7 +279,7 @@ function About() {
                     />
                     <div
                         data-cursor="target"
-                        data-sound={isReducedMotion ? false : "button"}
+                        data-sound={motionReduced ? false : "button"}
                         className={cn(
                             "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                             {

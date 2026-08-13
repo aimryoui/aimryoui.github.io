@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef } from "react"
 
 import { pxToRem } from "@/helpers/px-to-rem"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
+import { usePreference } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
-import { useEffectsStore } from "@/stores/effects-store"
 
 interface LineSidebarProps extends React.ComponentProps<"div"> {
     itemSelector?: string
@@ -41,11 +40,9 @@ function LineSidebar({
 }: LineSidebarProps) {
     const internalListRef = useRef<HTMLDivElement>(null)
 
-    const isEffectEnabled = useEffectsStore((state) =>
-        state.hasEffect("line-sidebar")
-    )
-    const reduceMotion = useReducedMotion()
-    const isActive = isEffectEnabled && !reduceMotion
+    const isEffectEnabled = usePreference().effectLineSidebar
+    const { motionReduced } = usePreference()
+    const isActive = isEffectEnabled && !motionReduced
 
     const listItemsRef = useRef<HTMLElement[]>([])
     const itemCentersRef = useRef<number[]>([])

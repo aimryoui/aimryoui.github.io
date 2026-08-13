@@ -5,9 +5,9 @@ import {
     type AnimatedMediaProps
 } from "@/components/media/animated-media"
 import { getParsedMediaData } from "@/helpers/get-parsed-media-data"
+import { usePreference } from "@/hooks/use-preference"
 import videoManifestRaw from "@/lib/video-manifest.json"
 import { type VideoManifest } from "@/scripts/process-videos"
-import { useMediaStore } from "@/stores/media-store"
 
 const videoManifest = videoManifestRaw as VideoManifest
 
@@ -18,7 +18,7 @@ interface VideoProps extends Omit<AnimatedMediaProps, "parsedData"> {
 function Video({ ...props }: VideoProps) {
     const parsedData = getParsedMediaData(props.src, videoManifest)
 
-    const videoAutoplay = useMediaStore((state) => state.videoAutoplay)
+    const { mediaVideoAutoplay } = usePreference()
 
     if (!parsedData) return null
 
@@ -27,7 +27,7 @@ function Video({ ...props }: VideoProps) {
             parsedData={parsedData}
             {...props}
             data-slot="video"
-            autoPlayPreference={videoAutoplay}
+            autoPlayPreference={mediaVideoAutoplay}
         />
     )
 }

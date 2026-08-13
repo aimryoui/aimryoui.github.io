@@ -16,8 +16,8 @@ import {
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { usePreference } from "@/hooks/use-preference"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { playHoverSound } from "@/lib/sounds"
 import {
     ChevronBackward,
@@ -81,7 +81,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
     )
     const { isTouchDevice } = useDevice()
     const { isWebKit } = useBrowserEngine()
-    const reduceMotion = useReducedMotion()
+    const { motionReduced } = usePreference()
 
     const playPressFeedback = usePressFeedback()
 
@@ -90,7 +90,6 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
             data-slot="lightbox"
             data-cursor="ignore"
             options={{
-                showHideAnimationType: reduceMotion ? "fade" : "zoom",
                 wheelToZoom: true,
                 secondaryZoomLevel: isMobilePortrait ? 0.75 : 2,
                 easing: isWebKit
@@ -105,6 +104,12 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                 imageClickAction: "zoom",
                 clickToCloseNonZoomable: false,
                 ...options,
+
+                // Force `fade` animation when motion is reduced
+                // Only allow to override outside when motion is preferred
+                showHideAnimationType: motionReduced
+                    ? "fade"
+                    : (options?.showHideAnimationType ?? "zoom"),
 
                 // Fallback for sideload browsers like Raynard
                 arrowPrev: !isTouchDevice,

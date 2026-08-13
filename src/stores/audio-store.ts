@@ -15,6 +15,7 @@ interface AudioState {
     toggleAudio: () => void
     setAudioMode: (mode: "manual" | "auto") => void
     setIsAudioEnabled: (enabled: boolean) => void
+    reset: () => void
 }
 
 const useAudioStore = create<AudioState>()(
@@ -34,6 +35,13 @@ const useAudioStore = create<AudioState>()(
             },
             setIsAudioEnabled: (enabled) => {
                 set({ isAudioEnabled: enabled })
+            },
+            reset: () => {
+                set({
+                    isAudioEnabled: DEFAULT_AUDIO_PREFERENCES.isAudioEnabled,
+                    audioMode: DEFAULT_AUDIO_PREFERENCES.audioMode,
+                    hasManuallyToggled: false
+                })
             }
         }),
         {

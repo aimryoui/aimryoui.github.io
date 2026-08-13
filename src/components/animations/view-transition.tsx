@@ -2,16 +2,14 @@
 
 import { ViewTransition as ReactViewTransition } from "react"
 
-import { useEffectsStore } from "@/stores/effects-store"
+import { usePreference } from "@/hooks/use-preference"
 
 type ViewTransitionProps = React.ComponentProps<typeof ReactViewTransition>
 
 function ViewTransition({ children, ...props }: ViewTransitionProps) {
-    const isEnabled = useEffectsStore((state) =>
-        state.effects.includes("page-transition")
-    )
+    const { effectPageTransition } = usePreference()
 
-    if (!isEnabled) {
+    if (!effectPageTransition) {
         return children
     }
 

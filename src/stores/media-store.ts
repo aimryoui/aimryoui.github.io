@@ -33,6 +33,7 @@ interface MediaStore {
     setGifAutoplay: (autoplay: AutoplayPreference) => void
     togglePreference: (preference: MediaPreference) => void
     hasPreference: (preference: MediaPreference) => boolean
+    reset: () => void
 }
 
 const useMediaStore = create<MediaStore>()(
@@ -64,6 +65,13 @@ const useMediaStore = create<MediaStore>()(
             },
             setGifAutoplay: (autoplay) => {
                 set({ gifAutoplay: autoplay })
+            },
+            reset: () => {
+                get().setPreferences(DEFAULT_MEDIA_PREFERENCES)
+                set({
+                    videoAutoplay: DEFAULT_VIDEO_AUTOPLAY_PREFERENCE,
+                    gifAutoplay: DEFAULT_GIF_AUTOPLAY_PREFERENCE
+                })
             }
         }),
         {

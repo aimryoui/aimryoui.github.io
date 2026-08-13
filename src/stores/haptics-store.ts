@@ -9,6 +9,7 @@ const hapticsStoreSchema = z.object({
 interface HapticsStore {
     isHapticEnabled: boolean
     setIsHapticEnabled: (enabled: boolean) => void
+    reset: () => void
 }
 
 const useHapticsStore = create<HapticsStore>()(
@@ -17,6 +18,9 @@ const useHapticsStore = create<HapticsStore>()(
             isHapticEnabled: true,
             setIsHapticEnabled: (enabled) => {
                 set({ isHapticEnabled: enabled })
+            },
+            reset: () => {
+                set({ isHapticEnabled: true })
             }
         }),
         {

@@ -18,13 +18,13 @@ import {
 import { AVAILABLE_EFFECTS, type Effect } from "@/configs/effects.config"
 import { type DeviceInfo, useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
+import { usePreference } from "@/hooks/use-preference"
 import { useEffectsStore } from "@/stores/effects-store"
 
 interface EffectDisableContext {
     device: DeviceInfo
     isLg: boolean
-    reduceMotion: boolean
+    motionReduced: boolean
 }
 
 interface EffectConfig {
@@ -45,7 +45,7 @@ const EFFECTS: Record<Effect, EffectConfig> = {
         description:
             "Use custom cursor that snappy-snaps to clickable elements. Not available on touch devices. Disabled with reduced motion.",
         icon: <MousePointerClick />,
-        shouldDisable: (ctx) => ctx.device.isTouchDevice || ctx.reduceMotion
+        shouldDisable: (ctx) => ctx.device.isTouchDevice || ctx.motionReduced
     },
     "line-sidebar": {
         label: "Line sidebar",
@@ -53,7 +53,7 @@ const EFFECTS: Record<Effect, EffectConfig> = {
             "Magnifying lines effect on sidebar. Not available on small screen or touch devices. Disabled with reduced motion.",
         icon: <TextAlignStart />,
         shouldDisable: (ctx) =>
-            ctx.device.isTouchDevice || ctx.reduceMotion || ctx.isLg
+            ctx.device.isTouchDevice || ctx.motionReduced || ctx.isLg
     },
     "ambient-colors": {
         label: "Ambient colors",
@@ -66,7 +66,7 @@ const EFFECTS: Record<Effect, EffectConfig> = {
         description:
             "Enable browser's native view-transition API when navigating between pages. Disabled with reduced motion.",
         icon: <ReplaceAll />,
-        shouldDisable: (ctx) => ctx.reduceMotion
+        shouldDisable: (ctx) => ctx.motionReduced
     }
 }
 
@@ -76,7 +76,7 @@ function EffectsMenu() {
 
     const isTouchDevice = useDevice()
     const isLg = useMediaQuery("lg")
-    const reduceMotion = useReducedMotion()
+    const { motionReduced } = usePreference()
 
     return (
         <DropdownMenuSub>
@@ -99,7 +99,7 @@ function EffectsMenu() {
                         disabled={EFFECTS[effect].shouldDisable?.({
                             device: isTouchDevice,
                             isLg,
-                            reduceMotion
+                            motionReduced
                         })}
                         closeOnClick={false}
                         description={EFFECTS[effect].description}

@@ -18,11 +18,12 @@ const sidebarStoreSchema = z.object({
 interface SidebarPositionStore {
     position: SidebarPosition
     setPosition: (position: SidebarPosition) => void
+    reset: () => void
 }
 
 const useSidebarPositionStore = create<SidebarPositionStore>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             position: DEFAULT_SIDEBAR_PREFERENCES,
             setPosition: (position) => {
                 set({ position })
@@ -33,6 +34,9 @@ const useSidebarPositionStore = create<SidebarPositionStore>()(
                         position
                     )
                 }
+            },
+            reset: () => {
+                get().setPosition(DEFAULT_SIDEBAR_PREFERENCES)
             }
         }),
         {
@@ -56,11 +60,12 @@ const toolbarStoreSchema = z.object({
 interface ToolbarPositionStore {
     position: ToolbarPosition
     setPosition: (position: ToolbarPosition) => void
+    reset: () => void
 }
 
 const useToolbarPositionStore = create<ToolbarPositionStore>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             position: DEFAULT_TOOLBAR_PREFERENCES,
             setPosition: (position) => {
                 set({ position })
@@ -71,6 +76,9 @@ const useToolbarPositionStore = create<ToolbarPositionStore>()(
                         position
                     )
                 }
+            },
+            reset: () => {
+                get().setPosition(DEFAULT_TOOLBAR_PREFERENCES)
             }
         }),
         {

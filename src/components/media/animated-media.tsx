@@ -13,7 +13,7 @@ import { type ParsedMediaData } from "@/helpers/get-parsed-media-data"
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 import { useMediaObserver } from "@/hooks/use-media-observer"
 import { useNetwork } from "@/hooks/use-network"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
+import { usePreference } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
 import { type VideoMetadata } from "@/scripts/process-videos"
 
@@ -113,7 +113,7 @@ function AnimatedMedia({
         parsedData
 
     const shouldLoad = useMediaObserver(wrapperRef)
-    const reduceMotion = useReducedMotion()
+    const { motionReduced } = usePreference()
     const network = useNetwork()
 
     const isWifiOrBetter =
@@ -124,7 +124,7 @@ function AnimatedMedia({
     const resolvedPreference = autoPlayPreference ?? "always"
 
     const isGlobalAutoPlayEnabled =
-        !reduceMotion &&
+        !motionReduced &&
         (resolvedPreference === "always" ||
             (resolvedPreference === "wifi" && isWifiOrBetter))
 

@@ -9,8 +9,8 @@ import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useIsMounted } from "@/hooks/use-is-mounted"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { usePreference } from "@/hooks/use-preference"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
-import { useReducedMotion } from "@/hooks/use-reduced-motion"
 import { cn } from "@/lib/utils"
 import {
     resolveSocialData,
@@ -48,7 +48,7 @@ function SocialButton({
         (isMounted && window.location.search.includes("feature=selected"))
 
     const playPressFeedback = usePressFeedback()
-    const isReducedMotion = useReducedMotion()
+    const { motionReduced } = usePreference()
 
     const isLg = useMediaQuery("lg")
 
@@ -61,7 +61,7 @@ function SocialButton({
         if (isExpanded) return
 
         hoverTimeoutRef.current = setTimeout(() => {
-            playPressFeedback(isReducedMotion ? "button" : "zoom-out")
+            playPressFeedback(motionReduced ? "button" : "zoom-out")
         }, FEEDBACK_DELAY)
 
         onHoverStart?.(e)
@@ -141,14 +141,14 @@ function SocialButton({
     useEffect(() => {
         if (isExpanded) {
             const timeout = setTimeout(() => {
-                playPressFeedback(isReducedMotion ? "button" : "zoom-out")
+                playPressFeedback(motionReduced ? "button" : "zoom-out")
             }, FEEDBACK_DELAY)
 
             return () => {
                 clearTimeout(timeout)
             }
         }
-    }, [isExpanded, isReducedMotion, playPressFeedback])
+    }, [isExpanded, motionReduced, playPressFeedback])
 
     const socialData = resolveSocialData(social)
     if (!socialData) return null
