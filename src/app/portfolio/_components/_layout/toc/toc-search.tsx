@@ -119,7 +119,7 @@ function Addons({
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="hover:bg-transparent"
+                            className="!bg-transparent"
                             onPress={onClear}
                             tracking={{
                                 eventName: "clear_toc_search"

@@ -16,14 +16,14 @@ function InputGroup({ className, ...props }: GroupProps) {
             className={cn(
                 "group/input-group relative flex h-9 w-full min-w-0 items-center rounded-xlg ring ring-inset ring-input will-change-[outline] has-[>textarea]:h-auto",
                 {
+                    dark: "bg-input/25",
                     hover: [
-                        "bg-element-hover",
+                        "bg-element-hover/80",
                         {
                             "data-target-cursor:data-[cursor=input]":
                                 "rounded-none"
                         }
                     ],
-                    dark: "bg-input/25",
 
                     "data-[cursor=input]":
                         "transition-[border-radius] ease-spring duration-200",
@@ -41,7 +41,7 @@ function InputGroup({ className, ...props }: GroupProps) {
                             "motion-reduced":
                                 "outline-highlighted/30 outline-4",
                             "motion-preferred": "animate-focus",
-                            hover: "bg-transparent dark:bg-input/30"
+                            hover: "bg-transparent dark:bg-input/25"
                         }
                     ],
 
