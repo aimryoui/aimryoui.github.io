@@ -46,15 +46,15 @@ function About() {
                     <span className="flex flex-wrap gap-x-[.2em]">
                         <span className="block">
                             a{" "}
-                            <Bold className="font-wght-[625] md:text-3xl sm:text-2xl">
-                                Creative Designer
-                            </Bold>
-                        </span>{" "}
-                        majoring in{" "}
-                        <span className="block">
                             <Highlight className="font-wght-[625] md:text-3xl sm:text-2xl">
-                                UI & UX Design
+                                Product Designer
                             </Highlight>
+                        </span>{" "}
+                        specializing in{" "}
+                        <span className="block">
+                            <Bold className="font-wght-[625] md:text-3xl sm:text-2xl">
+                                UI & UX Design
+                            </Bold>
                             .
                         </span>
                     </span>
