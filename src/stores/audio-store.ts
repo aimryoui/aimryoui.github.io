@@ -37,7 +37,7 @@ const useAudioStore = create<AudioState>()(
             }
         }),
         {
-            name: "audio-mode",
+            name: "nhn-audio-mode",
 
             partialize: (state) => ({ audioMode: state.audioMode }),
             merge: (persistedState, currentState) => {

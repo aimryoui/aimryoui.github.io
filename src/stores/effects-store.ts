@@ -43,7 +43,7 @@ const useEffectsStore = create<EffectsStore>()(
             hasEffect: (effect) => get().effects.includes(effect)
         }),
         {
-            name: "effects-preference",
+            name: "nhn-effects-preference",
             storage: createJSONStorage(() => localStorage),
             merge: (persistedState, currentState) => {
                 const parsed = effectsStoreSchema.safeParse(persistedState)

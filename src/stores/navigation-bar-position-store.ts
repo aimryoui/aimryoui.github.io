@@ -36,7 +36,7 @@ const useSidebarPositionStore = create<SidebarPositionStore>()(
             }
         }),
         {
-            name: "sidebar-position",
+            name: "nhn-sidebar-position",
             storage: createJSONStorage(() => localStorage),
             merge: (persistedState, currentState) => {
                 const parsed = sidebarStoreSchema.safeParse(persistedState)
@@ -74,7 +74,7 @@ const useToolbarPositionStore = create<ToolbarPositionStore>()(
             }
         }),
         {
-            name: "toolbar-position",
+            name: "nhn-toolbar-position",
             storage: createJSONStorage(() => localStorage),
             merge: (persistedState, currentState) => {
                 const parsed = toolbarStoreSchema.safeParse(persistedState)

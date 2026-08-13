@@ -20,7 +20,7 @@ const useHapticsStore = create<HapticsStore>()(
             }
         }),
         {
-            name: "haptics-preferences",
+            name: "nhn-haptics-preferences",
             storage: createJSONStorage(() => localStorage),
             merge: (persistedState, currentState) => {
                 const parsed = hapticsStoreSchema.safeParse(persistedState)

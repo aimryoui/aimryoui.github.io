@@ -32,7 +32,7 @@ const useMotionStore = create<MotionStore>()(
             }
         }),
         {
-            name: "motion-preference",
+            name: "nhn-motion-preference",
             storage: createJSONStorage(() => localStorage),
             merge: (persistedState, currentState) => {
                 const parsed = motionStoreSchema.safeParse(persistedState)

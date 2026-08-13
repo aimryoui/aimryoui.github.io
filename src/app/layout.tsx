@@ -178,7 +178,7 @@ export default async function RootLayout({
                         )
                         // Motion preference
                         try {
-                            const motionPref = localStorage.getItem("motion-preference")
+                            const motionPref = localStorage.getItem("nhn-motion-preference")
                             if (motionPref) {
                                 const parsed = JSON.parse(motionPref)
                                 htmlElement.setAttribute("data-motion", parsed.state.preference)
@@ -192,7 +192,7 @@ export default async function RootLayout({
                         // Effects preferences
                         try {
                             const defaultEffectsString = ${DEFAULT_EFFECTS_PREFERENCES.length > 0 ? `"${DEFAULT_EFFECTS_PREFERENCES.join(" ")}"` : '"null"'}
-                            const effectsPreference = localStorage.getItem("effects-preference")
+                            const effectsPreference = localStorage.getItem("nhn-effects-preference")
                             if (effectsPreference) {
                                 const parsed = JSON.parse(effectsPreference)
                                 const effects = parsed.state.effects
@@ -210,7 +210,7 @@ export default async function RootLayout({
                         // Media preferences
                         try {
                             const defaultMediaString = ${DEFAULT_MEDIA_PREFERENCES.length > 0 ? `"${DEFAULT_MEDIA_PREFERENCES.join(" ")}"` : '"null"'}
-                            const mediaPreferences = localStorage.getItem("media-preferences")
+                            const mediaPreferences = localStorage.getItem("nhn-media-preferences")
                             if (mediaPreferences) {
                                 const parsed = JSON.parse(mediaPreferences)
                                 const prefs = parsed.state.preferences
@@ -227,8 +227,8 @@ export default async function RootLayout({
                         }
                         // Navigation bar position
                         try {
-                            const sidebarPosition = localStorage.getItem("sidebar-position")
-                            const toolbarPosition = localStorage.getItem("toolbar-position")
+                            const sidebarPosition = localStorage.getItem("nhn-sidebar-position")
+                            const toolbarPosition = localStorage.getItem("nhn-toolbar-position")
                             if (sidebarPosition) {
                                 const parsed = JSON.parse(sidebarPosition)
                                 htmlElement.setAttribute(

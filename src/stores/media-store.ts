@@ -67,7 +67,7 @@ const useMediaStore = create<MediaStore>()(
             }
         }),
         {
-            name: "media-preferences",
+            name: "nhn-media-preferences",
             storage: createJSONStorage(() => localStorage),
             merge: (persistedState, currentState) => {
                 const parsed = mediaStoreSchema.safeParse(persistedState)
