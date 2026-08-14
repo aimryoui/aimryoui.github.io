@@ -29,8 +29,9 @@ function Experience() {
     let [expandedKeys, setExpandedKeys] = useState(
         new Set<Key>([
             "12-2025-uiux-motion-designer-san-data-systems-inc",
-            "12-2024-design-team-mentor-coc-sai-gon-communication-club",
-            "10-2023-design-team-lead-coc-sai-gon-communication-club"
+            "05-2026-uiux-designer-fina-care-studio",
+            "12-2025-uiux-designer-virtue-recovery-center",
+            "02-2025-uiux-designer-nalee-viet-nam-jsc"
         ])
     )
 
@@ -180,6 +181,9 @@ function Experience() {
                                         <TableCell
                                             className={cn(
                                                 "z-1 flex justify-between gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] p-0 align-top text-foreground font-wght-500",
+                                                place.position ===
+                                                    "UI/UX & Motion Designer" &&
+                                                    "tracking-[-0.011em] @[56.5rem]:tracking-normal",
                                                 {
                                                     "@[56.5rem]":
                                                         "mt-5.5 gap-x-2",

@@ -59,7 +59,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
         ]
     },
     {
-        section: "Clubs & \nCategory Projects",
+        section: "Community",
         items: [
             {
                 startDate: "12.2024",
@@ -167,7 +167,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
         ]
     },
     {
-        section: "Freelance",
+        section: "Freelance & Referral",
         items: [
             {
                 startDate: "From 2022",
@@ -227,6 +227,22 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 description: [
                     "Designed the logo based on the following criteria: 24/7 operation, supply chain, and speed.",
                     "A total of four options were designed and showcased; the pitch deck layout is professional, refined, and visually appealing."
+                ]
+            },
+            {
+                startDate: "12.2025",
+                endDate: "01.2026",
+                position: "UI/UX Designer",
+                organization: {
+                    text: "Virtue Recovery Center",
+                    url: "https://www.virtuerecoverycenter.com",
+                    ariaLabel: "Go see the Virtue Recovery Center website"
+                },
+                summary:
+                    "Designed a targeted, high-fidelity landing page for a US-based healthcare facility through a direct B2B referral from SAN Data Systems' CTO.",
+                description: [
+                    "Created a new landing page that aligns with the center's professional identity, improves visual clarity and user experience.",
+                    "Structured clear CTA layouts with reassuring microcopy to comfort potential users and build a trustworthy experience."
                 ]
             },
             {
