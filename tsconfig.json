@@ -18,8 +18,6 @@
         "allowUnreachableCode": false,
         "noUncheckedSideEffectImports": true,
         "noFallthroughCasesInSwitch": true,
-        // "noUncheckedIndexedAccess": true,
-        // "noPropertyAccessFromIndexSignature": true,
         "plugins": [
             {
                 "name": "next"
