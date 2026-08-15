@@ -262,7 +262,7 @@ function Education() {
                                     "@[59.375rem]": "col-span-1"
                                 })}
                             >
-                                Full Scholarship
+                                Merit-Based Entrance Scholarship
                             </TableCell>
 
                             <TableCell
