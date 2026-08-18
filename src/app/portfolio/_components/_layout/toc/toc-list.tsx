@@ -86,7 +86,7 @@ function TocList({
             className={cn(
                 "group overflow-x-hidden overflow-y-scroll scroll-auto py-3 scrollbar-none",
                 "scroll-fade-y scroll-fade-18",
-                "hover:scrollbar-thin group-data-[sidebar-position=left]/html:rtl",
+                "hover:scrollbar-thin group-is-[[data-sidebar-position='left'][data-effects~='target-cursor']]/html:rtl",
                 className
             )}
             {...props}
