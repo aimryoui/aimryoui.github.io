@@ -84,7 +84,7 @@ function TocList({
             ref={scrollContainerRef}
             itemSelector="[data-toc-item]"
             className={cn(
-                "group overflow-x-hidden overflow-y-scroll scroll-auto py-3 rtl scrollbar-none",
+                "group overflow-x-hidden overflow-y-scroll scroll-auto py-3 scrollbar-none",
                 "scroll-fade-y scroll-fade-18",
                 "hover:scrollbar-thin group-data-[sidebar-position=left]/html:ltr",
                 className

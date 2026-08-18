@@ -18,8 +18,12 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
                 className={cn(
                     "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-70 flex h-dvh w-sidebar flex-col justify-end bg-background",
                     {
-                        "group-data-[sidebar-position=right]/html":
+                        "group-data-[sidebar-position=right]/html": [
                             "left-auto right-[calc(var(--spacing)*6+var(--px))] order-4",
+                            {
+                                lg: "inset-x-0 bottom-0 top-auto h-auto w-full"
+                            }
+                        ],
                         lg: "inset-x-0 bottom-0 top-auto h-auto w-full"
                     },
                     className

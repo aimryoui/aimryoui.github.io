@@ -92,6 +92,20 @@ function Projects({
                                                         }
                                                     )}
                                                     className={cn({
+                                                        "group-data-[sidebar-position=right]/html":
+                                                            [
+                                                                "-right-safe-zone left-auto",
+                                                                {
+                                                                    "lg:@3xl":
+                                                                        "-left-safe-zone right-auto",
+                                                                    "@md": {
+                                                                        "group-odd":
+                                                                            "-left-safe-zone right-auto",
+                                                                        "group-even":
+                                                                            "-right-safe-zone left-auto"
+                                                                    }
+                                                                }
+                                                            ],
                                                         lg: [
                                                             "-right-safe-zone left-auto",
                                                             {

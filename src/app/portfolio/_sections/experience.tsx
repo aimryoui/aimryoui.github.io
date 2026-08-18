@@ -400,9 +400,14 @@ function Experience() {
                                                 className={cn(
                                                     "-right-[calc(var(--spacing-safe-zone)*2)]",
                                                     {
-                                                        lg: [
-                                                            "-right-[calc(var(--spacing-safe-zone)*2)] left-auto"
-                                                        ]
+                                                        "group-data-[sidebar-position=right]/html":
+                                                            [
+                                                                "-right-[calc(var(--spacing-safe-zone)*3+var(--px)*2+theme(spacing.sidebar))] left-auto",
+                                                                {
+                                                                    lg: "-right-[calc(var(--spacing-safe-zone)*2)] left-auto"
+                                                                }
+                                                            ],
+                                                        lg: "-right-[calc(var(--spacing-safe-zone)*2)] left-auto"
                                                     }
                                                 )}
                                             />
