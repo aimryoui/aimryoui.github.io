@@ -1,5 +1,14 @@
+"use client"
+
 import { sendGAEvent } from "@next/third-parties/google"
-import { AppWindow } from "lucide-react"
+import {
+    PanelBottom,
+    PanelLeft,
+    PanelLeftRightDashed,
+    PanelRight,
+    PanelTop,
+    PanelTopBottomDashed
+} from "lucide-react"
 
 import {
     DropdownMenuRadioGroup,
@@ -10,16 +19,31 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import {
-    type SidebarPosition,
-    type ToolbarPosition,
     useSidebarPositionStore,
     useToolbarPositionStore
 } from "@/stores/navigation-bar-position-store"
 
 const MENU_CONFIG = {
-    name: "Navigation",
-    icon: AppWindow
+    name: "Navigation"
 }
+
+const MOBILE_CONFIG = {
+    triggerIcon: PanelTopBottomDashed,
+    triggerText: "Toolbar position",
+    options: [
+        { value: "top", icon: PanelTop, text: "Top", disabled: true },
+        { value: "bottom", icon: PanelBottom, text: "Bottom", disabled: false }
+    ]
+} as const
+
+const DESKTOP_CONFIG = {
+    triggerIcon: PanelLeftRightDashed,
+    triggerText: "Sidebar position",
+    options: [
+        { value: "left", icon: PanelLeft, text: "Left", disabled: false },
+        { value: "right", icon: PanelRight, text: "Right", disabled: false }
+    ]
+} as const
 
 function NavigationBarPositionMenu() {
     const isMobile = useMediaQuery("lg")
@@ -34,21 +58,25 @@ function NavigationBarPositionMenu() {
         (state) => state.setPosition
     )
 
+    const position = isMobile ? toolbarPosition : sidebarPosition
+    const setPosition = isMobile
+        ? (setToolbarPosition as (v: string) => void)
+        : (setSidebarPosition as (v: string) => void)
+
+    const config = isMobile ? MOBILE_CONFIG : DESKTOP_CONFIG
+    const TriggerIcon = config.triggerIcon
+
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <MENU_CONFIG.icon />
-                {isMobile ? "Toolbar position" : "Sidebar position"}
+                <TriggerIcon />
+                {config.triggerText}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup
-                    value={isMobile ? toolbarPosition : sidebarPosition}
+                    value={position}
                     onValueChange={(value: string) => {
-                        if (isMobile) {
-                            setToolbarPosition(value as ToolbarPosition)
-                        } else {
-                            setSidebarPosition(value as SidebarPosition)
-                        }
+                        setPosition(value)
 
                         const eventName = "change_navigation_position"
                         const eventParams = {
@@ -58,31 +86,21 @@ function NavigationBarPositionMenu() {
                         sendGAEvent("event", eventName, eventParams)
                     }}
                 >
-                    <DropdownMenuRadioItem
-                        value={isMobile ? "top" : "left"}
-                        onClick={() => {
-                            if (isMobile) {
-                                setToolbarPosition("top")
-                            } else {
-                                setSidebarPosition("left")
-                            }
-                        }}
-                        disabled={isMobile}
-                    >
-                        {isMobile ? "Top" : "Left"}
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem
-                        value={isMobile ? "bottom" : "right"}
-                        onClick={() => {
-                            if (isMobile) {
-                                setToolbarPosition("bottom")
-                            } else {
-                                setSidebarPosition("right")
-                            }
-                        }}
-                    >
-                        {isMobile ? "Bottom" : "Right"}
-                    </DropdownMenuRadioItem>
+                    {config.options.map(
+                        ({ value, icon: Icon, text, disabled }) => (
+                            <DropdownMenuRadioItem
+                                key={value}
+                                value={value}
+                                disabled={disabled}
+                                onClick={() => {
+                                    setPosition(value)
+                                }}
+                            >
+                                <Icon />
+                                {text}
+                            </DropdownMenuRadioItem>
+                        )
+                    )}
                 </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
         </DropdownMenuSub>

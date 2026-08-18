@@ -1,3 +1,5 @@
+"use client"
+
 import { sendGAEvent } from "@next/third-parties/google"
 import { AudioLines, Loader, ToggleLeft, Vibrate } from "lucide-react"
 

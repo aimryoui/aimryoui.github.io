@@ -32,10 +32,10 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 summary:
                     "Contractor position, worked remotely on a full-time basis. Worked entirely in English, involved interaction with colleagues who were Indian-Americans and Indians.",
                 description: [
-                    "Worked on marketing motion graphic, product launch videos; product instruction, documentation videos using Adobe After Effects and Adobe XD.",
                     "Created design system and component library from scratch; adapted to existing products.",
                     "Redesigned/refined given products UI on Figma for better UX and ready for motion.",
                     "Designed booth display and presentation materials for Red Hat Summit; integrated AI for mockups, presentation.",
+                    "Worked on marketing motion graphic, product launch videos; product instruction, documentation videos using Adobe After Effects and Adobe XD.",
                     "Reported directly to the CTO."
                 ]
             },

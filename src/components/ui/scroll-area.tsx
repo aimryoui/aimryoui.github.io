@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 
 type ScrollAreaProps = React.ComponentProps<"div">
 
-function ScrollArea({ className, children, ...props }: ScrollAreaProps) {
+function ScrollArea({ className, ...props }: ScrollAreaProps) {
     return (
         <div
             data-slot="scroll-area"
@@ -16,9 +16,7 @@ function ScrollArea({ className, children, ...props }: ScrollAreaProps) {
                 className
             )}
             {...props}
-        >
-            {children}
-        </div>
+        />
     )
 }
 
