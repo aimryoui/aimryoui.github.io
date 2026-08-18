@@ -7,6 +7,7 @@ import { ChevronDown } from "lucide-react"
 import {
     Collapsible,
     CollapsibleContent,
+    type CollapsibleProps,
     CollapsibleTrigger
 } from "@/components/ui/collapsible"
 import { TooltipTrigger } from "@/components/ui/tooltip"
@@ -18,7 +19,7 @@ import {
 } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { useTocGroup } from "@/portfolio/_hooks/use-toc-tree"
 
-interface TocGroupProps {
+interface TocGroupProps extends CollapsibleProps {
     header: TocItemProps
     items: TocItemProps[]
     debouncedQuery: string
@@ -28,11 +29,13 @@ interface TocGroupProps {
 
 const TocGroup = memo(
     ({
+        className,
         header,
         items,
         debouncedQuery,
         onItemPress,
-        onSameLinkClick
+        onSameLinkClick,
+        ...props
     }: TocGroupProps) => {
         const isSelectedWorks = header.id === "selected-works"
         const { isExpanded, setIsExpanded } = useTocGroup(
@@ -51,8 +54,10 @@ const TocGroup = memo(
                     {
                         "motion-preferred":
                             "transition-[margin] ease-spring duration-350"
-                    }
+                    },
+                    className
                 )}
+                {...props}
             >
                 <TocItemRow
                     variant="category"

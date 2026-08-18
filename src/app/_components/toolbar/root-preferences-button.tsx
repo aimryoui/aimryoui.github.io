@@ -24,7 +24,7 @@ import {
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 
-function PreferencesButton() {
+function RootPreferencesButton() {
     const [isPreferencesOpen, setIsPreferencesOpen] = useState(false)
     const [isResetDialogOpen, setIsResetDialogOpen] = useState(false)
 
@@ -95,4 +95,4 @@ function PreferencesButton() {
     )
 }
 
-export { PreferencesButton }
+export { RootPreferencesButton }

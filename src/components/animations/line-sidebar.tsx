@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef } from "react"
 
+import { ScrollArea, type ScrollAreaProps } from "@/components/ui/scroll-area"
 import { pxToRem } from "@/helpers/px-to-rem"
 import { usePreference } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
 
-interface LineSidebarProps extends React.ComponentProps<"div"> {
+interface LineSidebarProps extends ScrollAreaProps {
     itemSelector?: string
     accentColor?: string
     textColor?: string
@@ -266,13 +267,9 @@ function LineSidebar({
     }, [runFrame, isActive])
 
     return (
-        <div
+        <ScrollArea
             ref={setListRef}
-            data-slot="line-sidebar"
-            className={cn(
-                "relative flex w-full flex-col gap-[--item-gap]",
-                className
-            )}
+            className={cn("w-full gap-[--item-gap]", className)}
             style={{
                 "--accent-color": accentColor,
                 "--text-color": textColor,

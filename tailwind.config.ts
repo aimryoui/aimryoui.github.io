@@ -11,6 +11,7 @@ import backgroundClip from "./src/lib/tailwindcss-plugins/utilities/background-c
 import clipPath from "./src/lib/tailwindcss-plugins/utilities/clip-path"
 import contentVisibility from "./src/lib/tailwindcss-plugins/utilities/content-visibility"
 import cornerShape from "./src/lib/tailwindcss-plugins/utilities/corner-shape"
+import direction from "./src/lib/tailwindcss-plugins/utilities/direction"
 import displayGridLanes from "./src/lib/tailwindcss-plugins/utilities/display-grid-lanes"
 import fieldSizing from "./src/lib/tailwindcss-plugins/utilities/field-sizing"
 import fontVariationSettings from "./src/lib/tailwindcss-plugins/utilities/font-variation-settings"
@@ -409,6 +410,7 @@ export default {
         clipPath,
         contentVisibility,
         cornerShape,
+        direction,
         displayGridLanes,
         fieldSizing,
         fontVariationSettings,

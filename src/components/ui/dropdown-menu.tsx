@@ -169,7 +169,7 @@ function DropdownMenuContent({
                     data-cursor="lock"
                     tabIndex={-1}
                     className={cn(
-                        "group/dropdown-menu-popup relative z-50 grid h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-48 max-w-56 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
+                        "group/dropdown-menu-popup relative z-50 grid h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-52 max-w-56 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
                         "group-data-target-cursor/dropdown-menu-positioner:group-hover/dropdown-menu-positioner:rounded-none",
                         {
                             "motion-preferred": [

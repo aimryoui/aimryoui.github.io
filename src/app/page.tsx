@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "lucide-react"
 
-import { PreferencesButton } from "@/_components/toolbar/preferences-button"
+import { RootPreferencesButton } from "@/_components/toolbar/root-preferences-button"
 import { AudioToggle } from "@/components/audio/audio"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -83,7 +83,7 @@ export default function Home() {
                         />
                     </li>
                     <li>
-                        <PreferencesButton />
+                        <RootPreferencesButton />
                     </li>
                 </Tooltip>
             </Space>

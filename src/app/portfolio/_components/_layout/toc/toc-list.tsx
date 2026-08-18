@@ -84,9 +84,9 @@ function TocList({
             ref={scrollContainerRef}
             itemSelector="[data-toc-item]"
             className={cn(
-                "group block overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-3 scrollbar-none",
+                "group overflow-x-hidden overflow-y-scroll scroll-auto py-3 rtl scrollbar-none",
                 "scroll-fade-y scroll-fade-18",
-                "hover:scrollbar-thin",
+                "hover:scrollbar-thin group-data-[sidebar-position=right]/html:ltr",
                 className
             )}
             {...props}
@@ -105,6 +105,7 @@ function TocList({
                             debouncedQuery={debouncedQuery}
                             onItemPress={handlePress}
                             onSameLinkClick={handleSameLinkClick}
+                            className="ltr"
                         />
                     )
                 }
@@ -112,7 +113,7 @@ function TocList({
                 return (
                     <ul
                         key={`anchors-${node.items[0].id}`}
-                        className="flex flex-col"
+                        className="flex flex-col ltr"
                     >
                         {node.items.map((item) => (
                             <TocItemRow

@@ -110,8 +110,8 @@
         "zustand": "^5.0.15"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.5.8",
-        "@csstools/postcss-oklab-function": "^5.0.7",
+        "@biomejs/biome": "^2.5.9",
+        "@csstools/postcss-oklab-function": "^5.0.8",
         "@eslint/css": "^1.4.0",
         "@limegrass/eslint-plugin-import-alias": "^1.6.1",
         "@stylistic/eslint-plugin": "^5.10.0",
@@ -156,5 +156,5 @@
     "engines": {
         "node": "^24.15.0"
     },
-    "packageManager": "pnpm@11.21.0"
+    "packageManager": "pnpm@11.22.0"
 }

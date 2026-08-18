@@ -143,6 +143,7 @@ function Button({
     mute = false,
     tracking,
     onPress,
+    onKeyDown,
     ...props
 }: ButtonProps) {
     const playPressFeedback = usePressFeedback()
@@ -174,6 +175,18 @@ function Button({
 
                 onPress?.(e)
             }}
+            onKeyDown={
+                onKeyDown
+                    ? (e) => {
+                          Object.defineProperty(e, "stopPropagation", {
+                              value: () => {},
+                              writable: true,
+                              configurable: true
+                          })
+                          onKeyDown(e)
+                      }
+                    : undefined
+            }
             className={cn(
                 nativeButton
                     ? [nativeButtonClassName, className]
@@ -210,6 +223,7 @@ function LinkButton({
     mute = false,
     tracking,
     onPress,
+    onKeyDown,
     href,
     scroll = true,
     draggable = false,
@@ -249,6 +263,18 @@ function LinkButton({
 
                 onPress?.(e)
             }}
+            onKeyDown={
+                onKeyDown
+                    ? (e) => {
+                          Object.defineProperty(e, "stopPropagation", {
+                              value: () => {},
+                              writable: true,
+                              configurable: true
+                          })
+                          onKeyDown(e)
+                      }
+                    : undefined
+            }
             className={cn(
                 nativeLink
                     ? [nativeButtonClassName, className]

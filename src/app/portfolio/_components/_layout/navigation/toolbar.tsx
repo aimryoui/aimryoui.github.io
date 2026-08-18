@@ -1,6 +1,5 @@
 "use client"
 
-import { PreferencesButton } from "@/_components/toolbar/preferences-button"
 import { RouteProgress } from "@/components/animations/route-progress"
 import { AudioToggle } from "@/components/audio/audio"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
@@ -12,6 +11,7 @@ import { siteConfig } from "@/configs/site.config"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import { MobileTocButton } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
+import { PreferencesButton } from "@/portfolio/_components/_layout/toolbar/preferences-button"
 
 import { projects } from "~/.velite"
 

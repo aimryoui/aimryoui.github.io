@@ -60,11 +60,11 @@ function PreferencesButton() {
                                             <DropdownMenuLabel>
                                                 Preferences
                                             </DropdownMenuLabel>
-                                            <NavigationBarPositionMenu />
                                             <SoundsHapticsMenu />
                                             <MediaMenu />
-                                            <EffectsMenu />
                                             <MotionMenu />
+                                            <EffectsMenu />
+                                            <NavigationBarPositionMenu />
                                             <ResetMenuItem
                                                 onClick={() => {
                                                     setIsResetDialogOpen(true)

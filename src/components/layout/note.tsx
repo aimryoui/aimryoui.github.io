@@ -18,7 +18,7 @@ function Note({
 }: NoteProps) {
     return (
         <>
-            <Space data-cursor="target" className="h-auto min-h-space">
+            <Space className="h-auto min-h-space">
                 <Highlight
                     className={cn(
                         "grid size-full min-h-space place-items-center bg-highlighted/10 px-safe-zone py-safe-zone-vertical text-center leading-6",

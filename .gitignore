@@ -55,3 +55,7 @@ public/assets/
 image-manifest.json
 video-manifest.json
 color-manifest.json
+
+# AI
+AGENTS.md
+CLAUDE.md
