@@ -23,7 +23,7 @@ function About() {
             >
                 <span
                     className={cn(
-                        "absolute bottom-full left-0 px-safe-zone pb-4 font-mono uppercase leading-normal",
+                        "absolute bottom-full start-0 px-safe-zone pb-4 font-mono uppercase leading-normal",
                         {
                             md: "pb-3 text-sm"
                         }

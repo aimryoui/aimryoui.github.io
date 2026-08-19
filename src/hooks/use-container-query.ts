@@ -40,8 +40,8 @@ function getRootFontSize() {
     if (rootFontSizeCache !== null) return rootFontSizeCache
 
     rootFontSizeCache =
-        parseFloat(getComputedStyle(document.documentElement).fontSize) ||
-        BASE_FONT_SIZE
+        parseFloat(getComputedStyle(document.documentElement).fontSize)
+        || BASE_FONT_SIZE
     return rootFontSizeCache
 }
 

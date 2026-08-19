@@ -5,6 +5,7 @@ function Figma({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -41,6 +42,7 @@ function AdobePhotoshop({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -64,6 +66,7 @@ function AdobeIllustrator({
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -84,6 +87,7 @@ function AdobeIndesign({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -107,6 +111,7 @@ function AdobeAfterEffects({
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -130,6 +135,7 @@ function AdobePremierePro({
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -153,6 +159,7 @@ function AdobeDreamweaver({
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -173,6 +180,7 @@ function AdobeXD({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -193,6 +201,7 @@ function AdobeDimension({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -213,6 +222,7 @@ function Blender({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -237,6 +247,7 @@ function VSCode({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 60 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >
@@ -280,6 +291,7 @@ function Bootstrap({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 76 60"
+            aria-hidden={true}
             className={className}
             {...props}
         >

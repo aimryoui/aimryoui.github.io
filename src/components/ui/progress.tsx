@@ -130,7 +130,7 @@ function ProgressValue({
     return (
         <span
             className={cn(
-                "ml-auto text-sm tabular-nums text-muted-foreground",
+                "ms-auto text-sm tabular-nums text-muted-foreground",
                 className
             )}
             data-slot="progress-value"

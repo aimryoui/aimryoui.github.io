@@ -10,6 +10,7 @@ import {
     SliderTrack
 } from "react-aria-components/Slider"
 
+import { useDirection } from "@/components/ui/direction"
 import { Label } from "@/components/ui/label"
 import { useDevice } from "@/hooks/use-device"
 import { createSoundEngine } from "@/lib/sounds"
@@ -36,6 +37,9 @@ function Slider<T extends number | number[]>({
     onChange,
     ...props
 }: SliderProps<T>) {
+    const direction = useDirection()
+    const isRtl = direction === "rtl"
+
     const snapFractions =
         snapCount > 1
             ? Array.from({ length: snapCount }).map(
@@ -77,8 +81,8 @@ function Slider<T extends number | number[]>({
             let nextActive = activeDotRef.current
 
             while (
-                floatIndex > nextActive + 0.55 &&
-                nextActive < snapCount - 1
+                floatIndex > nextActive + 0.55
+                && nextActive < snapCount - 1
             ) {
                 nextActive++
             }
@@ -164,7 +168,7 @@ function Slider<T extends number | number[]>({
                                             "group-data-horizontal":
                                                 "inset-x-2 top-1/2 -translate-y-1/2",
                                             "group-data-vertical":
-                                                "inset-y-2 left-1/2 -translate-x-1/2 flex-col"
+                                                "inset-y-2 start-1/2 -translate-x-1/2 flex-col rtl:translate-x-1/2"
                                         }
                                     )}
                                 >
@@ -183,8 +187,8 @@ function Slider<T extends number | number[]>({
                                                         ? "bg-background dark:bg-default/60"
                                                         : "bg-muted-foreground/60",
                                                     {
-                                                        first: "-translate-x-1.5",
-                                                        last: "translate-x-1.5"
+                                                        first: "-translate-x-1.5 rtl:translate-x-1.5",
+                                                        last: "translate-x-1.5 rtl:-translate-x-1.5"
                                                     }
                                                 )}
                                             />
@@ -194,7 +198,12 @@ function Slider<T extends number | number[]>({
                             )}
 
                             {state.values.map((_, index) => {
-                                const thumbOffset = `calc(0.625rem - ${state.getThumbPercent(index) * 1.25}rem)`
+                                const percent = state.getThumbPercent(index)
+                                const baseOffset = 0.625 - percent * 1.25
+                                const offsetValue =
+                                    isRtl || orientation === "vertical"
+                                        ? -baseOffset
+                                        : baseOffset
 
                                 return (
                                     <SliderThumb
@@ -203,7 +212,7 @@ function Slider<T extends number | number[]>({
                                         index={index}
                                         aria-label={thumbLabels?.[index]}
                                         className={cn(
-                                            "relative block size-5 shrink-0 cursor-grab select-none rounded-md border border-muted-foreground/60 bg-background ring-ring/50 will-change-[top,left] transition-[color,box-shadow]",
+                                            "relative block size-5 shrink-0 cursor-grab select-none rounded-md border border-muted-foreground/60 bg-background ring-ring/50 transition-[color,box-shadow]",
                                             {
                                                 after: "absolute -inset-2",
                                                 hover: "bg-element-hover ring-2",
@@ -212,14 +221,14 @@ function Slider<T extends number | number[]>({
                                                 active: "cursor-grabbing ring-4",
                                                 disabled:
                                                     "pointer-events-none opacity-40",
-                                                "group-data-horizontal": "mt-5",
-                                                "group-data-vertical": "ml-2.5"
+                                                "group-data-horizontal":
+                                                    "ml-[--offset-value] mt-5",
+                                                "group-data-vertical":
+                                                    "mt-[--offset-value]"
                                             }
                                         )}
                                         style={{
-                                            ...(orientation === "vertical"
-                                                ? { marginBottom: thumbOffset }
-                                                : { marginLeft: thumbOffset })
+                                            "--offset-value": `${offsetValue}rem`
                                         }}
                                     />
                                 )

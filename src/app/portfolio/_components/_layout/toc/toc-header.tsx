@@ -56,7 +56,7 @@ function TocHeader({
                                     dark: "bg-input/25"
                                 })}
                             >
-                                <ArrowLeft className="size-4" />
+                                <ArrowLeft className="size-4 rtl:rotate-180" />
                             </LinkButton>
                         }
                     />

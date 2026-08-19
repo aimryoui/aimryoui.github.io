@@ -66,10 +66,10 @@ function getTransitionScale(el: HTMLElement) {
 function isOriginalInViewport(el: Element) {
     const rect = el.getBoundingClientRect()
     return (
-        rect.top < window.innerHeight &&
-        rect.bottom > 0 &&
-        rect.left < window.innerWidth &&
-        rect.right > 0
+        rect.top < window.innerHeight
+        && rect.bottom > 0
+        && rect.left < window.innerWidth
+        && rect.right > 0
     )
 }
 
@@ -131,6 +131,7 @@ function Lightbox({ options, onBeforeOpen, ...props }: GalleryProps) {
                     if (pswpElement) {
                         pswpElement.setAttribute("data-slot", "lightbox")
                         pswpElement.setAttribute("data-cursor", "ignore")
+                        pswpElement.setAttribute("dir", "ltr")
                     }
                     if (pswpItemElement) {
                         pswpItemElement.setAttribute(

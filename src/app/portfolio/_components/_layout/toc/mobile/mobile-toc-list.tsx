@@ -14,8 +14,8 @@ import {
 import { useTocScroll } from "@/portfolio/_hooks/use-toc-scroll"
 import { useTocTree } from "@/portfolio/_hooks/use-toc-tree"
 
-type MobileTocListProps = React.ComponentProps<"div"> &
-    TocListProps & {
+type MobileTocListProps = React.ComponentProps<"div">
+    & TocListProps & {
         onLinkClick?: () => void
     }
 

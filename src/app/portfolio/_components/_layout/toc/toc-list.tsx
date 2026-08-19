@@ -86,7 +86,11 @@ function TocList({
             className={cn(
                 "group overflow-x-hidden overflow-y-scroll scroll-auto py-3 scrollbar-none",
                 "scroll-fade-y scroll-fade-18",
-                "hover:scrollbar-thin group-is-[[data-sidebar-position='left'][data-effects~='target-cursor']]/html:rtl",
+                "hover:scrollbar-thin",
+                {
+                    "group-is-[[data-sidebar-position='inline-start'][data-effects~='target-cursor']]/html":
+                        "ltr:rtl rtl:ltr"
+                },
                 className
             )}
             {...props}
@@ -105,7 +109,7 @@ function TocList({
                             debouncedQuery={debouncedQuery}
                             onItemPress={handlePress}
                             onSameLinkClick={handleSameLinkClick}
-                            className="ltr"
+                            className="ltr:ltr rtl:rtl"
                         />
                     )
                 }
@@ -113,7 +117,7 @@ function TocList({
                 return (
                     <ul
                         key={`anchors-${node.items[0].id}`}
-                        className="flex flex-col ltr"
+                        className="flex flex-col ltr:ltr rtl:rtl"
                     >
                         {node.items.map((item) => (
                             <TocItemRow

@@ -267,7 +267,9 @@ export default {
                 "toolbar-reveal":
                     "toolbar-reveal .5s cubic-bezier(0.22, 1, 0.36, 1) forwards",
                 "social-button-shake-in":
-                    "social-button-shake-in .3s ease-in-out forwards"
+                    "social-button-shake-in .3s ease-in-out forwards",
+                "social-button-shake-in-rtl":
+                    "social-button-shake-in-rtl .3s ease-in-out forwards"
             },
             keyframes: ({ theme }) => ({
                 spinner: {
@@ -334,6 +336,17 @@ export default {
                     },
                     "50%": {
                         transform: "translateX(-.375rem)"
+                    },
+                    "100%": {
+                        transform: "translateX(0)"
+                    }
+                },
+                "social-button-shake-in-rtl": {
+                    "0%": {
+                        transform: "translateX(0)"
+                    },
+                    "50%": {
+                        transform: "translateX(.375rem)"
                     },
                     "100%": {
                         transform: "translateX(0)"

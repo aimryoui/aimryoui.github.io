@@ -61,10 +61,10 @@ function DropdownMenu({
             >
                 {({ payload }) => {
                     const { content, className, ...options } =
-                        typeof payload === "object" &&
-                        payload !== null &&
-                        "content" in payload &&
-                        !isValidElement(payload)
+                        typeof payload === "object"
+                        && payload !== null
+                        && "content" in payload
+                        && !isValidElement(payload)
                             ? payload
                             : { content: payload, className: undefined }
 
@@ -96,8 +96,8 @@ function DropdownMenuTrigger<TPayload = DropdownMenuPayload>({
 }: MenuPrimitive.Trigger.Props<TPayload>) {
     const contextHandle = useContext(DropdownMenuHandleContext)
 
-    const handle = (explicitHandle ??
-        contextHandle) as MenuPrimitive.Handle<TPayload> | null
+    const handle = (explicitHandle
+        ?? contextHandle) as MenuPrimitive.Handle<TPayload> | null
 
     return (
         <MenuPrimitive.Trigger
@@ -121,8 +121,8 @@ function DropdownMenuContent({
     viewportClassName,
     children,
     ...props
-}: MenuPrimitive.Popup.Props &
-    Pick<
+}: MenuPrimitive.Popup.Props
+    & Pick<
         MenuPrimitive.Positioner.Props,
         "align" | "alignOffset" | "side" | "sideOffset"
     > & {
@@ -412,6 +412,7 @@ function DropdownMenuSubTrigger({
             }}
             className={cn(
                 "relative flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                !description && "pe-10",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
                     "data-open":
@@ -442,12 +443,12 @@ function DropdownMenuSubTrigger({
                     <span
                         data-slot="dropdown-menu-sub-trigger-indicator"
                         className={cn(
-                            "pointer-events-none absolute right-2 top-2 grid size-5 place-items-center"
+                            "pointer-events-none absolute end-2 top-2 grid size-5 place-items-center"
                         )}
                     >
                         <ChevronRightIcon
                             strokeWidth={1.5}
-                            className="cn-rtl-flip size-5"
+                            className="size-5 rtl:rotate-180"
                         />
                     </span>
                 </Comp>
@@ -470,7 +471,7 @@ function DropdownMenuSubTrigger({
 function DropdownMenuSubContent({
     align = "start",
     alignOffset = -5.5,
-    side = "right",
+    side = "inline-end",
     sideOffset = -1.5,
     className,
     ...props
@@ -503,8 +504,8 @@ function DropdownMenuLinkItem({
     inset,
     onClick,
     ...props
-}: Omit<MenuPrimitive.LinkItem.Props, "href"> &
-    Pick<React.ComponentProps<typeof NextLink>, "href"> & {
+}: Omit<MenuPrimitive.LinkItem.Props, "href">
+    & Pick<React.ComponentProps<typeof NextLink>, "href"> & {
         description?: React.ReactNode
         srOnlyDescription?: boolean
         openInNewTab?: boolean
@@ -564,9 +565,9 @@ function DropdownMenuLinkItem({
                     {openInNewTab && (
                         <span
                             data-slot="dropdown-menu-link-item-indicator"
-                            className="pointer-events-none absolute right-2.75 grid place-items-center"
+                            className="pointer-events-none absolute end-2.75 grid place-items-center"
                         >
-                            <ArrowUpRight className="size-4" />
+                            <ArrowUpRight className="size-4 rtl:-scale-x-100" />
                         </span>
                     )}
                 </Comp>
@@ -646,7 +647,7 @@ function DropdownMenuCheckboxItem({
                     <MenuPrimitive.CheckboxItemIndicator
                         data-slot="dropdown-menu-checkbox-item-indicator"
                         className={cn(
-                            "pointer-events-none absolute right-2 top-2 grid size-5 place-items-center"
+                            "pointer-events-none absolute end-2 top-2 grid size-5 place-items-center"
                         )}
                     >
                         <CheckIcon />
@@ -735,7 +736,7 @@ function DropdownMenuRadioItem({
                     <MenuPrimitive.RadioItemIndicator
                         data-slot="dropdown-menu-radio-item-indicator"
                         className={cn(
-                            "pointer-events-none absolute right-2 top-2 grid size-5 place-items-center"
+                            "pointer-events-none absolute end-2 top-2 grid size-5 place-items-center"
                         )}
                     >
                         <CheckIcon />
@@ -779,7 +780,7 @@ function DropdownMenuShortcut({
         <span
             data-slot="dropdown-menu-shortcut"
             className={cn(
-                "ml-auto text-xs tracking-widest text-muted-foreground",
+                "ms-auto text-xs tracking-widest text-muted-foreground",
                 "group-focus/dropdown-menu-item:text-accent-foreground",
                 className
             )}

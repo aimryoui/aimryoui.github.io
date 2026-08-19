@@ -205,9 +205,9 @@ function DrawerContent({
                                         "data-[swipe-direction=down]":
                                             "top-full",
                                         "data-[swipe-direction=left]":
-                                            "right-full",
+                                            "end-full",
                                         "data-[swipe-direction=right]":
-                                            "left-full",
+                                            "start-full",
                                         "data-[swipe-direction=up]":
                                             "bottom-full"
                                     }
@@ -278,14 +278,14 @@ function DrawerContent({
                                 "data-[swipe-direction=left]": [
                                     "[--closed-transform:translate3d(calc(-100%-var(--drawer-inset,0px)-2px),0,0)]",
                                     "[--translate-x:calc(var(--drawer-swipe-movement-x)+var(--stack-peek-offset)+(var(--stack-shrink)*100%))]",
-                                    "left-0 origin-left"
+                                    "start-0 origin-left"
                                 ],
 
                                 // Direction: right.
                                 "data-[swipe-direction=right]": [
                                     "[--closed-transform:translate3d(calc(100%+var(--drawer-inset,0px)+2px),0,0)]",
                                     "[--translate-x:calc(var(--drawer-swipe-movement-x)-var(--stack-peek-offset)-(var(--stack-shrink)*100%))]",
-                                    "right-0 origin-right"
+                                    "end-0 origin-right"
                                 ],
 
                                 // Responsives.

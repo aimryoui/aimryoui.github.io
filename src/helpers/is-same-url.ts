@@ -19,9 +19,9 @@ export function isSameUrl(href: string): boolean {
             : window.location.search
 
         return (
-            window.location.pathname === targetUrl.pathname &&
-            currentSearch === targetSearch &&
-            window.location.hash === targetUrl.hash
+            window.location.pathname === targetUrl.pathname
+            && currentSearch === targetSearch
+            && window.location.hash === targetUrl.hash
         )
     } catch {
         return false

@@ -29,15 +29,15 @@ function detectBrowserEngine(): BrowserEngine {
     if (cachedEngine) return cachedEngine
 
     if (
-        CSS.supports("-apple-pay-button-style", "black") ||
-        CSS.supports("-webkit-touch-callout", "none")
+        CSS.supports("-apple-pay-button-style", "black")
+        || CSS.supports("-webkit-touch-callout", "none")
     ) {
         cachedEngine = "webkit"
     } else if (CSS.supports("-moz-appearance", "none")) {
         cachedEngine = "gecko"
     } else if (
-        CSS.supports("-webkit-appearance", "none") &&
-        !CSS.supports("-moz-appearance", "none")
+        CSS.supports("-webkit-appearance", "none")
+        && !CSS.supports("-moz-appearance", "none")
     ) {
         cachedEngine = "blink"
     } else {
@@ -55,8 +55,8 @@ function checkIsDesktopApp(): boolean {
     const desktopWindow = window as unknown as DesktopWindow
 
     const isElectron =
-        ua.includes("electron") ||
-        Boolean(desktopWindow.process?.versions?.electron)
+        ua.includes("electron")
+        || Boolean(desktopWindow.process?.versions?.electron)
 
     const isTauri = "__TAURI__" in desktopWindow
 

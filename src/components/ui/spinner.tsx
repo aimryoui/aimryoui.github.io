@@ -10,6 +10,7 @@ function Spinner({ className, ...props }: SpinnerProps) {
         <svg
             data-slot="spinner"
             viewBox="0 0 30 30"
+            aria-hidden={true}
             className={cn("size-5", className)}
             {...props}
         >

@@ -241,8 +241,8 @@ function calculateLaneSizes(
                             rootFontSize
                         )
                         if (
-                            minmax.min === "max-content" ||
-                            minmax.min === "min-content"
+                            minmax.min === "max-content"
+                            || minmax.min === "min-content"
                         ) {
                             minSize += 100
                         } else if (minVal !== null) {
@@ -415,8 +415,8 @@ function getGridLanesStyles(element: HTMLElement): ParsedStyles {
 
     let tolerance = DEFAULT_TOLERANCE
     const toleranceValueRaw =
-        computed.getPropertyValue("--flow-tolerance").trim() ||
-        computed.getPropertyValue("flow-tolerance").trim()
+        computed.getPropertyValue("--flow-tolerance").trim()
+        || computed.getPropertyValue("flow-tolerance").trim()
 
     const toleranceValue = resolveCSSVariables(toleranceValueRaw, computed)
 
@@ -450,12 +450,8 @@ function getGridLanesStyles(element: HTMLElement): ParsedStyles {
                 rootFontSize
             ) ?? 0,
         rowGap:
-            parseLengthToPixels(
-                rowGap.split(" ")[0],
-                0,
-                fontSize,
-                rootFontSize
-            ) ?? 0,
+            parseLengthToPixels(rowGap.split(" ")[0], 0, fontSize, rootFontSize)
+            ?? 0,
         fontSize,
         rootFontSize,
         tolerance
@@ -582,8 +578,8 @@ class GridLanesLayout {
         this.resizeObserver = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 if (
-                    entry.target === this.container ||
-                    entry.target.parentElement === this.container
+                    entry.target === this.container
+                    || entry.target.parentElement === this.container
                 ) {
                     debouncedLayout()
                     break
@@ -603,9 +599,9 @@ class GridLanesLayout {
                     }
                     shouldRelayout = true
                 } else if (
-                    mutation.type === "attributes" &&
-                    (mutation.attributeName === "style" ||
-                        mutation.attributeName === "class")
+                    mutation.type === "attributes"
+                    && (mutation.attributeName === "style"
+                        || mutation.attributeName === "class")
                 ) {
                     shouldRelayout = true
                 }
@@ -651,13 +647,13 @@ class GridLanesLayout {
         const containerRect = this.container.getBoundingClientRect()
 
         const hasColumns =
-            styles.gridTemplateColumns &&
-            styles.gridTemplateColumns !== "none" &&
-            !styles.gridTemplateColumns.startsWith("auto")
+            styles.gridTemplateColumns
+            && styles.gridTemplateColumns !== "none"
+            && !styles.gridTemplateColumns.startsWith("auto")
         const hasRows =
-            styles.gridTemplateRows &&
-            styles.gridTemplateRows !== "none" &&
-            !styles.gridTemplateRows.startsWith("auto")
+            styles.gridTemplateRows
+            && styles.gridTemplateRows !== "none"
+            && !styles.gridTemplateRows.startsWith("auto")
 
         this.isVertical = hasColumns || !hasRows
 
@@ -685,8 +681,8 @@ class GridLanesLayout {
 
         const items = Array.from(this.container.children).filter(
             (el) =>
-                el.nodeType === Node.ELEMENT_NODE &&
-                window.getComputedStyle(el).display !== "none"
+                el.nodeType === Node.ELEMENT_NODE
+                && window.getComputedStyle(el).display !== "none"
         ) as HTMLElement[]
 
         const explicitItems: ItemRecord[] = []
@@ -823,8 +819,8 @@ class GridLanesLayout {
                     bestHeight = maxHeight
                     bestLane = i
                 } else if (
-                    Math.abs(maxHeight - bestHeight) <= tolerance &&
-                    i < bestLane
+                    Math.abs(maxHeight - bestHeight) <= tolerance
+                    && i < bestLane
                 ) {
                     bestHeight = maxHeight
                     bestLane = i
@@ -928,16 +924,16 @@ function init(options: GridLanesOptions = {}): InitResult {
                     if (node.nodeType === Node.ELEMENT_NODE) {
                         const el = node as HTMLElement
                         if (
-                            el.getAttribute(POLYFILL_ATTR) === "true" ||
-                            el.querySelector(`[${POLYFILL_ATTR}="true"]`)
+                            el.getAttribute(POLYFILL_ATTR) === "true"
+                            || el.querySelector(`[${POLYFILL_ATTR}="true"]`)
                         ) {
                             shouldInit = true
                         }
                     }
                 }
             } else if (
-                mutation.type === "attributes" &&
-                mutation.attributeName === POLYFILL_ATTR
+                mutation.type === "attributes"
+                && mutation.attributeName === POLYFILL_ATTR
             ) {
                 shouldInit = true
             }

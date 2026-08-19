@@ -19,6 +19,7 @@
     "embeddedLanguageFormatting": "auto",
     "singleAttributePerLine": false,
     "jsdoc": { "capitalizeDescriptions": false },
+    "experimentalOperatorPosition": "start",
     "sortTailwindcss": {
         "functions": ["cn", "cva", "twg", "twMerge"],
         "attributes": [

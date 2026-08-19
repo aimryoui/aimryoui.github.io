@@ -84,11 +84,11 @@ function Software() {
                                                 }
                                                 className={cn(
                                                     "col-span-2 flex px-0",
-                                                    _index === arr.length - 1 &&
-                                                        "pe-safe-zone",
+                                                    _index === arr.length - 1
+                                                        && "pe-safe-zone",
                                                     _index === 1 && {
                                                         "@[33.25rem]":
-                                                            "absolute left-0 top-[calc(1em*1.5+2px+var(--spacing-table-between)*2+var(--spacing)*8)]"
+                                                            "absolute start-0 top-[calc(1em*1.5+2px+var(--spacing-table-between)*2+var(--spacing)*8)]"
                                                     }
                                                 )}
                                             >
@@ -113,12 +113,12 @@ function Software() {
                                                     key={frequency.title}
                                                     className={cn(
                                                         "col-span-2 p-0 align-top text-foreground font-wght-600",
-                                                        _index ===
-                                                            arr.length - 1 &&
-                                                            "pe-safe-zone",
+                                                        _index
+                                                            === arr.length - 1
+                                                            && "pe-safe-zone",
                                                         _index === 1 && {
                                                             "@[33.25rem]":
-                                                                "absolute left-0 top-[calc(1em*1.5+2px+var(--spacing-table-between)*2+var(--spacing)*8)]"
+                                                                "absolute start-0 top-[calc(1em*1.5+2px+var(--spacing-table-between)*2+var(--spacing)*8)]"
                                                         }
                                                     )}
                                                 >
@@ -187,8 +187,8 @@ function Software() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        {index < arr.length - 1 &&
-                            arr[index + 1].section !== section.section && (
+                        {index < arr.length - 1
+                            && arr[index + 1].section !== section.section && (
                                 <SectionLine />
                             )}
                     </Fragment>

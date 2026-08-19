@@ -23,7 +23,7 @@ interface SocialType {
 }
 
 interface SocialButtonProps extends Omit<LinkButtonProps, "href"> {
-    projectId: ProjectId
+    projectId?: ProjectId
     social?: SocialData
 }
 
@@ -44,8 +44,8 @@ function SocialButton({
     const { isWebKit } = useBrowserEngine()
     const isMounted = useIsMounted()
     const isSelectedWorks =
-        isSelectedWorksProp ||
-        (isMounted && window.location.search.includes("feature=selected"))
+        isSelectedWorksProp
+        || (isMounted && window.location.search.includes("feature=selected"))
 
     const playPressFeedback = usePressFeedback()
     const { motionReduced } = usePreference()
@@ -188,7 +188,8 @@ function SocialButton({
                                 "transition-transform ease-spring duration-400",
                             lg: [
                                 "font-wght-600",
-                                isAtBottom && "-translate-x-safe-zone"
+                                isAtBottom
+                                    && "-translate-x-safe-zone rtl:translate-x-safe-zone"
                             ]
                         },
                         className
@@ -216,7 +217,7 @@ function SocialButton({
                                     "translate-x-0 grid-cols-[1fr] pe-3 ps-3.5 opacity-100",
                                 "group-data-[expanded=true]":
                                     "translate-x-0 grid-cols-[1fr] pe-3 ps-3.5 opacity-100",
-
+                                rtl: "-translate-x-11",
                                 xs: "hidden"
                             }
                         )}
@@ -224,21 +225,21 @@ function SocialButton({
                         <div className="min-w-0">
                             <span className="flex w-max items-center justify-end gap-x-1.5">
                                 {label}
-                                <ExternalLink className="mb-0.75 size-4" />
+                                <ExternalLink className="mb-0.75 size-4 rtl:-scale-x-100" />
                             </span>
                         </div>
                     </div>
                     <div
                         className={cn(
                             socialColors,
-                            "z-1 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15",
+                            "z-1 -me-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15",
                             "will-change-transform transition-[transform,translate,background-color] duration-100",
                             {
                                 "motion-preferred": {
                                     "group-hover":
-                                        "animate-social-button-shake-in",
+                                        "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl",
                                     "group-data-[expanded=true]":
-                                        "animate-social-button-shake-in"
+                                        "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl"
                                 },
                                 xs: "!animate-none"
                             }
@@ -281,7 +282,8 @@ function SocialButton({
                                 "transition-transform ease-spring duration-400",
                             lg: [
                                 "font-wght-600",
-                                isAtBottom && "-translate-x-safe-zone"
+                                isAtBottom
+                                    && "-translate-x-safe-zone rtl:translate-x-safe-zone"
                             ]
                         },
                         className
@@ -312,7 +314,8 @@ function SocialButton({
                                     "group-hover":
                                         "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75",
                                     "group-data-[expanded=true]":
-                                        "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75"
+                                        "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75",
+                                    rtl: "-translate-x-10"
                                 }
                             )}
                         >
@@ -326,13 +329,13 @@ function SocialButton({
                         <div
                             className={cn(
                                 socialColors,
-                                "-mr-0.5 size-9.5 shrink-0 rounded-full will-change-transform",
+                                "-me-0.5 size-9.5 shrink-0 rounded-full will-change-transform",
                                 {
                                     "motion-preferred": {
                                         "group-hover":
-                                            "animate-social-button-shake-in",
+                                            "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl",
                                         "group-data-[expanded=true]":
-                                            "animate-social-button-shake-in"
+                                            "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl"
                                     }
                                 }
                             )}
@@ -356,6 +359,7 @@ function SocialButton({
                                     "translate-x-0 grid-cols-[1fr] pe-3 ps-4",
                                 "group-data-[expanded=true]":
                                     "translate-x-0 grid-cols-[1fr] pe-3 ps-4",
+                                rtl: "-translate-x-10",
                                 xs: "hidden"
                             }
                         )}
@@ -374,7 +378,7 @@ function SocialButton({
                                 )}
                             >
                                 {label}
-                                <ExternalLink className="size-4 -translate-y-0.25" />
+                                <ExternalLink className="size-4 -translate-y-0.25 rtl:-scale-x-100" />
                             </span>
                         </div>
                     </div>
@@ -382,14 +386,14 @@ function SocialButton({
                     <div
                         className={cn(
                             socialColors,
-                            "relative z-20 -mr-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15 will-change-transform",
+                            "relative z-20 -me-0.5 grid size-9.5 shrink-0 place-items-center rounded-full border border-white/15 will-change-transform",
                             "transition-[border-color] duration-1000",
                             {
                                 "motion-preferred": {
                                     "group-hover":
-                                        "animate-social-button-shake-in",
+                                        "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl",
                                     "group-data-[expanded=true]":
-                                        "animate-social-button-shake-in"
+                                        "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl"
                                 },
                                 "group-hover":
                                     "border-transparent transition-none",

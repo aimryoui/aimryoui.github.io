@@ -53,8 +53,8 @@ function SectionName({
                 id: slugify(sectionName)
             })}
             className={cn(
-                isAnchorTag &&
-                    "sticky top-3.5 z-50 scroll-mt-safe-zone md:top-1.5",
+                isAnchorTag
+                    && "sticky top-3.5 z-50 scroll-mt-safe-zone md:top-1.5",
                 "pointer-events-none grid min-h-13 place-items-center py-2",
                 containerClassName
             )}

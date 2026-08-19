@@ -9,7 +9,8 @@ function SelectedWorks({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 600 600"
-                className={cn("h-4/5")}
+                aria-hidden={true}
+                className={cn("h-4/5 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
                 vectorEffect="non-scaling-stroke"
             >
@@ -91,7 +92,8 @@ function SelectedWorks({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 600 600"
-                className={cn("h-4/5")}
+                aria-hidden={true}
+                className={cn("h-4/5 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
                 vectorEffect="non-scaling-stroke"
             >
@@ -141,7 +143,8 @@ function SelectedWorks({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 600 600"
-                className={cn("h-4/5")}
+                aria-hidden={true}
+                className={cn("h-4/5 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
                 vectorEffect="non-scaling-stroke"
             >
@@ -181,7 +184,8 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 600 600"
-                className={cn("h-4/5")}
+                aria-hidden={true}
+                className={cn("h-4/5 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
                 vectorEffect="non-scaling-stroke"
             >
@@ -232,7 +236,8 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 300 300"
-                className={cn("h-1/2")}
+                aria-hidden={true}
+                className={cn("h-1/2 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
                 vectorEffect="non-scaling-stroke"
             >
@@ -266,7 +271,8 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 600 600"
-                className={cn("h-4/5")}
+                aria-hidden={true}
+                className={cn("h-4/5 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
                 vectorEffect="non-scaling-stroke"
             >
@@ -307,7 +313,8 @@ function Events({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
-                className={cn("h-3/4")}
+                aria-hidden={true}
+                className={cn("h-3/4 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -340,7 +347,8 @@ function Events({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 300 300"
-                className={cn("h-1/2")}
+                aria-hidden={true}
+                className={cn("h-1/2 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -398,7 +406,8 @@ function Events({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
-                className={cn("h-2/3")}
+                aria-hidden={true}
+                className={cn("h-3/4 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -447,7 +456,8 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
-                className={cn("h-3/4")}
+                aria-hidden={true}
+                className={cn("h-3/4 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -539,7 +549,8 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 300 300"
-                className={cn("h-1/2")}
+                aria-hidden={true}
+                className={cn("h-1/2 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -588,7 +599,8 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
-                className={cn("h-3/4")}
+                aria-hidden={true}
+                className={cn("h-3/4 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -695,6 +707,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
+                aria-hidden={true}
                 className={cn("h-3/4")}
                 shapeRendering="optimizeSpeed"
             >
@@ -782,6 +795,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
+                aria-hidden={true}
                 className={cn("h-3/4")}
                 shapeRendering="optimizeSpeed"
             >
@@ -825,6 +839,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
+                aria-hidden={true}
                 className={cn("h-3/4")}
                 shapeRendering="optimizeSpeed"
             >
@@ -989,7 +1004,8 @@ function Animations({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
-                className={cn("h-3/4")}
+                aria-hidden={true}
+                className={cn("h-3/4 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -1023,7 +1039,8 @@ function Animations({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
-                className={cn("h-3/4")}
+                aria-hidden={true}
+                className={cn("h-3/4 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -1092,7 +1109,8 @@ function Animations({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
-                className={cn("h-3/4")}
+                aria-hidden={true}
+                className={cn("h-3/4 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -1132,6 +1150,7 @@ function Photography({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
+                aria-hidden={true}
                 className={cn("h-3/4")}
                 shapeRendering="optimizeSpeed"
             >
@@ -1166,6 +1185,7 @@ function Photography({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
+                aria-hidden={true}
                 className={cn("h-3/4")}
                 shapeRendering="optimizeSpeed"
             >
@@ -1209,6 +1229,7 @@ function Photography({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
+                aria-hidden={true}
                 className={cn("h-3/4")}
                 shapeRendering="optimizeSpeed"
             >
@@ -1258,7 +1279,8 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
-                className={cn("h-3/4")}
+                aria-hidden={true}
+                className={cn("h-3/4 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -1288,7 +1310,8 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 450 450"
-                className={cn("h-2/3")}
+                aria-hidden={true}
+                className={cn("h-2/3 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -1321,7 +1344,8 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
-                className={cn("h-3/4")}
+                aria-hidden={true}
+                className={cn("h-3/4 rtl:-scale-x-100")}
                 shapeRendering="optimizeSpeed"
             >
                 <path
@@ -1370,6 +1394,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
+                aria-hidden={true}
                 className={cn("h-3/4")}
                 shapeRendering="optimizeSpeed"
             >
@@ -1456,6 +1481,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
+                aria-hidden={true}
                 className={cn("h-3/4")}
                 shapeRendering="optimizeSpeed"
             >
@@ -1649,6 +1675,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 490 490"
+                aria-hidden={true}
                 className={cn("h-3/4")}
                 shapeRendering="optimizeSpeed"
             >
@@ -1780,6 +1807,7 @@ function Miscellaneous({ className }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 490 490"
+            aria-hidden={true}
             className={cn("h-4/5")}
             shapeRendering="optimizeSpeed"
         >

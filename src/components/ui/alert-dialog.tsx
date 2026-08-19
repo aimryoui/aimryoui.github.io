@@ -72,14 +72,14 @@ function AlertDialogContent({
                 data-slot="alert-dialog-content"
                 data-size={size}
                 data-cursor="input"
-                {...(!motionReduced &&
-                    effectTargetCursor && {
+                {...(!motionReduced
+                    && effectTargetCursor && {
                         onMouseEnter: () => {
                             playHoverSound("tick")
                         }
                     })}
                 className={cn(
-                    "group/alert-dialog-content fixed left-1/2 top-1/2 z-90 grid max-h-[calc(100dvh-var(--spacing)*4*2)] w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl px-4 py-3 text-popover-foreground outline-none",
+                    "group/alert-dialog-content fixed start-1/2 top-1/2 z-90 grid max-h-[calc(100dvh-var(--spacing)*4*2)] w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl px-4 py-3 text-popover-foreground outline-none rtl:translate-x-1/2",
                     {
                         "motion-preferred": [
                             "duration-250",

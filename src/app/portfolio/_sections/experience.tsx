@@ -131,18 +131,18 @@ function Experience() {
                                                 },
                                                 {
                                                     before: [
-                                                        "absolute -inset-y-1.25 -left-2.25 right-2.75 rounded-lg transition-[background-color] duration-100",
+                                                        "absolute -inset-y-1.25 -start-2.25 end-2.75 rounded-lg transition-[background-color] duration-100",
                                                         {
                                                             hover: "bg-muted/45 transition-none",
                                                             active: "bg-muted/60 transition-none",
 
                                                             "@[69rem]":
-                                                                "-left-[calc(var(--spacing-safe-zone)/2)] right-[calc(var(--spacing-safe-zone)/2)]",
+                                                                "-start-[calc(var(--spacing-safe-zone)/2)] end-[calc(var(--spacing-safe-zone)/2)]",
                                                             "@[56.5rem]":
-                                                                "-left-[calc(var(--spacing-safe-zone)/2)] right-[calc(var(--spacing-safe-zone)/2)] rounded-xlg",
+                                                                "-start-[calc(var(--spacing-safe-zone)/2)] end-[calc(var(--spacing-safe-zone)/2)] rounded-xlg",
 
-                                                            md: "-left-[calc(var(--spacing-safe-zone)*1.75/3)] right-[calc(var(--spacing-safe-zone)*1.25/3)]",
-                                                            sm: "-bottom-1.5 -left-[calc(var(--spacing-safe-zone)*1.75/3)] right-[calc(var(--spacing-safe-zone)*1.25/3)]"
+                                                            md: "-start-[calc(var(--spacing-safe-zone)*1.75/3)] end-[calc(var(--spacing-safe-zone)*1.25/3)]",
+                                                            sm: "-bottom-1.5 -start-[calc(var(--spacing-safe-zone)*1.75/3)] end-[calc(var(--spacing-safe-zone)*1.25/3)]"
                                                         }
                                                     ]
                                                 }
@@ -163,8 +163,8 @@ function Experience() {
                                                 }
                                             )}
                                         >
-                                            {place.startDate ===
-                                            place.endDate ? (
+                                            {place.startDate
+                                            === place.endDate ? (
                                                 place.startDate
                                             ) : (
                                                 <>
@@ -181,9 +181,9 @@ function Experience() {
                                         <TableCell
                                             className={cn(
                                                 "z-1 flex justify-between gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] p-0 align-top text-foreground font-wght-500",
-                                                place.position ===
-                                                    "UI/UX & Motion Designer" &&
-                                                    "tracking-[-0.011em] @[56.5rem]:tracking-normal",
+                                                place.position
+                                                    === "UI/UX & Motion Designer"
+                                                    && "tracking-[-0.011em] @[56.5rem]:tracking-normal",
                                                 {
                                                     "@[56.5rem]":
                                                         "mt-5.5 gap-x-2",
@@ -291,8 +291,9 @@ function Experience() {
                                                     <span className="hidden italic text-muted-foreground/50 sm:inline-block">
                                                         |
                                                     </span>
-                                                    <span
+                                                    <bdi
                                                         data-cursor="lock"
+                                                        translate="no"
                                                         className={cn(
                                                             "-mx-1.5 -my-0.5 inline-block text-pretty px-1.5 py-0.5 underline",
                                                             {
@@ -307,7 +308,7 @@ function Experience() {
                                                             place.organization
                                                                 .text
                                                         }
-                                                    </span>
+                                                    </bdi>
                                                 </LinkButton>
                                             ) : (
                                                 <span
@@ -323,8 +324,8 @@ function Experience() {
                                                 </span>
                                             )}
                                         </TableCell>
-                                        {(!!place.description ||
-                                            !!place.summary) && (
+                                        {(!!place.description
+                                            || !!place.summary) && (
                                             <TableRow
                                                 className={cn(
                                                     "grid grid-cols-4 border-b border-dashed border-stroke pe-safe-zone not-last:mb-[calc(var(--spacing-safe-zone-vertical)*1/3)]",
@@ -398,16 +399,16 @@ function Experience() {
                                         >
                                             <SectionLine
                                                 className={cn(
-                                                    "-right-[calc(var(--spacing-safe-zone)*2)]",
+                                                    "-end-[calc(var(--spacing-safe-zone)*2)]",
                                                     {
-                                                        "group-data-[sidebar-position=right]/html":
+                                                        "group-data-[sidebar-position=inline-end]/html":
                                                             [
-                                                                "-right-[calc(var(--spacing-safe-zone)*3+var(--px)*2+theme(spacing.sidebar))] left-auto",
+                                                                "-end-[calc(var(--spacing-safe-zone)*3+var(--px)*2+theme(spacing.sidebar))] start-auto",
                                                                 {
-                                                                    lg: "-right-[calc(var(--spacing-safe-zone)*2)] left-auto"
+                                                                    lg: "-end-[calc(var(--spacing-safe-zone)*2)] start-auto"
                                                                 }
                                                             ],
-                                                        lg: "-right-[calc(var(--spacing-safe-zone)*2)] left-auto"
+                                                        lg: "-end-[calc(var(--spacing-safe-zone)*2)] start-auto"
                                                     }
                                                 )}
                                             />
@@ -420,8 +421,8 @@ function Experience() {
                             )}
                         </Table>
                     </TableContainer>
-                    {index < arr.length - 1 &&
-                        arr[index + 1].section !== section.section && (
+                    {index < arr.length - 1
+                        && arr[index + 1].section !== section.section && (
                             <SectionLine />
                         )}
                 </Fragment>

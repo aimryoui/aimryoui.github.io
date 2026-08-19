@@ -1,4 +1,5 @@
 import { useAudioStore } from "@/stores/audio-store"
+import { useDirectionStore } from "@/stores/direction-store"
 import { useEffectsStore } from "@/stores/effects-store"
 import { useHapticsStore } from "@/stores/haptics-store"
 import { useMediaStore } from "@/stores/media-store"
@@ -10,6 +11,7 @@ import {
 
 const PREFERENCE_STORES = [
     useAudioStore,
+    useDirectionStore,
     useEffectsStore,
     useHapticsStore,
     useMediaStore,

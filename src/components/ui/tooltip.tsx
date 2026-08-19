@@ -52,10 +52,10 @@ function Tooltip({
             >
                 {({ payload }) => {
                     const { content, ...options } =
-                        typeof payload === "object" &&
-                        payload !== null &&
-                        "content" in payload &&
-                        !isValidElement(payload)
+                        typeof payload === "object"
+                        && payload !== null
+                        && "content" in payload
+                        && !isValidElement(payload)
                             ? payload
                             : { content: payload }
 
@@ -95,8 +95,8 @@ function TooltipContent({
     alignOffset = 0,
     children,
     ...props
-}: TooltipPrimitive.Popup.Props &
-    Pick<
+}: TooltipPrimitive.Popup.Props
+    & Pick<
         TooltipPrimitive.Positioner.Props,
         "align" | "alignOffset" | "side" | "sideOffset"
     >) {
@@ -154,6 +154,8 @@ function TooltipArrow({ ...props }: TooltipPrimitive.Arrow.Props) {
                 "data-[side=bottom]": "top-0 -translate-y-full rotate-180",
                 "data-[side=left]": "hidden",
                 "data-[side=right]": "hidden",
+                "data-[side=inline-start]": "hidden",
+                "data-[side=inline-end]": "hidden",
                 "data-instant": "transition-none"
             })}
             {...props}
@@ -162,6 +164,7 @@ function TooltipArrow({ ...props }: TooltipPrimitive.Arrow.Props) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 10"
                 fill="none"
+                aria-hidden={true}
                 className={cn("h-2.5 w-6 -translate-y-0.75 transform-gpu")}
             >
                 <path
@@ -188,7 +191,7 @@ function TooltipViewport({
             className={cn(
                 "[--viewport-inline-padding:calc(var(--spacing)*2)]",
                 "relative size-full overflow-clip px-[--viewport-inline-padding] py-1",
-                "has-[kbd]:pr-1",
+                "has-[kbd]:pe-1",
                 {
                     "[&_:is([data-current],[data-previous])]": [
                         "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-opacity ease-[cubic-bezier(0.22,1,0.36,1)] duration-250",

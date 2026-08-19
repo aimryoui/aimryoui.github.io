@@ -162,6 +162,9 @@
     h6 {
         @apply scroll-mt-[calc(var(--spacing-space)+(var(--spacing-safe-zone)-var(--spacing)/2))];
     }
+    bdi {
+        @apply rtl:text-right;
+    }
     hr {
         @apply h-[unset] border-t-0;
     }

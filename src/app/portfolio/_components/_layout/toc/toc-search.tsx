@@ -112,7 +112,7 @@ function Addons({
                                 </Kbd>
                             </span>
                         ),
-                        side: "right",
+                        side: "inline-end",
                         sideOffset: 8
                     }}
                     render={
@@ -148,6 +148,7 @@ function Command({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 12 12"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >

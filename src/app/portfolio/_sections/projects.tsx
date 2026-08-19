@@ -68,7 +68,7 @@ function Projects({
                                                 {/* Represent border-right */}
                                                 <SvgElementLine
                                                     className={cn(
-                                                        "absolute inset-y-0 right-0 group-nth-[5n]:hidden",
+                                                        "absolute inset-y-0 end-0 group-nth-[5n]:hidden",
                                                         {
                                                             "@3xl": "group-nth-[5n]:block group-nth-[3n]:hidden",
                                                             "@md": "group-even:!hidden group-nth-[3n]:block"
@@ -92,31 +92,31 @@ function Projects({
                                                         }
                                                     )}
                                                     className={cn({
-                                                        "group-data-[sidebar-position=right]/html":
+                                                        "group-data-[sidebar-position=inline-end]/html":
                                                             [
-                                                                "-right-safe-zone left-auto",
+                                                                "-end-safe-zone start-auto",
                                                                 {
                                                                     "lg:@3xl":
-                                                                        "-left-safe-zone right-auto",
+                                                                        "-start-safe-zone end-auto",
                                                                     "@md": {
                                                                         "group-odd":
-                                                                            "-left-safe-zone right-auto",
+                                                                            "-start-safe-zone end-auto",
                                                                         "group-even":
-                                                                            "-right-safe-zone left-auto"
+                                                                            "-end-safe-zone start-auto"
                                                                     }
                                                                 }
                                                             ],
                                                         lg: [
-                                                            "-right-safe-zone left-auto",
+                                                            "-end-safe-zone start-auto",
                                                             {
-                                                                "@3xl": "-left-safe-zone right-auto"
+                                                                "@3xl": "-start-safe-zone end-auto"
                                                             }
                                                         ],
                                                         "@md": {
                                                             "group-odd":
-                                                                "-left-safe-zone right-auto",
+                                                                "-start-safe-zone end-auto",
                                                             "group-even":
-                                                                "-right-safe-zone left-auto"
+                                                                "-end-safe-zone start-auto"
                                                         }
                                                     })}
                                                 />
@@ -154,18 +154,18 @@ function Projects({
                                                         )}
                                                         project={project}
                                                     />
-                                                    {index <
-                                                        group.projects.length -
-                                                            1 && (
+                                                    {index
+                                                        < group.projects.length
+                                                            - 1 && (
                                                         <SectionLine
                                                             className={cn({
                                                                 lg: "w-[calc(100%+var(--spacing-safe-zone))]",
                                                                 "group-odd":
-                                                                    "right-0",
+                                                                    "end-0",
                                                                 "group-even": [
                                                                     "w-[calc(100%+var(--spacing-safe-zone))]",
                                                                     {
-                                                                        lg: "-right-safe-zone left-auto"
+                                                                        lg: "-end-safe-zone start-auto"
                                                                     }
                                                                 ]
                                                             })}

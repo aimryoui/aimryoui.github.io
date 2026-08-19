@@ -47,8 +47,8 @@ const PLAYBACK_BLOCKING_SELECTORS = [
 
 function isPlaybackObscured(isInLightbox: boolean) {
     const isLightboxObscuring =
-        !isInLightbox &&
-        document.body.querySelector(":scope > div.pswp") !== null
+        !isInLightbox
+        && document.body.querySelector(":scope > div.pswp") !== null
 
     if (isLightboxObscuring) return true
 
@@ -75,8 +75,8 @@ type AnimatedMediaProps = {
     isInLightbox?: boolean
     forceAutoPlay?: boolean
     autoPlayPreference?: AutoplayPreference
-} & React.ComponentProps<"div"> &
-    Pick<
+} & React.ComponentProps<"div">
+    & Pick<
         React.ComponentProps<"video">,
         "autoPlay" | "muted" | "controls" | "loop"
     >
@@ -117,20 +117,20 @@ function AnimatedMedia({
     const network = useNetwork()
 
     const isWifiOrBetter =
-        network.type !== "cellular" &&
-        network.type !== "bluetooth" &&
-        !network.saveData
+        network.type !== "cellular"
+        && network.type !== "bluetooth"
+        && !network.saveData
 
     const resolvedPreference = autoPlayPreference ?? "always"
 
     const isGlobalAutoPlayEnabled =
-        !motionReduced &&
-        (resolvedPreference === "always" ||
-            (resolvedPreference === "wifi" && isWifiOrBetter))
+        !motionReduced
+        && (resolvedPreference === "always"
+            || (resolvedPreference === "wifi" && isWifiOrBetter))
 
     const shouldAutoPlay =
-        forceAutoPlay ||
-        ((autoPlay ?? autoplay ?? true) && isGlobalAutoPlayEnabled)
+        forceAutoPlay
+        || ((autoPlay ?? autoplay ?? true) && isGlobalAutoPlayEnabled)
     const shouldMute = muted ?? mute ?? true
 
     // #shadow-root (closed) with #adopted-style-sheets
@@ -156,8 +156,8 @@ function AnimatedMedia({
             setShadowRoot(root)
         } catch (error: unknown) {
             if (
-                error instanceof DOMException &&
-                error.name === "NotSupportedError"
+                error instanceof DOMException
+                && error.name === "NotSupportedError"
             ) {
                 return
             }
@@ -342,6 +342,7 @@ function AnimatedMedia({
     return (
         <div
             ref={mergeRefs([wrapperRef, ref])}
+            dir="ltr"
             className={cn(
                 "relative overflow-hidden content-auto",
                 limitHeight
@@ -383,8 +384,8 @@ function AnimatedMedia({
             {...props}
         >
             <div ref={hostRef} className={cn("absolute inset-0 size-full")} />
-            {shadowRoot &&
-                createPortal(
+            {shadowRoot
+                && createPortal(
                     // oxlint-disable-next-line jsx-a11y/media-has-caption
                     <video
                         ref={videoRef}

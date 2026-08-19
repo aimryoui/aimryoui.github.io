@@ -16,10 +16,10 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
         <>
             <aside
                 className={cn(
-                    "group/sidebar fixed left-[calc(var(--spacing)*6+var(--px))] top-0 z-70 flex h-dvh w-sidebar flex-col justify-end bg-background",
+                    "group/sidebar fixed start-[calc(var(--spacing)*6+var(--px))] top-0 z-70 flex h-dvh w-sidebar flex-col justify-end bg-background",
                     {
-                        "group-data-[sidebar-position=right]/html": [
-                            "left-auto right-[calc(var(--spacing)*6+var(--px))] order-4",
+                        "group-data-[sidebar-position=inline-end]/html": [
+                            "end-[calc(var(--spacing)*6+var(--px))] start-auto order-4",
                             {
                                 lg: "inset-x-0 bottom-0 top-auto h-auto w-full"
                             }
@@ -35,7 +35,7 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
             </aside>
             <MarginLine
                 className={cn("ms-sidebar", {
-                    "group-data-[sidebar-position=right]/html":
+                    "group-data-[sidebar-position=inline-end]/html":
                         "z-60 order-3 me-sidebar ms-unset",
                     lg: "hidden"
                 })}
@@ -44,13 +44,13 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
                 dir="vertical"
                 className={cn(
                     "sticky top-0 h-dvh lg:hidden",
-                    "group-data-[sidebar-position=right]/html:order-2"
+                    "group-data-[sidebar-position=inline-end]/html:order-2"
                 )}
             />
             <MarginLine
                 className={cn(
                     "lg:hidden",
-                    "group-data-[sidebar-position=right]/html:order-1"
+                    "group-data-[sidebar-position=inline-end]/html:order-1"
                 )}
             />
         </>

@@ -97,8 +97,8 @@ async function processColorForFile(
 
     if (coverImagePath) {
         if (
-            coverImagePath.endsWith(".mp4") ||
-            coverImagePath.endsWith(".gif")
+            coverImagePath.endsWith(".mp4")
+            || coverImagePath.endsWith(".gif")
         ) {
             coverImagePath = coverImagePath.replace(
                 /\.(mp4|gif)$/u,
@@ -143,8 +143,8 @@ async function processColorForFile(
     if (Object.hasOwn(oldManifest, slug)) {
         const cachedData = oldManifest[slug]
         if (
-            cachedData?.version === SCRIPT_VERSION &&
-            cachedData.hash === currentInputHash
+            cachedData?.version === SCRIPT_VERSION
+            && cachedData.hash === currentInputHash
         ) {
             newManifest[slug] = cachedData
             return false
@@ -167,10 +167,10 @@ async function processColorForFile(
             imageBuffer = null
 
             const dominantHex =
-                colorOverride ??
-                palette.Vibrant?.hex ??
-                palette.Muted?.hex ??
-                "#01a6f4"
+                colorOverride
+                ?? palette.Vibrant?.hex
+                ?? palette.Muted?.hex
+                ?? "#01a6f4"
 
             const theme = {} as Theme
 
@@ -356,8 +356,8 @@ void (async () => {
         const isWatch =
             process.argv.includes("--watch") || process.argv.includes("-w")
         const skipInitial =
-            process.argv.includes("--skip-initial") ||
-            process.argv.includes("--skipInitial")
+            process.argv.includes("--skip-initial")
+            || process.argv.includes("--skipInitial")
         await build({ watch: isWatch, skipInitial })
     }
 })()

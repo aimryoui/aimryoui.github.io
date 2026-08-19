@@ -117,8 +117,8 @@ const groupProjectsByCategory = cache(
             .filter((project) => project.features?.selected[0])
             .sort(
                 (a, b) =>
-                    (a.features?.selected[1] ?? 0) -
-                    (b.features?.selected[1] ?? 0)
+                    (a.features?.selected[1] ?? 0)
+                    - (b.features?.selected[1] ?? 0)
             )
 
         if (selectedWorksProjects.length > 0) {

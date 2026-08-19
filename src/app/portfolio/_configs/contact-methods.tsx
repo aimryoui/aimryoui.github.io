@@ -27,6 +27,7 @@ const CONTACT_METHODS: ContactMethod[] = [
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 40 40"
+                        aria-hidden={true}
                         className={cn("size-6")}
                     >
                         <path
@@ -46,6 +47,7 @@ const CONTACT_METHODS: ContactMethod[] = [
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 40 40"
+                        aria-hidden={true}
                         className={cn("size-6")}
                     >
                         <path
@@ -79,6 +81,7 @@ const CONTACT_METHODS: ContactMethod[] = [
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 40 40"
+                        aria-hidden={true}
                         className={cn("size-6")}
                     >
                         <path
@@ -108,6 +111,7 @@ const CONTACT_METHODS: ContactMethod[] = [
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 40 40"
+                        aria-hidden={true}
                         className={cn("size-6")}
                     >
                         <path
@@ -128,6 +132,7 @@ const CONTACT_METHODS: ContactMethod[] = [
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 40 40"
+                        aria-hidden={true}
                         className={cn("size-6")}
                     >
                         <path
@@ -147,6 +152,7 @@ const CONTACT_METHODS: ContactMethod[] = [
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 40 40"
+                        aria-hidden={true}
                         className={cn("size-6")}
                     >
                         <path
@@ -171,6 +177,7 @@ const CONTACT_METHODS: ContactMethod[] = [
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 40 40"
+                        aria-hidden={true}
                         className={cn("size-6")}
                     >
                         <path
@@ -190,6 +197,7 @@ const CONTACT_METHODS: ContactMethod[] = [
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 40 40"
+                        aria-hidden={true}
                         className={cn("size-6")}
                     >
                         <path
@@ -218,6 +226,7 @@ const CONTACT_METHODS: ContactMethod[] = [
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 40 40"
+                        aria-hidden={true}
                         className={cn("size-6")}
                     >
                         <path
@@ -237,6 +246,7 @@ const CONTACT_METHODS: ContactMethod[] = [
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 40 40"
+                        aria-hidden={true}
                         className={cn("size-6")}
                     >
                         <path

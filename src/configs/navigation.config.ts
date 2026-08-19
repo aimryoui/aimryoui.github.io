@@ -1,10 +1,10 @@
 import { z } from "zod"
 
-const AVAILABLE_SIDEBAR_POSITIONS = ["left", "right"] as const
+const AVAILABLE_SIDEBAR_POSITIONS = ["inline-start", "inline-end"] as const
 const sidebarPositionSchema = z.enum(AVAILABLE_SIDEBAR_POSITIONS)
 type SidebarPosition = z.infer<typeof sidebarPositionSchema>
 
-const DEFAULT_SIDEBAR_PREFERENCES = "left" as SidebarPosition
+const DEFAULT_SIDEBAR_PREFERENCES = "inline-start" as SidebarPosition
 
 const AVAILABLE_TOOLBAR_POSITIONS = ["top", "bottom"] as const
 const toolbarPositionSchema = z.enum(AVAILABLE_TOOLBAR_POSITIONS)

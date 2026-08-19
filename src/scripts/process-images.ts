@@ -97,10 +97,10 @@ async function processImage(
     if (Object.hasOwn(oldManifest, manifestKey)) {
         const cachedData = oldManifest[manifestKey]
         if (
-            cachedData?.hash === currentHash &&
-            cachedData.version === SCRIPT_VERSION &&
-            fs.existsSync(previewOutput) &&
-            fs.existsSync(scrambledOutput)
+            cachedData?.hash === currentHash
+            && cachedData.version === SCRIPT_VERSION
+            && fs.existsSync(previewOutput)
+            && fs.existsSync(scrambledOutput)
         ) {
             newManifest[manifestKey] = cachedData
             cleanImageOutputFolder(outputFolder, [
@@ -332,8 +332,8 @@ async function buildImages(showProgress = false) {
             }
         }
         if (
-            fs.readdirSync(dir).length === 0 &&
-            path.resolve(dir) !== path.resolve(OUTPUT_BASE)
+            fs.readdirSync(dir).length === 0
+            && path.resolve(dir) !== path.resolve(OUTPUT_BASE)
         ) {
             fs.rmdirSync(dir)
         }
@@ -399,8 +399,8 @@ void (async () => {
         const isWatch =
             process.argv.includes("--watch") || process.argv.includes("-w")
         const skipInitial =
-            process.argv.includes("--skip-initial") ||
-            process.argv.includes("--skipInitial")
+            process.argv.includes("--skip-initial")
+            || process.argv.includes("--skipInitial")
         await build({ watch: isWatch, skipInitial })
     }
 })()

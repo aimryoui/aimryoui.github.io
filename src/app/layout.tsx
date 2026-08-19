@@ -15,6 +15,7 @@ import {
     PngAntiBleed,
     PngBorder
 } from "@/components/media/svg-filter"
+import { DirectionProvider } from "@/components/ui/direction"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { DEFAULT_EFFECTS_PREFERENCES } from "@/configs/effects.config"
 import { DEFAULT_MEDIA_PREFERENCES } from "@/configs/media.config"
@@ -156,7 +157,6 @@ export default async function RootLayout({
     return (
         <html
             lang="en"
-            dir="ltr"
             suppressHydrationWarning
             className={cn(
                 googleSansFlex.variable,
@@ -231,14 +231,17 @@ export default async function RootLayout({
                             const toolbarPosition = localStorage.getItem("nhn-toolbar-position")
                             if (sidebarPosition) {
                                 const parsed = JSON.parse(sidebarPosition)
+                                let position = parsed.state.position
+                                if (position === "left") position = "inline-start"
+                                if (position === "right") position = "inline-end"
                                 htmlElement.setAttribute(
                                     "data-sidebar-position",
-                                    parsed.state.position
+                                    position
                                 )
                             } else {
                                 htmlElement.setAttribute(
                                     "data-sidebar-position",
-                                    "left"
+                                    "inline-start"
                                 )
                             }
                             if (toolbarPosition) {
@@ -255,8 +258,30 @@ export default async function RootLayout({
                             }
                         } catch (e) {
                             console.error("Error getting navigation bar position:", e)
-                            htmlElement.setAttribute("data-sidebar-position", "left")
+                            htmlElement.setAttribute("data-sidebar-position", "inline-start")
                             htmlElement.setAttribute("data-toolbar-position", "bottom")
+                        }
+                        // Direction preference
+                        try {
+                            const directionPref = localStorage.getItem("nhn-direction-preference")
+                            let pref = "auto"
+                            if (directionPref) {
+                                const parsed = JSON.parse(directionPref)
+                                if (parsed.state.preference !== "auto") { pref = parsed.state.preference }
+                            }
+                            if (pref === "rtl") {
+                                htmlElement.dir = "rtl"
+                            } else if (pref === "ltr") {
+                                htmlElement.dir = "ltr"
+                            } else {
+                                // auto
+                                const loc = new Intl.Locale(navigator.language)
+                                const dir = loc.textInfo?.direction || (["ar", "he", "fa", "ur", "ps", "syr", "dv", "ku"].includes(loc.language) ? "rtl" : "ltr")
+                                htmlElement.dir = dir
+                            }
+                        } catch (e) {
+                            console.error("Error getting direction preference:", e)
+                            htmlElement.dir = "ltr"
                         }
                     `)
                     }}
@@ -269,24 +294,26 @@ export default async function RootLayout({
                         after: "pointer-events-none absolute inset-0 -z-1 bg-[repeating-linear-gradient(315deg,var(--color-pattern)_0,var(--color-pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]",
                         selection: "bg-highlighted/20 dark:bg-highlighted/30",
                         "lg:before":
-                            "pointer-events-none absolute left-1/2 top-0 z-40 h-space w-screen -translate-x-1/2 bg-gradient-to-b from-background to-transparent"
+                            "pointer-events-none absolute start-1/2 top-0 z-40 h-space w-screen -translate-x-1/2 bg-gradient-to-b from-background to-transparent rtl:translate-x-1/2"
                     }
                 )}
             >
                 <AudioProvider>
                     <ThemeProvider disableTransitionOnChange>
                         {/* <LazyMotionProvider> */}
-                        <RouteProgressProvider>
-                            <TooltipProvider>
-                                <MarginLine />
-                                <MarginLine className="order-last" />
-                                {children}
-                                <PngAntiBleed />
-                                <PngBorder />
-                                <MetaBall />
-                                <TargetCursor />
-                            </TooltipProvider>
-                        </RouteProgressProvider>
+                        <DirectionProvider>
+                            <RouteProgressProvider>
+                                <TooltipProvider>
+                                    <MarginLine />
+                                    <MarginLine className="order-last" />
+                                    {children}
+                                    <PngAntiBleed />
+                                    <PngBorder />
+                                    <MetaBall />
+                                    <TargetCursor />
+                                </TooltipProvider>
+                            </RouteProgressProvider>
+                        </DirectionProvider>
                         {/* </LazyMotionProvider> */}
                     </ThemeProvider>
                 </AudioProvider>

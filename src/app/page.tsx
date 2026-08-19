@@ -48,8 +48,8 @@ export default function Home() {
                     scroll={false}
                     className={cn(
                         "z-10 light:bg-white dark:text-white",
-                        "absolute left-1/2 top-1/2 !-translate-y-1/2 -translate-x-1/2",
-                        "active:scale-95"
+                        "absolute start-1/2 top-1/2 !-translate-y-1/2 -translate-x-1/2",
+                        "active:scale-95 rtl:translate-x-1/2"
                     )}
                 >
                     Portfolio
@@ -77,7 +77,7 @@ export default function Home() {
                                     className="dark:bg-input/25"
                                 >
                                     Resume
-                                    <ArrowUpRight className="-me-1" />
+                                    <ArrowUpRight className="-me-1 rtl:-scale-x-100" />
                                 </LinkButton>
                             }
                         />
@@ -91,7 +91,7 @@ export default function Home() {
             <Space
                 className={cn({
                     lg: {
-                        after: "pointer-events-none absolute bottom-0 left-1/2 z-40 h-space w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent"
+                        after: "pointer-events-none absolute bottom-0 start-1/2 z-40 h-space w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent"
                     }
                 })}
             />

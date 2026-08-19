@@ -98,8 +98,8 @@ function isExactHotkey(
     }
 
     if (
-        key &&
-        (usePhysicalKeys
+        key
+        && (usePhysicalKeys
             ? normalizeKey(pressedCode) === normalizeKey(key)
             : normalizeKey(pressedCode) === normalizeKey(key))
     ) {
@@ -155,8 +155,8 @@ function shouldFireEvent(
         }
 
         return (
-            !event.target.isContentEditable &&
-            !tagsToIgnore.includes(event.target.tagName)
+            !event.target.isContentEditable
+            && !tagsToIgnore.includes(event.target.tagName)
         )
     }
 
@@ -185,11 +185,8 @@ function useHotkeys(
                     options = { preventDefault: true, usePhysicalKeys: false }
                 ]) => {
                     if (
-                        getHotkeyMatcher(
-                            hotkey,
-                            options.usePhysicalKeys
-                        )(event) &&
-                        shouldFireEvent(
+                        getHotkeyMatcher(hotkey, options.usePhysicalKeys)(event)
+                        && shouldFireEvent(
                             event,
                             tagsToIgnore,
                             triggerOnContentEditable

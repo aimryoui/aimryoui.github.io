@@ -230,6 +230,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             className={cn(
                                                 "m-1 transition-[color] duration-100",
                                                 {
+                                                    rtl: "rotate-180",
                                                     "group-hover":
                                                         "text-highlighted transition-none",
                                                     "group-active":
@@ -321,6 +322,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                             className={cn(
                                                 "m-1 transition-[color] duration-100",
                                                 {
+                                                    rtl: "rotate-180",
                                                     "group-hover":
                                                         "text-highlighted transition-none",
                                                     "group-active":

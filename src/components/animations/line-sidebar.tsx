@@ -124,9 +124,9 @@ function LineSidebar({
             if (
                 mutations.some(
                     (m) =>
-                        m.type === "childList" ||
-                        (m.type === "attributes" &&
-                            m.attributeName === "hidden")
+                        m.type === "childList"
+                        || (m.type === "attributes"
+                            && m.attributeName === "hidden")
                 )
             ) {
                 resizeObserver.disconnect()

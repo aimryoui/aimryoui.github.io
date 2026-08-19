@@ -4,6 +4,7 @@ import { useState } from "react"
 
 import { Ellipsis } from "@/components/icons/icons"
 import { EffectsMenu } from "@/components/preferences/effects-menu"
+import { ExperimentalsMenu } from "@/components/preferences/experimentals-menu"
 import { MediaMenu } from "@/components/preferences/media-menu"
 import { MotionMenu } from "@/components/preferences/motion-menu"
 import { NavigationBarPositionMenu } from "@/components/preferences/navigation-bar-position-menu"
@@ -65,6 +66,7 @@ function PreferencesButton() {
                                             <MotionMenu />
                                             <EffectsMenu />
                                             <NavigationBarPositionMenu />
+                                            <ExperimentalsMenu />
                                             <ResetMenuItem
                                                 onClick={() => {
                                                     setIsResetDialogOpen(true)

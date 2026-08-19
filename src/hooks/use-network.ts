@@ -30,9 +30,9 @@ function getConnection(): Omit<UserNetworkReturnValue, "online"> {
 
     const _navigator = navigator as any
     const connection: any =
-        _navigator.connection ??
-        _navigator.mozConnection ??
-        _navigator.webkitConnection
+        _navigator.connection
+        ?? _navigator.mozConnection
+        ?? _navigator.webkitConnection
 
     if (!connection) {
         return {}

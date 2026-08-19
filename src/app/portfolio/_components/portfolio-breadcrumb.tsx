@@ -86,6 +86,7 @@ function PortfolioBreadcrumb({
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 48 48"
+                        aria-hidden={true}
                         className={cn("-ms-0.5 size-4", {
                             md: "hidden"
                         })}
@@ -143,7 +144,7 @@ function PortfolioBreadcrumb({
                                                     href="/portfolio/selected-works"
                                                     className="gap-2"
                                                 >
-                                                    <ArrowLeft className="-ms-0.25 size-3" />
+                                                    <ArrowLeft className="-ms-0.25 size-3 rtl:rotate-180" />
                                                     Selected Works
                                                 </DropdownMenuLinkItem>
                                             </DropdownMenuGroup>
@@ -166,7 +167,7 @@ function PortfolioBreadcrumb({
                                             href="/portfolio#design-projects"
                                             className="gap-2"
                                         >
-                                            <ArrowLeft className="-ms-0.25 size-3" />
+                                            <ArrowLeft className="-ms-0.25 size-3 rtl:rotate-180" />
                                             Design Projects
                                         </DropdownMenuLinkItem>
                                     </DropdownMenuGroup>
@@ -189,8 +190,8 @@ function PortfolioBreadcrumb({
                                         {groupProjectsByCategory(projects)
                                             .filter(
                                                 (g) =>
-                                                    g.id !== category &&
-                                                    g.id !== "selected-works"
+                                                    g.id !== category
+                                                    && g.id !== "selected-works"
                                             )
                                             .map((g) => (
                                                 <DropdownMenuLinkItem
@@ -211,7 +212,7 @@ function PortfolioBreadcrumb({
                                                     )}
                                                     className="gap-2"
                                                 >
-                                                    <ArrowLeft className="-ms-0.25 size-3" />
+                                                    <ArrowLeft className="-ms-0.25 size-3 rtl:rotate-180" />
                                                     {categoryTitle}
                                                 </DropdownMenuLinkItem>
                                             </DropdownMenuGroup>
@@ -227,7 +228,9 @@ function PortfolioBreadcrumb({
 
                 {projectName && (
                     <BreadcrumbItem>
-                        <BreadcrumbPage>{projectName}</BreadcrumbPage>
+                        <BreadcrumbPage>
+                            <bdi translate="no">{projectName}</bdi>
+                        </BreadcrumbPage>
                     </BreadcrumbItem>
                 )}
             </BreadcrumbList>

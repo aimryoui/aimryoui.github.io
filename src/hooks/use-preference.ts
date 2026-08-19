@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useSyncExternalStore } from "react"
 
 import { DEFAULT_AUDIO_PREFERENCES } from "@/configs/audio.config"
+import { DEFAULT_DIRECTION_PREFERENCE } from "@/configs/direction.config"
 import { DEFAULT_EFFECTS_PREFERENCES } from "@/configs/effects.config"
 import {
     DEFAULT_GIF_AUTOPLAY_PREFERENCE,
@@ -16,6 +17,7 @@ import {
 } from "@/configs/navigation.config"
 import { PREFERENCE_STORES } from "@/stores"
 import { useAudioStore } from "@/stores/audio-store"
+import { useDirectionStore } from "@/stores/direction-store"
 import { useEffectsStore } from "@/stores/effects-store"
 import { useHapticsStore } from "@/stores/haptics-store"
 import { useMediaStore } from "@/stores/media-store"
@@ -58,6 +60,9 @@ function computeSnapshot(isServer: boolean) {
     const motionPref = isServer
         ? DEFAULT_MOTION_PREFERENCES
         : useMotionStore.getState().preference
+    const directionPref = isServer
+        ? DEFAULT_DIRECTION_PREFERENCE
+        : useDirectionStore.getState().preference
     const sidebarPos = isServer
         ? DEFAULT_SIDEBAR_PREFERENCES
         : useSidebarPositionStore.getState().position
@@ -78,11 +83,12 @@ function computeSnapshot(isServer: boolean) {
         effectPageTransition: effects.includes("page-transition"),
         effectAmbientColors: effects.includes("ambient-colors"),
         motionReduced:
-            motionPref === "reduced" ||
-            (motionPref === "system" && systemReduced),
+            motionPref === "reduced"
+            || (motionPref === "system" && systemReduced),
         motionPreferred:
-            motionPref === "preferred" ||
-            (motionPref === "system" && !systemReduced),
+            motionPref === "preferred"
+            || (motionPref === "system" && !systemReduced),
+        directionPref,
         sidebarPosition: sidebarPos,
         toolbarPosition: toolbarPos
     }

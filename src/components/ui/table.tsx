@@ -117,7 +117,7 @@ function TableHead({ className, ...props }: ColumnProps) {
         <ColumnPrimitive
             data-slot="table-head"
             className={cn(
-                "whitespace-nowrap px-2 text-start align-middle has-[[role=checkbox]]:pr-0",
+                "whitespace-nowrap px-2 text-start align-middle has-[[role=checkbox]]:pe-0",
                 {
                     md: "text-sm"
                 },
@@ -141,7 +141,7 @@ function TableCell({
         <CellPrimitive
             data-slot="table-cell"
             className={cn(
-                "group/table-cell text-pretty align-middle text-base has-[[role=checkbox]]:pr-0",
+                "group/table-cell text-pretty align-middle text-base has-[[role=checkbox]]:pe-0",
                 {
                     md: "text-sm"
                 },

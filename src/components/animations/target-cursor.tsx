@@ -29,11 +29,11 @@ function getContainingBlock(element: HTMLElement | null): HTMLElement | null {
     while (node && node !== document.documentElement) {
         const style = getComputedStyle(node)
         if (
-            style.transform !== "none" ||
-            style.perspective !== "none" ||
-            style.filter !== "none" ||
-            WILL_CHANGE_REGEX.test(style.willChange) ||
-            CONTAIN_STYLE_REGEX.test(style.contain)
+            style.transform !== "none"
+            || style.perspective !== "none"
+            || style.filter !== "none"
+            || WILL_CHANGE_REGEX.test(style.willChange)
+            || CONTAIN_STYLE_REGEX.test(style.contain)
         ) {
             return node
         }
@@ -136,12 +136,12 @@ function TargetCursor({
 
     useEffect(() => {
         if (
-            motionReduced ||
-            isTouchDevice ||
-            !isEffectEnabled ||
-            !rootRef.current ||
-            !wrapperRef.current ||
-            !dotRef.current
+            motionReduced
+            || isTouchDevice
+            || !isEffectEnabled
+            || !rootRef.current
+            || !wrapperRef.current
+            || !dotRef.current
         )
             return
 
@@ -303,9 +303,9 @@ function TargetCursor({
                         paused: isHidden,
                         onComplete: () => {
                             if (
-                                hasMoved &&
-                                !isHiddenByIgnore &&
-                                !isHiddenByLeave
+                                hasMoved
+                                && !isHiddenByIgnore
+                                && !isHiddenByLeave
                             ) {
                                 state.spinTl?.restart()
                             }
@@ -385,8 +385,8 @@ function TargetCursor({
                 const myRem = (state.mouseY - wrapperY) / rootRem
 
                 const currentCornerSize =
-                    REST_CORNER_SIZE +
-                    (EXPANDED_CORNER_SIZE - REST_CORNER_SIZE) * sizeStrength
+                    REST_CORNER_SIZE
+                    + (EXPANDED_CORNER_SIZE - REST_CORNER_SIZE) * sizeStrength
 
                 for (let i = 0; i < 4; i++) {
                     const sx = cornerStarts[i].x
@@ -697,10 +697,11 @@ function TargetCursor({
         <div
             data-slot="target-cursor"
             ref={rootRef}
+            dir="ltr"
             aria-hidden={true}
             role="presentation"
             className={cn(
-                "pointer-events-none invisible fixed left-0 top-0 z-infinite opacity-0",
+                "pointer-events-none invisible fixed start-0 top-0 z-infinite opacity-0",
                 className
             )}
             {...props}
@@ -709,18 +710,18 @@ function TargetCursor({
                 data-slot="target-cursor-dot"
                 ref={dotRef}
                 className={cn(
-                    "absolute left-0 top-0 z-1 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-white will-change-transform"
+                    "absolute start-0 top-0 z-1 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-white will-change-transform"
                 )}
             />
             <div
                 data-slot="target-cursor-corners"
                 ref={wrapperRef}
-                className="absolute left-0 top-0 will-change-transform"
+                className="absolute start-0 top-0 will-change-transform"
             >
                 <div
                     data-slot="target-cursor-corner"
                     data-cursor="corner"
-                    className="absolute left-0 top-0 border-3 border-b-0 border-r-0 will-change-transform"
+                    className="absolute start-0 top-0 border-3 border-b-0 border-r-0 will-change-transform"
                     style={{
                         borderColor: cursorColor,
                         width: `${REST_CORNER_SIZE}rem`,
@@ -731,7 +732,7 @@ function TargetCursor({
                 <div
                     data-slot="target-cursor-corner"
                     data-cursor="corner"
-                    className="absolute left-0 top-0 border-3 border-b-0 border-l-0 will-change-transform"
+                    className="absolute start-0 top-0 border-3 border-b-0 border-l-0 will-change-transform"
                     style={{
                         borderColor: cursorColor,
                         width: `${REST_CORNER_SIZE}rem`,
@@ -742,7 +743,7 @@ function TargetCursor({
                 <div
                     data-slot="target-cursor-corner"
                     data-cursor="corner"
-                    className="absolute left-0 top-0 border-3 border-l-0 border-t-0 will-change-transform"
+                    className="absolute start-0 top-0 border-3 border-l-0 border-t-0 will-change-transform"
                     style={{
                         borderColor: cursorColor,
                         width: `${REST_CORNER_SIZE}rem`,
@@ -753,7 +754,7 @@ function TargetCursor({
                 <div
                     data-slot="target-cursor-corner"
                     data-cursor="corner"
-                    className="absolute left-0 top-0 border-3 border-r-0 border-t-0 will-change-transform"
+                    className="absolute start-0 top-0 border-3 border-r-0 border-t-0 will-change-transform"
                     style={{
                         borderColor: cursorColor,
                         width: `${REST_CORNER_SIZE}rem`,

@@ -24,8 +24,8 @@ interface TocItemProps {
 
 type TocItemVariant = "category" | "project" | "anchor"
 
-type TocItemRowProps = React.ComponentProps<"li"> &
-    React.ComponentProps<"div"> & {
+type TocItemRowProps = React.ComponentProps<"li">
+    & React.ComponentProps<"div"> & {
         variant?: TocItemVariant
         item: TocItemProps
         query?: string
@@ -61,6 +61,7 @@ const TocItemRow = memo(
         const isSelectedWorks = item.id === "selected-works"
 
         const Comp = isProject || isAnchor ? "li" : "div"
+        const LabelComp = isProject ? "bdi" : "span"
 
         return (
             // <ViewTransition key={item.id} name={`toc-item-${item.id}`}>
@@ -71,7 +72,7 @@ const TocItemRow = memo(
                     isProject && {
                         "not-data-line-sidebar": [
                             {
-                                before: "absolute inset-y-0 left-safe-zone w-0.25 bg-muted-foreground/20"
+                                before: "absolute inset-y-0 start-safe-zone w-0.25 bg-muted-foreground/20"
                             },
                             isActive
                                 ? {
@@ -94,7 +95,7 @@ const TocItemRow = memo(
                         // Tick
                         after: [
                             "not-data-line-sidebar:hidden",
-                            "absolute left-safe-zone top-[calc(100%+var(--item-gap)/2)] h-px origin-left -translate-y-1/2 bg-[--marker-color] opacity-60",
+                            "absolute start-safe-zone top-[calc(100%+var(--item-gap)/2)] h-px origin-left -translate-y-1/2 bg-[--marker-color] opacity-60",
                             "last:hidden has-[+[role=separator]]:hidden",
                             isProject
                                 ? "w-[calc(var(--marker-length)*var(--tick-scale))] motion-preferred:scale-x-[calc(1+var(--effect,0)*1.5)]"
@@ -113,7 +114,7 @@ const TocItemRow = memo(
                     aria-hidden={true}
                     className={cn(
                         "not-data-line-sidebar:hidden",
-                        "absolute left-safe-zone top-1/2 h-px origin-left -translate-y-1/2",
+                        "absolute start-safe-zone top-1/2 h-px origin-left -translate-y-1/2",
                         isActive
                             ? "bg-highlighted"
                             : "bg-[color-mix(in_srgb,var(--accent-color)_calc(var(--effect,0)*100%),var(--marker-color))]",
@@ -233,17 +234,18 @@ const TocItemRow = memo(
                             {item.icon}
                         </div>
                     )}
-                    <span
+                    <LabelComp
                         data-cursor="lock"
+                        translate="no"
                         className={cn(
                             "block w-fit max-w-full px-1.25",
                             isCategory && !isSelectedWorks && "-ms-1.25",
                             "data-line-sidebar:translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
                         )}
                     >
-                        {highlightQuery(item.label, query ?? "") ??
-                            formatOrdinals(item.label)}
-                    </span>
+                        {highlightQuery(item.label, query ?? "")
+                            ?? formatOrdinals(item.label)}
+                    </LabelComp>
                     {isActive && (
                         <div
                             className={cn(
@@ -251,7 +253,9 @@ const TocItemRow = memo(
                                 "group-hover:grid dark:bg-highlighted/20"
                             )}
                         >
-                            <ArrowRight className={cn("size-3.5")} />
+                            <ArrowRight
+                                className={cn("size-3.5 rtl:rotate-180")}
+                            />
                         </div>
                     )}
                 </LinkButton>

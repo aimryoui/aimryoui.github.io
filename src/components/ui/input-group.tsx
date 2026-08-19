@@ -29,8 +29,8 @@ function InputGroup({ className, ...props }: GroupProps) {
                         "transition-[border-radius] ease-spring duration-200",
 
                     // Variants based on alignment.
-                    "[&>input]:has-[>[data-align=inline-start]]": "pl-2",
-                    "[&>input]:has-[>[data-align=inline-end]]": "pr-2",
+                    "[&>input]:has-[>[data-align=inline-start]]": "ps-2",
+                    "[&>input]:has-[>[data-align=inline-end]]": "pe-2",
                     "has-[>[data-align=block-start]]": "h-auto flex-col pb-3",
                     "has-[>[data-align=block-end]]": "h-auto flex-col pt-3",
 
@@ -106,7 +106,7 @@ const inputGroupAddonVariants = cva(
         variants: {
             align: {
                 "inline-start":
-                    "order-first pl-3 has-[>button]:ml-[-0.45rem] has-[>kbd]:ml-[-0.3rem]",
+                    "order-first ps-3 has-[>button]:ms-[-0.45rem] has-[>kbd]:ms-[-0.3rem]",
                 "inline-end": "order-last has-[>kbd]:pe-2",
                 "block-start":
                     "order-first w-full justify-start px-3 pt-3 group-has-[>input]/input-group:pt-2.5 [&.border-b]:pb-3",
@@ -176,8 +176,8 @@ function InputGroupButton({
     variant = "ghost",
     size = "xs",
     ...props
-}: Omit<ButtonProps, "size" | "type"> &
-    VariantProps<typeof inputGroupButtonVariants> & {
+}: Omit<ButtonProps, "size" | "type">
+    & VariantProps<typeof inputGroupButtonVariants> & {
         type?: "button" | "submit" | "reset"
     }) {
     return (

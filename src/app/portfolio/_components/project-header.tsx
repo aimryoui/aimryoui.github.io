@@ -8,8 +8,10 @@ import {
     SvgElementLine
 } from "@/components/layout/line"
 import { LinkButton } from "@/components/ui/button"
+import { useDirection } from "@/components/ui/direction"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { At, H1, Highlight, Text } from "@/components/ui/typography"
+import { RTL_CHAR_REGEX } from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { slugify } from "@/helpers/slugify"
@@ -39,7 +41,7 @@ function ProjectHeader({
     (typeof projects)[number],
     "id" | "name" | "forceExpand" | "slug" | "code" | "filePath"
 > & {
-    projectId: ProjectId
+    projectId?: ProjectId
     projectName: (typeof projects)[number]["name"]
     isSelectedWorks?: boolean
 }) {
@@ -49,8 +51,20 @@ function ProjectHeader({
 
     const isMounted = useIsMounted()
     const isSelectedWorks =
-        isSelectedWorksProp ||
-        (isMounted && window.location.search.includes("feature=selected"))
+        isSelectedWorksProp
+        || (isMounted && window.location.search.includes("feature=selected"))
+
+    const direction = useDirection()
+
+    const isRTLText = RTL_CHAR_REGEX.test(projectName)
+    const hasTrailingPunctuation = TRAILING_REGEX.test(projectName)
+
+    const isClashing =
+        hasTrailingPunctuation
+        && ((direction === "rtl" && isRTLText)
+            || (direction === "ltr" && !isRTLText))
+
+    const shouldHideDot = isClashing || MEDIA_REGEX.test(projectName)
 
     return (
         <div className={cn("relative bg-background")}>
@@ -64,7 +78,7 @@ function ProjectHeader({
             >
                 <span
                     className={cn(
-                        "absolute bottom-[calc(100%+1rem)] left-safe-zone line-clamp-2 font-mono uppercase leading-normal wrap-anywhere",
+                        "absolute bottom-[calc(100%+1rem)] start-safe-zone line-clamp-2 font-mono uppercase leading-normal wrap-anywhere",
                         {
                             md: "bottom-[calc(100%+.75rem)] text-sm"
                         }
@@ -94,10 +108,7 @@ function ProjectHeader({
                             projectName={projectName}
                             isSelectedWorks={isSelectedWorks}
                         />
-                        {!(
-                            TRAILING_REGEX.test(projectName) ||
-                            MEDIA_REGEX.test(projectName)
-                        ) && (
+                        {!shouldHideDot && (
                             <span
                                 style={{
                                     viewTransitionName: "project-name-dot"
@@ -149,7 +160,7 @@ function ProjectHeader({
                 {tools.length > 0 && (
                     <div
                         className={cn(
-                            "absolute bottom-[calc(100%+1.05rem)] right-safe-zone flex gap-2",
+                            "absolute bottom-[calc(100%+1.05rem)] end-safe-zone flex gap-2",
                             {
                                 md: "bottom-[calc(100%+.85rem)]"
                             }
@@ -224,7 +235,7 @@ function ProjectName({
     projectName,
     isSelectedWorks
 }: {
-    projectId: ProjectId
+    projectId?: ProjectId
     projectName: string
     isSelectedWorks: boolean
 }) {
@@ -232,7 +243,7 @@ function ProjectName({
         <ViewTransition
             name={`project-${projectId}${isSelectedWorks ? "-selected" : ""}`}
         >
-            <span>{formatOrdinals(projectName)}</span>
+            <bdi translate="no">{formatOrdinals(projectName)}</bdi>
         </ViewTransition>
     )
 }

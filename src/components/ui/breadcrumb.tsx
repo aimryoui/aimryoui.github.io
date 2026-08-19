@@ -167,8 +167,8 @@ function BreadcrumbPage({
     spanClassName,
     children,
     ...props
-}: Omit<ButtonProps, "children"> &
-    Pick<React.ComponentProps<"span">, "children"> & {
+}: Omit<ButtonProps, "children">
+    & Pick<React.ComponentProps<"span">, "children"> & {
         spanClassName?: string
     }) {
     const { isCurrent } = use(BreadcrumbItemContext)

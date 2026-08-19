@@ -34,8 +34,8 @@ function useScrollSpy(ids: string[], offsetPercent = 40) {
                 })
                 .filter(
                     (item): item is { el: HTMLElement; rect: DOMRect } =>
-                        item !== null &&
-                        (item.rect.width > 0 || item.rect.height > 0)
+                        item !== null
+                        && (item.rect.width > 0 || item.rect.height > 0)
                 )
                 .sort((a, b) => a.rect.top - b.rect.top)
 
@@ -49,8 +49,8 @@ function useScrollSpy(ids: string[], offsetPercent = 40) {
             }
 
             const isBottom =
-                innerHeight + scrollY >=
-                document.documentElement.scrollHeight - 10
+                innerHeight + scrollY
+                >= document.documentElement.scrollHeight - 10
 
             if (pathname === "/portfolio" && isBottom) {
                 setActiveId(existingElements[existingElements.length - 1].el.id)

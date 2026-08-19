@@ -143,17 +143,17 @@ async function processVideo(
         const cachedData = oldManifest[manifestKey]
         if (cachedData?.version === SCRIPT_VERSION) {
             if (
-                cachedData.hash === currentVideoHash &&
-                fs.existsSync(indexOutput) &&
-                fs.existsSync(initOutput)
+                cachedData.hash === currentVideoHash
+                && fs.existsSync(indexOutput)
+                && fs.existsSync(initOutput)
             ) {
                 requiresVideoProcessing = false
             }
             if (
-                cachedData.posterHash === currentPosterHash &&
-                fs.existsSync(posterOutput) &&
-                cachedData.width &&
-                cachedData.blurDataURL
+                cachedData.posterHash === currentPosterHash
+                && fs.existsSync(posterOutput)
+                && cachedData.width
+                && cachedData.blurDataURL
             ) {
                 requiresPosterProcessing = false
             }
@@ -354,8 +354,8 @@ async function buildVideos(showProgress = false) {
             }
         }
         if (
-            fs.readdirSync(dir).length === 0 &&
-            path.resolve(dir) !== path.resolve(OUTPUT_BASE)
+            fs.readdirSync(dir).length === 0
+            && path.resolve(dir) !== path.resolve(OUTPUT_BASE)
         ) {
             fs.rmdirSync(dir)
         }
@@ -430,8 +430,8 @@ void (async () => {
         const isWatch =
             process.argv.includes("--watch") || process.argv.includes("-w")
         const skipInitial =
-            process.argv.includes("--skip-initial") ||
-            process.argv.includes("--skipInitial")
+            process.argv.includes("--skip-initial")
+            || process.argv.includes("--skipInitial")
         await build({ watch: isWatch, skipInitial })
     }
 })()

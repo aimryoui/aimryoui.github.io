@@ -184,8 +184,8 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                         window.location.origin + pathname
                     )
                     if (
-                        pathname !== "/portfolio" &&
-                        url.pathname !== pathname
+                        pathname !== "/portfolio"
+                        && url.pathname !== pathname
                     ) {
                         // Prevent scrolling to a stale activeId during navigation on detail pages
                         return
@@ -202,9 +202,9 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                     '[data-slot="collapsible-content"]'
                 )
                 if (
-                    !isFirst &&
-                    groupList &&
-                    groupList.clientHeight + 2 < groupList.scrollHeight
+                    !isFirst
+                    && groupList
+                    && groupList.clientHeight + 2 < groupList.scrollHeight
                 ) {
                     delay = 350
                 }

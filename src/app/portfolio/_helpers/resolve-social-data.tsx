@@ -19,6 +19,7 @@ const SOCIAL_UI_MAP: Record<
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 40 40"
+                aria-hidden={true}
                 className={cn(className)}
                 {...props}
             >
@@ -39,6 +40,7 @@ const SOCIAL_UI_MAP: Record<
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 40 40"
+                aria-hidden={true}
                 className={cn(className)}
                 {...props}
             >
@@ -59,6 +61,7 @@ const SOCIAL_UI_MAP: Record<
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 40 40"
+                aria-hidden={true}
                 className={cn(className)}
                 {...props}
             >

@@ -30,16 +30,17 @@ function RouteProgressProvider({
 function RouteProgress({ className, children, ...props }: BProgressProps) {
     return (
         <BProgress
-            data-slot="progress"
+            data-slot="route-progress"
             className={cn(
                 "absolute inset-x-0 -top-px z-50 h-0.75 w-full overflow-hidden",
+                "rtl:-scale-x-100",
                 className
             )}
             {...props}
         >
             {children}
             <Bar
-                data-slot="progress-bar"
+                data-slot="route-progress-bar"
                 role="progressbar"
                 className={cn("size-full bg-highlighted", {
                     "motion-reduced":

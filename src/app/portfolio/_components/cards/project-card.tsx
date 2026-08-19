@@ -107,8 +107,8 @@ function ProjectCard({
             })}
             tracking={{
                 eventName:
-                    tracking?.eventName ??
-                    (navigation ? "navigate_project" : "select_project"),
+                    tracking?.eventName
+                    ?? (navigation ? "navigate_project" : "select_project"),
                 eventParams: {
                     project_name: project.name,
                     project_slug: project.slug,
@@ -135,6 +135,7 @@ function ProjectCard({
             {navigation === "backward" && (
                 <ArrowLeft
                     className={cn("transition-[color] duration-100", {
+                        rtl: "rotate-180",
                         "group-hover": "text-highlighted transition-none",
                         "group-active": "text-highlighted transition-none"
                     })}
@@ -185,6 +186,7 @@ function ProjectCard({
                     className={cn(
                         "transition-[color] duration-100",
                         {
+                            rtl: "rotate-180",
                             "group-hover": "text-highlighted transition-none",
                             "group-active": "text-highlighted transition-none"
                         },
@@ -197,7 +199,7 @@ function ProjectCard({
             {!navigation && (
                 <SvgElementLine
                     className={cn(
-                        "absolute inset-y-0 right-0 group-even:hidden",
+                        "absolute inset-y-0 end-0 group-even:hidden",
                         {
                             md: "hidden"
                         }
@@ -216,9 +218,9 @@ function ProjectCover({
     src,
     isSelectedWorks = false,
     ...props
-}: React.ComponentProps<"div"> &
-    Pick<ProjectCardProps, "navigation"> & {
-        projectId: ProjectId
+}: React.ComponentProps<"div">
+    & Pick<ProjectCardProps, "navigation"> & {
+        projectId?: ProjectId
         src: string
         social?: SocialData
         isSelectedWorks?: boolean
@@ -301,7 +303,7 @@ function ProjectCover({
                             <div
                                 className={cn(
                                     socialData.color.default,
-                                    "absolute -right-1.5 -top-0.5 z-1 size-5 rounded-full border border-white/15 p-0.5 text-white",
+                                    "absolute -end-1.5 -top-0.5 z-1 size-5 rounded-full border border-white/15 p-0.5 text-white",
                                     {
                                         md: "-top-1 size-4.5"
                                     }
@@ -312,8 +314,8 @@ function ProjectCover({
                             >
                                 <socialData.icon
                                     className={cn(
-                                        socialData.type === "behance" &&
-                                            "-translate-y-[.5px] translate-x-[.5px]"
+                                        socialData.type === "behance"
+                                            && "-translate-y-[.5px] translate-x-[.5px]"
                                     )}
                                 />
                             </div>
@@ -349,9 +351,9 @@ function ProjectName({
     navigation,
     isSelectedWorks = false,
     ...props
-}: React.ComponentProps<typeof Bold> &
-    Pick<ProjectCardProps, "navigation"> & {
-        projectId: ProjectId
+}: React.ComponentProps<typeof Bold>
+    & Pick<ProjectCardProps, "navigation"> & {
+        projectId?: ProjectId
         name: string
         isNew: boolean
         isSelectedWorks?: boolean
@@ -371,7 +373,8 @@ function ProjectName({
             <ViewTransition
                 name={`project-${projectId}${isSelectedWorks ? "-selected" : ""}`}
             >
-                <span
+                <bdi
+                    translate="no"
                     className={cn(
                         "w-fit max-w-full translate-y-0 skew-y-0 truncate",
                         {
@@ -382,8 +385,8 @@ function ProjectName({
                                     "group-data-[hover=true]": [
                                         "-translate-y-full opacity-0",
                                         navigation === "backward"
-                                            ? "-skew-y-12"
-                                            : "skew-y-12"
+                                            ? "-skew-y-12 rtl:skew-y-12"
+                                            : "skew-y-12 rtl:-skew-y-12"
                                     ]
                                 }
                             ],
@@ -395,10 +398,11 @@ function ProjectName({
                     }}
                 >
                     {formatOrdinals(name)}
-                </span>
+                </bdi>
             </ViewTransition>
-            <span
+            <bdi
                 aria-hidden={true}
+                translate="no"
                 role="presentation"
                 className={cn(
                     "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0",
@@ -407,8 +411,8 @@ function ProjectName({
                         "motion-preferred": [
                             "transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
                             navigation === "backward"
-                                ? "origin-right -skew-y-12"
-                                : "origin-left skew-y-12",
+                                ? "origin-right -skew-y-12 rtl:origin-left rtl:skew-y-12"
+                                : "origin-left skew-y-12 rtl:origin-right rtl:-skew-y-12",
                             {
                                 "group-data-[hover=true]":
                                     "translate-y-0 skew-y-0 opacity-100 delay-0"
@@ -418,7 +422,7 @@ function ProjectName({
                 )}
             >
                 {formatOrdinals(name)}
-            </span>
+            </bdi>
             {isNew && (
                 <ViewTransition
                     name={`project-${projectId}-new-tick${isSelectedWorks ? "-selected" : ""}`}
@@ -427,7 +431,8 @@ function ProjectName({
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 14 14"
-                        className="absolute right-0 top-0 size-2.75 text-highlighted lg:size-2.5"
+                        aria-hidden={true}
+                        className="absolute end-0 top-0 size-2.75 text-highlighted lg:size-2.5 rtl:-scale-x-100"
                     >
                         <path
                             fill="currentColor"

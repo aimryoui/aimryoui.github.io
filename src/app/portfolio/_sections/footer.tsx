@@ -12,6 +12,7 @@ import {
 import { Space } from "@/components/layout/space"
 import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
+import { siteConfig } from "@/configs/site.config"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useContainerQuery } from "@/hooks/use-container-query"
 import { cn } from "@/lib/utils"
@@ -39,13 +40,13 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
             <Space
                 className={cn(
                     "hidden",
-                    pathName !== "/portfolio" &&
-                        "md:h-[calc(var(--spacing-space)+var(--spacing)*10+var(--px)/2)]",
+                    pathName !== "/portfolio"
+                        && "md:h-[calc(var(--spacing-space)+var(--spacing)*10+var(--px)/2)]",
                     {
                         lg: [
                             "block",
                             {
-                                after: "pointer-events-none absolute bottom-0 left-1/2 z-40 h-space w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent"
+                                after: "pointer-events-none absolute bottom-0 start-1/2 z-40 h-space w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent rtl:translate-x-1/2"
                             }
                         ]
                     }
@@ -76,7 +77,8 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                         }
                     )}
                 >
-                    {`© 2024 - ${CURRENT_YEAR} aimryoui.`}
+                    ©<bdi>{`2024 - ${CURRENT_YEAR}`}</bdi>
+                    <bdi translate="no">{siteConfig.username}</bdi>.
                     <span>NO AI training allowed.</span>
                     <span>All Rights Reserved.</span>
                 </p>
@@ -125,8 +127,8 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                                 "grid h-full place-items-center bg-background transition-[color,background-color] duration-[.35s,.1s]",
                                                 platform.title === "Behance"
                                                     ? "[&>svg]:size-7 lg:[&>svg]:size-6"
-                                                    : platform.title ===
-                                                        "Telegram"
+                                                    : platform.title
+                                                        === "Telegram"
                                                       ? "[&>svg]:size-6.5 lg:[&>svg]:size-5.5"
                                                       : "lg:[&>svg]:size-5",
                                                 {

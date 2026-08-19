@@ -7,6 +7,7 @@ function Search({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >
@@ -23,6 +24,7 @@ function XCircle({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >
@@ -39,6 +41,7 @@ function Refresh({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >
@@ -55,6 +58,7 @@ function Sun({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >
@@ -71,6 +75,7 @@ function Moon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >
@@ -87,6 +92,7 @@ function System({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >
@@ -103,6 +109,7 @@ function Ellipsis({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >
@@ -119,6 +126,7 @@ function ArrowUp({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >
@@ -135,6 +143,7 @@ function ArrowDown({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >
@@ -151,6 +160,7 @@ function ArrowLeft({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >
@@ -167,6 +177,7 @@ function ArrowRight({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4", className)}
             {...props}
         >

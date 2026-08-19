@@ -76,7 +76,7 @@ const TocGroup = memo(
                                     category
                                 </span>
                             ),
-                            side: "right",
+                            side: "inline-end",
                             sideOffset: -14,
                             alignOffset: isSelectedWorks ? 0 : 6
                         }}
@@ -120,7 +120,12 @@ const TocGroup = memo(
                                                 "motion-preferred":
                                                     "transition-transform duration-350",
                                                 "group-not-data-expanded/collapsible":
-                                                    "translate-x-[.5px] translate-y-0 -rotate-90 dark:stroke-2.5"
+                                                    [
+                                                        "translate-x-[.5px] translate-y-0 -rotate-90 dark:stroke-2.5",
+                                                        {
+                                                            rtl: "-translate-x-[.5px] -scale-y-100"
+                                                        }
+                                                    ]
                                             }
                                         )}
                                     />

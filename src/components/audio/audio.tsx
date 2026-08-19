@@ -78,9 +78,9 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
             const target = (e.target as Element).closest(TARGET_SELECTORS)
 
             if (
-                e.type === "focusin" &&
-                target &&
-                !target.matches(":focus-visible")
+                e.type === "focusin"
+                && target
+                && !target.matches(":focus-visible")
             ) {
                 return
             }
@@ -91,8 +91,8 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
                 ) as HoverSoundType
 
                 if (
-                    soundType &&
-                    soundType !== ("false" as unknown as HoverSoundType)
+                    soundType
+                    && soundType !== ("false" as unknown as HoverSoundType)
                 ) {
                     playerRef.current?.playHover(soundType)
                 }
@@ -217,8 +217,8 @@ function AudioToggle({ className, onPress, tracking, ...props }: ButtonProps) {
                 >
                     {isAudioEnabled && isActive ? (
                         <Volume2 className="size-5.5" />
-                    ) : !isAudioEnabled &&
-                      (audioMode === "manual" || hasManuallyToggled) ? (
+                    ) : !isAudioEnabled
+                      && (audioMode === "manual" || hasManuallyToggled) ? (
                         <VolumeX className="size-5.5" />
                     ) : (
                         <Volume1 className="size-5.5" />

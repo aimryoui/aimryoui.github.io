@@ -37,7 +37,6 @@
     "jsPlugins": [
         "@stylistic/eslint-plugin",
         { "name": "react-eslint", "specifier": "eslint-plugin-react" },
-        { "name": "react-compiler", "specifier": "eslint-plugin-react-hooks" },
         "eslint-plugin-tailwindcss",
         "eslint-plugin-simple-import-sort",
         "@limegrass/eslint-plugin-import-alias",
@@ -170,23 +169,6 @@
                 ],
                 "react/no-array-index-key": "off",
                 "react-eslint/no-deprecated": "error",
-
-                //* React Compiler
-                "react-compiler/config": "error",
-                "react-compiler/error-boundaries": "error",
-                "react-compiler/component-hook-factories": "error",
-                "react-compiler/gating": "error",
-                "react-compiler/globals": "error",
-                "react-compiler/immutability": "error",
-                "react-compiler/preserve-manual-memoization": "error",
-                "react-compiler/purity": "error",
-                "react-compiler/refs": "error",
-                "react-compiler/set-state-in-effect": "error",
-                "react-compiler/set-state-in-render": "error",
-                "react-compiler/static-components": "error",
-                "react-compiler/unsupported-syntax": "warn",
-                "react-compiler/use-memo": "error",
-                "react-compiler/incompatible-library": "warn",
 
                 //* Tailwind CSS
                 "tailwindcss/enforces-shorthand": "warn", // mx-5 my-5 should become m-5

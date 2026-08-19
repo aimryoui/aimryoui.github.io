@@ -68,6 +68,7 @@ function Toolbar({ className }: { className?: string }) {
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 48 48"
+                                    aria-hidden={true}
                                     className={cn("size-8.5", {
                                         "motion-preferred":
                                             "will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180"
@@ -107,11 +108,15 @@ function Toolbar({ className }: { className?: string }) {
                                     )}
                                 >
                                     <Bold className="text-sm">
-                                        <At className="text-current font-wght-[625]" />
-                                        {siteConfig.username}
+                                        <bdi>
+                                            <At className="text-current font-wght-[625]" />
+                                            {siteConfig.username}
+                                        </bdi>
                                     </Bold>
                                     <p className="font-mono text-xs">
-                                        {`${projects.length} PROJECTS`}
+                                        <bdi>
+                                            {`${projects.length} PROJECTS`}
+                                        </bdi>
                                     </p>
                                 </div>
                             </LinkButton>
@@ -134,7 +139,7 @@ function Toolbar({ className }: { className?: string }) {
                                     }
                                 )}
                             >
-                                <SvgElementLine className="absolute inset-y-0 left-0 z-1 w-px" />
+                                <SvgElementLine className="absolute inset-y-0 start-0 z-1 w-px" />
                                 <MobileTocButton />
                             </li>
                         )}

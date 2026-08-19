@@ -173,11 +173,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     <SectionLine
                                         className={cn({
                                             lg: "w-[calc(100%+var(--spacing-safe-zone))]",
-                                            "group-odd": "right-0",
+                                            "group-odd": "end-0",
                                             "group-even": [
                                                 "w-[calc(100%+var(--spacing-safe-zone))]",
                                                 {
-                                                    lg: "-right-safe-zone left-auto"
+                                                    lg: "-end-safe-zone start-auto"
                                                 }
                                             ]
                                         })}
@@ -247,6 +247,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                         className={cn(
                                             "m-1 transition-[color] duration-100",
                                             {
+                                                rtl: "rotate-180",
                                                 "group-hover":
                                                     "text-highlighted transition-none",
                                                 "group-active":
@@ -343,6 +344,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                         className={cn(
                                             "m-1 transition-[color] duration-100",
                                             {
+                                                rtl: "rotate-180",
                                                 "group-hover":
                                                     "text-highlighted transition-none",
                                                 "group-active":

@@ -27,6 +27,7 @@ import {
     type PngProps
 } from "@/components/media/image"
 import { Button, type ButtonProps } from "@/components/ui/button"
+import { useDirection } from "@/components/ui/direction"
 import { Lightbox } from "@/components/ui/lightbox"
 import { Slider } from "@/components/ui/slider"
 import { Spinner } from "@/components/ui/spinner"
@@ -39,7 +40,7 @@ type CarouselOptions = UseCarouselParameters[0]
 type CarouselPlugin = UseCarouselParameters[1]
 
 interface CarouselProps {
-    opts?: CarouselOptions
+    options?: CarouselOptions
     slideCount: number
     plugins?: CarouselPlugin
     orientation?: "horizontal" | "vertical"
@@ -99,7 +100,7 @@ const numberWithinRange = (number: number, min: number, max: number): number =>
 
 function Carousel({
     orientation = "horizontal",
-    opts,
+    options,
     slideCount,
     setEmblaApi,
     plugins,
@@ -108,6 +109,7 @@ function Carousel({
     ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
     const carouselId = useId()
+    const direction = useDirection()
 
     const getSlideSizes = (size: number) => Array<number>(slideCount).fill(size)
 
@@ -128,7 +130,8 @@ function Carousel({
 
     const [emblaRef, emblaApi, emblaServerApi] = useEmblaCarousel(
         {
-            ...opts,
+            ...options,
+            direction,
             breakpoints: {
                 "(prefers-reduced-motion: reduce)": { duration: 0 }
             },
@@ -258,7 +261,7 @@ function Carousel({
         emblaRef,
         emblaApi,
         setEmblaApi,
-        opts,
+        options,
         slideCount,
         orientation,
         goToPrev,
@@ -280,14 +283,15 @@ function Carousel({
             {/* oxlint-disable-next-line react/jsx-no-constructed-context-values */}
             <CarouselContext.Provider value={contextValue}>
                 <div
+                    data-slot="carousel"
+                    aria-roledescription="carousel"
+                    role="region"
+                    dir={direction}
                     onKeyDownCapture={handleKeyDown}
                     className={cn(
                         "relative flex w-full flex-col gap-2",
                         className
                     )}
-                    role="region"
-                    aria-roledescription="carousel"
-                    data-slot="carousel"
                     {...props}
                 >
                     <CarouselContent id={carouselId}>
@@ -358,7 +362,7 @@ function CarouselContent({
             <div
                 className={cn(
                     "flex",
-                    orientation === "horizontal" ? "-ml-2" : "-mt-2 flex-col",
+                    orientation === "horizontal" ? "-ms-2" : "-mt-2 flex-col",
                     className
                 )}
                 {...props}
@@ -387,7 +391,7 @@ function CarouselItem({
                 "min-w-0 shrink-0 grow-0 basis-3/4",
                 "[&>div:active]:cursor-grabbing",
                 orientation === "horizontal"
-                    ? "first-of-type:!pl-2"
+                    ? "first-of-type:!ps-2"
                     : "first-of-type:!pt-2",
                 {
                     md: "basis-full"
@@ -480,10 +484,10 @@ function CarouselIndicator({
             {!emblaApi || count === 0 ? (
                 <Spinner />
             ) : (
-                <p className="truncate">
+                <bdo dir="ltr" className="truncate">
                     <span ref={currentRef}>{count < 10 ? "1" : "01"}</span> /{" "}
                     {count}
-                </p>
+                </bdo>
             )}
         </div>
     )
@@ -598,7 +602,7 @@ function CarouselPrevious({
                     )}
                     {...props}
                 >
-                    <ArrowLeft />
+                    <ArrowLeft className="rtl:rotate-180" />
                 </Button>
             }
         />
@@ -654,7 +658,7 @@ function CarouselNext({
                     )}
                     {...props}
                 >
-                    <ArrowRight />
+                    <ArrowRight className="rtl:rotate-180" />
                 </Button>
             }
         />
@@ -761,10 +765,10 @@ function CarouselImage({
     srcPattern,
     gap,
     ...props
-}: Omit<ImageProps, "src"> &
-    ImageRoundProps &
-    PngProps &
-    ImageBorderProps & {
+}: Omit<ImageProps, "src">
+    & ImageRoundProps
+    & PngProps
+    & ImageBorderProps & {
         srcPattern: string
         gap?: number
     }) {

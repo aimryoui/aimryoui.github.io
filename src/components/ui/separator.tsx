@@ -20,7 +20,7 @@ function Separator({
                 data-slot="separator"
                 orientation={orientation}
                 className={cn(
-                    "absolute left-1/2 top-1/2 block w-full shrink-0 -translate-x-1/2 -translate-y-1/2 border-b border-stroke",
+                    "absolute start-1/2 top-1/2 block w-full shrink-0 -translate-x-1/2 -translate-y-1/2 border-b border-stroke rtl:translate-x-1/2",
                     dashed && "border-dashed",
                     className
                 )}
@@ -36,7 +36,7 @@ function Separator({
                 role="separator"
                 aria-orientation={orientation}
                 className={cn(
-                    "absolute left-1/2 top-1/2 h-full w-px -translate-x-1/2 -translate-y-1/2",
+                    "absolute start-1/2 top-1/2 h-full w-px -translate-x-1/2 -translate-y-1/2 rtl:translate-x-1/2",
                     className
                 )}
                 {...props}

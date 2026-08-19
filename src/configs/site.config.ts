@@ -40,18 +40,18 @@ const siteConfig = {
         },
         get full() {
             return (
-                "+84" +
-                " " +
-                this.phone
+                "+84"
+                + " "
+                + this.phone
                     .replace(LEADING_ZERO_REGEX, "")
                     .replace(PHONE_NUMBER_REGEX, "$1 $2 $3")
             )
         },
         get fullWithBrackets() {
             return (
-                "(+84)" +
-                " " +
-                this.phone
+                "(+84)"
+                + " "
+                + this.phone
                     .replace(LEADING_ZERO_REGEX, "")
                     .replace(PHONE_NUMBER_REGEX, "$1 $2 $3")
             )

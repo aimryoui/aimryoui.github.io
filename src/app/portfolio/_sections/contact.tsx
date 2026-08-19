@@ -70,7 +70,7 @@ function Contact() {
                         >
                             <TableCaption
                                 className={cn(
-                                    "sr-only absolute left-safe-zone top-safe-zone-vertical whitespace-pre-line font-wght-500"
+                                    "sr-only absolute start-safe-zone top-safe-zone-vertical whitespace-pre-line font-wght-500"
                                 )}
                             >
                                 {method.method}
@@ -135,7 +135,7 @@ function Contact() {
                                             >
                                                 <span
                                                     className={cn(
-                                                        "absolute left-safe-zone text-highlighted [&>svg]:size-[calc(1em*1.3)]",
+                                                        "absolute start-safe-zone text-highlighted [&>svg]:size-[calc(1em*1.3)]",
                                                         {
                                                             "@[40rem]":
                                                                 "hidden",
@@ -180,8 +180,8 @@ function Contact() {
                                                     }}
                                                     className={cn(
                                                         "[--space-between:calc(var(--spacing-table-between)/2)]",
-                                                        platform.links.hidden &&
-                                                            "text-transparent",
+                                                        platform.links.hidden
+                                                            && "text-transparent",
                                                         "group relative inline-block w-full text-base text-foreground font-wght-500",
                                                         "-my-[--space-between] py-[--space-between]",
                                                         {
@@ -199,7 +199,7 @@ function Contact() {
                                                         }
                                                     )}
                                                 >
-                                                    <span
+                                                    <bdi
                                                         data-cursor="lock"
                                                         className={cn(
                                                             "-mx-1.5 -my-0.5 inline-block text-pretty px-1.5 py-0.5 underline",
@@ -212,7 +212,7 @@ function Contact() {
                                                         )}
                                                     >
                                                         {platform.links.text}
-                                                    </span>
+                                                    </bdi>
                                                 </LinkButton>
                                             </TableCell>
 
@@ -233,8 +233,8 @@ function Contact() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        {index < arr.length - 1 &&
-                            arr[index + 1].method !== method.method && (
+                        {index < arr.length - 1
+                            && arr[index + 1].method !== method.method && (
                                 <SectionLine />
                             )}
                     </Fragment>

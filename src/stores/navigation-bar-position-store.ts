@@ -42,8 +42,28 @@ const useSidebarPositionStore = create<SidebarPositionStore>()(
         {
             name: "nhn-sidebar-position",
             storage: createJSONStorage(() => localStorage),
-            merge: (persistedState, currentState) => {
-                const parsed = sidebarStoreSchema.safeParse(persistedState)
+            merge: (persistedState: unknown, currentState) => {
+                let stateToParse = persistedState
+                if (
+                    stateToParse !== null
+                    && typeof stateToParse === "object"
+                    && "position" in stateToParse
+                ) {
+                    const typedState = stateToParse as Record<string, unknown>
+                    if (typedState.position === "left") {
+                        stateToParse = {
+                            ...stateToParse,
+                            position: "inline-start"
+                        }
+                    } else if (typedState.position === "right") {
+                        stateToParse = {
+                            ...stateToParse,
+                            position: "inline-end"
+                        }
+                    }
+                }
+
+                const parsed = sidebarStoreSchema.safeParse(stateToParse)
                 return {
                     ...currentState,
                     ...(parsed.success ? parsed.data : {})

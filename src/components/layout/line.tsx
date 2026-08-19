@@ -18,6 +18,7 @@ function MarginLine({ className, ...props }: MarginLineProps) {
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="none"
+                aria-hidden={true}
                 className={cn("absolute inset-0 h-full w-px")}
             >
                 <line
@@ -40,11 +41,11 @@ function Plus({ position }: { position?: "left" | "right" }) {
             className={cn(
                 "pointer-events-none relative z-40 size-1",
                 {
-                    before: "absolute left-1/2 top-1/2 h-safe-zone w-1 -translate-x-1/2 -translate-y-1/2 bg-highlighted",
-                    after: "absolute left-1/2 top-1/2 h-1 w-safe-zone -translate-x-1/2 -translate-y-1/2 bg-highlighted"
+                    before: "absolute start-1/2 top-1/2 h-safe-zone w-1 -translate-x-1/2 -translate-y-1/2 bg-highlighted rtl:translate-x-1/2",
+                    after: "absolute start-1/2 top-1/2 h-1 w-safe-zone -translate-x-1/2 -translate-y-1/2 bg-highlighted rtl:translate-x-1/2"
                 },
-                position === "left" && "-ml-[.171875rem]",
-                position === "right" && "-mr-[.171875rem]"
+                position === "left" && "-ms-[.171875rem]",
+                position === "right" && "-me-[.171875rem]"
             )}
         />
     )
@@ -78,13 +79,13 @@ function SectionLine({
                 className={cn(
                     "absolute top-1/2 -translate-y-1/2 border-b border-dashed border-stroke bg-background",
                     fit
-                        ? "left-1/2 w-full -translate-x-1/2"
+                        ? "start-1/2 w-full -translate-x-1/2 rtl:translate-x-1/2"
                         : [
-                              "-right-safe-zone w-[calc(100vw-var(--px)*2)]",
+                              "-end-safe-zone w-[calc(100vw-var(--px)*2)]",
                               {
-                                  "group-data-[sidebar-position=right]/html":
-                                      "-left-safe-zone right-auto",
-                                  lg: "-left-safe-zone right-auto"
+                                  "group-data-[sidebar-position=inline-end]/html":
+                                      "-start-safe-zone end-auto",
+                                  lg: "-start-safe-zone end-auto"
                               }
                           ],
                     className
@@ -119,7 +120,7 @@ function ElementLine({
         >
             <hr
                 className={cn(
-                    "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+                    "absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rtl:translate-x-1/2",
                     dir === "vertical"
                         ? "h-full border-r border-dashed border-stroke"
                         : "w-full border-b border-dashed border-stroke",
@@ -152,8 +153,9 @@ function SvgElementLine({
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="none"
+                aria-hidden={true}
                 className={cn(
-                    "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
+                    "absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rtl:translate-x-1/2",
                     dir === "vertical" ? "h-full w-px" : "h-px w-full"
                 )}
                 {...props}

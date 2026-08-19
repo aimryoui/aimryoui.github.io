@@ -7,6 +7,7 @@ function AboutIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -28,6 +29,7 @@ function ExperienceIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -56,6 +58,7 @@ function EducationIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -82,6 +85,7 @@ function SoftwareIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -108,6 +112,7 @@ function ContactIcon({ className, ...props }: React.ComponentProps<"svg">) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -132,6 +137,7 @@ function SelectedWorksIcon({
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4.5", className)}
             {...props}
         >
@@ -157,6 +163,7 @@ function DesignProjectsIcon({
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
+            aria-hidden={true}
             className={cn("size-4.5", className)}
             {...props}
         >

@@ -121,10 +121,10 @@ interface TrackingData {
     eventParams?: Record<string, string | number | boolean>
 }
 
-type ButtonProps = NativeButtonType &
-    ButtonPrimitiveProps &
-    ButtonVariantsType &
-    ButtonFeedback & {
+type ButtonProps = NativeButtonType
+    & ButtonPrimitiveProps
+    & ButtonVariantsType
+    & ButtonFeedback & {
         nativeButton?: boolean
         keepFeedback?: boolean
         mute?: boolean
@@ -156,8 +156,8 @@ function Button({
                 "data-size": size
             })}
             data-cursor="target"
-            {...(!mute &&
-                (!nativeButton || keepFeedback) && {
+            {...(!mute
+                && (!nativeButton || keepFeedback) && {
                     "data-sound": hoverSound
                 })}
             onPress={(e) => {
@@ -199,10 +199,10 @@ function Button({
 
 type NextLinkProps = React.ComponentProps<typeof NextLink>
 
-type LinkButtonProps = LinkPrimitiveProps &
-    Omit<NextLinkProps, "href"> &
-    ButtonVariantsType &
-    ButtonFeedback & {
+type LinkButtonProps = LinkPrimitiveProps
+    & Omit<NextLinkProps, "href">
+    & ButtonVariantsType
+    & ButtonFeedback & {
         nativeLink?: boolean
         keepFeedback?: boolean
         openInNewTab?: boolean
@@ -244,8 +244,8 @@ function LinkButton({
                 target: "_blank",
                 rel: "noreferrer"
             })}
-            {...(!mute &&
-                (!nativeLink || keepFeedback) && {
+            {...(!mute
+                && (!nativeLink || keepFeedback) && {
                     "data-sound": hoverSound
                 })}
             onPress={(e) => {

@@ -71,10 +71,10 @@ type ImageBorderProps =
           pngBorder?: never
       }
 
-type ImageCoreProps = GeneralImageProps &
-    ImageRoundProps &
-    PngProps &
-    ImageBorderProps
+type ImageCoreProps = GeneralImageProps
+    & ImageRoundProps
+    & PngProps
+    & ImageBorderProps
 
 function getBorderRadiusShorthand(rounded: CornerRound, radiusVal: string) {
     if (rounded === true) return radiusVal
@@ -251,6 +251,7 @@ function ImageCore({
         <div
             ref={mergeRefs([containerRef, ref])}
             data-slot="image"
+            dir="ltr"
             className={cn(
                 "content-auto",
                 limitHeight
@@ -265,9 +266,9 @@ function ImageCore({
                 "relative grid place-items-center",
                 !pngBorder && "overflow-hidden",
                 lightbox && !isInLightbox && "cursor-zoom-in",
-                !noBorder &&
-                    !pngBorder &&
-                    !gradientBorder && {
+                !noBorder
+                    && !pngBorder
+                    && !gradientBorder && {
                         after: [
                             "pointer-events-none absolute inset-0 z-2 rounded-inherit transition-[border-color] duration-250",
                             "border border-default/15",
@@ -281,15 +282,15 @@ function ImageCore({
                     {
                         after: [
                             "pointer-events-none absolute inset-0 z-2 rounded-inherit",
-                            typeof gradientBorder.width === "number" &&
-                                "p-[--nhn-gradient-border-width]",
+                            typeof gradientBorder.width === "number"
+                                && "p-[--nhn-gradient-border-width]",
                             "bg-[image:--nhn-gradient-border-color]",
                             "mask-clip-[content-box,border-box] mask-exclude mask-origin-[content-box,border-box]",
                             "[mask-image:linear-gradient(#fff_0_0),linear-gradient(#fff_0_0)]"
                         ]
                     },
-                    typeof gradientBorder.width === "string" &&
-                        gradientBorder.width
+                    typeof gradientBorder.width === "string"
+                        && gradientBorder.width
                 ],
                 dim && [
                     {
@@ -303,8 +304,8 @@ function ImageCore({
             style={{
                 "--nhn-aspect-ratio": aspectRatio,
 
-                ...(rounded &&
-                    !percentageRounded && {
+                ...(rounded
+                    && !percentageRounded && {
                         borderRadius: getBorderRadiusShorthand(
                             rounded,
                             isInLightbox
@@ -328,8 +329,8 @@ function ImageCore({
                 ...(!asBackgroundImage && {
                     aspectRatio: "var(--nhn-aspect-ratio)"
                 }),
-                ...(percentageRounded &&
-                    !rounded && {
+                ...(percentageRounded
+                    && !rounded && {
                         borderRadius: `calc(${percentageRounded}% * var(--nhn-radius-offset-factor)) / calc(${percentageRounded}% * var(--nhn-aspect-ratio) * var(--nhn-radius-offset-factor))`
                     }),
                 ...(gradientBorder && {
@@ -352,8 +353,8 @@ function ImageCore({
                     height={exactH}
                     className={cn(
                         "absolute size-full select-none object-cover",
-                        (pngAntiBleed || pngBorder) &&
-                            "blink:[filter:url(#png-anti-bleed)]",
+                        (pngAntiBleed || pngBorder)
+                            && "blink:[filter:url(#png-anti-bleed)]",
                         trimEdges && "blink:[clip-path:inset(.375rem)]"
                     )}
                     style={{
@@ -372,10 +373,10 @@ function ImageCore({
                         "z-1 max-h-inherit max-w-inherit",
                         asBackgroundImage && "absolute",
                         objectFit === "fill" && "size-full",
-                        objectFit === "contain" &&
-                            "size-auto max-h-full max-w-full",
-                        objectFit === "cover" &&
-                            "size-auto min-h-full min-w-full",
+                        objectFit === "contain"
+                            && "size-auto max-h-full max-w-full",
+                        objectFit === "cover"
+                            && "size-auto min-h-full min-w-full",
                         pngBorder && "blink:[filter:url(#png-border)]"
                     )}
                     style={{
@@ -410,10 +411,10 @@ function ImageCore({
 
 const imageManifest = imageManifestRaw as ImageManifest
 
-type ImageProps = Omit<GeneralImageProps, "parsedData"> &
-    ImageRoundProps &
-    PngProps &
-    ImageBorderProps & {
+type ImageProps = Omit<GeneralImageProps, "parsedData">
+    & ImageRoundProps
+    & PngProps
+    & ImageBorderProps & {
         src: string
     }
 

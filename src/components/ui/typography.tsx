@@ -177,8 +177,8 @@ function Link({
     mono,
     asChild,
     ...props
-}: React.ComponentProps<"a"> &
-    TextProps & {
+}: React.ComponentProps<"a">
+    & TextProps & {
         openInNewTab?: boolean
     }) {
     const Comp = asChild ? Slot : "a"

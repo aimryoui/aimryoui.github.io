@@ -1,10 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { type HTMLAttributes, useState } from "react"
 
 import { PanelsLeftBottom, RotateCcw, Undo2 } from "lucide-react"
 
 import { ArrowRight } from "@/components/icons/icons"
+import {
+    MENU_CONFIG as DIRECTION_MENU,
+    DIRECTION_PREFERENCES
+} from "@/components/preferences/direction-menu"
 import {
     EFFECTS,
     MENU_CONFIG as EFFECTS_MENU
@@ -34,9 +38,11 @@ import {
     AlertDialogTitle
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { useDirection } from "@/components/ui/direction"
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { DEFAULT_AUDIO_PREFERENCES } from "@/configs/audio.config"
+import { DEFAULT_DIRECTION_PREFERENCE } from "@/configs/direction.config"
 import {
     AVAILABLE_EFFECTS,
     DEFAULT_EFFECTS_PREFERENCES
@@ -55,6 +61,7 @@ import {
 import { cn } from "@/lib/utils"
 import { PREFERENCE_STORES } from "@/stores"
 import { useAudioStore } from "@/stores/audio-store"
+import { useDirectionStore } from "@/stores/direction-store"
 import { useEffectsStore } from "@/stores/effects-store"
 import { useHapticsStore } from "@/stores/haptics-store"
 import { useMediaStore } from "@/stores/media-store"
@@ -78,8 +85,8 @@ const getPreferenceChanges = () => {
             changes: {
                 id: string
                 name: string
-                from: string
-                to: string
+                from: string | ((dir: ReturnType<typeof useDirection>) => string)
+                to: string | ((dir: ReturnType<typeof useDirection>) => string)
                 onReset: () => void
                 onUndo: () => void
             }[]
@@ -108,6 +115,11 @@ const getPreferenceChanges = () => {
         [MOTION_MENU.name]: {
             category: MOTION_MENU.name,
             icon: MOTION_MENU.icon,
+            changes: []
+        },
+        [DIRECTION_MENU.name]: {
+            category: DIRECTION_MENU.name,
+            icon: DIRECTION_MENU.icon,
             changes: []
         }
     }
@@ -240,13 +252,47 @@ const getPreferenceChanges = () => {
         })
     }
 
+    const directionState = useDirectionStore.getState()
+    if (directionState.preference !== DEFAULT_DIRECTION_PREFERENCE) {
+        categoriesMap[DIRECTION_MENU.name].changes.push({
+            id: "directionPreference",
+            name: "Preference",
+            from: DIRECTION_PREFERENCES[directionState.preference].label,
+            to: DIRECTION_PREFERENCES[DEFAULT_DIRECTION_PREFERENCE].label,
+            onReset: () => {
+                useDirectionStore
+                    .getState()
+                    .setPreference(DEFAULT_DIRECTION_PREFERENCE)
+            },
+            onUndo: () => {
+                useDirectionStore
+                    .getState()
+                    .setPreference(directionState.preference)
+            }
+        })
+    }
+
     const sidebarState = useSidebarPositionStore.getState()
     if (sidebarState.position !== DEFAULT_SIDEBAR_PREFERENCES) {
         categoriesMap[NAVIGATION_MENU.name].changes.push({
             id: "sidebarPosition",
             name: "Sidebar position",
-            from: sidebarState.position === "left" ? "Left" : "Right",
-            to: DEFAULT_SIDEBAR_PREFERENCES === "left" ? "Left" : "Right",
+            from: (dir) =>
+                sidebarState.position === "inline-start"
+                    ? dir === "rtl"
+                        ? "Right"
+                        : "Left"
+                    : dir === "rtl"
+                      ? "Left"
+                      : "Right",
+            to: (dir) =>
+                DEFAULT_SIDEBAR_PREFERENCES === "inline-start"
+                    ? dir === "rtl"
+                        ? "Right"
+                        : "Left"
+                    : dir === "rtl"
+                      ? "Left"
+                      : "Right",
             onReset: () => {
                 useSidebarPositionStore
                     .getState()
@@ -314,6 +360,7 @@ function ResetPreferenceAlertDialog({
         }
     }
 
+    const direction = useDirection()
     const changes = initialChanges
     const ResetIcon = RESET_MENU_CONFIG.icon
 
@@ -382,7 +429,14 @@ function ResetPreferenceAlertDialog({
                                                             )}
                                                         >
                                                             <div className="flex items-center gap-1.5 text-foreground font-wght-600">
-                                                                <Icon className="size-4" />
+                                                                <Icon
+                                                                    className={cn(
+                                                                        "size-4",
+                                                                        group.category
+                                                                            === "Navigation"
+                                                                            && "rtl:-scale-x-100"
+                                                                    )}
+                                                                />
                                                                 <span>
                                                                     {
                                                                         group.category
@@ -393,8 +447,8 @@ function ResetPreferenceAlertDialog({
                                                                 className={cn(
                                                                     // 4 is icon size, 1.5 is the gap between icon and label
                                                                     "[--indent:calc(var(--spacing)*4+var(--spacing)*1.5)]",
-                                                                    "[--line-indent:calc(var(--indent)-var(--spacing)*4/2+var(--line-width)/3)] [--line-width:var(--px)] [--top-offset:calc(var(--gap)-var(--spacing)*.5)]",
-                                                                    "flex flex-col gap-[--gap] pl-[--indent]"
+                                                                    "[--line-indent:calc(var(--indent)-var(--spacing)*4/2+var(--line-width)/2.25)] [--line-width:var(--px)] [--top-offset:calc(var(--gap)-var(--spacing)*.5)]",
+                                                                    "flex flex-col gap-[--gap] ps-[--indent]"
                                                                 )}
                                                             >
                                                                 {group.changes.map(
@@ -404,19 +458,20 @@ function ResetPreferenceAlertDialog({
                                                                         arr
                                                                     ) => {
                                                                         const isFirst =
-                                                                            index ===
-                                                                            0
+                                                                            index
+                                                                            === 0
                                                                         const isLast =
-                                                                            index ===
-                                                                            arr.length -
-                                                                                1
+                                                                            index
+                                                                            === arr.length
+                                                                                - 1
                                                                         const isOnly =
-                                                                            isFirst &&
-                                                                            isLast
+                                                                            isFirst
+                                                                            && isLast
                                                                         const isReset =
                                                                             resetItems.has(
                                                                                 change.id
                                                                             )
+
                                                                         return (
                                                                             <li
                                                                                 key={
@@ -426,13 +481,13 @@ function ResetPreferenceAlertDialog({
                                                                                     "relative flex items-baseline gap-2",
                                                                                     {
                                                                                         before: [
-                                                                                            "absolute -left-[--line-indent] w-2.25 rounded-bl-sm border-b-[length:--line-width] border-l-[length:--line-width] border-stroke",
+                                                                                            "absolute -start-[--line-indent] w-2.25 rounded-es-sm border-b-[length:--line-width] border-s-[length:--line-width] border-stroke",
                                                                                             isFirst
                                                                                                 ? "-top-[--top-offset] h-[calc(theme(fontSize.sm.1)/2+var(--line-width)/2+var(--top-offset))]"
                                                                                                 : "top-0 h-[.65625rem]"
                                                                                         ],
                                                                                         after: !isLast && [
-                                                                                            "absolute -left-[--line-indent] border-l-[length:--line-width] border-stroke",
+                                                                                            "absolute -start-[--line-indent] border-s-[length:--line-width] border-stroke",
                                                                                             isFirst
                                                                                                 ? "-top-[--top-offset]"
                                                                                                 : "top-0",
@@ -442,7 +497,7 @@ function ResetPreferenceAlertDialog({
                                                                                 )}
                                                                             >
                                                                                 {/* <svg
-                                                                                    className="absolute -left-[--line-indent] w-2.5 overflow-visible text-stroke pointer-events-none"
+                                                                                    className="absolute -start-[--line-indent] w-2.5 overflow-visible text-stroke pointer-events-none"
                                                                                     style={{
                                                                                         top: isFirst ? "calc(-1 * var(--top-offset))" : "0",
                                                                                         height: isLast
@@ -489,27 +544,38 @@ function ResetPreferenceAlertDialog({
                                                                                         "text-end text-foreground",
                                                                                         (change.name.startsWith(
                                                                                             "Auto-play"
-                                                                                        ) ||
-                                                                                            change.name ===
-                                                                                                "Preference") &&
-                                                                                            "sm:text-xs"
+                                                                                        )
+                                                                                            || change.name
+                                                                                                === "Preference")
+                                                                                            && "sm:text-xs"
                                                                                     )}
                                                                                 >
                                                                                     {!isReset && (
                                                                                         <>
-                                                                                            <span className="line-through decoration-current decoration-solid decoration-[.03125rem] opacity-70 dark:decoration-1">
-                                                                                                {
-                                                                                                    change.from
-                                                                                                }
-                                                                                            </span>
-                                                                                            <ArrowRight className="mx-1.5 mb-0.5 inline-block size-3 align-middle text-muted-foreground" />
+                                                                                            <bdi className="line-through decoration-current decoration-solid decoration-[.03125rem] opacity-70 dark:decoration-1">
+                                                                                                {typeof change.from
+                                                                                                === "function"
+                                                                                                    ? change.from(
+                                                                                                          direction
+                                                                                                      )
+                                                                                                    : change.from}
+                                                                                            </bdi>
+                                                                                            <ArrowRight
+                                                                                                className={cn(
+                                                                                                    "mx-1.5 mb-0.5 inline-block size-3 align-middle text-muted-foreground",
+                                                                                                    "rtl:rotate-180"
+                                                                                                )}
+                                                                                            />
                                                                                         </>
                                                                                     )}
-                                                                                    <span className="text-primary font-wght-600">
-                                                                                        {
-                                                                                            change.to
-                                                                                        }
-                                                                                    </span>
+                                                                                    <bdi className="text-primary font-wght-600">
+                                                                                        {typeof change.to
+                                                                                        === "function"
+                                                                                            ? change.to(
+                                                                                                  direction
+                                                                                              )
+                                                                                            : change.to}
+                                                                                    </bdi>
                                                                                 </span>
                                                                                 <TooltipTrigger
                                                                                     delay={
@@ -524,7 +590,7 @@ function ResetPreferenceAlertDialog({
                                                                                                         : "Reset this preference only"}
                                                                                                 </span>
                                                                                             ),
-                                                                                        side: "right",
+                                                                                        side: "inline-end",
                                                                                         sideOffset: 8
                                                                                     }}
                                                                                     render={
@@ -539,7 +605,7 @@ function ResetPreferenceAlertDialog({
                                                                                             }
                                                                                             size="icon-sm"
                                                                                             className={cn(
-                                                                                                "-my-1.5 -me-2 ml-auto shrink-0 self-start !rounded-full"
+                                                                                                "-my-1.5 -me-2 ms-auto shrink-0 self-start !rounded-full"
                                                                                             )}
                                                                                             onClick={() => {
                                                                                                 const next =
@@ -566,7 +632,7 @@ function ResetPreferenceAlertDialog({
                                                                                         >
                                                                                             {isReset ? (
                                                                                                 <Undo2
-                                                                                                    className="-m-0.25 size-4.5 -translate-y-[1px]"
+                                                                                                    className="-m-0.25 size-4.5 -translate-y-[1px] rtl:-scale-x-100"
                                                                                                     strokeWidth={
                                                                                                         1.5
                                                                                                     }

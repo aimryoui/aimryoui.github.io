@@ -13,9 +13,9 @@ import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { getCategoryPath } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 
-type SectionTitleProps = React.ComponentProps<"div"> &
-    React.ComponentProps<"a"> &
-    LinkButtonProps & {
+type SectionTitleProps = React.ComponentProps<"div">
+    & React.ComponentProps<"a">
+    & LinkButtonProps & {
         link?: "route" | "hash"
         noteClassName?: string
         id: string
@@ -93,9 +93,9 @@ function SectionTitle({
                 <NoteComp
                     id={noteId}
                     className={cn(
-                        "absolute bottom-full left-0 max-w-[calc(100%-var(--spacing-safe-zone)*2)] px-safe-zone pb-4 font-mono uppercase leading-normal",
-                        noteId &&
-                            "scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem)]",
+                        "absolute bottom-full start-0 max-w-[calc(100%-var(--spacing-safe-zone)*2)] px-safe-zone pb-4 font-mono uppercase leading-normal",
+                        noteId
+                            && "scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem)]",
                         {
                             md: "pb-3 text-sm"
                         },
@@ -137,6 +137,7 @@ function SectionTitle({
                 {link === "route" ? (
                     <ArrowRight
                         className={cn("z-1 transition-[color] duration-100", {
+                            rtl: "rotate-180",
                             "group-hover": "text-highlighted transition-none",
                             "group-active": "text-highlighted transition-none"
                         })}

@@ -24,8 +24,8 @@ function Input({
             }}
             onPointerDown={(e) => {
                 if (
-                    document.activeElement === e.currentTarget &&
-                    !e.currentTarget.value
+                    document.activeElement === e.currentTarget
+                    && !e.currentTarget.value
                 ) {
                     playPressSound("button")
                 }

@@ -48,11 +48,11 @@ const MobileTocItemRow = memo(
                         "border-s-1 border-muted-foreground/20",
                         isActive
                             ? {
-                                  before: "absolute inset-y-0 -left-0.25 w-0.75 bg-highlighted"
+                                  before: "absolute inset-y-0 -start-0.25 w-0.75 bg-highlighted"
                               }
                             : {
                                   hover: {
-                                      before: "absolute inset-y-0 -left-0.25 w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
+                                      before: "absolute inset-y-0 -start-0.25 w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
                                   },
                                   active: {
                                       before: "!bg-highlighted"
@@ -158,18 +158,20 @@ const MobileTocItemRow = memo(
                             {item.icon}
                         </div>
                     )}
-                    <span>
-                        {highlightQuery(item.label, query ?? "") ??
-                            formatOrdinals(item.label)}
-                    </span>
+                    <bdi translate="no">
+                        {highlightQuery(item.label, query ?? "")
+                            ?? formatOrdinals(item.label)}
+                    </bdi>
                     {isActive && (
                         <div
                             className={cn(
-                                "absolute right-0 top-1/2 grid size-7 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                "absolute end-0 top-1/2 grid size-7 -translate-y-1/2 place-items-center rounded-full bg-highlighted/10 text-highlighted",
                                 "dark:bg-highlighted/20"
                             )}
                         >
-                            <ArrowRight className={cn("size-4")} />
+                            <ArrowRight
+                                className={cn("size-4 rtl:rotate-180")}
+                            />
                         </div>
                     )}
                 </LinkButton>

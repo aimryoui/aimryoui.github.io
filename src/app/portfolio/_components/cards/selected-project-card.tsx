@@ -156,7 +156,7 @@ function ProjectCover({
     src,
     ...props
 }: React.ComponentProps<"div"> & {
-    projectId: ProjectId
+    projectId?: ProjectId
     src: string
     social?: SocialData
 }) {
@@ -195,7 +195,7 @@ function ProjectName({
     isNew,
     ...props
 }: React.ComponentProps<typeof Bold> & {
-    projectId: ProjectId
+    projectId?: ProjectId
     name: string
     isNew: boolean
 }) {
@@ -212,12 +212,13 @@ function ProjectName({
             {...props}
         >
             <ViewTransition name={`project-${projectId}-selected`}>
-                <span
+                <bdi
+                    translate="no"
                     className={cn(
                         "line-clamp-2 w-fit max-w-full translate-y-0 skew-y-0 transition-[transform,opacity] ease-in-out duration-500",
                         {
                             "group-data-[hover=true]": [
-                                "-translate-y-full skew-y-12 opacity-0"
+                                "-translate-y-full skew-y-12 opacity-0 rtl:-skew-y-12"
                             ],
                             "group-active": "text-highlighted"
                         }
@@ -227,28 +228,31 @@ function ProjectName({
                     }}
                 >
                     {formatOrdinals(name)}
-                </span>
+                </bdi>
             </ViewTransition>
-            <span
+            <bdi
                 aria-hidden={true}
+                translate="no"
                 role="presentation"
                 className={cn(
                     "pointer-events-none absolute line-clamp-2 w-fit max-w-full origin-left translate-y-full skew-y-12 text-highlighted opacity-0 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
                     {
+                        rtl: "origin-right -skew-y-12",
                         "group-data-[hover=true]":
                             "translate-y-0 skew-y-0 opacity-100 delay-0"
                     }
                 )}
             >
                 {formatOrdinals(name)}
-            </span>
+            </bdi>
             {isNew && (
                 <ViewTransition name={`project-${projectId}-new-tick-selected`}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 14 14"
-                        className="absolute right-0 top-0 size-2.75 text-highlighted lg:size-2.5"
+                        aria-hidden={true}
+                        className="absolute end-0 top-0 size-2.75 text-highlighted lg:size-2.5 rtl:-scale-x-100"
                     >
                         <path
                             fill="currentColor"

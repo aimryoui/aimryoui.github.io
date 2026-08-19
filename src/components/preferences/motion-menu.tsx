@@ -44,7 +44,7 @@ const MOTION_PREFERENCES: Record<MotionPreference, MotionPreferenceConfig> = {
         value: "system",
         label: "Follow system",
         description: "Follow system motion preferences.",
-        icon: <System className="size-4.5" />
+        icon: <System className="-mx-0.25 size-4.5" />
     }
 }
 

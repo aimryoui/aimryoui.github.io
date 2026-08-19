@@ -5,9 +5,8 @@ type AudioContextCtor = typeof AudioContext
 function getAudioContextCtor(): AudioContextCtor | undefined {
     if (typeof window === "undefined") return undefined
     return (
-        (window as unknown as { AudioContext?: AudioContextCtor })
-            .AudioContext ??
-        (window as unknown as { webkitAudioContext?: AudioContextCtor })
+        (window as unknown as { AudioContext?: AudioContextCtor }).AudioContext
+        ?? (window as unknown as { webkitAudioContext?: AudioContextCtor })
             .webkitAudioContext
     )
 }
@@ -162,16 +161,16 @@ function buildHoverBuffer(
         let resonance = 0
         for (const mode of config.modes) {
             resonance +=
-                Math.sin(2 * Math.PI * mode.frequency * t + mode.phase) *
-                Math.exp(-t / mode.decay) *
-                mode.gain
+                Math.sin(2 * Math.PI * mode.frequency * t + mode.phase)
+                * Math.exp(-t / mode.decay)
+                * mode.gain
         }
 
         const noise = Math.random() * 2 - 1
         const transient =
-            (noise - previousNoise) *
-            Math.exp(-t / config.transientDecay) *
-            config.transientMultiplier
+            (noise - previousNoise)
+            * Math.exp(-t / config.transientDecay)
+            * config.transientMultiplier
         previousNoise = noise
 
         data[i] = (resonance + transient) * attack * fadeOut
@@ -208,12 +207,12 @@ function buildPressBuffer(
         if (config.pitchSweep > 0) {
             if (config.sweepDirection === "down") {
                 freq =
-                    config.baseFreq +
-                    config.pitchSweep * Math.exp(-t * config.sweepSpeed)
+                    config.baseFreq
+                    + config.pitchSweep * Math.exp(-t * config.sweepSpeed)
             } else {
                 freq =
-                    config.baseFreq +
-                    config.pitchSweep * (1 - Math.exp(-t * config.sweepSpeed))
+                    config.baseFreq
+                    + config.pitchSweep * (1 - Math.exp(-t * config.sweepSpeed))
             }
         }
 

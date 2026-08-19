@@ -75,8 +75,8 @@ const optimizeAndReplacePlugin = (): Plugin => {
                 }
 
                 if (
-                    atRule.name === "supports" &&
-                    atRule.params.includes("(color: light-dark(red, red))")
+                    atRule.name === "supports"
+                    && atRule.params.includes("(color: light-dark(red, red))")
                 ) {
                     atRule.params = atRule.params
                         .replace(SUPPORTS_LIGHT_DARK_COME_FIRST_REGEX, "")

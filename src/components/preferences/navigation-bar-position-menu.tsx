@@ -10,6 +10,7 @@ import {
     PanelTopBottomDashed
 } from "lucide-react"
 
+import { useDirection } from "@/components/ui/direction"
 import {
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
@@ -38,11 +39,7 @@ const MOBILE_CONFIG = {
 
 const DESKTOP_CONFIG = {
     triggerIcon: PanelLeftRightDashed,
-    triggerText: "Sidebar position",
-    options: [
-        { value: "left", icon: PanelLeft, text: "Left", disabled: false },
-        { value: "right", icon: PanelRight, text: "Right", disabled: false }
-    ]
+    triggerText: "Sidebar position"
 } as const
 
 function NavigationBarPositionMenu() {
@@ -63,7 +60,25 @@ function NavigationBarPositionMenu() {
         ? (setToolbarPosition as (v: string) => void)
         : (setSidebarPosition as (v: string) => void)
 
+    const direction = useDirection()
+
+    const desktopOptions = [
+        {
+            value: "inline-start",
+            icon: direction === "rtl" ? PanelRight : PanelLeft,
+            text: direction === "rtl" ? "Right" : "Left",
+            disabled: false
+        },
+        {
+            value: "inline-end",
+            icon: direction === "rtl" ? PanelLeft : PanelRight,
+            text: direction === "rtl" ? "Left" : "Right",
+            disabled: false
+        }
+    ]
+
     const config = isMobile ? MOBILE_CONFIG : DESKTOP_CONFIG
+    const options = isMobile ? MOBILE_CONFIG.options : desktopOptions
     const TriggerIcon = config.triggerIcon
 
     return (
@@ -86,21 +101,19 @@ function NavigationBarPositionMenu() {
                         sendGAEvent("event", eventName, eventParams)
                     }}
                 >
-                    {config.options.map(
-                        ({ value, icon: Icon, text, disabled }) => (
-                            <DropdownMenuRadioItem
-                                key={value}
-                                value={value}
-                                disabled={disabled}
-                                onClick={() => {
-                                    setPosition(value)
-                                }}
-                            >
-                                <Icon />
-                                {text}
-                            </DropdownMenuRadioItem>
-                        )
-                    )}
+                    {options.map(({ value, icon: Icon, text, disabled }) => (
+                        <DropdownMenuRadioItem
+                            key={value}
+                            value={value}
+                            disabled={disabled}
+                            onClick={() => {
+                                setPosition(value)
+                            }}
+                        >
+                            <Icon />
+                            {text}
+                        </DropdownMenuRadioItem>
+                    ))}
                 </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
         </DropdownMenuSub>

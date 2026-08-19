@@ -25,7 +25,7 @@
 */
 
 .pswp {
-    @apply fixed left-0 top-0 z-[--pswp-root-z-index] hidden size-full touch-none opacity-[.003] outline-0;
+    @apply fixed start-0 top-0 z-[--pswp-root-z-index] hidden size-full touch-none opacity-[.003] outline-0;
 
     contain: layout style size;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -72,7 +72,7 @@
 .pswp__content,
 .pswp__img.pswp__img--placeholder,
 .pswp__zoom-wrap {
-    @apply absolute left-0 top-0 size-full;
+    @apply absolute start-0 top-0 size-full;
 }
 
 .pswp__img.pswp__img--placeholder,
@@ -199,7 +199,7 @@ div.pswp__img--placeholder,
 }
 
 .pswp__top-bar {
-    @apply pointer-events-none absolute left-0 top-0 z-10 flex h-[60px] w-full flex-row justify-end;
+    @apply pointer-events-none absolute start-0 top-0 z-10 flex h-[60px] w-full flex-row justify-end;
 }
 .pswp__top-bar > * {
     @apply pointer-events-auto will-change-[opacity];
@@ -211,7 +211,7 @@ div.pswp__img--placeholder,
 
 */
 .pswp__button--close {
-    @apply mr-[6px];
+    @apply me-[6px];
 }
 
 /*
@@ -246,14 +246,14 @@ div.pswp__img--placeholder,
 }
 
 .pswp__button--arrow--prev {
-    @apply left-0;
+    @apply start-0;
 }
 
 .pswp__button--arrow--next {
-    @apply right-0;
+    @apply end-0;
 }
 .pswp__button--arrow--next .pswp__icn {
-    @apply left-auto right-[14px];
+    @apply end-[14px] start-auto;
 }
 
 /*
