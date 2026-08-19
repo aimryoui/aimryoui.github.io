@@ -270,7 +270,7 @@ function ImageCore({
                     && !pngBorder
                     && !gradientBorder && {
                         after: [
-                            "pointer-events-none absolute inset-0 z-2 rounded-inherit transition-[border-color] duration-250",
+                            "pointer-events-none absolute inset-0 z-2 rounded-inherit transition-[border-color] duration-350",
                             "border border-default/15",
                             {
                                 "data-[lightbox-active=true]":

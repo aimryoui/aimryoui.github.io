@@ -7,8 +7,13 @@ import { usePress } from "react-aria"
 
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
+import { useDirection } from "@/components/ui/direction"
 import { Lightbox } from "@/components/ui/lightbox"
 import { Highlight } from "@/components/ui/typography"
+import {
+    RTL_CHAR_REGEX,
+    TRAILING_PUNCTUATION_REGEX
+} from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { slugify } from "@/helpers/slugify"
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
@@ -40,6 +45,15 @@ function SectionName({
     const TextComp = isAnchorTag ? "h4" : Fragment
 
     const playPressFeedback = usePressFeedback()
+    const direction = useDirection()
+
+    const isRTLText = RTL_CHAR_REGEX.test(sectionName)
+    const hasTrailingPunctuation = TRAILING_PUNCTUATION_REGEX.test(sectionName)
+
+    const isDirectionClashing =
+        hasTrailingPunctuation
+        && ((direction === "rtl" && !isRTLText)
+            || (direction === "ltr" && isRTLText))
 
     let { pressProps } = usePress({
         onPress: () => {
@@ -94,6 +108,7 @@ function SectionName({
                     })}
                 >
                     {formatOrdinals(sectionName)}
+                    {isDirectionClashing && (isRTLText ? "\u200F" : "\u200E")}
                 </TextComp>{" "}
                 {author && (
                     <Highlight className="font-mono normal-case" italic>

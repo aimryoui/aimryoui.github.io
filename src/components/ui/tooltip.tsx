@@ -194,10 +194,10 @@ function TooltipViewport({
                 "has-[kbd]:pe-1",
                 {
                     "[&_:is([data-current],[data-previous])]": [
-                        "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-opacity ease-[cubic-bezier(0.22,1,0.36,1)] duration-250",
+                        "w-[calc(var(--popup-width)-2*var(--viewport-inline-padding))] translate-x-0 opacity-100 transition-opacity ease-[cubic-bezier(0.22,1,0.36,1)] duration-300",
                         {
                             "motion-preferred":
-                                "transition-[transform,opacity] duration-[.4s,.25s]"
+                                "transition-[transform,opacity] duration-[.4s,.3s]"
                         }
                     ],
                     "motion-preferred": {

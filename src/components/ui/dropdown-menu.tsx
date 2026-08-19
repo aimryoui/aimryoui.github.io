@@ -218,24 +218,31 @@ function DropdownMenuViewport({
                 {
                     "group-data-[side=top]/dropdown-menu-popup": "justify-end",
                     "[&_:is([data-current],[data-previous])]": [
-                        "w-[calc(var(--popup-width)-var(--spacing)*2)] translate-x-0 opacity-100 transition-opacity ease-[cubic-bezier(0.22,1,0.36,1)] duration-[.4s,.25s]",
+                        "w-[calc(var(--popup-width)-var(--spacing)*2)] translate-x-0 opacity-100 transition-opacity ease-[cubic-bezier(0.22,1,0.36,1)] duration-300",
                         {
-                            "motion-preferred": "transition-[transform,opacity]"
+                            "motion-preferred":
+                                "transition-[transform,opacity] duration-[.4s,.3s]"
                         }
                     ],
                     "motion-preferred": {
-                        "[&_[data-current][data-starting-style]]": {
-                            "data-[activation-direction~='left']":
-                                "-translate-x-1/2 opacity-0",
-                            "data-[activation-direction~='right']":
-                                "translate-x-1/2 opacity-0"
-                        },
-                        "[&_[data-previous][data-ending-style]]": {
-                            "data-[activation-direction~='left']":
-                                "translate-x-1/2 opacity-0",
-                            "data-[activation-direction~='right']":
-                                "-translate-x-1/2 opacity-0"
-                        }
+                        "[&_[data-current][data-starting-style]]": [
+                            "opacity-0",
+                            {
+                                "data-[activation-direction~='left']":
+                                    "-translate-x-1/2",
+                                "data-[activation-direction~='right']":
+                                    "translate-x-1/2"
+                            }
+                        ],
+                        "[&_[data-previous][data-ending-style]]": [
+                            "opacity-0",
+                            {
+                                "data-[activation-direction~='left']":
+                                    "translate-x-1/2",
+                                "data-[activation-direction~='right']":
+                                    "-translate-x-1/2"
+                            }
+                        ]
                     },
                     "[[data-instant]_&_:is([data-current],[data-previous])]":
                         "transition-none"

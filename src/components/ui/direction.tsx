@@ -21,12 +21,11 @@ function BaseUIDirectionSync({ children }: { children: React.ReactNode }) {
     )
 }
 
-function DirectionProvider({
-    children,
-    ...props
-}: React.ComponentProps<typeof I18nProvider> & {
+type DirectionProviderProps = React.ComponentProps<typeof I18nProvider> & {
     direction?: React.ComponentProps<"div">["dir"]
-}) {
+}
+
+function DirectionProvider({ children, ...props }: DirectionProviderProps) {
     const directionPref = useDirectionStore((state) => state.preference)
     const { locale: currentLocale, direction: systemDirection } = useLocale()
 
@@ -55,4 +54,5 @@ function useDirection() {
     return direction
 }
 
+export type { DirectionProviderProps }
 export { DirectionProvider, I18nProvider, useDirection, useLocale }

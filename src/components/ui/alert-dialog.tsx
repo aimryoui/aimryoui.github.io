@@ -42,7 +42,7 @@ function AlertDialogOverlay({
                     dark: "bg-black/50",
                     "supports-[backdrop-filter]": "backdrop-blur-sm",
                     "motion-preferred": [
-                        "duration-250",
+                        "duration-300",
                         {
                             "data-starting-style": "opacity-0 backdrop-blur-0",
                             "data-ending-style": "opacity-0 backdrop-blur-0"
@@ -82,7 +82,7 @@ function AlertDialogContent({
                     "group/alert-dialog-content fixed start-1/2 top-1/2 z-90 grid max-h-[calc(100dvh-var(--spacing)*4*2)] w-full -translate-x-1/2 -translate-y-1/2 cursor-auto gap-3 rounded-3xl px-4 py-3 text-popover-foreground outline-none rtl:translate-x-1/2",
                     {
                         "motion-preferred": [
-                            "duration-250",
+                            "duration-300",
                             {
                                 "data-starting-style": "scale-95 opacity-0",
                                 "data-ending-style": "scale-95 opacity-0"

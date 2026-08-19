@@ -20,9 +20,10 @@ const MobileTocItemRow = memo(
         query,
         onPress,
         onSameLinkClick,
+        onLinkClick,
         children,
         ...props
-    }: TocItemRowProps) => {
+    }: TocItemRowProps & { onLinkClick?: () => void }) => {
         const pathname = usePathname()
 
         const isActive = useTocActiveId((s) => s.activeId === item.id)
@@ -107,6 +108,7 @@ const MobileTocItemRow = memo(
                             hrefPathname === pathname || hrefPathname === ""
                         if (item.mode === "route" && !isSamePath) {
                             // Let the native link navigation happen
+                            onLinkClick?.()
                             return
                         }
 

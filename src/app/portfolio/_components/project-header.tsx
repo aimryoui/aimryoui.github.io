@@ -11,7 +11,11 @@ import { LinkButton } from "@/components/ui/button"
 import { useDirection } from "@/components/ui/direction"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { At, H1, Highlight, Text } from "@/components/ui/typography"
-import { RTL_CHAR_REGEX } from "@/helpers/character-regexes"
+import {
+    RTL_CHAR_REGEX,
+    TRAILING_MEDIA_FILE_EXTENSIONS_REGEX,
+    TRAILING_PUNCTUATION_REGEX
+} from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { slugify } from "@/helpers/slugify"
@@ -23,9 +27,6 @@ import { type ProjectId } from "@/types/project-ids"
 import { type projects } from "~/.velite"
 
 const ICON = TOOL_ICONS({ size: "sm" })
-
-const TRAILING_REGEX = /[.!?]$/u
-const MEDIA_REGEX = /\.(jpg|png|mp4|mp3)$/u
 
 function ProjectHeader({
     type,
@@ -57,14 +58,15 @@ function ProjectHeader({
     const direction = useDirection()
 
     const isRTLText = RTL_CHAR_REGEX.test(projectName)
-    const hasTrailingPunctuation = TRAILING_REGEX.test(projectName)
+    const hasTrailingPunctuation = TRAILING_PUNCTUATION_REGEX.test(projectName)
 
     const isClashing =
         hasTrailingPunctuation
         && ((direction === "rtl" && isRTLText)
             || (direction === "ltr" && !isRTLText))
 
-    const shouldHideDot = isClashing || MEDIA_REGEX.test(projectName)
+    const shouldHideDot =
+        isClashing || TRAILING_MEDIA_FILE_EXTENSIONS_REGEX.test(projectName)
 
     return (
         <div className={cn("relative bg-background")}>

@@ -401,10 +401,10 @@ function CarouselItem({
             style={
                 orientation === "horizontal"
                     ? {
-                          paddingLeft: gapToRem
+                          paddingInlineStart: gapToRem
                       }
                     : {
-                          paddingTop: gapToRem
+                          paddingBlockStart: gapToRem
                       }
             }
             {...props}
@@ -484,10 +484,10 @@ function CarouselIndicator({
             {!emblaApi || count === 0 ? (
                 <Spinner />
             ) : (
-                <bdo dir="ltr" className="truncate">
+                <span className="truncate">
                     <span ref={currentRef}>{count < 10 ? "1" : "01"}</span> /{" "}
                     {count}
-                </bdo>
+                </span>
             )}
         </div>
     )

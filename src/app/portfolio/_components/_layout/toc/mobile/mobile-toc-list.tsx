@@ -76,6 +76,7 @@ function MobileTocList({
                             debouncedQuery={debouncedQuery}
                             onItemPress={handlePress}
                             onSameLinkClick={handleSameClick}
+                            onLinkClick={onLinkClick}
                         />
                     )
                 }
@@ -103,6 +104,7 @@ function MobileTocList({
                                     handleSameLinkClick()
                                     onLinkClick?.()
                                 }}
+                                onLinkClick={onLinkClick}
                             />
                         ))}
                     </ul>
