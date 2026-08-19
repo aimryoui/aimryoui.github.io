@@ -2,7 +2,7 @@
 
 import { cloneElement, isValidElement, useState } from "react"
 
-import { PanelsLeftBottom, RotateCcw, Undo2 } from "lucide-react"
+import { RotateCcw, Undo2 } from "lucide-react"
 
 import { ArrowRight } from "@/components/icons/icons"
 import {
@@ -96,7 +96,7 @@ const getPreferenceChanges = () => {
     > = {
         [NAVIGATION_MENU.name]: {
             category: NAVIGATION_MENU.name,
-            icon: <PanelsLeftBottom />,
+            icon: NAVIGATION_MENU.icon,
             changes: []
         },
         [SOUNDS_HAPTICS_MENU.name]: {

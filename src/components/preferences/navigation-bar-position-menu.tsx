@@ -6,7 +6,6 @@ import {
     MirrorRightBoldDuotoneIcon,
     WindowFrameBoldDuotoneIcon
 } from "@solar-icons/react"
-import { PanelBottom, PanelTop, PanelTopBottomDashed } from "lucide-react"
 
 import { useDirection } from "@/components/ui/direction"
 import {
@@ -25,22 +24,39 @@ import {
 
 const MENU_CONFIG = {
     name: "Navigation",
-    icon: <MirrorLeftBoldDuotoneIcon />
+    icon: (
+        <WindowFrameBoldDuotoneIcon
+            className={cn(
+                "[--solar-secondary-color:theme(colors.current)] [--solar-secondary-opacity:1]",
+                "-scale-y-100 rtl:-scale-x-100",
+                "first-of-type:*:!opacity-50 last-of-type:*:!opacity-25 not-[[style]]:*:opacity-100",
+                {
+                    lg: "first-of-type:*:!opacity-100 not-[[style]]:not-last-of-type:*:text-background nth-2:*:!opacity-25 nth-3:*:!opacity-25"
+                }
+            )}
+        />
+    )
 }
 
 const MOBILE_CONFIG = {
-    triggerIcon: PanelTopBottomDashed,
     triggerText: "Toolbar position",
     options: [
-        { value: "top", icon: PanelTop, text: "Top", disabled: true },
-        { value: "bottom", icon: PanelBottom, text: "Bottom", disabled: false }
+        {
+            value: "top",
+            icon: MirrorTopBoldDuotoneIcon,
+            text: "Top",
+            disabled: true
+        },
+        {
+            value: "bottom",
+            icon: MirrorBottomBoldDuotoneIcon,
+            text: "Bottom",
+            disabled: false
+        }
     ]
 } as const
 
-const DESKTOP_CONFIG = {
-    triggerIcon: WindowFrameBoldDuotoneIcon,
-    triggerText: "Sidebar position"
-} as const
+const DESKTOP_CONFIG = { triggerText: "Sidebar position" } as const
 
 function NavigationBarPositionMenu() {
     const isMobile = useMediaQuery("lg")
@@ -85,17 +101,11 @@ function NavigationBarPositionMenu() {
 
     const config = isMobile ? MOBILE_CONFIG : DESKTOP_CONFIG
     const options = isMobile ? MOBILE_CONFIG.options : desktopOptions
-    const TriggerIcon = config.triggerIcon
 
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <TriggerIcon
-                    className={cn(
-                        "first-of-type:*:!opacity-25 not-[[style]]:*:opacity-50",
-                        "[--solar-secondary-color:theme(colors.current)] [--solar-secondary-opacity:1]"
-                    )}
-                />
+                {MENU_CONFIG.icon}
                 {config.triggerText}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
@@ -131,4 +141,12 @@ function NavigationBarPositionMenu() {
     )
 }
 
-export { MENU_CONFIG, NavigationBarPositionMenu }
+function MirrorTopBoldDuotoneIcon() {
+    return <MirrorLeftBoldDuotoneIcon className="rotate-90" />
+}
+
+function MirrorBottomBoldDuotoneIcon() {
+    return <MirrorRightBoldDuotoneIcon className="rotate-90" />
+}
+
+export { DESKTOP_CONFIG, MENU_CONFIG, MOBILE_CONFIG, NavigationBarPositionMenu }

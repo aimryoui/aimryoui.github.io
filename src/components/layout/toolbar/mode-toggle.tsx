@@ -24,7 +24,7 @@ function ThemedIcon() {
             return <MoonBoldDuotoneIcon className="size-5.5" />
         case "system":
         case undefined:
-            return <MonitorBoldDuotoneIcon className="size-5" />
+            return <MonitorBoldDuotoneIcon className="size-5 scale-105" />
     }
 }
 

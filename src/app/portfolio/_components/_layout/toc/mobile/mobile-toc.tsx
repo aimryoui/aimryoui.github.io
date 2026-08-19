@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from "react"
 
 import { type Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
 import { sendGAEvent } from "@next/third-parties/google"
-import { PanelTopClose, PanelTopOpen } from "lucide-react"
+import {
+    ListDownMinimalisticBoldDuotoneIcon,
+    ListUpMinimalisticBoldDuotoneIcon
+} from "@solar-icons/react"
 
 import { SectionLine } from "@/components/layout/line"
 import { Button } from "@/components/ui/button"
@@ -126,15 +129,9 @@ function MobileTocButtonCore() {
                                 data-state={isTocOpen ? "open" : "closed"}
                             >
                                 {isTocOpen ? (
-                                    <PanelTopOpen
-                                        strokeWidth={0.75}
-                                        className="size-8"
-                                    />
+                                    <ListDownMinimalisticBoldDuotoneIcon className="size-8" />
                                 ) : (
-                                    <PanelTopClose
-                                        strokeWidth={0.75}
-                                        className="size-8"
-                                    />
+                                    <ListUpMinimalisticBoldDuotoneIcon className="size-8" />
                                 )}
                             </Button>
                         }
@@ -183,7 +180,7 @@ function MobileTocButton() {
             aria-expanded={false}
             data-state="closed"
         >
-            <PanelTopClose strokeWidth={1.25} className="size-8" />
+            <ListUpMinimalisticBoldDuotoneIcon className="size-8" />
             <span className="sr-only">Table of Contents</span>
         </Button>
     )
