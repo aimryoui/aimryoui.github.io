@@ -35,14 +35,18 @@ const MOTION_PREFERENCES: Record<MotionPreference, MotionPreferenceConfig> = {
         label: "Preferred",
         description:
             "Enable all motion effects, ignore system motion preferences.",
-        icon: <LikeBoldDuotoneIcon />
+        icon: (
+            <LikeBoldDuotoneIcon className="translate-x-[.5px] [--solar-secondary-opacity:0.4]" />
+        )
     },
     reduced: {
         value: "reduced",
         label: "Reduced",
         description:
             "Reduce motion effects that may be problematic for some users.",
-        icon: <MinusCircleBoldDuotoneIcon className="scale-105" />
+        icon: (
+            <MinusCircleBoldDuotoneIcon className="scale-105 last-of-type:*:origin-center last-of-type:*:scale-125" />
+        )
     },
     system: {
         value: "system",

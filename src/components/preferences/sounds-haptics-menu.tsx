@@ -53,7 +53,9 @@ const AUDIO_PREFERENCES: Record<
         label: "Auto",
         description:
             "Automatically capture first global interaction and turn on sound effects.",
-        icon: <MagicWand3BoldDuotoneIcon />
+        icon: (
+            <MagicWand3BoldDuotoneIcon className="[--solar-secondary-opacity:0.4]" />
+        )
     }
 }
 

@@ -39,7 +39,7 @@ interface MediaPreferenceConfig {
 
 const MENU_CONFIG = {
     name: "Media",
-    icon: <GalleryWideBoldDuotoneIcon className="mb-0.5" />
+    icon: <GalleryWideBoldDuotoneIcon className="mb-0.25" />
 }
 
 const MEDIA_PREFERENCES: Record<MediaPreference, MediaPreferenceConfig> = {
@@ -60,7 +60,9 @@ const AUTOPLAY_OPTIONS: Record<
     },
     wifi: {
         label: "Wi-Fi connections only",
-        icon: <WiFiRouterBoldDuotoneIcon />
+        icon: (
+            <WiFiRouterBoldDuotoneIcon className="[--solar-secondary-opacity:0.4]" />
+        )
     },
     never: {
         label: "Never auto-play",

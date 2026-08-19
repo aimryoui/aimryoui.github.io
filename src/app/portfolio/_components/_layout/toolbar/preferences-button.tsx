@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-import { MenuDotsBoldDuotoneIcon, SolarProvider } from "@solar-icons/react"
+import { MenuDotsBoldDuotoneIcon } from "@solar-icons/react"
 
 import { EffectsMenu } from "@/components/preferences/effects-menu"
 import { ExperimentalsMenu } from "@/components/preferences/experimentals-menu"
@@ -37,6 +37,7 @@ function PreferencesButton() {
                 onOpenChange={(open) => {
                     setIsPreferencesOpen(open)
                 }}
+                containerClassName="[--solar-secondary-opacity:0.25] dark:[--solar-secondary-opacity:0.4]"
             >
                 <TooltipTrigger
                     delay={500}
@@ -57,7 +58,7 @@ function PreferencesButton() {
                             }
                             payload={{
                                 content: (
-                                    <SolarProvider size={20}>
+                                    <>
                                         <DropdownMenuGroup>
                                             <DropdownMenuLabel>
                                                 Preferences
@@ -82,7 +83,7 @@ function PreferencesButton() {
                                             <ResumeDownloadMenuLinkItem />
                                             <SourceCodeMenuLinkItem />
                                         </DropdownMenuGroup>
-                                    </SolarProvider>
+                                    </>
                                 )
                             }}
                         >

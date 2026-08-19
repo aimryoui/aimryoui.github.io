@@ -36,6 +36,7 @@ function RootPreferencesButton() {
                 onOpenChange={(open) => {
                     setIsPreferencesOpen(open)
                 }}
+                containerClassName="[--solar-secondary-opacity:0.25] dark:[--solar-secondary-opacity:0.4]"
             >
                 <TooltipTrigger
                     delay={500}

@@ -25,6 +25,15 @@ import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
 import { EXPERIENCE_SECTIONS } from "@/portfolio/_configs/experience-sections"
 
+const renderDate = (date: string) => {
+    return date.split(" ").map((chunk, index, arr) => (
+        <Fragment key={index}>
+            <bdi>{chunk}</bdi>
+            {index < arr.length - 1 && " "}
+        </Fragment>
+    ))
+}
+
 function Experience() {
     let [expandedKeys, setExpandedKeys] = useState(
         new Set<Key>([
@@ -163,17 +172,13 @@ function Experience() {
                                                 }
                                             )}
                                         >
-                                            {place.startDate
-                                            === place.endDate ? (
-                                                place.startDate
+                                            {place.startDate === place.endDate ? (
+                                                renderDate(place.startDate)
                                             ) : (
                                                 <>
-                                                    <bdi>{place.startDate}</bdi>{" "}
-                                                    —{" "}
+                                                    {renderDate(place.startDate)} —{" "}
                                                     {place.endDate ? (
-                                                        <bdi>
-                                                            {place.endDate}
-                                                        </bdi>
+                                                        renderDate(place.endDate)
                                                     ) : (
                                                         <span className="text-foreground">
                                                             Now

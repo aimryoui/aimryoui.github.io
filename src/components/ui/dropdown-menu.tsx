@@ -35,6 +35,7 @@ const DropdownMenuHandleContext = createContext<DropdownMenuHandle | null>(null)
 const createDropdownMenuHandle = MenuPrimitive.createHandle<DropdownMenuPayload>
 
 function DropdownMenu({
+    containerClassName,
     children,
     handle: externalHandle,
     ...props
@@ -44,6 +45,7 @@ function DropdownMenu({
 > & {
     children?: React.ReactNode
     handle?: DropdownMenuHandle
+    containerClassName?: MenuPrimitive.Portal.Props["className"]
 }) {
     const [internalHandle] = useState(
         MenuPrimitive.createHandle<DropdownMenuPayload>
@@ -76,6 +78,7 @@ function DropdownMenu({
                             sideOffset={options.sideOffset}
                             anchor={options.anchor}
                             className={className}
+                            containerClassName={containerClassName}
                         >
                             {content}
                         </DropdownMenuContent>
@@ -117,6 +120,7 @@ function DropdownMenuContent({
     shadow = true,
     isSubMenu = false,
     className,
+    containerClassName,
     positionerClassName,
     viewportClassName,
     children,
@@ -129,20 +133,20 @@ function DropdownMenuContent({
         anchor?: HTMLElement | null
         shadow?: boolean
         isSubMenu?: boolean
+        containerClassName?: MenuPrimitive.Portal.Props["className"]
         positionerClassName?: MenuPrimitive.Positioner.Props["className"]
         viewportClassName?: MenuPrimitive.Viewport.Props["className"]
     }) {
     return (
         <DropdownMenuPortal
-            className={
-                shadow
-                    ? cn(
-                          "z-80",
-                          "[filter:drop-shadow(0px_0px_25px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_2px_rgba(0,0,0,0.10))]",
-                          "dark:[filter:drop-shadow(0px_0px_25px_theme(colors.background/0.6))_drop-shadow(0px_0px_2px_theme(colors.background/0.4))]"
-                      )
-                    : undefined
-            }
+            className={cn(
+                shadow && [
+                    "z-80",
+                    "[filter:drop-shadow(0px_0px_25px_rgba(0,0,0,0.16))_drop-shadow(0px_0px_2px_rgba(0,0,0,0.10))]",
+                    "dark:[filter:drop-shadow(0px_0px_25px_theme(colors.background/0.6))_drop-shadow(0px_0px_2px_theme(colors.background/0.4))]"
+                ],
+                containerClassName
+            )}
         >
             <MenuPrimitive.Positioner
                 data-slot="dropdown-menu-positioner"

@@ -29,9 +29,9 @@ const MENU_CONFIG = {
             className={cn(
                 "[--solar-secondary-color:theme(colors.current)] [--solar-secondary-opacity:1]",
                 "-scale-y-100 rtl:-scale-x-100",
-                "first-of-type:*:!opacity-50 last-of-type:*:!opacity-25 not-[[style]]:*:opacity-100",
+                "first-of-type:*:!opacity-40 last-of-type:*:!opacity-20 not-[[style]]:*:opacity-100",
                 {
-                    lg: "first-of-type:*:!opacity-100 not-[[style]]:not-last-of-type:*:text-background nth-2:*:!opacity-25 nth-3:*:!opacity-25"
+                    lg: "first-of-type:*:!opacity-100 not-[[style]]:not-last-of-type:*:text-background nth-2:*:!opacity-20 nth-3:*:!opacity-20"
                 }
             )}
         />

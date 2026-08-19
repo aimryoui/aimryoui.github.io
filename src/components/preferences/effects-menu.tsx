@@ -51,7 +51,9 @@ const EFFECTS: Record<Effect, EffectConfig> = {
         label: "Line sidebar",
         description:
             "Magnifying lines effect on sidebar. Not available on small screen or touch devices. Disabled with reduced motion.",
-        icon: <ListBoldDuotoneIcon />,
+        icon: (
+            <ListBoldDuotoneIcon className="[--solar-secondary-opacity:0.4]" />
+        ),
         shouldDisable: (ctx) =>
             ctx.device.isTouchDevice || ctx.motionReduced || ctx.isLg
     },
