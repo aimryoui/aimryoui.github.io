@@ -97,7 +97,12 @@ function TocList({
         >
             {tree.map((node) => {
                 if (node.type === "divider") {
-                    return <TocDivider key={`div-${node.id}`} />
+                    return (
+                        <TocDivider
+                            key={`div-${node.id}`}
+                            className="ltr:ltr rtl:rtl"
+                        />
+                    )
                 }
 
                 if (node.type === "group") {

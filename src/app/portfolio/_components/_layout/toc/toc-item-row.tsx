@@ -96,9 +96,15 @@ const TocItemRow = memo(
                         after: [
                             "not-data-line-sidebar:hidden",
                             "absolute start-safe-zone top-[calc(100%+var(--item-gap)/2)] h-px origin-left -translate-y-1/2 bg-[--marker-color] opacity-60",
-                            "last:hidden has-[+[role=separator]]:hidden",
+                            "last:hidden has-[+[role=separator]]:hidden rtl:origin-right",
                             isProject
-                                ? "w-[calc(var(--marker-length)*var(--tick-scale))] motion-preferred:scale-x-[calc(1+var(--effect,0)*1.5)]"
+                                ? [
+                                      "w-[calc(var(--marker-length)*var(--tick-scale))]",
+                                      {
+                                          "motion-preferred":
+                                              "scale-x-[calc(1+var(--effect,0)*1.5)]"
+                                      }
+                                  ]
                                 : {
                                       "motion-preferred":
                                           "w-1.25 scale-x-[--effect,0] transition-[width] group-not-data-expanded/collapsible:w-0"
@@ -115,6 +121,7 @@ const TocItemRow = memo(
                     className={cn(
                         "not-data-line-sidebar:hidden",
                         "absolute start-safe-zone top-1/2 h-px origin-left -translate-y-1/2",
+                        "rtl:origin-right",
                         isActive
                             ? "bg-highlighted"
                             : "bg-[color-mix(in_srgb,var(--accent-color)_calc(var(--effect,0)*100%),var(--marker-color))]",
@@ -219,9 +226,12 @@ const TocItemRow = memo(
                         <div
                             className={cn(
                                 "my-0.5 grid size-6 place-items-center rounded-md bg-muted-foreground/15",
-                                "data-line-sidebar:translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem)*0.9)]",
                                 {
                                     dark: "bg-muted-foreground/20",
+
+                                    "data-line-sidebar":
+                                        "translate-x-[--move-x] [--move-x:calc(var(--effect,0)*var(--max-shift,1.875rem)*0.9)] rtl:-translate-x-[--move-x]",
+
                                     "group-hover":
                                         "transition-[background-color,color] duration-100",
                                     "group-hover/link":
@@ -240,7 +250,10 @@ const TocItemRow = memo(
                         className={cn(
                             "block w-fit max-w-full px-1.25",
                             isCategory && !isSelectedWorks && "-ms-1.25",
-                            "data-line-sidebar:translate-x-[calc(var(--effect,0)*var(--max-shift,1.875rem))]"
+                            {
+                                "data-line-sidebar":
+                                    "translate-x-[--move-x] [--move-x:calc(var(--effect,0)*var(--max-shift,1.875rem))] rtl:-translate-x-[--move-x]"
+                            }
                         )}
                     >
                         {highlightQuery(item.label, query ?? "")
