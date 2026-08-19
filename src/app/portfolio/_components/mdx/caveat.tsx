@@ -1,6 +1,6 @@
 "use client"
 
-import { FileExclamationPoint } from "lucide-react"
+import { GolfBoldDuotoneIcon } from "@solar-icons/react"
 
 import { Note } from "@/components/layout/note"
 import {
@@ -15,7 +15,7 @@ function CaveatLightness() {
             className={cn("flex flex-col items-start justify-start text-start")}
         >
             <div className="mb-0.5 flex items-center gap-1 self-start">
-                <FileExclamationPoint className="size-4.5 -translate-y-0.25" />
+                <GolfBoldDuotoneIcon className="-ms-0.5 size-5" />
                 <strong>Caveat:</strong>
             </div>
             <span>

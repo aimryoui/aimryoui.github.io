@@ -1,6 +1,6 @@
 "use client"
 
-import { type HTMLAttributes, useState } from "react"
+import { cloneElement, isValidElement, useState } from "react"
 
 import { PanelsLeftBottom, RotateCcw, Undo2 } from "lucide-react"
 
@@ -73,7 +73,7 @@ import {
 
 const RESET_MENU_CONFIG = {
     name: "Reset to defaults",
-    icon: RotateCcw
+    icon: <RotateCcw />
 }
 
 const getPreferenceChanges = () => {
@@ -81,11 +81,13 @@ const getPreferenceChanges = () => {
         string,
         {
             category: string
-            icon: React.ElementType
+            icon: React.ReactNode
             changes: {
                 id: string
                 name: string
-                from: string | ((dir: ReturnType<typeof useDirection>) => string)
+                from:
+                    | string
+                    | ((dir: ReturnType<typeof useDirection>) => string)
                 to: string | ((dir: ReturnType<typeof useDirection>) => string)
                 onReset: () => void
                 onUndo: () => void
@@ -94,7 +96,7 @@ const getPreferenceChanges = () => {
     > = {
         [NAVIGATION_MENU.name]: {
             category: NAVIGATION_MENU.name,
-            icon: PanelsLeftBottom,
+            icon: <PanelsLeftBottom />,
             changes: []
         },
         [SOUNDS_HAPTICS_MENU.name]: {
@@ -330,10 +332,9 @@ const getPreferenceChanges = () => {
 }
 
 function ResetMenuItem({ onClick }: { onClick?: () => void }) {
-    const Icon = RESET_MENU_CONFIG.icon
     return (
         <DropdownMenuItem onClick={onClick} variant="destructive">
-            <Icon />
+            {RESET_MENU_CONFIG.icon}
             {RESET_MENU_CONFIG.name}
         </DropdownMenuItem>
     )
@@ -362,7 +363,6 @@ function ResetPreferenceAlertDialog({
 
     const direction = useDirection()
     const changes = initialChanges
-    const ResetIcon = RESET_MENU_CONFIG.icon
 
     const handleReset = () => {
         PREFERENCE_STORES.forEach((store) => {
@@ -412,14 +412,13 @@ function ResetPreferenceAlertDialog({
                                         <Tooltip>
                                             <ul
                                                 className={cn(
-                                                    "flex-1 space-y-3 overflow-y-auto px-4 py-3.75 scroll-fade-y scroll-fade-16 scrollbar-thin",
+                                                    "flex-1 space-y-3 overflow-y-auto py-3.75 pe-4 ps-3.5 scroll-fade-y scroll-fade-16 scrollbar-thin",
                                                     {
                                                         sm: "space-y-5 px-5.75 py-5.5"
                                                     }
                                                 )}
                                             >
                                                 {changes.map((group) => {
-                                                    const Icon = group.icon
                                                     return (
                                                         <li
                                                             key={group.category}
@@ -429,14 +428,30 @@ function ResetPreferenceAlertDialog({
                                                             )}
                                                         >
                                                             <div className="flex items-center gap-1.5 text-foreground font-wght-600">
-                                                                <Icon
-                                                                    className={cn(
-                                                                        "size-4",
-                                                                        group.category
-                                                                            === "Navigation"
-                                                                            && "rtl:-scale-x-100"
+                                                                {isValidElement(
+                                                                    group.icon
+                                                                )
+                                                                    && cloneElement(
+                                                                        group.icon as React.ReactElement<{
+                                                                            className?: string
+                                                                        }>,
+                                                                        {
+                                                                            className:
+                                                                                cn(
+                                                                                    (
+                                                                                        group.icon as React.ReactElement<{
+                                                                                            className?: string
+                                                                                        }>
+                                                                                    )
+                                                                                        .props
+                                                                                        .className,
+                                                                                    "size-4.5",
+                                                                                    group.category
+                                                                                        === "Navigation"
+                                                                                        && "rtl:-scale-x-100"
+                                                                                )
+                                                                        }
                                                                     )}
-                                                                />
                                                                 <span>
                                                                     {
                                                                         group.category
@@ -445,9 +460,9 @@ function ResetPreferenceAlertDialog({
                                                             </div>
                                                             <ul
                                                                 className={cn(
-                                                                    // 4 is icon size, 1.5 is the gap between icon and label
-                                                                    "[--indent:calc(var(--spacing)*4+var(--spacing)*1.5)]",
-                                                                    "[--line-indent:calc(var(--indent)-var(--spacing)*4/2+var(--line-width)/2.25)] [--line-width:var(--px)] [--top-offset:calc(var(--gap)-var(--spacing)*.5)]",
+                                                                    // 4.5 is icon size, 1.5 is the gap between icon and label
+                                                                    "[--indent:calc(var(--spacing)*4.5+var(--spacing)*1.5)]",
+                                                                    "[--line-indent:calc(var(--indent)-var(--spacing)*4.5/2+var(--line-width)/2)] [--line-width:var(--px)] [--top-offset:calc(var(--gap)-var(--spacing)*.5)]",
                                                                     "flex flex-col gap-[--gap] ps-[--indent]"
                                                                 )}
                                                             >
@@ -464,9 +479,6 @@ function ResetPreferenceAlertDialog({
                                                                             index
                                                                             === arr.length
                                                                                 - 1
-                                                                        const isOnly =
-                                                                            isFirst
-                                                                            && isLast
                                                                         const isReset =
                                                                             resetItems.has(
                                                                                 change.id
@@ -638,7 +650,7 @@ function ResetPreferenceAlertDialog({
                                                                                                     }
                                                                                                 />
                                                                                             ) : (
-                                                                                                <ResetIcon />
+                                                                                                <RotateCcw />
                                                                                             )}
                                                                                         </Button>
                                                                                     }
@@ -669,7 +681,7 @@ function ResetPreferenceAlertDialog({
                             handleReset()
                         }}
                     >
-                        <ResetIcon />
+                        <RotateCcw />
                         Reset all
                     </AlertDialogAction>
                 </AlertDialogFooter>

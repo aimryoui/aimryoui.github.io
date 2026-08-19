@@ -315,7 +315,7 @@ function ProjectCover({
                                 <socialData.icon
                                     className={cn(
                                         socialData.type === "behance"
-                                            && "-translate-y-[.5px] translate-x-[.5px]"
+                                            && "-translate-y-[.5px] translate-x-[.5px] rtl:-translate-x-[.5px]"
                                     )}
                                 />
                             </div>

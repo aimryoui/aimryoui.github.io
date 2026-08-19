@@ -1,7 +1,12 @@
 "use client"
 
 import { sendGAEvent } from "@next/third-parties/google"
-import { AudioLines, Loader, ToggleLeft, Vibrate } from "lucide-react"
+import {
+    BoneFractureBoldDuotoneIcon,
+    MagicWand3BoldDuotoneIcon,
+    SmartphoneVibrationBoldDuotoneIcon,
+    UserHandUpBoldDuotoneIcon
+} from "@solar-icons/react"
 
 import {
     DropdownMenuCheckboxItem,
@@ -29,7 +34,7 @@ interface AudioPreferenceConfig {
 
 const MENU_CONFIG = {
     name: "Sounds & Haptics",
-    icon: AudioLines
+    icon: <BoneFractureBoldDuotoneIcon />
 }
 
 const AUDIO_PREFERENCES: Record<
@@ -41,14 +46,14 @@ const AUDIO_PREFERENCES: Record<
         label: "Manual",
         description:
             "Manually press the volume button to toggle sound effects.",
-        icon: <ToggleLeft />
+        icon: <UserHandUpBoldDuotoneIcon />
     },
     auto: {
         value: "auto",
         label: "Auto",
         description:
             "Automatically capture first global interaction and turn on sound effects.",
-        icon: <Loader />
+        icon: <MagicWand3BoldDuotoneIcon />
     }
 }
 
@@ -66,7 +71,7 @@ function SoundsHapticsMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <MENU_CONFIG.icon />
+                {MENU_CONFIG.icon}
                 {MENU_CONFIG.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent className="max-w-60">
@@ -117,7 +122,7 @@ function SoundsHapticsMenu() {
                         closeOnClick={false}
                         description="Provide subtle vibrations on interactions. Mobile-only feature; may not work on some devices."
                     >
-                        <Vibrate />
+                        <SmartphoneVibrationBoldDuotoneIcon />
                         Haptic feedback
                     </DropdownMenuCheckboxItem>
                 </DropdownMenuGroup>

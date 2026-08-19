@@ -308,7 +308,7 @@ function DropdownMenuItem({
                             "not-focus": "**:text-accent-foreground"
                         }
                     ],
-                    "[&_svg:not([class*='size-'])]": "size-4",
+                    "[&_svg:not([class*='size-'])]": "-ms-0.5 size-4.5",
                     "[&_svg]":
                         "pointer-events-none shrink-0 data-[variant=destructive]:*:text-destructive"
                 },
@@ -422,7 +422,7 @@ function DropdownMenuSubTrigger({
                     "data-inset": "ps-7",
                     "not-data-[variant=destructive]":
                         "focus:**:text-accent-foreground",
-                    "[&_svg:not([class*='size-'])]": "size-4",
+                    "[&_svg:not([class*='size-'])]": "-ms-0.5 size-4.5",
                     "[&_svg]": "pointer-events-none shrink-0"
                 },
                 className
@@ -443,12 +443,12 @@ function DropdownMenuSubTrigger({
                     <span
                         data-slot="dropdown-menu-sub-trigger-indicator"
                         className={cn(
-                            "pointer-events-none absolute end-2 top-2 grid size-5 place-items-center"
+                            "pointer-events-none absolute end-2 top-2 grid size-4.5 place-items-center"
                         )}
                     >
                         <ChevronRightIcon
                             strokeWidth={1.5}
-                            className="size-5 rtl:rotate-180"
+                            className="size-4.5 rtl:rotate-180"
                         />
                     </span>
                 </Comp>
@@ -533,7 +533,7 @@ function DropdownMenuLinkItem({
                     "data-disabled":
                         "cursor-not-allowed !bg-transparent opacity-50",
                     "[&_svg]": "pointer-events-none shrink-0",
-                    "[&_svg:not([class*='size-'])]": "size-4"
+                    "[&_svg:not([class*='size-'])]": "-ms-0.5 size-4.5"
                 },
                 className
             )}
@@ -625,7 +625,7 @@ function DropdownMenuCheckboxItem({
                     "data-inset": "ps-7",
                     "data-disabled":
                         "cursor-not-allowed !bg-transparent opacity-50",
-                    "[&_svg:not([class*='size-'])]": "size-4",
+                    "[&_svg:not([class*='size-'])]": "-ms-0.5 size-4.5",
                     "[&_svg]": "pointer-events-none shrink-0"
                 },
                 className
@@ -647,7 +647,7 @@ function DropdownMenuCheckboxItem({
                     <MenuPrimitive.CheckboxItemIndicator
                         data-slot="dropdown-menu-checkbox-item-indicator"
                         className={cn(
-                            "pointer-events-none absolute end-2 top-2 grid size-5 place-items-center"
+                            "pointer-events-none absolute end-2 top-2 grid size-4.5 place-items-center"
                         )}
                     >
                         <CheckIcon />
@@ -715,7 +715,7 @@ function DropdownMenuRadioItem({
                     "data-inset": "ps-7",
                     "data-disabled":
                         "cursor-not-allowed !bg-transparent opacity-50",
-                    "[&_svg:not([class*='size-'])]": "size-4",
+                    "[&_svg:not([class*='size-'])]": "-ms-0.5 size-4.5",
                     "[&_svg]": "pointer-events-none shrink-0"
                 },
                 className
@@ -736,7 +736,7 @@ function DropdownMenuRadioItem({
                     <MenuPrimitive.RadioItemIndicator
                         data-slot="dropdown-menu-radio-item-indicator"
                         className={cn(
-                            "pointer-events-none absolute end-2 top-2 grid size-5 place-items-center"
+                            "pointer-events-none absolute end-2 top-2 grid size-4.5 place-items-center"
                         )}
                     >
                         <CheckIcon />

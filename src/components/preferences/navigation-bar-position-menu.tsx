@@ -2,13 +2,11 @@
 
 import { sendGAEvent } from "@next/third-parties/google"
 import {
-    PanelBottom,
-    PanelLeft,
-    PanelLeftRightDashed,
-    PanelRight,
-    PanelTop,
-    PanelTopBottomDashed
-} from "lucide-react"
+    MirrorLeftBoldDuotoneIcon,
+    MirrorRightBoldDuotoneIcon,
+    WindowFrameBoldDuotoneIcon
+} from "@solar-icons/react"
+import { PanelBottom, PanelTop, PanelTopBottomDashed } from "lucide-react"
 
 import { useDirection } from "@/components/ui/direction"
 import {
@@ -19,13 +17,15 @@ import {
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { cn } from "@/lib/utils"
 import {
     useSidebarPositionStore,
     useToolbarPositionStore
 } from "@/stores/navigation-bar-position-store"
 
 const MENU_CONFIG = {
-    name: "Navigation"
+    name: "Navigation",
+    icon: <MirrorLeftBoldDuotoneIcon />
 }
 
 const MOBILE_CONFIG = {
@@ -38,7 +38,7 @@ const MOBILE_CONFIG = {
 } as const
 
 const DESKTOP_CONFIG = {
-    triggerIcon: PanelLeftRightDashed,
+    triggerIcon: WindowFrameBoldDuotoneIcon,
     triggerText: "Sidebar position"
 } as const
 
@@ -65,13 +65,19 @@ function NavigationBarPositionMenu() {
     const desktopOptions = [
         {
             value: "inline-start",
-            icon: direction === "rtl" ? PanelRight : PanelLeft,
+            icon:
+                direction === "rtl"
+                    ? MirrorRightBoldDuotoneIcon
+                    : MirrorLeftBoldDuotoneIcon,
             text: direction === "rtl" ? "Right" : "Left",
             disabled: false
         },
         {
             value: "inline-end",
-            icon: direction === "rtl" ? PanelLeft : PanelRight,
+            icon:
+                direction === "rtl"
+                    ? MirrorLeftBoldDuotoneIcon
+                    : MirrorRightBoldDuotoneIcon,
             text: direction === "rtl" ? "Left" : "Right",
             disabled: false
         }
@@ -84,7 +90,12 @@ function NavigationBarPositionMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <TriggerIcon />
+                <TriggerIcon
+                    className={cn(
+                        "first-of-type:*:!opacity-25 not-[[style]]:*:opacity-50",
+                        "[--solar-secondary-color:theme(colors.current)] [--solar-secondary-opacity:1]"
+                    )}
+                />
                 {config.triggerText}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>

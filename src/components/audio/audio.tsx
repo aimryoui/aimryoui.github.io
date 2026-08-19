@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState } from "react"
 
-import { Volume1, Volume2, VolumeX } from "lucide-react"
+import {
+    VolumeBoldDuotoneIcon,
+    VolumeLoudBoldDuotoneIcon,
+    VolumeSmallBoldDuotoneIcon
+} from "@solar-icons/react"
 
 import { Button, type ButtonProps } from "@/components/ui/button"
 import { TooltipTrigger } from "@/components/ui/tooltip"
@@ -216,12 +220,12 @@ function AudioToggle({ className, onPress, tracking, ...props }: ButtonProps) {
                     {...props}
                 >
                     {isAudioEnabled && isActive ? (
-                        <Volume2 className="size-5.5" />
+                        <VolumeLoudBoldDuotoneIcon className="size-5 scale-105" />
                     ) : !isAudioEnabled
                       && (audioMode === "manual" || hasManuallyToggled) ? (
-                        <VolumeX className="size-5.5" />
+                        <VolumeBoldDuotoneIcon className="size-5 scale-105" />
                     ) : (
-                        <Volume1 className="size-5.5" />
+                        <VolumeSmallBoldDuotoneIcon className="size-5 scale-105" />
                     )}
                 </Button>
             }

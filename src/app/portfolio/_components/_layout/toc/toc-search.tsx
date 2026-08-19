@@ -1,8 +1,9 @@
 "use client"
 
 import { sendGAEvent } from "@next/third-parties/google"
+import { MinimalisticMagnifierLinearIcon } from "@solar-icons/react"
 
-import { Search, XCircle } from "@/components/icons/icons"
+import { XCircle } from "@/components/icons/icons"
 import { Button } from "@/components/ui/button"
 import {
     InputGroupAddon,
@@ -84,7 +85,7 @@ function TocSearch({
                 {...props}
             />
             <InputGroupAddon align="inline-start">
-                <Search />
+                <MinimalisticMagnifierLinearIcon className="mb-0.25 size-4.5" />
             </InputGroupAddon>
             <Addons hasValue={hasValue} onClear={onClear} />
         </SearchGroup>

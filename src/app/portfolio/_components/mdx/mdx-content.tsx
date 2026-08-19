@@ -1,4 +1,4 @@
-import { Lightbulb } from "lucide-react"
+import { LightbulbBoltBoldDuotoneIcon } from "@solar-icons/react"
 import * as runtime from "react/jsx-runtime"
 
 import { SectionLine } from "@/components/layout/line"
@@ -30,7 +30,7 @@ const sharedComponents = {
     SectionLine,
 
     // Icons
-    Lightbulb
+    LightbulbBoltBoldDuotoneIcon
 }
 
 declare global {

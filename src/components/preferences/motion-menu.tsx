@@ -1,9 +1,13 @@
 "use client"
 
 import { sendGAEvent } from "@next/third-parties/google"
-import { OctagonMinus, SquareStack, ThumbsUp } from "lucide-react"
+import {
+    LikeBoldDuotoneIcon,
+    MinusCircleBoldDuotoneIcon,
+    MonitorBoldDuotoneIcon,
+    ThreeSquaresBoldDuotoneIcon
+} from "@solar-icons/react"
 
-import { System } from "@/components/icons/icons"
 import {
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
@@ -22,7 +26,7 @@ interface MotionPreferenceConfig {
 
 const MENU_CONFIG = {
     name: "Motion",
-    icon: SquareStack
+    icon: <ThreeSquaresBoldDuotoneIcon />
 }
 
 const MOTION_PREFERENCES: Record<MotionPreference, MotionPreferenceConfig> = {
@@ -31,20 +35,20 @@ const MOTION_PREFERENCES: Record<MotionPreference, MotionPreferenceConfig> = {
         label: "Preferred",
         description:
             "Enable all motion effects, ignore system motion preferences.",
-        icon: <ThumbsUp />
+        icon: <LikeBoldDuotoneIcon />
     },
     reduced: {
         value: "reduced",
         label: "Reduced",
         description:
             "Reduce motion effects that may be problematic for some users.",
-        icon: <OctagonMinus />
+        icon: <MinusCircleBoldDuotoneIcon className="scale-105" />
     },
     system: {
         value: "system",
         label: "Follow system",
         description: "Follow system motion preferences.",
-        icon: <System className="-mx-0.25 size-4.5" />
+        icon: <MonitorBoldDuotoneIcon />
     }
 }
 
@@ -55,7 +59,7 @@ function MotionMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <MENU_CONFIG.icon />
+                {MENU_CONFIG.icon}
                 {MENU_CONFIG.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>

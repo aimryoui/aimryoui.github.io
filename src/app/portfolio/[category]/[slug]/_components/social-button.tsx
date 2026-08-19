@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
-import { ExternalLink } from "lucide-react"
+import { SquareTopDownLinearIcon } from "@solar-icons/react"
 
 import { ViewTransition } from "@/components/animations/view-transition"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
@@ -214,9 +214,9 @@ function SocialButton({
                                     }
                                 ],
                                 "group-hover":
-                                    "translate-x-0 grid-cols-[1fr] pe-3 ps-3.5 opacity-100",
+                                    "translate-x-0 grid-cols-[1fr] pe-3.5 ps-3.5 opacity-100",
                                 "group-data-[expanded=true]":
-                                    "translate-x-0 grid-cols-[1fr] pe-3 ps-3.5 opacity-100",
+                                    "translate-x-0 grid-cols-[1fr] pe-3.5 ps-3.5 opacity-100",
                                 rtl: "-translate-x-11",
                                 xs: "hidden"
                             }
@@ -225,7 +225,10 @@ function SocialButton({
                         <div className="min-w-0">
                             <span className="flex w-max items-center justify-end gap-x-1.5">
                                 {label}
-                                <ExternalLink className="mb-0.75 size-4 rtl:-scale-x-100" />
+                                <SquareTopDownLinearIcon
+                                    strokeWidth={2}
+                                    className="size-4 rtl:-scale-x-100"
+                                />
                             </span>
                         </div>
                     </div>
@@ -312,9 +315,9 @@ function SocialButton({
                                 {
                                     "motion-reduced": "transition-none",
                                     "group-hover":
-                                        "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75",
+                                        "translate-x-0 grid-cols-[1fr] pe-3.5 ps-4 delay-75",
                                     "group-data-[expanded=true]":
-                                        "translate-x-0 grid-cols-[1fr] pe-3 ps-4 delay-75",
+                                        "translate-x-0 grid-cols-[1fr] pe-3.5 ps-4 delay-75",
                                     rtl: "-translate-x-10"
                                 }
                             )}
@@ -356,9 +359,9 @@ function SocialButton({
                                     }
                                 ],
                                 "group-hover":
-                                    "translate-x-0 grid-cols-[1fr] pe-3 ps-4",
+                                    "translate-x-0 grid-cols-[1fr] pe-3.5 ps-4",
                                 "group-data-[expanded=true]":
-                                    "translate-x-0 grid-cols-[1fr] pe-3 ps-4",
+                                    "translate-x-0 grid-cols-[1fr] pe-3.5 ps-4",
                                 rtl: "-translate-x-10",
                                 xs: "hidden"
                             }
@@ -378,7 +381,10 @@ function SocialButton({
                                 )}
                             >
                                 {label}
-                                <ExternalLink className="size-4 -translate-y-0.25 rtl:-scale-x-100" />
+                                <SquareTopDownLinearIcon
+                                    strokeWidth={2}
+                                    className="size-4 rtl:-scale-x-100"
+                                />
                             </span>
                         </div>
                     </div>

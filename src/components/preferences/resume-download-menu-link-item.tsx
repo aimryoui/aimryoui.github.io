@@ -1,4 +1,4 @@
-import { FileDown } from "lucide-react"
+import { FileDownloadBoldDuotoneIcon } from "@solar-icons/react"
 
 import { DropdownMenuLinkItem } from "@/components/ui/dropdown-menu"
 
@@ -15,7 +15,7 @@ const RESUME_DOWNLOAD_MENU: SourceCodeMenuConfig = {
     href: "/Resume_Product-Designer_Nguyen-Hoang-Nhan.pdf",
     label: MENU_NAME,
     description: "Download my resume.",
-    icon: <FileDown />
+    icon: <FileDownloadBoldDuotoneIcon />
 }
 
 function ResumeDownloadMenuLinkItem() {

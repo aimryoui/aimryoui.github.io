@@ -1,7 +1,14 @@
 "use client"
 
 import { sendGAEvent } from "@next/third-parties/google"
-import { ImagePlay, Images, Play, PlayOff, Sunset, Wifi } from "lucide-react"
+import {
+    ClapperboardPlayBoldDuotoneIcon,
+    ForbiddenCircleBoldDuotoneIcon,
+    GalleryWideBoldDuotoneIcon,
+    PlayBoldDuotoneIcon,
+    SunsetBoldDuotoneIcon,
+    WiFiRouterBoldDuotoneIcon
+} from "@solar-icons/react"
 
 import {
     DropdownMenuCheckboxItem,
@@ -32,14 +39,14 @@ interface MediaPreferenceConfig {
 
 const MENU_CONFIG = {
     name: "Media",
-    icon: Images
+    icon: <GalleryWideBoldDuotoneIcon className="mb-0.5" />
 }
 
 const MEDIA_PREFERENCES: Record<MediaPreference, MediaPreferenceConfig> = {
     dim: {
         label: "Dim white point",
         description: "Reduce white point brightness of media on dark mode.",
-        icon: <Sunset />
+        icon: <SunsetBoldDuotoneIcon />
     }
 }
 
@@ -49,15 +56,15 @@ const AUTOPLAY_OPTIONS: Record<
 > = {
     always: {
         label: "Always auto-play",
-        icon: <Play />
+        icon: <PlayBoldDuotoneIcon className="-translate-x-0.25" />
     },
     wifi: {
         label: "Wi-Fi connections only",
-        icon: <Wifi />
+        icon: <WiFiRouterBoldDuotoneIcon />
     },
     never: {
         label: "Never auto-play",
-        icon: <PlayOff />
+        icon: <ForbiddenCircleBoldDuotoneIcon />
     }
 }
 
@@ -74,7 +81,7 @@ function MediaMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <MENU_CONFIG.icon />
+                {MENU_CONFIG.icon}
                 {MENU_CONFIG.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
@@ -102,7 +109,7 @@ function MediaMenu() {
 
                 <DropdownMenuSub>
                     <DropdownMenuSubTrigger description="Play animated media when in view. Disabled with reduced motion.">
-                        <ImagePlay />
+                        <ClapperboardPlayBoldDuotoneIcon />
                         Auto-play
                     </DropdownMenuSubTrigger>
                     <DropdownMenuSubContent className="max-w-64">

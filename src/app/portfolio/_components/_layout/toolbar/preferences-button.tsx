@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 
-import { Ellipsis } from "@/components/icons/icons"
+import { MenuDotsBoldDuotoneIcon, SolarProvider } from "@solar-icons/react"
+
 import { EffectsMenu } from "@/components/preferences/effects-menu"
 import { ExperimentalsMenu } from "@/components/preferences/experimentals-menu"
 import { MediaMenu } from "@/components/preferences/media-menu"
@@ -56,7 +57,7 @@ function PreferencesButton() {
                             }
                             payload={{
                                 content: (
-                                    <>
+                                    <SolarProvider size={20}>
                                         <DropdownMenuGroup>
                                             <DropdownMenuLabel>
                                                 Preferences
@@ -81,11 +82,11 @@ function PreferencesButton() {
                                             <ResumeDownloadMenuLinkItem />
                                             <SourceCodeMenuLinkItem />
                                         </DropdownMenuGroup>
-                                    </>
+                                    </SolarProvider>
                                 )
                             }}
                         >
-                            <Ellipsis className="size-6" />
+                            <MenuDotsBoldDuotoneIcon className="size-6" />
                         </DropdownMenuTrigger>
                     }
                 />

@@ -1,8 +1,12 @@
 "use client"
 
+import {
+    MonitorBoldDuotoneIcon,
+    MoonBoldDuotoneIcon,
+    Sun2BoldDuotoneIcon
+} from "@solar-icons/react"
 import { useTheme } from "next-themes"
 
-import { Moon, Sun, System } from "@/components/icons/icons"
 import { Button, type ButtonProps } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
 import { TooltipTrigger } from "@/components/ui/tooltip"
@@ -15,12 +19,12 @@ function ThemedIcon() {
 
     switch (theme) {
         case "light":
-            return <Sun className="size-6" />
+            return <Sun2BoldDuotoneIcon className="size-6" />
         case "dark":
-            return <Moon className="size-6" />
+            return <MoonBoldDuotoneIcon className="size-5.5" />
         case "system":
         case undefined:
-            return <System className="size-5.75" />
+            return <MonitorBoldDuotoneIcon className="size-5" />
     }
 }
 

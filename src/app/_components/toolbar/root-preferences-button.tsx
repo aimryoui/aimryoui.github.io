@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 
-import { Ellipsis } from "@/components/icons/icons"
+import { MenuDotsBoldDuotoneIcon } from "@solar-icons/react"
+
 import { EffectsMenu } from "@/components/preferences/effects-menu"
 import { ExperimentalsMenu } from "@/components/preferences/experimentals-menu"
 import { MediaMenu } from "@/components/preferences/media-menu"
@@ -84,7 +85,7 @@ function RootPreferencesButton() {
                                 side: "top"
                             }}
                         >
-                            <Ellipsis className="size-6" />
+                            <MenuDotsBoldDuotoneIcon className="size-6" />
                         </DropdownMenuTrigger>
                     }
                 />

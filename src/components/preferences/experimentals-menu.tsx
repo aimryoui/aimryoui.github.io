@@ -1,6 +1,6 @@
 "use client"
 
-import { FlaskConical } from "lucide-react"
+import { TestTubeMinimalisticBoldDuotoneIcon } from "@solar-icons/react"
 
 import { DirectionMenu } from "@/components/preferences/direction-menu"
 import {
@@ -11,14 +11,14 @@ import {
 
 const MENU_CONFIG = {
     name: "Experimentals",
-    icon: FlaskConical
+    icon: <TestTubeMinimalisticBoldDuotoneIcon />
 }
 
 function ExperimentalsMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <MENU_CONFIG.icon />
+                {MENU_CONFIG.icon}
                 {MENU_CONFIG.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>

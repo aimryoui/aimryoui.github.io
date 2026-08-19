@@ -1,7 +1,12 @@
 "use client"
 
 import { sendGAEvent } from "@next/third-parties/google"
-import { AlignLeft, AlignRight, Languages, Signpost } from "lucide-react"
+import {
+    AlignLeftBoldDuotoneIcon,
+    AlignRightBoldDuotoneIcon,
+    Signpost2BoldDuotoneIcon
+} from "@solar-icons/react"
+import { Languages } from "lucide-react"
 
 import {
     DropdownMenuRadioGroup,
@@ -24,8 +29,8 @@ interface DirectionPreferenceConfig {
 
 const MENU_CONFIG = {
     name: "Direction",
-    icon: Signpost,
-    description: "Change reading direction. Developing purpose."
+    icon: <Signpost2BoldDuotoneIcon />,
+    description: "Change reading direction. For development purposes."
 }
 
 const DIRECTION_PREFERENCES: Record<
@@ -36,13 +41,13 @@ const DIRECTION_PREFERENCES: Record<
         value: "ltr",
         label: "Left to Right",
         description: "Force Left to Right direction.",
-        icon: <AlignLeft />
+        icon: <AlignLeftBoldDuotoneIcon />
     },
     rtl: {
         value: "rtl",
         label: "Right to Left",
         description: "Force Right to Left direction.",
-        icon: <AlignRight />
+        icon: <AlignRightBoldDuotoneIcon />
     },
     auto: {
         value: "auto",
@@ -61,7 +66,7 @@ function DirectionMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger description={MENU_CONFIG.description}>
-                <MENU_CONFIG.icon />
+                {MENU_CONFIG.icon}
                 {MENU_CONFIG.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>

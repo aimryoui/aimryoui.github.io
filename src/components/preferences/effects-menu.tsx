@@ -2,12 +2,12 @@
 
 import { sendGAEvent } from "@next/third-parties/google"
 import {
-    MousePointerClick,
-    Palette,
-    Replace,
-    Sparkles,
-    TextAlignStart
-} from "lucide-react"
+    CursorBoldDuotoneIcon,
+    ListBoldDuotoneIcon,
+    Palette2BoldDuotoneIcon,
+    Reorder2BoldDuotoneIcon,
+    StarRingBoldDuotoneIcon
+} from "@solar-icons/react"
 
 import {
     DropdownMenuCheckboxItem,
@@ -35,8 +35,8 @@ interface EffectConfig {
 }
 
 const MENU_CONFIG = {
-    name: "Visual effects",
-    icon: Sparkles
+    name: "Effects",
+    icon: <StarRingBoldDuotoneIcon />
 }
 
 const EFFECTS: Record<Effect, EffectConfig> = {
@@ -44,14 +44,14 @@ const EFFECTS: Record<Effect, EffectConfig> = {
         label: "Target cursor",
         description:
             "Use custom cursor that snappy-snaps to clickable elements. Not available on touch devices. Disabled with reduced motion.",
-        icon: <MousePointerClick />,
+        icon: <CursorBoldDuotoneIcon />,
         shouldDisable: (ctx) => ctx.device.isTouchDevice || ctx.motionReduced
     },
     "line-sidebar": {
         label: "Line sidebar",
         description:
             "Magnifying lines effect on sidebar. Not available on small screen or touch devices. Disabled with reduced motion.",
-        icon: <TextAlignStart />,
+        icon: <ListBoldDuotoneIcon />,
         shouldDisable: (ctx) =>
             ctx.device.isTouchDevice || ctx.motionReduced || ctx.isLg
     },
@@ -59,13 +59,13 @@ const EFFECTS: Record<Effect, EffectConfig> = {
         label: "Ambient colors",
         description:
             "Use project vibrant-based colors instead of default colors.",
-        icon: <Palette />
+        icon: <Palette2BoldDuotoneIcon />
     },
     "page-transition": {
         label: "Page transition",
         description:
             "Enable browser's native view-transition API when navigating between pages. Disabled with reduced motion.",
-        icon: <Replace />,
+        icon: <Reorder2BoldDuotoneIcon />,
         shouldDisable: (ctx) => ctx.motionReduced
     }
 }
@@ -81,7 +81,7 @@ function EffectsMenu() {
     return (
         <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-                <MENU_CONFIG.icon />
+                {MENU_CONFIG.icon}
                 {MENU_CONFIG.name}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent className="max-w-66">

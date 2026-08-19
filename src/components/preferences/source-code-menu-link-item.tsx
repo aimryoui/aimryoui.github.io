@@ -1,4 +1,4 @@
-import { CodeXml } from "lucide-react"
+import { CodeBoldDuotoneIcon } from "@solar-icons/react"
 
 import { DropdownMenuLinkItem } from "@/components/ui/dropdown-menu"
 
@@ -15,7 +15,7 @@ const SOURCE_CODE_MENU: SourceCodeMenuConfig = {
     href: "https://github.com/aimryoui/aimryoui.github.io",
     label: MENU_NAME,
     description: "View the source code of this website on GitHub.",
-    icon: <CodeXml className="-translate-y-[.5px]" />
+    icon: <CodeBoldDuotoneIcon className="-translate-y-[.5px]" />
 }
 
 function SourceCodeMenuLinkItem() {
