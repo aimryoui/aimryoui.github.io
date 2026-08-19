@@ -22,8 +22,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
         section: "Contract",
         items: [
             {
-                startDate: "12.2025",
-                endDate: "07.2026",
+                startDate: "Dec 2025",
+                endDate: "Jul 2026",
                 position: "UI/UX & Motion Designer",
                 organization: {
                     text: "SAN Data Systems Inc.",
@@ -40,8 +40,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "01.2024",
-                endDate: "04.2024",
+                startDate: "Jan 2024",
+                endDate: "Apr 2024",
                 position: "Design Internship",
                 organization: {
                     text: "Amazing Tech Co.",
@@ -62,7 +62,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
         section: "Community",
         items: [
             {
-                startDate: "12.2024",
+                startDate: "Dec 2024",
                 position: "Design Team Mentor",
                 organization: {
                     text: "Cóc Sài Gòn Communication Club",
@@ -77,7 +77,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "06.2022",
+                startDate: "Jun 2022",
                 position: "HR Media Team",
                 organization: {
                     text: "Cóc Sài Gòn Communication Club",
@@ -92,8 +92,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "10.2023",
-                endDate: "11.2024",
+                startDate: "Oct 2023",
+                endDate: "Nov 2024",
                 position: "Design Team Lead",
                 organization: {
                     text: "Cóc Sài Gòn Communication Club",
@@ -112,8 +112,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "10.2021",
-                endDate: "09.2023",
+                startDate: "Oct 2021",
+                endDate: "Sep 2023",
                 position: "Designer",
                 organization: {
                     text: "Cóc Sài Gòn Communication Club",
@@ -130,8 +130,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "01.2023",
-                endDate: "03.2023",
+                startDate: "Jan 2023",
+                endDate: "Mar 2023",
                 position: "Design Team Lead",
                 organization: {
                     text: "Humans of FPTU",
@@ -147,8 +147,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "05.2022",
-                endDate: "01.2023",
+                startDate: "May 2022",
+                endDate: "Jan 2023",
                 position: "Designer",
                 organization: {
                     text: "Humans of FPTU",
@@ -180,8 +180,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "04.2026",
-                endDate: "07.2026",
+                startDate: "Apr 2026",
+                endDate: "Jul 2026",
                 position: "Freelance Designer",
                 organization: {
                     text: "Cường Khanh Advertising Co., Ltd",
@@ -197,8 +197,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "05.2026",
-                endDate: "06.2026",
+                startDate: "May 2026",
+                endDate: "Jun 2026",
                 position: "UI/UX Designer",
                 organization: {
                     text: "FINA Care Studio",
@@ -214,8 +214,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "01.2026",
-                endDate: "01.2026",
+                startDate: "Jan 2026",
+                endDate: "Jan 2026",
                 position: "Logo Designer",
                 organization: {
                     text: "Nguyên Liệu 24H Co., Ltd",
@@ -230,8 +230,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "12.2025",
-                endDate: "01.2026",
+                startDate: "Dec 2025",
+                endDate: "Jan 2026",
                 position: "UI/UX Designer",
                 organization: {
                     text: "Virtue Recovery Center",
@@ -246,8 +246,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "03.2025",
-                endDate: "03.2025",
+                startDate: "Mar 2025",
+                endDate: "Mar 2025",
                 position: "Freelance Designer",
                 organization: {
                     text: "Tọa Độ Cồng Chiêng",
@@ -264,8 +264,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "02.2025",
-                endDate: "10.2025",
+                startDate: "Feb 2025",
+                endDate: "Oct 2025",
                 position: "UI/UX Designer",
                 organization: {
                     text: "Nalee Viet Nam JSC",
@@ -281,8 +281,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "02.2025",
-                endDate: "04.2025",
+                startDate: "Feb 2025",
+                endDate: "Apr 2025",
                 position: "Key Visual Designer",
                 organization: {
                     text: "Xoay Vật Chuyển Dòng",
@@ -299,8 +299,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "02.2025",
-                endDate: "03.2025",
+                startDate: "Feb 2025",
+                endDate: "Mar 2025",
                 position: "Key Visual Designer",
                 organization: {
                     text: "Oẳn Tù Tì Production",
@@ -315,8 +315,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "01.2025",
-                endDate: "04.2025",
+                startDate: "Jan 2025",
+                endDate: "Apr 2025",
                 position: "Art Director",
                 organization: {
                     text: "The Present Thinker Crew",
@@ -333,8 +333,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "07.2023",
-                endDate: "08.2023",
+                startDate: "Jul 2023",
+                endDate: "Aug 2023",
                 position: "Free Designer",
                 organization: {
                     text: "Đơ Ngã Đỡ Production",
@@ -350,8 +350,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "03.2023",
-                endDate: "05.2023",
+                startDate: "Mar 2023",
+                endDate: "May 2023",
                 position: "Freelance Designer",
                 organization: {
                     text: "bédeb Production",
@@ -366,8 +366,8 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
                 ]
             },
             {
-                startDate: "02.2023",
-                endDate: "03.2023",
+                startDate: "Feb 2023",
+                endDate: "Mar 2023",
                 position: "Key Visual Designer",
                 organization: {
                     text: "RMIT Vietnam Finance Club",

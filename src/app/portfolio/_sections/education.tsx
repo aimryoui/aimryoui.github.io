@@ -40,7 +40,7 @@ function Education() {
                     className={cn(
                         "sticky top-[calc(var(--spacing-space)+var(--spacing-safe-zone-vertical))] z-45 h-fit whitespace-pre-line ps-safe-zone font-wght-500",
                         {
-                            "@[50.125rem]":
+                            "@[56.5rem]":
                                 "static col-span-full whitespace-normal px-safe-zone font-wght-600"
                         }
                     )}
@@ -52,7 +52,7 @@ function Education() {
                     className={cn(
                         "col-span-full col-start-2 grid table-fixed gap-y-table-between",
                         {
-                            "@[50.125rem]":
+                            "@[56.5rem]":
                                 "col-start-1 gap-y-table-between px-safe-zone"
                         }
                     )}
@@ -84,7 +84,7 @@ function Education() {
 
                     <TableBody
                         className={cn("grid gap-y-table-between", {
-                            "@[50.125rem]": "gap-y-table-between"
+                            "@[56.5rem]": "gap-y-table-between"
                         })}
                     >
                         <TableRow
@@ -92,24 +92,24 @@ function Education() {
                             className={cn(
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
                                 {
-                                    "@[59.375rem]": "grid-cols-2",
+                                    "@[69rem]": "grid-cols-2",
                                     "last:*": "pe-safe-zone"
                                 }
                             )}
                         >
                             <TableCell
                                 className={cn("p-0 align-top font-mono", {
-                                    "@[59.375rem]": "absolute"
+                                    "@[69rem]": "absolute"
                                 })}
                             >
-                                <bdi>09.2021</bdi> — <bdi>11.2025</bdi>
+                                Sep 2021 — Nov 2025
                             </TableCell>
 
                             <TableCell
                                 className={cn(
                                     "col-span-2 flex justify-between gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] text-pretty p-0 align-top text-foreground font-wght-500",
                                     {
-                                        "@[59.375rem]": "col-span-1 mt-[2em]",
+                                        "@[69rem]": "col-span-1 mt-[2em]",
                                         lg: "font-wght-600"
                                     }
                                 )}
@@ -120,7 +120,7 @@ function Education() {
 
                             <TableCell
                                 className={cn("p-0 align-top", {
-                                    "@[59.375rem]": "mt-[2em]"
+                                    "@[69rem]": "mt-[2em]"
                                 })}
                             >
                                 <LinkButton
@@ -180,20 +180,20 @@ function Education() {
                             className={cn(
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] border-b-0 hover:bg-transparent",
                                 {
-                                    "@[59.375rem]": "grid-cols-2",
+                                    "@[69rem]": "grid-cols-2",
                                     "last:*": "pe-safe-zone"
                                 }
                             )}
                         >
                             <TableCell
                                 className={cn({
-                                    "@[59.375rem]": "hidden"
+                                    "@[69rem]": "hidden"
                                 })}
                             />
 
                             <TableCell
                                 className={cn("col-span-2 p-0 align-top", {
-                                    "@[59.375rem]": "col-span-1"
+                                    "@[69rem]": "col-span-1"
                                 })}
                             >
                                 Grade Point Average (GPA)
@@ -213,20 +213,20 @@ function Education() {
                             className={cn(
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] border-b-0 hover:bg-transparent",
                                 {
-                                    "@[59.375rem]": "grid-cols-2",
+                                    "@[69rem]": "grid-cols-2",
                                     "last:*": "pe-safe-zone"
                                 }
                             )}
                         >
                             <TableCell
                                 className={cn({
-                                    "@[59.375rem]": "hidden"
+                                    "@[69rem]": "hidden"
                                 })}
                             />
 
                             <TableCell
                                 className={cn("col-span-2 p-0 align-top", {
-                                    "@[59.375rem]": "col-span-1"
+                                    "@[69rem]": "col-span-1"
                                 })}
                             >
                                 Degree Classification
@@ -246,20 +246,20 @@ function Education() {
                             className={cn(
                                 "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] border-b-0 hover:bg-transparent",
                                 {
-                                    "@[59.375rem]": "grid-cols-2",
+                                    "@[69rem]": "grid-cols-2",
                                     "last:*": "pe-safe-zone"
                                 }
                             )}
                         >
                             <TableCell
                                 className={cn({
-                                    "@[59.375rem]": "hidden"
+                                    "@[69rem]": "hidden"
                                 })}
                             />
 
                             <TableCell
                                 className={cn("col-span-2 p-0 align-top", {
-                                    "@[59.375rem]": "col-span-1"
+                                    "@[69rem]": "col-span-1"
                                 })}
                             >
                                 Merit-Based Entrance Scholarship
