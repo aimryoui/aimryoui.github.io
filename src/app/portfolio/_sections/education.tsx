@@ -102,7 +102,7 @@ function Education() {
                                     "@[59.375rem]": "absolute"
                                 })}
                             >
-                                09.2021 — 11.2025
+                                <bdi>09.2021</bdi> — <bdi>11.2025</bdi>
                             </TableCell>
 
                             <TableCell

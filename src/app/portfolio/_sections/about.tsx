@@ -145,7 +145,7 @@ function About() {
                                         md: "text-2xl"
                                     })}
                                 >
-                                    {item.value}
+                                    <bdi>{item.value}</bdi>
                                 </Highlight>
                                 <div
                                     className={cn(
@@ -239,7 +239,7 @@ function About() {
                                     <Highlight
                                         className={cn("font-wght-[625]")}
                                     >
-                                        HCMC
+                                        <bdi>HCMC</bdi>
                                     </Highlight>
                                 </LinkButton>
                             }
@@ -316,7 +316,7 @@ function About() {
                                             }
                                         )}
                                     >
-                                        Vietnam
+                                        <bdi>Vietnam</bdi>
                                     </Highlight>
                                     {/* https://css-shape.com/star/ */}
                                     <div

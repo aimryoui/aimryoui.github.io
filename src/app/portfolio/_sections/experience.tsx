@@ -168,8 +168,13 @@ function Experience() {
                                                 place.startDate
                                             ) : (
                                                 <>
-                                                    {place.startDate} —{" "}
-                                                    {place.endDate ?? (
+                                                    <bdi>{place.startDate}</bdi>{" "}
+                                                    —{" "}
+                                                    {place.endDate ? (
+                                                        <bdi>
+                                                            {place.endDate}
+                                                        </bdi>
+                                                    ) : (
                                                         <span className="text-foreground">
                                                             Now
                                                         </span>
