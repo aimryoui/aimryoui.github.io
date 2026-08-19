@@ -414,7 +414,7 @@ function ResetPreferenceAlertDialog({
                                                 className={cn(
                                                     "flex-1 space-y-3 overflow-y-auto py-3.75 pe-4 ps-3.5 scroll-fade-y scroll-fade-16 scrollbar-thin",
                                                     {
-                                                        sm: "space-y-5 px-5.75 py-5.5"
+                                                        sm: "space-y-5 pe-5.75 ps-5.25 py-5.5"
                                                     }
                                                 )}
                                             >
