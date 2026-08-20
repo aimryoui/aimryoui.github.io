@@ -98,6 +98,7 @@ const TocGroup = memo(
                                         "grid size-6 place-items-center rounded-[.75rem] bg-foreground/10 !corner-round transition-[border-radius,transform,translate] duration-100",
                                         {
                                             dark: "bg-foreground/15",
+                                            rtl: "-scale-y-100",
                                             "group-hover/collapsibile-trigger":
                                                 "bg-foreground/20 data-target-cursor:rounded-none dark:bg-foreground/25",
                                             "group-active/collapsibile-trigger":
@@ -119,11 +120,12 @@ const TocGroup = memo(
                                             {
                                                 "motion-preferred":
                                                     "transition-transform duration-350",
+                                                rtl: "-translate-y-[.5px] rotate-180",
                                                 "group-not-data-expanded/collapsible":
                                                     [
                                                         "translate-x-[.5px] translate-y-0 -rotate-90 dark:stroke-2.5",
                                                         {
-                                                            rtl: "-translate-x-[.5px] -scale-y-100"
+                                                            rtl: "-translate-x-[.5px] rotate-90"
                                                         }
                                                     ]
                                             }

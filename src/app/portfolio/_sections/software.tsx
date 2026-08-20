@@ -40,7 +40,7 @@ function Software() {
                     <Fragment key={section.section}>
                         <TableContainer
                             className={cn(
-                                "grid grid-cols-5 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] gap-y-table-between bg-background py-safe-zone-vertical"
+                                "grid grid-cols-5 gap-x-safe-zone gap-y-table-between bg-background py-safe-zone-vertical"
                             )}
                         >
                             <TableCaption
@@ -104,7 +104,7 @@ function Software() {
                                     <TableRow
                                         id={`software-${slugify(section.section)}`}
                                         className={cn(
-                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]"
+                                            "relative grid grid-cols-4 gap-x-safe-zone"
                                         )}
                                     >
                                         {section.frequencies.map(

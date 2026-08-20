@@ -43,7 +43,7 @@ function Contact() {
                 )}
             >
                 <div className="mb-0.5 flex items-center gap-1 self-start">
-                    <InfoCircleBoldDuotoneIcon className="size-5" />
+                    <InfoCircleBoldDuotoneIcon className="-ms-0.5 size-5" />
                     <strong>Disclaimer:</strong>
                 </div>
                 <span>
@@ -65,7 +65,7 @@ function Contact() {
                     <Fragment key={method.method}>
                         <TableContainer
                             className={cn(
-                                "grid grid-cols-5 gap-[calc(var(--spacing-safe-zone)+var(--px)*2)] bg-background py-safe-zone-vertical"
+                                "grid grid-cols-5 gap-safe-zone bg-background py-safe-zone-vertical"
                             )}
                         >
                             <TableCaption
@@ -87,7 +87,7 @@ function Contact() {
                                 <TableHeader
                                     className={cn("sr-only grid", {
                                         "[&>tr]": [
-                                            "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
+                                            "grid grid-cols-4 gap-x-safe-zone",
                                             {
                                                 "last:*": "pe-safe-zone"
                                             }
@@ -123,7 +123,7 @@ function Contact() {
                                     {(platform) => (
                                         <TableRow
                                             className={cn(
-                                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
+                                                "grid grid-cols-4 gap-x-safe-zone",
                                                 {
                                                     "@[28rem]":
                                                         "flex gap-safe-zone"

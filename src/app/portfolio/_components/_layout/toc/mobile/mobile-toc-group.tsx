@@ -67,6 +67,7 @@ const MobileTocGroup = memo(
                                 "grid size-7 place-items-center rounded-full bg-foreground/10 transition-transform",
                                 {
                                     dark: "bg-foreground/15",
+                                    rtl: "-scale-y-100",
                                     "group-hover/collapsibile-trigger":
                                         "bg-foreground/20 dark:bg-foreground/25",
                                     "group-active/collapsibile-trigger":
@@ -84,8 +85,13 @@ const MobileTocGroup = memo(
                                 className={cn("size-6 translate-y-[.5px]", {
                                     "motion-preferred":
                                         "transition-transform duration-350",
-                                    "group-not-data-expanded/collapsible":
-                                        "translate-x-[1px] translate-y-0 -rotate-90 dark:stroke-2.5"
+                                    rtl: "-translate-y-[.5px] rotate-180",
+                                    "group-not-data-expanded/collapsible": [
+                                        "translate-x-[1px] translate-y-0 -rotate-90 dark:stroke-2.5",
+                                        {
+                                            rtl: "-translate-x-[1px] rotate-90"
+                                        }
+                                    ]
                                 })}
                             />
                         </div>

@@ -1,25 +1,27 @@
 "use client"
 
-import { Slot } from "@radix-ui/react-slot"
-
 import { cn } from "@/lib/utils"
 
-interface TextProps {
+type TextProps<T extends React.ElementType> = {
+    as?: T
+    className?: string
     highlight?: boolean
     italic?: boolean
     mono?: boolean
-    asChild?: boolean
-}
+} & Omit<
+    React.ComponentPropsWithRef<T>,
+    "as" | "className" | "highlight" | "italic" | "mono"
+>
 
-function H1({
+function H1<T extends React.ElementType = "h1">({
     className,
     highlight,
     italic,
     mono,
-    asChild,
+    as,
     ...props
-}: React.ComponentProps<"h1"> & TextProps) {
-    const Comp = asChild ? Slot : "h1"
+}: TextProps<T>) {
+    const Comp = as ?? "h1"
 
     return (
         <Comp
@@ -38,15 +40,15 @@ function H1({
     )
 }
 
-function H2({
+function H2<T extends React.ElementType = "h2">({
     className,
     highlight,
     italic,
     mono,
-    asChild,
+    as,
     ...props
-}: React.ComponentProps<"h2"> & TextProps) {
-    const Comp = asChild ? Slot : "h2"
+}: TextProps<T>) {
+    const Comp = as ?? "h2"
 
     return (
         <Comp
@@ -65,15 +67,15 @@ function H2({
     )
 }
 
-function H3({
+function H3<T extends React.ElementType = "h3">({
     className,
     highlight,
     italic,
     mono,
-    asChild,
+    as,
     ...props
-}: React.ComponentProps<"h3"> & TextProps) {
-    const Comp = asChild ? Slot : "h3"
+}: TextProps<T>) {
+    const Comp = as ?? "h3"
 
     return (
         <Comp
@@ -92,15 +94,15 @@ function H3({
     )
 }
 
-function H4({
+function H4<T extends React.ElementType = "h4">({
     className,
     highlight,
     italic,
     mono,
-    asChild,
+    as,
     ...props
-}: React.ComponentProps<"h4"> & TextProps) {
-    const Comp = asChild ? Slot : "h4"
+}: TextProps<T>) {
+    const Comp = as ?? "h4"
 
     return (
         <Comp
@@ -119,14 +121,24 @@ function H4({
     )
 }
 
-function Bold({
+type BoldProps<T extends React.ElementType> = {
+    as?: T
+    className?: string
+    italic?: boolean
+    mono?: boolean
+} & Omit<
+    React.ComponentPropsWithRef<T>,
+    "as" | "className" | "highlight" | "italic" | "mono"
+>
+
+function Bold<T extends React.ElementType = "b">({
     className,
     italic,
     mono,
-    asChild,
+    as,
     ...props
-}: React.ComponentProps<"b"> & Omit<TextProps, "highlight">) {
-    const Comp = asChild ? Slot : "b"
+}: BoldProps<T>) {
+    const Comp = as ?? "b"
 
     return (
         <Comp
@@ -144,14 +156,14 @@ function Bold({
     )
 }
 
-function Highlight({
+function Highlight<T extends React.ElementType = "b">({
     className,
     italic,
     mono,
-    asChild,
+    as,
     ...props
-}: React.ComponentProps<"b"> & Omit<TextProps, "highlight">) {
-    const Comp = asChild ? Slot : "b"
+}: BoldProps<T>) {
+    const Comp = as ?? "b"
 
     return (
         <Comp
@@ -169,19 +181,20 @@ function Highlight({
     )
 }
 
-function Link({
+type LinkProps<T extends React.ElementType> = TextProps<T> & {
+    openInNewTab?: boolean
+}
+
+function Link<T extends React.ElementType = "a">({
     className,
     openInNewTab,
     highlight,
     italic,
     mono,
-    asChild,
+    as,
     ...props
-}: React.ComponentProps<"a">
-    & TextProps & {
-        openInNewTab?: boolean
-    }) {
-    const Comp = asChild ? Slot : "a"
+}: LinkProps<T>) {
+    const Comp = as ?? "a"
 
     return (
         <Comp
@@ -206,14 +219,14 @@ function Link({
     )
 }
 
-function Text({
+function Text<T extends React.ElementType = "p">({
     className,
     italic,
     mono,
-    asChild,
+    as,
     ...props
-}: React.ComponentProps<"p"> & Omit<TextProps, "highlight">) {
-    const Comp = asChild ? Slot : "p"
+}: BoldProps<T>) {
+    const Comp = as ?? "p"
 
     return (
         <Comp
@@ -231,15 +244,18 @@ function Text({
     )
 }
 
-function At({
+function At<T extends React.ElementType = "span">({
     className,
     highlight,
     italic,
-    mono
-}: React.ComponentProps<"span"> & TextProps) {
+    mono,
+    as,
+    ...props
+}: TextProps<T>) {
+    const Comp = as ?? "span"
     return (
         <>
-            <span
+            <Comp
                 aria-hidden={true}
                 role="presentation"
                 className={cn(
@@ -252,12 +268,14 @@ function At({
                     },
                     className
                 )}
+                {...props}
             >
                 @
-            </span>
+            </Comp>
             <span className="sr-only">at</span>
         </>
     )
 }
 
 export { At, Bold, H1, H2, H3, H4, Highlight, Link, Text }
+

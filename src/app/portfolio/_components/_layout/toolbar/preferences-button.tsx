@@ -57,6 +57,7 @@ function PreferencesButton() {
                                 />
                             }
                             payload={{
+                                sticky: false,
                                 content: (
                                     <>
                                         <DropdownMenuGroup>

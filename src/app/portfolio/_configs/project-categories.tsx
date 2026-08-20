@@ -20,7 +20,7 @@ type CategoryCollection = Record<string, CategoryDetails>
 
 const PROJECT_CATEGORIES: CategoryCollection = {
     uiux: {
-        title: "UI & UX",
+        title: "Product & UI/UX",
         note: "Mobile Apps / Websites",
         icons: <UIUX />
     },

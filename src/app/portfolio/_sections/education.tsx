@@ -33,7 +33,7 @@ function Education() {
             <SectionLine />
             <TableContainer
                 className={cn(
-                    "grid grid-cols-5 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] gap-y-table-between bg-background py-safe-zone-vertical"
+                    "grid grid-cols-5 gap-x-safe-zone gap-y-table-between bg-background py-safe-zone-vertical"
                 )}
             >
                 <TableCaption
@@ -60,7 +60,7 @@ function Education() {
                     <TableHeader
                         className={cn("sr-only grid", {
                             "[&>tr]": [
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
+                                "grid grid-cols-4 gap-x-safe-zone",
                                 {
                                     "last:*": "pe-safe-zone"
                                 }
@@ -89,13 +89,10 @@ function Education() {
                     >
                         <TableRow
                             id="education-degree"
-                            className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
-                                {
-                                    "@[69rem]": "grid-cols-2",
-                                    "last:*": "pe-safe-zone"
-                                }
-                            )}
+                            className={cn("grid grid-cols-4 gap-x-safe-zone", {
+                                "@[69rem]": "grid-cols-2",
+                                "last:*": "pe-safe-zone"
+                            })}
                         >
                             <TableCell
                                 className={cn("p-0 align-top font-mono", {
@@ -108,7 +105,7 @@ function Education() {
 
                             <TableCell
                                 className={cn(
-                                    "col-span-2 flex justify-between gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] text-pretty p-0 align-top text-foreground font-wght-500",
+                                    "col-span-2 flex justify-between gap-x-safe-zone text-pretty p-0 align-top text-foreground font-wght-500",
                                     {
                                         "@[69rem]": "col-span-1 mt-[2em]",
                                         lg: "font-wght-600"
@@ -179,7 +176,7 @@ function Education() {
                         <TableRow
                             id="education-grade"
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] border-b-0 hover:bg-transparent",
+                                "grid grid-cols-4 gap-x-safe-zone border-b-0 hover:bg-transparent",
                                 {
                                     "@[69rem]": "grid-cols-2",
                                     "last:*": "pe-safe-zone"
@@ -212,7 +209,7 @@ function Education() {
                         <TableRow
                             id="education-classification"
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] border-b-0 hover:bg-transparent",
+                                "grid grid-cols-4 gap-x-safe-zone border-b-0 hover:bg-transparent",
                                 {
                                     "@[69rem]": "grid-cols-2",
                                     "last:*": "pe-safe-zone"
@@ -245,7 +242,7 @@ function Education() {
                         <TableRow
                             id="education-scholarships"
                             className={cn(
-                                "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] border-b-0 hover:bg-transparent",
+                                "grid grid-cols-4 gap-x-safe-zone border-b-0 hover:bg-transparent",
                                 {
                                     "@[69rem]": "grid-cols-2",
                                     "last:*": "pe-safe-zone"

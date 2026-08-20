@@ -188,7 +188,7 @@ const TocItemRow = memo(
                         "group/link relative flex flex-1 items-center truncate py-1 leading-6",
                         isProject
                             ? [
-                                  "pe-5.5 ps-14 text-foreground dark:text-muted-foreground",
+                                  "pe-[calc(var(--spacing-safe-zone)-var(--spacing)*.5)] ps-14 text-foreground dark:text-muted-foreground",
                                   {
                                       "not-data-line-sidebar": "ps-9",
                                       "group-last-of-type/item": "-mb-3 pb-4"
@@ -197,7 +197,8 @@ const TocItemRow = memo(
                             : "font-wght-600",
                         isCategory
                             ? "ps-safe-zone"
-                            : !isProject && "pe-5.5 ps-safe-zone",
+                            : !isProject
+                                  && "pe-[calc(var(--spacing-safe-zone)-var(--spacing)*.5)] ps-safe-zone",
                         (isAnchor || isSelectedWorks) && [
                             "gap-2",
                             {
@@ -267,7 +268,9 @@ const TocItemRow = memo(
                             )}
                         >
                             <ArrowRight
-                                className={cn("size-3.5 rtl:rotate-180")}
+                                className={cn(
+                                    "size-3 scale-125 rtl:rotate-180"
+                                )}
                             />
                         </div>
                     )}

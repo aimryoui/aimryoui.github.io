@@ -62,7 +62,7 @@ function Experience() {
                 <Fragment key={section.section}>
                     <TableContainer
                         className={cn(
-                            "grid grid-cols-5 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] gap-y-table-between bg-background py-safe-zone-vertical"
+                            "grid grid-cols-5 gap-x-safe-zone gap-y-table-between bg-background py-safe-zone-vertical"
                         )}
                     >
                         <TableCaption
@@ -91,7 +91,7 @@ function Experience() {
                             <TableHeader
                                 className={cn("sr-only grid", {
                                     "[&>tr]": [
-                                        "grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
+                                        "grid grid-cols-4 gap-x-safe-zone",
                                         {
                                             "last:*": "pe-safe-zone"
                                         }
@@ -132,7 +132,7 @@ function Experience() {
                                     <TableRow
                                         id={place.id}
                                         className={cn(
-                                            "relative grid grid-cols-4 gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)]",
+                                            "relative grid grid-cols-4 gap-x-safe-zone",
                                             place.description && [
                                                 {
                                                     "aria-expanded:before":
@@ -172,13 +172,19 @@ function Experience() {
                                                 }
                                             )}
                                         >
-                                            {place.startDate === place.endDate ? (
+                                            {place.startDate
+                                            === place.endDate ? (
                                                 renderDate(place.startDate)
                                             ) : (
                                                 <>
-                                                    {renderDate(place.startDate)} —{" "}
+                                                    {renderDate(
+                                                        place.startDate
+                                                    )}{" "}
+                                                    —{" "}
                                                     {place.endDate ? (
-                                                        renderDate(place.endDate)
+                                                        renderDate(
+                                                            place.endDate
+                                                        )
                                                     ) : (
                                                         <span className="text-foreground">
                                                             Now
@@ -190,7 +196,7 @@ function Experience() {
 
                                         <TableCell
                                             className={cn(
-                                                "z-1 flex justify-between gap-x-[calc(var(--spacing-safe-zone)+var(--px)*2)] p-0 align-top text-foreground font-wght-500",
+                                                "z-1 flex justify-between gap-x-safe-zone p-0 align-top text-foreground font-wght-500",
                                                 place.position
                                                     === "UI/UX & Motion Designer"
                                                     && "tracking-[-0.011em] @[56.5rem]:tracking-normal",
@@ -349,7 +355,7 @@ function Experience() {
                                             >
                                                 <TableCell
                                                     className={cn(
-                                                        "col-span-3 space-y-1.5 overflow-hidden italic group-not-last/table-row:pb-safe-zone-vertical",
+                                                        "col-span-3 space-y-1.5 overflow-hidden italic leading-normal group-not-last/table-row:pb-safe-zone-vertical",
                                                         {
                                                             "@[69rem]":
                                                                 "col-span-full"

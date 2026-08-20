@@ -23,7 +23,7 @@ type DropdownMenuOptions = {
     className?: string
 } & Pick<
     MenuPrimitive.Positioner.Props,
-    "align" | "alignOffset" | "side" | "sideOffset"
+    "sticky" | "align" | "alignOffset" | "side" | "sideOffset"
 >
 
 type DropdownMenuPayload = React.ReactNode | DropdownMenuOptions
@@ -77,6 +77,7 @@ function DropdownMenu({
                             side={options.side}
                             sideOffset={options.sideOffset}
                             anchor={options.anchor}
+                            sticky={options.sticky}
                             className={className}
                             containerClassName={containerClassName}
                         >
@@ -117,6 +118,7 @@ function DropdownMenuContent({
     side = "bottom",
     sideOffset = 0,
     anchor,
+    sticky = true,
     shadow = true,
     isSubMenu = false,
     className,
@@ -128,7 +130,7 @@ function DropdownMenuContent({
 }: MenuPrimitive.Popup.Props
     & Pick<
         MenuPrimitive.Positioner.Props,
-        "align" | "alignOffset" | "side" | "sideOffset"
+        "sticky" | "align" | "alignOffset" | "side" | "sideOffset"
     > & {
         anchor?: HTMLElement | null
         shadow?: boolean
@@ -166,14 +168,14 @@ function DropdownMenuContent({
                 alignOffset={alignOffset}
                 side={side}
                 sideOffset={sideOffset}
-                sticky
+                sticky={sticky}
             >
                 <MenuPrimitive.Popup
                     data-slot="dropdown-menu-content"
                     data-cursor="lock"
                     tabIndex={-1}
                     className={cn(
-                        "group/dropdown-menu-popup relative z-50 grid h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-52 max-w-56 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none",
+                        "group/dropdown-menu-popup relative z-50 grid h-[--popup-height,auto] max-h-[--available-height] w-[--popup-width] min-w-52 max-w-56 origin-[--transform-origin] overflow-y-auto overflow-x-hidden rounded-xl bg-background text-foreground ring ring-stroke outline-none scrollbar-thin",
                         "group-data-target-cursor/dropdown-menu-positioner:group-hover/dropdown-menu-positioner:rounded-none",
                         {
                             "motion-preferred": [
