@@ -14,7 +14,6 @@ import {
     CollapsibleTrigger
 } from "@/components/ui/collapsible"
 import { Bold, Text } from "@/components/ui/typography"
-import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import {
     Emotion1,
@@ -35,7 +34,6 @@ const EMOTIONS = [
 ]
 
 function Details({ className, ...props }: React.ComponentProps<"div">) {
-    const isMd = useMediaQuery("md")
     const [expandedStates, setExpandedStates] = useState({
         summary: false,
         skills: false,
@@ -86,10 +84,17 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
             {...props}
         >
             <div className="col-span-3">
+                {/* Desktop version (hidden on mobile) */}
                 <SummaryDetail
-                    isMd={isMd}
+                    defaultExpanded={false}
                     onExpandedChange={handlers.summary}
-                    className="w-full"
+                    className="w-full md:hidden"
+                />
+                {/* Mobile version (hidden on desktop) */}
+                <SummaryDetail
+                    defaultExpanded={true}
+                    onExpandedChange={handlers.summary}
+                    className="hidden w-full md:flex"
                 />
                 <SvgElementLine dir="horizontal" />
                 <SkillsDetail
@@ -149,6 +154,7 @@ function CollapsibleContainer({
     containerClassName,
     label,
     defaultExpanded = false,
+    isExpanded: controlledIsExpanded,
     onExpandedChange,
     children,
     ...props
@@ -156,16 +162,20 @@ function CollapsibleContainer({
     & CollapsibleContentProps & {
         label: string
         defaultExpanded?: boolean
+        isExpanded?: boolean
         containerClassName?: CollapsibleProps["className"]
         onExpandedChange?: (isOpen: boolean) => void
     }) {
-    const [isExpanded, setIsExpanded] = useState(defaultExpanded)
+    const [uncontrolledIsExpanded, setIsExpanded] = useState(defaultExpanded)
+    const isExpanded = controlledIsExpanded ?? uncontrolledIsExpanded
 
     return (
         <Collapsible
             isExpanded={isExpanded}
             onExpandedChange={(isOpen) => {
-                setIsExpanded(isOpen)
+                if (controlledIsExpanded === undefined) {
+                    setIsExpanded(isOpen)
+                }
                 onExpandedChange?.(isOpen)
             }}
             className={cn(
@@ -251,20 +261,19 @@ function CollapsibleContainer({
 
 type DetailSectionProps = Pick<CollapsibleProps, "className"> & {
     onExpandedChange?: (isOpen: boolean) => void
+    defaultExpanded?: boolean
 }
 
 function SummaryDetail({
     className,
-    onExpandedChange,
-    isMd
-}: DetailSectionProps & {
-    isMd: boolean
-}) {
+    defaultExpanded,
+    onExpandedChange
+}: DetailSectionProps) {
     return (
         <CollapsibleContainer
-            defaultExpanded={isMd}
+            defaultExpanded={defaultExpanded}
             onExpandedChange={onExpandedChange}
-            label="Summary"
+            label="TL;DR"
             containerClassName={cn(className)}
         >
             <Text className={cn("text-pretty")}>
@@ -364,7 +373,11 @@ function SkillsDetail({ className, onExpandedChange }: DetailSectionProps) {
     )
 }
 
-const INTERESTING = [<>Web accessibility.</>, <>How to get a job.</>]
+const INTERESTING = [
+    <>Web accessibility.</>,
+    <>Upper-intermediate in English.</>,
+    <>How to get a job.</>
+]
 
 function LearningDetail({ className, onExpandedChange }: DetailSectionProps) {
     return (
