@@ -4,6 +4,7 @@ import {
     LineSidebar,
     type LineSidebarProps
 } from "@/components/animations/line-sidebar"
+import { SmoothScrolling } from "@/components/ui/smooth-scrolling"
 import { cn } from "@/lib/utils"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
 import { TocGroup } from "@/portfolio/_components/_layout/toc/toc-group"
@@ -40,13 +41,12 @@ function handleItemClick(
             tocEl.scrollIntoView({ block: "center", behavior: "smooth" })
         }
     } else {
-        // Anchor mode: scroll page to the heading element
+        // Anchor mode: track for TOC highlight animation only.
+        // Do NOT pushState here — it races ahead of the native <a> click event.
+        // When onPress fires (pointerup), pushState runs, URL becomes #contact.
+        // Then the browser fires the native click → Next.js sees URL already = #contact → skips scroll.
+        // Solution: let Next.js handle URL + scroll natively via the link click.
         clickedTargetRef.current = targetId
-        const el = document.getElementById(targetId)
-        if (el) {
-            el.scrollIntoView({ behavior: "smooth", block: "start" })
-        }
-        window.history.pushState(null, "", `#${targetId}`)
     }
 }
 
@@ -80,11 +80,9 @@ function TocList({
     const tree = useTocTree(filteredItems)
 
     return (
-        <LineSidebar
-            ref={scrollContainerRef}
-            itemSelector="[data-toc-item]"
+        <SmoothScrolling
             className={cn(
-                "group overflow-x-hidden overflow-y-scroll scroll-auto py-3 scrollbar-none",
+                "group overflow-x-hidden overflow-y-scroll scroll-auto scrollbar-none",
                 "scroll-fade-y scroll-fade-18",
                 "hover:scrollbar-thin",
                 {
@@ -93,51 +91,57 @@ function TocList({
                 },
                 className
             )}
-            {...props}
         >
-            {tree.map((node) => {
-                if (node.type === "divider") {
-                    return (
-                        <TocDivider
-                            key={`div-${node.id}`}
-                            className="ltr:ltr rtl:rtl"
-                        />
-                    )
-                }
-
-                if (node.type === "group") {
-                    return (
-                        <TocGroup
-                            key={`group-${node.header.id}`}
-                            header={node.header}
-                            items={node.items}
-                            debouncedQuery={debouncedQuery}
-                            onItemPress={handlePress}
-                            onSameLinkClick={handleSameLinkClick}
-                            className="ltr:ltr rtl:rtl"
-                        />
-                    )
-                }
-
-                return (
-                    <ul
-                        key={`anchors-${node.items[0].id}`}
-                        className="flex flex-col ltr:ltr rtl:rtl"
-                    >
-                        {node.items.map((item) => (
-                            <TocItemRow
-                                key={item.id}
-                                variant="anchor"
-                                item={item}
-                                query={debouncedQuery}
-                                onPress={handlePress}
-                                onSameLinkClick={handleSameLinkClick}
+            <LineSidebar
+                ref={scrollContainerRef}
+                itemSelector="[data-toc-item]"
+                className="h-max w-full overflow-visible py-3"
+                {...props}
+            >
+                {tree.map((node) => {
+                    if (node.type === "divider") {
+                        return (
+                            <TocDivider
+                                key={`div-${node.id}`}
+                                className="ltr:ltr rtl:rtl"
                             />
-                        ))}
-                    </ul>
-                )
-            })}
-        </LineSidebar>
+                        )
+                    }
+
+                    if (node.type === "group") {
+                        return (
+                            <TocGroup
+                                key={`group-${node.header.id}`}
+                                header={node.header}
+                                items={node.items}
+                                debouncedQuery={debouncedQuery}
+                                onItemPress={handlePress}
+                                onSameLinkClick={handleSameLinkClick}
+                                className="ltr:ltr rtl:rtl"
+                            />
+                        )
+                    }
+
+                    return (
+                        <ul
+                            key={`anchors-${node.items[0].id}`}
+                            className="flex flex-col ltr:ltr rtl:rtl"
+                        >
+                            {node.items.map((item) => (
+                                <TocItemRow
+                                    key={item.id}
+                                    variant="anchor"
+                                    item={item}
+                                    query={debouncedQuery}
+                                    onPress={handlePress}
+                                    onSameLinkClick={handleSameLinkClick}
+                                />
+                            ))}
+                        </ul>
+                    )
+                })}
+            </LineSidebar>
+        </SmoothScrolling>
     )
 }
 

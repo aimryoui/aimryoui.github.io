@@ -1,8 +1,6 @@
 "use client"
 
-import { Fragment, useState } from "react"
-
-import { type Key } from "react-aria-components/Collection"
+import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
@@ -34,16 +32,14 @@ const renderDate = (date: string) => {
     ))
 }
 
-function Experience() {
-    let [expandedKeys, setExpandedKeys] = useState(
-        new Set<Key>([
-            "dec-2025-uiux-motion-designer-san-data-systems-inc",
-            "may-2026-uiux-designer-fina-care-studio",
-            "dec-2025-uiux-designer-virtue-recovery-center",
-            "feb-2025-uiux-designer-nalee-viet-nam-jsc"
-        ])
-    )
+const DEFAULT_EXPANDED = [
+    "dec-2025-uiux-motion-designer-san-data-systems-inc",
+    "may-2026-uiux-designer-fina-care-studio",
+    "dec-2025-uiux-designer-virtue-recovery-center",
+    "feb-2025-uiux-designer-nalee-viet-nam-jsc"
+]
 
+function Experience() {
     return (
         <section className="@container">
             <Space />
@@ -53,7 +49,6 @@ function Experience() {
                 title="Experience"
                 note="Information"
                 link="hash"
-                className="sticky top-0 z-50"
             />
             <Divider />
             <SectionLine />
@@ -79,8 +74,7 @@ function Experience() {
                         <Table
                             aria-label="Experience"
                             treeColumn="organization"
-                            expandedKeys={expandedKeys}
-                            onExpandedChange={setExpandedKeys}
+                            defaultExpandedKeys={DEFAULT_EXPANDED}
                             className={cn(
                                 "col-span-full col-start-2 grid table-fixed gap-y-table-between",
                                 {

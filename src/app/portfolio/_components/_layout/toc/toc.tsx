@@ -56,7 +56,10 @@ function TableOfContents({ items }: TocProps) {
     }
 
     const handleAnimationEnd = (e: React.AnimationEvent<HTMLElement>) => {
-        if (e.animationName === "toc-reveal") {
+        if (
+            e.animationName === "toc-reveal" ||
+            e.animationName === "toc-fade"
+        ) {
             setNavRevealPhase("done")
         }
     }
@@ -99,21 +102,22 @@ function TableOfContents({ items }: TocProps) {
                     aria-label="Table of contents"
                     className={cn(
                         "flex flex-1 flex-col overflow-auto",
-                        navRevealPhase === "animating" && "animate-toc-reveal",
+                        navRevealPhase === "animating" && [
+                            "motion-preferred:animate-toc-reveal",
+                            "motion-reduced:animate-toc-fade"
+                        ],
+                        navRevealPhase !== "done" && [
+                            "motion-preferred:[mask-image:linear-gradient(black_33.333%,black_35%,transparent_65%,transparent_100%)]",
+                            "motion-preferred:[mask-position:0_100%]",
+                            "motion-preferred:[mask-size:100%_300%]",
+                            "motion-preferred:will-change-[mask-position]",
+                            "motion-reduced:opacity-0"
+                        ],
                         {
                             lg: "hidden"
                         }
                     )}
                     onAnimationEnd={handleAnimationEnd}
-                    {...(navRevealPhase !== "done" && {
-                        style: {
-                            maskImage:
-                                "linear-gradient(black 33.333%, black 35%, transparent 65%, transparent 100%)",
-                            maskPosition: "0 100%",
-                            maskSize: "100% 300%",
-                            willChange: "mask-position"
-                        }
-                    })}
                 >
                     <Tooltip>
                         {filteredItems.length === 0 ? (

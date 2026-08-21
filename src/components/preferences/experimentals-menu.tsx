@@ -3,6 +3,7 @@
 import { TestTubeMinimalisticBoldDuotoneIcon } from "@solar-icons/react"
 
 import { DirectionMenu } from "@/components/preferences/direction-menu"
+import { SmoothScrollingMenu } from "@/components/preferences/smooth-scrolling-menu"
 import {
     DropdownMenuSub,
     DropdownMenuSubContent,
@@ -23,6 +24,7 @@ function ExperimentalsMenu() {
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
                 <DirectionMenu />
+                <SmoothScrollingMenu />
             </DropdownMenuSubContent>
         </DropdownMenuSub>
     )

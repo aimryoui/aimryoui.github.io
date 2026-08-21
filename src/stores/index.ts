@@ -8,6 +8,7 @@ import {
     useSidebarPositionStore,
     useToolbarPositionStore
 } from "@/stores/navigation-bar-position-store"
+import { useSmoothScrollingStore } from "@/stores/smooth-scrolling-store"
 
 const PREFERENCE_STORES = [
     useAudioStore,
@@ -17,7 +18,8 @@ const PREFERENCE_STORES = [
     useMediaStore,
     useMotionStore,
     useSidebarPositionStore,
-    useToolbarPositionStore
+    useToolbarPositionStore,
+    useSmoothScrollingStore
 ]
 
 export { PREFERENCE_STORES }

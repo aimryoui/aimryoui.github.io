@@ -18,7 +18,7 @@ import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { type HoverSoundType, type PressSoundType } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 
-const nativeButtonClassName = cn("shrink-0 cursor-pointer select-none", {
+const nativeButtonClassName = cn("shrink-0 cursor-pointer", {
     "aria-invalid":
         "border-destructive ring-destructive/20 dark:ring-destructive/40",
     "focus-visible":
@@ -29,7 +29,7 @@ const nativeButtonClassName = cn("shrink-0 cursor-pointer select-none", {
 const buttonVariants = cva(
     cn(
         nativeButtonClassName,
-        "inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-xlg text-sm font-wght-500 transition-[transform,translate,background-color] duration-100",
+        "inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-xlg text-sm text-muted-foreground font-wght-500 transition-[transform,translate,background-color] duration-100",
         {
             "data-target-cursor":
                 "transition-[transform,translate,scale,background-color,border-radius] ease-[linear,linear,linear,linear,cubic-bezier(0.22,1,0.36,1)] duration-[.1s,.1s,.1s,.1s,.2s]",

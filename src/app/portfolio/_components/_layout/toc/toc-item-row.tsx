@@ -143,15 +143,6 @@ const TocItemRow = memo(
                     hoverSound="tick"
                     pressSound="link"
                     prefetch={false}
-                    onClick={(e) => {
-                        // Strip query AND hash to compare only the pathname
-                        const hrefPathname = href.split("?")[0].split("#")[0]
-                        const isSamePath =
-                            hrefPathname === pathname || hrefPathname === ""
-                        if (isSameUrl(href) || isSamePath) {
-                            e.preventDefault()
-                        }
-                    }}
                     tracking={{
                         eventName: "click_toc_link",
                         eventParams: {
@@ -165,24 +156,34 @@ const TocItemRow = memo(
                     }}
                     onPress={() => {
                         if (isSameUrl(href)) {
+                            onPress(item)
                             onSameLinkClick()
                             return
                         }
 
-                        // Strip query AND hash to compare only the pathname.
-                        // This treats /path and /path?feature=selected as the same route.
                         const hrefPathname = href.split("?")[0].split("#")[0]
                         const isSamePath =
                             hrefPathname === pathname || hrefPathname === ""
+
                         if (item.mode === "route" && !isSamePath) return
 
-                        onPress(item)
-
-                        // For same-pathname route items (different query = same page content),
-                        // also fire the flash since the user is already on this page.
-                        if (isSamePath && item.mode === "route") {
-                            onSameLinkClick()
+                        if (item.mode === "route") {
+                            onPress(item)
+                            if (isSamePath) onSameLinkClick()
+                            return
                         }
+
+                        // Anchor mode: React Aria already called router.push(href) but
+                        // Next.js router.push does NOT scroll to hash. We must scroll manually.
+                        onPress(item)
+                        requestAnimationFrame(() => {
+                            const el = document.getElementById(item.id)
+                            if (el)
+                                el.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "start"
+                                })
+                        })
                     }}
                     className={cn(
                         "group/link relative flex flex-1 items-center truncate py-1 leading-6",

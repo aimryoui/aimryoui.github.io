@@ -374,9 +374,10 @@ function SkillsDetail({ className, onExpandedChange }: DetailSectionProps) {
 }
 
 const INTERESTING = [
-    <>Web accessibility.</>,
-    <>Upper-intermediate in English.</>,
-    <>How to get a job.</>
+    <>Web a11y.</>,
+    <>I18n.</>,
+    <>RTL Languages.</>,
+    <>Upper-intermediate in English.</>
 ]
 
 function LearningDetail({ className, onExpandedChange }: DetailSectionProps) {
@@ -432,8 +433,8 @@ const FACTS = [
     </>,
     <>
         I don&#39;t like eating green onions. Therefore, anything that looks
-        like green onion — or even just has the word &#34;onion&#34; in its
-        name — gets caught in the crossfire.
+        like green onion — or even just has the word &#34;onion&#34; in its name
+        — gets caught in the crossfire.
     </>
 ]
 

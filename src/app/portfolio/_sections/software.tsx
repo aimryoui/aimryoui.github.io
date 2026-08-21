@@ -27,12 +27,7 @@ function Software() {
         <section className="@container">
             <Space />
             <SectionLine containerClassName="z-55" />
-            <SectionTitle
-                id="software"
-                title="Software"
-                link="hash"
-                className="sticky top-0 z-50"
-            />
+            <SectionTitle id="software" title="Software" link="hash" />
             <Divider />
             <SectionLine />
             <Tooltip>

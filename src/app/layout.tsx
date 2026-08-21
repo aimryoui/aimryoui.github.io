@@ -1,4 +1,5 @@
 import "@/globals.css"
+import "lenis/dist/lenis.css"
 
 import { type Metadata, type Viewport } from "next"
 import { Google_Sans_Flex } from "next/font/google"
@@ -16,6 +17,7 @@ import {
     PngBorder
 } from "@/components/media/svg-filter"
 import { DirectionProvider } from "@/components/ui/direction"
+import { SmoothScrolling } from "@/components/ui/smooth-scrolling"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { DEFAULT_EFFECTS_PREFERENCES } from "@/configs/effects.config"
 import { DEFAULT_MEDIA_PREFERENCES } from "@/configs/media.config"
@@ -158,12 +160,12 @@ export default async function RootLayout({
         <html
             lang="en"
             suppressHydrationWarning
+            data-scroll-behavior="smooth"
             className={cn(
                 googleSansFlex.variable,
                 sfMono.variable,
                 "group/html antialiased scrollbar-colored scrollbar-thumb-default/40 scrollbar-track-pattern"
             )}
-            data-scroll-behavior="smooth"
         >
             <head>
                 <script
@@ -301,6 +303,7 @@ export default async function RootLayout({
                 <AudioProvider>
                     <ThemeProvider disableTransitionOnChange>
                         {/* <LazyMotionProvider> */}
+                        <SmoothScrolling root />
                         <DirectionProvider>
                             <RouteProgressProvider>
                                 <TooltipProvider>

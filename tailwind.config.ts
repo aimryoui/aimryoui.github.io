@@ -264,6 +264,7 @@ export default {
                     "collapse .4s cubic-bezier(0.22, 1, 0.36, 1) forwards",
                 "toc-reveal":
                     "toc-reveal 1.25s cubic-bezier(.4,0,.6,1) forwards",
+                "toc-fade": "toc-fade 0.5s cubic-bezier(.4,0,.6,1) forwards",
                 "toolbar-reveal":
                     "toolbar-reveal .5s cubic-bezier(0.22, 1, 0.36, 1) forwards",
                 "social-button-shake-in":
@@ -322,12 +323,12 @@ export default {
                         maskPosition: "0 0"
                     }
                 },
-                "toolbar-reveal": {
+                "toc-fade": {
                     "0%": {
-                        transform: "translateY(100%)"
+                        opacity: "0"
                     },
                     "100%": {
-                        transform: "translateY(0)"
+                        opacity: "1"
                     }
                 },
                 "social-button-shake-in": {

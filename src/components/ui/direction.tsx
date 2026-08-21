@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import { DirectionProvider as BaseUIDirectionProvider } from "@base-ui/react/direction-provider"
 import { I18nProvider, useLocale } from "react-aria-components/I18nProvider"
 
-import { useDirectionStore } from "@/stores/direction-store"
+import { usePreference } from "@/hooks/use-preference"
 
 function BaseUIDirectionSync({ children }: { children: React.ReactNode }) {
     const { direction } = useLocale()
@@ -26,7 +26,7 @@ type DirectionProviderProps = React.ComponentProps<typeof I18nProvider> & {
 }
 
 function DirectionProvider({ children, ...props }: DirectionProviderProps) {
-    const directionPref = useDirectionStore((state) => state.preference)
+    const { directionPref } = usePreference()
     const { locale: currentLocale, direction: systemDirection } = useLocale()
 
     // Resolve what direction we should actually use

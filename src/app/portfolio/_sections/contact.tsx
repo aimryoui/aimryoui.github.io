@@ -29,12 +29,7 @@ function Contact() {
         <section className="@container">
             <Space />
             <SectionLine containerClassName="z-55" />
-            <SectionTitle
-                id="contact"
-                title="Contact"
-                link="hash"
-                className="sticky top-0 z-50"
-            />
+            <SectionTitle id="contact" title="Contact" link="hash" />
             <Divider />
             <SectionLine />
             <Note

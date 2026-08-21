@@ -76,15 +76,6 @@ const MobileTocItemRow = memo(
                     hoverSound="tick"
                     pressSound={isProject ? "link" : "button"}
                     haptic={isProject ? "light" : "success"}
-                    onClick={(e) => {
-                        // Strip query AND hash to compare only the pathname
-                        const hrefPathname = href.split("?")[0].split("#")[0]
-                        const isSamePath =
-                            hrefPathname === pathname || hrefPathname === ""
-                        if (isSameUrl(href) || isSamePath) {
-                            e.preventDefault()
-                        }
-                    }}
                     tracking={{
                         eventName: "click_toc_link",
                         eventParams: {
@@ -98,25 +89,36 @@ const MobileTocItemRow = memo(
                     }}
                     onPress={() => {
                         if (isSameUrl(href)) {
+                            onPress(item)
                             onSameLinkClick()
                             return
                         }
 
-                        // Strip query AND hash to compare only the pathname.
                         const hrefPathname = href.split("?")[0].split("#")[0]
                         const isSamePath =
                             hrefPathname === pathname || hrefPathname === ""
+
                         if (item.mode === "route" && !isSamePath) {
-                            // Let the native link navigation happen
                             onLinkClick?.()
                             return
                         }
 
-                        onPress(item)
-
-                        if (isSamePath && item.mode === "route") {
-                            onSameLinkClick()
+                        if (item.mode === "route") {
+                            onPress(item)
+                            if (isSamePath) onSameLinkClick()
+                            return
                         }
+
+                        // Anchor mode: React Aria calls router.push() which doesn't scroll to hash.
+                        onPress(item)
+                        requestAnimationFrame(() => {
+                            const el = document.getElementById(item.id)
+                            if (el)
+                                el.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "start"
+                                })
+                        })
                     }}
                     className={cn(
                         "group/link relative flex-1 truncate leading-6",

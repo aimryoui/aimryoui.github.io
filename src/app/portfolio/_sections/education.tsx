@@ -23,12 +23,7 @@ function Education() {
         <section className="@container">
             <Space />
             <SectionLine containerClassName="z-55" />
-            <SectionTitle
-                id="education"
-                title="Education"
-                link="hash"
-                className="sticky top-0 z-50"
-            />
+            <SectionTitle id="education" title="Education" link="hash" />
             <Divider />
             <SectionLine />
             <TableContainer

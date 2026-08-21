@@ -23,6 +23,7 @@ import {
     MOTION_PREFERENCES
 } from "@/components/preferences/motion-menu"
 import { MENU_CONFIG as NAVIGATION_MENU } from "@/components/preferences/navigation-bar-position-menu"
+import { MENU_CONFIG as SMOOTH_SCROLLING_MENU } from "@/components/preferences/smooth-scrolling-menu"
 import {
     AUDIO_PREFERENCES,
     MENU_CONFIG as SOUNDS_HAPTICS_MENU
@@ -70,6 +71,7 @@ import {
     useSidebarPositionStore,
     useToolbarPositionStore
 } from "@/stores/navigation-bar-position-store"
+import { useSmoothScrollingStore } from "@/stores/smooth-scrolling-store"
 
 const RESET_MENU_CONFIG = {
     name: "Reset to defaults",
@@ -122,6 +124,11 @@ const getPreferenceChanges = () => {
         [DIRECTION_MENU.name]: {
             category: DIRECTION_MENU.name,
             icon: DIRECTION_MENU.icon,
+            changes: []
+        },
+        [SMOOTH_SCROLLING_MENU.name]: {
+            category: SMOOTH_SCROLLING_MENU.name,
+            icon: SMOOTH_SCROLLING_MENU.icon,
             changes: []
         }
     }
@@ -270,6 +277,26 @@ const getPreferenceChanges = () => {
                 useDirectionStore
                     .getState()
                     .setPreference(directionState.preference)
+            }
+        })
+    }
+
+    const smoothScrollingState = useSmoothScrollingStore.getState()
+    if (smoothScrollingState.isSmoothScrollingEnabled) {
+        categoriesMap[SMOOTH_SCROLLING_MENU.name].changes.push({
+            id: "smoothScrollingPreference",
+            name: "Preference",
+            from: "On",
+            to: "Off",
+            onReset: () => {
+                useSmoothScrollingStore
+                    .getState()
+                    .setIsSmoothScrollingEnabled(false)
+            },
+            onUndo: () => {
+                useSmoothScrollingStore
+                    .getState()
+                    .setIsSmoothScrollingEnabled(true)
             }
         })
     }

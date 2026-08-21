@@ -26,6 +26,7 @@ import {
     useSidebarPositionStore,
     useToolbarPositionStore
 } from "@/stores/navigation-bar-position-store"
+import { useSmoothScrollingStore } from "@/stores/smooth-scrolling-store"
 
 let isSystemReduced = false
 if (typeof window !== "undefined") {
@@ -69,6 +70,9 @@ function computeSnapshot(isServer: boolean) {
     const toolbarPos = isServer
         ? DEFAULT_TOOLBAR_PREFERENCES
         : useToolbarPositionStore.getState().position
+    const smoothScrolling = isServer
+        ? false
+        : useSmoothScrollingStore.getState().isSmoothScrollingEnabled
     const systemReduced = isServer ? false : isSystemReduced
 
     return {
@@ -90,7 +94,8 @@ function computeSnapshot(isServer: boolean) {
             || (motionPref === "system" && !systemReduced),
         directionPref,
         sidebarPosition: sidebarPos,
-        toolbarPosition: toolbarPos
+        toolbarPosition: toolbarPos,
+        isSmoothScrollingEnabled: smoothScrolling
     }
 }
 
