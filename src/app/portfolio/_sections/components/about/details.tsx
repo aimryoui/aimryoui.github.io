@@ -160,13 +160,14 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                                     className={cn(
                                         "sticky top-[calc(49vh-var(--icon-height)/2)] my-[--padding-block] h-[--icon-height] justify-self-center",
                                         {
-                                            rtl: "-scale-x-100"
+                                            rtl: "-scale-x-100",
+                                            lg: "top-[calc(50vh-var(--icon-height)/2-var(--spacing-space)/2)]"
                                         }
                                     )}
                                 />
                             </span>
                             <span className="absolute inset-0 flex items-end justify-center">
-                                <PseudoFiller className="bottom-0 -mb-[--padding] mt-[calc(var(--icon-height)+var(--padding-block))] -scale-y-100" />
+                                <PseudoFiller className="bottom-0 -mb-[--padding] mt-[calc(var(--icon-height)+var(--padding-block))] -scale-y-100 lg:bottom-space" />
                             </span>
                         </div>
                     </div>
