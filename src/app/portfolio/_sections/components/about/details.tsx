@@ -128,30 +128,67 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                 <Divider dir="vertical" className={cn("h-auto")} />
                 <SvgElementLine className={cn("h-auto")} />
                 <div className={cn("h-full flex-1")}>
-                    <div className={cn("h-full bg-highlighted/10 p-2")}>
+                    <div
+                        className={cn(
+                            "h-full overflow-clip bg-highlighted/10 p-2"
+                        )}
+                    >
                         <div
                             className={cn(
-                                "flex size-full justify-center overflow-clip rounded-2xl border border-highlighted bg-background py-[--padding-block]",
+                                "[--padding:calc(var(--spacing)*2)]",
+                                "[--border-radius:--radius-2xl]",
+                                "[--offset-outer:calc(var(--padding)+var(--px)/2)]",
+                                "[--subpixel-correction:1px]",
+                                // "[--background-color:theme(colors.alert/0.3)]",
+                                "[--background-color:color-mix(in_srgb,var(--color-highlighted)_10%,var(--color-background))]",
+                                "[--icon-height:calc((var(--spacing)*5+var(--spacing-safe-zone-vertical)*2)*var(--trigger-quantity)-var(--padding-block)*2)]",
+                                "relative grid size-full grid-rows-[1fr] rounded-[--border-radius] bg-background",
                                 "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]",
                                 {
+                                    before: "absolute inset-0 rounded-inherit border border-highlighted",
+
                                     md: "rounded-xl",
                                     sm: "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.09375rem,transparent_.09375rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.09375rem,transparent_.09375rem)] bg-[length:.5625rem_.5625rem] bg-[position:0_0,.28125rem_.28125rem]"
                                 }
                             )}
                         >
-                            <EmotionIcon
-                                className={cn(
-                                    "sticky top-[calc(48vh-var(--spacing)*54/2)] h-[calc((var(--spacing)*5+var(--spacing-safe-zone-vertical)*2)*var(--trigger-quantity)-var(--padding-block)*2)]",
-                                    {
-                                        rtl: "-scale-x-100"
-                                    }
-                                )}
-                            />
+                            <span className="absolute inset-0 flex items-start justify-center">
+                                <PseudoFiller className="top-0 -mt-[--padding] mb-[calc(var(--icon-height)+var(--padding-block))]" />
+                            </span>
+                            <span className="absolute inset-0 flex justify-center">
+                                <EmotionIcon
+                                    className={cn(
+                                        "sticky top-[calc(49vh-var(--icon-height)/2)] my-[--padding-block] h-[--icon-height] justify-self-center",
+                                        {
+                                            rtl: "-scale-x-100"
+                                        }
+                                    )}
+                                />
+                            </span>
+                            <span className="absolute inset-0 flex items-end justify-center">
+                                <PseudoFiller className="bottom-0 -mb-[--padding] mt-[calc(var(--icon-height)+var(--padding-block))] -scale-y-100" />
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+    )
+}
+
+function PseudoFiller({ className, ...props }: React.ComponentProps<"span">) {
+    return (
+        <span
+            className={cn(
+                "sticky -mx-[--offset-outer] box-content h-[--padding-block] w-full rounded-t-[calc(var(--border-radius)+var(--offset-outer))] border-x-[length:--padding] border-t-[length:--padding] border-[--background-color]",
+                {
+                    before: "absolute -inset-x-[--padding] -top-[calc(var(--padding)+var(--subpixel-correction))] bottom-0 border-x-[length:--padding] border-t-[calc(var(--padding)+var(--subpixel-correction))] border-[--background-color]",
+                    after: "absolute inset-0 rounded-t-[--border-radius] border-x border-t border-highlighted"
+                },
+                className
+            )}
+            {...props}
+        />
     )
 }
 

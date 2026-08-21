@@ -105,6 +105,7 @@
         "react-dom": "^19.2.8",
         "react-merge-refs": "^3.0.2",
         "react-photoswipe-gallery": "^4.1.2",
+        "sonner": "^2.0.8",
         "tailwind-merge": "^2.6.1",
         "twg": "^7.1.4",
         "web-haptics": "^0.0.6",
