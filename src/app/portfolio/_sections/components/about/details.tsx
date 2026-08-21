@@ -2,6 +2,7 @@
 
 import { Fragment, useMemo, useState } from "react"
 
+import { sendGAEvent } from "@next/third-parties/google"
 import { ChevronDown } from "lucide-react"
 
 import { Divider } from "@/components/layout/divider"
@@ -42,26 +43,25 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
         things: false
     })
 
-    const handlers = useMemo(
-        () => ({
-            summary: (isOpen: boolean) => {
-                setExpandedStates((p) => ({ ...p, summary: isOpen }))
-            },
-            skills: (isOpen: boolean) => {
-                setExpandedStates((p) => ({ ...p, skills: isOpen }))
-            },
-            interesting: (isOpen: boolean) => {
-                setExpandedStates((p) => ({ ...p, interesting: isOpen }))
-            },
-            facts: (isOpen: boolean) => {
-                setExpandedStates((p) => ({ ...p, facts: isOpen }))
-            },
-            things: (isOpen: boolean) => {
-                setExpandedStates((p) => ({ ...p, things: isOpen }))
+    const handlers = useMemo(() => {
+        const createHandler =
+            (key: keyof typeof expandedStates) => (isOpen: boolean) => {
+                setExpandedStates((p) => ({ ...p, [key]: isOpen }))
+                const eventName = isOpen
+                    ? "expand_about_detail"
+                    : "collapse_about_detail"
+                const eventParams = { detail_id: key }
+                sendGAEvent("event", eventName, eventParams)
             }
-        }),
-        []
-    )
+
+        return {
+            summary: createHandler("summary"),
+            skills: createHandler("skills"),
+            interesting: createHandler("interesting"),
+            facts: createHandler("facts"),
+            things: createHandler("things")
+        }
+    }, [])
 
     let expandedCount = 0
     if (expandedStates.summary) expandedCount++
@@ -120,8 +120,8 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
             <div
                 className="col-span-2 -ms-safe-zone flex md:hidden"
                 style={{
-                    "--trigger-quantity": 5,
-                    "--padding-block": "2rem"
+                    "--trigger-quantity": Object.keys(expandedStates).length,
+                    "--padding-block": "calc(var(--spacing)*8)"
                 }}
             >
                 <SvgElementLine className={cn("h-auto")} />
