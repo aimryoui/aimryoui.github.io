@@ -18,12 +18,14 @@ import { At } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
 
+const id = "education"
+
 function Education() {
     return (
-        <section className="@container">
+        <section id={id} className="@container">
             <Space />
             <SectionLine containerClassName="z-55" />
-            <SectionTitle id="education" title="Education" link="hash" />
+            <SectionTitle id={id} title="Education" link="hash" />
             <Divider />
             <SectionLine />
             <TableContainer

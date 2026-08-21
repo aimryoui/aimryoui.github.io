@@ -41,11 +41,6 @@ function handleItemClick(
             tocEl.scrollIntoView({ block: "center", behavior: "smooth" })
         }
     } else {
-        // Anchor mode: track for TOC highlight animation only.
-        // Do NOT pushState here — it races ahead of the native <a> click event.
-        // When onPress fires (pointerup), pushState runs, URL becomes #contact.
-        // Then the browser fires the native click → Next.js sees URL already = #contact → skips scroll.
-        // Solution: let Next.js handle URL + scroll natively via the link click.
         clickedTargetRef.current = targetId
     }
 }

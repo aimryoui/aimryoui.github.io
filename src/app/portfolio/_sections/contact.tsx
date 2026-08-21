@@ -24,12 +24,14 @@ import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
 import { CONTACT_METHODS } from "@/portfolio/_configs/contact-methods"
 
+const id = "contact"
+
 function Contact() {
     return (
-        <section className="@container">
+        <section id={id} className="@container">
             <Space />
             <SectionLine containerClassName="z-55" />
-            <SectionTitle id="contact" title="Contact" link="hash" />
+            <SectionTitle id={id} title="Contact" link="hash" />
             <Divider />
             <SectionLine />
             <Note

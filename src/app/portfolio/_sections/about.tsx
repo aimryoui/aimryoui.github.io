@@ -10,8 +10,9 @@ function About() {
     return (
         <>
             <section
+                id="about"
                 className={cn(
-                    "relative bg-background px-safe-zone py-safe-zone-vertical"
+                    "relative scroll-mt-[9999px] bg-background px-safe-zone py-safe-zone-vertical"
                 )}
             >
                 <span
@@ -24,10 +25,7 @@ function About() {
                 >
                     About
                 </span>
-                <H1
-                    id="about"
-                    className="flex flex-wrap gap-x-[.2em] leading-[2.75rem] sm:text-2xl"
-                >
+                <H1 className="flex flex-wrap gap-x-[.2em] leading-[2.75rem] sm:text-2xl">
                     Hello there!{" "}
                     <span className="block">
                         I&#39;m{" "}

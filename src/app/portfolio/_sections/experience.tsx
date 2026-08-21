@@ -32,6 +32,8 @@ const renderDate = (date: string) => {
     ))
 }
 
+const id = "experience"
+
 const DEFAULT_EXPANDED = [
     "dec-2025-uiux-motion-designer-san-data-systems-inc",
     "may-2026-uiux-designer-fina-care-studio",
@@ -41,11 +43,11 @@ const DEFAULT_EXPANDED = [
 
 function Experience() {
     return (
-        <section className="@container">
+        <section id={id} className="@container">
             <Space />
             <SectionLine containerClassName="z-55" />
             <SectionTitle
-                id="experience"
+                id={id}
                 title="Experience"
                 note="Information"
                 link="hash"

@@ -128,7 +128,9 @@ function SectionTitle({
                 )}
             >
                 <Title
-                    id={id}
+                    {...(link === "route" && {
+                        id
+                    })}
                     headingLevel={headingLevel}
                     order={order}
                     title={title}
@@ -167,7 +169,7 @@ function Title({
     title,
     link
 }: {
-    id: string
+    id?: string
     headingLevel?: SectionTitleProps["headingLevel"]
     order?: number
     title: string

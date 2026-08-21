@@ -22,12 +22,14 @@ import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
 import { SOFTWARE_SECTIONS } from "@/portfolio/_configs/software-sections"
 
+const id = "software"
+
 function Software() {
     return (
-        <section className="@container">
+        <section id={id} className="@container">
             <Space />
             <SectionLine containerClassName="z-55" />
-            <SectionTitle id="software" title="Software" link="hash" />
+            <SectionTitle id={id} title="Software" link="hash" />
             <Divider />
             <SectionLine />
             <Tooltip>
