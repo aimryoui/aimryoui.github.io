@@ -117,7 +117,13 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                     className="w-full"
                 />
             </div>
-            <div className="col-span-2 -ms-safe-zone flex md:hidden">
+            <div
+                className="col-span-2 -ms-safe-zone flex md:hidden"
+                style={{
+                    "--trigger-quantity": 5,
+                    "--padding-block": "2rem"
+                }}
+            >
                 <SvgElementLine className={cn("h-auto")} />
                 <Divider dir="vertical" className={cn("h-auto")} />
                 <SvgElementLine className={cn("h-auto")} />
@@ -125,7 +131,7 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                     <div className={cn("h-full bg-highlighted/10 p-2")}>
                         <div
                             className={cn(
-                                "flex size-full justify-center overflow-clip rounded-2xl border border-highlighted bg-background py-8",
+                                "flex size-full justify-center overflow-clip rounded-2xl border border-highlighted bg-background py-[--padding-block]",
                                 "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]",
                                 {
                                     md: "rounded-xl",
@@ -135,7 +141,7 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                         >
                             <EmotionIcon
                                 className={cn(
-                                    "sticky top-[calc(48vh-var(--spacing)*54/2)] h-54",
+                                    "sticky top-[calc(48vh-var(--spacing)*54/2)] h-[calc((var(--spacing)*5+var(--spacing-safe-zone-vertical)*2)*var(--trigger-quantity)-var(--padding-block)*2)]",
                                     {
                                         rtl: "-scale-x-100"
                                     }

@@ -60,6 +60,9 @@ const TocItemRow = memo(
         const isAnchor = variant === "anchor"
         const isSelectedWorks = item.id === "selected-works"
 
+        const hrefPathname = href.split("?")[0].split("#")[0]
+        const isSamePath = hrefPathname === pathname || hrefPathname === ""
+
         const Comp = isProject || isAnchor ? "li" : "div"
         const LabelComp = isProject ? "bdi" : "span"
 
@@ -143,6 +146,7 @@ const TocItemRow = memo(
                     hoverSound="tick"
                     pressSound="link"
                     prefetch={false}
+                    scroll={!isSamePath}
                     tracking={{
                         eventName: "click_toc_link",
                         eventParams: {
@@ -155,27 +159,17 @@ const TocItemRow = memo(
                         }
                     }}
                     onPress={() => {
-                        if (isSameUrl(href)) {
-                            onPress(item)
-                            onSameLinkClick()
+                        if (item.mode === "route" && !isSamePath) {
                             return
                         }
 
-                        const hrefPathname = href.split("?")[0].split("#")[0]
-                        const isSamePath =
-                            hrefPathname === pathname || hrefPathname === ""
-
-                        if (item.mode === "route" && !isSamePath) return
-
-                        if (item.mode === "route") {
-                            onPress(item)
-                            if (isSamePath) onSameLinkClick()
-                            return
-                        }
-
-                        // Anchor mode: React Aria already called router.push(href) but
-                        // Next.js router.push does NOT scroll to hash. We must scroll manually.
                         onPress(item)
+
+                        // If the item is already active in the TOC, it's a repeat click
+                        if (isActive) {
+                            onSameLinkClick()
+                        }
+
                         requestAnimationFrame(() => {
                             const el = document.getElementById(item.id)
                             if (el)

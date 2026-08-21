@@ -39,6 +39,9 @@ const MobileTocItemRow = memo(
         const isCategory = variant === "category"
         const isAnchor = variant === "anchor"
 
+        const hrefPathname = href.split("?")[0].split("#")[0]
+        const isSamePath = hrefPathname === pathname || hrefPathname === ""
+
         const Comp = isProject || isAnchor ? "li" : "div"
 
         return (
@@ -76,6 +79,7 @@ const MobileTocItemRow = memo(
                     hoverSound="tick"
                     pressSound={isProject ? "link" : "button"}
                     haptic={isProject ? "light" : "success"}
+                    scroll={!isSamePath}
                     tracking={{
                         eventName: "click_toc_link",
                         eventParams: {
@@ -88,29 +92,18 @@ const MobileTocItemRow = memo(
                         }
                     }}
                     onPress={() => {
-                        if (isSameUrl(href)) {
-                            onPress(item)
-                            onSameLinkClick()
-                            return
-                        }
-
-                        const hrefPathname = href.split("?")[0].split("#")[0]
-                        const isSamePath =
-                            hrefPathname === pathname || hrefPathname === ""
-
                         if (item.mode === "route" && !isSamePath) {
                             onLinkClick?.()
                             return
                         }
 
-                        if (item.mode === "route") {
-                            onPress(item)
-                            if (isSamePath) onSameLinkClick()
-                            return
+                        onPress(item)
+
+                        // If the item is already active in the TOC, it's a repeat click
+                        if (isActive) {
+                            onSameLinkClick()
                         }
 
-                        // Anchor mode: React Aria calls router.push() which doesn't scroll to hash.
-                        onPress(item)
                         requestAnimationFrame(() => {
                             const el = document.getElementById(item.id)
                             if (el)

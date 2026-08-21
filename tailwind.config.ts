@@ -147,6 +147,9 @@ export default {
                 inherit: "inherit",
                 unset: "unset"
             },
+            scrollMargin: {
+                full: "calc(infinity * 1px)"
+            },
             inset: ({ theme }) => ({
                 ...(theme("spacing") as Record<string, string>)
             }),

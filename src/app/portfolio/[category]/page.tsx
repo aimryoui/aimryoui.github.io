@@ -123,7 +123,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 <SectionLine showDecoration />
                 <Space />
                 <SectionLine containerClassName="z-55" />
-                <section>
+                <section id={group.id} className="scroll-mt-full">
                     <SectionTitle
                         id={group.id}
                         headingLevel="1"

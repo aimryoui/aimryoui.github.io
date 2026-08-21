@@ -12,7 +12,7 @@ function About() {
             <section
                 id="about"
                 className={cn(
-                    "relative scroll-mt-[9999px] bg-background px-safe-zone py-safe-zone-vertical"
+                    "relative scroll-mt-full bg-background px-safe-zone py-safe-zone-vertical"
                 )}
             >
                 <span

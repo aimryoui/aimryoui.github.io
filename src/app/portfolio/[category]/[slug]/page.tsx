@@ -136,7 +136,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         projectName={project.name}
                     />
                 </Space>
-                <section className={cn("@container")}>
+                <section
+                    id={project.id}
+                    className={cn("scroll-mt-full @container")}
+                >
                     {socialData && (
                         <Space
                             className={cn(

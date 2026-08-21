@@ -18,7 +18,6 @@ import {
 } from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
-import { slugify } from "@/helpers/slugify"
 import { useIsMounted } from "@/hooks/use-is-mounted"
 import { cn } from "@/lib/utils"
 import { TOOL_ICONS } from "@/portfolio/_configs/tools"
@@ -46,7 +45,6 @@ function ProjectHeader({
     projectName: (typeof projects)[number]["name"]
     isSelectedWorks?: boolean
 }) {
-    const headerId = slugify(projectName)
     const { subject, duration, place } = information
     const isNew = features?.new ?? false
 
@@ -100,7 +98,6 @@ function ProjectHeader({
                     )}
                 >
                     <H1
-                        id={headerId}
                         className={cn(
                             "w-fit text-pretty text-foreground wrap-anywhere"
                         )}
