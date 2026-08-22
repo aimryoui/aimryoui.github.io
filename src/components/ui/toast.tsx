@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils"
 const toast = ToastPrimitive.createToastManager()
 
 function ToastProvider({ ...props }: ToastPrimitive.Provider.Props) {
-    return <ToastPrimitive.Provider {...props} />
+    return <ToastPrimitive.Provider {...props} timeout={600000} />
 }
 
 function ToastPortal({ ...props }: ToastPrimitive.Portal.Props) {
@@ -71,11 +71,10 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
             data-slot="toast-viewport"
             className={cn(
                 "[--toast-viewport-top:calc(var(--spacing-safe-zone)-var(--spacing)*.5)]",
-                "[--toast-max-allowed:28rem]",
                 "[--is-mobile:0]",
-                "pointer-events-none fixed inset-x-0 top-[--toast-viewport-top] z-50 mx-auto grid w-fit min-w-[min(var(--toast-max-width,0px),var(--toast-max-allowed))] max-w-md outline-none",
+                "pointer-events-none fixed inset-x-0 top-[--toast-viewport-top] z-50 mx-auto grid w-fit min-w-[var(--toast-max-width,0px)] max-w-md outline-none",
                 {
-                    sm: "w-full max-w-[calc(100vw-var(--spacing-safe-zone)*4)] [--is-mobile:1] [--toast-max-allowed:calc(100vw-var(--spacing-safe-zone)*4)]"
+                    sm: "w-full min-w-0 max-w-[calc(100vw-var(--spacing-safe-zone)*4)] [--is-mobile:1]"
                 },
                 className
             )}
