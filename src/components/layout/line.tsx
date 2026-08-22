@@ -11,6 +11,9 @@ function MarginLine({ className, ...props }: MarginLineProps) {
             role="separator"
             className={cn(
                 "pointer-events-none sticky top-0 z-30 h-dvh w-px",
+                {
+                    webkit: "relative h-auto"
+                },
                 className
             )}
             {...props}
