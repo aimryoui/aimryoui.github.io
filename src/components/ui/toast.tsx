@@ -44,6 +44,12 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
         if (!viewport) return
 
         const observer = new ResizeObserver((entries) => {
+            const isMobile =
+                getComputedStyle(viewport)
+                    .getPropertyValue("--is-mobile")
+                    .trim() === "1"
+            if (isMobile) return
+
             const width = entries[0].contentRect.width
 
             if (width > currentMaxWidth.current + 0.1) {
@@ -66,9 +72,10 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
             className={cn(
                 "[--toast-viewport-top:calc(var(--spacing-safe-zone)-var(--spacing)*.5)]",
                 "[--toast-max-allowed:28rem]",
+                "[--is-mobile:0]",
                 "pointer-events-none fixed inset-x-0 top-[--toast-viewport-top] z-50 mx-auto grid w-fit min-w-[min(var(--toast-max-width,0px),var(--toast-max-allowed))] max-w-md outline-none",
                 {
-                    sm: "w-full max-w-[calc(100vw-var(--spacing-safe-zone)*4)] [--toast-max-allowed:calc(100vw-var(--spacing-safe-zone)*4)]"
+                    sm: "w-full max-w-[calc(100vw-var(--spacing-safe-zone)*4)] [--is-mobile:1] [--toast-max-allowed:calc(100vw-var(--spacing-safe-zone)*4)]"
                 },
                 className
             )}
