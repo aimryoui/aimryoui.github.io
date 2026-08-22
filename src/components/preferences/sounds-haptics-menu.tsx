@@ -84,6 +84,8 @@ function SoundsHapticsMenu() {
                         value={audioMode}
                         onValueChange={(value: string) => {
                             const nextMode = value as AudioState["audioMode"]
+                            if (nextMode === audioMode) return
+
                             setAudioMode(nextMode)
 
                             const eventName = "change_audio_preference"

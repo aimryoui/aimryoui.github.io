@@ -74,6 +74,8 @@ function DirectionMenu() {
                 <DropdownMenuRadioGroup
                     value={directionPreference}
                     onValueChange={(value: string) => {
+                        if (value === directionPreference) return
+
                         setDirectionPreference(value as DirectionPreference)
 
                         const eventName = "change_direction_preference"
@@ -85,7 +87,9 @@ function DirectionMenu() {
                             DIRECTION_PREFERENCES[directionPreference].label,
                             DIRECTION_PREFERENCES[value as DirectionPreference]
                                 .label,
-                            () =>{  setDirectionPreference(directionPreference); }
+                            () => {
+                                setDirectionPreference(directionPreference)
+                            }
                         )
                     }}
                 >

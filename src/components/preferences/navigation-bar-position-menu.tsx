@@ -113,6 +113,8 @@ function NavigationBarPositionMenu() {
                 <DropdownMenuRadioGroup
                     value={position}
                     onValueChange={(value: string) => {
+                        if (value === position) return
+
                         setPosition(value)
 
                         const eventName = "change_navigation_position"
@@ -132,7 +134,9 @@ function NavigationBarPositionMenu() {
                             config.triggerText,
                             prevOption?.text ?? "",
                             nextOption?.text ?? "",
-                            () =>{  setPosition(position); }
+                            () => {
+                                setPosition(position)
+                            }
                         )
                     }}
                 >

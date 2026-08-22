@@ -71,6 +71,8 @@ function MotionMenu() {
                 <DropdownMenuRadioGroup
                     value={motionPreference}
                     onValueChange={(value: string) => {
+                        if (value === motionPreference) return
+
                         setMotionPreference(value as MotionPreference)
 
                         const eventName = "change_motion_preference"
@@ -81,7 +83,9 @@ function MotionMenu() {
                             "Motion",
                             MOTION_PREFERENCES[motionPreference].label,
                             MOTION_PREFERENCES[value as MotionPreference].label,
-                            () =>{  setMotionPreference(motionPreference); }
+                            () => {
+                                setMotionPreference(motionPreference)
+                            }
                         )
                     }}
                 >

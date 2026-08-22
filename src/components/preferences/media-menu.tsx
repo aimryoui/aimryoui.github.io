@@ -136,6 +136,8 @@ function MediaMenu() {
                             <DropdownMenuRadioGroup
                                 value={videoAutoplay}
                                 onValueChange={(value: string) => {
+                                    if (value === videoAutoplay) return
+
                                     setVideoAutoplay(
                                         value as AutoplayPreference
                                     )
@@ -177,6 +179,8 @@ function MediaMenu() {
                             <DropdownMenuRadioGroup
                                 value={gifAutoplay}
                                 onValueChange={(value: string) => {
+                                    if (value === gifAutoplay) return
+
                                     setGifAutoplay(value as AutoplayPreference)
 
                                     const eventName =
@@ -217,4 +221,4 @@ function MediaMenu() {
     )
 }
 
-export { AUTOPLAY_OPTIONS, MEDIA_PREFERENCES, MENU_CONFIG, MediaMenu }
+export { AUTOPLAY_OPTIONS, MEDIA_PREFERENCES, MediaMenu,MENU_CONFIG }

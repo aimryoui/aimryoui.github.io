@@ -41,7 +41,9 @@ function SmoothScrollingMenu() {
                     "Smooth scrolling",
                     isEnabled ? "On" : "Off",
                     checked ? "On" : "Off",
-                    () =>{  setIsEnabled(isEnabled); }
+                    () => {
+                        setIsEnabled(isEnabled)
+                    }
                 )
             }}
             closeOnClick={false}
