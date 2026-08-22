@@ -57,5 +57,6 @@ video-manifest.json
 color-manifest.json
 
 # AI
+.agents
 AGENTS.md
 CLAUDE.md

@@ -1,5 +1,7 @@
 "use client"
 
+import "lenis/dist/lenis.css"
+
 import { ReactLenis } from "lenis/react"
 
 import { usePreference } from "@/hooks/use-preference"

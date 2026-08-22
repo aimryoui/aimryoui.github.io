@@ -97,7 +97,7 @@ function AlertDialogContent({
                             "pointer-events-none absolute -inset-4 -z-20 bg-[repeating-linear-gradient(315deg,var(--color-stroke)_0,var(--color-stroke)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]"
                         ],
                         after: [
-                            "pointer-events-none absolute inset-0 -z-10 rounded-inherit bg-popover ring ring-stroke",
+                            "pointer-events-none absolute inset-0 -z-10 rounded-inherit bg-background ring ring-stroke",
                             {
                                 "motion-preferred":
                                     "transition-[border-radius] duration-100",

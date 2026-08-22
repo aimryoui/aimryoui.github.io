@@ -591,7 +591,7 @@ function ResetPreferenceAlertDialog({
                                                                                 >
                                                                                     {!isReset && (
                                                                                         <>
-                                                                                            <bdi className="line-through decoration-current decoration-solid decoration-[.03125rem] opacity-70 dark:decoration-1">
+                                                                                            <bdi className="text-muted-foreground line-through decoration-current decoration-solid decoration-[.03125rem] dark:decoration-1">
                                                                                                 {typeof change.from
                                                                                                 === "function"
                                                                                                     ? change.from(

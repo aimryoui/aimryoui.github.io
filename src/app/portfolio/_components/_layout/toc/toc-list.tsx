@@ -4,7 +4,7 @@ import {
     LineSidebar,
     type LineSidebarProps
 } from "@/components/animations/line-sidebar"
-import { SmoothScrolling } from "@/components/ui/smooth-scrolling"
+import { SmoothScrolling } from "@/components/animations/smooth-scrolling"
 import { cn } from "@/lib/utils"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
 import { TocGroup } from "@/portfolio/_components/_layout/toc/toc-group"

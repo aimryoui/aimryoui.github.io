@@ -8,6 +8,7 @@ import {
     UserHandUpBoldDuotoneIcon
 } from "@solar-icons/react"
 
+import { showMenuToast } from "@/components/preferences/menu-toast"
 import {
     DropdownMenuCheckboxItem,
     DropdownMenuGroup,
@@ -89,6 +90,24 @@ function SoundsHapticsMenu() {
                             const eventParams = { audio_mode: nextMode }
                             sendGAEvent("event", eventName, eventParams)
 
+                            showMenuToast(
+                                "Sound effects",
+                                AUDIO_PREFERENCES[audioMode].label,
+                                AUDIO_PREFERENCES[nextMode].label,
+                                () => {
+                                    setAudioMode(audioMode)
+                                    if (audioMode === "auto") {
+                                        useAudioStore
+                                            .getState()
+                                            .setIsAudioEnabled(true)
+                                    } else {
+                                        useAudioStore
+                                            .getState()
+                                            .setIsAudioEnabled(false)
+                                    }
+                                }
+                            )
+
                             if (nextMode === "auto") {
                                 useAudioStore.getState().setIsAudioEnabled(true)
 
@@ -119,6 +138,15 @@ function SoundsHapticsMenu() {
                             const eventName = "change_haptic_preference"
                             const eventParams = { enabled: checked }
                             sendGAEvent("event", eventName, eventParams)
+
+                            showMenuToast(
+                                "Haptic feedback",
+                                isHapticEnabled ? "On" : "Off",
+                                checked ? "On" : "Off",
+                                () => {
+                                    setIsHapticEnabled(isHapticEnabled)
+                                }
+                            )
                         }}
                         disabled={!isTouchDevice}
                         closeOnClick={false}

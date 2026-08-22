@@ -7,6 +7,7 @@ import {
     WindowFrameBoldDuotoneIcon
 } from "@solar-icons/react"
 
+import { showMenuToast } from "@/components/preferences/menu-toast"
 import { useDirection } from "@/components/ui/direction"
 import {
     DropdownMenuRadioGroup,
@@ -120,6 +121,19 @@ function NavigationBarPositionMenu() {
                             is_mobile: isMobile
                         }
                         sendGAEvent("event", eventName, eventParams)
+
+                        const prevOption = options.find(
+                            (o) => o.value === position
+                        )
+                        const nextOption = options.find(
+                            (o) => o.value === value
+                        )
+                        showMenuToast(
+                            config.triggerText,
+                            prevOption?.text ?? "",
+                            nextOption?.text ?? "",
+                            () =>{  setPosition(position); }
+                        )
                     }}
                 >
                     {options.map(({ value, icon: Icon, text, disabled }) => (

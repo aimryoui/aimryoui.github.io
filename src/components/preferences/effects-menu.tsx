@@ -9,6 +9,7 @@ import {
     StarRingBoldDuotoneIcon
 } from "@solar-icons/react"
 
+import { showMenuToast } from "@/components/preferences/menu-toast"
 import {
     DropdownMenuCheckboxItem,
     DropdownMenuSub,
@@ -97,6 +98,15 @@ function EffectsMenu() {
                             const eventName = "change_effects_preference"
                             const eventParams = { effect, enabled: checked }
                             sendGAEvent("event", eventName, eventParams)
+
+                            showMenuToast(
+                                EFFECTS[effect].label,
+                                checked ? "Off" : "On",
+                                checked ? "On" : "Off",
+                                () => {
+                                    toggleEffect(effect)
+                                }
+                            )
                         }}
                         disabled={EFFECTS[effect].shouldDisable?.({
                             device: isTouchDevice,

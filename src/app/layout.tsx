@@ -1,5 +1,4 @@
 import "@/globals.css"
-import "lenis/dist/lenis.css"
 
 import { type Metadata, type Viewport } from "next"
 import { Google_Sans_Flex } from "next/font/google"
@@ -8,6 +7,7 @@ import localFont from "next/font/local"
 import { GoogleAnalytics } from "@next/third-parties/google"
 
 import { RouteProgressProvider } from "@/components/animations/route-progress"
+import { SmoothScrolling } from "@/components/animations/smooth-scrolling"
 import { TargetCursor } from "@/components/animations/target-cursor"
 import { AudioProvider } from "@/components/audio/audio"
 import { MarginLine } from "@/components/layout/line"
@@ -17,7 +17,7 @@ import {
     PngBorder
 } from "@/components/media/svg-filter"
 import { DirectionProvider } from "@/components/ui/direction"
-import { SmoothScrolling } from "@/components/ui/smooth-scrolling"
+import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { DEFAULT_EFFECTS_PREFERENCES } from "@/configs/effects.config"
 import { DEFAULT_MEDIA_PREFERENCES } from "@/configs/media.config"
@@ -314,6 +314,7 @@ export default async function RootLayout({
                                     <PngBorder />
                                     <MetaBall />
                                     <TargetCursor />
+                                    <Toaster />
                                 </TooltipProvider>
                             </RouteProgressProvider>
                         </DirectionProvider>

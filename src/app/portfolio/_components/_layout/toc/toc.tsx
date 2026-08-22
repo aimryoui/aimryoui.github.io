@@ -57,8 +57,8 @@ function TableOfContents({ items }: TocProps) {
 
     const handleAnimationEnd = (e: React.AnimationEvent<HTMLElement>) => {
         if (
-            e.animationName === "toc-reveal" ||
-            e.animationName === "toc-fade"
+            e.animationName === "toc-reveal"
+            || e.animationName === "toc-fade"
         ) {
             setNavRevealPhase("done")
         }

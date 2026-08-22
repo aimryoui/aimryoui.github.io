@@ -43,7 +43,8 @@
         "src/components/ui/drawer.tsx": "in-progress",
         "src/components/ui/dropdown-menu.tsx": "in-progress",
         "src/components/ui/progress.tsx": "in-progress",
-        "src/components/ui/tooltip.tsx": "in-progress"
+        "src/components/ui/tooltip.tsx": "in-progress",
+        "src/components/ui/toast.tsx": "in-progress"
     },
     "lineHighlightTypes": [
         {

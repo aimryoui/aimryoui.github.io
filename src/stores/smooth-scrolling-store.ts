@@ -27,7 +27,8 @@ const useSmoothScrollingStore = create<SmoothScrollingStore>()(
             name: "nhn-smooth-scrolling-preference",
             storage: createJSONStorage(() => localStorage),
             merge: (persistedState, currentState) => {
-                const parsed = smoothScrollingStoreSchema.safeParse(persistedState)
+                const parsed =
+                    smoothScrollingStoreSchema.safeParse(persistedState)
                 return {
                     ...currentState,
                     ...(parsed.success ? parsed.data : {})

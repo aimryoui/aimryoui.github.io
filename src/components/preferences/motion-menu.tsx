@@ -8,6 +8,7 @@ import {
     ThreeSquaresBoldDuotoneIcon
 } from "@solar-icons/react"
 
+import { showMenuToast } from "@/components/preferences/menu-toast"
 import {
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
@@ -75,6 +76,13 @@ function MotionMenu() {
                         const eventName = "change_motion_preference"
                         const eventParams = { motion_preference: value }
                         sendGAEvent("event", eventName, eventParams)
+
+                        showMenuToast(
+                            "Motion",
+                            MOTION_PREFERENCES[motionPreference].label,
+                            MOTION_PREFERENCES[value as MotionPreference].label,
+                            () =>{  setMotionPreference(motionPreference); }
+                        )
                     }}
                 >
                     {Object.values(MOTION_PREFERENCES).map((preference) => (

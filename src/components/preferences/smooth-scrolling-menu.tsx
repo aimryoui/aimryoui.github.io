@@ -3,6 +3,7 @@
 import { sendGAEvent } from "@next/third-parties/google"
 import { MouseBoldDuotoneIcon } from "@solar-icons/react"
 
+import { showMenuToast } from "@/components/preferences/menu-toast"
 import { DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
 import { usePreference } from "@/hooks/use-preference"
 import { useSmoothScrollingStore } from "@/stores/smooth-scrolling-store"
@@ -35,6 +36,13 @@ function SmoothScrollingMenu() {
                     enabled: checked
                 }
                 sendGAEvent("event", eventName, eventParams)
+
+                showMenuToast(
+                    "Smooth scrolling",
+                    isEnabled ? "On" : "Off",
+                    checked ? "On" : "Off",
+                    () =>{  setIsEnabled(isEnabled); }
+                )
             }}
             closeOnClick={false}
             description={MENU_CONFIG.description}

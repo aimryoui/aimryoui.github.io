@@ -8,6 +8,7 @@ import {
 } from "@solar-icons/react"
 import { Languages } from "lucide-react"
 
+import { showMenuToast } from "@/components/preferences/menu-toast"
 import {
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
@@ -78,6 +79,14 @@ function DirectionMenu() {
                         const eventName = "change_direction_preference"
                         const eventParams = { direction_preference: value }
                         sendGAEvent("event", eventName, eventParams)
+
+                        showMenuToast(
+                            "Direction",
+                            DIRECTION_PREFERENCES[directionPreference].label,
+                            DIRECTION_PREFERENCES[value as DirectionPreference]
+                                .label,
+                            () =>{  setDirectionPreference(directionPreference); }
+                        )
                     }}
                 >
                     {Object.values(DIRECTION_PREFERENCES).map((preference) => (

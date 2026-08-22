@@ -7,9 +7,10 @@ import {
     GalleryWideBoldDuotoneIcon,
     PlayBoldDuotoneIcon,
     SunsetBoldDuotoneIcon,
-    WiFiRouterBoldDuotoneIcon
+    WiFiBoldDuotoneIcon
 } from "@solar-icons/react"
 
+import { showMenuToast } from "@/components/preferences/menu-toast"
 import {
     DropdownMenuCheckboxItem,
     DropdownMenuGroup,
@@ -61,7 +62,10 @@ const AUTOPLAY_OPTIONS: Record<
     wifi: {
         label: "Wi-Fi connections only",
         icon: (
-            <WiFiRouterBoldDuotoneIcon className="[--solar-secondary-opacity:0.4]" />
+            <WiFiBoldDuotoneIcon
+                secondaryOpacity={1}
+                className="[--solar-secondary-opacity:0.4]"
+            />
         )
     },
     never: {
@@ -97,6 +101,15 @@ function MediaMenu() {
                             const eventName = "change_media_preference"
                             const eventParams = { preference, enabled: checked }
                             sendGAEvent("event", eventName, eventParams)
+
+                            showMenuToast(
+                                MEDIA_PREFERENCES[preference].label,
+                                checked ? "Off" : "On",
+                                checked ? "On" : "Off",
+                                () => {
+                                    togglePreference(preference)
+                                }
+                            )
                         }}
                         disabled={MEDIA_PREFERENCES[preference].shouldDisable?.(
                             motionReduced
@@ -128,6 +141,17 @@ function MediaMenu() {
                                         "change_video_autoplay_preference"
                                     const eventParams = { autoplay: value }
                                     sendGAEvent("event", eventName, eventParams)
+
+                                    showMenuToast(
+                                        "Video Auto-play",
+                                        AUTOPLAY_OPTIONS[videoAutoplay].label,
+                                        AUTOPLAY_OPTIONS[
+                                            value as AutoplayPreference
+                                        ].label,
+                                        () => {
+                                            setVideoAutoplay(videoAutoplay)
+                                        }
+                                    )
                                 }}
                             >
                                 {AUTOPLAY_PREFERENCES.map((preference) => (
@@ -155,6 +179,17 @@ function MediaMenu() {
                                         "change_gif_autoplay_preference"
                                     const eventParams = { autoplay: value }
                                     sendGAEvent("event", eventName, eventParams)
+
+                                    showMenuToast(
+                                        "GIF Auto-play",
+                                        AUTOPLAY_OPTIONS[gifAutoplay].label,
+                                        AUTOPLAY_OPTIONS[
+                                            value as AutoplayPreference
+                                        ].label,
+                                        () => {
+                                            setGifAutoplay(gifAutoplay)
+                                        }
+                                    )
                                 }}
                             >
                                 {AUTOPLAY_PREFERENCES.map((preference) => (
@@ -177,4 +212,4 @@ function MediaMenu() {
     )
 }
 
-export { AUTOPLAY_OPTIONS, MEDIA_PREFERENCES, MENU_CONFIG, MediaMenu }
+export { AUTOPLAY_OPTIONS, MEDIA_PREFERENCES, MediaMenu,MENU_CONFIG }
