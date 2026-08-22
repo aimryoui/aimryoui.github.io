@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils"
 const toast = ToastPrimitive.createToastManager()
 
 function ToastProvider({ ...props }: ToastPrimitive.Provider.Props) {
-    return <ToastPrimitive.Provider {...props} timeout={600000} />
+    return <ToastPrimitive.Provider {...props} />
 }
 
 function ToastPortal({ ...props }: ToastPrimitive.Portal.Props) {
@@ -100,19 +100,32 @@ function Toast({
             data-slot="toast"
             swipeDirection={swipeDirection}
             className={cn(
-                "group/toast pointer-events-auto z-[calc(1000-var(--toast-index))] col-start-1 row-start-1 min-w-0 origin-top select-none rounded-xlg bg-popover text-popover-foreground shadow-lg ring ring-inset ring-input will-change-transform outline-none",
+                "group/toast pointer-events-auto z-[calc(1000-var(--toast-index))] col-start-1 row-start-1 min-w-0 origin-top select-none rounded-xlg bg-popover text-popover-foreground shadow-lg ring ring-inset ring-input outline-none",
                 "[--gap:.5rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)+calc(var(--toast-index)*var(--gap))+var(--toast-swipe-movement-y))] [--peek:0.5rem] [--scale:calc(max(0,1-(var(--toast-index)*0.1)))] [--shrink:calc(1-var(--scale))]",
-                "h-[--height] [transform:translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--peek))+(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms]",
+                "h-[--height] transition-opacity duration-500 [transform:translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--peek))+(var(--shrink)*var(--height))))_scale(var(--scale))]",
                 "[&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:[transform:translateY(calc(-100%-var(--toast-viewport-top)))] [&[data-ending-style]:not([data-limited])]:opacity-0",
                 {
                     "focus-visible": "border-ring ring-3 ring-ring/50",
                     after: "absolute left-0 top-full h-[calc(var(--gap)+1px)] w-full",
                     "data-limited": "opacity-0",
-                    "data-starting-style":
-                        "[transform:translateY(calc(-100%-var(--toast-viewport-top)))]",
-                    "data-expanded": [
-                        "h-[--toast-height] [transform:translateX(var(--toast-swipe-movement-x))_translateY(var(--offset-y))] [transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_150ms,height_150ms]",
+                    "data-expanded":
+                        "h-[--toast-height] [transform:translateX(var(--toast-swipe-movement-x))_translateY(var(--offset-y))]",
+                    "motion-preferred": [
+                        "[transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms]",
                         {
+                            "data-starting-style":
+                                "[transform:translateY(calc(-100%-var(--toast-viewport-top)))]",
+                            "data-expanded": [
+                                "[transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_150ms,height_150ms]",
+                                {
+                                    "data-ending-style": [
+                                        "data-[swipe-direction=down]:[transform:translateY(calc(var(--toast-swipe-movement-y)+100%+var(--toast-viewport-top)))]",
+                                        "data-[swipe-direction=left]:[transform:translateX(calc(var(--toast-swipe-movement-x)-100vw))_translateY(var(--offset-y))]",
+                                        "data-[swipe-direction=right]:[transform:translateX(calc(var(--toast-swipe-movement-x)+100vw))_translateY(var(--offset-y))]",
+                                        "data-[swipe-direction=up]:[transform:translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-viewport-top)))]"
+                                    ]
+                                }
+                            ],
                             "data-ending-style": [
                                 "data-[swipe-direction=down]:[transform:translateY(calc(var(--toast-swipe-movement-y)+100%+var(--toast-viewport-top)))]",
                                 "data-[swipe-direction=left]:[transform:translateX(calc(var(--toast-swipe-movement-x)-100vw))_translateY(var(--offset-y))]",
@@ -121,11 +134,10 @@ function Toast({
                             ]
                         }
                     ],
-                    "data-ending-style": [
-                        "data-[swipe-direction=down]:[transform:translateY(calc(var(--toast-swipe-movement-y)+100%+var(--toast-viewport-top)))]",
-                        "data-[swipe-direction=left]:[transform:translateX(calc(var(--toast-swipe-movement-x)-100vw))_translateY(var(--offset-y))]",
-                        "data-[swipe-direction=right]:[transform:translateX(calc(var(--toast-swipe-movement-x)+100vw))_translateY(var(--offset-y))]",
-                        "data-[swipe-direction=up]:[transform:translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-viewport-top)))]"
+                    "motion-reduced": [
+                        {
+                            "data-starting-style": "opacity-0"
+                        }
                     ]
                 },
                 className
