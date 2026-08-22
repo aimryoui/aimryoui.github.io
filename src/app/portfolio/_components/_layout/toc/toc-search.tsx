@@ -127,7 +127,7 @@ function Addons({
                             }}
                             pressSound={false}
                         >
-                            <XCircle className="cursor-pointer" />
+                            <XCircle className="cursor-pointer md:size-5" />
                         </Button>
                     }
                 />

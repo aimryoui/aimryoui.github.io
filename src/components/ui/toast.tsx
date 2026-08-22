@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils"
 const toast = ToastPrimitive.createToastManager()
 
 function ToastProvider({ ...props }: ToastPrimitive.Provider.Props) {
-    return <ToastPrimitive.Provider {...props} timeout={600000} />
+    return <ToastPrimitive.Provider {...props} />
 }
 
 function ToastPortal({ ...props }: ToastPrimitive.Portal.Props) {
