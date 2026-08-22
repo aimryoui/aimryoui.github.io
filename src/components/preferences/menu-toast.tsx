@@ -15,12 +15,12 @@ function showMenuToast(
     const id = toast.add({
         type: "success" as const,
         description: (
-            <span className="flex items-center gap-1.5">
-                <Bold>{label}:</Bold>
+            <span className="block max-w-full truncate">
+                <Bold>{label}:</Bold>{" "}
                 <span className="text-muted-foreground line-through decoration-current decoration-solid decoration-[.03125rem] dark:decoration-1">
                     {oldState}
-                </span>
-                <ArrowRight className="size-3 text-muted-foreground rtl:rotate-180" />
+                </span>{" "}
+                <ArrowRight className="mb-[.125em] inline-block size-3 text-muted-foreground rtl:rotate-180" />{" "}
                 <Bold className="text-foreground">{newState}</Bold>
             </span>
         ),

@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils"
 const toast = ToastPrimitive.createToastManager()
 
 function ToastProvider({ ...props }: ToastPrimitive.Provider.Props) {
-    return <ToastPrimitive.Provider {...props} />
+    return <ToastPrimitive.Provider {...props} timeout={600000} />
 }
 
 function ToastPortal({ ...props }: ToastPrimitive.Portal.Props) {
@@ -34,7 +34,7 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
         if (toasts.length === 0 && currentMaxWidth.current > 0) {
             currentMaxWidth.current = 0
             if (viewportRef.current) {
-                viewportRef.current.style.minWidth = ""
+                viewportRef.current.style.removeProperty("--toast-max-width")
             }
         }
     }, [toasts.length])
@@ -48,11 +48,12 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
 
             if (width > currentMaxWidth.current + 0.1) {
                 currentMaxWidth.current = width
-                viewport.style.minWidth = `${width}px`
+                viewport.style.setProperty("--toast-max-width", `${width}px`)
             }
         })
 
         observer.observe(viewport)
+
         return () => {
             observer.disconnect()
         }
@@ -64,9 +65,10 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
             data-slot="toast-viewport"
             className={cn(
                 "[--toast-viewport-top:calc(var(--spacing-safe-zone)-var(--spacing)*.5)]",
-                "pointer-events-none fixed left-1/2 top-[--toast-viewport-top] z-50 mx-0 grid w-fit max-w-md -translate-x-1/2 outline-none",
+                "[--toast-max-allowed:28rem]",
+                "pointer-events-none fixed inset-x-0 top-[--toast-viewport-top] z-50 mx-auto grid w-fit min-w-[min(var(--toast-max-width,0px),var(--toast-max-allowed))] max-w-md outline-none",
                 {
-                    sm: "inset-x-4 mx-auto w-auto"
+                    sm: "w-full max-w-[calc(100vw-var(--spacing-safe-zone)*4)] [--toast-max-allowed:calc(100vw-var(--spacing-safe-zone)*4)]"
                 },
                 className
             )}
@@ -91,7 +93,7 @@ function Toast({
             data-slot="toast"
             swipeDirection={swipeDirection}
             className={cn(
-                "group/toast pointer-events-auto z-[calc(1000-var(--toast-index))] col-start-1 row-start-1 w-full origin-top select-none rounded-xlg bg-popover text-popover-foreground shadow-lg ring ring-inset ring-input will-change-transform outline-none",
+                "group/toast pointer-events-auto z-[calc(1000-var(--toast-index))] col-start-1 row-start-1 min-w-0 origin-top select-none rounded-xlg bg-popover text-popover-foreground shadow-lg ring ring-inset ring-input will-change-transform outline-none",
                 "[--gap:.5rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)+calc(var(--toast-index)*var(--gap))+var(--toast-swipe-movement-y))] [--peek:0.5rem] [--scale:calc(max(0,1-(var(--toast-index)*0.1)))] [--shrink:calc(1-var(--scale))]",
                 "h-[--height] [transform:translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--peek))+(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms]",
                 "[&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:[transform:translateY(calc(-100%-var(--toast-viewport-top)))] [&[data-ending-style]:not([data-limited])]:opacity-0",
