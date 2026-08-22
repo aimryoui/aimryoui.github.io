@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect, useRef } from "react"
+
 import { Toast as ToastPrimitive } from "@base-ui/react/toast"
 import {
     CircleCheckIcon,
@@ -16,7 +18,7 @@ import { cn } from "@/lib/utils"
 const toast = ToastPrimitive.createToastManager()
 
 function ToastProvider({ ...props }: ToastPrimitive.Provider.Props) {
-    return <ToastPrimitive.Provider {...props} timeout={600000} />
+    return <ToastPrimitive.Provider {...props} />
 }
 
 function ToastPortal({ ...props }: ToastPrimitive.Portal.Props) {
@@ -24,12 +26,45 @@ function ToastPortal({ ...props }: ToastPrimitive.Portal.Props) {
 }
 
 function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
+    const { toasts } = ToastPrimitive.useToastManager()
+    const viewportRef = useRef<HTMLDivElement>(null)
+    const currentMaxWidth = useRef(0)
+
+    useEffect(() => {
+        if (toasts.length === 0 && currentMaxWidth.current > 0) {
+            currentMaxWidth.current = 0
+            if (viewportRef.current) {
+                viewportRef.current.style.minWidth = ""
+            }
+        }
+    }, [toasts.length])
+
+    useEffect(() => {
+        const viewport = viewportRef.current
+        if (!viewport) return
+
+        const observer = new ResizeObserver((entries) => {
+            const width = entries[0].contentRect.width
+
+            if (width > currentMaxWidth.current + 0.1) {
+                currentMaxWidth.current = width
+                viewport.style.minWidth = `${width}px`
+            }
+        })
+
+        observer.observe(viewport)
+        return () => {
+            observer.disconnect()
+        }
+    }, [])
+
     return (
         <ToastPrimitive.Viewport
+            ref={viewportRef}
             data-slot="toast-viewport"
             className={cn(
                 "[--toast-viewport-top:calc(var(--spacing-safe-zone)-var(--spacing)*.5)]",
-                "pointer-events-none fixed left-1/2 top-[--toast-viewport-top] z-50 mx-0 w-full max-w-sm -translate-x-1/2 outline-none",
+                "pointer-events-none fixed left-1/2 top-[--toast-viewport-top] z-50 mx-0 grid w-fit max-w-md -translate-x-1/2 outline-none",
                 {
                     sm: "inset-x-4 mx-auto w-auto"
                 },
@@ -40,9 +75,15 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
     )
 }
 
+const SWIPE_DIRECTIONS = [
+    "up",
+    "left",
+    "right"
+] as ToastPrimitive.Root.Props["swipeDirection"]
+
 function Toast({
     className,
-    swipeDirection = "up",
+    swipeDirection = SWIPE_DIRECTIONS,
     ...props
 }: ToastPrimitive.Root.Props) {
     return (
@@ -50,7 +91,7 @@ function Toast({
             data-slot="toast"
             swipeDirection={swipeDirection}
             className={cn(
-                "group/toast pointer-events-auto absolute inset-x-0 top-0 z-[calc(1000-var(--toast-index))] mx-auto w-fit origin-top select-none rounded-xlg bg-popover text-popover-foreground shadow-lg ring ring-inset ring-input will-change-transform outline-none",
+                "group/toast pointer-events-auto z-[calc(1000-var(--toast-index))] col-start-1 row-start-1 w-full origin-top select-none rounded-xlg bg-popover text-popover-foreground shadow-lg ring ring-inset ring-input will-change-transform outline-none",
                 "[--gap:.5rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)+calc(var(--toast-index)*var(--gap))+var(--toast-swipe-movement-y))] [--peek:0.5rem] [--scale:calc(max(0,1-(var(--toast-index)*0.1)))] [--shrink:calc(1-var(--scale))]",
                 "h-[--height] [transform:translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--peek))+(var(--shrink)*var(--height))))_scale(var(--scale))] [transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms]",
                 "[&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:[transform:translateY(calc(-100%-var(--toast-viewport-top)))] [&[data-ending-style]:not([data-limited])]:opacity-0",
@@ -59,7 +100,7 @@ function Toast({
                     after: "absolute left-0 top-full h-[calc(var(--gap)+1px)] w-full",
                     "data-limited": "opacity-0",
                     "data-starting-style":
-                        "opacity-0 [transform:translateY(calc(-100%-var(--toast-viewport-top)))]",
+                        "[transform:translateY(calc(-100%-var(--toast-viewport-top)))]",
                     "data-expanded": [
                         "h-[--toast-height] [transform:translateX(var(--toast-swipe-movement-x))_translateY(var(--offset-y))] [transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_150ms,height_150ms]",
                         {
@@ -173,13 +214,7 @@ function ToastClose({
             data-slot="toast-close"
             aria-label="Close toast"
             render={render}
-            className={cn(
-                "relative shrink-0",
-                {
-                    after: "absolute -inset-2"
-                },
-                className
-            )}
+            className={cn("relative shrink-0", className)}
             {...props}
         >
             {children ?? <XIcon />}

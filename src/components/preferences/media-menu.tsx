@@ -53,14 +53,16 @@ const MEDIA_PREFERENCES: Record<MediaPreference, MediaPreferenceConfig> = {
 
 const AUTOPLAY_OPTIONS: Record<
     AutoplayPreference,
-    { label: string; icon: React.ReactNode }
+    { label: string; labelShort: string; icon: React.ReactNode }
 > = {
     always: {
         label: "Always auto-play",
+        labelShort: "Always",
         icon: <PlayBoldDuotoneIcon className="-translate-x-0.25" />
     },
     wifi: {
         label: "Wi-Fi connections only",
+        labelShort: "Wi-Fi only",
         icon: (
             <WiFiBoldDuotoneIcon
                 secondaryOpacity={1}
@@ -70,6 +72,7 @@ const AUTOPLAY_OPTIONS: Record<
     },
     never: {
         label: "Never auto-play",
+        labelShort: "Never",
         icon: <ForbiddenCircleBoldDuotoneIcon />
     }
 }
@@ -143,11 +146,12 @@ function MediaMenu() {
                                     sendGAEvent("event", eventName, eventParams)
 
                                     showMenuToast(
-                                        "Video Auto-play",
-                                        AUTOPLAY_OPTIONS[videoAutoplay].label,
+                                        "Videos Auto-play",
+                                        AUTOPLAY_OPTIONS[videoAutoplay]
+                                            .labelShort,
                                         AUTOPLAY_OPTIONS[
                                             value as AutoplayPreference
-                                        ].label,
+                                        ].labelShort,
                                         () => {
                                             setVideoAutoplay(videoAutoplay)
                                         }
@@ -181,11 +185,12 @@ function MediaMenu() {
                                     sendGAEvent("event", eventName, eventParams)
 
                                     showMenuToast(
-                                        "GIF Auto-play",
-                                        AUTOPLAY_OPTIONS[gifAutoplay].label,
+                                        "GIFs Auto-play",
+                                        AUTOPLAY_OPTIONS[gifAutoplay]
+                                            .labelShort,
                                         AUTOPLAY_OPTIONS[
                                             value as AutoplayPreference
-                                        ].label,
+                                        ].labelShort,
                                         () => {
                                             setGifAutoplay(gifAutoplay)
                                         }
@@ -212,4 +217,4 @@ function MediaMenu() {
     )
 }
 
-export { AUTOPLAY_OPTIONS, MEDIA_PREFERENCES, MediaMenu,MENU_CONFIG }
+export { AUTOPLAY_OPTIONS, MEDIA_PREFERENCES, MENU_CONFIG, MediaMenu }
