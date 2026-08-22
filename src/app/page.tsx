@@ -23,8 +23,10 @@ export default function Home() {
                     "flex w-full flex-col items-center justify-center gap-2 bg-background p-6"
                 )}
             >
-                <H1>Nguyễn Hoàng Nhân</H1>
-                <Highlight>Product Designer - UI/UX Designer</Highlight>
+                <H1 className="text-center">Nguyễn Hoàng Nhân</H1>
+                <Highlight className="text-center">
+                    Product Designer - UI/UX Designer
+                </Highlight>
             </div>
             <SectionLine />
             <Divider />
@@ -64,7 +66,7 @@ export default function Home() {
                     <li>
                         <ModeToggle />
                     </li>
-                    <li>
+                    <li className="xs:hidden">
                         <TooltipTrigger
                             delay={500}
                             payload={{

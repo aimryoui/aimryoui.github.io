@@ -20,6 +20,10 @@ interface TocProps {
 
 let hasRevealedOnLoad = false
 
+export function markTocRevealed() {
+    hasRevealedOnLoad = true
+}
+
 function TableOfContents({ items }: TocProps) {
     const isMounted = useIsMounted()
     const rafRef = useRef<number | null>(null)
