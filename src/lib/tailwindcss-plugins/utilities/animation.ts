@@ -157,6 +157,14 @@ export default plugin(
                 type: ["any"]
             }
         )
+        addUtilities({
+            ".animation-step-start": {
+                animationTimingFunction: "step-start"
+            },
+            ".animation-step-end": {
+                animationTimingFunction: "step-end"
+            }
+        })
 
         matchUtilities(
             { animation: (value: string) => ({ animationPlayState: value }) },

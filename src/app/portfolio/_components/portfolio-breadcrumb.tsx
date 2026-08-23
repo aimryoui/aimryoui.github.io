@@ -22,6 +22,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
+import { getPreferences } from "@/hooks/use-preference"
 import { getCategoryPath, groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 
@@ -46,9 +47,10 @@ function PortfolioBreadcrumb({
 
     useEffect(() => {
         const rafId = requestAnimationFrame(() => {
+            const { motionReduced } = getPreferences()
             listRef.current?.scroll({
                 left: listRef.current.scrollWidth,
-                behavior: "smooth"
+                behavior: motionReduced ? "instant" : "smooth"
             })
         })
         return () => {

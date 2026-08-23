@@ -5,7 +5,7 @@ import plugin from "tailwindcss/plugin"
 import { transformer } from "twg/transform"
 
 import { AVAILABLE_EFFECTS } from "./src/configs/effects.config"
-import animate from "./src/lib/tailwindcss-plugins/utilities/animate"
+import animation from "./src/lib/tailwindcss-plugins/utilities/animation"
 import backfaceVisibility from "./src/lib/tailwindcss-plugins/utilities/backface-visibility"
 import backgroundClip from "./src/lib/tailwindcss-plugins/utilities/background-clip"
 import clipPath from "./src/lib/tailwindcss-plugins/utilities/clip-path"
@@ -278,11 +278,11 @@ export default {
                 "social-button-shake-in-rtl":
                     "social-button-shake-in-rtl .3s ease-in-out forwards",
                 "marquee-ping-pong":
-                    "marquee-ping-pong var(--marquee-duration, 5s) linear infinite",
+                    "marquee-ping-pong var(--marquee-duration, 5s) infinite",
                 "marquee-infinity":
-                    "marquee-infinity var(--marquee-duration, 5s) linear infinite",
+                    "marquee-infinity var(--marquee-duration, 5s) infinite",
                 "marquee-mask-ping-pong":
-                    "marquee-mask-ping-pong var(--marquee-duration, 5s) linear infinite"
+                    "marquee-mask-ping-pong var(--marquee-duration, 5s) infinite"
             },
             keyframes: ({ theme }) => ({
                 spinner: {
@@ -459,7 +459,7 @@ export default {
     plugins: [
         anchorsPlugin,
 
-        animate,
+        animation,
         backfaceVisibility,
         backgroundClip,
         clipPath,

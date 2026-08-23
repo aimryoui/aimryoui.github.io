@@ -157,6 +157,7 @@ function Marquee({
                     "data-vertical": "flex-col",
                     "not-data-overflowing": "truncate",
                     "data-overflowing": [
+                        "animation-ease-linear",
                         pauseOnHover
                             && "hover:animation-paused active:animation-paused",
                         fadeEdges && [
@@ -168,7 +169,7 @@ function Marquee({
                         ]
                     ],
                     "motion-reduced":
-                        "data-horizontal:overflow-x-auto data-vertical:overflow-y-auto"
+                        "!animation-step-end data-vertical:!animate-none data-vertical:overflow-y-auto data-vertical:![mask-image:none]"
                 },
                 className
             )}
@@ -180,15 +181,18 @@ function Marquee({
                 className={cn(
                     "flex shrink-0 flex-row",
                     {
-                        "group-data-overflowing/marquee":
+                        "group-data-overflowing/marquee": [
+                            "animation-ease-linear",
                             mode === "ping-pong"
                                 ? "animate-marquee-ping-pong"
-                                : "animate-marquee-infinity",
+                                : "animate-marquee-infinity"
+                        ],
                         "group-data-horizontal/marquee":
                             "[--marquee-x:calc(var(--marquee-distance-x,0px)*-1)] rtl:[--marquee-x:var(--marquee-distance-x,0px)]",
                         "group-data-vertical/marquee":
                             "flex-col [--marquee-y:calc(var(--marquee-distance-y,0px)*-1)]",
-                        "motion-reduced": "animate-none"
+                        "motion-reduced":
+                            "!animation-step-end data-vertical:!animate-none"
                     },
                     pauseOnHover && {
                         "group-data-overflowing/marquee":
