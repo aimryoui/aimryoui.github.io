@@ -100,44 +100,55 @@ function Toast({
             swipeDirection={swipeDirection}
             className={cn(
                 "group/toast pointer-events-auto z-[calc(1000-var(--toast-index))] col-start-1 row-start-1 min-w-0 origin-top select-none rounded-xlg bg-popover text-popover-foreground shadow-lg ring ring-inset ring-input outline-none",
-                "[--gap:.5rem] [--height:var(--toast-frontmost-height,var(--toast-height))] [--offset-y:calc(var(--toast-offset-y)+calc(var(--toast-index)*var(--gap))+var(--toast-swipe-movement-y))] [--peek:0.5rem] [--scale:calc(max(0,1-(var(--toast-index)*0.1)))] [--shrink:calc(1-var(--scale))]",
-                "h-[--height] transition-opacity duration-500 [transform:translateX(var(--toast-swipe-movement-x))_translateY(calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--peek))+(var(--shrink)*var(--height))))_scale(var(--scale))]",
-                "[&[data-ending-style]:not([data-limited]):not([data-swipe-direction])]:[transform:translateY(calc(-100%-var(--toast-viewport-top)))] [&[data-ending-style]:not([data-limited])]:opacity-0",
+                "[--gap:.5rem] [--height:var(--toast-frontmost-height,var(--toast-height))]",
+                "[--offset-y:calc(var(--toast-offset-y)+calc(var(--toast-index)*var(--gap))+var(--toast-swipe-movement-y))]",
+                "[--peek:0.5rem] [--scale:calc(max(0,1-(var(--toast-index)*0.1)))] [--shrink:calc(1-var(--scale))]",
+                "h-[--height] translate-x-[var(--toast-swipe-movement-x)] translate-y-[calc(var(--toast-swipe-movement-y)+(var(--toast-index)*var(--peek))+(var(--shrink)*var(--height)))] scale-[var(--scale)] transition-opacity duration-300",
                 {
                     "focus-visible": "border-ring ring-3 ring-ring/50",
                     after: "absolute left-0 top-full h-[calc(var(--gap)+1px)] w-full",
                     "data-limited": "opacity-0",
+                    "data-ending-style:not-data-limited": "opacity-0",
                     "data-expanded":
-                        "h-[--toast-height] [transform:translateX(var(--toast-swipe-movement-x))_translateY(var(--offset-y))]",
+                        "h-[--toast-height] translate-x-[var(--toast-swipe-movement-x)] translate-y-[var(--offset-y)] scale-100",
                     "motion-preferred": [
                         "[transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_500ms,height_150ms]",
                         {
+                            "data-ending-style:not-data-limited":
+                                "translate-x-0 translate-y-[calc(-100%-var(--toast-viewport-top))] scale-100",
                             "data-starting-style":
-                                "[transform:translateY(calc(-100%-var(--toast-viewport-top)))]",
+                                "translate-x-0 translate-y-[calc(-100%-var(--toast-viewport-top))] scale-100",
                             "data-expanded": [
                                 "[transition:transform_500ms_cubic-bezier(0.22,1,0.36,1),opacity_150ms,height_150ms]",
                                 {
-                                    "data-ending-style": [
-                                        "data-[swipe-direction=down]:[transform:translateY(calc(var(--toast-swipe-movement-y)+100%+var(--toast-viewport-top)))]",
-                                        "data-[swipe-direction=left]:[transform:translateX(calc(var(--toast-swipe-movement-x)-100vw))_translateY(var(--offset-y))]",
-                                        "data-[swipe-direction=right]:[transform:translateX(calc(var(--toast-swipe-movement-x)+100vw))_translateY(var(--offset-y))]",
-                                        "data-[swipe-direction=up]:[transform:translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-viewport-top)))]"
-                                    ]
+                                    "data-ending-style": {
+                                        "data-[swipe-direction=down]":
+                                            "translate-x-0 translate-y-[calc(var(--toast-swipe-movement-y)+100%+var(--toast-viewport-top))] scale-100",
+                                        "data-[swipe-direction=left]":
+                                            "translate-x-[calc(var(--toast-swipe-movement-x)-100vw)] translate-y-[var(--offset-y)] scale-100",
+                                        "data-[swipe-direction=right]":
+                                            "translate-x-[calc(var(--toast-swipe-movement-x)+100vw)] translate-y-[var(--offset-y)] scale-100",
+                                        "data-[swipe-direction=up]":
+                                            "translate-x-0 translate-y-[calc(var(--toast-swipe-movement-y)-100%-var(--toast-viewport-top))] scale-100"
+                                    }
                                 }
                             ],
-                            "data-ending-style": [
-                                "data-[swipe-direction=down]:[transform:translateY(calc(var(--toast-swipe-movement-y)+100%+var(--toast-viewport-top)))]",
-                                "data-[swipe-direction=left]:[transform:translateX(calc(var(--toast-swipe-movement-x)-100vw))_translateY(var(--offset-y))]",
-                                "data-[swipe-direction=right]:[transform:translateX(calc(var(--toast-swipe-movement-x)+100vw))_translateY(var(--offset-y))]",
-                                "data-[swipe-direction=up]:[transform:translateY(calc(var(--toast-swipe-movement-y)-100%-var(--toast-viewport-top)))]"
-                            ]
+                            "data-ending-style": {
+                                "data-[swipe-direction=down]":
+                                    "translate-x-0 translate-y-[calc(var(--toast-swipe-movement-y)+100%+var(--toast-viewport-top))] scale-100",
+                                "data-[swipe-direction=left]":
+                                    "translate-x-[calc(var(--toast-swipe-movement-x)-100vw)] translate-y-[var(--offset-y)] scale-100",
+                                "data-[swipe-direction=right]":
+                                    "translate-x-[calc(var(--toast-swipe-movement-x)+100vw)] translate-y-[var(--offset-y)] scale-100",
+                                "data-[swipe-direction=up]":
+                                    "translate-x-0 translate-y-[calc(var(--toast-swipe-movement-y)-100%-var(--toast-viewport-top))] scale-100"
+                            }
                         }
                     ],
-                    "motion-reduced": [
-                        {
-                            "data-starting-style": "opacity-0"
-                        }
-                    ]
+                    "motion-reduced": {
+                        "not-data-ending-style:not-only-of-type": "duration-0",
+                        "data-starting-style": "opacity-0"
+                    }
                 },
                 className
             )}

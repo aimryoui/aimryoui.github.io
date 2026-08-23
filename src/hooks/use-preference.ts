@@ -138,6 +138,11 @@ function getServerSnapshot() {
     return serverSnapshot
 }
 
+// Use inside Event Handlers / Callbacks
+function getPreferences() {
+    return globalState
+}
+
 function usePreference() {
     const snapshotRef = useRef(globalState)
     const proxyRef = useRef<PreferencesState | null>(null)
@@ -194,4 +199,4 @@ function usePreference() {
 }
 
 export type { PreferencesState }
-export { usePreference }
+export { getPreferences, usePreference }

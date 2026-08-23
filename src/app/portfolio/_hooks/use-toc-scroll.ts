@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation"
 import { create } from "zustand"
 
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
+import { getPreferences } from "@/hooks/use-preference"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 
@@ -82,7 +83,10 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                 fullPath
             )
             if (activeEl) {
-                activeEl.scrollIntoView({ block: "center", behavior: "auto" })
+                activeEl.scrollIntoView({
+                    block: "center",
+                    behavior: "instant"
+                })
             }
         }
     }, [debouncedQuery, activeId, fullPath])
@@ -117,7 +121,10 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                 fullPath
             )
             if (activeEl) {
-                activeEl.scrollIntoView({ block: "center", behavior: "auto" })
+                activeEl.scrollIntoView({
+                    block: "center",
+                    behavior: "instant"
+                })
                 hasInitialScrolledRef.current = true
                 isFirstRenderRef.current = false
             }
@@ -209,7 +216,8 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                     delay = 350
                 }
 
-                const behavior = isFirst ? "auto" : "smooth"
+                const { motionReduced } = getPreferences()
+                const behavior = isFirst || motionReduced ? "instant" : "smooth"
 
                 if (delay > 0) {
                     const timer = setTimeout(() => {

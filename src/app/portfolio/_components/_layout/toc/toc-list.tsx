@@ -5,6 +5,7 @@ import {
     type LineSidebarProps
 } from "@/components/animations/line-sidebar"
 import { SmoothScrolling } from "@/components/animations/smooth-scrolling"
+import { getPreferences } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
 import { TocGroup } from "@/portfolio/_components/_layout/toc/toc-group"
@@ -38,7 +39,11 @@ function handleItemClick(
             `[data-toc-id="${targetId}"][href="${item.href}"]`
         )
         if (tocEl) {
-            tocEl.scrollIntoView({ block: "center", behavior: "smooth" })
+            const { motionReduced } = getPreferences()
+            tocEl.scrollIntoView({
+                block: "center",
+                behavior: motionReduced ? "instant" : "smooth"
+            })
         }
     } else {
         clickedTargetRef.current = targetId

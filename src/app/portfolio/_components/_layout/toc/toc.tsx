@@ -20,7 +20,7 @@ interface TocProps {
 
 let hasRevealedOnLoad = false
 
-export function markTocRevealed() {
+function markTocRevealed() {
     hasRevealedOnLoad = true
 }
 
@@ -147,4 +147,4 @@ function TableOfContents({ items }: TocProps) {
     )
 }
 
-export { TableOfContents }
+export { markTocRevealed, TableOfContents }

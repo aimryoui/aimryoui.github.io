@@ -3,9 +3,22 @@
 import { useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
 
+import { getPreferences } from "@/hooks/use-preference"
+
 /** @see {@link https://github.com/vercel/next.js/issues/88986} */
 
 const LAYOUT_SETTLE_DELAY_MS = 300
+
+function scrollToElement(id: string) {
+    const element = document.getElementById(id)
+    if (!element) return
+
+    const { motionReduced } = getPreferences()
+    element.scrollIntoView({
+        behavior: motionReduced ? "instant" : "smooth",
+        block: "start"
+    })
+}
 
 export default function HashScroller() {
     const pathname = usePathname()
@@ -24,13 +37,7 @@ export default function HashScroller() {
 
         rafId = requestAnimationFrame(() => {
             timer = setTimeout(() => {
-                const element = document.getElementById(id)
-                if (element) {
-                    element.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    })
-                }
+                scrollToElement(id)
             }, LAYOUT_SETTLE_DELAY_MS)
         })
 

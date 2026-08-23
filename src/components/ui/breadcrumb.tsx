@@ -47,7 +47,7 @@ function BreadcrumbList<T extends object>({
             data-slot="breadcrumb-list"
             ref={ref}
             className={cn(
-                "flex h-full items-center scroll-smooth text-muted-foreground",
+                "flex h-full items-center text-muted-foreground motion-preferred:scroll-smooth",
                 className
             )}
             {...props}

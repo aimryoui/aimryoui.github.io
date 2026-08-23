@@ -7,8 +7,22 @@ import { ArrowRight } from "@/components/icons/icons"
 import { LinkButton } from "@/components/ui/button"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
+import { getPreferences } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
 import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
+
+function scrollToTarget(id: string) {
+    requestAnimationFrame(() => {
+        const el = document.getElementById(id)
+        if (!el) return
+
+        const { motionReduced } = getPreferences()
+        el.scrollIntoView({
+            behavior: motionReduced ? "instant" : "smooth",
+            block: "start"
+        })
+    })
+}
 
 interface TocItemProps {
     id: string
@@ -169,14 +183,7 @@ const TocItemRow = memo(
                             onSameLinkClick()
                         }
 
-                        requestAnimationFrame(() => {
-                            const el = document.getElementById(item.id)
-                            if (el)
-                                el.scrollIntoView({
-                                    behavior: "smooth",
-                                    block: "start"
-                                })
-                        })
+                        scrollToTarget(item.id)
                     }}
                     className={cn(
                         "group/link relative flex flex-1 items-center truncate py-1 leading-6",

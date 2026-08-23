@@ -7,9 +7,9 @@ import { usePreference } from "@/hooks/use-preference"
 type ViewTransitionProps = React.ComponentProps<typeof ReactViewTransition>
 
 function ViewTransition({ children, ...props }: ViewTransitionProps) {
-    const { effectPageTransition } = usePreference()
+    const { effectPageTransition, motionReduced } = usePreference()
 
-    if (!effectPageTransition) {
+    if (!effectPageTransition || motionReduced) {
         return children
     }
 
