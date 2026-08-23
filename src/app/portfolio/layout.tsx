@@ -1,4 +1,3 @@
-import { Suspense } from "react"
 import { type Metadata } from "next"
 
 import { siteConfig } from "@/configs/site.config"
@@ -45,9 +44,7 @@ export default function PortfolioLayout({
             <Navigation />
             {children}
             <HashScroller />
-            <Suspense fallback={null}>
-                <FeatureQueryListener />
-            </Suspense>
+            <FeatureQueryListener />
         </>
     )
 }

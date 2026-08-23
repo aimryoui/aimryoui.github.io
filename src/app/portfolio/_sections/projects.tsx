@@ -154,9 +154,7 @@ function Projects({
                                                         )}
                                                         project={project}
                                                     />
-                                                    {index
-                                                        < group.projects.length
-                                                            - 1 && (
+                                                    {index < group.projects.length - 1 && (
                                                         <SectionLine
                                                             className={cn({
                                                                 lg: "w-[calc(100%+var(--spacing-safe-zone))]",

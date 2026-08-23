@@ -1,5 +1,8 @@
 "use client"
 
+import { useState } from "react"
+import { usePathname } from "next/navigation"
+
 import { ViewTransition } from "@/components/animations/view-transition"
 import { Divider } from "@/components/layout/divider"
 import {
@@ -18,8 +21,8 @@ import {
 } from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
-import { useIsMounted } from "@/hooks/use-is-mounted"
 import { cn } from "@/lib/utils"
+import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import { TOOL_ICONS } from "@/portfolio/_configs/tools"
 import { type ProjectId } from "@/types/project-ids"
 
@@ -48,10 +51,17 @@ function ProjectHeader({
     const { subject, duration, place } = information
     const isNew = features?.new ?? false
 
-    const isMounted = useIsMounted()
-    const isSelectedWorks =
-        isSelectedWorksProp
-        || (isMounted && window.location.search.includes("feature=selected"))
+    const isFeatureSelected = useFeatureQuery((s) => s.isFeatureSelected)
+    const pathname = usePathname()
+    const isActive = projectId ? pathname.includes(projectId) : false
+    
+    const [frozenState, setFrozenState] = useState(isFeatureSelected)
+
+    if (isActive && frozenState !== isFeatureSelected) {
+        setFrozenState(isFeatureSelected)
+    }
+
+    const isSelectedWorks = isSelectedWorksProp || frozenState
 
     const direction = useDirection()
 

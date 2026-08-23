@@ -12,6 +12,7 @@ import { TRIM_PROJECT_SLUG_REGEX } from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { cn } from "@/lib/utils"
+import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import {
     resolveSocialData,
     type SocialData
@@ -85,6 +86,11 @@ function ProjectCard({
         onMouseLeave?.(e)
     }
 
+    const handlePress: NonNullable<LinkButtonProps["onPress"]> = (e) => {
+        useFeatureQuery.getState().setFeatureSelected(isSelectedWorks)
+        props.onPress?.(e)
+    }
+
     const Comp = navigation
         ? navigation === "forward"
             ? PaginationNext
@@ -97,6 +103,7 @@ function ProjectCard({
             data-cursor="target"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onPress={handlePress}
             href={href}
             prefetch={!!navigation}
             {...(!navigation && {

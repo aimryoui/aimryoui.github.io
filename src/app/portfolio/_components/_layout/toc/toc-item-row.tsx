@@ -9,6 +9,7 @@ import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { getPreferences } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
+import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
 
 function scrollToTarget(id: string) {
@@ -173,6 +174,11 @@ const TocItemRow = memo(
                     }}
                     onPress={() => {
                         if (item.mode === "route" && !isSamePath) {
+                            useFeatureQuery
+                                .getState()
+                                .setFeatureSelected(
+                                    href.includes("feature=selected")
+                                )
                             return
                         }
 

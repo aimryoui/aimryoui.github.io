@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { useSearchParams } from "next/navigation"
+import { usePathname } from "next/navigation"
 
 import { create } from "zustand"
 
@@ -20,12 +20,12 @@ const useFeatureQuery = create<FeatureQueryStore>((set) => ({
 }))
 
 function FeatureQueryListener() {
-    const searchParams = useSearchParams()
+    const pathname = usePathname()
     const setFeatureSelected = useFeatureQuery((s) => s.setFeatureSelected)
 
     useEffect(() => {
-        setFeatureSelected(searchParams.get("feature") === "selected")
-    }, [searchParams, setFeatureSelected])
+        setFeatureSelected(window.location.search.includes("feature=selected"))
+    }, [pathname, setFeatureSelected])
 
     return null
 }

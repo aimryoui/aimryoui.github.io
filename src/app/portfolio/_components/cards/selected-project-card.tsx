@@ -10,6 +10,7 @@ import { TRIM_PROJECT_SLUG_REGEX } from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { cn } from "@/lib/utils"
+import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import {
     resolveSocialData,
     type SocialData
@@ -73,12 +74,18 @@ function SelectedProjectCard({
         onMouseLeave?.(e)
     }
 
+    const handlePress: NonNullable<LinkButtonProps["onPress"]> = (e) => {
+        useFeatureQuery.getState().setFeatureSelected(true)
+        props.onPress?.(e)
+    }
+
     return (
         <LinkButton
             ref={compRef}
             data-cursor="target"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onPress={handlePress}
             href={href}
             prefetch={false}
             nativeLink={true}
@@ -202,7 +209,7 @@ function ProjectName({
     return (
         <Bold
             className={cn(
-                "relative inline-flex w-fit max-w-full overflow-hidden text-pretty leading-5",
+                "relative inline-flex w-fit overflow-hidden text-pretty leading-5",
                 isNew && "pe-3",
                 {
                     md: "text-sm"
@@ -214,15 +221,17 @@ function ProjectName({
             <ViewTransition name={`project-${projectId}-selected`}>
                 <bdi
                     translate="no"
-                    className={cn(
-                        "line-clamp-2 w-fit max-w-full translate-y-0 skew-y-0 transition-[transform,opacity] ease-in-out duration-500",
-                        {
-                            "group-data-[hover=true]": [
-                                "-translate-y-full skew-y-12 opacity-0 rtl:-skew-y-12"
-                            ],
-                            "group-active": "text-highlighted"
-                        }
-                    )}
+                    className={cn("line-clamp-2 w-fit translate-y-0 skew-y-0", {
+                        "motion-reduced": "group-hover:text-highlighted",
+                        "motion-preferred": [
+                            "transition-[transform,opacity] ease-in-out duration-500",
+                            {
+                                "group-data-[hover=true]":
+                                    "-translate-y-full skew-y-12 opacity-0 rtl:-skew-y-12"
+                            }
+                        ],
+                        "group-active": "text-highlighted"
+                    })}
                     style={{
                         viewTransitionName: "none !important"
                     }}
@@ -235,11 +244,17 @@ function ProjectName({
                 translate="no"
                 role="presentation"
                 className={cn(
-                    "pointer-events-none absolute line-clamp-2 w-fit max-w-full origin-left translate-y-full skew-y-12 text-highlighted opacity-0 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
+                    "pointer-events-none absolute line-clamp-2 w-fit translate-y-full text-highlighted opacity-0",
                     {
-                        rtl: "origin-right -skew-y-12",
-                        "group-data-[hover=true]":
-                            "translate-y-0 skew-y-0 opacity-100 delay-0"
+                        "motion-reduced": "hidden",
+                        "motion-preferred": [
+                            "origin-left skew-y-12 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
+                            {
+                                rtl: "origin-right -skew-y-12",
+                                "group-data-[hover=true]":
+                                    "translate-y-0 skew-y-0 opacity-100 delay-0"
+                            }
+                        ]
                     }
                 )}
             >
@@ -282,7 +297,7 @@ function ProjectCategory({
         >
             <Text
                 className={cn(
-                    "line-clamp-2 w-fit max-w-full text-pretty text-sm transition-[color] duration-100",
+                    "line-clamp-2 w-fit text-pretty text-sm transition-[color] duration-100",
                     {
                         "group-hover": "text-foreground transition-none",
                         "group-active": "text-foreground transition-none",

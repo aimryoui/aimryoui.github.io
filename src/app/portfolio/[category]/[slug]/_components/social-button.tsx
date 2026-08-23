@@ -1,17 +1,18 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { usePathname } from "next/navigation"
 
 import { SquareTopDownLinearIcon } from "@solar-icons/react"
 
 import { ViewTransition } from "@/components/animations/view-transition"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
-import { useIsMounted } from "@/hooks/use-is-mounted"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePreference } from "@/hooks/use-preference"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
+import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import {
     resolveSocialData,
     type SocialData
@@ -42,10 +43,17 @@ function SocialButton({
     ...props
 }: SocialButtonProps & { isSelectedWorks?: boolean }) {
     const { isWebKit } = useBrowserEngine()
-    const isMounted = useIsMounted()
-    const isSelectedWorks =
-        isSelectedWorksProp
-        || (isMounted && window.location.search.includes("feature=selected"))
+    const isFeatureSelected = useFeatureQuery((s) => s.isFeatureSelected)
+    const pathname = usePathname()
+    const isActive = projectId ? pathname.includes(projectId) : false
+    
+    const [frozenState, setFrozenState] = useState(isFeatureSelected)
+
+    if (isActive && frozenState !== isFeatureSelected) {
+        setFrozenState(isFeatureSelected)
+    }
+
+    const isSelectedWorks = isSelectedWorksProp || frozenState
 
     const playPressFeedback = usePressFeedback()
     const { motionReduced } = usePreference()
