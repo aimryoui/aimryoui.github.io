@@ -165,6 +165,7 @@ function ToastContent({ className, ...props }: ToastPrimitive.Content.Props) {
                 "flex h-full items-center gap-1.5 overflow-hidden ps-3 transition-opacity ease-[cubic-bezier(0.22,1,0.36,1)] duration-250",
                 {
                     "data-behind": "opacity-0",
+                    "**:data-behind:not-data-expanded": "!animation-paused",
                     "data-expanded": "!opacity-100"
                 },
                 className

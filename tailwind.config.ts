@@ -255,7 +255,8 @@ export default {
                 inset: "inset",
                 disabled: "disabled",
                 horizontal: "orientation=horizontal",
-                vertical: "orientation=vertical"
+                vertical: "orientation=vertical",
+                overflowing: "overflowing"
             },
             opacity: {
                 8: ".08"
@@ -275,7 +276,13 @@ export default {
                 "social-button-shake-in":
                     "social-button-shake-in .3s ease-in-out forwards",
                 "social-button-shake-in-rtl":
-                    "social-button-shake-in-rtl .3s ease-in-out forwards"
+                    "social-button-shake-in-rtl .3s ease-in-out forwards",
+                "marquee-ping-pong":
+                    "marquee-ping-pong var(--marquee-duration, 5s) linear infinite",
+                "marquee-infinity":
+                    "marquee-infinity var(--marquee-duration, 5s) linear infinite",
+                "marquee-mask-ping-pong":
+                    "marquee-mask-ping-pong var(--marquee-duration, 5s) linear infinite"
             },
             keyframes: ({ theme }) => ({
                 spinner: {
@@ -356,6 +363,35 @@ export default {
                     },
                     "100%": {
                         transform: "translateX(0)"
+                    }
+                },
+                "marquee-ping-pong": {
+                    "0%, 15%": { transform: "translate3d(0, 0, 0)" },
+                    "35%, 65%": {
+                        transform:
+                            "translate3d(var(--marquee-x, 0), var(--marquee-y, 0), 0)"
+                    },
+                    "85%, 100%": { transform: "translate3d(0, 0, 0)" }
+                },
+                "marquee-mask-ping-pong": {
+                    "0%, 15%": {
+                        "--marquee-mask-start": "0px",
+                        "--marquee-mask-end": "1rem"
+                    },
+                    "35%, 65%": {
+                        "--marquee-mask-start": "1rem",
+                        "--marquee-mask-end": "0px"
+                    },
+                    "85%, 100%": {
+                        "--marquee-mask-start": "0px",
+                        "--marquee-mask-end": "1rem"
+                    }
+                },
+                "marquee-infinity": {
+                    "0%": { transform: "translate3d(0, 0, 0)" },
+                    "100%": {
+                        transform:
+                            "translate3d(var(--marquee-x, 0), var(--marquee-y, 0), 0)"
                     }
                 }
             })
@@ -462,6 +498,16 @@ export default {
             addBase({
                 ":root": {
                     "--spacing": `${(4 / BASE_FONT_SIZE).toString()}rem` // 0.25rem ~ 4px
+                },
+                "@property --marquee-mask-start": {
+                    syntax: '"<length>"',
+                    inherits: "true",
+                    initialValue: "0px"
+                },
+                "@property --marquee-mask-end": {
+                    syntax: '"<length>"',
+                    inherits: "true",
+                    initialValue: "0px"
                 }
             })
 
