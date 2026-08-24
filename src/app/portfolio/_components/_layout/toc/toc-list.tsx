@@ -83,7 +83,7 @@ function TocList({
         <SmoothScrolling
             className={cn(
                 "group overflow-x-hidden overflow-y-scroll scroll-auto scrollbar-none",
-                "scroll-fade-y scroll-fade-18",
+                "scroll-fade-y scroll-fade-18 group-has-[input:not(:placeholder-shown)]/sidebar:scroll-fade-none",
                 "hover:scrollbar-thin",
                 {
                     "group-is-[[data-sidebar-position='inline-start'][data-effects~='target-cursor']]/html":

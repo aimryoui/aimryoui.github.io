@@ -12,7 +12,7 @@ const MENU_CONFIG = {
     name: "Smooth scrolling",
     icon: <MouseBoldDuotoneIcon />,
     description:
-        "Enable page smooth scrolling. May affect performance. Disabled with reduced motion."
+        "Enable page & scroll areas smooth scrolling. May affect performance. Disabled with reduced motion."
 }
 
 function SmoothScrollingMenu() {

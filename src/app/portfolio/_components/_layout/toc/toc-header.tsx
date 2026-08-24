@@ -47,7 +47,7 @@ function TocHeader({
                         }}
                         render={
                             <LinkButton
-                                href="/portfolio#design-projects"
+                                href="/portfolio#selected-works"
                                 variant="outline"
                                 size="icon"
                                 prefetch={false}

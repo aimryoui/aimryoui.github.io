@@ -34,7 +34,7 @@ function Input({
             data-slot="input"
             className={composeRenderProps(className, (className) =>
                 cn(
-                    "h-9 w-full min-w-0 rounded-xlg border border-input bg-transparent px-3 pb-1.5 pt-1 text-base caret-highlighted will-change-[outline,border]",
+                    "h-9 w-full min-w-0 rounded-xlg border border-input bg-transparent px-3 pb-1.5 pt-1 text-base text-foreground caret-highlighted will-change-[outline,border]",
                     {
                         hover: "bg-element-hover",
                         dark: "bg-input/30",
