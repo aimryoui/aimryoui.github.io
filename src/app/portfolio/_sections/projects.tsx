@@ -39,7 +39,12 @@ function Projects({
 
                 return (
                     <Fragment key={group.id}>
-                        <section className={cn("bg-background @container")}>
+                        <section
+                            id={group.id}
+                            className={cn(
+                                "scroll-mt-[calc(var(--spacing-space)*2)] bg-background @container"
+                            )}
+                        >
                             {isSelectedWorks ? (
                                 <>
                                     {selectedWorksStyle}
@@ -154,7 +159,9 @@ function Projects({
                                                         )}
                                                         project={project}
                                                     />
-                                                    {index < group.projects.length - 1 && (
+                                                    {index
+                                                        < group.projects.length
+                                                            - 1 && (
                                                         <SectionLine
                                                             className={cn({
                                                                 lg: "w-[calc(100%+var(--spacing-safe-zone))]",

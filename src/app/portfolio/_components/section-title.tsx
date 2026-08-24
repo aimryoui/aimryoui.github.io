@@ -95,7 +95,7 @@ function SectionTitle({
                     className={cn(
                         "absolute bottom-full start-0 max-w-[calc(100%-var(--spacing-safe-zone)*2)] px-safe-zone pb-4 font-mono uppercase leading-normal",
                         noteId
-                            && "scroll-mt-[calc(var(--spacing-space)*2-1rem-1em*1.5)] md:scroll-mt-[calc(var(--spacing-space)*2-.75rem-1.25rem)]",
+                            && "scroll-mt-[calc(var(--spacing-space)*2-var(--spacing)*4-1em*1.5)] md:scroll-mt-[calc(var(--spacing-space)*2-var(--spacing)*3-1.25rem)]",
                         {
                             md: "pb-3 text-sm"
                         },
@@ -128,9 +128,6 @@ function SectionTitle({
                 )}
             >
                 <Title
-                    {...(link === "route" && {
-                        id
-                    })}
                     headingLevel={headingLevel}
                     order={order}
                     title={title}
@@ -163,25 +160,23 @@ function SectionTitle({
 }
 
 function Title({
-    id,
     headingLevel = "2",
     order,
     title,
     link
 }: {
-    id?: string
     headingLevel?: SectionTitleProps["headingLevel"]
     order?: number
     title: string
     link?: SectionTitleProps["link"]
 }) {
     const Comp = headingLevel === "1" ? H1 : H2
+
     return (
         <ViewTransition
             name={formatViewTransitionName(`overall-category-${title}`)}
         >
             <Comp
-                id={id}
                 className={cn(
                     "w-fit text-foreground wrap-anywhere transition-[color] duration-100",
                     link === "hash"
