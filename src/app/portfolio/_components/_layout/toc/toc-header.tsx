@@ -56,6 +56,12 @@ function TocHeader({
                                 className={cn("pointer-events-auto", {
                                     dark: "bg-input/25"
                                 })}
+                                tracking={{
+                                    eventName: "button_click",
+                                    eventParams: {
+                                        button_name: "TOC Header - Back"
+                                    }
+                                }}
                                 onPress={() => {
                                     useMobileTocStore
                                         .getState()

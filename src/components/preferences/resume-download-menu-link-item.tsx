@@ -1,5 +1,6 @@
 "use client"
 
+import { sendGAEvent } from "@next/third-parties/google"
 import { FileDownloadBoldDuotoneIcon } from "@solar-icons/react"
 
 import { DropdownMenuLinkItem } from "@/components/ui/dropdown-menu"
@@ -34,6 +35,11 @@ function ResumeDownloadMenuLinkItem() {
             openInNewTab
             description={RESUME_DOWNLOAD_MENU.description}
             srOnlyDescription
+            onClick={() => {
+                sendGAEvent("event", "button_click", {
+                    button_name: "Preferences - Download Resume"
+                })
+            }}
         >
             {RESUME_DOWNLOAD_MENU.icon}
             {RESUME_DOWNLOAD_MENU.label}

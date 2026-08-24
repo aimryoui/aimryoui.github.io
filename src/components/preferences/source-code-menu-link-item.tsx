@@ -1,3 +1,6 @@
+"use client"
+
+import { sendGAEvent } from "@next/third-parties/google"
 import { CodeBoldDuotoneIcon } from "@solar-icons/react"
 
 import { DropdownMenuLinkItem } from "@/components/ui/dropdown-menu"
@@ -27,6 +30,11 @@ function SourceCodeMenuLinkItem() {
             openInNewTab
             description={SOURCE_CODE_MENU.description}
             srOnlyDescription
+            onClick={() => {
+                sendGAEvent("event", "button_click", {
+                    button_name: "Preferences - Source Code"
+                })
+            }}
         >
             {SOURCE_CODE_MENU.icon}
             {SOURCE_CODE_MENU.label}

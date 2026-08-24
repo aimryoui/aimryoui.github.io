@@ -64,6 +64,12 @@ function Toolbar({ className }: { className?: string }) {
                                 hoverSound="tick"
                                 pressSound="link"
                                 scroll={false}
+                                tracking={{
+                                    eventName: "button_click",
+                                    eventParams: {
+                                        button_name: "Toolbar - Home/Logo"
+                                    }
+                                }}
                                 onPress={() => {
                                     useMobileTocStore
                                         .getState()

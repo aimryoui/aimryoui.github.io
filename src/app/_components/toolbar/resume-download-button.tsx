@@ -15,6 +15,10 @@ function ResumeDownloadButton() {
             href={resumeUrl}
             variant="outline"
             className="dark:bg-input/25"
+            tracking={{
+                eventName: "button_click",
+                eventParams: { button_name: "Toolbar - Download Resume" }
+            }}
         >
             Resume
             <ArrowUpRight className="-me-1 rtl:-scale-x-100" />
