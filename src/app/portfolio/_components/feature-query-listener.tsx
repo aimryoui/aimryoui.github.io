@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useLayoutEffect } from "react"
 import { usePathname } from "next/navigation"
 
 import { create } from "zustand"
@@ -23,9 +23,38 @@ function FeatureQueryListener() {
     const pathname = usePathname()
     const setFeatureSelected = useFeatureQuery((s) => s.setFeatureSelected)
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setFeatureSelected(window.location.search.includes("feature=selected"))
     }, [pathname, setFeatureSelected])
+
+    useEffect(() => {
+        const handleLocationChange = () => {
+            setFeatureSelected(
+                window.location.search.includes("feature=selected")
+            )
+        }
+
+        window.addEventListener("popstate", handleLocationChange)
+
+        const originalPushState = window.history.pushState
+        const originalReplaceState = window.history.replaceState
+
+        window.history.pushState = function (...args) {
+            originalPushState.apply(this, args)
+            setTimeout(handleLocationChange, 0)
+        }
+
+        window.history.replaceState = function (...args) {
+            originalReplaceState.apply(this, args)
+            setTimeout(handleLocationChange, 0)
+        }
+
+        return () => {
+            window.removeEventListener("popstate", handleLocationChange)
+            window.history.pushState = originalPushState
+            window.history.replaceState = originalReplaceState
+        }
+    }, [setFeatureSelected])
 
     return null
 }

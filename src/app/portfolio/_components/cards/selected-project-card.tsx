@@ -2,15 +2,12 @@
 
 import { useEffect, useRef } from "react"
 
-import { ViewTransition } from "@/components/animations/view-transition"
 import { Image } from "@/components/media/image"
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
 import { Bold, Text } from "@/components/ui/typography"
 import { TRIM_PROJECT_SLUG_REGEX } from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
-import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { cn } from "@/lib/utils"
-import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import {
     resolveSocialData,
     type SocialData
@@ -74,18 +71,12 @@ function SelectedProjectCard({
         onMouseLeave?.(e)
     }
 
-    const handlePress: NonNullable<LinkButtonProps["onPress"]> = (e) => {
-        useFeatureQuery.getState().setFeatureSelected(true)
-        props.onPress?.(e)
-    }
-
     return (
         <LinkButton
             ref={compRef}
             data-cursor="target"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            onPress={handlePress}
             href={href}
             prefetch={false}
             nativeLink={true}
@@ -134,7 +125,6 @@ function SelectedProjectCard({
             <ProjectCover
                 projectId={project.id}
                 src={coverImagePath}
-                social={project.social}
                 className={cn("z-1")}
             />
             <div
@@ -143,14 +133,10 @@ function SelectedProjectCard({
                 })}
             >
                 <ProjectName
-                    projectId={project.id}
                     name={project.name}
                     isNew={project.features?.new ?? false}
                 />
-                <ProjectCategory
-                    name={project.name}
-                    category={project.category}
-                />
+                <ProjectCategory category={project.category} />
             </div>
         </LinkButton>
     )
@@ -170,39 +156,35 @@ function ProjectCover({
     const socialData = resolveSocialData(social)
 
     return (
-        <ViewTransition name={`cover-${projectId}-selected`}>
-            <div
-                className={cn(
-                    "relative w-full",
-                    {
-                        after: "absolute inset-0 size-full border border-default/15"
-                    },
-                    className
-                )}
-                {...props}
-            >
-                <Image
-                    lightbox={false}
-                    dim={projectId === "bean-jr"}
-                    src={src}
-                    alt=""
-                    asBackgroundImage
-                    className="aspect-[4/3]"
-                    noBorder
-                />
-            </div>
-        </ViewTransition>
+        <div
+            className={cn(
+                "relative w-full",
+                {
+                    after: "absolute inset-0 size-full border border-default/15"
+                },
+                className
+            )}
+            {...props}
+        >
+            <Image
+                lightbox={false}
+                dim={projectId === "bean-jr"}
+                src={src}
+                alt=""
+                asBackgroundImage
+                className="aspect-[4/3]"
+                noBorder
+            />
+        </div>
     )
 }
 
 function ProjectName({
     className,
-    projectId,
     name,
     isNew,
     ...props
 }: React.ComponentProps<typeof Bold> & {
-    projectId?: ProjectId
     name: string
     isNew: boolean
 }) {
@@ -218,27 +200,25 @@ function ProjectName({
             )}
             {...props}
         >
-            <ViewTransition name={`project-${projectId}-selected`}>
-                <bdi
-                    translate="no"
-                    className={cn("line-clamp-2 w-fit translate-y-0 skew-y-0", {
-                        "motion-reduced": "group-hover:text-highlighted",
-                        "motion-preferred": [
-                            "transition-[transform,opacity] ease-in-out duration-500",
-                            {
-                                "group-data-[hover=true]":
-                                    "-translate-y-full skew-y-12 opacity-0 rtl:-skew-y-12"
-                            }
-                        ],
-                        "group-active": "text-highlighted"
-                    })}
-                    style={{
-                        viewTransitionName: "none !important"
-                    }}
-                >
-                    {formatOrdinals(name)}
-                </bdi>
-            </ViewTransition>
+            <bdi
+                translate="no"
+                className={cn("line-clamp-2 w-fit translate-y-0 skew-y-0", {
+                    "motion-reduced": "group-hover:text-highlighted",
+                    "motion-preferred": [
+                        "transition-[transform,opacity] ease-in-out duration-500",
+                        {
+                            "group-data-[hover=true]":
+                                "-translate-y-full skew-y-12 opacity-0 rtl:-skew-y-12"
+                        }
+                    ],
+                    "group-active": "text-highlighted"
+                })}
+                style={{
+                    viewTransitionName: "none !important"
+                }}
+            >
+                {formatOrdinals(name)}
+            </bdi>
             <bdi
                 aria-hidden={true}
                 translate="no"
@@ -261,20 +241,18 @@ function ProjectName({
                 {formatOrdinals(name)}
             </bdi>
             {isNew && (
-                <ViewTransition name={`project-${projectId}-new-tick-selected`}>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 14 14"
-                        aria-hidden={true}
-                        className="absolute end-0 top-0 size-2.75 text-highlighted lg:size-2.5 rtl:-scale-x-100"
-                    >
-                        <path
-                            fill="currentColor"
-                            d="M12.195.002c.474.02.944.255 1.29.635s.537.868.515 1.342a1.58 1.58 0 0 1-.63 1.186l-.523.405-9.423 7.296-.524.405a.73.73 0 0 1-.504.14.7.7 0 0 1-.465-.224.7.7 0 0 1-.182-.484.73.73 0 0 1 .186-.49l.45-.484 8.122-8.722.45-.485a1.58 1.58 0 0 1 1.238-.52M10.758 10.106c.455-.149.927-.1 1.317.17s.667.74.763 1.27c.097.53.003 1.067-.267 1.456-.27.391-.694.602-1.173.624l-.402.02-7.26.336-.403.02a.74.74 0 0 1-.48-.17.7.7 0 0 1-.265-.423.7.7 0 0 1 .098-.49.74.74 0 0 1 .39-.327q.193-.06.385-.124l6.913-2.238zM.515 1.817c.378-.285.943-.394 1.514-.313.57.082 1.082.345 1.365.724.287.38.32.845.153 1.3l-.088.244-1.602 4.372-.088.242a.76.76 0 0 1-.328.368.7.7 0 0 1-.464.106.7.7 0 0 1-.415-.232.76.76 0 0 1-.21-.443q-.01-.13-.018-.259L.021 3.281q-.008-.13-.017-.259c-.034-.484.13-.92.51-1.205"
-                        />
-                    </svg>
-                </ViewTransition>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                    aria-hidden={true}
+                    className="absolute end-0 top-0 size-2.75 text-highlighted lg:size-2.5 rtl:-scale-x-100"
+                >
+                    <path
+                        fill="currentColor"
+                        d="M12.195.002c.474.02.944.255 1.29.635s.537.868.515 1.342a1.58 1.58 0 0 1-.63 1.186l-.523.405-9.423 7.296-.524.405a.73.73 0 0 1-.504.14.7.7 0 0 1-.465-.224.7.7 0 0 1-.182-.484.73.73 0 0 1 .186-.49l.45-.484 8.122-8.722.45-.485a1.58 1.58 0 0 1 1.238-.52M10.758 10.106c.455-.149.927-.1 1.317.17s.667.74.763 1.27c.097.53.003 1.067-.267 1.456-.27.391-.694.602-1.173.624l-.402.02-7.26.336-.403.02a.74.74 0 0 1-.48-.17.7.7 0 0 1-.265-.423.7.7 0 0 1 .098-.49.74.74 0 0 1 .39-.327q.193-.06.385-.124l6.913-2.238zM.515 1.817c.378-.285.943-.394 1.514-.313.57.082 1.082.345 1.365.724.287.38.32.845.153 1.3l-.088.244-1.602 4.372-.088.242a.76.76 0 0 1-.328.368.7.7 0 0 1-.464.106.7.7 0 0 1-.415-.232.76.76 0 0 1-.21-.443q-.01-.13-.018-.259L.021 3.281q-.008-.13-.017-.259c-.034-.484.13-.92.51-1.205"
+                    />
+                </svg>
             )}
         </Bold>
     )
@@ -282,37 +260,29 @@ function ProjectName({
 
 function ProjectCategory({
     className,
-    name,
     category,
     ...props
 }: React.ComponentProps<typeof Text> & {
-    name: string
     category: string
 }) {
     return (
-        <ViewTransition
-            name={formatViewTransitionName(
-                `category-${name}-${category}-selected`
+        <Text
+            className={cn(
+                "line-clamp-2 w-fit text-pretty text-sm transition-[color] duration-100",
+                {
+                    "group-hover": "text-foreground transition-none",
+                    "group-active": "text-foreground transition-none",
+                    md: "text-xs"
+                },
+                className
             )}
+            style={{
+                viewTransitionName: "none !important"
+            }}
+            {...props}
         >
-            <Text
-                className={cn(
-                    "line-clamp-2 w-fit text-pretty text-sm transition-[color] duration-100",
-                    {
-                        "group-hover": "text-foreground transition-none",
-                        "group-active": "text-foreground transition-none",
-                        md: "text-xs"
-                    },
-                    className
-                )}
-                style={{
-                    viewTransitionName: "none !important"
-                }}
-                {...props}
-            >
-                {category}
-            </Text>
-        </ViewTransition>
+            {category}
+        </Text>
     )
 }
 

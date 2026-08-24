@@ -1,8 +1,5 @@
 "use client"
 
-import { useState } from "react"
-import { usePathname } from "next/navigation"
-
 import { ViewTransition } from "@/components/animations/view-transition"
 import { Divider } from "@/components/layout/divider"
 import {
@@ -22,7 +19,6 @@ import {
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { cn } from "@/lib/utils"
-import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import { TOOL_ICONS } from "@/portfolio/_configs/tools"
 import { type ProjectId } from "@/types/project-ids"
 
@@ -38,30 +34,16 @@ function ProjectHeader({
     features,
     information,
     tools,
-    detail,
-    isSelectedWorks: isSelectedWorksProp = false
+    detail
 }: Omit<
     (typeof projects)[number],
     "id" | "name" | "forceExpand" | "slug" | "code" | "filePath"
 > & {
     projectId?: ProjectId
     projectName: (typeof projects)[number]["name"]
-    isSelectedWorks?: boolean
 }) {
     const { subject, duration, place } = information
     const isNew = features?.new ?? false
-
-    const isFeatureSelected = useFeatureQuery((s) => s.isFeatureSelected)
-    const pathname = usePathname()
-    const isActive = projectId ? pathname.includes(projectId) : false
-    
-    const [frozenState, setFrozenState] = useState(isFeatureSelected)
-
-    if (isActive && frozenState !== isFeatureSelected) {
-        setFrozenState(isFeatureSelected)
-    }
-
-    const isSelectedWorks = isSelectedWorksProp || frozenState
 
     const direction = useDirection()
 
@@ -115,7 +97,6 @@ function ProjectHeader({
                         <ProjectName
                             projectId={projectId}
                             projectName={projectName}
-                            isSelectedWorks={isSelectedWorks}
                         />
                         {!shouldHideDot && (
                             <span
@@ -130,7 +111,6 @@ function ProjectHeader({
                     <ProjectCategory
                         projectName={projectName}
                         category={category}
-                        isSelectedWorks={isSelectedWorks}
                     />
                 </div>
                 <SvgElementLine className={cn("md:hidden")} />
@@ -241,17 +221,13 @@ function ProjectHeader({
 
 function ProjectName({
     projectId,
-    projectName,
-    isSelectedWorks
+    projectName
 }: {
     projectId?: ProjectId
     projectName: string
-    isSelectedWorks: boolean
 }) {
     return (
-        <ViewTransition
-            name={`project-${projectId}${isSelectedWorks ? "-selected" : ""}`}
-        >
+        <ViewTransition name={`project-${projectId}`}>
             <bdi translate="no">{formatOrdinals(projectName)}</bdi>
         </ViewTransition>
     )
@@ -259,17 +235,15 @@ function ProjectName({
 
 function ProjectCategory({
     projectName,
-    category,
-    isSelectedWorks
+    category
 }: {
     projectName: string
     category: string
-    isSelectedWorks: boolean
 }) {
     return (
         <ViewTransition
             name={formatViewTransitionName(
-                `category-${projectName}-${category}${isSelectedWorks ? "-selected" : ""}`
+                `category-${projectName}-${category}`
             )}
         >
             <Highlight className={cn("w-fit")}>{category}</Highlight>

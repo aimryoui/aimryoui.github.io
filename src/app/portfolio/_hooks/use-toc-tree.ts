@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { usePathname } from "next/navigation"
 
+import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
@@ -83,7 +84,7 @@ function useTocGroup(items: TocItemProps[], defaultExpanded = true) {
         })
     })
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const checkActive = (activeId: string | null) => {
             const match = items.some((i) => {
                 if (i.id !== activeId) return false

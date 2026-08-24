@@ -101,8 +101,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     )
     const project = projectIndex === -1 ? null : categoryProjects[projectIndex]
 
-    const isSelectedWorks = category === "selected-works"
-
     if (!group || !project) notFound()
 
     const prev = projectIndex > 0 ? categoryProjects[projectIndex - 1] : null
@@ -153,7 +151,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             <SocialButton
                                 projectId={project.id}
                                 social={project.social}
-                                isSelectedWorks={isSelectedWorks}
                             />
                         </Space>
                     )}
@@ -169,7 +166,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             information={project.information}
                             tools={project.tools}
                             detail={project.detail}
-                            isSelectedWorks={isSelectedWorks}
                         />
 
                         <SectionLine />

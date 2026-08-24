@@ -10,7 +10,6 @@ import { highlightQuery } from "@/helpers/highlight-query"
 import { getPreferences } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
 import { type TocItemRowProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
-import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
 
 function scrollToTarget(id: string) {
@@ -107,11 +106,6 @@ const MobileTocItemRow = memo(
                     }}
                     onPress={() => {
                         if (item.mode === "route" && !isSamePath) {
-                            useFeatureQuery
-                                .getState()
-                                .setFeatureSelected(
-                                    href.includes("feature=selected")
-                                )
                             onLinkClick?.()
                             return
                         }

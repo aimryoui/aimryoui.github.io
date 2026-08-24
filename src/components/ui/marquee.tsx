@@ -85,8 +85,8 @@ function Marquee({
                     ? content.scrollWidth - container.clientWidth
                     : content.scrollHeight - container.clientHeight
 
-                // Require at least 10px of overflow to animate, avoiding micro-jitters
-                overflow = distance > 10
+                // Require at least 1px of overflow to animate, avoiding micro-jitters
+                overflow = distance > 1
             } else {
                 // mode === "infinity"
                 const singleChild = singleChildRef.current

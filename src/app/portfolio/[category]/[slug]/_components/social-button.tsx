@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { usePathname } from "next/navigation"
 
 import { SquareTopDownLinearIcon } from "@solar-icons/react"
 
@@ -12,7 +11,6 @@ import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePreference } from "@/hooks/use-preference"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
-import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import {
     resolveSocialData,
     type SocialData
@@ -39,22 +37,10 @@ function SocialButton({
     onHoverStart,
     onHoverEnd,
     tracking,
-    isSelectedWorks: isSelectedWorksProp = false,
     ...props
-}: SocialButtonProps & { isSelectedWorks?: boolean }) {
+}: SocialButtonProps) {
     const { isWebKit } = useBrowserEngine()
-    const isFeatureSelected = useFeatureQuery((s) => s.isFeatureSelected)
-    const pathname = usePathname()
-    const isActive = projectId ? pathname.includes(projectId) : false
     
-    const [frozenState, setFrozenState] = useState(isFeatureSelected)
-
-    if (isActive && frozenState !== isFeatureSelected) {
-        setFrozenState(isFeatureSelected)
-    }
-
-    const isSelectedWorks = isSelectedWorksProp || frozenState
-
     const playPressFeedback = usePressFeedback()
     const { motionReduced } = usePreference()
 
@@ -166,7 +152,7 @@ function SocialButton({
 
     return (
         <ViewTransition
-            name={`project-${projectId}-social-button${isSelectedWorks ? "-selected" : ""}`}
+            name={`project-${projectId}-social-button`}
         >
             {isWebKit ? (
                 <LinkButton

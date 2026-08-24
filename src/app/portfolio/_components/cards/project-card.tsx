@@ -12,7 +12,6 @@ import { TRIM_PROJECT_SLUG_REGEX } from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { cn } from "@/lib/utils"
-import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import {
     resolveSocialData,
     type SocialData
@@ -86,10 +85,7 @@ function ProjectCard({
         onMouseLeave?.(e)
     }
 
-    const handlePress: NonNullable<LinkButtonProps["onPress"]> = (e) => {
-        useFeatureQuery.getState().setFeatureSelected(isSelectedWorks)
-        props.onPress?.(e)
-    }
+
 
     const Comp = navigation
         ? navigation === "forward"
@@ -103,7 +99,6 @@ function ProjectCard({
             data-cursor="target"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            onPress={handlePress}
             href={href}
             prefetch={!!navigation}
             {...(!navigation && {
@@ -150,7 +145,6 @@ function ProjectCard({
             )}
             <ProjectCover
                 projectId={project.id}
-                isSelectedWorks={isSelectedWorks}
                 navigation={navigation}
                 src={coverImagePath}
                 social={project.social}
@@ -175,7 +169,6 @@ function ProjectCard({
             >
                 <ProjectName
                     projectId={project.id}
-                    isSelectedWorks={isSelectedWorks}
                     name={project.name}
                     navigation={navigation}
                     isNew={project.features?.new ?? false}
@@ -183,7 +176,6 @@ function ProjectCard({
                 />
                 <ProjectCategory
                     name={project.name}
-                    isSelectedWorks={isSelectedWorks}
                     category={project.category}
                     className={cn(navigation === "backward" && "text-end")}
                 />
@@ -223,20 +215,18 @@ function ProjectCover({
     navigation,
     social,
     src,
-    isSelectedWorks = false,
     ...props
-}: React.ComponentProps<"div">
-    & Pick<ProjectCardProps, "navigation"> & {
-        projectId?: ProjectId
-        src: string
-        social?: SocialData
-        isSelectedWorks?: boolean
-    }) {
+}: React.ComponentProps<"div"> & {
+    projectId?: ProjectId
+    src: string
+    social?: SocialData
+    navigation?: ProjectCardProps["navigation"]
+}) {
     const socialData = resolveSocialData(social)
 
     return (
         <ViewTransition
-            name={`cover-${projectId}${isSelectedWorks ? "-selected" : ""}`}
+            name={`cover-${projectId}`}
         >
             <div
                 className={cn(
@@ -305,7 +295,7 @@ function ProjectCover({
                 >
                     {socialData && (
                         <ViewTransition
-                            name={`project-${projectId}-social-button${isSelectedWorks ? "-selected" : ""}`}
+                            name={`project-${projectId}-social-button`}
                         >
                             <div
                                 className={cn(
@@ -356,15 +346,13 @@ function ProjectName({
     name,
     isNew,
     navigation,
-    isSelectedWorks = false,
     ...props
-}: React.ComponentProps<typeof Bold>
-    & Pick<ProjectCardProps, "navigation"> & {
-        projectId?: ProjectId
-        name: string
-        isNew: boolean
-        isSelectedWorks?: boolean
-    }) {
+}: React.ComponentProps<typeof Bold> & {
+    projectId?: ProjectId
+    name: string
+    isNew: boolean
+    navigation?: ProjectCardProps["navigation"]
+}) {
     return (
         <Bold
             className={cn(
@@ -378,7 +366,7 @@ function ProjectName({
             {...props}
         >
             <ViewTransition
-                name={`project-${projectId}${isSelectedWorks ? "-selected" : ""}`}
+                name={`project-${projectId}`}
             >
                 <bdi
                     translate="no"
@@ -432,7 +420,7 @@ function ProjectName({
             </bdi>
             {isNew && (
                 <ViewTransition
-                    name={`project-${projectId}-new-tick${isSelectedWorks ? "-selected" : ""}`}
+                    name={`project-${projectId}-new-tick`}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -456,17 +444,15 @@ function ProjectCategory({
     className,
     name,
     category,
-    isSelectedWorks = false,
     ...props
 }: React.ComponentProps<typeof Text> & {
     name: string
     category: string
-    isSelectedWorks?: boolean
 }) {
     return (
         <ViewTransition
             name={formatViewTransitionName(
-                `category-${name}-${category}${isSelectedWorks ? "-selected" : ""}`
+                `category-${name}-${category}`
             )}
         >
             <Text

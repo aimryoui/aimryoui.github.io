@@ -25,6 +25,7 @@ import {
 import { getPreferences } from "@/hooks/use-preference"
 import { getCategoryPath, groupProjectsByCategory } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
+import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 
 import { projects } from "~/.velite"
 
@@ -43,7 +44,10 @@ function PortfolioBreadcrumb({
 
     const [menuHandle] = useState(createDropdownMenuHandle)
 
-    const isSelectedWorks = category === "selected-works"
+    const isSelectedCategory = category === "selected-works"
+    const isFeatureSelected = useFeatureQuery((s) => s.isFeatureSelected)
+
+    const isSelectedWorks = isSelectedCategory || isFeatureSelected
 
     useEffect(() => {
         const rafId = requestAnimationFrame(() => {
@@ -181,7 +185,7 @@ function PortfolioBreadcrumb({
                     </BreadcrumbDropdownMenu>
                 </BreadcrumbItem>
 
-                {category !== "selected-works" && (
+                {!isSelectedWorks && (
                     <BreadcrumbItem>
                         <BreadcrumbDropdownMenu
                             handle={menuHandle}
