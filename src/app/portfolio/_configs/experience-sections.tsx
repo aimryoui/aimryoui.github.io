@@ -1,7 +1,9 @@
+import { type PortfolioRole } from "@/configs/role.config"
+
 interface ExperienceSectionDetails {
     startDate: string
     endDate?: string
-    position: string
+    position: string | Partial<Record<PortfolioRole, string>>
     organization?: {
         text: string
         url: string
@@ -9,7 +11,7 @@ interface ExperienceSectionDetails {
         duplicate?: boolean
     }
     summary?: string
-    description?: string[]
+    description?: string[] | Record<PortfolioRole, string[]>
 }
 
 interface ExperienceSection {
@@ -24,20 +26,31 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
             {
                 startDate: "Dec 2025",
                 endDate: "Jul 2026",
-                position: "UI/UX & Motion Designer",
+                position: {
+                    pd: "UI/UX & Motion Designer",
+                    cd: "Graphic & Motion Designer"
+                },
                 organization: {
                     text: "SAN Data Systems Inc.",
                     url: "https://sandatasystem.com"
                 },
                 summary:
                     "Contractor position, worked remotely on a full-time basis. Worked entirely in English, involved interaction with colleagues who were Indian-Americans and Indians.",
-                description: [
-                    "Created design system and component library from scratch; adapted to existing products.",
-                    "Redesigned/refined given products UI on Figma for better UX and ready for motion.",
-                    "Designed booth display and presentation materials for Red Hat Summit; integrated AI for mockups, presentation.",
-                    "Worked on marketing motion graphic, product launch videos; product instruction, documentation videos using Adobe After Effects and Adobe XD.",
-                    "Reported directly to the CTO."
-                ]
+                description: {
+                    pd: [
+                        "Created design system and component library from scratch; adapted to existing products.",
+                        "Redesigned/refined given products UI on Figma for better UX and ready for motion.",
+                        "Designed booth display and presentation materials for Red Hat Summit; integrated AI for mockups, presentation.",
+                        "Worked on marketing motion graphic, product launch videos; product instruction, documentation videos using Adobe After Effects and Adobe XD.",
+                        "Reported directly to the CTO."
+                    ],
+                    cd: [
+                        "Worked on marketing motion graphic, product launch videos; product instruction, documentation videos using Adobe After Effects and Adobe XD.",
+                        "Designed booth display and presentation materials for Red Hat Summit; integrated AI for mockups, presentation.",
+                        "Redesigned/refined given products UI on Figma for better UX and ready for motion.",
+                        "Reported directly to the CTO."
+                    ]
+                }
             },
             {
                 startDate: "Jan 2024",
@@ -182,7 +195,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
             {
                 startDate: "Apr 2026",
                 endDate: "Jul 2026",
-                position: "Freelance Designer",
+                position: "Visual Designer",
                 organization: {
                     text: "Cường Khanh Advertising Co., Ltd",
                     url: "https://cuongkhanhadv.com.vn",
@@ -248,7 +261,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
             {
                 startDate: "Mar 2025",
                 endDate: "Mar 2025",
-                position: "Freelance Designer",
+                position: "Graphic Designer",
                 organization: {
                     text: "Tọa Độ Cồng Chiêng",
                     url: "https://www.facebook.com/toadocongchieng",
@@ -283,7 +296,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
             {
                 startDate: "Feb 2025",
                 endDate: "Apr 2025",
-                position: "Key Visual Designer",
+                position: "Visual Designer",
                 organization: {
                     text: "Xoay Vật Chuyển Dòng",
                     url: "https://www.facebook.com/xoayvatchuyendong.project",
@@ -301,7 +314,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
             {
                 startDate: "Feb 2025",
                 endDate: "Mar 2025",
-                position: "Key Visual Designer",
+                position: "Visual Designer",
                 organization: {
                     text: "Oẳn Tù Tì Production",
                     url: "https://www.facebook.com/OanTuTiProduction"
@@ -352,7 +365,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
             {
                 startDate: "Mar 2023",
                 endDate: "May 2023",
-                position: "Freelance Designer",
+                position: "Visual Designer",
                 organization: {
                     text: "bédeb Production",
                     url: "https://www.facebook.com/phimngannotket"
@@ -368,7 +381,7 @@ const EXPERIENCE_SECTIONS: ExperienceSection[] = [
             {
                 startDate: "Feb 2023",
                 endDate: "Mar 2023",
-                position: "Key Visual Designer",
+                position: "Visual Designer",
                 organization: {
                     text: "RMIT Vietnam Finance Club",
                     url: "https://www.facebook.com/RMITVietnamResearchChallenge"

@@ -15,7 +15,15 @@ import {
     CollapsibleTrigger
 } from "@/components/ui/collapsible"
 import { Bold, Text } from "@/components/ui/typography"
+import { type PortfolioRole } from "@/configs/role.config"
 import { cn } from "@/lib/utils"
+import {
+    FACTS,
+    INTERESTING,
+    SKILLS,
+    SUMMARY,
+    THINGS
+} from "@/portfolio/_configs/about-details"
 import {
     Emotion1,
     Emotion2,
@@ -24,6 +32,7 @@ import {
     Emotion5,
     EmotionNeutral
 } from "@/portfolio/_sections/components/about/emotion-icons"
+import { useQueryStore } from "@/stores/query-store"
 
 const EMOTIONS = [
     EmotionNeutral,
@@ -35,6 +44,8 @@ const EMOTIONS = [
 ]
 
 function Details({ className, ...props }: React.ComponentProps<"div">) {
+    const role = useQueryStore((s) => s.role)
+
     const [expandedStates, setExpandedStates] = useState({
         summary: false,
         skills: false,
@@ -86,18 +97,21 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
             <div className="col-span-3">
                 {/* Desktop version (hidden on mobile) */}
                 <SummaryDetail
+                    role={role}
                     defaultExpanded={false}
                     onExpandedChange={handlers.summary}
                     className="w-full md:hidden"
                 />
                 {/* Mobile version (hidden on desktop) */}
                 <SummaryDetail
+                    role={role}
                     defaultExpanded={true}
                     onExpandedChange={handlers.summary}
                     className="hidden w-full md:flex"
                 />
                 <SvgElementLine dir="horizontal" />
                 <SkillsDetail
+                    role={role}
                     onExpandedChange={handlers.skills}
                     className="w-full"
                 />
@@ -108,6 +122,7 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                 />
                 <SvgElementLine dir="horizontal" />
                 <FactsDetail
+                    role={role}
                     onExpandedChange={handlers.facts}
                     className="w-full"
                 />
@@ -292,7 +307,7 @@ function CollapsibleContainer({
             <CollapsibleContent>
                 <div
                     className={cn(
-                        "relative space-y-1.5 px-safe-zone py-safe-zone-vertical leading-normal",
+                        "relative space-y-1.5 text-pretty px-safe-zone py-safe-zone-vertical leading-normal",
                         className
                     )}
                 >
@@ -310,9 +325,10 @@ type DetailSectionProps = Pick<CollapsibleProps, "className"> & {
 
 function SummaryDetail({
     className,
+    role,
     defaultExpanded,
     onExpandedChange
-}: DetailSectionProps) {
+}: DetailSectionProps & { role: PortfolioRole }) {
     return (
         <CollapsibleContainer
             defaultExpanded={defaultExpanded}
@@ -320,109 +336,30 @@ function SummaryDetail({
             label="TL;DR"
             containerClassName={cn(className)}
         >
-            <Text className={cn("text-pretty")}>
-                <Bold>Detail-oriented</Bold> UI/UX Designer with experience in
-                building scalable UI patterns and design systems.
-            </Text>
-            <Text className={cn("text-pretty")}>
-                <Bold>Practical front-end background</Bold> (Next.js, React,
-                Tailwind CSS) ensuring clean, accurate design specs and{" "}
-                <Bold>smooth handoff to engineering</Bold>.
-            </Text>
-            <Text className={cn("text-pretty")}>
-                Passionate about building web and application products; building
-                open source tools that help improve DX; a11y (accessibility -
-                WCAG 2.2 AA compliance, WAI-ARIA).
-            </Text>
+            {SUMMARY[role]}
         </CollapsibleContainer>
     )
 }
 
-const SKILLS = [
-    {
-        title: "Design Systems & UI/UX:",
-        content: [
-            "Figma (Advanced Libraries, Assets; Variables, Variable Mode, Styles; Auto-layout, Grid System, Component Audits, Responsive; Advanced Properties, Variants, Instance Swap, Slot)",
-            "Scalable UI Patterns",
-            "Component-based / Token-based Design",
-            "Web Design",
-            "Mobile Application Design",
-            "User Flows",
-            "Detailed Engineering Specs",
-            "Interaction Design",
-            "Prototyping",
-            "Design Systems",
-            "Information Architecture",
-            "Accessibility (WCAG, ARIA)",
-            "Surveys",
-            "Competitive Analysis",
-            "User Research",
-            "Usability Testing"
-        ]
-    },
-    {
-        title: "Development & Handoff:",
-        content: [
-            "Figma Sites (Publish, CMS)",
-            "Figma Make",
-            "Figma AI",
-            "VS Code",
-            "Cursor",
-            "Frontend Basics (Next.js, React, shadcn/ui, React Aria - RAC, Base UI, Radix UI, Tailwind CSS, HTML/CSS)",
-            "Smooth Engineering Handoff",
-            "Technical Constraint Problem Solving"
-        ]
-    },
-    {
-        title: "Visual & Graphic:",
-        content: [
-            "Adobe Creative Cloud (Photoshop, Illustrator, InDesign) for high-fidelity assets and visual design"
-        ]
-    },
-    {
-        title: "Other Tools:",
-        content: [
-            "Sketch",
-            "Adobe After Effects",
-            "Adobe Premiere Pro",
-            "Adobe XD",
-            "Adobe Dreamweaver",
-            "Adobe Dimension",
-            "ElevenLabs",
-            "AI Audio Generation",
-            "Notion",
-            "Obsidian",
-            "Excalidraw",
-            "Microsoft Teams",
-            "Slack",
-            "Trello",
-            "etc"
-        ]
-    }
-]
-
-function SkillsDetail({ className, onExpandedChange }: DetailSectionProps) {
+function SkillsDetail({
+    className,
+    role,
+    onExpandedChange
+}: DetailSectionProps & { role: PortfolioRole }) {
     return (
         <CollapsibleContainer
             onExpandedChange={onExpandedChange}
             label="Tools & Skills"
             containerClassName={cn(className)}
         >
-            {SKILLS.map((skill, index) => (
-                <Text key={index} className={cn("text-pretty")}>
+            {SKILLS[role].map((skill, index) => (
+                <Text key={index}>
                     <Bold>{skill.title}</Bold> {skill.content.join(", ")}.
                 </Text>
             ))}
         </CollapsibleContainer>
     )
 }
-
-const INTERESTING = [
-    <>Web a11y.</>,
-    <>I18n.</>,
-    <>RTL Languages.</>,
-    <>Upper-intermediate in English.</>
-]
 
 function LearningDetail({ className, onExpandedChange }: DetailSectionProps) {
     return (
@@ -437,7 +374,7 @@ function LearningDetail({ className, onExpandedChange }: DetailSectionProps) {
                         key={index}
                         as="li"
                         className={cn(
-                            "ms-[calc(1em-0.125rem-1px)] list-outside list-disc text-pretty",
+                            "ms-[calc(1em-0.125rem-1px)] list-outside list-disc",
                             {
                                 marker: "text-sm text-muted-foreground/40",
                                 md: "ms-[calc(1em-1px)]"
@@ -452,37 +389,11 @@ function LearningDetail({ className, onExpandedChange }: DetailSectionProps) {
     )
 }
 
-const FIELDS = ["event projects", "short films", "social posts", "publications"]
-
-const FACTS = [
-    <>
-        I came up from{" "}
-        {FIELDS.map((item, index, arr) => (
-            <Fragment key={item}>
-                <Bold>{item}</Bold>
-                {index < arr.length - 1 && ", "}
-            </Fragment>
-        ))}
-        , or event-type university course projects. So glad that I joined a club
-        in university.
-    </>,
-    <>
-        I don&#39;t consider perfectionism as a weakness. I really like software
-        that allows me to zoom in on an image down to the individual pixel.
-    </>,
-    <>
-        I became <Bold>addicted to coding</Bold> after taking a web development
-        course at university. I was the only one to achieve a{" "}
-        <Bold>perfect score</Bold> that semester, and the rest is history.
-    </>,
-    <>
-        I don&#39;t like eating green onions. Therefore, anything that looks
-        like green onion — or even just has the word &#34;onion&#34; in its name
-        — gets caught in the crossfire.
-    </>
-]
-
-function FactsDetail({ className, onExpandedChange }: DetailSectionProps) {
+function FactsDetail({
+    className,
+    role,
+    onExpandedChange
+}: DetailSectionProps & { role: PortfolioRole }) {
     return (
         <CollapsibleContainer
             onExpandedChange={onExpandedChange}
@@ -490,12 +401,12 @@ function FactsDetail({ className, onExpandedChange }: DetailSectionProps) {
             containerClassName={cn(className)}
         >
             <ul className="space-y-1.5">
-                {FACTS.map((fact, index) => (
+                {FACTS[role].map((fact, index) => (
                     <Text
                         key={index}
                         as="li"
                         className={cn(
-                            "ms-[calc(1em-0.125rem-1px)] list-outside list-disc text-pretty",
+                            "ms-[calc(1em-0.125rem-1px)] list-outside list-disc",
                             {
                                 marker: "text-sm text-muted-foreground/40",
                                 md: "ms-[calc(1em-1px)]"
@@ -509,21 +420,6 @@ function FactsDetail({ className, onExpandedChange }: DetailSectionProps) {
         </CollapsibleContainer>
     )
 }
-
-const THINGS = [
-    {
-        title: "Those are:",
-        items: ["Data", "Algorithm", "Family", "Environment", "Nguyễn Sỹ Cương"]
-    },
-    {
-        title: "Only can choose 3?",
-        items: ["Data", "Algorithm", "Family"]
-    },
-    {
-        title: "Only can choose 1?",
-        items: ["Family"]
-    }
-]
 
 function ThingsThatMatters({
     className,
@@ -553,13 +449,13 @@ function ThingsThatMatters({
                     >
                         <Bold
                             className={cn(
-                                "text-pretty text-muted-foreground",
+                                "text-muted-foreground",
                                 index === 0 && "xs:sr-only"
                             )}
                         >
                             {title}
                         </Bold>
-                        <ul className="space-y-1.5 text-pretty">
+                        <ul className="space-y-1.5">
                             {items.map((item, index) => (
                                 <Text
                                     key={index}

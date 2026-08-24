@@ -1,5 +1,10 @@
 import { cache } from "react"
 
+import {
+    DEFAULT_PORTFOLIO_ROLE,
+    type PortfolioRole
+} from "@/configs/role.config"
+import { SELECTED_WORKS } from "@/configs/selected-works.config"
 import { DASHES_REGEX } from "@/helpers/character-regexes"
 import { slugify } from "@/helpers/slugify"
 import { SelectedWorks } from "@/portfolio/_components/_icons/category-icons"
@@ -80,7 +85,10 @@ interface ProjectGroup {
 }
 
 const groupProjectsByCategory = cache(
-    (allProjects: Project[]): ProjectGroup[] => {
+    (
+        allProjects: Project[],
+        role: PortfolioRole = DEFAULT_PORTFOLIO_ROLE
+    ): ProjectGroup[] => {
         const sortedAll = sortProjects(allProjects)
 
         const groups: Record<string, Project[] | undefined> = {}
@@ -96,30 +104,33 @@ const groupProjectsByCategory = cache(
             groups[categorySlug].push(project)
         })
 
-        const result = Object.keys(PROJECT_CATEGORIES).reduce<ProjectGroup[]>(
-            (acc, cat) => {
-                if (groups[cat] && groups[cat].length > 0) {
-                    const config = PROJECT_CATEGORIES[cat]
-                    acc.push({
-                        id: cat,
-                        title: config.title,
-                        note: config.note,
-                        icons: config.icons,
-                        projects: groups[cat] ?? []
-                    })
-                }
-                return acc
-            },
-            []
-        )
+        let categoryKeys = Object.keys(PROJECT_CATEGORIES)
+        if (role === "cd") {
+            categoryKeys = [
+                "events",
+                "uiux",
+                ...categoryKeys.filter((k) => k !== "events" && k !== "uiux")
+            ]
+        }
 
-        const selectedWorksProjects = allProjects
-            .filter((project) => project.features?.selected[0])
-            .sort(
-                (a, b) =>
-                    (a.features?.selected[1] ?? 0)
-                    - (b.features?.selected[1] ?? 0)
-            )
+        const result = categoryKeys.reduce<ProjectGroup[]>((acc, cat) => {
+            if (groups[cat] && groups[cat].length > 0) {
+                const config = PROJECT_CATEGORIES[cat]
+                acc.push({
+                    id: cat,
+                    title: config.title,
+                    note: config.note,
+                    icons: config.icons,
+                    projects: groups[cat] ?? []
+                })
+            }
+            return acc
+        }, [])
+
+        const selectedIds = SELECTED_WORKS[role]
+        const selectedWorksProjects = selectedIds
+            .map((id) => allProjects.find((p) => p.id === id))
+            .filter((p): p is Project => p !== undefined)
 
         if (selectedWorksProjects.length > 0) {
             result.unshift({

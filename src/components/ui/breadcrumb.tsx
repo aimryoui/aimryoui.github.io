@@ -1,7 +1,6 @@
 "use client"
 
 import { createContext, use, useMemo } from "react"
-import NextLink from "next/link"
 
 import { ChevronDownIcon, MoreHorizontalIcon } from "lucide-react"
 import { composeRenderProps } from "react-aria-components"
@@ -18,6 +17,7 @@ import {
     type ButtonProps,
     type LinkButtonProps
 } from "@/components/ui/button"
+import { Link as NextLink } from "@/components/ui/link"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 

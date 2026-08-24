@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils"
 import ProjectCard from "@/portfolio/_components/cards/project-card"
 import SelectedProjectCard from "@/portfolio/_components/cards/selected-project-card"
 import SectionTitle from "@/portfolio/_components/section-title"
+import { useQueryStore } from "@/stores/query-store"
 
 import { projects } from "~/.velite"
 
@@ -23,7 +24,8 @@ function Projects({
 }: {
     selectedWorksStyle?: React.ReactNode
 }) {
-    const projectGroups = groupProjectsByCategory(projects)
+    const role = useQueryStore((s) => s.role)
+    const projectGroups = groupProjectsByCategory(projects, role)
 
     return (
         <>

@@ -140,7 +140,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                                 }
                                             )}
                                         >
-                                            {platform.icon}
+                                            <platform.icon />
                                         </LinkButton>
                                     </li>
                                 }

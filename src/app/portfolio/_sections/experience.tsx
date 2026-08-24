@@ -18,10 +18,12 @@ import {
     TableRow
 } from "@/components/ui/table"
 import { At } from "@/components/ui/typography"
+import { type PortfolioRole } from "@/configs/role.config"
 import { slugify } from "@/helpers/slugify"
 import { cn } from "@/lib/utils"
 import SectionTitle from "@/portfolio/_components/section-title"
 import { EXPERIENCE_SECTIONS } from "@/portfolio/_configs/experience-sections"
+import { useQueryStore } from "@/stores/query-store"
 
 const renderDate = (date: string) => {
     return date.split(" ").map((chunk, index, arr) => (
@@ -32,16 +34,53 @@ const renderDate = (date: string) => {
     ))
 }
 
+const renderDescription = (
+    description: string[] | Record<PortfolioRole, string[]> | undefined,
+    role: PortfolioRole
+) => {
+    const desc = Array.isArray(description) ? description : description?.[role]
+
+    if (!desc || desc.length === 0) return null
+
+    return (
+        <ul className="space-y-1.5 text-pretty">
+            {desc.map((item, index) => (
+                <li
+                    key={index}
+                    className={cn(
+                        "ms-[calc(1em-0.125rem-1px)] list-outside list-disc",
+                        {
+                            marker: "text-sm text-muted-foreground/40",
+                            md: "ms-[calc(1em-1px)]"
+                        }
+                    )}
+                >
+                    {item}
+                </li>
+            ))}
+        </ul>
+    )
+}
+
 const id = "experience"
 
-const DEFAULT_EXPANDED = [
-    "dec-2025-uiux-motion-designer-san-data-systems-inc",
-    "may-2026-uiux-designer-fina-care-studio",
-    "dec-2025-uiux-designer-virtue-recovery-center",
-    "feb-2025-uiux-designer-nalee-viet-nam-jsc"
-]
+const DEFAULT_EXPANDED: Partial<Record<PortfolioRole, string[]>> = {
+    pd: [
+        "dec-2025-uiux-motion-designer-san-data-systems-inc",
+        "may-2026-uiux-designer-fina-care-studio",
+        "dec-2025-uiux-designer-virtue-recovery-center",
+        "feb-2025-uiux-designer-nalee-viet-nam-jsc"
+    ],
+    cd: [
+        "dec-2025-graphic-motion-designer-san-data-systems-inc",
+        "apr-2026-visual-designer-cuong-khanh-advertising-co-ltd",
+        "jan-2026-logo-designer-nguyen-lieu-24h-co-ltd"
+    ]
+}
 
 function Experience() {
+    const role = useQueryStore((s) => s.role)
+
     return (
         <section id={id} className="@container">
             <Space />
@@ -74,9 +113,10 @@ function Experience() {
                             {section.section}
                         </TableCaption>
                         <Table
+                            key={role}
                             aria-label="Experience"
                             treeColumn="organization"
-                            defaultExpandedKeys={DEFAULT_EXPANDED}
+                            defaultExpandedKeys={DEFAULT_EXPANDED[role] ?? []}
                             className={cn(
                                 "col-span-full col-start-2 grid table-fixed gap-y-table-between",
                                 {
@@ -113,13 +153,22 @@ function Experience() {
                             </TableHeader>
 
                             <TableBody
-                                items={section.items.map((place) => ({
-                                    ...place,
-                                    id: slugify(
-                                        `${place.startDate} ${place.position} ${place.organization?.text}`
-                                    )
-                                }))}
-                                dependencies={[section.items]}
+                                items={section.items.map((place) => {
+                                    const resolvedPosition =
+                                        typeof place.position === "string"
+                                            ? place.position
+                                            : (place.position[role]
+                                              ?? place.position.pd
+                                              ?? "")
+                                    return {
+                                        ...place,
+                                        position: resolvedPosition,
+                                        id: slugify(
+                                            `${place.startDate} ${resolvedPosition} ${place.organization?.text}`
+                                        )
+                                    }
+                                })}
+                                dependencies={[section.items, role]}
                                 className={cn("grid gap-y-table-between", {
                                     md: "gap-y-2.75"
                                 })}
@@ -193,9 +242,13 @@ function Experience() {
                                         <TableCell
                                             className={cn(
                                                 "z-1 flex justify-between gap-x-safe-zone p-0 align-top text-foreground font-wght-500",
-                                                place.position
-                                                    === "UI/UX & Motion Designer"
-                                                    && "tracking-[-0.011em] @[56.5rem]:tracking-normal",
+                                                place.organization?.text
+                                                    === "SAN Data Systems Inc." && [
+                                                    role === "pd"
+                                                        ? "tracking-[-0.011em]"
+                                                        : "tracking-[-0.041em]",
+                                                    "@[56.5rem]:tracking-normal"
+                                                ],
                                                 {
                                                     "@[56.5rem]":
                                                         "mt-5.5 gap-x-2",
@@ -363,30 +416,9 @@ function Experience() {
                                                             {place.summary}
                                                         </p>
                                                     )}
-                                                    {place.description && (
-                                                        <ul className="space-y-1.5 text-pretty">
-                                                            {place.description.map(
-                                                                (
-                                                                    item,
-                                                                    index
-                                                                ) => (
-                                                                    <li
-                                                                        key={
-                                                                            index
-                                                                        }
-                                                                        className={cn(
-                                                                            "ms-[calc(1em-0.125rem-1px)] list-outside list-disc",
-                                                                            {
-                                                                                marker: "text-sm text-muted-foreground/40",
-                                                                                md: "ms-[calc(1em-1px)]"
-                                                                            }
-                                                                        )}
-                                                                    >
-                                                                        {item}
-                                                                    </li>
-                                                                )
-                                                            )}
-                                                        </ul>
+                                                    {renderDescription(
+                                                        place.description,
+                                                        role
                                                     )}
                                                 </TableCell>
                                             </TableRow>

@@ -25,6 +25,7 @@ import { siteConfig } from "@/configs/site.config"
 import { minifyJs } from "@/helpers/minify-js"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/providers/theme-provider"
+import { QueryListener } from "@/stores/query-store"
 
 import AppData from "~/package.json"
 
@@ -300,6 +301,7 @@ export default async function RootLayout({
                     }
                 )}
             >
+                <QueryListener />
                 <AudioProvider>
                     <ThemeProvider disableTransitionOnChange>
                         {/* <LazyMotionProvider> */}

@@ -2,7 +2,10 @@
 
 import { cn } from "@/lib/utils"
 
-function AboutIcon({ className, ...props }: React.ComponentProps<"svg">) {
+export function AboutIcon({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +27,10 @@ function AboutIcon({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function ExperienceIcon({ className, ...props }: React.ComponentProps<"svg">) {
+export function ExperienceIcon({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +59,10 @@ function ExperienceIcon({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function EducationIcon({ className, ...props }: React.ComponentProps<"svg">) {
+export function EducationIcon({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +89,10 @@ function EducationIcon({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function SoftwareIcon({ className, ...props }: React.ComponentProps<"svg">) {
+export function SoftwareIcon({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +119,10 @@ function SoftwareIcon({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function ContactIcon({ className, ...props }: React.ComponentProps<"svg">) {
+export function ContactIcon({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +144,7 @@ function ContactIcon({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function SelectedWorksIcon({
+export function SelectedWorksIcon({
     className,
     ...props
 }: React.ComponentProps<"svg">) {
@@ -155,7 +170,7 @@ function SelectedWorksIcon({
     )
 }
 
-function DesignProjectsIcon({
+export function DesignProjectsIcon({
     className,
     ...props
 }: React.ComponentProps<"svg">) {
@@ -178,14 +193,4 @@ function DesignProjectsIcon({
             />
         </svg>
     )
-}
-
-export {
-    AboutIcon,
-    ContactIcon,
-    DesignProjectsIcon,
-    EducationIcon,
-    ExperienceIcon,
-    SelectedWorksIcon,
-    SoftwareIcon
 }

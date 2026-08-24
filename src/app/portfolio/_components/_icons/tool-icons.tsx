@@ -1,6 +1,6 @@
 "use client"
 
-function Figma({ className, ...props }: React.ComponentProps<"svg">) {
+export function Figma({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,10 @@ function Figma({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobePhotoshop({ className, ...props }: React.ComponentProps<"svg">) {
+export function AdobePhotoshop({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +61,7 @@ function AdobePhotoshop({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobeIllustrator({
+export function AdobeIllustrator({
     className,
     ...props
 }: React.ComponentProps<"svg">) {
@@ -82,7 +85,10 @@ function AdobeIllustrator({
     )
 }
 
-function AdobeIndesign({ className, ...props }: React.ComponentProps<"svg">) {
+export function AdobeIndesign({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +109,7 @@ function AdobeIndesign({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobeAfterEffects({
+export function AdobeAfterEffects({
     className,
     ...props
 }: React.ComponentProps<"svg">) {
@@ -127,7 +133,7 @@ function AdobeAfterEffects({
     )
 }
 
-function AdobePremierePro({
+export function AdobePremierePro({
     className,
     ...props
 }: React.ComponentProps<"svg">) {
@@ -151,7 +157,7 @@ function AdobePremierePro({
     )
 }
 
-function AdobeDreamweaver({
+export function AdobeDreamweaver({
     className,
     ...props
 }: React.ComponentProps<"svg">) {
@@ -175,7 +181,7 @@ function AdobeDreamweaver({
     )
 }
 
-function AdobeXD({ className, ...props }: React.ComponentProps<"svg">) {
+export function AdobeXD({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -196,7 +202,10 @@ function AdobeXD({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function AdobeDimension({ className, ...props }: React.ComponentProps<"svg">) {
+export function AdobeDimension({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -217,7 +226,7 @@ function AdobeDimension({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Blender({ className, ...props }: React.ComponentProps<"svg">) {
+export function Blender({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -242,7 +251,7 @@ function Blender({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function VSCode({ className, ...props }: React.ComponentProps<"svg">) {
+export function VSCode({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -286,7 +295,10 @@ function VSCode({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Bootstrap({ className, ...props }: React.ComponentProps<"svg">) {
+export function Bootstrap({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -318,19 +330,4 @@ function Bootstrap({ className, ...props }: React.ComponentProps<"svg">) {
             />
         </svg>
     )
-}
-
-export {
-    AdobeAfterEffects,
-    AdobeDimension,
-    AdobeDreamweaver,
-    AdobeIllustrator,
-    AdobeIndesign,
-    AdobePhotoshop,
-    AdobePremierePro,
-    AdobeXD,
-    Blender,
-    Bootstrap,
-    Figma,
-    VSCode
 }

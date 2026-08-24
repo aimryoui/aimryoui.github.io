@@ -30,14 +30,13 @@ function handleItemClick(
     const targetId = item.id
 
     if (item.mode === "route" && item.href) {
-        // For same-pathname route items: update URL first so window.location.search
-        // reflects the new query, then scroll TOC to the exact matching element.
-        // Do NOT scroll the page — content doesn't change.
         clickedTargetRef.current = null
-        window.history.pushState(null, "", item.href)
-        const tocEl = tocContainer?.querySelector(
-            `[data-toc-id="${targetId}"][href="${item.href}"]`
+
+        let tocEl = tocContainer?.querySelector(
+            `[data-toc-id="${targetId}"][data-toc-href="${item.href}"]`
         )
+        tocEl ??= tocContainer?.querySelector(`[data-toc-id="${targetId}"]`)
+
         if (tocEl) {
             const { motionReduced } = getPreferences()
             tocEl.scrollIntoView({

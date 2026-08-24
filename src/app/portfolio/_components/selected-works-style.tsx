@@ -1,3 +1,4 @@
+import { SELECTED_WORKS } from "@/configs/selected-works.config"
 import { TRIM_PROJECT_SLUG_REGEX } from "@/helpers/character-regexes"
 import { generateColorRules } from "@/helpers/color-rules"
 import { minifyCss } from "@/helpers/minify-css"
@@ -8,8 +9,9 @@ import { projects } from "~/.velite"
 
 const colorManifest = colorManifestRaw as ColorManifest
 
-const selectedWorksProjects = projects.filter(
-    (project) => project.features?.selected[0]
+const allSelectedProjectIds = new Set(Object.values(SELECTED_WORKS).flat())
+const selectedWorksProjects = projects.filter((project) =>
+    allSelectedProjectIds.has(project.id)
 )
 
 let ambientStyles = ""

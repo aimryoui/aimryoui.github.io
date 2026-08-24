@@ -1,4 +1,4 @@
-const PlusMagnify = /* html */ `
+export const PlusMagnify = /* html */ `
     <svg 
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +25,7 @@ const PlusMagnify = /* html */ `
     </svg>
 `
 
-const XMark = /* html */ `
+export const XMark = /* html */ `
     <svg
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ const XMark = /* html */ `
     </svg>
 `
 
-const ChevronForward = /* html */ `
+export const ChevronForward = /* html */ `
     <svg
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +59,7 @@ const ChevronForward = /* html */ `
     </svg>
 `
 
-const ChevronBackward = /* html */ `
+export const ChevronBackward = /* html */ `
     <svg
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
@@ -75,5 +75,3 @@ const ChevronBackward = /* html */ `
         />
     </svg>
 `
-
-export { ChevronBackward, ChevronForward, PlusMagnify, XMark }

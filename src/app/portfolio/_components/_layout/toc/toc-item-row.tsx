@@ -150,6 +150,7 @@ const TocItemRow = memo(
                 />
                 <LinkButton
                     data-toc-id={item.id}
+                    data-toc-href={href}
                     data-cursor="target"
                     aria-current={isCurrent}
                     href={href}

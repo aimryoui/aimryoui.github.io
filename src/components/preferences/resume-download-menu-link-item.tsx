@@ -1,6 +1,9 @@
+"use client"
+
 import { FileDownloadBoldDuotoneIcon } from "@solar-icons/react"
 
 import { DropdownMenuLinkItem } from "@/components/ui/dropdown-menu"
+import { useQueryStore } from "@/stores/query-store"
 
 const MENU_NAME = "Resume"
 
@@ -19,9 +22,15 @@ const RESUME_DOWNLOAD_MENU: SourceCodeMenuConfig = {
 }
 
 function ResumeDownloadMenuLinkItem() {
+    const role = useQueryStore((s) => s.role)
+    const href =
+        role === "cd"
+            ? "/Resume_Creative-Designer_Nguyen-Hoang-Nhan.pdf"
+            : RESUME_DOWNLOAD_MENU.href
+
     return (
         <DropdownMenuLinkItem
-            href={RESUME_DOWNLOAD_MENU.href}
+            href={href}
             openInNewTab
             description={RESUME_DOWNLOAD_MENU.description}
             srOnlyDescription

@@ -9,11 +9,11 @@ import {
     useMemo,
     useState
 } from "react"
-import NextLink from "next/link"
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { ArrowUpRight, CheckIcon, ChevronRightIcon, Undo2 } from "lucide-react"
 
+import { Link as NextLink } from "@/components/ui/link"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 

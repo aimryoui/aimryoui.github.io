@@ -3,7 +3,7 @@
 
 import { cn } from "@/lib/utils"
 
-function SelectedWorks({ className }: React.ComponentProps<"svg">) {
+export function SelectedWorks({ className }: React.ComponentProps<"svg">) {
     return (
         <>
             <svg
@@ -178,7 +178,7 @@ function SelectedWorks({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function UIUX({ className }: React.ComponentProps<"svg">) {
+export function UIUX({ className }: React.ComponentProps<"svg">) {
     return (
         <>
             <svg
@@ -307,7 +307,7 @@ function UIUX({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function Events({ className }: React.ComponentProps<"svg">) {
+export function Events({ className }: React.ComponentProps<"svg">) {
     return (
         <>
             <svg
@@ -450,7 +450,7 @@ function Events({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function ShortFilms({ className }: React.ComponentProps<"svg">) {
+export function ShortFilms({ className }: React.ComponentProps<"svg">) {
     return (
         <>
             <svg
@@ -701,7 +701,7 @@ function ShortFilms({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function Branding({ className }: React.ComponentProps<"svg">) {
+export function Branding({ className }: React.ComponentProps<"svg">) {
     return (
         <>
             <svg
@@ -998,7 +998,7 @@ function Branding({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function Animations({ className }: React.ComponentProps<"svg">) {
+export function Animations({ className }: React.ComponentProps<"svg">) {
     return (
         <>
             <svg
@@ -1144,7 +1144,7 @@ function Animations({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function Photography({ className }: React.ComponentProps<"svg">) {
+export function Photography({ className }: React.ComponentProps<"svg">) {
     return (
         <>
             <svg
@@ -1273,7 +1273,7 @@ function Photography({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function Weddings({ className }: React.ComponentProps<"svg">) {
+export function Weddings({ className }: React.ComponentProps<"svg">) {
     return (
         <>
             <svg
@@ -1388,7 +1388,9 @@ function Weddings({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
+export function OtherCourseProjects({
+    className
+}: React.ComponentProps<"svg">) {
     return (
         <>
             <svg
@@ -1802,7 +1804,7 @@ function OtherCourseProjects({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-function Miscellaneous({ className }: React.ComponentProps<"svg">) {
+export function Miscellaneous({ className }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1878,17 +1880,4 @@ function Miscellaneous({ className }: React.ComponentProps<"svg">) {
             />
         </svg>
     )
-}
-
-export {
-    Animations,
-    Branding,
-    Events,
-    Miscellaneous,
-    OtherCourseProjects,
-    Photography,
-    SelectedWorks,
-    ShortFilms,
-    UIUX,
-    Weddings
 }

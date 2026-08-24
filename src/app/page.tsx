@@ -1,5 +1,5 @@
-import { ArrowUpRight } from "lucide-react"
-
+import { Role as HomeRole } from "@/_components/role"
+import { ResumeDownloadButton } from "@/_components/toolbar/resume-download-button"
 import { RootPreferencesButton } from "@/_components/toolbar/root-preferences-button"
 import { AudioToggle } from "@/components/audio/audio"
 import { Divider } from "@/components/layout/divider"
@@ -10,7 +10,7 @@ import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
 import { Image } from "@/components/media/image"
 import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
-import { H1, Highlight } from "@/components/ui/typography"
+import { H1 } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 
 export default function Home() {
@@ -24,9 +24,7 @@ export default function Home() {
                 )}
             >
                 <H1 className="text-center">Nguyễn Hoàng Nhân</H1>
-                <Highlight className="text-center">
-                    Product Designer - UI/UX Designer
-                </Highlight>
+                <HomeRole />
             </div>
             <SectionLine />
             <Divider />
@@ -72,16 +70,7 @@ export default function Home() {
                             payload={{
                                 content: <span>Download my Resume</span>
                             }}
-                            render={
-                                <LinkButton
-                                    href="/Resume_Product-Designer_Nguyen-Hoang-Nhan.pdf"
-                                    variant="outline"
-                                    className="dark:bg-input/25"
-                                >
-                                    Resume
-                                    <ArrowUpRight className="-me-1 rtl:-scale-x-100" />
-                                </LinkButton>
-                            }
+                            render={<ResumeDownloadButton />}
                         />
                     </li>
                     <li>

@@ -1,7 +1,5 @@
 "use client"
 
-import NextLink from "next/link"
-
 import { sendGAEvent } from "@next/third-parties/google"
 import { cva, type VariantProps } from "class-variance-authority"
 import {
@@ -14,6 +12,7 @@ import {
 } from "react-aria-components/Link"
 import { type defaultPatterns } from "web-haptics"
 
+import { Link as NextLink } from "@/components/ui/link"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { type HoverSoundType, type PressSoundType } from "@/lib/sounds"
 import { cn } from "@/lib/utils"

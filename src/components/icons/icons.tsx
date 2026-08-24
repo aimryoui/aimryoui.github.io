@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 
-function Search({ className, ...props }: React.ComponentProps<"svg">) {
+export function Search({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -19,7 +19,7 @@ function Search({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function XCircle({ className, ...props }: React.ComponentProps<"svg">) {
+export function XCircle({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,7 @@ function XCircle({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Refresh({ className, ...props }: React.ComponentProps<"svg">) {
+export function Refresh({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@ function Refresh({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Sun({ className, ...props }: React.ComponentProps<"svg">) {
+export function Sun({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@ function Sun({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Moon({ className, ...props }: React.ComponentProps<"svg">) {
+export function Moon({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +87,7 @@ function Moon({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function System({ className, ...props }: React.ComponentProps<"svg">) {
+export function System({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +104,7 @@ function System({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Ellipsis({ className, ...props }: React.ComponentProps<"svg">) {
+export function Ellipsis({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +121,7 @@ function Ellipsis({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function ArrowUp({ className, ...props }: React.ComponentProps<"svg">) {
+export function ArrowUp({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -138,7 +138,10 @@ function ArrowUp({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function ArrowDown({ className, ...props }: React.ComponentProps<"svg">) {
+export function ArrowDown({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +158,10 @@ function ArrowDown({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function ArrowLeft({ className, ...props }: React.ComponentProps<"svg">) {
+export function ArrowLeft({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -172,7 +178,10 @@ function ArrowLeft({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function ArrowRight({ className, ...props }: React.ComponentProps<"svg">) {
+export function ArrowRight({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -187,18 +196,4 @@ function ArrowRight({ className, ...props }: React.ComponentProps<"svg">) {
             />
         </svg>
     )
-}
-
-export {
-    ArrowDown,
-    ArrowLeft,
-    ArrowRight,
-    ArrowUp,
-    Ellipsis,
-    Moon,
-    Refresh,
-    Search,
-    Sun,
-    System,
-    XCircle
 }

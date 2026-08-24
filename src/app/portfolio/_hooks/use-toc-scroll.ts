@@ -6,7 +6,7 @@ import { create } from "zustand"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { getPreferences } from "@/hooks/use-preference"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
-import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
+import { useQueryStore } from "@/stores/query-store"
 
 interface TocActiveIdStore {
     activeId: string | null
@@ -36,7 +36,7 @@ function getActiveElement(
     if (!id || !container) return null
 
     let el = container.querySelector(
-        `[data-toc-id="${id}"][href="${fullPath}"]`
+        `[data-toc-id="${id}"][data-toc-href="${fullPath}"]`
     )
     el ??= container.querySelector(`[data-toc-id="${id}"]`)
     return el
@@ -48,7 +48,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
     onActiveReady
 }: UseTocScrollOptions) {
     const pathname = usePathname()
-    const isFeatureSelected = useFeatureQuery((s) => s.isFeatureSelected)
+    const isFeatureSelected = useQueryStore((s) => s.isFeatureSelected)
     const fullPath = pathname + (isFeatureSelected ? "?feature=selected" : "")
     const { isBlink } = useBrowserEngine()
 

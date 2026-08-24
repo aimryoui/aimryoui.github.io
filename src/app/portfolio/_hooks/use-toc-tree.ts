@@ -3,8 +3,8 @@ import { usePathname } from "next/navigation"
 
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
-import { useFeatureQuery } from "@/portfolio/_components/feature-query-listener"
 import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
+import { useQueryStore } from "@/stores/query-store"
 
 type TocNode =
     | { type: "divider"; id: string }
@@ -66,7 +66,7 @@ function useTocTree(filteredItems: TocItemProps[]): TocNode[] {
 
 function useTocGroup(items: TocItemProps[], defaultExpanded = true) {
     const pathname = usePathname()
-    const isFeatureSelected = useFeatureQuery((s) => s.isFeatureSelected)
+    const isFeatureSelected = useQueryStore((s) => s.isFeatureSelected)
 
     const [isExpanded, setIsExpanded] = useState(() => {
         if (defaultExpanded) return true

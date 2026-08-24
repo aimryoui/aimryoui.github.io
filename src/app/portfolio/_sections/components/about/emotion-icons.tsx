@@ -2,7 +2,10 @@
 
 import { cn } from "@/lib/utils"
 
-function EmotionNeutral({ className, ...props }: React.ComponentProps<"svg">) {
+export function EmotionNeutral({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +46,7 @@ function EmotionNeutral({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Emotion1({ className, ...props }: React.ComponentProps<"svg">) {
+export function Emotion1({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +102,7 @@ function Emotion1({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Emotion2({ className, ...props }: React.ComponentProps<"svg">) {
+export function Emotion2({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +145,7 @@ function Emotion2({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Emotion3({ className, ...props }: React.ComponentProps<"svg">) {
+export function Emotion3({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -238,7 +241,7 @@ function Emotion3({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Emotion4({ className, ...props }: React.ComponentProps<"svg">) {
+export function Emotion4({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -311,7 +314,7 @@ function Emotion4({ className, ...props }: React.ComponentProps<"svg">) {
     )
 }
 
-function Emotion5({ className, ...props }: React.ComponentProps<"svg">) {
+export function Emotion5({ className, ...props }: React.ComponentProps<"svg">) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -383,5 +386,3 @@ function Emotion5({ className, ...props }: React.ComponentProps<"svg">) {
         </svg>
     )
 }
-
-export { Emotion1, Emotion2, Emotion3, Emotion4, Emotion5, EmotionNeutral }

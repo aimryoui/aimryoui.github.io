@@ -85,6 +85,7 @@ const MobileTocItemRow = memo(
             >
                 <LinkButton
                     data-toc-id={item.id}
+                    data-toc-href={href}
                     aria-current={isCurrent}
                     href={href}
                     nativeLink

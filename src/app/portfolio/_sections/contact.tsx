@@ -141,7 +141,7 @@ function Contact() {
                                                         }
                                                     )}
                                                 >
-                                                    {platform.icon}
+                                                    <platform.icon />
                                                 </span>
                                                 <p
                                                     className={cn({

@@ -2,7 +2,6 @@ import { type Metadata } from "next"
 
 import { siteConfig } from "@/configs/site.config"
 import Navigation from "@/portfolio/_components/_layout/navigation"
-import { FeatureQueryListener } from "@/portfolio/_components/feature-query-listener"
 import HashScroller from "@/portfolio/_components/hash-scroller"
 
 const APP_PATH_TITLE = "Portfolio | Q3.2026 | Nguyễn Hoàng Nhân"
@@ -44,7 +43,6 @@ export default function PortfolioLayout({
             <Navigation />
             {children}
             <HashScroller />
-            <FeatureQueryListener />
         </>
     )
 }

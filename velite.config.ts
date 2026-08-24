@@ -49,9 +49,6 @@ const projects = defineCollection({
         features: s
             .object({
                 new: s.boolean().default(false),
-                selected: s
-                    .tuple([s.boolean(), s.number()])
-                    .default([false, 0]),
                 selectedCover: s.string().optional()
             })
             .optional(),

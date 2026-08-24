@@ -1,10 +1,11 @@
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { Bold, H1, Highlight, Link, Text } from "@/components/ui/typography"
+import { Bold, H1, Link, Text } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import { Blocks as AboutBlocks } from "@/portfolio/_sections/components/about/blocks"
 import { Details as AboutDetails } from "@/portfolio/_sections/components/about/details"
+import { Role as AboutRole } from "@/portfolio/_sections/components/about/role"
 
 function About() {
     return (
@@ -34,21 +35,7 @@ function About() {
                         </Bold>
                         ,
                     </span>{" "}
-                    <span className="flex flex-wrap gap-x-[.2em]">
-                        <span className="block">
-                            a{" "}
-                            <Highlight className="font-wght-[625] md:text-3xl sm:text-2xl">
-                                Product Designer
-                            </Highlight>
-                        </span>{" "}
-                        specializing in{" "}
-                        <span className="block">
-                            <Bold className="font-wght-[625] md:text-3xl sm:text-2xl">
-                                UI/UX Design
-                            </Bold>
-                            .
-                        </span>
-                    </span>
+                    <AboutRole />
                 </H1>
             </section>
             <SectionLine />
