@@ -2,29 +2,25 @@ import type React from "react"
 import { useCallback } from "react"
 
 import { cn } from "@/lib/utils"
+import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
 import { MobileTocGroup } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-group"
 import { MobileTocItemRow } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-item-row"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import {
     handleItemClick,
-    handleSameLinkClick,
     type TocListProps
 } from "@/portfolio/_components/_layout/toc/toc-list"
 import { useTocScroll } from "@/portfolio/_hooks/use-toc-scroll"
 import { useTocTree } from "@/portfolio/_hooks/use-toc-tree"
 
-type MobileTocListProps = React.ComponentProps<"div">
-    & TocListProps & {
-        onLinkClick?: () => void
-    }
+type MobileTocListProps = React.ComponentProps<"div"> & TocListProps
 
 function MobileTocList({
     className,
     items,
     filteredItems,
     debouncedQuery,
-    onLinkClick,
     ...props
 }: MobileTocListProps) {
     const { scrollContainerRef, clickedTargetRef } = useTocScroll({
@@ -37,15 +33,10 @@ function MobileTocList({
     const handlePress = useCallback(
         (item: TocItemProps) => {
             handleItemClick(item, clickedTargetRef, scrollContainerRef.current)
-            onLinkClick?.()
+            useMobileTocStore.getState().setIsTocOpen(false)
         },
-        [clickedTargetRef, onLinkClick, scrollContainerRef]
+        [clickedTargetRef, scrollContainerRef]
     )
-
-    const handleSameClick = useCallback(() => {
-        handleSameLinkClick()
-        onLinkClick?.()
-    }, [onLinkClick])
 
     return (
         <div
@@ -75,8 +66,6 @@ function MobileTocList({
                             items={node.items}
                             debouncedQuery={debouncedQuery}
                             onItemPress={handlePress}
-                            onSameLinkClick={handleSameClick}
-                            onLinkClick={onLinkClick}
                         />
                     )
                 }
@@ -98,13 +87,10 @@ function MobileTocList({
                                         clickedTargetRef,
                                         scrollContainerRef.current
                                     )
-                                    onLinkClick?.()
+                                    useMobileTocStore
+                                        .getState()
+                                        .setIsTocOpen(false)
                                 }}
-                                onSameLinkClick={() => {
-                                    handleSameLinkClick()
-                                    onLinkClick?.()
-                                }}
-                                onLinkClick={onLinkClick}
                             />
                         ))}
                     </ul>

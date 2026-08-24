@@ -40,7 +40,7 @@ function SocialButton({
     ...props
 }: SocialButtonProps) {
     const { isWebKit } = useBrowserEngine()
-    
+
     const playPressFeedback = usePressFeedback()
     const { motionReduced } = usePreference()
 
@@ -151,9 +151,7 @@ function SocialButton({
     const socialColors = [color.default, color.hover]
 
     return (
-        <ViewTransition
-            name={`project-${projectId}-social-button`}
-        >
+        <ViewTransition name={`project-${projectId}-social-button`}>
             {isWebKit ? (
                 <LinkButton
                     data-cursor="ignore"

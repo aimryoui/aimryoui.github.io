@@ -23,7 +23,7 @@ import {
 } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/portfolio/_components/cards/project-card"
-import FlashOverlay from "@/portfolio/_components/flash-overlay"
+import { FlashOverlay } from "@/portfolio/_components/flash-overlay"
 import { CaveatLightness } from "@/portfolio/_components/mdx/caveat"
 import { MDXContent } from "@/portfolio/_components/mdx/mdx-content"
 import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrumb"

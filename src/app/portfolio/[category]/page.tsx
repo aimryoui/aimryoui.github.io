@@ -22,7 +22,7 @@ import {
 } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/portfolio/_components/cards/project-card"
-import FlashOverlay from "@/portfolio/_components/flash-overlay"
+import { FlashOverlay } from "@/portfolio/_components/flash-overlay"
 import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrumb"
 import SectionTitle from "@/portfolio/_components/section-title"
 import Footer from "@/portfolio/_sections/footer"

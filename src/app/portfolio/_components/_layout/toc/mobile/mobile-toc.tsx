@@ -8,6 +8,7 @@ import {
     ListDownMinimalisticBoldDuotoneIcon,
     ListUpMinimalisticBoldDuotoneIcon
 } from "@solar-icons/react"
+import { create } from "zustand"
 
 import { SectionLine } from "@/components/layout/line"
 import { Button } from "@/components/ui/button"
@@ -33,11 +34,9 @@ function MobileToc({
     items,
     filteredItems,
     debouncedQuery,
-    handleClearSearch,
-    onLinkClick
+    handleClearSearch
 }: TocListProps & {
     handleClearSearch: () => void
-    onLinkClick?: () => void
 }) {
     useEffect(() => {
         if (debouncedQuery && filteredItems.length === 0) {
@@ -65,7 +64,6 @@ function MobileToc({
                     items={items}
                     filteredItems={filteredItems}
                     debouncedQuery={debouncedQuery}
-                    onLinkClick={onLinkClick}
                     className="scroll-pb-[--safe-area-inset]"
                 />
             )}
@@ -75,8 +73,19 @@ function MobileToc({
 
 const snapPoints = [0.85, 1]
 
+const useMobileTocStore = create<{
+    isTocOpen: boolean
+    setIsTocOpen: (open: boolean) => void
+}>((set) => ({
+    isTocOpen: false,
+    setIsTocOpen: (open) => {
+        set({ isTocOpen: open })
+    }
+}))
+
 function MobileTocButtonCore() {
-    const [isTocOpen, setIsTocOpen] = useState(false)
+    const isTocOpen = useMobileTocStore((s) => s.isTocOpen)
+    const setIsTocOpen = useMobileTocStore((s) => s.setIsTocOpen)
 
     const tocItems = useTocItems()
 
@@ -156,9 +165,6 @@ function MobileTocButtonCore() {
                     filteredItems={filteredItems}
                     debouncedQuery={debouncedQuery}
                     handleClearSearch={handleClearSearch}
-                    onLinkClick={() => {
-                        setIsTocOpen(false)
-                    }}
                 />
             </DrawerContent>
         </Drawer>
@@ -186,4 +192,4 @@ function MobileTocButton() {
     )
 }
 
-export { MobileTocButton }
+export { MobileTocButton, useMobileTocStore }

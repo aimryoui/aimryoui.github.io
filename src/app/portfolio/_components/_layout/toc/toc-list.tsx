@@ -50,10 +50,6 @@ function handleItemClick(
     }
 }
 
-function handleSameLinkClick() {
-    window.dispatchEvent(new CustomEvent("portfolio:main-flash"))
-}
-
 function TocList({
     className,
     items,
@@ -116,7 +112,6 @@ function TocList({
                                 items={node.items}
                                 debouncedQuery={debouncedQuery}
                                 onItemPress={handlePress}
-                                onSameLinkClick={handleSameLinkClick}
                                 className="ltr:ltr rtl:rtl"
                             />
                         )
@@ -134,7 +129,6 @@ function TocList({
                                     item={item}
                                     query={debouncedQuery}
                                     onPress={handlePress}
-                                    onSameLinkClick={handleSameLinkClick}
                                 />
                             ))}
                         </ul>
@@ -146,4 +140,4 @@ function TocList({
 }
 
 export type { TocListProps }
-export { handleItemClick, handleSameLinkClick, TocList }
+export { handleItemClick, TocList }

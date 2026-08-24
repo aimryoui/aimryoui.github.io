@@ -14,7 +14,7 @@ projects.forEach((project) => {
     const manifestKey = project.filePath.replace(TRIM_PROJECT_SLUG_REGEX, "")
     const projectColor = colorManifest[manifestKey]
 
-    if (projectColor?.theme && project.id) {
+    if (projectColor?.theme) {
         const hexRules = generateColorRules(projectColor.theme, "hex")
         const oklchRules = generateColorRules(projectColor.theme, "oklch")
 
@@ -33,9 +33,7 @@ projects.forEach((project) => {
 })
 
 function AmbientStyle({ project }: { project: Project }) {
-    const ambientStyles = project.id
-        ? ambientStylesMap.get(project.id)
-        : undefined
+    const ambientStyles = ambientStylesMap.get(project.id)
 
     if (ambientStyles)
         return <style dangerouslySetInnerHTML={{ __html: ambientStyles }} />

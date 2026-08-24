@@ -6,6 +6,7 @@ import { ArrowLeft } from "@/components/icons/icons"
 import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
+import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
 import {
     TocSearch,
     type TocSearchProps
@@ -55,6 +56,11 @@ function TocHeader({
                                 className={cn("pointer-events-auto", {
                                     dark: "bg-input/25"
                                 })}
+                                onPress={() => {
+                                    useMobileTocStore
+                                        .getState()
+                                        .setIsTocOpen(false)
+                                }}
                             >
                                 <ArrowLeft className="size-4 rtl:rotate-180" />
                             </LinkButton>

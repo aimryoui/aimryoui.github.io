@@ -20,19 +20,10 @@ interface MobileTocGroupProps {
     items: TocItemProps[]
     debouncedQuery: string
     onItemPress: (item: TocItemProps) => void
-    onSameLinkClick: () => void
-    onLinkClick?: () => void
 }
 
 const MobileTocGroup = memo(
-    ({
-        header,
-        items,
-        debouncedQuery,
-        onItemPress,
-        onSameLinkClick,
-        onLinkClick
-    }: MobileTocGroupProps) => {
+    ({ header, items, debouncedQuery, onItemPress }: MobileTocGroupProps) => {
         const isDefaultExpanded = header.id !== "selected-works"
         const { isExpanded, setIsExpanded } = useTocGroup(
             items,
@@ -51,8 +42,6 @@ const MobileTocGroup = memo(
                     item={header}
                     query={debouncedQuery}
                     onPress={onItemPress}
-                    onSameLinkClick={onSameLinkClick}
-                    onLinkClick={onLinkClick}
                 >
                     <CollapsibleTrigger
                         haptic={isExpanded ? "light" : "nudge"}
@@ -106,8 +95,6 @@ const MobileTocGroup = memo(
                                 item={item}
                                 query={debouncedQuery}
                                 onPress={onItemPress}
-                                onSameLinkClick={onSameLinkClick}
-                                onLinkClick={onLinkClick}
                             />
                         ))}
                     </ul>

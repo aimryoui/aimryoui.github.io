@@ -9,7 +9,9 @@ import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { getPreferences } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
+import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
 import { type TocItemRowProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { useFlashStore } from "@/portfolio/_components/flash-overlay"
 import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
 
 function scrollToTarget(id: string) {
@@ -32,11 +34,9 @@ const MobileTocItemRow = memo(
         variant = "anchor",
         query,
         onPress,
-        onSameLinkClick,
-        onLinkClick,
         children,
         ...props
-    }: TocItemRowProps & { onLinkClick?: () => void }) => {
+    }: TocItemRowProps) => {
         const pathname = usePathname()
 
         const isActive = useTocActiveId((s) => s.activeId === item.id)
@@ -106,7 +106,7 @@ const MobileTocItemRow = memo(
                     }}
                     onPress={() => {
                         if (item.mode === "route" && !isSamePath) {
-                            onLinkClick?.()
+                            useMobileTocStore.getState().setIsTocOpen(false)
                             return
                         }
 
@@ -114,7 +114,7 @@ const MobileTocItemRow = memo(
 
                         // If the item is already active in the TOC, it's a repeat click
                         if (isActive) {
-                            onSameLinkClick()
+                            useFlashStore.getState().triggerFlash()
                         }
 
                         scrollToTarget(item.id)

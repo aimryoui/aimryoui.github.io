@@ -9,6 +9,7 @@ import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { getPreferences } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
+import { useFlashStore } from "@/portfolio/_components/flash-overlay"
 import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
 
 function scrollToTarget(id: string) {
@@ -43,7 +44,6 @@ type TocItemRowProps = React.ComponentProps<"li">
         item: TocItemProps
         query?: string
         onPress: (item: TocItemProps) => void
-        onSameLinkClick: () => void
     }
 
 const TocItemRow = memo(
@@ -53,7 +53,6 @@ const TocItemRow = memo(
         item,
         query,
         onPress,
-        onSameLinkClick,
         children,
         ...props
     }: TocItemRowProps) => {
@@ -180,7 +179,7 @@ const TocItemRow = memo(
 
                         // If the item is already active in the TOC, it's a repeat click
                         if (isActive) {
-                            onSameLinkClick()
+                            useFlashStore.getState().triggerFlash()
                         }
 
                         scrollToTarget(item.id)

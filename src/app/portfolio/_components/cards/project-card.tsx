@@ -85,8 +85,6 @@ function ProjectCard({
         onMouseLeave?.(e)
     }
 
-
-
     const Comp = navigation
         ? navigation === "forward"
             ? PaginationNext
@@ -225,9 +223,7 @@ function ProjectCover({
     const socialData = resolveSocialData(social)
 
     return (
-        <ViewTransition
-            name={`cover-${projectId}`}
-        >
+        <ViewTransition name={`cover-${projectId}`}>
             <div
                 className={cn(
                     "flex h-11 -translate-y-0.75 flex-col items-center justify-center gap-0.5",
@@ -365,9 +361,7 @@ function ProjectName({
             )}
             {...props}
         >
-            <ViewTransition
-                name={`project-${projectId}`}
-            >
+            <ViewTransition name={`project-${projectId}`}>
                 <bdi
                     translate="no"
                     className={cn(
@@ -419,9 +413,7 @@ function ProjectName({
                 {formatOrdinals(name)}
             </bdi>
             {isNew && (
-                <ViewTransition
-                    name={`project-${projectId}-new-tick`}
-                >
+                <ViewTransition name={`project-${projectId}-new-tick`}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -451,9 +443,7 @@ function ProjectCategory({
 }) {
     return (
         <ViewTransition
-            name={formatViewTransitionName(
-                `category-${name}-${category}`
-            )}
+            name={formatViewTransitionName(`category-${name}-${category}`)}
         >
             <Text
                 className={cn(

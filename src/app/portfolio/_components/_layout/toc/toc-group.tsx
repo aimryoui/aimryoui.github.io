@@ -24,7 +24,6 @@ interface TocGroupProps extends CollapsibleProps {
     items: TocItemProps[]
     debouncedQuery: string
     onItemPress: (item: TocItemProps) => void
-    onSameLinkClick: () => void
 }
 
 const TocGroup = memo(
@@ -34,7 +33,6 @@ const TocGroup = memo(
         items,
         debouncedQuery,
         onItemPress,
-        onSameLinkClick,
         ...props
     }: TocGroupProps) => {
         const isSelectedWorks = header.id === "selected-works"
@@ -64,7 +62,6 @@ const TocGroup = memo(
                     item={header}
                     query={debouncedQuery}
                     onPress={onItemPress}
-                    onSameLinkClick={onSameLinkClick}
                 >
                     <TooltipTrigger
                         delay={500}
@@ -145,7 +142,6 @@ const TocGroup = memo(
                                 item={item}
                                 query={debouncedQuery}
                                 onPress={onItemPress}
-                                onSameLinkClick={onSameLinkClick}
                             />
                         ))}
                     </ul>

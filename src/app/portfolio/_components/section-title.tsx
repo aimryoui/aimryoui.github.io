@@ -1,5 +1,7 @@
 "use client"
 
+import { usePathname } from "next/navigation"
+
 import { sendGAEvent } from "@next/third-parties/google"
 import { type PressEvent, usePress } from "react-aria"
 
@@ -12,6 +14,7 @@ import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { getCategoryPath } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
+import { useFlashStore } from "@/portfolio/_components/flash-overlay"
 
 type SectionTitleProps = React.ComponentProps<"div">
     & React.ComponentProps<"a">
@@ -39,6 +42,7 @@ function SectionTitle({
     onPress,
     ...props
 }: SectionTitleProps) {
+    const pathname = usePathname()
     const playPressFeedback = usePressFeedback()
 
     const ContainerComp: React.ElementType =
@@ -55,6 +59,11 @@ function SectionTitle({
                 category_title: title
             }
             sendGAEvent("event", eventName, eventParams)
+
+            const targetPath = link === "route" ? getCategoryPath(id) : "/portfolio"
+            if (targetPath === pathname) {
+                useFlashStore.getState().triggerFlash()
+            }
         }
         onPress?.(e)
     }

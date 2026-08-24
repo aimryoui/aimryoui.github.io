@@ -10,7 +10,10 @@ import { At, Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
-import { MobileTocButton } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
+import {
+    MobileTocButton,
+    useMobileTocStore
+} from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
 import { PreferencesButton } from "@/portfolio/_components/_layout/toolbar/preferences-button"
 
 import { projects } from "~/.velite"
@@ -61,6 +64,11 @@ function Toolbar({ className }: { className?: string }) {
                                 hoverSound="tick"
                                 pressSound="link"
                                 scroll={false}
+                                onPress={() => {
+                                    useMobileTocStore
+                                        .getState()
+                                        .setIsTocOpen(false)
+                                }}
                                 className={cn(
                                     "group flex items-center gap-[calc(var(--spacing-safe-zone)/2)]"
                                 )}

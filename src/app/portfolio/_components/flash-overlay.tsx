@@ -1,41 +1,39 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { create } from "zustand"
 
 import { cn } from "@/lib/utils"
 
-const FLASH_EVENT = "portfolio:main-flash"
+const useFlashStore = create<{
+    flashKey: number
+    isFlashing: boolean
+    triggerFlash: () => void
+}>((set) => {
+    let timeout: ReturnType<typeof setTimeout> | null = null
 
-export default function FlashOverlay() {
-    const [mounted, setMounted] = useState(false)
-    const [flashKey, setFlashKey] = useState(0)
-    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+    return {
+        flashKey: 0,
+        isFlashing: false,
+        triggerFlash: () => {
+            if (timeout) clearTimeout(timeout)
 
-    useEffect(() => {
-        const handleFlash = () => {
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current)
-            }
+            set((state) => ({
+                flashKey: state.flashKey + 1,
+                isFlashing: true
+            }))
 
-            setFlashKey((prev) => prev + 1)
-            setMounted(true)
-
-            timeoutRef.current = setTimeout(() => {
-                setMounted(false)
+            timeout = setTimeout(() => {
+                set({ isFlashing: false })
             }, 850)
         }
+    }
+})
 
-        window.addEventListener(FLASH_EVENT, handleFlash)
+function FlashOverlay() {
+    const flashKey = useFlashStore((s) => s.flashKey)
+    const isFlashing = useFlashStore((s) => s.isFlashing)
 
-        return () => {
-            window.removeEventListener(FLASH_EVENT, handleFlash)
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current)
-            }
-        }
-    }, [])
-
-    if (!mounted) return null
+    if (!isFlashing) return null
 
     return (
         <div
@@ -48,3 +46,5 @@ export default function FlashOverlay() {
         />
     )
 }
+
+export { FlashOverlay, useFlashStore }
