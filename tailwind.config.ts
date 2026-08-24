@@ -256,6 +256,8 @@ export default {
                 disabled: "disabled",
                 horizontal: "orientation=horizontal",
                 vertical: "orientation=vertical",
+                checked: "checked",
+                unchecked: "unchecked",
                 overflowing: "overflowing"
             },
             opacity: {

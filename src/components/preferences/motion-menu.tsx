@@ -16,6 +16,7 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
+import { DEFAULT_MOTION_PREFERENCES } from "@/configs/motion.config"
 import { type MotionPreference, useMotionStore } from "@/stores/motion-store"
 
 interface MotionPreferenceConfig {
@@ -93,6 +94,9 @@ function MotionMenu() {
                         <DropdownMenuRadioItem
                             key={preference.value}
                             value={preference.value}
+                            isDefault={
+                                preference.value === DEFAULT_MOTION_PREFERENCES
+                            }
                             closeOnClick
                             description={preference.description}
                             srOnlyDescription

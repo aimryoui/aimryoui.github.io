@@ -20,11 +20,15 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
+import { DEFAULT_AUDIO_PREFERENCES } from "@/configs/audio.config"
 import { useDevice } from "@/hooks/use-device"
 import { usePreference } from "@/hooks/use-preference"
 import { playPressSound } from "@/lib/sounds"
 import { type AudioState, useAudioStore } from "@/stores/audio-store"
-import { useHapticsStore } from "@/stores/haptics-store"
+import {
+    DEFAULT_HAPTICS_PREFERENCE,
+    useHapticsStore
+} from "@/stores/haptics-store"
 
 interface AudioPreferenceConfig {
     value: AudioState["audioMode"]
@@ -121,6 +125,10 @@ function SoundsHapticsMenu() {
                             <DropdownMenuRadioItem
                                 key={preference.value}
                                 value={preference.value}
+                                isDefault={
+                                    preference.value
+                                    === DEFAULT_AUDIO_PREFERENCES.audioMode
+                                }
                                 closeOnClick={false}
                                 description={preference.description}
                             >
@@ -135,6 +143,7 @@ function SoundsHapticsMenu() {
                     <DropdownMenuLabel>Haptics</DropdownMenuLabel>
                     <DropdownMenuCheckboxItem
                         checked={isHapticEnabled}
+                        isDefault={DEFAULT_HAPTICS_PREFERENCE}
                         onCheckedChange={(checked) => {
                             setIsHapticEnabled(checked)
                             const eventName = "change_haptic_preference"

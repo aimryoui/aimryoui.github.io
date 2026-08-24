@@ -16,7 +16,11 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
-import { AVAILABLE_EFFECTS, type Effect } from "@/configs/effects.config"
+import {
+    AVAILABLE_EFFECTS,
+    DEFAULT_EFFECTS_PREFERENCES,
+    type Effect
+} from "@/configs/effects.config"
 import { type DeviceInfo, useDevice } from "@/hooks/use-device"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePreference } from "@/hooks/use-preference"
@@ -91,6 +95,7 @@ function EffectsMenu() {
                 {AVAILABLE_EFFECTS.map((effect) => (
                     <DropdownMenuCheckboxItem
                         key={effect}
+                        isDefault={DEFAULT_EFFECTS_PREFERENCES.includes(effect)}
                         checked={effects.includes(effect)}
                         onCheckedChange={(checked) => {
                             toggleEffect(effect)

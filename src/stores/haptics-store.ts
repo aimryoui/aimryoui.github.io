@@ -12,10 +12,12 @@ interface HapticsStore {
     reset: () => void
 }
 
+const DEFAULT_HAPTICS_PREFERENCE = true
+
 const useHapticsStore = create<HapticsStore>()(
     persist(
         (set) => ({
-            isHapticEnabled: true,
+            isHapticEnabled: DEFAULT_HAPTICS_PREFERENCE,
             setIsHapticEnabled: (enabled) => {
                 set({ isHapticEnabled: enabled })
             },
@@ -37,4 +39,4 @@ const useHapticsStore = create<HapticsStore>()(
     )
 )
 
-export { useHapticsStore }
+export { DEFAULT_HAPTICS_PREFERENCE, useHapticsStore }

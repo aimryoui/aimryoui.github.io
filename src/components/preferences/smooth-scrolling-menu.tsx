@@ -6,7 +6,10 @@ import { MouseBoldDuotoneIcon } from "@solar-icons/react"
 import { showMenuToast } from "@/components/preferences/menu-toast"
 import { DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
 import { usePreference } from "@/hooks/use-preference"
-import { useSmoothScrollingStore } from "@/stores/smooth-scrolling-store"
+import {
+    DEFAULT_SMOOTH_SCROLLING_PREFERENCE,
+    useSmoothScrollingStore
+} from "@/stores/smooth-scrolling-store"
 
 const MENU_CONFIG = {
     name: "Smooth scrolling",
@@ -27,6 +30,7 @@ function SmoothScrollingMenu() {
     return (
         <DropdownMenuCheckboxItem
             checked={isEnabled && !motionReduced}
+            isDefault={DEFAULT_SMOOTH_SCROLLING_PREFERENCE}
             disabled={motionReduced}
             onCheckedChange={(checked) => {
                 setIsEnabled(checked)

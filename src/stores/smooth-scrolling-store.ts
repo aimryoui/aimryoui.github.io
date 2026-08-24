@@ -12,10 +12,12 @@ interface SmoothScrollingStore {
     reset: () => void
 }
 
+const DEFAULT_SMOOTH_SCROLLING_PREFERENCE = false
+
 const useSmoothScrollingStore = create<SmoothScrollingStore>()(
     persist(
         (set) => ({
-            isSmoothScrollingEnabled: false,
+            isSmoothScrollingEnabled: DEFAULT_SMOOTH_SCROLLING_PREFERENCE,
             setIsSmoothScrollingEnabled: (enabled) => {
                 set({ isSmoothScrollingEnabled: enabled })
             },
@@ -38,4 +40,4 @@ const useSmoothScrollingStore = create<SmoothScrollingStore>()(
     )
 )
 
-export { useSmoothScrollingStore }
+export { DEFAULT_SMOOTH_SCROLLING_PREFERENCE, useSmoothScrollingStore }

@@ -16,6 +16,10 @@ import {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
+import {
+    DEFAULT_SIDEBAR_PREFERENCES,
+    DEFAULT_TOOLBAR_PREFERENCES
+} from "@/configs/navigation.config"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import {
@@ -144,6 +148,11 @@ function NavigationBarPositionMenu() {
                         <DropdownMenuRadioItem
                             key={value}
                             value={value}
+                            isDefault={
+                                isMobile
+                                    ? value === DEFAULT_TOOLBAR_PREFERENCES
+                                    : value === DEFAULT_SIDEBAR_PREFERENCES
+                            }
                             disabled={disabled}
                             onClick={() => {
                                 setPosition(value)

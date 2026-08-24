@@ -26,6 +26,9 @@ import {
     AUTOPLAY_PREFERENCES,
     type AutoplayPreference,
     AVAILABLE_MEDIA_PREFERENCES,
+    DEFAULT_GIF_AUTOPLAY_PREFERENCE,
+    DEFAULT_MEDIA_PREFERENCES,
+    DEFAULT_VIDEO_AUTOPLAY_PREFERENCE,
     type MediaPreference
 } from "@/configs/media.config"
 import { usePreference } from "@/hooks/use-preference"
@@ -114,9 +117,14 @@ function MediaMenu() {
                                 }
                             )
                         }}
-                        disabled={MEDIA_PREFERENCES[preference].shouldDisable?.(
-                            motionReduced
+                        isDefault={DEFAULT_MEDIA_PREFERENCES.includes(
+                            preference
                         )}
+                        disabled={
+                            MEDIA_PREFERENCES[preference].shouldDisable?.(
+                                motionReduced
+                            ) ?? false
+                        }
                         closeOnClick={false}
                         description={MEDIA_PREFERENCES[preference].description}
                     >
@@ -164,6 +172,10 @@ function MediaMenu() {
                                     <DropdownMenuRadioItem
                                         key={preference}
                                         value={preference}
+                                        isDefault={
+                                            preference
+                                            === DEFAULT_VIDEO_AUTOPLAY_PREFERENCE
+                                        }
                                         closeOnClick={false}
                                         disabled={motionReduced}
                                     >
@@ -205,6 +217,10 @@ function MediaMenu() {
                                     <DropdownMenuRadioItem
                                         key={preference}
                                         value={preference}
+                                        isDefault={
+                                            preference
+                                            === DEFAULT_GIF_AUTOPLAY_PREFERENCE
+                                        }
                                         closeOnClick={false}
                                         disabled={motionReduced}
                                     >

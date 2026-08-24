@@ -12,7 +12,7 @@ import {
 import NextLink from "next/link"
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
-import { ArrowUpRight, CheckIcon, ChevronRightIcon } from "lucide-react"
+import { ArrowUpRight, CheckIcon, ChevronRightIcon, Undo2 } from "lucide-react"
 
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
@@ -606,6 +606,7 @@ function DropdownMenuCheckboxItem({
     children,
     description,
     srOnlyDescription,
+    isDefault,
     disabled,
     checked,
     inset,
@@ -614,6 +615,7 @@ function DropdownMenuCheckboxItem({
 }: MenuPrimitive.CheckboxItem.Props & {
     description?: React.ReactNode
     srOnlyDescription?: boolean
+    isDefault?: boolean
     inset?: boolean
 }) {
     const playPressFeedback = usePressFeedback()
@@ -657,6 +659,15 @@ function DropdownMenuCheckboxItem({
                     })}
                 >
                     {children}
+                    {isDefault !== undefined && (
+                        <DropdownMenuDefaultIndicator
+                            className={cn(
+                                isDefault
+                                    ? "group-data-checked/dropdown-menu-checkbox-item:hidden"
+                                    : "group-data-unchecked/dropdown-menu-checkbox-item:hidden"
+                            )}
+                        />
+                    )}
                     <MenuPrimitive.CheckboxItemIndicator
                         data-slot="dropdown-menu-checkbox-item-indicator"
                         className={cn(
@@ -697,6 +708,7 @@ function DropdownMenuRadioItem({
     children,
     description,
     srOnlyDescription,
+    isDefault,
     disabled,
     inset,
     onClick,
@@ -704,6 +716,7 @@ function DropdownMenuRadioItem({
 }: MenuPrimitive.RadioItem.Props & {
     description?: React.ReactNode
     srOnlyDescription?: boolean
+    isDefault?: boolean
     inset?: boolean
 }) {
     const playPressFeedback = usePressFeedback()
@@ -746,6 +759,13 @@ function DropdownMenuRadioItem({
                     })}
                 >
                     {children}
+                    {isDefault && (
+                        <DropdownMenuDefaultIndicator
+                            className={cn(
+                                "group-data-checked/dropdown-menu-radio-item:hidden"
+                            )}
+                        />
+                    )}
                     <MenuPrimitive.RadioItemIndicator
                         data-slot="dropdown-menu-radio-item-indicator"
                         className={cn(
@@ -795,6 +815,22 @@ function DropdownMenuShortcut({
             className={cn(
                 "ms-auto text-xs tracking-widest text-muted-foreground",
                 "group-focus/dropdown-menu-item:text-accent-foreground",
+                className
+            )}
+            {...props}
+        />
+    )
+}
+
+function DropdownMenuDefaultIndicator({
+    className,
+    ...props
+}: React.ComponentProps<"svg">) {
+    return (
+        <Undo2
+            data-slot="dropdown-menu-default-indicator"
+            className={cn(
+                "size-4 -translate-y-[1px] text-muted-foreground rtl:-scale-x-100",
                 className
             )}
             {...props}

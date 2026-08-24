@@ -17,9 +17,10 @@ import {
     DropdownMenuSubTrigger
 } from "@/components/ui/dropdown-menu"
 import {
-    type DirectionPreference,
-    useDirectionStore
-} from "@/stores/direction-store"
+    DEFAULT_DIRECTION_PREFERENCE,
+    type DirectionPreference
+} from "@/configs/direction.config"
+import { useDirectionStore } from "@/stores/direction-store"
 
 interface DirectionPreferenceConfig {
     value: DirectionPreference
@@ -98,6 +99,10 @@ function DirectionMenu() {
                             key={preference.value}
                             // dir={preference.value}
                             value={preference.value}
+                            isDefault={
+                                preference.value
+                                === DEFAULT_DIRECTION_PREFERENCE
+                            }
                             description={preference.description}
                             srOnlyDescription
                         >
