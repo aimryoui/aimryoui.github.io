@@ -6,7 +6,7 @@ import { ArrowLeft } from "@/components/icons/icons"
 import { LinkButton } from "@/components/ui/button"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
+import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile"
 import {
     TocSearch,
     type TocSearchProps

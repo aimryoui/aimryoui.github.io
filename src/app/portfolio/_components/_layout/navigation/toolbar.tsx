@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils"
 import {
     MobileTocButton,
     useMobileTocStore
-} from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
+} from "@/portfolio/_components/_layout/toc/mobile"
 import { PreferencesButton } from "@/portfolio/_components/_layout/toolbar/preferences-button"
 
 import { projects } from "~/.velite"

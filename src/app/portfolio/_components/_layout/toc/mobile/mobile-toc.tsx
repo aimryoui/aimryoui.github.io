@@ -8,7 +8,6 @@ import {
     ListDownMinimalisticBoldDuotoneIcon,
     ListUpMinimalisticBoldDuotoneIcon
 } from "@solar-icons/react"
-import { create } from "zustand"
 
 import { SectionLine } from "@/components/layout/line"
 import { Button } from "@/components/ui/button"
@@ -20,70 +19,19 @@ import {
     DrawerTrigger
 } from "@/components/ui/drawer"
 import { TooltipTrigger } from "@/components/ui/tooltip"
-import { useIsMounted } from "@/hooks/use-is-mounted"
 import { usePreference } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
 import { MobileTocList } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-list"
+import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-store"
 import { TocHeader } from "@/portfolio/_components/_layout/toc/toc-header"
 import { type TocListProps } from "@/portfolio/_components/_layout/toc/toc-list"
 import { TocSearchNoResult } from "@/portfolio/_components/_layout/toc/toc-search"
 import { useTocItems } from "@/portfolio/_hooks/use-toc-items"
 import { useTocSearch } from "@/portfolio/_hooks/use-toc-search"
 
-function MobileToc({
-    items,
-    filteredItems,
-    debouncedQuery,
-    handleClearSearch
-}: TocListProps & {
-    handleClearSearch: () => void
-}) {
-    useEffect(() => {
-        if (debouncedQuery && filteredItems.length === 0) {
-            const eventName = "search_toc_no_result"
-            const eventParams = { search_query: debouncedQuery }
-            sendGAEvent("event", eventName, eventParams)
-        }
-    }, [debouncedQuery, filteredItems.length])
-
-    if (items.length === 0) return null
-
-    return (
-        <nav
-            aria-label="Table of contents"
-            className={cn(
-                "[--safe-area-inset:calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))]",
-                "flex flex-col overflow-auto text-xl",
-                "pb-[--safe-area-inset]"
-            )}
-        >
-            {filteredItems.length === 0 ? (
-                <TocSearchNoResult onClear={handleClearSearch} />
-            ) : (
-                <MobileTocList
-                    items={items}
-                    filteredItems={filteredItems}
-                    debouncedQuery={debouncedQuery}
-                    className="scroll-pb-[--safe-area-inset]"
-                />
-            )}
-        </nav>
-    )
-}
-
 const snapPoints = [0.85, 1]
 
-const useMobileTocStore = create<{
-    isTocOpen: boolean
-    setIsTocOpen: (open: boolean) => void
-}>((set) => ({
-    isTocOpen: false,
-    setIsTocOpen: (open) => {
-        set({ isTocOpen: open })
-    }
-}))
-
-function MobileTocButtonCore() {
+function MobileToc() {
     const isTocOpen = useMobileTocStore((s) => s.isTocOpen)
     const setIsTocOpen = useMobileTocStore((s) => s.setIsTocOpen)
 
@@ -160,7 +108,7 @@ function MobileTocButtonCore() {
                     />
                     <SectionLine fit />
                 </DrawerHeader>
-                <MobileToc
+                <MobileTocNav
                     items={tocItems}
                     filteredItems={filteredItems}
                     debouncedQuery={debouncedQuery}
@@ -171,25 +119,45 @@ function MobileTocButtonCore() {
     )
 }
 
-function MobileTocButton() {
-    const isMounted = useIsMounted()
+function MobileTocNav({
+    items,
+    filteredItems,
+    debouncedQuery,
+    handleClearSearch
+}: TocListProps & {
+    handleClearSearch: () => void
+}) {
+    useEffect(() => {
+        if (debouncedQuery && filteredItems.length === 0) {
+            const eventName = "search_toc_no_result"
+            const eventParams = { search_query: debouncedQuery }
+            sendGAEvent("event", eventName, eventParams)
+        }
+    }, [debouncedQuery, filteredItems.length])
 
-    return isMounted ? (
-        <MobileTocButtonCore />
-    ) : (
-        <Button
-            size="icon"
-            variant="outline"
-            haptic={undefined}
-            isDisabled={true}
-            className={cn("!size-full !rounded-none border-0")}
-            aria-expanded={false}
-            data-state="closed"
+    if (items.length === 0) return null
+
+    return (
+        <nav
+            aria-label="Table of contents"
+            className={cn(
+                "[--safe-area-inset:calc(env(safe-area-inset-bottom,0px)+var(--spacing-space))]",
+                "flex flex-col overflow-auto text-xl",
+                "pb-[--safe-area-inset]"
+            )}
         >
-            <ListUpMinimalisticBoldDuotoneIcon className="size-8" />
-            <span className="sr-only">Table of Contents</span>
-        </Button>
+            {filteredItems.length === 0 ? (
+                <TocSearchNoResult onClear={handleClearSearch} />
+            ) : (
+                <MobileTocList
+                    items={items}
+                    filteredItems={filteredItems}
+                    debouncedQuery={debouncedQuery}
+                    className="scroll-pb-[--safe-area-inset]"
+                />
+            )}
+        </nav>
     )
 }
 
-export { MobileTocButton, useMobileTocStore }
+export default MobileToc

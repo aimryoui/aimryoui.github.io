@@ -221,4 +221,4 @@ function MediaMenu() {
     )
 }
 
-export { AUTOPLAY_OPTIONS, MEDIA_PREFERENCES, MediaMenu,MENU_CONFIG }
+export { AUTOPLAY_OPTIONS, MEDIA_PREFERENCES, MENU_CONFIG, MediaMenu }

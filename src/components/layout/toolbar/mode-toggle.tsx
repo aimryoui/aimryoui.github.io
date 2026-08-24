@@ -31,7 +31,7 @@ function ThemedIcon() {
 function ModeToggle({ className, onPress, tracking, ...props }: ButtonProps) {
     const { theme, setTheme } = useTheme()
 
-    const mounted = useIsMounted()
+    const isMounted = useIsMounted()
 
     const newTheme =
         theme === "light" ? "dark" : theme === "dark" ? "system" : "light"
@@ -50,7 +50,7 @@ function ModeToggle({ className, onPress, tracking, ...props }: ButtonProps) {
             render={
                 <Button
                     suppressHydrationWarning
-                    isDisabled={!mounted}
+                    isDisabled={!isMounted}
                     variant="outline"
                     size="icon"
                     haptic="success"
@@ -75,7 +75,7 @@ function ModeToggle({ className, onPress, tracking, ...props }: ButtonProps) {
                     )}
                     {...props}
                 >
-                    {mounted ? <ThemedIcon /> : <Spinner />}
+                    {isMounted ? <ThemedIcon /> : <Spinner />}
                     <span className="sr-only">Toggle theme</span>
                 </Button>
             }

@@ -60,7 +60,8 @@ function SectionTitle({
             }
             sendGAEvent("event", eventName, eventParams)
 
-            const targetPath = link === "route" ? getCategoryPath(id) : "/portfolio"
+            const targetPath =
+                link === "route" ? getCategoryPath(id) : "/portfolio"
             if (targetPath === pathname) {
                 useFlashStore.getState().triggerFlash()
             }

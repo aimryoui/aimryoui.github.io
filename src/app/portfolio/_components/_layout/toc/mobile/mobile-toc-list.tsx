@@ -2,7 +2,7 @@ import type React from "react"
 import { useCallback } from "react"
 
 import { cn } from "@/lib/utils"
-import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc"
+import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile"
 import { MobileTocGroup } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-group"
 import { MobileTocItemRow } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-item-row"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"

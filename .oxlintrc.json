@@ -177,7 +177,7 @@
                 "tailwindcss/no-unnecessary-arbitrary-value": "warn", // replacing m-[1.25rem] with m-5
 
                 //* Import
-                "simple-import-sort/exports": "warn",
+                // "simple-import-sort/exports": "warn",
                 "@limegrass/import-alias/import-alias": [
                     "warn",
                     {

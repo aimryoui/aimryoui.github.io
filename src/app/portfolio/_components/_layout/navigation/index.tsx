@@ -7,10 +7,8 @@ import { MarginLine } from "@/components/layout/line"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import Toolbar from "@/portfolio/_components/_layout/navigation/toolbar"
-import {
-    markTocRevealed,
-    TableOfContents
-} from "@/portfolio/_components/_layout/toc/toc"
+import { TableOfContents } from "@/portfolio/_components/_layout/toc"
+import { useTocRevealStore } from "@/portfolio/_components/_layout/toc/toc-store"
 import { useTocItems } from "@/portfolio/_hooks/use-toc-items"
 
 function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
@@ -21,7 +19,7 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
         // Mark TOC as revealed immediately after the initial mount cycle.
         // If TableOfContents mounts on Desktop, it will read the state BEFORE this runs.
         // If it mounts on Mobile, this ensures subsequent Desktop resizes don't animate.
-        markTocRevealed()
+        useTocRevealStore.getState().markTocRevealed()
     }, [])
 
     return (

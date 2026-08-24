@@ -10,4 +10,4 @@ const DEFAULT_AUDIO_PREFERENCES = {
 }
 
 export type { AudioMode }
-export { audioModeSchema, AVAILABLE_AUDIO_MODES, DEFAULT_AUDIO_PREFERENCES }
+export { AVAILABLE_AUDIO_MODES, audioModeSchema, DEFAULT_AUDIO_PREFERENCES }
