@@ -663,8 +663,8 @@ function DropdownMenuCheckboxItem({
                         <DropdownMenuDefaultIndicator
                             className={cn(
                                 isDefault
-                                    ? "group-data-checked/dropdown-menu-checkbox-item:hidden"
-                                    : "group-data-unchecked/dropdown-menu-checkbox-item:hidden"
+                                    ? "group-data-checked/dropdown-menu-checkbox-item:invisible"
+                                    : "group-data-unchecked/dropdown-menu-checkbox-item:invisible"
                             )}
                         />
                     )}
@@ -762,7 +762,7 @@ function DropdownMenuRadioItem({
                     {isDefault && (
                         <DropdownMenuDefaultIndicator
                             className={cn(
-                                "group-data-checked/dropdown-menu-radio-item:hidden"
+                                "group-data-checked/dropdown-menu-radio-item:invisible"
                             )}
                         />
                     )}

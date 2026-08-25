@@ -17,7 +17,9 @@ function ResumeDownloadButton() {
             className="dark:bg-input/25"
             tracking={{
                 eventName: "button_click",
-                eventParams: { button_name: "Toolbar - Download Resume" }
+                eventParams: {
+                    button_name: `Toolbar - Download Resume (${role.toUpperCase()})`
+                }
             }}
         >
             Resume
