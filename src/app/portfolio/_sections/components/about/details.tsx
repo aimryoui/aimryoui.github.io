@@ -48,7 +48,8 @@ const EMOTIONS = [
 
 const VISUAL_SECTIONS_COUNT = EMOTIONS.length - 1
 
-const DEFAULT_EXPANDED_KEYS = new Set<Key>(["tl-dr-mobile"])
+const MOBILE_SUMMARY_ID = "tl-dr-mobile"
+const DEFAULT_EXPANDED_KEYS = new Set<Key>([MOBILE_SUMMARY_ID])
 
 function Details({ className, ...props }: React.ComponentProps<"div">) {
     const role = useQueryStore((s) => s.role)
@@ -71,7 +72,7 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
     }
 
     const expandedCount = Math.min(
-        expandedKeys.size - (expandedKeys.has("tl-dr-mobile") ? 1 : 0),
+        expandedKeys.size - (expandedKeys.has(MOBILE_SUMMARY_ID) ? 1 : 0),
         VISUAL_SECTIONS_COUNT
     )
 
@@ -95,15 +96,11 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                 onExpandedChange={handleExpandedChange}
             >
                 {/* Desktop version (hidden on mobile) */}
-                <SummaryDetail
-                    role={role}
-                    id="tl-dr"
-                    className="w-full md:hidden"
-                />
+                <SummaryDetail role={role} className="w-full md:hidden" />
                 {/* Mobile version (hidden on desktop) */}
                 <SummaryDetail
                     role={role}
-                    id="tl-dr-mobile"
+                    id={MOBILE_SUMMARY_ID}
                     className="hidden w-full md:block"
                 />
                 <SvgElementLine dir="horizontal" />
