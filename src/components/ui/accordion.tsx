@@ -1,5 +1,7 @@
 "use client"
 
+import { createContext, useContext } from "react"
+
 import { ChevronDown } from "lucide-react"
 import {
     DisclosurePanel as AccordionContentPrimitive,
@@ -19,7 +21,10 @@ import {
     type ButtonProps
 } from "@/components/ui/button"
 import { Bold } from "@/components/ui/typography"
+import { usePreference } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
+
+const AccordionItemContext = createContext(false)
 
 type AccordionProps = DisclosureGroupProps
 
@@ -41,7 +46,15 @@ function AccordionItem({ className, ...props }: AccordionItemProps) {
             data-slot="accordion-item"
             className={cn("group/accordion-item", className)}
             {...props}
-        />
+        >
+            {(renderProps) => (
+                <AccordionItemContext.Provider value={renderProps.isExpanded}>
+                    {typeof props.children === "function"
+                        ? props.children(renderProps)
+                        : props.children}
+                </AccordionItemContext.Provider>
+            )}
+        </AccordionItemPrimitive>
     )
 }
 
@@ -50,8 +63,12 @@ type AccordionTriggerProps = ButtonProps
 function AccordionTrigger({
     className,
     children,
+    pressSound,
     ...props
 }: Omit<ButtonProps, "children"> & { children: React.ReactNode }) {
+    const isExpanded = useContext(AccordionItemContext)
+    const { motionReduced } = usePreference()
+
     return (
         <AccordionHeaderPrimitive className="flex">
             <AccordionTriggerPrimitive
@@ -59,6 +76,14 @@ function AccordionTrigger({
                 data-slot="accordion-trigger"
                 nativeButton
                 keepFeedback
+                pressSound={
+                    pressSound
+                    ?? (motionReduced
+                        ? "button"
+                        : isExpanded
+                          ? "zoom-out"
+                          : "zoom-in")
+                }
                 className={cn(
                     "group/accordion-trigger relative flex flex-1 items-start justify-between py-2.5 text-left font-wght-600",
                     {
