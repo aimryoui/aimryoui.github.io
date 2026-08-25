@@ -4,7 +4,7 @@ import { memo } from "react"
 import { usePathname } from "next/navigation"
 
 import { ArrowRight } from "@/components/icons/icons"
-import { LinkButton } from "@/components/ui/button"
+import { Link } from "@/components/ui/link"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { getPreferences } from "@/hooks/use-preference"
@@ -148,16 +148,12 @@ const TocItemRow = memo(
                               }
                     )}
                 />
-                <LinkButton
+                <Link
                     data-toc-id={item.id}
                     data-toc-href={href}
                     data-cursor="target"
                     aria-current={isCurrent}
                     href={href}
-                    nativeLink
-                    keepFeedback
-                    hoverSound="tick"
-                    pressSound="link"
                     prefetch={false}
                     scroll={!isSamePath}
                     tracking={{
@@ -275,7 +271,7 @@ const TocItemRow = memo(
                             />
                         </div>
                     )}
-                </LinkButton>
+                </Link>
                 {children}
             </Comp>
             // </ViewTransition>

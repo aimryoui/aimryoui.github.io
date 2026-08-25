@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import { SquareTopDownLinearIcon } from "@solar-icons/react"
 
 import { ViewTransition } from "@/components/animations/view-transition"
-import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
+import { Link, type LinkProps } from "@/components/ui/link"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePreference } from "@/hooks/use-preference"
@@ -21,7 +21,7 @@ interface SocialType {
     socialType?: "behance" | "dribbble" | "product-website"
 }
 
-interface SocialButtonProps extends Omit<LinkButtonProps, "href"> {
+interface SocialButtonProps extends Omit<LinkProps, "href"> {
     projectId?: ProjectId
     social?: SocialData
 }
@@ -153,15 +153,13 @@ function SocialButton({
     return (
         <ViewTransition name={`project-${projectId}-social-button`}>
             {isWebKit ? (
-                <LinkButton
+                <Link
                     data-cursor="ignore"
                     data-expanded={isExpanded}
                     href={url}
+                    externalLink
                     openInNewTab
-                    nativeLink
-                    keepFeedback
                     hoverSound={isExpanded ? "button" : false}
-                    pressSound="link"
                     onHoverStart={handleHoverStart}
                     onHoverEnd={handleHoverEnd}
                     tracking={{
@@ -247,17 +245,15 @@ function SocialButton({
                             )}
                         />
                     </div>
-                </LinkButton>
+                </Link>
             ) : (
-                <LinkButton
+                <Link
                     data-cursor="ignore"
                     data-expanded={isExpanded}
                     href={url}
-                    nativeLink
+                    externalLink
                     openInNewTab
-                    keepFeedback
                     hoverSound={isExpanded ? "button" : false}
-                    pressSound="link"
                     onHoverStart={handleHoverStart}
                     onHoverEnd={handleHoverEnd}
                     tracking={{
@@ -408,7 +404,7 @@ function SocialButton({
                             )}
                         />
                     </div>
-                </LinkButton>
+                </Link>
             )}
         </ViewTransition>
     )

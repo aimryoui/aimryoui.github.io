@@ -8,7 +8,7 @@ import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
-import { LinkButton } from "@/components/ui/button"
+import { Link } from "@/components/ui/link"
 import {
     Table,
     TableBody,
@@ -157,12 +157,9 @@ function Contact() {
                                                     "@[59.375rem]": "col-span-2"
                                                 })}
                                             >
-                                                <LinkButton
+                                                <Link
                                                     href={platform.links.url}
-                                                    nativeLink
-                                                    keepFeedback
-                                                    hoverSound="tick"
-                                                    pressSound="link"
+                                                    externalLink
                                                     openInNewTab
                                                     translate="no"
                                                     tracking={{
@@ -210,7 +207,7 @@ function Contact() {
                                                     >
                                                         {platform.links.text}
                                                     </bdi>
-                                                </LinkButton>
+                                                </Link>
                                             </TableCell>
 
                                             <TableCell

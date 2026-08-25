@@ -8,16 +8,11 @@ import {
     Breadcrumb as BreadcrumbPrimitive,
     type BreadcrumbProps,
     Breadcrumbs as BreadcrumbsPrimitive,
-    type BreadcrumbsProps,
-    Link as LinkPrimitive
+    type BreadcrumbsProps
 } from "react-aria-components/Breadcrumbs"
 
-import {
-    Button,
-    type ButtonProps,
-    type LinkButtonProps
-} from "@/components/ui/button"
-import { Link as NextLink } from "@/components/ui/link"
+import { Button, type ButtonProps } from "@/components/ui/button"
+import { Link, type LinkProps } from "@/components/ui/link"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
@@ -115,7 +110,7 @@ function BreadcrumbLink({
     onPress,
     scroll = true,
     ...props
-}: LinkButtonProps & {
+}: LinkProps & {
     spanClassName?: string
 }) {
     const { isCurrent } = use(BreadcrumbItemContext)
@@ -123,7 +118,7 @@ function BreadcrumbLink({
     const playPressFeedback = usePressFeedback()
 
     return (
-        <LinkPrimitive
+        <Link
             data-slot="breadcrumb-link"
             data-sound="button"
             className={cn(
@@ -137,28 +132,23 @@ function BreadcrumbLink({
                 },
                 className
             )}
-            {...props}
-            render={(props) =>
-                "href" in props ? (
-                    <NextLink scroll={scroll} {...props} draggable={false}>
-                        <span
-                            data-cursor="lock"
-                            className={cn("px-1.25 py-0.5", spanClassName)}
-                        >
-                            {props.children}
-                        </span>
-                        {!isCurrent && <BreadcrumbSeparator />}
-                    </NextLink>
-                ) : (
-                    <span {...props} />
-                )
-            }
+            scroll={scroll}
             onPress={(e) => {
                 playPressFeedback("button")
 
                 onPress?.(e)
             }}
-        />
+            draggable={false}
+            {...props}
+        >
+            <span
+                data-cursor="lock"
+                className={cn("px-1.25 py-0.5", spanClassName)}
+            >
+                {props.children}
+            </span>
+            {!isCurrent && <BreadcrumbSeparator />}
+        </Link>
     )
 }
 

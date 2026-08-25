@@ -2,7 +2,7 @@
 
 import { MoreHorizontalIcon } from "lucide-react"
 
-import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
+import { Link, type LinkProps } from "@/components/ui/link"
 import { cn } from "@/lib/utils"
 
 function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
@@ -41,30 +41,20 @@ function PaginationItem({ className, ...props }: React.ComponentProps<"li">) {
 
 type PaginationLinkProps = {
     isActive?: boolean
-} & Omit<LinkButtonProps, "variant">
+} & LinkProps
 
 function PaginationLink({
     className,
     isActive,
-    size = "icon",
-    nativeLink = true,
     ...props
 }: PaginationLinkProps) {
     return (
-        <LinkButton
+        <Link
             data-slot="pagination-link"
             data-cursor="target"
             aria-current={isActive ? "page" : undefined}
             data-active={isActive}
-            {...(!nativeLink && {
-                variant: isActive ? "outline" : "ghost",
-                size
-            })}
             className={cn(className)}
-            nativeLink={nativeLink}
-            keepFeedback
-            hoverSound="tick"
-            pressSound="link"
             {...props}
         />
     )

@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react"
 import { ViewTransition } from "@/components/animations/view-transition"
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { SvgElementLine } from "@/components/layout/line"
-import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
+import { Link, type LinkProps } from "@/components/ui/link"
 import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Bold, Text } from "@/components/ui/typography"
 import { TRIM_PROJECT_SLUG_REGEX } from "@/helpers/character-regexes"
@@ -48,7 +48,7 @@ function ProjectCard({
     onMouseLeave,
     tracking,
     ...props
-}: LinkButtonProps & ProjectCardProps) {
+}: LinkProps & ProjectCardProps) {
     const compRef = useRef<HTMLAnchorElement>(null)
     const startTimeRef = useRef<number>(0)
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
@@ -89,22 +89,15 @@ function ProjectCard({
         ? navigation === "forward"
             ? PaginationNext
             : PaginationPrevious
-        : LinkButton
+        : Link
 
     return (
         <Comp
             ref={compRef}
-            data-cursor="target"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             href={href}
             prefetch={!!navigation}
-            {...(!navigation && {
-                nativeLink: true,
-                keepFeedback: true,
-                hoverSound: "tick",
-                pressSound: "link"
-            })}
             tracking={{
                 eventName:
                     tracking?.eventName

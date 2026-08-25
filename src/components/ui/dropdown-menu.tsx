@@ -13,7 +13,7 @@ import {
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { ArrowUpRight, CheckIcon, ChevronRightIcon, Undo2 } from "lucide-react"
 
-import { Link as NextLink } from "@/components/ui/link"
+import { Link, type LinkProps } from "@/components/ui/link"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
@@ -518,7 +518,7 @@ function DropdownMenuLinkItem({
     onClick,
     ...props
 }: Omit<MenuPrimitive.LinkItem.Props, "href">
-    & Pick<React.ComponentProps<typeof NextLink>, "href"> & {
+    & Pick<LinkProps, "href"> & {
         description?: React.ReactNode
         srOnlyDescription?: boolean
         openInNewTab?: boolean
@@ -551,12 +551,10 @@ function DropdownMenuLinkItem({
                 className
             )}
             render={
-                <NextLink
+                <Link
+                    data-cursor={null}
                     href={href}
-                    {...(openInNewTab && {
-                        target: "_blank",
-                        rel: "noreferrer"
-                    })}
+                    openInNewTab={openInNewTab}
                 />
             }
             {...props}

@@ -7,8 +7,8 @@ import {
     SectionLine,
     SvgElementLine
 } from "@/components/layout/line"
-import { LinkButton } from "@/components/ui/button"
 import { useDirection } from "@/components/ui/direction"
+import { Link } from "@/components/ui/link"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { At, H1, Highlight, Text } from "@/components/ui/typography"
 import {
@@ -164,16 +164,9 @@ function ProjectHeader({
                                         key={key}
                                         payload={tool.label}
                                         render={
-                                            <LinkButton
-                                                href={tool.url}
-                                                openInNewTab
-                                                nativeLink
-                                                keepFeedback
-                                                hoverSound="tick"
-                                                pressSound="link"
-                                            >
+                                            <Link href={tool.url} openInNewTab>
                                                 {tool.icon}
-                                            </LinkButton>
+                                            </Link>
                                         }
                                     />
                                 )

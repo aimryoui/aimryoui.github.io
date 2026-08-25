@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 
 import { Image } from "@/components/media/image"
-import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
+import { Link, type LinkProps } from "@/components/ui/link"
 import { Bold, Text } from "@/components/ui/typography"
 import { TRIM_PROJECT_SLUG_REGEX } from "@/helpers/character-regexes"
 import { formatOrdinals } from "@/helpers/format-ordinals"
@@ -36,7 +36,7 @@ function SelectedProjectCard({
     onMouseLeave,
     tracking,
     ...props
-}: LinkButtonProps & SelectedProjectCardProps) {
+}: LinkProps & SelectedProjectCardProps) {
     const compRef = useRef<HTMLAnchorElement>(null)
     const startTimeRef = useRef<number>(0)
     const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
@@ -72,15 +72,16 @@ function SelectedProjectCard({
     }
 
     return (
-        <LinkButton
+        <Link
             ref={compRef}
             data-cursor="target"
+            href={href}
+            haptic="medium"
+            hoverSound="button"
+            pressSound="button"
+            prefetch={false}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            href={href}
-            prefetch={false}
-            nativeLink={true}
-            keepFeedback={true}
             tracking={{
                 eventName: tracking?.eventName ?? "handpicked_project",
                 eventParams: {
@@ -138,7 +139,7 @@ function SelectedProjectCard({
                 />
                 <ProjectCategory category={project.category} />
             </div>
-        </LinkButton>
+        </Link>
     )
 }
 

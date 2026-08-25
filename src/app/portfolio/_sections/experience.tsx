@@ -5,7 +5,7 @@ import { Fragment } from "react"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { LinkButton } from "@/components/ui/button"
+import { Link } from "@/components/ui/link"
 import {
     Table,
     TableBody,
@@ -296,7 +296,7 @@ function Experience() {
                                             }}
                                         >
                                             {place.organization ? (
-                                                <LinkButton
+                                                <Link
                                                     href={
                                                         place.organization.url
                                                     }
@@ -304,10 +304,7 @@ function Experience() {
                                                         place.organization
                                                             .ariaLabel
                                                     }
-                                                    nativeLink
-                                                    keepFeedback
-                                                    hoverSound="tick"
-                                                    pressSound="link"
+                                                    externalLink
                                                     openInNewTab
                                                     translate="no"
                                                     tracking={{
@@ -374,7 +371,7 @@ function Experience() {
                                                                 .text
                                                         }
                                                     </bdi>
-                                                </LinkButton>
+                                                </Link>
                                             ) : (
                                                 <span
                                                     className={cn(

@@ -10,7 +10,7 @@ import {
     SvgElementLine
 } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { LinkButton } from "@/components/ui/button"
+import { Link } from "@/components/ui/link"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { siteConfig } from "@/configs/site.config"
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
@@ -108,14 +108,11 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                                 "h-space basis-[calc(50%-var(--px))]"
                                         })}
                                     >
-                                        <LinkButton
+                                        <Link
                                             data-cursor="target"
                                             href={platform.links.url}
+                                            externalLink
                                             openInNewTab
-                                            nativeLink
-                                            keepFeedback
-                                            hoverSound="tick"
-                                            pressSound="link"
                                             tracking={{
                                                 eventName: "click_footer_link",
                                                 eventParams: {
@@ -141,7 +138,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                             )}
                                         >
                                             <platform.icon />
-                                        </LinkButton>
+                                        </Link>
                                     </li>
                                 }
                             />

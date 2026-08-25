@@ -4,7 +4,7 @@ import { Fragment } from "react"
 
 import { Divider } from "@/components/layout/divider"
 import { SvgElementLine } from "@/components/layout/line"
-import { LinkButton } from "@/components/ui/button"
+import { Link } from "@/components/ui/link"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
 import { usePreference } from "@/hooks/use-preference"
@@ -123,12 +123,11 @@ function LocationBlock({
                     content: "Hồ Chí Minh City"
                 }}
                 render={
-                    <LinkButton
+                    <Link
                         href="https://en.wikipedia.org/wiki/Ho_Chi_Minh_City"
-                        nativeLink
-                        keepFeedback
-                        data-sound={motionReduced ? false : "button"}
+                        externalLink
                         openInNewTab
+                        data-sound={motionReduced ? false : "button"}
                         tracking={{
                             eventName: "click_about_link",
                             eventParams: {
@@ -151,7 +150,7 @@ function LocationBlock({
                         <Highlight className={cn("font-wght-[625]")}>
                             <bdi>HCMC</bdi>
                         </Highlight>
-                    </LinkButton>
+                    </Link>
                 }
             />
             <div
@@ -191,9 +190,9 @@ function NationBlock({
                     content: "Việt Nam"
                 }}
                 render={
-                    <LinkButton
+                    <Link
                         href="https://wikipedia.org/wiki/Vietnam"
-                        nativeLink
+                        externalLink
                         openInNewTab
                         tracking={{
                             eventName: "click_about_link",
@@ -223,7 +222,7 @@ function NationBlock({
                                 )}
                             />
                         </div>
-                    </LinkButton>
+                    </Link>
                 }
             />
             <div

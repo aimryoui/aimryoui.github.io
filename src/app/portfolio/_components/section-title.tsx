@@ -8,7 +8,7 @@ import { type PressEvent, usePress } from "react-aria"
 import { ViewTransition } from "@/components/animations/view-transition"
 import { ArrowRight } from "@/components/icons/icons"
 import { SectionLine } from "@/components/layout/line"
-import { LinkButton, type LinkButtonProps } from "@/components/ui/button"
+import { Link, type LinkProps } from "@/components/ui/link"
 import { H1, H2, Highlight } from "@/components/ui/typography"
 import { formatViewTransitionName } from "@/helpers/format-view-transition-name"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
@@ -18,7 +18,7 @@ import { useFlashStore } from "@/portfolio/_components/flash-overlay"
 
 type SectionTitleProps = React.ComponentProps<"div">
     & React.ComponentProps<"a">
-    & LinkButtonProps & {
+    & LinkProps & {
         link?: "route" | "hash"
         noteClassName?: string
         id: string
@@ -46,7 +46,7 @@ function SectionTitle({
     const playPressFeedback = usePressFeedback()
 
     const ContainerComp: React.ElementType =
-        link === "route" ? LinkButton : link === "hash" ? "a" : "div"
+        link === "route" ? Link : link === "hash" ? "a" : "div"
 
     const NoteComp: React.ElementType = headingLevel === "1" ? "h2" : "span"
 
@@ -83,15 +83,14 @@ function SectionTitle({
                     link === "route" ? getCategoryPath(id) : `/portfolio#${id}`
             })}
             {...(link === "route" && {
-                nativeLink: true,
-                keepFeedback: true,
+                hoverSound: "button",
+                pressSound: "button",
                 prefetch: false,
                 onPress: handlePress
             })}
             data-cursor={link === "route" ? "target" : "ignore"}
             {...(link === "hash" && {
-                ...pressProps,
-                "data-sound": "tick"
+                ...pressProps
             })}
             className={cn(
                 "group sticky top-0 z-50 flex min-h-space flex-col items-center bg-background",

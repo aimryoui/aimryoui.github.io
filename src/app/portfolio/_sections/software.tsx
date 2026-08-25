@@ -5,7 +5,7 @@ import { Fragment } from "react"
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { LinkButton } from "@/components/ui/button"
+import { Link } from "@/components/ui/link"
 import {
     Table,
     TableBody,
@@ -142,15 +142,12 @@ function Software() {
                                                                             tool.label
                                                                         }
                                                                         render={
-                                                                            <LinkButton
+                                                                            <Link
                                                                                 href={
                                                                                     tool.url
                                                                                 }
+                                                                                externalLink
                                                                                 openInNewTab
-                                                                                nativeLink
-                                                                                keepFeedback
-                                                                                hoverSound="tick"
-                                                                                pressSound="link"
                                                                                 tracking={{
                                                                                     eventName:
                                                                                         "click_software_link",
@@ -170,7 +167,7 @@ function Software() {
                                                                                         tool.label
                                                                                     }
                                                                                 </span>
-                                                                            </LinkButton>
+                                                                            </Link>
                                                                         }
                                                                     />
                                                                 </Fragment>

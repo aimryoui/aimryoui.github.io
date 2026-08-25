@@ -6,18 +6,14 @@ import {
     Button as ButtonPrimitive,
     type ButtonProps as ButtonPrimitiveProps
 } from "react-aria-components/Button"
-import {
-    Link as LinkPrimitive,
-    type LinkProps as LinkPrimitiveProps
-} from "react-aria-components/Link"
 import { type defaultPatterns } from "web-haptics"
 
-import { Link as NextLink } from "@/components/ui/link"
+import { Link } from "@/components/ui/link"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { type HoverSoundType, type PressSoundType } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 
-const nativeButtonClassName = cn("shrink-0 cursor-pointer", {
+const nativePressableClassName = cn("shrink-0 cursor-pointer", {
     "aria-invalid":
         "border-destructive ring-destructive/20 dark:ring-destructive/40",
     "focus-visible":
@@ -27,7 +23,7 @@ const nativeButtonClassName = cn("shrink-0 cursor-pointer", {
 
 const buttonVariants = cva(
     cn(
-        nativeButtonClassName,
+        nativePressableClassName,
         "inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-xlg text-sm font-wght-500 transition-[transform,translate,background-color] duration-100",
         {
             "data-target-cursor":
@@ -188,7 +184,7 @@ function Button({
             }
             className={cn(
                 nativeButton
-                    ? [nativeButtonClassName, className]
+                    ? [nativePressableClassName, className]
                     : buttonVariants({ variant, size, className })
             )}
             {...props}
@@ -196,104 +192,39 @@ function Button({
     )
 }
 
-type NextLinkProps = React.ComponentProps<typeof NextLink>
+type LinkProps = React.ComponentProps<typeof Link>
 
-type LinkButtonProps = LinkPrimitiveProps
-    & Omit<NextLinkProps, "href">
-    & ButtonVariantsType
-    & ButtonFeedback & {
-        nativeLink?: boolean
-        keepFeedback?: boolean
-        openInNewTab?: boolean
-        mute?: boolean
-        tracking?: TrackingData
-    }
+type LinkButtonProps = LinkProps & ButtonVariantsType
 
 function LinkButton({
     className,
     variant = "default",
     size = "default",
-    nativeLink = false,
-    keepFeedback = false,
-    openInNewTab = false,
     haptic = "medium",
     hoverSound = "button",
     pressSound = "button",
-    mute = false,
-    tracking,
-    onPress,
-    onKeyDown,
-    href,
-    scroll = true,
-    draggable = false,
     ...props
 }: LinkButtonProps) {
-    const playPressFeedback = usePressFeedback()
-
     return (
-        <LinkPrimitive
-            href={href}
-            {...(!nativeLink && {
-                "data-slot": "link-button",
-                "data-variant": variant,
-                "data-size": size
-            })}
-            data-cursor="target"
-            {...(openInNewTab && {
-                target: "_blank",
-                rel: "noreferrer"
-            })}
-            {...(!mute
-                && (!nativeLink || keepFeedback) && {
-                    "data-sound": hoverSound
-                })}
-            onPress={(e) => {
-                if (!mute && (!nativeLink || keepFeedback)) {
-                    playPressFeedback(pressSound, haptic)
-                }
-
-                if (tracking) {
-                    sendGAEvent(
-                        "event",
-                        tracking.eventName,
-                        tracking.eventParams ?? {}
-                    )
-                }
-
-                onPress?.(e)
-            }}
-            onKeyDown={
-                onKeyDown
-                    ? (e) => {
-                          Object.defineProperty(e, "stopPropagation", {
-                              value: () => {},
-                              writable: true,
-                              configurable: true
-                          })
-                          onKeyDown(e)
-                      }
-                    : undefined
-            }
-            className={cn(
-                nativeLink
-                    ? [nativeButtonClassName, className]
-                    : buttonVariants({ variant, size, className })
-            )}
+        <Link
+            data-slot="link-button"
+            data-variant={variant}
+            data-size={size}
+            haptic={haptic}
+            hoverSound={hoverSound}
+            pressSound={pressSound}
+            className={cn(buttonVariants({ variant, size, className }))}
             {...props}
-            render={(props) =>
-                "href" in props ? (
-                    <NextLink
-                        scroll={scroll}
-                        {...props}
-                        draggable={draggable}
-                    />
-                ) : (
-                    <span {...props} />
-                )
-            }
         />
     )
 }
 
-export type { ButtonProps, HapticVariantsType, LinkButtonProps, TrackingData }
-export { Button, buttonVariants, LinkButton }
+export type {
+    ButtonFeedback,
+    ButtonProps,
+    ButtonVariantsType,
+    HapticVariantsType,
+    LinkButtonProps,
+    TrackingData
+}
+export { Button, buttonVariants, LinkButton, nativePressableClassName }

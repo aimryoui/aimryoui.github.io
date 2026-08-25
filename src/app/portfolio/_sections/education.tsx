@@ -3,7 +3,7 @@
 import { Divider } from "@/components/layout/divider"
 import { SectionLine } from "@/components/layout/line"
 import { Space } from "@/components/layout/space"
-import { LinkButton } from "@/components/ui/button"
+import { Link } from "@/components/ui/link"
 import {
     Table,
     TableBody,
@@ -118,12 +118,9 @@ function Education() {
                                     "@[69rem]": "mt-[2em]"
                                 })}
                             >
-                                <LinkButton
+                                <Link
                                     href="https://daihoc.fpt.edu.vn/hcm/"
-                                    nativeLink
-                                    keepFeedback
-                                    hoverSound="tick"
-                                    pressSound="link"
+                                    externalLink
                                     openInNewTab
                                     aria-label="Go to the FPT University website"
                                     translate="no"
@@ -166,7 +163,7 @@ function Education() {
                                     >
                                         FPT University HCMC
                                     </span>
-                                </LinkButton>
+                                </Link>
                             </TableCell>
                         </TableRow>
 

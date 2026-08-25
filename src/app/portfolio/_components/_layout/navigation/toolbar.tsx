@@ -4,7 +4,7 @@ import { RouteProgress } from "@/components/animations/route-progress"
 import { AudioToggle } from "@/components/audio/audio"
 import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { ModeToggle } from "@/components/layout/toolbar/mode-toggle"
-import { LinkButton } from "@/components/ui/button"
+import { Link } from "@/components/ui/link"
 import { Tooltip } from "@/components/ui/tooltip"
 import { At, Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
@@ -56,13 +56,9 @@ function Toolbar({ className }: { className?: string }) {
                 >
                     <Tooltip>
                         <li className="me-auto">
-                            <LinkButton
+                            <Link
                                 data-cursor="ignore"
                                 href="/portfolio"
-                                nativeLink
-                                keepFeedback
-                                hoverSound="tick"
-                                pressSound="link"
                                 scroll={false}
                                 tracking={{
                                     eventName: "button_click",
@@ -133,7 +129,7 @@ function Toolbar({ className }: { className?: string }) {
                                         </bdi>
                                     </p>
                                 </div>
-                            </LinkButton>
+                            </Link>
                         </li>
                         <li>
                             <AudioToggle />
