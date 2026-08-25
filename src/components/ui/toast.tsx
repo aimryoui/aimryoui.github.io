@@ -328,7 +328,7 @@ function Toaster({
 const createToastManager = ToastPrimitive.createToastManager
 const useToastManager = ToastPrimitive.useToastManager
 
-// oxlint-disable-next-line simple-import-sort/exports
+
 export {
     createToastManager,
     Toast,

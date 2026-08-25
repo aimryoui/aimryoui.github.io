@@ -54,7 +54,9 @@ const useMediaStore = create<MediaStore>()(
             togglePreference: (preference) => {
                 const current = get().preferences
                 const next = current.includes(preference)
-                    ? current.filter((p) => p !== preference)
+                    ? current.filter(
+                          (p) => (p as string) !== (preference as string)
+                      )
                     : [...current, preference]
                 get().setPreferences(next)
             },

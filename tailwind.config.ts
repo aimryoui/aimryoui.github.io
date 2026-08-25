@@ -90,6 +90,9 @@ export default {
                 "3xl": ["1.875rem", "2.25rem"],
                 "4xl": ["2.25rem", "2.25rem"]
             },
+            textUnderlineOffset: {
+                3: "3px"
+            },
             spacing: {
                 px: "var(--px)",
                 0.25: ".0625rem",
