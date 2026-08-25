@@ -125,7 +125,6 @@ function MediaMenu() {
                                 motionReduced
                             ) ?? false
                         }
-                        closeOnClick={false}
                         description={MEDIA_PREFERENCES[preference].description}
                     >
                         {MEDIA_PREFERENCES[preference].icon}
@@ -176,7 +175,6 @@ function MediaMenu() {
                                             preference
                                             === DEFAULT_VIDEO_AUTOPLAY_PREFERENCE
                                         }
-                                        closeOnClick={false}
                                         disabled={motionReduced}
                                     >
                                         {AUTOPLAY_OPTIONS[preference].icon}
@@ -221,7 +219,6 @@ function MediaMenu() {
                                             preference
                                             === DEFAULT_GIF_AUTOPLAY_PREFERENCE
                                         }
-                                        closeOnClick={false}
                                         disabled={motionReduced}
                                     >
                                         {AUTOPLAY_OPTIONS[preference].icon}

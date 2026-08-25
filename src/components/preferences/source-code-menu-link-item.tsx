@@ -27,6 +27,7 @@ function SourceCodeMenuLinkItem() {
     return (
         <DropdownMenuLinkItem
             href={SOURCE_CODE_MENU.href}
+            externalLink
             openInNewTab
             description={SOURCE_CODE_MENU.description}
             srOnlyDescription

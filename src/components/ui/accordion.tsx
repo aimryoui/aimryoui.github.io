@@ -60,12 +60,8 @@ function AccordionTrigger({
                 nativeButton
                 keepFeedback
                 className={cn(
-                    "group/accordion-trigger relative flex flex-1 items-start justify-between py-2.5 text-left text-sm font-wght-550 outline-none transition-all",
-                    "**:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground",
+                    "group/accordion-trigger relative flex flex-1 items-start justify-between py-2.5 text-left font-wght-600",
                     {
-                        hover: "underline",
-                        "focus-visible":
-                            "border-ring ring-3 ring-ring/50 after:border-ring",
                         disabled: "pointer-events-none opacity-50"
                     },
                     className
@@ -74,9 +70,13 @@ function AccordionTrigger({
             >
                 <Bold
                     className={cn(
-                        "text-muted-foreground transition-[color] duration-100",
+                        "leading-normal text-muted-foreground transition-[color] duration-100",
                         {
                             "group-hover/accordion-trigger":
+                                "text-foreground transition-none",
+                            "group-active/accordion-trigger":
+                                "text-foreground transition-none",
+                            "group-focus-visible/accordion-trigger":
                                 "text-foreground transition-none",
                             "group-data-expanded/accordion-item":
                                 "text-foreground transition-none"
@@ -86,20 +86,26 @@ function AccordionTrigger({
                     {children}
                 </Bold>
                 <div
+                    data-slot="accordion-trigger-icon"
                     className={cn(
-                        "grid size-6 place-items-center rounded-[.75rem] bg-foreground/10 !corner-round transition-[transform,translate] duration-100",
+                        "grid size-6 place-items-center rounded-full bg-foreground/40 text-inverted transition-[transform,translate] duration-100",
                         {
-                            dark: "bg-foreground/15",
+                            dark: "bg-foreground/60",
                             rtl: "-scale-y-100",
                             "group-hover/accordion-trigger":
-                                "bg-foreground/20 dark:bg-foreground/25",
+                                "bg-foreground/35 dark:bg-foreground/55",
                             "group-active/accordion-trigger":
                                 "motion-preferred:translate-y-0.5",
-                            "group-not-data-expanded/accordion-item": [
-                                "bg-foreground/40 text-inverted dark:bg-foreground/60",
+                            "group-focus-visible/accordion-trigger":
+                                "bg-foreground/35 dark:bg-foreground/55",
+                            "group-data-expanded/accordion-item": [
+                                "bg-foreground/15 text-muted-foreground",
                                 {
+                                    dark: "bg-foreground/20",
                                     "group-hover/accordion-trigger":
-                                        "bg-foreground/35 dark:bg-foreground/55"
+                                        "bg-foreground/25 text-foreground dark:bg-foreground/30",
+                                    "group-focus-visible/accordion-trigger":
+                                        "bg-foreground/25 text-foreground dark:bg-foreground/30"
                                 }
                             ]
                         }

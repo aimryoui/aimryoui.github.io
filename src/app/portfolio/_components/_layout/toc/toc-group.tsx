@@ -92,22 +92,26 @@ const TocGroup = memo(
                                 <div
                                     data-cursor="lock"
                                     className={cn(
-                                        "grid size-6 place-items-center rounded-[.75rem] bg-foreground/10 !corner-round transition-[border-radius,transform,translate] duration-100",
+                                        "grid size-6 place-items-center rounded-[.75rem] bg-foreground/40 text-inverted !corner-round transition-[border-radius,transform,translate] duration-100",
                                         {
-                                            dark: "bg-foreground/15",
+                                            dark: "bg-foreground/60",
                                             rtl: "-scale-y-100",
                                             "group-hover/collapsibile-trigger":
-                                                "bg-foreground/20 data-target-cursor:rounded-none dark:bg-foreground/25",
+                                                "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
                                             "group-active/collapsibile-trigger":
                                                 "motion-preferred:translate-y-0.5",
-                                            "group-not-data-expanded/collapsible":
-                                                [
-                                                    "bg-foreground/40 text-inverted dark:bg-foreground/60",
-                                                    {
-                                                        "group-hover/collapsibile-trigger":
-                                                            "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55"
-                                                    }
-                                                ]
+                                            "group-focus-visible/collapsibile-trigger":
+                                                "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
+                                            "group-data-expanded/collapsible": [
+                                                "bg-foreground/10 text-muted-foreground",
+                                                {
+                                                    dark: "bg-foreground/15",
+                                                    "group-hover/collapsibile-trigger":
+                                                        "bg-foreground/20 text-foreground data-target-cursor:rounded-none dark:bg-foreground/25",
+                                                    "group-focus-visible/collapsibile-trigger":
+                                                        "bg-foreground/20 text-foreground dark:bg-foreground/25"
+                                                }
+                                            ]
                                         }
                                     )}
                                 >

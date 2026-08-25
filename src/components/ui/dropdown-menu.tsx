@@ -13,7 +13,7 @@ import {
 import { Menu as MenuPrimitive } from "@base-ui/react/menu"
 import { ArrowUpRight, CheckIcon, ChevronRightIcon, Undo2 } from "lucide-react"
 
-import { Link, type LinkProps } from "@/components/ui/link"
+import { NextLink, type NextLinkProps } from "@/components/ui/link"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
@@ -424,7 +424,7 @@ function DropdownMenuSubTrigger({
                 onClick?.(e)
             }}
             className={cn(
-                "relative flex cursor-default select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "relative flex cursor-default select-none items-center gap-1.5 text-nowrap rounded-lg px-3 py-2 text-sm outline-hidden",
                 !description && "pe-10",
                 {
                     focus: "bg-accent/60 text-accent-foreground dark:bg-accent",
@@ -518,10 +518,9 @@ function DropdownMenuLinkItem({
     onClick,
     ...props
 }: Omit<MenuPrimitive.LinkItem.Props, "href">
-    & Pick<LinkProps, "href"> & {
+    & NextLinkProps & {
         description?: React.ReactNode
         srOnlyDescription?: boolean
-        openInNewTab?: boolean
         inset?: boolean
     }) {
     const playPressFeedback = usePressFeedback()
@@ -551,7 +550,7 @@ function DropdownMenuLinkItem({
                 className
             )}
             render={
-                <Link
+                <NextLink
                     data-cursor={null}
                     href={href}
                     openInNewTab={openInNewTab}
@@ -631,7 +630,7 @@ function DropdownMenuCheckboxItem({
                 onClick?.(e)
             }}
             className={cn(
-                "group/dropdown-menu-checkbox-item relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "group/dropdown-menu-checkbox-item relative flex cursor-pointer select-none items-center gap-1.5 text-nowrap rounded-lg px-3 py-2 text-sm outline-hidden",
                 !description && "pe-10",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
@@ -678,7 +677,7 @@ function DropdownMenuCheckboxItem({
                 {description && (
                     <span
                         className={cn(
-                            "text-xs text-muted-foreground",
+                            "text-wrap text-xs text-muted-foreground",
                             srOnlyDescription && "sr-only",
                             "group-data-disabled/dropdown-menu-checkbox-item:text-foreground"
                         )}
@@ -732,7 +731,7 @@ function DropdownMenuRadioItem({
                 onClick?.(e)
             }}
             className={cn(
-                "group/dropdown-menu-radio-item relative flex cursor-pointer select-none items-center gap-1.5 rounded-lg px-3 py-2 text-sm outline-hidden",
+                "group/dropdown-menu-radio-item relative flex cursor-pointer select-none items-center gap-1.5 text-nowrap rounded-lg px-3 py-2 text-sm outline-hidden",
                 !description && "pe-10",
                 {
                     focus: "bg-accent/60 text-accent-foreground **:text-accent-foreground dark:bg-accent",
@@ -776,7 +775,7 @@ function DropdownMenuRadioItem({
                 {description && (
                     <span
                         className={cn(
-                            "text-xs text-muted-foreground",
+                            "text-wrap text-xs text-muted-foreground",
                             srOnlyDescription && "sr-only",
                             "group-data-disabled/dropdown-menu-radio-item:text-foreground"
                         )}

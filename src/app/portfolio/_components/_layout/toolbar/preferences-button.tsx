@@ -54,7 +54,9 @@ function PreferencesButton() {
                                     className={cn({
                                         dark: "bg-input/25"
                                     })}
-                                />
+                                >
+                                    <MenuDotsBoldDuotoneIcon className="size-6" />
+                                </Button>
                             }
                             payload={{
                                 sticky: false,
@@ -87,9 +89,7 @@ function PreferencesButton() {
                                     </>
                                 )
                             }}
-                        >
-                            <MenuDotsBoldDuotoneIcon className="size-6" />
-                        </DropdownMenuTrigger>
+                        />
                     }
                 />
             </DropdownMenu>

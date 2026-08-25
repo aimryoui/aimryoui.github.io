@@ -53,9 +53,12 @@ function RootPreferencesButton() {
                                     className={cn({
                                         dark: "bg-input/25"
                                     })}
-                                />
+                                >
+                                    <MenuDotsBoldDuotoneIcon className="size-6" />
+                                </Button>
                             }
                             payload={{
+                                side: "top",
                                 content: (
                                     <>
                                         <DropdownMenuGroup>
@@ -82,12 +85,9 @@ function RootPreferencesButton() {
                                             <SourceCodeMenuLinkItem />
                                         </DropdownMenuGroup>
                                     </>
-                                ),
-                                side: "top"
+                                )
                             }}
-                        >
-                            <MenuDotsBoldDuotoneIcon className="size-6" />
-                        </DropdownMenuTrigger>
+                        />
                     }
                 />
             </DropdownMenu>

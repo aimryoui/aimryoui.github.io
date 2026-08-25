@@ -108,7 +108,6 @@ function BreadcrumbLink({
     className,
     spanClassName,
     onPress,
-    scroll = true,
     ...props
 }: LinkProps & {
     spanClassName?: string
@@ -132,13 +131,11 @@ function BreadcrumbLink({
                 },
                 className
             )}
-            scroll={scroll}
             onPress={(e) => {
                 playPressFeedback("button")
 
                 onPress?.(e)
             }}
-            draggable={false}
             {...props}
         >
             <span

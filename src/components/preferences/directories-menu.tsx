@@ -1,41 +1,38 @@
 "use client"
 
 import { sendGAEvent } from "@next/third-parties/google"
-import { MouseBoldDuotoneIcon } from "@solar-icons/react"
+import { RouteBoldDuotoneIcon } from "@solar-icons/react"
 
 import { showMenuToast } from "@/components/preferences/menu-toast"
 import { DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
-import { usePreference } from "@/hooks/use-preference"
 import {
-    DEFAULT_SMOOTH_SCROLLING_PREFERENCE,
-    useSmoothScrollingStore
-} from "@/stores/smooth-scrolling-store"
+    DEFAULT_DIRECTORIES_MENU_PREFERENCE,
+    useDirectoriesStore
+} from "@/stores/directories-store"
 
 const MENU_CONFIG = {
-    name: "Smooth scrolling",
-    icon: <MouseBoldDuotoneIcon />,
+    name: "Directories Menu",
+    icon: <RouteBoldDuotoneIcon />,
     description:
-        "Enable page & scroll areas smooth scrolling. May affect performance. Disabled with reduced motion."
+        "Enable the additional dropdown in the toolbar. For development purposes."
 }
 
-function SmoothScrollingMenu() {
-    const isEnabled = useSmoothScrollingStore(
-        (state) => state.isSmoothScrollingEnabled
+function DirectoriesMenu() {
+    const isEnabled = useDirectoriesStore(
+        (state) => state.isDirectoriesMenuEnabled
     )
-    const setIsEnabled = useSmoothScrollingStore(
-        (state) => state.setIsSmoothScrollingEnabled
+    const setIsEnabled = useDirectoriesStore(
+        (state) => state.setIsDirectoriesMenuEnabled
     )
-    const { motionReduced } = usePreference()
 
     return (
         <DropdownMenuCheckboxItem
-            checked={isEnabled && !motionReduced}
-            isDefault={DEFAULT_SMOOTH_SCROLLING_PREFERENCE}
-            disabled={motionReduced}
+            checked={isEnabled}
+            isDefault={DEFAULT_DIRECTORIES_MENU_PREFERENCE}
             onCheckedChange={(checked) => {
                 setIsEnabled(checked)
 
-                const eventName = "change_smooth_scrolling_preference"
+                const eventName = "change_directories_menu_preference"
                 const eventParams = {
                     enabled: checked
                 }
@@ -58,4 +55,4 @@ function SmoothScrollingMenu() {
     )
 }
 
-export { MENU_CONFIG, SmoothScrollingMenu }
+export { DirectoriesMenu, MENU_CONFIG }

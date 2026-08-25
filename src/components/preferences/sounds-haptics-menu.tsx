@@ -129,7 +129,6 @@ function SoundsHapticsMenu() {
                                     preference.value
                                     === DEFAULT_AUDIO_PREFERENCES.audioMode
                                 }
-                                closeOnClick={false}
                                 description={preference.description}
                             >
                                 {preference.icon}
@@ -160,7 +159,6 @@ function SoundsHapticsMenu() {
                             )
                         }}
                         disabled={!isTouchDevice}
-                        closeOnClick={false}
                         description="Provide subtle vibrations on interactions. Mobile-only feature; may not work on some devices."
                     >
                         <SmartphoneVibrationBoldDuotoneIcon />

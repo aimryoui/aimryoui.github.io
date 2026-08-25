@@ -118,7 +118,6 @@ function EffectsMenu() {
                             isLg,
                             motionReduced
                         })}
-                        closeOnClick={false}
                         description={EFFECTS[effect].description}
                     >
                         {EFFECTS[effect].icon}

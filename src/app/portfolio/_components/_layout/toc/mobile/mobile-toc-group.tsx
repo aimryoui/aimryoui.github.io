@@ -53,16 +53,26 @@ const MobileTocGroup = memo(
                     >
                         <div
                             className={cn(
-                                "grid size-7 place-items-center rounded-full bg-foreground/10 transition-transform",
+                                "grid size-7 place-items-center rounded-full bg-foreground/40 text-inverted transition-[transform,translate]",
                                 {
-                                    dark: "bg-foreground/15",
+                                    dark: "bg-foreground/60",
                                     rtl: "-scale-y-100",
                                     "group-hover/collapsibile-trigger":
-                                        "bg-foreground/20 dark:bg-foreground/25",
+                                        "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
                                     "group-active/collapsibile-trigger":
                                         "motion-preferred:translate-y-0.5",
-                                    "group-not-data-expanded/collapsible":
-                                        "bg-foreground/40 text-inverted dark:bg-foreground/60"
+                                    "group-focus-visible/collapsibile-trigger":
+                                        "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
+                                    "group-data-expanded/collapsible": [
+                                        "bg-foreground/10 text-muted-foreground",
+                                        {
+                                            dark: "bg-foreground/15",
+                                            "group-hover/collapsibile-trigger":
+                                                "bg-foreground/20 text-foreground data-target-cursor:rounded-none dark:bg-foreground/25",
+                                            "group-focus-visible/collapsibile-trigger":
+                                                "bg-foreground/20 text-foreground dark:bg-foreground/25"
+                                        }
+                                    ]
                                 }
                             )}
                         >

@@ -125,18 +125,18 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                 <div className={cn("h-full flex-1")}>
                     <div
                         className={cn(
-                            "h-full overflow-clip bg-highlighted/10 p-2"
+                            "[--padding:calc(var(--spacing)*2)]",
+                            "h-full overflow-clip bg-highlighted/10 p-[--padding]"
                         )}
                     >
                         <div
                             className={cn(
-                                "[--padding:calc(var(--spacing)*2)]",
                                 "[--border-radius:--radius-2xl]",
                                 "[--offset-outer:calc(var(--padding)+var(--px)/2)]",
                                 "[--subpixel-correction:1px]",
                                 // "[--background-color:theme(colors.alert/0.3)]",
                                 "[--background-color:color-mix(in_srgb,var(--color-highlighted)_10%,var(--color-background))]",
-                                "[--icon-height:calc((var(--spacing)*5+var(--spacing-safe-zone-vertical)*2)*var(--trigger-quantity)-var(--padding-block)*2)]",
+                                "[--icon-height:calc((var(--spacing)*6+var(--spacing-safe-zone-vertical)*2)*var(--trigger-quantity)-var(--padding-block)*2-var(--padding)*2)]",
                                 "relative grid size-full grid-rows-[1fr] rounded-[--border-radius] bg-background",
                                 "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]",
                                 {

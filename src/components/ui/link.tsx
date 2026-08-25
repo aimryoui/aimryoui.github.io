@@ -1,6 +1,6 @@
 "use client"
 
-import NextLink from "next/link"
+import NextLinkPrimitive from "next/link"
 
 import { sendGAEvent } from "@next/third-parties/google"
 import {
@@ -17,10 +17,10 @@ import { useClientSearchParams } from "@/hooks/use-client-search-params"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
 
-type NextLinkProps = React.ComponentProps<typeof NextLink>
+type NextLinkPrimitiveProps = React.ComponentProps<typeof NextLinkPrimitive>
 
 type LinkProps = Omit<LinkPrimitiveProps, "href">
-    & Omit<NextLinkProps, "href">
+    & Omit<NextLinkPrimitiveProps, "href">
     & ButtonFeedback & {
         href?: string
         externalLink?: boolean
@@ -42,7 +42,6 @@ function Link({
     onPress,
     onKeyDown,
     scroll = true,
-    draggable = false,
     ...props
 }: LinkProps) {
     const searchParams = useClientSearchParams()
@@ -97,16 +96,81 @@ function Link({
                 if ("href" in domProps && finalHref !== undefined) {
                     const { href: _discardedHref, ...rest } = domProps
                     return (
-                        <NextLink
+                        <NextLinkPrimitive
                             scroll={scroll}
                             href={finalHref}
                             {...rest}
-                            draggable={draggable}
+                            draggable={false}
                         />
                     )
                 }
                 return <span {...domProps} />
             }}
+        />
+    )
+}
+
+type NextLinkProps = Omit<NextLinkPrimitiveProps, "href">
+    & ButtonFeedback & {
+        href: string
+        externalLink?: boolean
+        openInNewTab?: boolean
+        mute?: boolean
+        tracking?: TrackingData
+    }
+
+function NextLink({
+    className,
+    href,
+    externalLink = false,
+    openInNewTab = false,
+    haptic = "light",
+    hoverSound = "tick",
+    pressSound = "link",
+    mute = false,
+    tracking,
+    onClick,
+    scroll = true,
+    ...props
+}: NextLinkProps) {
+    const searchParams = useClientSearchParams()
+    const role = searchParams.get("r")
+
+    const playPressFeedback = usePressFeedback()
+
+    const finalHref = externalLink ? href : appendRoleToInternalHref(href, role)
+
+    return (
+        <NextLinkPrimitive
+            data-slot="link"
+            data-cursor="target"
+            href={finalHref ?? "#"}
+            scroll={scroll}
+            {...(openInNewTab && {
+                target: "_blank",
+                rel: "noreferrer"
+            })}
+            {...(!mute && {
+                "data-sound": hoverSound
+            })}
+            onClick={(e) => {
+                if (!mute) {
+                    playPressFeedback(pressSound, haptic)
+                }
+
+                if (tracking) {
+                    sendGAEvent(
+                        "event",
+                        tracking.eventName,
+                        tracking.eventParams ?? {}
+                    )
+                }
+
+                onClick?.(e)
+            }}
+            className={cn(nativePressableClassName, className)}
+            {...props}
+            draggable={false}
         />
     )
 }
@@ -134,5 +198,5 @@ function appendRoleToInternalHref(
     }
 }
 
-export type { LinkProps }
-export { Link }
+export type { LinkProps, NextLinkProps }
+export { Link, NextLink }

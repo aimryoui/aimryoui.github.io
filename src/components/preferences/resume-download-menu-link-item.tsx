@@ -28,6 +28,7 @@ function ResumeDownloadMenuLinkItem() {
     return (
         <DropdownMenuLinkItem
             href={href}
+            externalLink
             openInNewTab
             description={RESUME_DOWNLOAD_MENU.description}
             srOnlyDescription
