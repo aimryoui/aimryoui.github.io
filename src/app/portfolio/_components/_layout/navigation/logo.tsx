@@ -20,7 +20,10 @@ import {
 import { Link } from "@/components/ui/link"
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold } from "@/components/ui/typography"
-import { DEFAULT_PORTFOLIO_ROLE, type PortfolioRole } from "@/configs/role.config"
+import {
+    DEFAULT_PORTFOLIO_ROLE,
+    type PortfolioRole
+} from "@/configs/role.config"
 import { siteConfig } from "@/configs/site.config"
 import { useClientSearchParams } from "@/hooks/use-client-search-params"
 import { cn } from "@/lib/utils"
@@ -77,31 +80,7 @@ function LogoLink() {
         router.push(`${pathname}?${searchParams.toString()}`, { scroll: false })
     }
 
-    if (!isDirectoriesMenuEnabled) {
-        return (
-            <Link
-                data-cursor="ignore"
-                href="/portfolio"
-                scroll={false}
-                tracking={{
-                    eventName: "button_click",
-                    eventParams: {
-                        button_name: "Toolbar - Home/Logo"
-                    }
-                }}
-                onPress={() => {
-                    useMobileTocStore.getState().setIsTocOpen(false)
-                }}
-                className={cn(
-                    "group flex items-center gap-[calc(var(--spacing-safe-zone)/2)]"
-                )}
-            >
-                <TriggerContent />
-            </Link>
-        )
-    }
-
-    return (
+    return isDirectoriesMenuEnabled ? (
         <DropdownMenu
             onOpenChange={(open) => {
                 setIsLogoLinkOpen(open)
@@ -118,7 +97,6 @@ function LogoLink() {
                     <DropdownMenuTrigger
                         render={
                             <Button
-                                data-cursor="ignore"
                                 nativeButton
                                 keepFeedback
                                 tracking={{
@@ -128,14 +106,26 @@ function LogoLink() {
                                     }
                                 }}
                                 className={cn(
-                                    "group flex items-center gap-[calc(var(--spacing-safe-zone)/2)]"
+                                    "group relative flex items-center gap-[calc(var(--spacing-safe-zone)/2)] rounded-xl",
+                                    "-my-[calc(var(--spacing-safe-zone-vertical)/2)] -me-[calc(var(--spacing-safe-zone)/2-var(--spacing))] -ms-[calc(var(--spacing-safe-zone)/2)]",
+                                    "py-[calc(var(--spacing-safe-zone-vertical)/2)] pe-[calc(var(--spacing-safe-zone)/2-var(--spacing))] ps-[calc(var(--spacing-safe-zone)/2)]",
+                                    {
+                                        hover: "bg-accent/60 data-target-cursor:rounded-none",
+                                        active: "bg-accent/60 dark:bg-accent",
+                                        "aria-expanded":
+                                            "bg-muted text-foreground",
+
+                                        "data-target-cursor":
+                                            "transition-[transform,translate,scale,background-color,border-radius] ease-[linear,linear,linear,linear,cubic-bezier(0.22,1,0.36,1)] duration-[.1s,.1s,.1s,.1s,.2s]"
+                                    }
                                 )}
                             >
                                 <TriggerContent isDirectoriesMenuEnabled />
                             </Button>
                         }
                         payload={{
-                            className: "min-w-auto",
+                            className:
+                                "min-w-auto origin-bottom-left rtl:origin-bottom-right",
                             content: (
                                 <>
                                     <DropdownMenuGroup>
@@ -185,6 +175,26 @@ function LogoLink() {
                 }
             />
         </DropdownMenu>
+    ) : (
+        <Link
+            data-cursor="ignore"
+            href="/portfolio"
+            scroll={false}
+            tracking={{
+                eventName: "button_click",
+                eventParams: {
+                    button_name: "Toolbar - Home/Logo"
+                }
+            }}
+            onPress={() => {
+                useMobileTocStore.getState().setIsTocOpen(false)
+            }}
+            className={cn(
+                "group flex items-center gap-[calc(var(--spacing-safe-zone)/2)]"
+            )}
+        >
+            <TriggerContent />
+        </Link>
     )
 }
 
@@ -203,7 +213,7 @@ function TriggerContent({
             />
             <div
                 className={cn(
-                    "text-start",
+                    "z-1 text-start",
                     // .25rem*8.5: logo width
                     // .25rem*4/2*(2|1): trigger gap width (4/2) * quantity (2 on menu enable, 1 on menu disable)
                     // .25rem*4*4: container gap width (4) * quantity (4)
@@ -228,7 +238,7 @@ function TriggerContent({
                 </p>
             </div>
             {isDirectoriesMenuEnabled && (
-                <ChevronsUpDown className="-ms-1 size-5 group-hover:text-foreground" />
+                <ChevronsUpDown className="z-1 -ms-1.5 size-5 group-hover:text-foreground" />
             )}
         </>
     )
