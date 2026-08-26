@@ -213,7 +213,7 @@ function Experience() {
                                                 "z-1 inline-block p-0 align-top font-mono",
                                                 {
                                                     "@[56.5rem]": "absolute",
-                                                    sm: "static order-1 pe-safe-zone text-[.84375rem] tracking-tighter quad-[-.25em]"
+                                                    sm: "static order-1 pe-safe-zone text-[.84375rem] tracking-tighter quad-[-.2em]"
                                                 }
                                             )}
                                         >
@@ -440,16 +440,16 @@ function Experience() {
                                         >
                                             <SectionLine
                                                 className={cn(
-                                                    "-end-[calc(var(--spacing-safe-zone)*2)]",
+                                                    "-end-[calc(var(--body-safe-zone-right)+var(--spacing-safe-zone))]",
                                                     {
                                                         "group-data-[sidebar-position=inline-end]/html":
                                                             [
-                                                                "-end-[calc(var(--spacing-safe-zone)*3+var(--px)*2+theme(spacing.sidebar))] start-auto",
+                                                                "-end-[calc(var(--body-safe-zone-right)+var(--spacing-safe-zone)*2+var(--px)*2+theme(spacing.sidebar))] start-auto",
                                                                 {
-                                                                    lg: "-end-[calc(var(--spacing-safe-zone)*2)] start-auto"
+                                                                    lg: "-end-[calc(var(--body-safe-zone-right)+var(--spacing-safe-zone))] start-auto"
                                                                 }
                                                             ],
-                                                        lg: "-end-[calc(var(--spacing-safe-zone)*2)] start-auto"
+                                                        lg: "-end-[calc(var(--body-safe-zone-right)+var(--spacing-safe-zone))] start-auto"
                                                     }
                                                 )}
                                             />

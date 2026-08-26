@@ -33,7 +33,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
     return (
         <footer
             ref={containerRef}
-            className={cn("relative flex flex-col bg-background @container", {
+            className={cn("flex flex-col bg-background @container", {
                 lg: "flex-col-reverse"
             })}
         >

@@ -90,7 +90,8 @@ function SectionTitle({
             })}
             data-cursor={link === "route" ? "target" : "ignore"}
             {...(link === "hash" && {
-                ...pressProps
+                ...pressProps,
+                "data-sound": "tick"
             })}
             className={cn(
                 "group sticky top-0 z-50 flex min-h-space flex-col items-center bg-background",

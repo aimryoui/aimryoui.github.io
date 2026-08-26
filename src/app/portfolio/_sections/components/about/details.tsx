@@ -213,7 +213,7 @@ function AboutAccordionItem({
                     }
                 )}
             >
-                {label}
+                <bdi>{label}</bdi>
             </AccordionTrigger>
             <SectionLine fit />
             <AccordionContent className={cn("leading-normal", className)}>

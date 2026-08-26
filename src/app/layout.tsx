@@ -175,8 +175,10 @@ export default function RootLayout({
             </head>
             <body
                 className={cn(
+                    "[--body-safe-zone-left:max(var(--safe-area-inset-left),var(--spacing-safe-zone))]",
+                    "[--body-safe-zone-right:max(var(--safe-area-inset-right),var(--spacing-safe-zone))]",
                     "relative flex min-w-body bg-background text-muted-foreground scrollbar-gutter-stable",
-                    "pl-[calc(var(--safe-area-inset-left)+var(--spacing-safe-zone))] pr-[calc(var(--safe-area-inset-right)+var(--spacing-safe-zone))]",
+                    "pl-[--body-safe-zone-left] pr-[--body-safe-zone-right]",
                     {
                         after: "pointer-events-none absolute inset-0 -z-1 bg-[repeating-linear-gradient(315deg,var(--color-pattern)_0,var(--color-pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]",
                         selection: "bg-highlighted/20 dark:bg-highlighted/30",

@@ -101,29 +101,29 @@ function Projects({
                                                     className={cn({
                                                         "group-data-[sidebar-position=inline-end]/html":
                                                             [
-                                                                "-end-safe-zone start-auto",
+                                                                "-end-[--body-safe-zone-right] start-auto",
                                                                 {
                                                                     "lg:@3xl":
-                                                                        "-start-safe-zone end-auto",
+                                                                        "-start-[--body-safe-zone-left] end-auto",
                                                                     "@md": {
                                                                         "group-odd":
-                                                                            "-start-safe-zone end-auto",
+                                                                            "-start-[--body-safe-zone-left] end-auto",
                                                                         "group-even":
-                                                                            "-end-safe-zone start-auto"
+                                                                            "-end-[--body-safe-zone-right] start-auto"
                                                                     }
                                                                 }
                                                             ],
                                                         lg: [
-                                                            "-end-safe-zone start-auto",
+                                                            "-end-[--body-safe-zone-right] start-auto",
                                                             {
-                                                                "@3xl": "-start-safe-zone end-auto"
+                                                                "@3xl": "-start-[--body-safe-zone-left] end-auto"
                                                             }
                                                         ],
                                                         "@md": {
                                                             "group-odd":
-                                                                "-start-safe-zone end-auto",
+                                                                "-start-[--body-safe-zone-left] end-auto",
                                                             "group-even":
-                                                                "-end-safe-zone start-auto"
+                                                                "-end-[--body-safe-zone-right] start-auto"
                                                         }
                                                     })}
                                                 />
@@ -164,19 +164,7 @@ function Projects({
                                                     {index
                                                         < group.projects.length
                                                             - 1 && (
-                                                        <SectionLine
-                                                            className={cn({
-                                                                lg: "w-[calc(100%+var(--spacing-safe-zone))]",
-                                                                "group-odd":
-                                                                    "end-0",
-                                                                "group-even": [
-                                                                    "w-[calc(100%+var(--spacing-safe-zone))]",
-                                                                    {
-                                                                        lg: "-end-safe-zone start-auto"
-                                                                    }
-                                                                ]
-                                                            })}
-                                                        />
+                                                        <SectionLine fit />
                                                     )}
                                                 </li>
                                             )

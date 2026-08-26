@@ -26,12 +26,12 @@ const siteConfig = {
     get age() {
         return new Date().getFullYear() - this.birthYear
     },
-    role: ["Creative Designer", "UI/UX Designer"],
+    role: ["Product Designer", "UI/UX Designer", "Creative Designer"],
     email: {
-        personal: "nhnhana5@gmail.com",
+        personal: "nhan2003hoang@gmail.com",
         school: "nhannhse171176@fpt.edu.vn",
         work: "workwith.hnhan@gmail.com",
-        company: "nhnhan@redcloudcomputing.com"
+        company: "unemployed"
     },
     tel: {
         phone: "0817818898",

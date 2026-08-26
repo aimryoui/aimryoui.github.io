@@ -108,7 +108,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <meta property="og:image:alt" content={OG_ALT} />
             <meta name="twitter:image:alt" content={OG_ALT} />
             {/* <ViewTransition name="main"> */}
-            <main className={cn("relative flex-1")}>
+            <main className={cn("flex-1")}>
                 <FlashOverlay />
                 <Space
                     className={cn(
@@ -170,18 +170,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     project={project}
                                 />
                                 {index < group.projects.length - 1 && (
-                                    <SectionLine
-                                        className={cn({
-                                            lg: "w-[calc(100%+var(--spacing-safe-zone))]",
-                                            "group-odd": "end-0",
-                                            "group-even": [
-                                                "w-[calc(100%+var(--spacing-safe-zone))]",
-                                                {
-                                                    lg: "-end-safe-zone start-auto"
-                                                }
-                                            ]
-                                        })}
-                                    />
+                                    <SectionLine fit />
                                 )}
                             </li>
                         ))}

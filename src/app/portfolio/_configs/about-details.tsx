@@ -158,7 +158,7 @@ const SKILLS: Record<PortfolioRole, { title: string; content: string[] }[]> = {
 const INTERESTING = [
     <>Web a11y.</>,
     <>I18n.</>,
-    <>RTL Languages.</>,
+    <>RTL languages.</>,
     <>Upper-intermediate in English.</>
 ]
 

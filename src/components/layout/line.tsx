@@ -84,11 +84,11 @@ function SectionLine({
                     fit
                         ? "start-1/2 w-full -translate-x-1/2 rtl:translate-x-1/2"
                         : [
-                              "-end-safe-zone w-[calc(100vw-var(--px)*2)]",
+                              "-end-[--body-safe-zone-right] w-[calc(100vw-var(--px)*2)]",
                               {
                                   "group-data-[sidebar-position=inline-end]/html":
-                                      "-start-safe-zone end-auto",
-                                  lg: "-start-safe-zone end-auto"
+                                      "-start-[--body-safe-zone-left] end-auto",
+                                  lg: "-start-[--body-safe-zone-left] end-auto"
                               }
                           ],
                     className
