@@ -90,6 +90,7 @@ function DirectionMenu() {
                                 .label,
                             () => {
                                 setDirectionPreference(directionPreference)
+                                sendGAEvent("event", `${eventName}_undo`, eventParams)
                             }
                         )
                     }}

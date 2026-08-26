@@ -10,5 +10,12 @@ const getResumeUrl = (role?: PortfolioRole) => {
         : "/Resume_Product-Designer_Nguyen-Hoang-Nhan.pdf"
 }
 
+const ROLE_QUERY_PARAM_KEY = "r"
+
 export type { PortfolioRole }
-export { DEFAULT_PORTFOLIO_ROLE, getResumeUrl, PORTFOLIO_ROLES }
+export {
+    DEFAULT_PORTFOLIO_ROLE,
+    getResumeUrl,
+    PORTFOLIO_ROLES,
+    ROLE_QUERY_PARAM_KEY
+}

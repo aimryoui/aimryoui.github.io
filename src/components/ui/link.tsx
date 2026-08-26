@@ -13,6 +13,7 @@ import {
     nativePressableClassName,
     type TrackingData
 } from "@/components/ui/button"
+import { ROLE_QUERY_PARAM_KEY } from "@/configs/role.config"
 import { useClientSearchParams } from "@/hooks/use-client-search-params"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
@@ -45,7 +46,7 @@ function Link({
     ...props
 }: LinkProps) {
     const searchParams = useClientSearchParams()
-    const role = searchParams.get("r")
+    const role = searchParams.get(ROLE_QUERY_PARAM_KEY)
 
     const playPressFeedback = usePressFeedback()
 
@@ -134,7 +135,7 @@ function NextLink({
     ...props
 }: NextLinkProps) {
     const searchParams = useClientSearchParams()
-    const role = searchParams.get("r")
+    const role = searchParams.get(ROLE_QUERY_PARAM_KEY)
 
     const playPressFeedback = usePressFeedback()
 
@@ -186,12 +187,12 @@ function appendRoleToInternalHref(
     }
 
     if (!href.includes("?") && !href.includes("#")) {
-        return `${href}?r=${role}`
+        return `${href}?${ROLE_QUERY_PARAM_KEY}=${role}`
     }
 
     try {
         const url = new URL(href, "http://a")
-        url.searchParams.set("r", role)
+        url.searchParams.set(ROLE_QUERY_PARAM_KEY, role)
         return url.pathname + url.search + url.hash
     } catch {
         return href

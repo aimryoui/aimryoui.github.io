@@ -47,6 +47,7 @@ function SmoothScrollingMenu() {
                     checked ? "On" : "Off",
                     () => {
                         setIsEnabled(isEnabled)
+                        sendGAEvent("event", `${eventName}_undo`, eventParams)
                     }
                 )
             }}

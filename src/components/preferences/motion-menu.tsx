@@ -86,6 +86,7 @@ function MotionMenu() {
                             MOTION_PREFERENCES[value as MotionPreference].label,
                             () => {
                                 setMotionPreference(motionPreference)
+                                sendGAEvent("event", `${eventName}_undo`, eventParams)
                             }
                         )
                     }}

@@ -3,9 +3,11 @@
 import { useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 
+import { sendGAEvent } from "@next/third-parties/google"
 import { ChevronsUpDown } from "lucide-react"
 
 import { Logo } from "@/components/icons/icons"
+import { showMenuToast } from "@/components/preferences/menu-toast"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -22,7 +24,8 @@ import { TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold } from "@/components/ui/typography"
 import {
     DEFAULT_PORTFOLIO_ROLE,
-    type PortfolioRole
+    type PortfolioRole,
+    ROLE_QUERY_PARAM_KEY
 } from "@/configs/role.config"
 import { siteConfig } from "@/configs/site.config"
 import { useClientSearchParams } from "@/hooks/use-client-search-params"
@@ -44,8 +47,8 @@ interface RoleConfig {
 }
 
 const DIRECTORIES_CONFIG: DirectoryConfig[] = [
-    { href: "/", label: "Home" },
-    { href: "/portfolio", label: "Portfolio" }
+    { href: "/", label: "/" },
+    { href: "/portfolio", label: "/portfolio" }
 ]
 
 const ROLES_CONFIG: Record<PortfolioRole, RoleConfig> = {
@@ -72,11 +75,36 @@ function LogoLink() {
 
     const handleRoleChange = (newRole: string) => {
         const searchParams = new URLSearchParams(rawSearchParams.toString())
-        if (newRole === "cd") {
-            searchParams.set("r", "cd")
+        if (newRole === DEFAULT_PORTFOLIO_ROLE) {
+            searchParams.delete(ROLE_QUERY_PARAM_KEY)
         } else {
-            searchParams.delete("r")
+            searchParams.set(ROLE_QUERY_PARAM_KEY, newRole)
         }
+
+        sendGAEvent("event", "change_role", { role: newRole })
+
+        showMenuToast(
+            "Viewing as",
+            ROLES_CONFIG[role]?.label
+                || ROLES_CONFIG[DEFAULT_PORTFOLIO_ROLE].label,
+            ROLES_CONFIG[newRole as PortfolioRole]?.label
+                || ROLES_CONFIG[DEFAULT_PORTFOLIO_ROLE].label,
+            () => {
+                const undoSearchParams = new URLSearchParams(
+                    rawSearchParams.toString()
+                )
+                if (role === DEFAULT_PORTFOLIO_ROLE) {
+                    undoSearchParams.delete(ROLE_QUERY_PARAM_KEY)
+                } else {
+                    undoSearchParams.set(ROLE_QUERY_PARAM_KEY, role)
+                }
+                sendGAEvent("event", "change_role_undo", { role })
+                router.push(`${pathname}?${undoSearchParams.toString()}`, {
+                    scroll: false
+                })
+            }
+        )
+
         router.push(`${pathname}?${searchParams.toString()}`, { scroll: false })
     }
 
@@ -112,6 +140,8 @@ function LogoLink() {
                                     {
                                         hover: "bg-accent/60 data-target-cursor:rounded-none",
                                         active: "bg-accent/60 dark:bg-accent",
+                                        "focus-visible":
+                                            "text-muted-foreground",
                                         "aria-expanded": "bg-muted",
 
                                         "data-target-cursor":
@@ -142,7 +172,7 @@ function LogoLink() {
                                                 href={dir.href}
                                                 closeOnClick
                                             >
-                                                {dir.label}
+                                                {`${dir.label}${role === "cd" ? "?r=cd" : ""}`}
                                             </DropdownMenuLinkItem>
                                         ))}
                                     </DropdownMenuGroup>

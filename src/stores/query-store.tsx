@@ -7,7 +7,8 @@ import { create } from "zustand"
 import {
     DEFAULT_PORTFOLIO_ROLE,
     PORTFOLIO_ROLES,
-    type PortfolioRole
+    type PortfolioRole,
+    ROLE_QUERY_PARAM_KEY
 } from "@/configs/role.config"
 import { useClientSearchParams } from "@/hooks/use-client-search-params"
 
@@ -39,7 +40,7 @@ function QueryListener() {
     useLayoutEffect(() => {
         setFeatureSelected(params.get("feature") === "selected")
 
-        const role = params.get("r") as PortfolioRole | null
+        const role = params.get(ROLE_QUERY_PARAM_KEY) as PortfolioRole | null
         if (role && PORTFOLIO_ROLES.includes(role)) {
             setRole(role)
         } else {

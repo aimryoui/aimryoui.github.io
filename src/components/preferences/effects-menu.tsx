@@ -110,6 +110,7 @@ function EffectsMenu() {
                                 checked ? "On" : "Off",
                                 () => {
                                     toggleEffect(effect)
+                                    sendGAEvent("event", `${eventName}_undo`, eventParams)
                                 }
                             )
                         }}

@@ -114,6 +114,7 @@ function MediaMenu() {
                                 checked ? "On" : "Off",
                                 () => {
                                     togglePreference(preference)
+                                    sendGAEvent("event", `${eventName}_undo`, eventParams)
                                 }
                             )
                         }}
@@ -163,6 +164,7 @@ function MediaMenu() {
                                         ].labelShort,
                                         () => {
                                             setVideoAutoplay(videoAutoplay)
+                                            sendGAEvent("event", `${eventName}_undo`, eventParams)
                                         }
                                     )
                                 }}
@@ -207,6 +209,7 @@ function MediaMenu() {
                                         ].labelShort,
                                         () => {
                                             setGifAutoplay(gifAutoplay)
+                                            sendGAEvent("event", `${eventName}_undo`, eventParams)
                                         }
                                     )
                                 }}
