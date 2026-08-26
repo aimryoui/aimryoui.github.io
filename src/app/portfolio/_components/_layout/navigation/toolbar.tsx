@@ -32,17 +32,16 @@ function Toolbar({ className }: { className?: string }) {
             </div>
             <header
                 className={cn(
-                    "flex h-space min-w-body items-center bg-background px-safe-zone",
-                    {
-                        lg: "py-3.5"
-                    }
+                    "[--safe-area-inset:calc(var(--safe-area-inset-bottom)+var(--spacing-space))]",
+                    "h-[--safe-area-inset] min-w-body bg-background"
                 )}
             >
                 <menu
                     className={cn(
-                        "flex w-full items-center gap-3 @container",
+                        "relative flex w-full items-center gap-3 px-safe-zone py-5.5 @container",
                         {
-                            lg: "gap-safe-zone"
+                            after: "absolute inset-x-0 top-full z-40 h-[var(--safe-area-inset-bottom)] bg-gradient-to-t from-background to-transparent",
+                            lg: "gap-safe-zone py-3.5"
                         },
                         className
                     )}
@@ -69,7 +68,7 @@ function Toolbar({ className }: { className?: string }) {
                                     }
                                 )}
                             >
-                                <SvgElementLine className="absolute inset-y-0 start-0 z-1 w-px" />
+                                <SvgElementLine className="absolute inset-y-0 start-0 z-1 h-[--safe-area-inset] w-px" />
                                 <MobileTocButton />
                             </li>
                         )}

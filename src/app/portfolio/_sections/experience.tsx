@@ -213,7 +213,7 @@ function Experience() {
                                                 "z-1 inline-block p-0 align-top font-mono",
                                                 {
                                                     "@[56.5rem]": "absolute",
-                                                    sm: "static order-1 pe-safe-zone text-[.84375rem]"
+                                                    sm: "static order-1 pe-safe-zone text-[.84375rem] tracking-tighter quad-[-.25em]"
                                                 }
                                             )}
                                         >

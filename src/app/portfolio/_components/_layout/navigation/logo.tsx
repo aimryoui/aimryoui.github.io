@@ -251,18 +251,18 @@ function TriggerContent() {
                     // .25rem*9*3: right side button size (9) * quantity (3)
                     // 5.1rem: approx. width of texts
                     // 1.25rem: ChevronsUpDown icon width
-                    // -.25rem: negative margin-inline-start of ChevronsUpDown icon
+                    // -.35rem: negative margin-inline-start of ChevronsUpDown icon
                     "sm:@[calc(.25rem*8.5+.25rem*4/2*1+.25rem*4*4+.25rem*16-.25rem*4+.25rem*9*3+5.1rem)]:hidden",
-                    "group-data-[directories]/html:sm:@[calc(.25rem*8.5+.25rem*4/2*2+.25rem*4*4+.25rem*16-.25rem*4+.25rem*9*3+5.1rem+1.25rem-.2rem)]:hidden"
+                    "group-data-[directories]/html:sm:@[calc(.25rem*8.5+.25rem*4/2*2+.25rem*4*4+.25rem*16-.25rem*4+.25rem*9*3+5.1rem+1.25rem-.35rem)]:hidden"
                 )}
             >
-                <Bold className="text-sm">
+                <Bold className="block text-sm">
                     <bdi>
                         <At className="text-current font-wght-[625]" />
                         {siteConfig.username}
                     </bdi>
                 </Bold>
-                <p className="font-mono text-xs">
+                <p className="block font-mono text-xs">
                     <bdi>{`${projects.length} PROJECTS`}</bdi>
                 </p>
             </div>

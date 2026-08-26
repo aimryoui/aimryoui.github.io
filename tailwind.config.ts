@@ -27,6 +27,7 @@ import transform from "./src/lib/tailwindcss-plugins/utilities/transform"
 import transition from "./src/lib/tailwindcss-plugins/utilities/transition"
 import transitionBehavior from "./src/lib/tailwindcss-plugins/utilities/transition-behavior"
 import viewTransition from "./src/lib/tailwindcss-plugins/utilities/view-transition"
+import wordSpacing from "./src/lib/tailwindcss-plugins/utilities/word-spacing"
 import all from "./src/lib/tailwindcss-plugins/variants/all"
 import browserEngines from "./src/lib/tailwindcss-plugins/variants/browser-engines"
 import containerQueries from "./src/lib/tailwindcss-plugins/variants/container-queries"
@@ -486,6 +487,7 @@ export default {
         transition,
         transitionBehavior,
         viewTransition,
+        wordSpacing,
 
         all,
         browserEngines,

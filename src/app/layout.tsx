@@ -163,7 +163,11 @@ export default function RootLayout({
             className={cn(
                 googleSansFlex.variable,
                 sfMono.variable,
-                "group/html antialiased scrollbar-colored scrollbar-thumb-default/40 scrollbar-track-pattern"
+                "group/html antialiased scrollbar-colored scrollbar-thumb-default/40 scrollbar-track-pattern",
+                "[--safe-area-inset-top:env(safe-area-inset-top,0px)]",
+                "[--safe-area-inset-bottom:env(safe-area-inset-bottom,0px)]",
+                "[--safe-area-inset-left:env(safe-area-inset-left,0px)]",
+                "[--safe-area-inset-right:env(safe-area-inset-right,0px)]"
             )}
         >
             <head>
@@ -171,12 +175,13 @@ export default function RootLayout({
             </head>
             <body
                 className={cn(
-                    "relative flex min-w-body bg-background px-safe-zone text-muted-foreground scrollbar-gutter-stable",
+                    "relative flex min-w-body bg-background text-muted-foreground scrollbar-gutter-stable",
+                    "pl-[calc(var(--safe-area-inset-left)+var(--spacing-safe-zone))] pr-[calc(var(--safe-area-inset-right)+var(--spacing-safe-zone))]",
                     {
                         after: "pointer-events-none absolute inset-0 -z-1 bg-[repeating-linear-gradient(315deg,var(--color-pattern)_0,var(--color-pattern)_.0625rem,transparent_0,transparent_50%)] bg-[length:.625rem_.625rem]",
                         selection: "bg-highlighted/20 dark:bg-highlighted/30",
                         "lg:before":
-                            "pointer-events-none absolute start-1/2 top-0 z-40 h-space w-screen -translate-x-1/2 bg-gradient-to-b from-background to-transparent rtl:translate-x-1/2"
+                            "pointer-events-none absolute inset-x-0 top-0 z-40 h-space bg-gradient-to-b from-background to-transparent"
                     }
                 )}
             >

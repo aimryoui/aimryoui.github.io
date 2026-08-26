@@ -5,7 +5,7 @@ export default plugin(
         matchUtilities(
             {
                 "stroke-dashed": (value: string) => ({
-                    strokeDasharray: `calc(${value} * 2.75) calc(${value} * 1.75)`
+                    "stroke-dasharray": `calc(${value} * 2.75) calc(${value} * 1.75)`
                 })
             },
             {

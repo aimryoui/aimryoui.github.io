@@ -46,7 +46,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                         lg: [
                             "block",
                             {
-                                after: "pointer-events-none absolute bottom-0 start-1/2 z-40 h-space w-screen -translate-x-1/2 bg-gradient-to-t from-background to-transparent rtl:translate-x-1/2"
+                                after: "pointer-events-none absolute inset-x-0 bottom-0 z-40 h-space bg-gradient-to-t from-background to-transparent"
                             }
                         ]
                     }
