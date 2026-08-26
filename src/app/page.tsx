@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils"
 
 export default function Home() {
     return (
-        <main className={cn("flex w-full flex-col")}>
+        <main className={cn("flex w-full flex-1 flex-col")}>
             <Space />
             <SectionLine showDecoration />
             <div

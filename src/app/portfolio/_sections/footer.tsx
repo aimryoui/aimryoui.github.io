@@ -39,14 +39,14 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
         >
             <Space
                 className={cn(
-                    "hidden h-[calc(var(--safe-area-inset-bottom)+var(--spacing-space))]",
+                    "hidden h-[--toolbar-height]",
                     pathName !== "/portfolio"
-                        && "md:h-[calc(var(--safe-area-inset-bottom)+var(--spacing-space)+var(--spacing)*10+var(--px)/2)]",
+                        && "md:h-[calc(var(--toolbar-height)+var(--spacing)*10+var(--px)/2)]",
                     {
                         lg: [
                             "block",
                             {
-                                after: "pointer-events-none absolute inset-x-0 bottom-0 z-40 h-space bg-gradient-to-t from-background to-transparent"
+                                after: "pointer-events-none absolute inset-x-0 bottom-0 z-40 h-[--toolbar-height] bg-gradient-to-t from-background to-transparent"
                             }
                         ]
                     }

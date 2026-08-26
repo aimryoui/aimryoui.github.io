@@ -143,8 +143,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             className={cn(
                                 "pointer-events-none fixed top-0 z-60 flex w-[100cqw] items-center justify-end bg-transparent px-safe-zone",
                                 {
-                                    lg: "bottom-[calc(var(--safe-area-inset-bottom)+var(--spacing-space))] top-auto px-0",
-                                    md: "bottom-[calc(var(--safe-area-inset-bottom)+var(--spacing-space)+var(--spacing)*10+var(--px)/2)]"
+                                    lg: "bottom-[--toolbar-height] top-auto px-0",
+                                    md: "bottom-[calc(var(--toolbar-height)+var(--spacing)*10+var(--px)/2)]"
                                 }
                             )}
                         >

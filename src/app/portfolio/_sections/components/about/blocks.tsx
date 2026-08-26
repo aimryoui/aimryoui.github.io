@@ -65,7 +65,7 @@ function NumberBlocks({
                     "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                     {
                         md: "pb-4",
-                        sm: "h-space"
+                        sm: "h-[calc(var(--spacing-space)+var(--spacing)*4)]"
                     }
                 )}
             >
@@ -96,9 +96,12 @@ function NumberBlocks({
             </div>
             {index < array.length - 1 && (
                 <>
-                    <SvgElementLine className="h-24 sm:h-space" />
-                    <Divider dir="vertical" className="h-24 sm:h-space" />
-                    <SvgElementLine className="h-24 sm:h-space" />
+                    <SvgElementLine className="h-24 sm:h-[calc(var(--spacing-space)+var(--spacing)*4)]" />
+                    <Divider
+                        dir="vertical"
+                        className="h-24 sm:h-[calc(var(--spacing-space)+var(--spacing)*4)]"
+                    />
+                    <SvgElementLine className="h-24 sm:h-[calc(var(--spacing-space)+var(--spacing)*4)]" />
                 </>
             )}
         </Fragment>
@@ -114,7 +117,7 @@ function LocationBlock({
                 "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                 {
                     md: "hidden",
-                    sm: "h-space"
+                    sm: "h-[calc(var(--spacing-space)+var(--spacing)*4)]"
                 }
             )}
         >
@@ -181,7 +184,7 @@ function NationBlock({
                 "relative grid h-24 flex-1 place-items-center bg-highlighted/10",
                 {
                     md: "hidden",
-                    sm: "h-space"
+                    sm: "h-[calc(var(--spacing-space)+var(--spacing)*4)]"
                 }
             )}
         >
@@ -248,20 +251,20 @@ function BlockDivider() {
             <SvgElementLine
                 className={cn("h-24", {
                     md: "hidden",
-                    sm: "h-space"
+                    sm: "h-[calc(var(--spacing-space)+var(--spacing)*4)]"
                 })}
             />
             <Divider
                 dir="vertical"
                 className={cn("h-24", {
                     md: "hidden",
-                    sm: "h-space"
+                    sm: "h-[calc(var(--spacing-space)+var(--spacing)*4)]"
                 })}
             />
             <SvgElementLine
                 className={cn("h-24", {
                     md: "hidden",
-                    sm: "h-space"
+                    sm: "h-[calc(var(--spacing-space)+var(--spacing)*4)]"
                 })}
             />
         </>

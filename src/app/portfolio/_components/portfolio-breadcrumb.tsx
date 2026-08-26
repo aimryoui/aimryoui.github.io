@@ -66,7 +66,7 @@ function PortfolioBreadcrumb({
         <Breadcrumb
             className={cn({
                 md: [
-                    "fixed inset-x-0 bottom-[calc(var(--safe-area-inset-bottom)+var(--spacing-space))] h-auto w-full bg-background",
+                    "fixed inset-x-0 bottom-[--toolbar-height] h-auto w-full bg-background",
                     {
                         before: "absolute inset-0 z-1 bg-input/25"
                     }
