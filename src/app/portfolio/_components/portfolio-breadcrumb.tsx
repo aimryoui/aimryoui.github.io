@@ -64,9 +64,9 @@ function PortfolioBreadcrumb({
 
     return (
         <Breadcrumb
-            className={cn({
+            className={cn("w-full min-w-0", {
                 md: [
-                    "fixed inset-x-0 bottom-[--toolbar-height] h-auto w-full bg-background",
+                    "fixed inset-x-0 bottom-[--toolbar-height] h-auto bg-background",
                     {
                         before: "absolute inset-0 z-1 bg-input/25"
                     }
@@ -75,15 +75,18 @@ function PortfolioBreadcrumb({
         >
             <SectionLine
                 fit
-                containerClassName={cn({
-                    md: "absolute inset-x-0 top-0 z-2"
+                containerClassName={cn("hidden", {
+                    md: "absolute inset-x-0 top-0 z-2 block"
                 })}
             />
             <BreadcrumbList
                 ref={listRef}
-                className={cn({
-                    md: "z-2 overflow-x-scroll px-safe-zone scroll-fade-x scroll-fade-24 scrollbar-thin"
-                })}
+                className={cn(
+                    "w-full min-w-0 overflow-x-scroll px-safe-zone scroll-fade-x scroll-fade-24 scrollbar-thin",
+                    {
+                        md: "z-2"
+                    }
+                )}
             >
                 <BreadcrumbItem
                     data-cursor={false}

@@ -164,7 +164,7 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                                 />
                             </span>
                             <span className="absolute inset-0 flex items-end justify-center">
-                                <PseudoFiller className="bottom-0 -mb-[--padding] mt-[calc(var(--icon-actual-height)+var(--padding-block))] -scale-y-100 lg:bottom-[calc(var(--safe-area-inset-bottom)+var(--spacing-space))]" />
+                                <PseudoFiller className="bottom-0 -mb-[--padding] mt-[calc(var(--icon-actual-height)+var(--padding-block))] -scale-y-100 lg:bottom-[--toolbar-height]" />
                             </span>
                         </div>
                     </div>
