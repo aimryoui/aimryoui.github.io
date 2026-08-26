@@ -144,9 +144,8 @@ function MobileTocNav({
         <nav
             aria-label="Table of contents"
             className={cn(
-                "[--safe-area-inset:calc(var(--safe-area-inset-bottom)+var(--spacing-space))]",
                 "flex flex-col overflow-auto text-xl",
-                "pb-[--safe-area-inset]"
+                "pb-[--toolbar-height]"
             )}
         >
             {filteredItems.length === 0 ? (
@@ -156,7 +155,7 @@ function MobileTocNav({
                     items={items}
                     filteredItems={filteredItems}
                     debouncedQuery={debouncedQuery}
-                    className="scroll-pb-[--safe-area-inset]"
+                    className="scroll-pb-[--toolbar-height]"
                 />
             )}
         </nav>
