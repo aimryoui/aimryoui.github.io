@@ -16,13 +16,20 @@ const DEFAULT_DIRECTORIES_MENU_PREFERENCE = false
 
 const useDirectoriesStore = create<DirectoriesStore>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             isDirectoriesMenuEnabled: DEFAULT_DIRECTORIES_MENU_PREFERENCE,
             setIsDirectoriesMenuEnabled: (enabled) => {
                 set({ isDirectoriesMenuEnabled: enabled })
+                if (typeof document !== "undefined") {
+                    if (enabled) {
+                        document.documentElement.setAttribute("data-directories", "")
+                    } else {
+                        document.documentElement.removeAttribute("data-directories")
+                    }
+                }
             },
             reset: () => {
-                set({ isDirectoriesMenuEnabled: DEFAULT_DIRECTORIES_MENU_PREFERENCE })
+                get().setIsDirectoriesMenuEnabled(DEFAULT_DIRECTORIES_MENU_PREFERENCE)
             }
         }),
         {
