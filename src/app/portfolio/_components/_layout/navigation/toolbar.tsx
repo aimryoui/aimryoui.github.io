@@ -38,10 +38,11 @@ function Toolbar({ className }: { className?: string }) {
             >
                 <menu
                     className={cn(
-                        "relative flex w-full items-center gap-3 px-safe-zone py-5.5 @container",
+                        "relative flex w-full items-center gap-3 py-5.5 pl-[--body-safe-zone-left] pr-[--body-safe-zone-right] @container",
                         {
                             after: "absolute inset-x-0 top-full z-40 h-[var(--safe-area-inset-bottom)] bg-gradient-to-t from-background to-transparent",
-                            lg: "gap-safe-zone py-3.5"
+                            lg: "gap-safe-zone py-5.5",
+                            md: "gap-safe-zone py-3.5"
                         },
                         className
                     )}

@@ -74,7 +74,7 @@ function ToastViewport({ className, ...props }: ToastPrimitive.Viewport.Props) {
                 "[--is-mobile:0]",
                 "pointer-events-none fixed inset-x-0 top-[--toast-viewport-top] z-70 mx-auto grid w-fit min-w-[var(--toast-max-width,0px)] max-w-md outline-none",
                 {
-                    sm: "w-full min-w-0 max-w-[calc(100vw-var(--spacing-safe-zone)*4)] [--is-mobile:1]"
+                    sm: "w-full min-w-0 max-w-[calc(100vw-var(--body-safe-zone-left)-var(--body-safe-zone-right)-var(--spacing-safe-zone)*2)] [--is-mobile:1]"
                 },
                 className
             )}
@@ -327,7 +327,6 @@ function Toaster({
 
 const createToastManager = ToastPrimitive.createToastManager
 const useToastManager = ToastPrimitive.useToastManager
-
 
 export {
     createToastManager,

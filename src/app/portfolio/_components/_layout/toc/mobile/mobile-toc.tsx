@@ -95,7 +95,10 @@ function MobileToc() {
                     />
                 }
             />
-            <DrawerContent data-current-snap-points={snapPoint}>
+            <DrawerContent
+                data-current-snap-points={snapPoint}
+                className="ml-[calc(var(--body-safe-zone-left)-var(--spacing-safe-zone))] mr-[calc(var(--body-safe-zone-right)-var(--spacing-safe-zone))]"
+            >
                 <DrawerHeader className="pointer-events-none sticky top-0 p-0">
                     <DrawerTitle className="sr-only">
                         Table of Contents

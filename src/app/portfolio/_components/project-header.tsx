@@ -62,7 +62,7 @@ function ProjectHeader({
         <div className={cn("relative bg-background")}>
             <div
                 className={cn(
-                    "grid grid-cols-[minmax(0,3fr)_var(--px)_calc(var(--spacing)*6)_var(--px)_minmax(0,2fr)]",
+                    "grid grid-cols-[minmax(0,3fr)_var(--px)_var(--spacing-safe-zone)_var(--px)_minmax(0,2fr)]",
                     {
                         md: "grid-cols-1"
                     }
