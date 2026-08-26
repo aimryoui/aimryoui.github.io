@@ -127,11 +127,11 @@ export const viewport: Viewport = {
     minimumScale: 1,
     maximumScale: 5,
     userScalable: true,
-    themeColor: [
-        { media: "(prefers-color-scheme: light)", color: "#ebecee" },
-        { media: "(prefers-color-scheme: dark)", color: "#17191c" }
-    ],
-    colorScheme: "dark light"
+    // themeColor: [
+    //     { media: "(prefers-color-scheme: light)", color: "#ebecee" },
+    //     { media: "(prefers-color-scheme: dark)", color: "#17191c" }
+    // ],
+    colorScheme: "light dark"
 }
 
 const googleSansFlex = Google_Sans_Flex({
