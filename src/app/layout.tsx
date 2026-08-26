@@ -127,10 +127,12 @@ export const viewport: Viewport = {
     minimumScale: 1,
     maximumScale: 5,
     userScalable: true
+    //! Causing color mismatch on Safari surrounding area
     // themeColor: [
     //     { media: "(prefers-color-scheme: light)", color: "#ebecee" },
     //     { media: "(prefers-color-scheme: dark)", color: "#17191c" }
     // ],
+    //! Causing color mismatch on Brave iOS surrounding area
     // colorScheme: "light dark"
 }
 
@@ -163,7 +165,7 @@ export default function RootLayout({
             className={cn(
                 googleSansFlex.variable,
                 sfMono.variable,
-                "group/html antialiased scrollbar-colored scrollbar-thumb-default/40 scrollbar-track-pattern",
+                "group/html antialiased bg-background scrollbar-colored scrollbar-thumb-default/40 scrollbar-track-pattern",
                 "[--safe-area-inset-top:env(safe-area-inset-top,0px)]",
                 "[--safe-area-inset-bottom:env(safe-area-inset-bottom,0px)]",
                 "[--safe-area-inset-left:env(safe-area-inset-left,0px)]",
