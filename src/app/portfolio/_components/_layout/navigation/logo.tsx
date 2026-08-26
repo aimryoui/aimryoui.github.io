@@ -112,15 +112,19 @@ function LogoLink() {
                                     {
                                         hover: "bg-accent/60 data-target-cursor:rounded-none",
                                         active: "bg-accent/60 dark:bg-accent",
-                                        "aria-expanded":
-                                            "bg-muted text-foreground",
+                                        "aria-expanded": "bg-muted",
 
                                         "data-target-cursor":
-                                            "transition-[transform,translate,scale,background-color,border-radius] ease-[linear,linear,linear,linear,cubic-bezier(0.22,1,0.36,1)] duration-[.1s,.1s,.1s,.1s,.2s]"
+                                            "transition-[transform,translate,scale,background-color,border-radius] ease-[linear,linear,linear,linear,cubic-bezier(0.22,1,0.36,1)] duration-[.1s,.1s,.1s,.1s,.2s]",
+
+                                        md: [
+                                            "-me-[calc(var(--spacing-safe-zone)*3/5-var(--spacing))] -ms-[calc(var(--spacing-safe-zone)*3/5)]",
+                                            "pe-[calc(var(--spacing-safe-zone)*3/5-var(--spacing))] ps-[calc(var(--spacing-safe-zone)*3/5)]"
+                                        ]
                                     }
                                 )}
                             >
-                                <TriggerContent isDirectoriesMenuEnabled />
+                                <TriggerContent />
                             </Button>
                         }
                         payload={{
@@ -198,11 +202,7 @@ function LogoLink() {
     )
 }
 
-function TriggerContent({
-    isDirectoriesMenuEnabled = false
-}: {
-    isDirectoriesMenuEnabled?: boolean
-}) {
+function TriggerContent() {
     return (
         <>
             <Logo
@@ -222,9 +222,8 @@ function TriggerContent({
                     // 5.1rem: approx. width of texts
                     // 1.25rem: ChevronsUpDown icon width
                     // -.25rem: negative margin-inline-start of ChevronsUpDown icon
-                    isDirectoriesMenuEnabled
-                        ? "sm:@[calc(.25rem*8.5+.25rem*4/2*2+.25rem*4*4+.25rem*16-.25rem*4+.25rem*9*3+5.1rem+1.25rem-.2rem)]:hidden"
-                        : "sm:@[calc(.25rem*8.5+.25rem*4/2*1+.25rem*4*4+.25rem*16-.25rem*4+.25rem*9*3+5.1rem)]:hidden"
+                    "sm:@[calc(.25rem*8.5+.25rem*4/2*1+.25rem*4*4+.25rem*16-.25rem*4+.25rem*9*3+5.1rem)]:hidden",
+                    "group-data-[directories]/html:sm:@[calc(.25rem*8.5+.25rem*4/2*2+.25rem*4*4+.25rem*16-.25rem*4+.25rem*9*3+5.1rem+1.25rem-.2rem)]:hidden"
                 )}
             >
                 <Bold className="text-sm">
@@ -237,9 +236,7 @@ function TriggerContent({
                     <bdi>{`${projects.length} PROJECTS`}</bdi>
                 </p>
             </div>
-            {isDirectoriesMenuEnabled && (
-                <ChevronsUpDown className="z-1 -ms-1.5 size-5 group-hover:text-foreground" />
-            )}
+            <ChevronsUpDown className="z-1 -ms-1.5 hidden size-5 group-hover:text-foreground group-data-[directories]/html:block" />
         </>
     )
 }

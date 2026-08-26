@@ -19,12 +19,10 @@ import {
 import { DirectionProvider } from "@/components/ui/direction"
 import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { DEFAULT_EFFECTS_PREFERENCES } from "@/configs/effects.config"
-import { DEFAULT_MEDIA_PREFERENCES } from "@/configs/media.config"
 import { siteConfig } from "@/configs/site.config"
-import { minifyJs } from "@/helpers/minify-js"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/providers/theme-provider"
+import { PreferenceScripts } from "@/scripts/preferences"
 import { QueryListener } from "@/stores/query-store"
 
 import AppData from "~/package.json"
@@ -152,7 +150,7 @@ const sfMono = localFont({
     variable: "--font-sf-mono"
 })
 
-export default async function RootLayout({
+export default function RootLayout({
     children
 }: Readonly<{
     children: React.ReactNode
@@ -169,126 +167,7 @@ export default async function RootLayout({
             )}
         >
             <head>
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: await minifyJs(/* js */ `
-                        const htmlElement = document.documentElement
-                        // Platform detection
-                        htmlElement.setAttribute("data-platform",
-                            window.navigator.platform.includes("Mac")
-                            ? "mac"
-                            : "win"
-                        )
-                        // Motion preference
-                        try {
-                            const motionPref = localStorage.getItem("nhn-motion-preference")
-                            if (motionPref) {
-                                const parsed = JSON.parse(motionPref)
-                                htmlElement.setAttribute("data-motion", parsed.state.preference)
-                            } else {
-                                htmlElement.setAttribute("data-motion", "system")
-                            }
-                        } catch (e) {
-                            console.error("Error getting motion preference:", e)
-                            htmlElement.setAttribute("data-motion", "system")
-                        }
-                        // Effects preferences
-                        try {
-                            const defaultEffectsString = ${DEFAULT_EFFECTS_PREFERENCES.length > 0 ? `"${DEFAULT_EFFECTS_PREFERENCES.join(" ")}"` : '"null"'}
-                            const effectsPreference = localStorage.getItem("nhn-effects-preference")
-                            if (effectsPreference) {
-                                const parsed = JSON.parse(effectsPreference)
-                                const effects = parsed.state.effects
-                                htmlElement.setAttribute(
-                                    "data-effects",
-                                    effects.length > 0 ? effects.join(" ") : "null"
-                                )
-                            } else {
-                                htmlElement.setAttribute("data-effects", defaultEffectsString)
-                            }
-                        } catch (e) {
-                            console.error("Error getting effects preference:", e)
-                            htmlElement.setAttribute("data-effects", ${DEFAULT_EFFECTS_PREFERENCES.length > 0 ? `"${DEFAULT_EFFECTS_PREFERENCES.join(" ")}"` : '"null"'})
-                        }
-                        // Media preferences
-                        try {
-                            const defaultMediaString = ${DEFAULT_MEDIA_PREFERENCES.length > 0 ? `"${DEFAULT_MEDIA_PREFERENCES.join(" ")}"` : '"null"'}
-                            const mediaPreferences = localStorage.getItem("nhn-media-preferences")
-                            if (mediaPreferences) {
-                                const parsed = JSON.parse(mediaPreferences)
-                                const prefs = parsed.state.preferences
-                                htmlElement.setAttribute(
-                                    "data-media",
-                                    prefs.length > 0 ? prefs.join(" ") : "null"
-                                )
-                            } else {
-                                htmlElement.setAttribute("data-media", defaultMediaString)
-                            }
-                        } catch (e) {
-                            console.error("Error getting media preferences:", e)
-                            htmlElement.setAttribute("data-media", ${DEFAULT_MEDIA_PREFERENCES.length > 0 ? `"${DEFAULT_MEDIA_PREFERENCES.join(" ")}"` : '"null"'})
-                        }
-                        // Navigation bar position
-                        try {
-                            const sidebarPosition = localStorage.getItem("nhn-sidebar-position")
-                            const toolbarPosition = localStorage.getItem("nhn-toolbar-position")
-                            if (sidebarPosition) {
-                                const parsed = JSON.parse(sidebarPosition)
-                                let position = parsed.state.position
-                                if (position === "left") position = "inline-start"
-                                if (position === "right") position = "inline-end"
-                                htmlElement.setAttribute(
-                                    "data-sidebar-position",
-                                    position
-                                )
-                            } else {
-                                htmlElement.setAttribute(
-                                    "data-sidebar-position",
-                                    "inline-start"
-                                )
-                            }
-                            if (toolbarPosition) {
-                                const parsed = JSON.parse(toolbarPosition)
-                                htmlElement.setAttribute(
-                                    "data-toolbar-position",
-                                    parsed.state.position
-                                )
-                            } else {
-                                htmlElement.setAttribute(
-                                    "data-toolbar-position",
-                                    "bottom"
-                                )
-                            }
-                        } catch (e) {
-                            console.error("Error getting navigation bar position:", e)
-                            htmlElement.setAttribute("data-sidebar-position", "inline-start")
-                            htmlElement.setAttribute("data-toolbar-position", "bottom")
-                        }
-                        // Direction preference
-                        try {
-                            const directionPref = localStorage.getItem("nhn-direction-preference")
-                            let pref = "auto"
-                            if (directionPref) {
-                                const parsed = JSON.parse(directionPref)
-                                if (parsed.state.preference !== "auto") { pref = parsed.state.preference }
-                            }
-                            if (pref === "rtl") {
-                                htmlElement.dir = "rtl"
-                            } else if (pref === "ltr") {
-                                htmlElement.dir = "ltr"
-                            } else {
-                                // auto
-                                const loc = new Intl.Locale(navigator.language)
-                                const dir = loc.textInfo?.direction || (["ar", "he", "fa", "ur", "ps", "syr", "dv", "ku"].includes(loc.language) ? "rtl" : "ltr")
-                                htmlElement.dir = dir
-                            }
-                        } catch (e) {
-                            console.error("Error getting direction preference:", e)
-                            htmlElement.dir = "ltr"
-                        }
-                    `)
-                    }}
-                />
+                <PreferenceScripts />
             </head>
             <body
                 className={cn(
