@@ -28,6 +28,20 @@ interface UseTocScrollOptions {
 
 const SCROLL_DELAY = 400
 
+import { type LenisRef } from "lenis/react"
+
+type ScrollContainerRefTarget = HTMLElement | LenisRef
+
+function getScrollElement(
+    refCurrent: ScrollContainerRefTarget | null
+): HTMLElement | null {
+    if (!refCurrent) return null
+    if ("wrapper" in refCurrent) {
+        return refCurrent.wrapper
+    }
+    return refCurrent
+}
+
 function getActiveElement(
     container: HTMLElement | null,
     id: string | null,
@@ -42,7 +56,7 @@ function getActiveElement(
     return el
 }
 
-function useTocScroll<T extends HTMLElement = HTMLDivElement>({
+function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
     items,
     debouncedQuery,
     onActiveReady
@@ -75,13 +89,11 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
         if (prev === debouncedQuery) return
 
         if (debouncedQuery && scrollContainerRef.current) {
-            scrollContainerRef.current.scrollTop = 0
+            const container = getScrollElement(scrollContainerRef.current)
+            if (container) container.scrollTop = 0
         } else if (!debouncedQuery && scrollContainerRef.current) {
-            const activeEl = getActiveElement(
-                scrollContainerRef.current,
-                activeId,
-                fullPath
-            )
+            const container = getScrollElement(scrollContainerRef.current)
+            const activeEl = getActiveElement(container, activeId, fullPath)
             if (activeEl) {
                 activeEl.scrollIntoView({
                     block: "center",
@@ -93,7 +105,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
 
     // Compute initial active ID after paint to prevent React from aborting View Transitions
     useEffect(() => {
-        const container = scrollContainerRef.current
+        const container = getScrollElement(scrollContainerRef.current)
         if (!container) return
 
         const hash = window.location.hash.slice(1)
@@ -116,7 +128,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
         if (initialActiveId) {
             setActiveId(initialActiveId)
             const activeEl = getActiveElement(
-                scrollContainerRef.current,
+                container,
                 initialActiveId,
                 fullPath
             )
@@ -167,13 +179,16 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
     // Scroll active element into view
     useEffect(() => {
         if (activeId && scrollContainerRef.current) {
+            const container = getScrollElement(scrollContainerRef.current)
+            if (!container) return
+
             if (clickedTargetRef.current) {
                 if (activeId !== clickedTargetRef.current) return
                 clickedTargetRef.current = null
             }
 
             const activeElement = getActiveElement(
-                scrollContainerRef.current,
+                container,
                 activeId,
                 fullPath
             )
@@ -222,7 +237,7 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
                 if (delay > 0) {
                     const timer = setTimeout(() => {
                         const el = getActiveElement(
-                            scrollContainerRef.current,
+                            container,
                             activeId,
                             fullPath
                         )
@@ -249,7 +264,8 @@ function useTocScroll<T extends HTMLElement = HTMLDivElement>({
 
     return {
         scrollContainerRef,
-        clickedTargetRef
+        clickedTargetRef,
+        getContainer: () => getScrollElement(scrollContainerRef.current)
     }
 }
 

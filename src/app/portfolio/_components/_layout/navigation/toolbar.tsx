@@ -33,15 +33,18 @@ function Toolbar({ className }: { className?: string }) {
             <header
                 className={cn(
                     "[--safe-area-inset:calc(var(--safe-area-inset-bottom)+var(--spacing-space))]",
-                    "h-[--safe-area-inset] min-w-body bg-background"
+                    "h-space min-w-body bg-background",
+                    {
+                        lg: "h-[--safe-area-inset]"
+                    }
                 )}
             >
                 <menu
                     className={cn(
-                        "relative flex w-full items-center gap-3 py-5.5 pl-[--body-safe-zone-left] pr-[--body-safe-zone-right] @container",
+                        "relative flex w-full items-center gap-3 px-safe-zone py-5.5 @container",
                         {
                             after: "absolute inset-x-0 top-full z-40 h-[var(--safe-area-inset-bottom)] bg-gradient-to-t from-background to-transparent",
-                            lg: "gap-safe-zone py-5.5",
+                            lg: "gap-safe-zone py-5.5 pl-[--body-safe-zone-left] pr-[--body-safe-zone-right]",
                             md: "gap-safe-zone py-3.5"
                         },
                         className

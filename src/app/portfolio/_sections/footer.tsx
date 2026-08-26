@@ -39,7 +39,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
         >
             <Space
                 className={cn(
-                    "hidden",
+                    "hidden h-[calc(var(--safe-area-inset-bottom)+var(--spacing-space))]",
                     pathName !== "/portfolio"
                         && "md:h-[calc(var(--safe-area-inset-bottom)+var(--spacing-space)+var(--spacing)*10+var(--px)/2)]",
                     {

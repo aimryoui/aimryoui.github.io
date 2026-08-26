@@ -1,6 +1,9 @@
 import type React from "react"
 import { useCallback } from "react"
 
+import { type LenisRef } from "lenis/react"
+
+import { SmoothScrolling } from "@/components/animations/smooth-scrolling"
 import { cn } from "@/lib/utils"
 import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile"
 import { MobileTocGroup } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-group"
@@ -21,9 +24,10 @@ function MobileTocList({
     items,
     filteredItems,
     debouncedQuery,
+    ref: _ref,
     ...props
 }: MobileTocListProps) {
-    const { scrollContainerRef, clickedTargetRef } = useTocScroll({
+    const { scrollContainerRef, clickedTargetRef, getContainer } = useTocScroll<LenisRef>({
         items,
         debouncedQuery
     })
@@ -32,14 +36,14 @@ function MobileTocList({
 
     const handlePress = useCallback(
         (item: TocItemProps) => {
-            handleItemClick(item, clickedTargetRef, scrollContainerRef.current)
+            handleItemClick(item, clickedTargetRef, getContainer())
             useMobileTocStore.getState().setIsTocOpen(false)
         },
-        [clickedTargetRef, scrollContainerRef]
+        [clickedTargetRef, getContainer]
     )
 
     return (
-        <div
+        <SmoothScrolling
             ref={scrollContainerRef}
             className={cn(
                 "group overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-2 scrollbar-thin webkit:pointer-events-auto",
@@ -85,7 +89,7 @@ function MobileTocList({
                                     handleItemClick(
                                         item,
                                         clickedTargetRef,
-                                        scrollContainerRef.current
+                                        getContainer()
                                     )
                                     useMobileTocStore
                                         .getState()
@@ -97,7 +101,7 @@ function MobileTocList({
                 )
             })}
             <div className="pointer-events-auto h-[35vh] w-full" />
-        </div>
+        </SmoothScrolling>
     )
 }
 

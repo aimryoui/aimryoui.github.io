@@ -137,7 +137,9 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                                 // "[--background-color:theme(colors.alert/0.3)]",
                                 "[--background-color:color-mix(in_srgb,var(--color-highlighted)_10%,var(--color-background))]",
                                 "[--icon-height:calc((var(--spacing)*6+var(--spacing-safe-zone-vertical)*2)*var(--trigger-quantity)-var(--padding-block)*2-var(--padding)*2)]",
-                                "relative grid size-full grid-rows-[1fr] rounded-[--border-radius] bg-background",
+                                "[--icon-max-height:calc(100dvh-var(--safe-area-inset-bottom)-var(--spacing-space)-var(--padding-block)*2)]",
+                                "[--actual-icon-height:min(var(--icon-height),100cqw,var(--icon-max-height))]",
+                                "relative grid size-full grid-rows-[1fr] rounded-[--border-radius] bg-background @container",
                                 "bg-[image:radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem),radial-gradient(oklch(from_var(--color-stroke)_l_c_h/40%)_.125rem,transparent_.125rem)] bg-[length:.75rem_.75rem] bg-[position:0_0,.375rem_.375rem]",
                                 {
                                     before: "absolute inset-0 rounded-inherit border border-highlighted",
@@ -148,21 +150,21 @@ function Details({ className, ...props }: React.ComponentProps<"div">) {
                             )}
                         >
                             <span className="absolute inset-0 flex items-start justify-center">
-                                <PseudoFiller className="top-0 -mt-[--padding] mb-[calc(var(--icon-height)+var(--padding-block))]" />
+                                <PseudoFiller className="top-0 -mt-[--padding] mb-[calc(var(--actual-icon-height)+var(--padding-block))]" />
                             </span>
                             <span className="absolute inset-0 flex justify-center">
                                 <EmotionIcon
                                     className={cn(
-                                        "sticky top-[calc(49vh-var(--icon-height)/2)] my-[--padding-block] h-[--icon-height] justify-self-center",
+                                        "sticky top-[calc(49dvh-var(--actual-icon-height)/2)] my-[--padding-block] h-[--actual-icon-height] justify-self-center",
                                         {
                                             rtl: "-scale-x-100",
-                                            lg: "top-[calc(50vh-var(--icon-height)/2-var(--spacing-space)/2)]"
+                                            lg: "top-[calc(50dvh-(var(--actual-icon-height)+var(--safe-area-inset-bottom)+var(--spacing-space))/2)]"
                                         }
                                     )}
                                 />
                             </span>
                             <span className="absolute inset-0 flex items-end justify-center">
-                                <PseudoFiller className="bottom-0 -mb-[--padding] mt-[calc(var(--icon-height)+var(--padding-block))] -scale-y-100 lg:bottom-[calc(var(--safe-area-inset-bottom)+var(--spacing-space))]" />
+                                <PseudoFiller className="bottom-0 -mb-[--padding] mt-[calc(var(--actual-icon-height)+var(--padding-block))] -scale-y-100 lg:bottom-[calc(var(--safe-area-inset-bottom)+var(--spacing-space))]" />
                             </span>
                         </div>
                     </div>

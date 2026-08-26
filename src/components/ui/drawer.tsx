@@ -178,7 +178,7 @@ function DrawerContent({
                             "pb-[max(0px,calc(var(--drawer-snap-point-offset)+var(--drawer-swipe-movement-y)))] data-[current-snap-points=1]:not-data-[swiping]:rounded-t-none",
 
                             // Gradient border.
-                            "border border-dashed border-[color-mix(in_srgb,var(--color-stroke)_calc(max(var(--safe-area-inset-left),var(--safe-area-inset-right))/1px*100%),transparent)] bg-[image:linear-gradient(var(--color-background),var(--color-background)),linear-gradient(to_bottom,var(--color-stroke)_0%,var(--color-background)_60%)] bg-origin-border bg-clip-[padding-box,border-box]",
+                            "border border-dashed border-[color-mix(in_srgb,var(--color-stroke)_clamp(0%,calc(max(var(--safe-area-inset-left),var(--safe-area-inset-right))/1px*100%),100%),transparent)] bg-[image:linear-gradient(var(--color-background),var(--color-background)),linear-gradient(to_bottom,var(--color-stroke)_0%,var(--color-background)_60%)] bg-origin-border bg-clip-[padding-box,border-box]",
 
                             // Animations.
                             [

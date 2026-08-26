@@ -177,6 +177,7 @@ export default function RootLayout({
                 className={cn(
                     "[--body-safe-zone-left:max(calc(var(--safe-area-inset-left)+var(--spacing-safe-zone)/2),var(--spacing-safe-zone))]",
                     "[--body-safe-zone-right:max(calc(var(--safe-area-inset-right)+var(--spacing-safe-zone)/2),var(--spacing-safe-zone))]",
+                    // "[--toolbar-height]",
                     "relative flex min-w-body bg-background text-muted-foreground scrollbar-gutter-stable",
                     "pl-[--body-safe-zone-left] pr-[--body-safe-zone-right]",
                     {
