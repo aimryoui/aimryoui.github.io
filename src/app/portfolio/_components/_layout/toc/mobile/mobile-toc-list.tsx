@@ -27,10 +27,11 @@ function MobileTocList({
     ref: _ref,
     ...props
 }: MobileTocListProps) {
-    const { scrollContainerRef, clickedTargetRef, getContainer } = useTocScroll<LenisRef>({
-        items,
-        debouncedQuery
-    })
+    const { scrollContainerRef, clickedTargetRef, getContainer } =
+        useTocScroll<LenisRef>({
+            items,
+            debouncedQuery
+        })
 
     const tree = useTocTree(filteredItems)
 

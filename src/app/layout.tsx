@@ -1,10 +1,9 @@
 import "@/globals.css"
 
+
 import { type Metadata, type Viewport } from "next"
 import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
-
-import { GoogleAnalytics } from "@next/third-parties/google"
 
 import { RouteProgressProvider } from "@/components/animations/route-progress"
 import { SmoothScrolling } from "@/components/animations/smooth-scrolling"
@@ -19,9 +18,11 @@ import {
 import { DirectionProvider } from "@/components/ui/direction"
 import { Toaster } from "@/components/ui/toast"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { cspConfig } from "@/configs/csp.config"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/providers/theme-provider"
+import { AnalyticsScripts } from "@/scripts/analytics"
 import { PreferenceScripts } from "@/scripts/preferences"
 import { QueryListener } from "@/stores/query-store"
 
@@ -173,7 +174,17 @@ export default function RootLayout({
             )}
         >
             <head>
+                {process.env.NODE_ENV === "development" && (
+                    <meta
+                        httpEquiv="Content-Security-Policy"
+                        content={cspConfig.base.replace(
+                            "script-src 'self'",
+                            "script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+                        )}
+                    />
+                )}
                 <PreferenceScripts />
+                <AnalyticsScripts />
             </head>
             <body
                 className={cn(
@@ -214,7 +225,6 @@ export default function RootLayout({
                     </ThemeProvider>
                 </AudioProvider>
             </body>
-            <GoogleAnalytics gaId={siteConfig.analytics.googleAnalytics} />
         </html>
     )
 }

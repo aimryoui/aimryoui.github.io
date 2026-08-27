@@ -102,7 +102,11 @@ function SoundsHapticsMenu() {
                                 AUDIO_PREFERENCES[nextMode].label,
                                 () => {
                                     setAudioMode(audioMode)
-                                    sendGAEvent("event", `${eventName}_undo`, eventParams)
+                                    sendGAEvent(
+                                        "event",
+                                        `${eventName}_undo`,
+                                        eventParams
+                                    )
                                     if (audioMode === "auto") {
                                         useAudioStore
                                             .getState()
@@ -156,7 +160,11 @@ function SoundsHapticsMenu() {
                                 checked ? "On" : "Off",
                                 () => {
                                     setIsHapticEnabled(isHapticEnabled)
-                                    sendGAEvent("event", `${eventName}_undo`, eventParams)
+                                    sendGAEvent(
+                                        "event",
+                                        `${eventName}_undo`,
+                                        eventParams
+                                    )
                                 }
                             )
                         }}

@@ -8,7 +8,7 @@ function CornerBackgroundLayer() {
     return (
         <Layer>
             <div
-                tw="absolute start-0 top-0"
+                tw="absolute left-0 top-0"
                 style={{
                     width: "88px",
                     height: "80px",
@@ -16,7 +16,7 @@ function CornerBackgroundLayer() {
                 }}
             />
             <div
-                tw="absolute end-0 top-0"
+                tw="absolute right-0 top-0"
                 style={{
                     width: "88px",
                     height: "80px",
@@ -24,7 +24,7 @@ function CornerBackgroundLayer() {
                 }}
             />
             <div
-                tw="absolute bottom-0 start-0"
+                tw="absolute bottom-0 left-0"
                 style={{
                     width: "88px",
                     height: "80px",
@@ -32,7 +32,7 @@ function CornerBackgroundLayer() {
                 }}
             />
             <div
-                tw="absolute bottom-0 end-0"
+                tw="absolute bottom-0 right-0"
                 style={{
                     width: "88px",
                     height: "80px",

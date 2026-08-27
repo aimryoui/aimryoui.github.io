@@ -110,11 +110,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {/* <ViewTransition name="main"> */}
             <main className={cn("flex-1")}>
                 <FlashOverlay />
-                <Space
-                    className={cn(
-                        "flex items-center justify-start px-safe-zone"
-                    )}
-                >
+                <Space className={cn("flex items-center justify-start")}>
                     <PortfolioBreadcrumb
                         category={category}
                         categoryTitle={group.title}

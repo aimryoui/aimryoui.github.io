@@ -22,14 +22,21 @@ const useDirectoriesStore = create<DirectoriesStore>()(
                 set({ isDirectoriesMenuEnabled: enabled })
                 if (typeof document !== "undefined") {
                     if (enabled) {
-                        document.documentElement.setAttribute("data-directories", "")
+                        document.documentElement.setAttribute(
+                            "data-directories",
+                            ""
+                        )
                     } else {
-                        document.documentElement.removeAttribute("data-directories")
+                        document.documentElement.removeAttribute(
+                            "data-directories"
+                        )
                     }
                 }
             },
             reset: () => {
-                get().setIsDirectoriesMenuEnabled(DEFAULT_DIRECTORIES_MENU_PREFERENCE)
+                get().setIsDirectoriesMenuEnabled(
+                    DEFAULT_DIRECTORIES_MENU_PREFERENCE
+                )
             }
         }),
         {

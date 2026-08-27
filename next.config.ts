@@ -43,6 +43,9 @@ const nextConfig = (phase: string): NextConfig => {
             useLightningcss: true,
             lightningCssFeatures: {
                 include: ["light-dark"]
+            },
+            sri: {
+                algorithm: "sha256"
             }
         }
     }

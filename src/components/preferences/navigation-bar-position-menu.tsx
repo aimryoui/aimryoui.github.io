@@ -140,7 +140,11 @@ function NavigationBarPositionMenu() {
                             nextOption?.text ?? "",
                             () => {
                                 setPosition(position)
-                                sendGAEvent("event", `${eventName}_undo`, eventParams)
+                                sendGAEvent(
+                                    "event",
+                                    `${eventName}_undo`,
+                                    eventParams
+                                )
                             }
                         )
                     }}
