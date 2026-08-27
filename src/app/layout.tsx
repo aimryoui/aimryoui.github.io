@@ -1,9 +1,10 @@
 import "@/globals.css"
 
-
 import { type Metadata, type Viewport } from "next"
 import { Google_Sans_Flex } from "next/font/google"
 import localFont from "next/font/local"
+
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 import { RouteProgressProvider } from "@/components/animations/route-progress"
 import { SmoothScrolling } from "@/components/animations/smooth-scrolling"
@@ -22,7 +23,6 @@ import { cspConfig } from "@/configs/csp.config"
 import { siteConfig } from "@/configs/site.config"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/providers/theme-provider"
-import { AnalyticsScripts } from "@/scripts/analytics"
 import { PreferenceScripts } from "@/scripts/preferences"
 import { QueryListener } from "@/stores/query-store"
 
@@ -184,7 +184,12 @@ export default function RootLayout({
                     />
                 )}
                 <PreferenceScripts />
-                <AnalyticsScripts />
+                {process.env.NODE_ENV === "production"
+                    && siteConfig.analytics.googleAnalytics && (
+                        <GoogleAnalytics
+                            gaId={siteConfig.analytics.googleAnalytics}
+                        />
+                    )}
             </head>
             <body
                 className={cn(

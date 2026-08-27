@@ -5,8 +5,9 @@ import { join } from "path"
 import { load } from "cheerio"
 import { globSync } from "glob"
 
-// oxlint-disable-next-line @limegrass/import-alias/import-alias
+// oxlint-disable @limegrass/import-alias/import-alias
 import { cspConfig } from "../configs/csp.config"
+import { siteConfig } from "../configs/site.config"
 
 function hashScript(content: string): string {
     const hash = createHash("sha256")
@@ -42,6 +43,12 @@ export function buildCSP() {
                     totalScriptsHashed++
                 }
             }
+        }
+
+        // Compute hash for Google Analytics script injected on client by next/third-parties
+        if (siteConfig.analytics.googleAnalytics) {
+            const gaScript = `\n          window['dataLayer'] = window['dataLayer'] || [];\n          function gtag(){window['dataLayer'].push(arguments);}\n          gtag('js', new Date());\n\n          gtag('config', '${siteConfig.analytics.googleAnalytics}' );`
+            hashes.push(hashScript(gaScript))
         }
 
         if (hashes.length > 0) {
