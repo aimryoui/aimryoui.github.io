@@ -15,6 +15,7 @@ import { Button, type ButtonProps } from "@/components/ui/button"
 import { Link, type LinkProps } from "@/components/ui/link"
 import { usePressFeedback } from "@/hooks/use-press-feedback"
 import { cn } from "@/lib/utils"
+import { useFlashStore } from "@/portfolio/_components/flash-overlay"
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
     return (
@@ -166,11 +167,9 @@ function BreadcrumbPage({
             aria-current="page"
             nativeButton
             keepFeedback
-            onPress={() =>
-                void window.dispatchEvent(
-                    new CustomEvent("portfolio:main-flash")
-                )
-            }
+            onPress={() => {
+                useFlashStore.getState().triggerFlash()
+            }}
             className={cn(
                 "-me-1.25 flex h-full items-center text-foreground",
                 {

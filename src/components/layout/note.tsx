@@ -35,7 +35,7 @@ function Note({
                             "[&_a:focus-visible]": "text-highlighted",
 
                             "[&_code]": [
-                                "text-nowrap rounded-lg border border-highlighted/30 bg-highlighted/5 px-1.25 pb-0.75 pt-0.5 text-sm font-[600] corner-superellipse wrap-anywhere dark:font-[400]",
+                                "text-nowrap rounded-lg border border-highlighted/30 bg-highlighted/5 px-1.25 pb-0.5 pt-0.25 text-sm font-[600] corner-superellipse wrap-anywhere dark:font-[400]",
                                 {
                                     md: "rounded-md text-xs"
                                 }

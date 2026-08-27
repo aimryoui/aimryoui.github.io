@@ -120,7 +120,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <meta property="og:image:alt" content={OG_ALT} />
             <meta name="twitter:image:alt" content={OG_ALT} />
             {/* <ViewTransition name="main"> */}
-            <main className={cn("min-w-0 flex-1")}>
+            <main className={cn("relative min-w-0 flex-1")}>
                 <AmbientStyle project={project} />
                 <FlashOverlay />
                 <Space className={cn("flex items-center justify-start")}>
