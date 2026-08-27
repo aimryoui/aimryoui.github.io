@@ -46,16 +46,22 @@ const buttonVariants = cva(
                     hover: "bg-secondary/80",
                     "aria-expanded": "bg-secondary text-secondary-foreground"
                 }),
-                outline: cn("border border-stroke bg-background", {
-                    hover: "bg-element-hover text-foreground",
-                    active: "bg-muted",
-                    "aria-expanded": "bg-muted text-foreground"
-                }),
-                tinted: cn("bg-default/[0.075] dark:bg-default/10", {
-                    hover: "bg-default/10 text-foreground dark:bg-default/15",
-                    active: "bg-default/15 dark:bg-default/20",
-                    "aria-expanded": "bg-default/20 text-foreground"
-                }),
+                outline: cn(
+                    "border border-stroke bg-background text-muted-foreground",
+                    {
+                        hover: "bg-element-hover text-foreground",
+                        active: "bg-muted",
+                        "aria-expanded": "bg-muted text-foreground"
+                    }
+                ),
+                tinted: cn(
+                    "bg-default/[0.075] text-muted-foreground dark:bg-default/10",
+                    {
+                        hover: "bg-default/10 text-foreground dark:bg-default/15",
+                        active: "bg-default/15 dark:bg-default/20",
+                        "aria-expanded": "bg-default/20 text-foreground"
+                    }
+                ),
                 ghost: cn("text-muted-foreground", {
                     hover: "bg-accent/60 text-foreground dark:bg-accent",
                     active: "bg-accent/60 text-foreground dark:bg-accent",
@@ -85,10 +91,10 @@ const buttonVariants = cva(
                 default: "h-9 min-w-9 px-4 py-2 has-[>svg]:px-3",
                 lg: "h-10 min-w-10 rounded-md px-6 has-[>svg]:px-4",
                 sm: "h-8 min-w-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5",
-                icon: "size-9 text-muted-foreground",
-                "icon-sm": "size-8 text-muted-foreground",
-                "icon-lg": "size-10 text-muted-foreground",
-                "icon-xl": "size-12 text-muted-foreground"
+                icon: "size-9",
+                "icon-sm": "size-8",
+                "icon-lg": "size-10",
+                "icon-xl": "size-12"
             }
         },
         defaultVariants: {
