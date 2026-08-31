@@ -26,6 +26,8 @@ import {
     SectionTitle
 } from "@/portfolio/_components/mdx/section"
 
+import { Link } from "~/src/components/ui/typography"
+
 function Range({
     start,
     end,
@@ -46,6 +48,7 @@ function Range({
 
 const sharedComponents = {
     Range,
+    Link,
     Image,
     Video,
     Gif,

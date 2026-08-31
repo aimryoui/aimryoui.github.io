@@ -126,6 +126,7 @@ function SectionContent({
                 className={cn(
                     "flex flex-col gap-2.5 text-pretty bg-background px-safe-zone py-safe-zone-vertical leading-normal",
                     {
+                        "[&_a]": "text-highlighted",
                         "[&_strong]":
                             "text-foreground font-wght-600 dark:font-wght-450",
                         "[&_blockquote]":

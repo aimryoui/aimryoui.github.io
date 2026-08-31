@@ -1,5 +1,7 @@
 "use client"
 
+import { ArrowUpRight } from "lucide-react"
+
 import { cn } from "@/lib/utils"
 
 type TextProps<T extends React.ElementType> = {
@@ -183,15 +185,18 @@ function Highlight<T extends React.ElementType = "b">({
 
 type LinkProps<T extends React.ElementType> = TextProps<T> & {
     openInNewTab?: boolean
+    showExternalIcon?: boolean
 }
 
 function Link<T extends React.ElementType = "a">({
     className,
     openInNewTab,
+    showExternalIcon,
     highlight,
     italic,
     mono,
     as,
+    children,
     ...props
 }: LinkProps<T>) {
     const Comp = as ?? "a"
@@ -207,7 +212,7 @@ function Link<T extends React.ElementType = "a">({
                 },
                 highlight && "text-highlighted",
                 italic && "italic",
-                mono ? "font-mono" : "font-wght-500",
+                mono ? "font-mono" : "font-wght-600",
                 {
                     md: "text-sm"
                 },
@@ -215,7 +220,12 @@ function Link<T extends React.ElementType = "a">({
             )}
             {...(openInNewTab && { target: "_blank", rel: "noreferrer" })}
             {...props}
-        />
+        >
+            {children}
+            {showExternalIcon && (
+                <ArrowUpRight className="mb-1.5 inline size-4" />
+            )}
+        </Comp>
     )
 }
 
