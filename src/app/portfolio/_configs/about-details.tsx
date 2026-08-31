@@ -189,6 +189,10 @@ const pdFacts = [
         I don&#39;t like eating green onions. Therefore, anything that looks
         like green onion — or even just has the word &#34;onion&#34; in its name
         — gets caught in the crossfire.
+    </>,
+    // oxlint-disable-next-line react/jsx-no-useless-fragment
+    <>
+        <Bold>I&#39;m a slaver of Squircle.</Bold>
     </>
 ]
 

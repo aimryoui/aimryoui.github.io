@@ -5,28 +5,26 @@ import { type LenisRef } from "lenis/react"
 
 import { SmoothScrolling } from "@/components/animations/smooth-scrolling"
 import { cn } from "@/lib/utils"
-import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile"
 import { MobileTocGroup } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-group"
 import { MobileTocItemRow } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-item-row"
+import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/stores/mobile-toc-store"
+import { useTocStore } from "@/portfolio/_components/_layout/toc/stores/toc-store"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
-import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import {
     handleItemClick,
     type TocListProps
 } from "@/portfolio/_components/_layout/toc/toc-list"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
 import { useTocScroll } from "@/portfolio/_hooks/use-toc-scroll"
 import { useTocTree } from "@/portfolio/_hooks/use-toc-tree"
 
 type MobileTocListProps = React.ComponentProps<"div"> & TocListProps
 
-function MobileTocList({
-    className,
-    items,
-    filteredItems,
-    debouncedQuery,
-    ref: _ref,
-    ...props
-}: MobileTocListProps) {
+function MobileTocList({ className, ref: _ref, ...props }: MobileTocListProps) {
+    const items = useTocStore((s) => s.items)
+    const filteredItems = useTocStore((s) => s.filteredItems)
+    const debouncedQuery = useTocStore((s) => s.query)
+
     const { scrollContainerRef, clickedTargetRef, getContainer } =
         useTocScroll<LenisRef>({
             items,
@@ -69,7 +67,6 @@ function MobileTocList({
                             key={`group-${node.header.id}`}
                             header={node.header}
                             items={node.items}
-                            debouncedQuery={debouncedQuery}
                             onItemPress={handlePress}
                         />
                     )
@@ -85,7 +82,6 @@ function MobileTocList({
                                 key={item.id}
                                 variant="anchor"
                                 item={item}
-                                query={debouncedQuery}
                                 onPress={(item) => {
                                     handleItemClick(
                                         item,

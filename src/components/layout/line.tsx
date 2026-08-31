@@ -58,6 +58,7 @@ type SectionLineProps = React.ComponentProps<"hr"> & {
     containerClassName?: string
     showDecoration?: boolean
     fit?: boolean
+    center?: boolean
 }
 
 function SectionLine({
@@ -65,6 +66,7 @@ function SectionLine({
     containerClassName,
     showDecoration = false,
     fit = false,
+    center = false,
     ...props
 }: SectionLineProps) {
     return (
@@ -83,14 +85,28 @@ function SectionLine({
                     "absolute top-1/2 -translate-y-1/2 border-b border-dashed border-stroke bg-background",
                     fit
                         ? "start-1/2 w-full -translate-x-1/2 rtl:translate-x-1/2"
-                        : [
-                              "-end-[--body-safe-zone-right] w-[calc(100vw-var(--px)*2)]",
-                              {
-                                  "group-data-[sidebar-position=inline-end]/html":
-                                      "-start-[--body-safe-zone-left] end-auto",
-                                  lg: "-start-[--body-safe-zone-left] end-auto"
-                              }
-                          ],
+                        : center
+                          ? [
+                                "start-1/2 w-screen -translate-x-1/2 rtl:translate-x-1/2",
+                                {
+                                    xl: [
+                                        "-end-[--body-safe-zone-right] start-auto w-[calc(100vw-var(--px)*2)] translate-x-0",
+                                        {
+                                            "group-data-[sidebar-position=inline-end]/html":
+                                                "-start-[--body-safe-zone-left] end-auto"
+                                        }
+                                    ],
+                                    lg: "end-auto start-1/2 w-screen -translate-x-1/2 rtl:translate-x-1/2"
+                                }
+                            ]
+                          : [
+                                "-end-[--body-safe-zone-right] w-[calc(100vw-var(--px)*2)]",
+                                {
+                                    "group-data-[sidebar-position=inline-end]/html":
+                                        "-start-[--body-safe-zone-left] end-auto",
+                                    lg: "-start-[--body-safe-zone-left] end-auto"
+                                }
+                            ],
                     className
                 )}
                 {...props}
@@ -149,7 +165,7 @@ function SvgElementLine({
             role="separator"
             className={cn(
                 "pointer-events-none relative z-1",
-                dir === "vertical" ? "h-full" : "w-full",
+                dir === "vertical" ? "h-auto" : "w-full",
                 className
             )}
         >

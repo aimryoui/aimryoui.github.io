@@ -42,7 +42,7 @@ function SectionName({
     const isAnchorTag = as === "a"
 
     const Comp = as
-    const TextComp = isAnchorTag ? "h4" : Fragment
+    const TextComp = isAnchorTag ? "h3" : Fragment
 
     const playPressFeedback = usePressFeedback()
     const direction = useDirection()
@@ -63,12 +63,8 @@ function SectionName({
 
     return (
         <div
-            {...(isAnchorTag && {
-                id: slugify(sectionName)
-            })}
             className={cn(
-                isAnchorTag
-                    && "sticky top-3.5 z-50 scroll-mt-safe-zone md:top-1.5",
+                isAnchorTag && "sticky top-3.5 z-50 md:top-1.5",
                 "pointer-events-none grid min-h-13 place-items-center py-2",
                 containerClassName
             )}
@@ -153,14 +149,12 @@ function MediaFrameContent({
     )
 }
 
-interface MediaFrameProps extends MediaFrameContentProps {
-    sectionName?: string
-    author?: string
-    normalcase?: boolean
-    flex?: boolean
-    continuous?: boolean
-    hasSocialLinks?: SectionNameProps["hasSocialLinks"]
-}
+type MediaFrameProps = MediaFrameContentProps
+    & Partial<Omit<SectionNameProps, "as" | "containerClassName">> & {
+        flex?: boolean
+        continuous?: boolean
+        spaceAround?: boolean
+    }
 
 function MediaFrame({
     className,
@@ -170,14 +164,16 @@ function MediaFrame({
     flex,
     continuous,
     hasSocialLinks,
+    spaceAround = true,
     children,
     ...props
 }: MediaFrameProps) {
     return (
         <>
             <figure
+                id={sectionName ? slugify(sectionName) : undefined}
                 className={cn(
-                    "grid w-full grid-cols-1 bg-background",
+                    "grid w-full scroll-mt-safe-zone grid-cols-1 bg-background",
                     flex && "h-full flex-1"
                 )}
             >
@@ -235,7 +231,7 @@ function MediaFrame({
                                 hasSocialLinks={hasSocialLinks}
                                 className="invisible"
                             />
-                            <SectionLine />
+                            <SectionLine center />
                         </div>
                     </>
                 ) : (
@@ -244,7 +240,7 @@ function MediaFrame({
                             "z-20 col-start-1 row-start-1 flex h-0 flex-col justify-end bg-background"
                         )}
                     >
-                        <SectionLine />
+                        <SectionLine fit={!spaceAround} />
                     </div>
                 )}
 
@@ -263,9 +259,13 @@ function MediaFrame({
                     )}
                 </div>
             </figure>
-            <SectionLine />
-            <Divider />
-            <SectionLine />
+            {spaceAround && (
+                <>
+                    <SectionLine center />
+                    <Divider />
+                    <SectionLine center containerClassName="z-55" />
+                </>
+            )}
         </>
     )
 }

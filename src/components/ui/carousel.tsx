@@ -19,13 +19,7 @@ import Ssr from "embla-carousel-ssr"
 import WheelGestures from "embla-carousel-wheel-gestures"
 
 import { ArrowLeft, ArrowRight, Refresh } from "@/components/icons/icons"
-import {
-    Image,
-    type ImageBorderProps,
-    type ImageProps,
-    type ImageRoundProps,
-    type PngProps
-} from "@/components/media/image"
+import { Image, type ImageProps } from "@/components/media/image"
 import { Button, type ButtonProps } from "@/components/ui/button"
 import { useDirection } from "@/components/ui/direction"
 import { Lightbox } from "@/components/ui/lightbox"
@@ -101,13 +95,16 @@ const numberWithinRange = (number: number, min: number, max: number): number =>
 function Carousel({
     orientation = "horizontal",
     options,
+    gap = 2,
     slideCount,
     setEmblaApi,
     plugins,
     className,
     children,
     ...props
-}: React.ComponentProps<"div"> & CarouselProps) {
+}: React.ComponentProps<"div"> & CarouselProps & { gap?: number }) {
+    const gapToRem = `${gap / 4}rem`
+
     const carouselId = useId()
     const direction = useDirection()
 
@@ -292,6 +289,9 @@ function Carousel({
                         "relative flex w-full flex-col gap-2",
                         className
                     )}
+                    style={{
+                        "--slide-spacing": gapToRem
+                    }}
                     {...props}
                 >
                     <CarouselContent id={carouselId}>
@@ -302,11 +302,11 @@ function Carousel({
                             "grid w-full items-center gap-2",
                             "grid-cols-[1fr_75%_1fr]",
                             {
-                                "2xl": "grid-cols-6",
-                                xl: "grid-cols-4",
-                                md: "grid-cols-3",
-                                sm: "grid-cols-2",
-                                xs: "grid-cols-1"
+                                "@[65rem]": "grid-cols-6",
+                                "@[52rem]": "grid-cols-4",
+                                "@2xl": "grid-cols-3",
+                                "@md": "grid-cols-2",
+                                "@2xs": "grid-cols-1"
                             }
                         )}
                     >
@@ -318,20 +318,20 @@ function Carousel({
 
                             <CarouselScrollbar
                                 className={cn("flex-1", {
-                                    "2xl": "col-span-4",
-                                    xl: "order-first col-span-4 my-2",
-                                    md: "col-span-3",
-                                    sm: "col-span-2",
-                                    xs: "col-span-1"
+                                    "@[65rem]": "col-span-4",
+                                    "@[52rem]": "order-first col-span-4 my-2",
+                                    "@2xl": "col-span-3",
+                                    "@md": "col-span-2",
+                                    "@2xs": "col-span-1"
                                 })}
                             />
 
                             <div
                                 className={cn("flex w-full justify-end gap-2", {
-                                    xl: "col-start-4",
-                                    md: "col-start-3",
-                                    sm: "col-start-2",
-                                    xs: "col-start-1"
+                                    "@[52rem]": "col-start-4",
+                                    "@2xl": "col-start-3",
+                                    "@md": "col-start-2",
+                                    "@2xs": "col-start-1"
                                 })}
                             >
                                 <CarouselPrevious className="flex-1" />
@@ -362,7 +362,9 @@ function CarouselContent({
             <div
                 className={cn(
                     "flex",
-                    orientation === "horizontal" ? "-ms-2" : "-mt-2 flex-col",
+                    orientation === "horizontal"
+                        ? "-ms-[--slide-spacing]"
+                        : "-mt-[--slide-spacing] flex-col",
                     className
                 )}
                 {...props}
@@ -373,14 +375,8 @@ function CarouselContent({
     )
 }
 
-function CarouselItem({
-    gap = 2,
-    className,
-    ...props
-}: React.ComponentProps<"div"> & { gap?: number }) {
+function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
     const { orientation } = useCarousel()
-
-    const gapToRem = `${gap / 4}rem`
 
     return (
         <div
@@ -391,22 +387,13 @@ function CarouselItem({
                 "min-w-0 shrink-0 grow-0 basis-3/4",
                 "[&>div:active]:cursor-grabbing",
                 orientation === "horizontal"
-                    ? "first-of-type:!ps-2"
-                    : "first-of-type:!pt-2",
+                    ? "ps-[--slide-spacing]"
+                    : "pt-[--slide-spacing]",
                 {
                     md: "basis-full"
                 },
                 className
             )}
-            style={
-                orientation === "horizontal"
-                    ? {
-                          paddingInlineStart: gapToRem
-                      }
-                    : {
-                          paddingBlockStart: gapToRem
-                      }
-            }
             {...props}
         />
     )
@@ -759,41 +746,15 @@ function CarouselScrollbar({
     )
 }
 
-const PATTERN_SRC_REGEX = /\{(\d+)(?:-(\d+))?\}/u
-
 function CarouselImage({
-    srcPattern,
-    gap,
+    containerClassName,
     ...props
-}: Omit<ImageProps, "src">
-    & ImageRoundProps
-    & PngProps
-    & ImageBorderProps & {
-        srcPattern: string
-        gap?: number
-    }) {
-    const isPatternSrc = PATTERN_SRC_REGEX.exec(srcPattern)
-
-    let spreadImages = [srcPattern]
-
-    if (isPatternSrc) {
-        const start = parseInt(isPatternSrc[1], 10)
-        const end = isPatternSrc[2] ? parseInt(isPatternSrc[2], 10) : start
-        const padLength = isPatternSrc[1].length
-
-        const result = []
-        for (let i = Math.min(start, end); i <= Math.max(start, end); i++) {
-            const numStr = String(i).padStart(padLength, "0")
-            result.push(srcPattern.replace(isPatternSrc[0], numStr))
-        }
-        spreadImages = result
-    }
-
-    return spreadImages.map((src) => (
-        <CarouselItem key={src} gap={gap}>
-            <Image {...props} data-slot="carousel-image" src={src} />
+}: ImageProps & { containerClassName?: string }) {
+    return (
+        <CarouselItem className={containerClassName}>
+            <Image {...props} data-slot="carousel-image" />
         </CarouselItem>
-    ))
+    )
 }
 
 export {

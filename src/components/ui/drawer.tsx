@@ -160,7 +160,7 @@ function DrawerContent({
                     data-slot="drawer-viewport"
                     data-modal={modal}
                     data-cursor="ignore"
-                    className="pointer-events-none fixed inset-0 z-60 cursor-auto select-none data-[modal=true]:pointer-events-auto"
+                    className="pointer-events-none fixed inset-0 z-70 cursor-auto select-none data-[modal=true]:pointer-events-auto"
                 >
                     <DrawerPrimitive.Popup
                         data-slot="drawer-popup"
@@ -171,7 +171,7 @@ function DrawerContent({
                             "[--drawer-bleed-background:var(--color-background)] [--drawer-inset:0px]",
                             "[--drawer-stacked-shadow:0_-20px_25px_-5px_rgb(0_0_0/0.1),0_-8px_10px_-6px_rgb(0_0_0/0.1)]",
 
-                            "group/drawer-popup pointer-events-auto fixed z-60 flex select-none flex-col rounded-t-4xl text-popover-foreground shadow-xl outline-none",
+                            "group/drawer-popup pointer-events-auto fixed flex select-none flex-col rounded-t-4xl text-popover-foreground shadow-xl outline-none",
 
                             // Sizing.
                             "m-[--drawer-inset,0px] h-[--drawer-content-height] max-h-[--drawer-content-max-height,none] min-h-0 w-[--drawer-content-width,auto]",

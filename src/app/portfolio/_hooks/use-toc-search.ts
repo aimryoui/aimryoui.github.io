@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 
 import { removeDiacritics } from "@/helpers/remove-diacritics"
-import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
 import { useSearch } from "@/portfolio/_hooks/use-search"
 
 interface NormalizedTocItem extends TocItemProps {
@@ -18,13 +18,13 @@ function getFilteredItems(normalizedItems: NormalizedTocItem[], query: string) {
 
     const flushGroup = () => {
         if (currentCategory) {
-            const isCategoryMatch =
+            const isHeaderMatch =
                 currentCategory._normalizedLabel.includes(normalizedQuery)
             const matchingChildren = currentChildren.filter((child) =>
                 child._normalizedLabel.includes(normalizedQuery)
             )
 
-            if (isCategoryMatch || matchingChildren.length > 0) {
+            if (isHeaderMatch || matchingChildren.length > 0) {
                 result.push(currentCategory)
                 result.push(...matchingChildren)
             }

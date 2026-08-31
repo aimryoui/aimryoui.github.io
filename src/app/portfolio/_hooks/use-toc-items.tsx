@@ -16,13 +16,16 @@ import {
     SelectedWorksIcon,
     SoftwareIcon
 } from "@/portfolio/_components/_icons/toc-icons"
-import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
+import { useQueryStore } from "@/stores/query-store"
 
 import { projects } from "~/.velite"
 
 function useTocItems() {
+    const role = useQueryStore((s) => s.role)
+
     return useMemo(() => {
-        const projectGroups = groupProjectsByCategory(projects)
+        const projectGroups = groupProjectsByCategory(projects, role)
 
         const selectedWorksGroup = projectGroups.find(
             (g) => g.id === "selected-works"
@@ -145,7 +148,7 @@ function useTocItems() {
         ]
 
         return tocItems
-    }, [])
+    }, [role])
 }
 
 export { useTocItems }

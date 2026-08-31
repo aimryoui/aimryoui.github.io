@@ -12,8 +12,8 @@ export default plugin(({ matchVariant }) => {
         "group-is",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:is(${value}) &`
-                : `.group:is(${value}) &`,
+                ? `:merge(.group\\/${modifier}):is(${value}) &`
+                : `:merge(.group):is(${value}) &`,
         {
             values: {}
         }
@@ -23,8 +23,8 @@ export default plugin(({ matchVariant }) => {
         "group-nth",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:nth-child(${value}) &`
-                : `.group:nth-child(${value}) &`,
+                ? `:merge(.group\\/${modifier}):nth-child(${value}) &`
+                : `:merge(.group):nth-child(${value}) &`,
         {
             values: sharedValues
         }
@@ -33,8 +33,8 @@ export default plugin(({ matchVariant }) => {
         "group-nth-of-type",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:nth-of-type(${value}) &`
-                : `.group:nth-of-type(${value}) &`,
+                ? `:merge(.group\\/${modifier}):nth-of-type(${value}) &`
+                : `:merge(.group):nth-of-type(${value}) &`,
         {
             values: sharedValues
         }
@@ -43,8 +43,8 @@ export default plugin(({ matchVariant }) => {
         "group-nth-last",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:nth-last-child(${value}) &`
-                : `.group:nth-last-child(${value}) &`,
+                ? `:merge(.group\\/${modifier}):nth-last-child(${value}) &`
+                : `:merge(.group):nth-last-child(${value}) &`,
         {
             values: sharedValues
         }
@@ -53,8 +53,8 @@ export default plugin(({ matchVariant }) => {
         "group-nth-last-of-type",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:nth-last-of-type(${value}) &`
-                : `.group:nth-last-of-type(${value}) &`,
+                ? `:merge(.group\\/${modifier}):nth-last-of-type(${value}) &`
+                : `:merge(.group):nth-last-of-type(${value}) &`,
         {
             values: sharedValues
         }

@@ -9,9 +9,21 @@ import { useMediaQuery } from "@/hooks/use-media-query"
 import { cn } from "@/lib/utils"
 import { LogoLink } from "@/portfolio/_components/_layout/navigation/logo"
 import { MobileTocButton } from "@/portfolio/_components/_layout/toc/mobile"
+import { type TocConfig } from "@/portfolio/_components/_layout/toc/types/toc"
 import { PreferencesButton } from "@/portfolio/_components/_layout/toolbar/preferences-button"
 
-function Toolbar({ className }: { className?: string }) {
+interface ToolbarProps extends Pick<
+    TocConfig,
+    "items" | "enableStartEndAutoHighlight"
+> {
+    className?: string
+}
+
+function Toolbar({
+    className,
+    items,
+    enableStartEndAutoHighlight
+}: ToolbarProps) {
     const isMobile = useMediaQuery("lg", true)
 
     return (
@@ -69,7 +81,12 @@ function Toolbar({ className }: { className?: string }) {
                                 )}
                             >
                                 <SvgElementLine className="absolute inset-y-0 start-0 z-1 h-[--toolbar-height] w-px" />
-                                <MobileTocButton />
+                                <MobileTocButton
+                                    items={items}
+                                    enableStartEndAutoHighlight={
+                                        enableStartEndAutoHighlight
+                                    }
+                                />
                             </li>
                         )}
                     </Tooltip>

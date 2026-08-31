@@ -155,7 +155,7 @@ function SocialButton({
             {isWebKit ? (
                 <Link
                     data-cursor="ignore"
-                    data-expanded={isExpanded}
+                    data-expanded={isExpanded ? "" : undefined}
                     href={url}
                     externalLink
                     openInNewTab
@@ -200,12 +200,12 @@ function SocialButton({
                                     "will-change-[transform,grid-template-columns,opacity,padding] transition-[transform,grid-template-columns,opacity,padding] ease-spring duration-400",
                                     {
                                         "group-hover": "delay-75",
-                                        "group-data-[expanded=true]": "delay-75"
+                                        "group-data-expanded": "delay-75"
                                     }
                                 ],
                                 "group-hover":
                                     "translate-x-0 grid-cols-[1fr] pe-3.5 ps-3.5 opacity-100",
-                                "group-data-[expanded=true]":
+                                "group-data-expanded":
                                     "translate-x-0 grid-cols-[1fr] pe-3.5 ps-3.5 opacity-100",
                                 rtl: "-translate-x-11",
                                 xs: "hidden"
@@ -231,7 +231,7 @@ function SocialButton({
                                 "motion-preferred": {
                                     "group-hover":
                                         "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl",
-                                    "group-data-[expanded=true]":
+                                    "group-data-expanded":
                                         "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl"
                                 },
                                 xs: "!animate-none"
@@ -249,7 +249,7 @@ function SocialButton({
             ) : (
                 <Link
                     data-cursor="ignore"
-                    data-expanded={isExpanded}
+                    data-expanded={isExpanded ? "" : undefined}
                     href={url}
                     externalLink
                     openInNewTab
@@ -304,7 +304,7 @@ function SocialButton({
                                     "motion-reduced": "transition-none",
                                     "group-hover":
                                         "translate-x-0 grid-cols-[1fr] pe-3.5 ps-4 delay-75",
-                                    "group-data-[expanded=true]":
+                                    "group-data-expanded":
                                         "translate-x-0 grid-cols-[1fr] pe-3.5 ps-4 delay-75",
                                     rtl: "-translate-x-10"
                                 }
@@ -325,7 +325,7 @@ function SocialButton({
                                     "motion-preferred": {
                                         "group-hover":
                                             "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl",
-                                        "group-data-[expanded=true]":
+                                        "group-data-expanded":
                                             "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl"
                                     }
                                 }
@@ -343,12 +343,12 @@ function SocialButton({
                                     "will-change-[transform,grid-template-columns,padding] transition-[transform,grid-template-columns,padding] ease-spring duration-400",
                                     {
                                         "group-hover": "delay-75",
-                                        "group-data-[expanded=true]": "delay-75"
+                                        "group-data-expanded": "delay-75"
                                     }
                                 ],
                                 "group-hover":
                                     "translate-x-0 grid-cols-[1fr] pe-3.5 ps-4",
-                                "group-data-[expanded=true]":
+                                "group-data-expanded":
                                     "translate-x-0 grid-cols-[1fr] pe-3.5 ps-4",
                                 rtl: "-translate-x-10",
                                 xs: "hidden"
@@ -363,8 +363,7 @@ function SocialButton({
                                         "motion-preferred":
                                             "transition-opacity ease-spring duration-400",
                                         "group-hover": "opacity-100",
-                                        "group-data-[expanded=true]":
-                                            "opacity-100"
+                                        "group-data-expanded": "opacity-100"
                                     }
                                 )}
                             >
@@ -386,12 +385,12 @@ function SocialButton({
                                 "motion-preferred": {
                                     "group-hover":
                                         "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl",
-                                    "group-data-[expanded=true]":
+                                    "group-data-expanded":
                                         "animate-social-button-shake-in rtl:animate-social-button-shake-in-rtl"
                                 },
                                 "group-hover":
                                     "border-transparent transition-none",
-                                "group-data-[expanded=true]":
+                                "group-data-expanded":
                                     "border-transparent transition-none",
                                 xs: "!animate-none !border-white/15"
                             }

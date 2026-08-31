@@ -13,17 +13,18 @@ import {
 import { TooltipTrigger } from "@/components/ui/tooltip"
 import { Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
-import {
-    type TocItemProps,
-    TocItemRow
-} from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { useTocStore } from "@/portfolio/_components/_layout/toc/stores/toc-store"
+import { TocItemRow } from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
 import { useTocGroup } from "@/portfolio/_hooks/use-toc-tree"
 
 interface TocGroupProps extends CollapsibleProps {
     header: TocItemProps
     items: TocItemProps[]
-    debouncedQuery: string
     onItemPress: (item: TocItemProps) => void
+    collapsible?: boolean
+    isFirst?: boolean
+    isLast?: boolean
 }
 
 const TocGroup = memo(
@@ -31,19 +32,47 @@ const TocGroup = memo(
         className,
         header,
         items,
-        debouncedQuery,
         onItemPress,
+        collapsible,
+        isFirst,
+        isLast,
         ...props
     }: TocGroupProps) => {
+        const compact = useTocStore((s) => s.compact)
         const isSelectedWorks = header.id === "selected-works"
         const { isExpanded, setIsExpanded } = useTocGroup(
             items,
-            !isSelectedWorks
+            isSelectedWorks
         )
 
-        return (
+        const hasActiveChild = useTocStore((s) =>
+            s.activeId ? items.some((item) => item.id === s.activeId) : false
+        )
+
+        return items.length === 0 || collapsible === false ? (
+            <>
+                <TocItemRow
+                    variant="header"
+                    item={header}
+                    onPress={onItemPress}
+                    collapsible={false}
+                />
+                {items.length > 0 && (
+                    <ul className="flex flex-col pb-3">
+                        {items.map((item) => (
+                            <TocItemRow
+                                key={item.id}
+                                variant="item"
+                                item={item}
+                                onPress={onItemPress}
+                            />
+                        ))}
+                    </ul>
+                )}
+            </>
+        ) : (
             <Collapsible
-                defaultExpanded={!isSelectedWorks}
+                defaultExpanded={isSelectedWorks}
                 isExpanded={isExpanded}
                 onExpandedChange={setIsExpanded}
                 className={cn(
@@ -58,10 +87,12 @@ const TocGroup = memo(
                 {...props}
             >
                 <TocItemRow
-                    variant="category"
+                    variant="header"
                     item={header}
-                    query={debouncedQuery}
                     onPress={onItemPress}
+                    activeViaChild={
+                        (hasActiveChild && !isExpanded) || undefined
+                    }
                 >
                     <TooltipTrigger
                         delay={500}
@@ -70,48 +101,89 @@ const TocGroup = memo(
                                 <span>
                                     {isExpanded ? "Collapse" : "Expand"}{" "}
                                     <Highlight>{header.label}</Highlight>{" "}
-                                    category
+                                    {compact ? "section" : "category"}
                                 </span>
                             ),
                             side: "inline-end",
                             sideOffset: -14,
-                            alignOffset: isSelectedWorks ? 0 : 6
+                            alignOffset: compact
+                                ? isFirst
+                                    ? 6
+                                    : !isExpanded && isLast
+                                      ? -6
+                                      : 0
+                                : isExpanded
+                                  ? 6
+                                  : 0
                         }}
                         render={
                             <CollapsibleTrigger
                                 pressSound={isExpanded ? "zoom-out" : "zoom-in"}
                                 className={cn(
-                                    "group/collapsibile-trigger -mt-3 pb-1 pe-5.5 ps-5 pt-4",
+                                    "group/collapsibile-trigger pe-5.5 ps-5",
                                     "group-has-[input:not(:placeholder-shown)]/sidebar:hidden",
-                                    {
-                                        "group-not-data-expanded/collapsible":
-                                            "-mb-3 pb-4"
-                                    }
+                                    compact
+                                        ? [
+                                              "py-1.5",
+                                              {
+                                                  "group-first/collapsible":
+                                                      "-mt-3 pt-4.5",
+                                                  "group-last/collapsible:group-not-data-expanded/collapsible":
+                                                      "-mb-3 pb-4.5"
+                                              }
+                                          ]
+                                        : [
+                                              "-my-3 py-4.5",
+                                              {
+                                                  "group-data-expanded/collapsible":
+                                                      "-mt-6 pb-1.5"
+                                              }
+                                          ]
                                 )}
                             >
                                 <div
                                     data-cursor="lock"
                                     className={cn(
-                                        "grid size-6 place-items-center rounded-[.75rem] bg-foreground/40 text-inverted !corner-round transition-[border-radius,transform,translate] duration-100",
+                                        "grid size-6 place-items-center rounded-[.75rem] !corner-round transition-[border-radius,transform,translate] duration-100",
                                         {
-                                            dark: "bg-foreground/60",
-                                            rtl: "-scale-y-100",
-                                            "group-hover/collapsibile-trigger":
-                                                "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
                                             "group-active/collapsibile-trigger":
-                                                "motion-preferred:translate-y-0.5",
-                                            "group-focus-visible/collapsibile-trigger":
-                                                "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
-                                            "group-data-expanded/collapsible": [
-                                                "bg-foreground/10 text-muted-foreground",
-                                                {
-                                                    dark: "bg-foreground/15",
-                                                    "group-hover/collapsibile-trigger":
-                                                        "bg-foreground/20 text-foreground data-target-cursor:rounded-none dark:bg-foreground/25",
-                                                    "group-focus-visible/collapsibile-trigger":
-                                                        "bg-foreground/20 text-foreground dark:bg-foreground/25"
-                                                }
-                                            ]
+                                                "motion-preferred:translate-y-0.5"
+                                        },
+                                        compact
+                                            ? [
+                                                  "text-muted-foreground/70",
+                                                  {
+                                                      "group-hover/collapsibile-trigger":
+                                                          "bg-foreground/15 text-foreground data-target-cursor:rounded-none dark:bg-foreground/20",
+                                                      "group-active/collapsibile-trigger":
+                                                          "bg-foreground/20 text-foreground data-target-cursor:rounded-none dark:bg-foreground/15",
+                                                      "group-data-expanded/collapsible":
+                                                          "text-foreground"
+                                                  }
+                                              ]
+                                            : [
+                                                  "bg-foreground/40 text-inverted",
+                                                  {
+                                                      dark: "bg-foreground/60",
+                                                      "group-hover/collapsibile-trigger":
+                                                          "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
+                                                      "group-focus-visible/collapsibile-trigger":
+                                                          "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
+                                                      "group-data-expanded/collapsible":
+                                                          [
+                                                              "bg-foreground/10 text-muted-foreground",
+                                                              {
+                                                                  dark: "bg-foreground/15",
+                                                                  "group-hover/collapsibile-trigger":
+                                                                      "bg-foreground/20 text-foreground data-target-cursor:rounded-none dark:bg-foreground/25",
+                                                                  "group-focus-visible/collapsibile-trigger":
+                                                                      "bg-foreground/20 text-foreground dark:bg-foreground/25"
+                                                              }
+                                                          ]
+                                                  }
+                                              ],
+                                        {
+                                            rtl: "-scale-y-100"
                                         }
                                     )}
                                 >
@@ -124,7 +196,9 @@ const TocGroup = memo(
                                                 rtl: "-translate-y-[.5px] rotate-180",
                                                 "group-not-data-expanded/collapsible":
                                                     [
-                                                        "translate-x-[.5px] translate-y-0 -rotate-90 dark:stroke-2.5",
+                                                        "translate-x-[.5px] translate-y-0 -rotate-90",
+                                                        !compact
+                                                            && "dark:stroke-2.5",
                                                         {
                                                             rtl: "-translate-x-[.5px] rotate-90"
                                                         }
@@ -142,9 +216,8 @@ const TocGroup = memo(
                         {items.map((item) => (
                             <TocItemRow
                                 key={item.id}
-                                variant="project"
+                                variant="item"
                                 item={item}
-                                query={debouncedQuery}
                                 onPress={onItemPress}
                             />
                         ))}

@@ -23,7 +23,7 @@ function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
             aria-label="breadcrumb"
             data-slot="breadcrumb"
             className={cn(
-                "z-50 flex h-full items-center justify-start font-wght-500",
+                "z-65 flex h-full items-center justify-start font-wght-500",
                 className
             )}
             {...props}

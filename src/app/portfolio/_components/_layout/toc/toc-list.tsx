@@ -7,133 +7,141 @@ import {
 import { SmoothScrolling } from "@/components/animations/smooth-scrolling"
 import { getPreferences } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
+import { useTocStore } from "@/portfolio/_components/_layout/toc/stores/toc-store"
 import { TocDivider } from "@/portfolio/_components/_layout/toc/toc-divider"
 import { TocGroup } from "@/portfolio/_components/_layout/toc/toc-group"
+import { TocItemRow } from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
 import {
-    type TocItemProps,
-    TocItemRow
-} from "@/portfolio/_components/_layout/toc/toc-item-row"
-import { useTocScroll } from "@/portfolio/_hooks/use-toc-scroll"
+    scrollElementToCenter,
+    useTocScroll
+} from "@/portfolio/_hooks/use-toc-scroll"
 import { useTocTree } from "@/portfolio/_hooks/use-toc-tree"
 
 interface TocListProps extends LineSidebarProps {
-    items: TocItemProps[]
-    filteredItems: TocItemProps[]
-    debouncedQuery: string
+    lineSidebarEffect?: boolean
 }
-
 function handleItemClick(
     item: TocItemProps,
     clickedTargetRef: React.RefObject<string | null>,
     tocContainer?: HTMLElement | null
 ) {
     const targetId = item.id
-
     if (item.mode === "route" && item.href) {
         clickedTargetRef.current = null
-
         let tocEl = tocContainer?.querySelector(
             `[data-toc-id="${targetId}"][data-toc-href="${item.href}"]`
         )
         tocEl ??= tocContainer?.querySelector(`[data-toc-id="${targetId}"]`)
-
         if (tocEl) {
             const { motionReduced } = getPreferences()
-            tocEl.scrollIntoView({
-                block: "center",
-                behavior: motionReduced ? "instant" : "smooth"
-            })
+            scrollElementToCenter(
+                tocEl as HTMLElement,
+                motionReduced ? "instant" : "smooth"
+            )
         }
     } else {
         clickedTargetRef.current = targetId
     }
 }
-
 function TocList({
     className,
-    items,
-    filteredItems,
-    debouncedQuery,
     onActiveReady,
+    lineSidebarEffect = true,
     ...props
 }: TocListProps & {
     onActiveReady?: () => void
 }) {
+    const compact = useTocStore((s) => s.compact)
+    const items = useTocStore((s) => s.items)
+    const filteredItems = useTocStore((s) => s.filteredItems)
+    const debouncedQuery = useTocStore((s) => s.query)
+
     const { scrollContainerRef, clickedTargetRef } = useTocScroll({
         items,
         debouncedQuery,
         onActiveReady
     })
-
     const handlePress = useCallback(
         (item: TocItemProps) => {
             handleItemClick(item, clickedTargetRef, scrollContainerRef.current)
         },
         [clickedTargetRef, scrollContainerRef]
     )
-
     const tree = useTocTree(filteredItems)
+
+    const firstGroupIndex = tree.findIndex((node) => node.type === "group")
+    const lastGroupIndex = tree.findLastIndex((node) => node.type === "group")
+
+    const ScrollContainer = lineSidebarEffect ? LineSidebar : "div"
 
     return (
         <SmoothScrolling
             className={cn(
-                "group overflow-x-hidden overflow-y-scroll scroll-auto scrollbar-none",
+                "group overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto scrollbar-none",
                 "scroll-fade-y scroll-fade-18 group-has-[input:not(:placeholder-shown)]/sidebar:scroll-fade-none",
                 "hover:scrollbar-thin",
-                {
+                !compact && {
                     "group-is-[[data-sidebar-position='inline-start'][data-effects~='target-cursor']]/html":
                         "ltr:rtl rtl:ltr"
                 },
                 className
             )}
         >
-            <LineSidebar
+            <ScrollContainer
                 ref={scrollContainerRef}
                 itemSelector="[data-toc-item]"
-                className="h-max w-full overflow-visible py-3"
+                className={cn(
+                    compact
+                        ? "[--marker-length:.75rem]"
+                        : "[--marker-length:1.5rem]",
+                    "h-max w-full overflow-visible py-3"
+                )}
                 {...props}
             >
-                {tree.map((node) => {
+                {tree.map((node, index) => {
                     if (node.type === "divider") {
+                        if (compact) return null
                         return (
                             <TocDivider
                                 key={`div-${node.id}`}
-                                className="ltr:ltr rtl:rtl"
+                                className={cn("ltr:ltr rtl:rtl")}
                             />
                         )
                     }
-
                     if (node.type === "group") {
                         return (
                             <TocGroup
                                 key={`group-${node.header.id}`}
                                 header={node.header}
                                 items={node.items}
-                                debouncedQuery={debouncedQuery}
                                 onItemPress={handlePress}
-                                className="ltr:ltr rtl:rtl"
+                                isFirst={index === firstGroupIndex}
+                                isLast={index === lastGroupIndex}
+                                className={cn(!compact && "ltr:ltr rtl:rtl")}
                             />
                         )
                     }
-
                     return (
                         <ul
                             key={`anchors-${node.items[0].id}`}
-                            className="flex flex-col ltr:ltr rtl:rtl"
+                            className={cn(
+                                "flex flex-col",
+                                !compact && "ltr:ltr rtl:rtl"
+                            )}
                         >
                             {node.items.map((item) => (
                                 <TocItemRow
                                     key={item.id}
                                     variant="anchor"
                                     item={item}
-                                    query={debouncedQuery}
                                     onPress={handlePress}
                                 />
                             ))}
                         </ul>
                     )
                 })}
-            </LineSidebar>
+            </ScrollContainer>
         </SmoothScrolling>
     )
 }

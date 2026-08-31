@@ -274,7 +274,7 @@ function LineSidebar({
                 "--accent-color": accentColor,
                 "--text-color": textColor,
                 "--marker-color": markerColor,
-                "--marker-length": `${pxToRem(markerLength)}rem`,
+                // "--marker-length": `${pxToRem(markerLength)}rem`,
                 "--marker-gap": `${pxToRem(markerGap)}rem`,
                 "--tick-scale": tickScale,
                 "--max-shift": `${pxToRem(maxShift)}rem`,

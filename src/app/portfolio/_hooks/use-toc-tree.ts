@@ -1,9 +1,12 @@
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
 
 import { useIsomorphicLayoutEffect } from "@/hooks/use-isomorphic-layout-effect"
-import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
-import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
+import {
+    useTocStore,
+    useTocStoreApi
+} from "@/portfolio/_components/_layout/toc/stores/toc-store"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
 import { useQueryStore } from "@/stores/query-store"
 
 type TocNode =
@@ -17,7 +20,7 @@ function useTocTree(filteredItems: TocItemProps[]): TocNode[] {
             if (item.hidden) return acc
 
             const isCollapsible = item.depth === 2 && item.id !== "outlines"
-            const isProject = item.depth === 3 && !item.icon
+            const isItem = item.depth === 3 && !item.icon
 
             if (item.depth === 2) {
                 acc.push({ type: "divider", id: item.id })
@@ -41,7 +44,7 @@ function useTocTree(filteredItems: TocItemProps[]): TocNode[] {
 
             if (isCollapsible) {
                 acc.push({ type: "group", header: item, items: [] })
-            } else if (isProject) {
+            } else if (isItem) {
                 if (acc.length > 0) {
                     const lastNode = acc[acc.length - 1]
                     if (lastNode.type === "group") {
@@ -64,50 +67,83 @@ function useTocTree(filteredItems: TocItemProps[]): TocNode[] {
     }, [filteredItems])
 }
 
+function isItemActive(
+    item: TocItemProps,
+    activeId: string | null,
+    pathname: string,
+    isFeatureSelected: boolean
+) {
+    if (item.id !== activeId) return false
+    if (item.href?.startsWith("#")) return true
+    const hrefPathname = item.href?.split("?")[0]
+    if (hrefPathname !== pathname) return false
+    const hrefHasFeature = item.href?.includes("feature=selected") ?? false
+    return hrefHasFeature === isFeatureSelected
+}
+
+function checkGroupActive(
+    items: TocItemProps[],
+    activeId: string | null,
+    pathname: string,
+    isFeatureSelected: boolean
+) {
+    return items.some((item) =>
+        isItemActive(item, activeId, pathname, isFeatureSelected)
+    )
+}
+
 function useTocGroup(items: TocItemProps[], defaultExpanded = true) {
     const pathname = usePathname()
     const isFeatureSelected = useQueryStore((s) => s.isFeatureSelected)
+    const store = useTocStoreApi()
+    const query = useTocStore((s) => s.query)
 
     const [isExpanded, setIsExpanded] = useState(() => {
+        if (query && items.length > 0) return true
         if (defaultExpanded) return true
-        const activeId = useTocActiveId.getState().activeId
-        return items.some((i) => {
-            if (i.id !== activeId) return false
-            if (i.href?.startsWith("#")) return true
-            // Match pathname AND feature param to ensure only the correct group expands.
-            // e.g. when ?feature=selected, only the Selected Works item matches;
-            // the regular category item (no query) does NOT expand.
-            const hrefPathname = i.href?.split("?")[0]
-            if (hrefPathname !== pathname) return false
-            const hrefHasFeature = i.href?.includes("feature=selected") ?? false
-            return hrefHasFeature === isFeatureSelected
-        })
+        return checkGroupActive(
+            items,
+            store.getState().activeId,
+            pathname,
+            isFeatureSelected
+        )
     })
 
-    useIsomorphicLayoutEffect(() => {
-        const checkActive = (activeId: string | null) => {
-            const match = items.some((i) => {
-                if (i.id !== activeId) return false
-                if (i.href?.startsWith("#")) return true
-                const hrefPathname = i.href?.split("?")[0]
-                if (hrefPathname !== pathname) return false
-                const hrefHasFeature =
-                    i.href?.includes("feature=selected") ?? false
-                return hrefHasFeature === isFeatureSelected
-            })
+    const wasSearchingRef = useRef(!!query)
 
-            if (match) {
+    useIsomorphicLayoutEffect(() => {
+        if (query) {
+            wasSearchingRef.current = true
+            if (items.length > 0) setIsExpanded(true)
+        } else if (wasSearchingRef.current) {
+            wasSearchingRef.current = false
+            setIsExpanded(
+                defaultExpanded
+                    || checkGroupActive(
+                        items,
+                        store.getState().activeId,
+                        pathname,
+                        isFeatureSelected
+                    )
+            )
+        }
+    }, [query, items, defaultExpanded, pathname, isFeatureSelected, store])
+
+    useIsomorphicLayoutEffect(() => {
+        const handleActiveCheck = (activeId: string | null) => {
+            if (wasSearchingRef.current) return
+            if (
+                checkGroupActive(items, activeId, pathname, isFeatureSelected)
+            ) {
                 setIsExpanded(true)
             }
         }
 
-        checkActive(useTocActiveId.getState().activeId)
-
-        const unsubscribe = useTocActiveId.subscribe((state) => {
-            checkActive(state.activeId)
+        handleActiveCheck(store.getState().activeId)
+        return store.subscribe((state) => {
+            handleActiveCheck(state.activeId)
         })
-        return unsubscribe
-    }, [items, pathname, isFeatureSelected])
+    }, [items, pathname, isFeatureSelected, store])
 
     return { isExpanded, setIsExpanded }
 }

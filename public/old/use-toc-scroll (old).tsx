@@ -1,14 +1,24 @@
 import { useEffect, useMemo, useRef } from "react"
 import { usePathname } from "next/navigation"
 
+import { create } from "zustand"
+
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { getPreferences } from "@/hooks/use-preference"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
-import {
-    useTocStore,
-    useTocStoreApi
-} from "@/portfolio/_components/_layout/toc/stores/toc-store"
 import { useQueryStore } from "@/stores/query-store"
+
+interface TocActiveIdStore {
+    activeId: string | null
+    setActiveId: (id: string | null) => void
+}
+
+const useTocActiveId = create<TocActiveIdStore>((set) => ({
+    activeId: null,
+    setActiveId: (id) => {
+        set({ activeId: id })
+    }
+}))
 
 interface UseTocScrollOptions {
     items: { id: string }[]
@@ -21,37 +31,6 @@ const SCROLL_DELAY = 400
 import { type LenisRef } from "lenis/react"
 
 type ScrollContainerRefTarget = HTMLElement | LenisRef
-
-function scrollElementToCenter(
-    element: HTMLElement,
-    behavior: ScrollBehavior = "smooth"
-) {
-    let parent = element.parentElement
-    while (parent) {
-        const overflowY = window.getComputedStyle(parent).overflowY
-        if (overflowY === "auto" || overflowY === "scroll") {
-            break
-        }
-        parent = parent.parentElement
-    }
-
-    if (!parent) {
-        element.scrollIntoView({ block: "center", behavior })
-        return
-    }
-
-    const parentRect = parent.getBoundingClientRect()
-    const elementRect = element.getBoundingClientRect()
-
-    const relativeTop = elementRect.top - parentRect.top + parent.scrollTop
-    const centerScroll =
-        relativeTop - parent.clientHeight / 2 + elementRect.height / 2
-
-    parent.scrollTo({
-        top: centerScroll,
-        behavior
-    })
-}
 
 function getScrollElement(
     refCurrent: ScrollContainerRefTarget | null
@@ -74,7 +53,7 @@ function getActiveElement(
         `[data-toc-id="${id}"][data-toc-href="${fullPath}"]`
     )
     el ??= container.querySelector(`[data-toc-id="${id}"]`)
-    return el as HTMLElement | null
+    return el
 }
 
 function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
@@ -94,13 +73,9 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
     const hasNotifiedActiveRef = useRef(false)
 
     const allIds = useMemo(() => items.map((item) => item.id), [items])
-
-    const rawActiveId = useScrollSpy(allIds, 40)
-    const enableStartEndAutoHighlight = useTocStore(
-        (s) => s.enableStartEndAutoHighlight
-    )
-    const activeId = useTocStore((s) => s.activeId)
-    const setActiveId = useTocStore((s) => s.setActiveId)
+    const rawActiveId = useScrollSpy(allIds)
+    const activeId = useTocActiveId((s) => s.activeId)
+    const setActiveId = useTocActiveId((s) => s.setActiveId)
     const lastUpdateTimestamp = useRef(0)
 
     const prevQueryRef = useRef(debouncedQuery)
@@ -120,13 +95,19 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
             const container = getScrollElement(scrollContainerRef.current)
             const activeEl = getActiveElement(container, activeId, fullPath)
             if (activeEl) {
-                scrollElementToCenter(activeEl, "instant")
+                activeEl.scrollIntoView({
+                    block: "center",
+                    behavior: "instant"
+                })
             }
         }
     }, [debouncedQuery, activeId, fullPath])
 
     // Compute initial active ID after paint to prevent React from aborting View Transitions
     useEffect(() => {
+        const container = getScrollElement(scrollContainerRef.current)
+        if (!container) return
+
         const hash = window.location.hash.slice(1)
         let initialActiveId = hash && allIds.includes(hash) ? hash : rawActiveId
 
@@ -142,77 +123,31 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                     break
                 }
             }
-
-            // At top of page with no element past activePoint → default to first
-            if (
-                !initialActiveId
-                && enableStartEndAutoHighlight
-                && allIds.length > 0
-            ) {
-                initialActiveId = allIds[0]
-            }
         }
 
         if (initialActiveId) {
             setActiveId(initialActiveId)
-        }
-
-        // Scroll TOC item into view — only possible once container is mounted
-        const container = getScrollElement(scrollContainerRef.current)
-        if (container && initialActiveId) {
             const activeEl = getActiveElement(
                 container,
                 initialActiveId,
                 fullPath
             )
             if (activeEl) {
-                scrollElementToCenter(activeEl, "instant")
+                activeEl.scrollIntoView({
+                    block: "center",
+                    behavior: "instant"
+                })
                 hasInitialScrolledRef.current = true
                 isFirstRenderRef.current = false
             }
         }
-
-        // Notify parent that initial activeId check is complete.
-        // We use double requestAnimationFrame to ensure the browser has time to paint
-        // the "waiting" state (opacity: 0) before the "animating" classes are added.
-        if (!hasNotifiedActiveRef.current) {
-            hasNotifiedActiveRef.current = true
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    onActiveReady?.()
-                })
-            })
-        }
         // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    // Bottom-of-page auto-highlight: when enableStartEndAutoHighlight is on and
-    // the user scrolls to the very bottom, activate the last item
-    useEffect(() => {
-        if (!enableStartEndAutoHighlight || allIds.length === 0) return
-
-        const handleScroll = () => {
-            const { scrollY, innerHeight } = window
-            const isBottom =
-                innerHeight + scrollY
-                >= document.documentElement.scrollHeight - 10
-            if (isBottom) {
-                setActiveId(allIds[allIds.length - 1])
-            }
-        }
-
-        window.addEventListener("scroll", handleScroll, { passive: true })
-        return () => {
-            window.removeEventListener("scroll", handleScroll)
-        }
-    }, [enableStartEndAutoHighlight, allIds, setActiveId])
 
     // Make sure the scrollIntoView animation is finished
     // before setting the other activeIds
     useEffect(() => {
-        // Skip empty string — useScrollSpy returns "" when nothing is detected yet.
-        // We don't want that to override what the mount effect already set.
-        if (!rawActiveId || activeId === rawActiveId) return
+        if (activeId === rawActiveId) return
 
         let currentDelay = 0
 
@@ -232,6 +167,14 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
             clearTimeout(timer)
         }
     }, [rawActiveId, activeId, pathname, fullPath, isBlink, setActiveId])
+
+    // Notify parent that activeId is ready
+    useEffect(() => {
+        if (activeId && !hasNotifiedActiveRef.current) {
+            hasNotifiedActiveRef.current = true
+            onActiveReady?.()
+        }
+    }, [activeId, onActiveReady])
 
     // Scroll active element into view
     useEffect(() => {
@@ -299,7 +242,10 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                             fullPath
                         )
                         if (el) {
-                            scrollElementToCenter(el, behavior)
+                            el.scrollIntoView({
+                                block: "center",
+                                behavior
+                            })
                         }
                     }, delay)
 
@@ -308,7 +254,10 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                     }
                 }
 
-                scrollElementToCenter(activeElement, behavior)
+                activeElement.scrollIntoView({
+                    block: "center",
+                    behavior
+                })
             }
         }
     }, [activeId, pathname, fullPath])
@@ -321,4 +270,4 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
 }
 
 export type { UseTocScrollOptions }
-export { scrollElementToCenter, useTocScroll, useTocStore, useTocStoreApi }
+export { useTocActiveId, useTocScroll }

@@ -30,7 +30,7 @@ import {
 import { siteConfig } from "@/configs/site.config"
 import { useClientSearchParams } from "@/hooks/use-client-search-params"
 import { cn } from "@/lib/utils"
-import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile"
+import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/stores/mobile-toc-store"
 import { useDirectoriesStore } from "@/stores/directories-store"
 import { useQueryStore } from "@/stores/query-store"
 

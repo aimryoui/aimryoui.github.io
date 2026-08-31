@@ -7,12 +7,14 @@ import { cn } from "@/lib/utils"
 interface NoteProps extends React.ComponentProps<typeof Highlight> {
     bold?: boolean
     spaceAround?: boolean
+    sectionLineCenter?: boolean
 }
 
 function Note({
     className,
     bold = false,
     spaceAround = false,
+    sectionLineCenter = false,
     children,
     ...props
 }: NoteProps) {
@@ -53,9 +55,12 @@ function Note({
             </Space>
             {spaceAround && (
                 <>
-                    <SectionLine />
+                    <SectionLine center={sectionLineCenter} />
                     <Divider />
-                    <SectionLine />
+                    <SectionLine
+                        center={sectionLineCenter}
+                        containerClassName="z-55"
+                    />
                 </>
             )}
         </>

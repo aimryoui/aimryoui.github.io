@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { Tooltip } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
+import { useTocStore } from "@/portfolio/_components/_layout/toc/stores/toc-store"
 import {
     TocList,
     type TocListProps
@@ -15,13 +16,8 @@ interface TocProps extends TocListProps {
     shouldAnimate: boolean
 }
 
-function Toc({
-    items,
-    debouncedQuery,
-    filteredItems,
-    handleClearSearch,
-    shouldAnimate
-}: TocProps) {
+function Toc({ handleClearSearch, shouldAnimate, ...props }: TocProps) {
+    const filteredItems = useTocStore((s) => s.filteredItems)
     const rafRef = useRef<number | null>(null)
     const hasRevealed = useRef(!shouldAnimate)
 
@@ -80,12 +76,7 @@ function Toc({
                 {filteredItems.length === 0 ? (
                     <TocSearchNoResult onClear={handleClearSearch} />
                 ) : (
-                    <TocList
-                        items={items}
-                        debouncedQuery={debouncedQuery}
-                        filteredItems={filteredItems}
-                        onActiveReady={handleActiveReady}
-                    />
+                    <TocList onActiveReady={handleActiveReady} {...props} />
                 )}
             </Tooltip>
         </nav>

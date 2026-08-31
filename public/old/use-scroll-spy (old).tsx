@@ -8,7 +8,7 @@ const FPS_INTERVAL = 1000 / FPS
  * Hook to track the ID of the element that is currently in the viewport
  *
  * @param {string[]} ids - List of IDs to be tracked
- * @param {number} offsetPercent - Active point from top of viewport by %
+ * @param {string} offsetPercent - Active point from top of viewport by %
  *   (Default: 40%)
  * @returns {string} The ID of the element that is currently in the viewport
  */
@@ -43,14 +43,14 @@ function useScrollSpy(ids: string[], offsetPercent = 40) {
                 return
             }
 
-            const isBottom =
-                innerHeight + scrollY
-                >= document.documentElement.scrollHeight - 10
-
             if (pathname === "/portfolio" && scrollY < 10) {
                 setActiveId(existingElements[0].el.id)
                 return
             }
+
+            const isBottom =
+                innerHeight + scrollY
+                >= document.documentElement.scrollHeight - 10
 
             if (pathname === "/portfolio" && isBottom) {
                 setActiveId(existingElements[existingElements.length - 1].el.id)

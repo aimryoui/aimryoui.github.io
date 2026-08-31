@@ -1,0 +1,21 @@
+interface TocItemProps {
+    id: string
+    label: string
+    depth: number
+    href?: string
+    mode?: "anchor" | "route"
+    kind?: "static" | "project"
+    icon?: React.ReactNode
+    hidden?: boolean
+}
+
+type TocItemVariant = "header" | "item" | "anchor"
+
+interface TocConfig {
+    items?: TocItemProps[]
+    enableStartEndAutoHighlight?: boolean
+    compact?: boolean
+    labelElement?: "span" | "bdi"
+}
+
+export type { TocConfig, TocItemProps, TocItemVariant }

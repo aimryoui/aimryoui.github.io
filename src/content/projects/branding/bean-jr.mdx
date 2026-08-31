@@ -46,12 +46,17 @@ export const basePath = "/branding/bean-jr"
                 percentageRounded={4}
             />
         </CarouselItem>
-        <CarouselImage
-            srcPattern={`${basePath}/{3-4}.jpg`}
-            alt="Introduction"
-            dim
-            percentageRounded={4}
-        />
+        <Range start={3} end={4}>
+            {(num) => (
+                <CarouselImage
+                    key={num}
+                    src={`${basePath}/${num}.jpg`}
+                    alt="Introduction"
+                    dim
+                    percentageRounded={4}
+                />
+            )}
+        </Range>
     </Carousel>
 </MediaFrame>
 
@@ -65,12 +70,17 @@ export const basePath = "/branding/bean-jr"
                 percentageRounded={4}
             />
         </CarouselItem>
-        <CarouselImage
-            srcPattern={`${basePath}/{6-7}.jpg`}
-            alt="About"
-            dim
-            percentageRounded={4}
-        />
+        <Range start={6} end={7}>
+            {(num) => (
+                <CarouselImage
+                    key={num}
+                    src={`${basePath}/${num}.jpg`}
+                    alt="About"
+                    dim
+                    percentageRounded={4}
+                />
+            )}
+        </Range>
     </Carousel>
 </MediaFrame>
 
@@ -85,7 +95,7 @@ export const basePath = "/branding/bean-jr"
             />
         </CarouselItem>
         <CarouselImage
-            srcPattern={`${basePath}/{9}.jpg`}
+            src={`${basePath}/9.jpg`}
             alt="Brand Voice"
             dim
             percentageRounded={4}
@@ -103,12 +113,17 @@ export const basePath = "/branding/bean-jr"
                 percentageRounded={4}
             />
         </CarouselItem>
-        <CarouselImage
-            srcPattern={`${basePath}/{11-26}.jpg`}
-            alt="Logo"
-            dim
-            percentageRounded={4}
-        />
+        <Range start={11} end={26}>
+            {(num) => (
+                <CarouselImage
+                    key={num}
+                    src={`${basePath}/${num}.jpg`}
+                    alt="Logo"
+                    dim
+                    percentageRounded={4}
+                />
+            )}
+        </Range>
     </Carousel>
 </MediaFrame>
 
@@ -122,12 +137,17 @@ export const basePath = "/branding/bean-jr"
                 percentageRounded={4}
             />
         </CarouselItem>
-        <CarouselImage
-            srcPattern={`${basePath}/{28-31}.jpg`}
-            alt="Colors"
-            dim
-            percentageRounded={4}
-        />
+        <Range start={28} end={31}>
+            {(num) => (
+                <CarouselImage
+                    key={num}
+                    src={`${basePath}/${num}.jpg`}
+                    alt="Colors"
+                    dim
+                    percentageRounded={4}
+                />
+            )}
+        </Range>
     </Carousel>
 </MediaFrame>
 
@@ -141,12 +161,17 @@ export const basePath = "/branding/bean-jr"
                 percentageRounded={4}
             />
         </CarouselItem>
-        <CarouselImage
-            srcPattern={`${basePath}/{33-40}.jpg`}
-            alt="Typography"
-            dim
-            percentageRounded={4}
-        />
+        <Range start={33} end={40}>
+            {(num) => (
+                <CarouselImage
+                    key={num}
+                    src={`${basePath}/${num}.jpg`}
+                    alt="Typography"
+                    dim
+                    percentageRounded={4}
+                />
+            )}
+        </Range>
     </Carousel>
 </MediaFrame>
 
@@ -160,12 +185,17 @@ export const basePath = "/branding/bean-jr"
                 percentageRounded={4}
             />
         </CarouselItem>
-        <CarouselImage
-            srcPattern={`${basePath}/{42-56}.jpg`}
-            alt="Design Application"
-            dim
-            percentageRounded={4}
-        />
+        <Range start={42} end={56}>
+            {(num) => (
+                <CarouselImage
+                    key={num}
+                    src={`${basePath}/${num}.jpg`}
+                    alt="Design Application"
+                    dim
+                    percentageRounded={4}
+                />
+            )}
+        </Range>
     </Carousel>
 </MediaFrame>
 

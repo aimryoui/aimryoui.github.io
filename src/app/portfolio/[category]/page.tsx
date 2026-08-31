@@ -108,7 +108,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             <meta property="og:image:alt" content={OG_ALT} />
             <meta name="twitter:image:alt" content={OG_ALT} />
             {/* <ViewTransition name="main"> */}
-            <main className={cn("relative flex-1")}>
+            <main className={cn("relative order-5 flex-1")}>
                 <FlashOverlay />
                 <Space className={cn("flex items-center justify-start")}>
                     <PortfolioBreadcrumb
@@ -268,7 +268,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                 </PaginationPrevious>
                             </PaginationItem>
                             <li className="h-full">
-                                <SvgElementLine />
+                                <SvgElementLine className="h-full" />
                             </li>
                             <PaginationItem>
                                 <PaginationNext

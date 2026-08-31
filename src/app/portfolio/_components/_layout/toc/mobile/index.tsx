@@ -6,8 +6,11 @@ import { ListUpMinimalisticBoldDuotoneIcon } from "@solar-icons/react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { type TocConfig } from "@/portfolio/_components/_layout/toc/types/toc"
 
-export { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-store"
+export { useMobileTocStore } from "@/portfolio/_components/_layout/toc/stores/mobile-toc-store"
+
+type MobileTocProps = Pick<TocConfig, "items" | "enableStartEndAutoHighlight">
 
 const MobileToc = dynamic(() => import("./mobile-toc"), {
     ssr: false,
@@ -27,8 +30,9 @@ const MobileToc = dynamic(() => import("./mobile-toc"), {
     )
 })
 
-function MobileTocButton() {
-    return <MobileToc />
+function MobileTocButton(props: MobileTocProps) {
+    return <MobileToc {...props} />
 }
 
+export type { MobileTocProps }
 export { MobileTocButton }

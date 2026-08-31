@@ -16,8 +16,33 @@ import { Image } from "@/components/media/image"
 import { Video } from "@/components/media/video"
 import { Carousel, CarouselImage, CarouselItem } from "@/components/ui/carousel"
 import { Masonry } from "@/components/ui/masonry"
+import {
+    Section,
+    SectionContent,
+    SectionHeading,
+    SectionTitle
+} from "@/portfolio/_components/mdx/section"
+
+function Range({
+    start,
+    end,
+    children
+}: {
+    start: number
+    end: number
+    children: (i: number) => React.ReactNode
+}) {
+    return (
+        <>
+            {Array.from({ length: end - start + 1 }, (_, i) => i + start).map(
+                children
+            )}
+        </>
+    )
+}
 
 const sharedComponents = {
+    Range,
     Image,
     Video,
     Gif,
@@ -29,6 +54,10 @@ const sharedComponents = {
     MediaFrame,
     MediaFrameContent,
     JustifiedColumn,
+    Section,
+    SectionHeading,
+    SectionTitle,
+    SectionContent,
     SectionLine,
 
     // Icons

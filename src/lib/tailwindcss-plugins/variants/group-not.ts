@@ -13,8 +13,8 @@ export default plugin(({ matchVariant, theme }) => {
         "group-not",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:not(${value}) &`
-                : `.group:not(${value}) &`,
+                ? `:merge(.group\\/${modifier}):not(${value}) &`
+                : `:merge(.group):not(${value}) &`,
         {
             values: tailwindVariants
         }
@@ -23,7 +23,9 @@ export default plugin(({ matchVariant, theme }) => {
     matchVariant(
         "group-not-hover",
         (_, { modifier }) => {
-            const groupSelector = modifier ? `.group\\/${modifier}` : ".group"
+            const groupSelector = modifier
+                ? `:merge(.group\\/${modifier})`
+                : ":merge(.group)"
             return [
                 `${groupSelector}:hover &`,
                 `@media not (hover: hover) { ${groupSelector} & }`
@@ -38,8 +40,8 @@ export default plugin(({ matchVariant, theme }) => {
         "group-not-aria",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:not(*[aria-${value}]) &`
-                : `.group:not(*[aria-${value}]) &`,
+                ? `:merge(.group\\/${modifier}):not(*[aria-${value}]) &`
+                : `:merge(.group):not(*[aria-${value}]) &`,
         {
             values: theme("aria")
         }
@@ -48,8 +50,8 @@ export default plugin(({ matchVariant, theme }) => {
         "group-not-data",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:not(*[data-${value}]) &`
-                : `.group:not(*[data-${value}]) &`,
+                ? `:merge(.group\\/${modifier}):not(*[data-${value}]) &`
+                : `:merge(.group):not(*[data-${value}]) &`,
         {
             values: theme("data")
         }
@@ -59,8 +61,8 @@ export default plugin(({ matchVariant, theme }) => {
         "group-not-nth",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:not(:nth-child(${value})) &`
-                : `.group:not(:nth-child(${value})) &`,
+                ? `:merge(.group\\/${modifier}):not(:nth-child(${value})) &`
+                : `:merge(.group):not(:nth-child(${value})) &`,
         {
             values: sharedValues
         }
@@ -69,8 +71,8 @@ export default plugin(({ matchVariant, theme }) => {
         "group-not-nth-of-type",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:not(:nth-of-type(${value})) &`
-                : `.group:not(:nth-of-type(${value})) &`,
+                ? `:merge(.group\\/${modifier}):not(:nth-of-type(${value})) &`
+                : `:merge(.group):not(:nth-of-type(${value})) &`,
         {
             values: sharedValues
         }
@@ -79,8 +81,8 @@ export default plugin(({ matchVariant, theme }) => {
         "group-not-nth-last",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:not(:nth-last-child(${value})) &`
-                : `.group:not(:nth-last-child(${value})) &`,
+                ? `:merge(.group\\/${modifier}):not(:nth-last-child(${value})) &`
+                : `:merge(.group):not(:nth-last-child(${value})) &`,
         {
             values: sharedValues
         }
@@ -89,8 +91,8 @@ export default plugin(({ matchVariant, theme }) => {
         "group-not-nth-last-of-type",
         (value, { modifier }) =>
             modifier
-                ? `.group\\/${modifier}:not(:nth-last-of-type(${value})) &`
-                : `.group:not(:nth-last-of-type(${value})) &`,
+                ? `:merge(.group\\/${modifier}):not(:nth-last-of-type(${value})) &`
+                : `:merge(.group):not(:nth-last-of-type(${value})) &`,
         {
             values: sharedValues
         }

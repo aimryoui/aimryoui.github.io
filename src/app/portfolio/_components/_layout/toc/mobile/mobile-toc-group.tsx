@@ -12,25 +12,50 @@ import {
 import { Highlight } from "@/components/ui/typography"
 import { cn } from "@/lib/utils"
 import { MobileTocItemRow } from "@/portfolio/_components/_layout/toc/mobile/mobile-toc-item-row"
-import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
+import { useTocStore } from "@/portfolio/_components/_layout/toc/stores/toc-store"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
 import { useTocGroup } from "@/portfolio/_hooks/use-toc-tree"
 
 interface MobileTocGroupProps {
     header: TocItemProps
     items: TocItemProps[]
-    debouncedQuery: string
     onItemPress: (item: TocItemProps) => void
+    collapsible?: boolean
 }
 
 const MobileTocGroup = memo(
-    ({ header, items, debouncedQuery, onItemPress }: MobileTocGroupProps) => {
+    ({ header, items, onItemPress, collapsible }: MobileTocGroupProps) => {
         const isDefaultExpanded = header.id !== "selected-works"
         const { isExpanded, setIsExpanded } = useTocGroup(
             items,
             isDefaultExpanded
         )
 
-        return (
+        const hasActiveChild = useTocStore((s) =>
+            s.activeId ? items.some((item) => item.id === s.activeId) : false
+        )
+
+        return items.length === 0 || collapsible === false ? (
+            <>
+                <MobileTocItemRow
+                    variant="header"
+                    item={header}
+                    onPress={onItemPress}
+                />
+                {items.length > 0 && (
+                    <ul className="flex flex-col">
+                        {items.map((item) => (
+                            <MobileTocItemRow
+                                key={item.id}
+                                variant="item"
+                                item={item}
+                                onPress={onItemPress}
+                            />
+                        ))}
+                    </ul>
+                )}
+            </>
+        ) : (
             <Collapsible
                 defaultExpanded={isDefaultExpanded}
                 isExpanded={isExpanded}
@@ -38,10 +63,12 @@ const MobileTocGroup = memo(
                 className="group/collapsible flex flex-col"
             >
                 <MobileTocItemRow
-                    variant="category"
+                    variant="header"
                     item={header}
-                    query={debouncedQuery}
                     onPress={onItemPress}
+                    activeViaChild={
+                        (hasActiveChild && !isExpanded) || undefined
+                    }
                 >
                     <CollapsibleTrigger
                         haptic={isExpanded ? "light" : "nudge"}
@@ -101,9 +128,8 @@ const MobileTocGroup = memo(
                         {items.map((item) => (
                             <MobileTocItemRow
                                 key={item.id}
-                                variant="project"
+                                variant="item"
                                 item={item}
-                                query={debouncedQuery}
                                 onPress={onItemPress}
                             />
                         ))}

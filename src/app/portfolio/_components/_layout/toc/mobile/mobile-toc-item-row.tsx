@@ -9,10 +9,10 @@ import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
 import { getPreferences } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
-import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/mobile"
+import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/stores/mobile-toc-store"
+import { useTocStore } from "@/portfolio/_components/_layout/toc/stores/toc-store"
 import { type TocItemRowProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
 import { useFlashStore } from "@/portfolio/_components/flash-overlay"
-import { useTocActiveId } from "@/portfolio/_hooks/use-toc-scroll"
 
 function scrollToTarget(id: string) {
     requestAnimationFrame(() => {
@@ -32,14 +32,16 @@ const MobileTocItemRow = memo(
         className,
         item,
         variant = "anchor",
-        query,
         onPress,
         children,
+        activeViaChild,
         ...props
     }: TocItemRowProps) => {
         const pathname = usePathname()
 
-        const isActive = useTocActiveId((s) => s.activeId === item.id)
+        const query = useTocStore((s) => s.query)
+        const _isActive = useTocStore((s) => s.activeId === item.id)
+        const isActive = activeViaChild ?? _isActive
         const href = item.href ?? `#${item.id}`
 
         const isCurrent = isActive
@@ -48,20 +50,20 @@ const MobileTocItemRow = memo(
                 : "true"
             : undefined
 
-        const isProject = variant === "project"
-        const isCategory = variant === "category"
-        const isAnchor = variant === "anchor"
+        const isItem = variant === "item"
+        const isHeader = variant === "header"
+        const isAnchorItem = variant === "anchor"
 
         const hrefPathname = href.split("?")[0].split("#")[0]
         const isSamePath = hrefPathname === pathname || hrefPathname === ""
 
-        const Comp = isProject || isAnchor ? "li" : "div"
+        const Comp = isItem || isAnchorItem ? "li" : "div"
 
         return (
             <Comp
                 className={cn(
                     "pointer-events-auto relative mx-safe-zone box-content flex h-fit touch-auto list-inside items-center",
-                    isProject && [
+                    isItem && [
                         "border-s-1 border-muted-foreground/20",
                         isActive
                             ? {
@@ -88,8 +90,8 @@ const MobileTocItemRow = memo(
                     data-toc-href={href}
                     aria-current={isCurrent}
                     href={href}
-                    pressSound={isProject ? "link" : "button"}
-                    haptic={isProject ? "light" : "success"}
+                    pressSound={isItem ? "link" : "button"}
+                    haptic={isItem ? "light" : "success"}
                     scroll={!isSamePath}
                     tracking={{
                         eventName: "click_toc_link",
@@ -122,13 +124,13 @@ const MobileTocItemRow = memo(
                         item.icon
                             ? "flex items-center gap-3.5 py-2"
                             : "inline-block py-2",
-                        isProject
+                        isItem
                             ? "px-safe-zone text-foreground dark:text-muted-foreground"
                             : "font-wght-500 font-slnt-0",
                         isActive
                             ? "pe-[calc(var(--spacing-safe-zone)+var(--spacing)*7)] !text-highlighted font-wght-600"
                             : {
-                                  hover: isProject
+                                  hover: isItem
                                       ? "text-muted-foreground dark:text-foreground"
                                       : "text-foreground",
                                   active: "!text-highlighted",
@@ -160,7 +162,7 @@ const MobileTocItemRow = memo(
                         </div>
                     )}
                     <bdi translate="no">
-                        {highlightQuery(item.label, query ?? "")
+                        {highlightQuery(item.label, query)
                             ?? formatOrdinals(item.label)}
                     </bdi>
                     {isActive && (

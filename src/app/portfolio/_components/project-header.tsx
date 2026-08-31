@@ -37,7 +37,14 @@ function ProjectHeader({
     detail
 }: Omit<
     (typeof projects)[number],
-    "id" | "name" | "forceExpand" | "slug" | "code" | "filePath"
+    | "id"
+    | "name"
+    | "forceExpand"
+    | "slug"
+    | "code"
+    | "filePath"
+    | "caseStudy"
+    | "toc"
 > & {
     projectId?: ProjectId
     projectName: (typeof projects)[number]["name"]
@@ -177,10 +184,10 @@ function ProjectHeader({
             </div>
             {detail && (
                 <>
-                    <SectionLine />
+                    <SectionLine center />
                     <div
                         className={cn(
-                            "flex flex-col gap-2 px-safe-zone py-safe-zone-vertical"
+                            "flex flex-col gap-2.5 px-safe-zone py-safe-zone-vertical leading-normal"
                         )}
                     >
                         <h2
@@ -194,7 +201,7 @@ function ProjectHeader({
                             {formatOrdinals(detail.description)}
                         </h2>
                         {detail.abbreviation && (
-                            <h3
+                            <p
                                 className={cn(
                                     "text-pretty text-muted-foreground",
                                     {
@@ -203,7 +210,7 @@ function ProjectHeader({
                                 )}
                             >
                                 {formatOrdinals(detail.abbreviation)}
-                            </h3>
+                            </p>
                         )}
                     </div>
                 </>

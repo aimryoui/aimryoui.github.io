@@ -81,13 +81,13 @@ function TocSearch({
                         }
                     }
                 }}
-                className={cn("text-md", className)}
+                className={cn("text-sm lg:text-md", className)}
                 {...props}
             />
             <InputGroupAddon align="inline-start">
                 <MinimalisticMagnifierLinearIcon
                     strokeWidth={2}
-                    className="mb-0.25 size-4.5 group-hover/input-group:text-foreground group-has-[[data-slot=input-group-control]:focus-visible]/input-group:text-foreground"
+                    className="size-4.5 -translate-y-0.25 group-hover/input-group:text-foreground group-has-[[data-slot=input-group-control]:focus-visible]/input-group:text-foreground"
                 />
             </InputGroupAddon>
             <Addons hasValue={hasValue} onClear={onClear} />

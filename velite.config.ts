@@ -11,11 +11,14 @@ import {
     s
 } from "velite"
 
+import { slugify } from "@/helpers/slugify"
 import { TOOL_ICONS, type ToolKey } from "@/portfolio/_configs/tools"
 import { type ProjectId } from "@/types/project-ids"
 
 const HEX_COLOR_REGEX = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/u
 const DIM_PROP_REGEX = /<[^>]+?\bdim\b[^>]*?>/u
+const HEADING_REGEX =
+    /<(SectionHeading|SectionTitle|Section|MediaFrame)[^>]*(?:title|sectionName)=(["'])(.*?)\2[^>]*>/gu
 
 const fileNameWithoutExt = defineSchema(() =>
     s.custom<string | undefined>().transform((value) => {
@@ -39,6 +42,8 @@ const projects = defineCollection({
         type: s.string(),
         name: s.string(),
         category: s.string(),
+
+        caseStudy: s.boolean().default(false),
 
         information: s.object({
             duration: s.string(),
@@ -99,7 +104,28 @@ const projects = defineCollection({
                 return value
             }),
 
-        code: s.mdx()
+        code: s.mdx(),
+        toc: s
+            .custom<{ id: string; text: string; level: 1 | 2 }[]>()
+            .transform((_, { meta }) => {
+                if (!meta.content) return []
+                const headings: { id: string; text: string; level: 1 | 2 }[] =
+                    []
+                for (const match of meta.content.matchAll(HEADING_REGEX)) {
+                    const tag = match[1]
+                    const title = match[3]
+                    headings.push({
+                        id: slugify(title),
+                        text: title,
+                        level:
+                            tag === "SectionHeading" || tag === "MediaFrame"
+                                ? 1
+                                : 2
+                    })
+                }
+                return headings
+            })
+            .default([])
     })
 })
 

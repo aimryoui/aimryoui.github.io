@@ -2,18 +2,18 @@
 type: "Project"
 name: "Siglo"
 category: "Mobile App / Publication / University Capstone Project"
+caseStudy: true
 information:
     duration: "Mar 2025 — Sep 2025"
     subject: "SU25 Capstone Project"
     place: "FPT University HCMC"
 features:
     new: true
-
     selectedCover: "/uiux/siglo/0.jpg"
 social:
     behance: "https://www.behance.net/gallery/237306881/Siglo-Community-Messaging-Mobile-Application"
 override:
-    coverImage: "/uiux/siglo/2.jpg"
+    coverImage: "/uiux/siglo/59.jpg"
 tools:
     - "figma"
     - "photoshop"
@@ -33,12 +33,794 @@ detail:
 
 export const basePath = "/uiux/siglo"
 
-<Note spaceAround className="md:text-start">
+<SectionHeading title="Where did the idea start?" />
+
+<Section order={1} title="We lack a dedicated platform for content creators">
+    <SectionContent>
+        In reality, there are plenty of **social media platforms** available for
+        **content creators**, **celebrities**, **KOLs**, and **KOCs** to use.
+        However, they are **forced to "coexist" with ordinary users**.
+        {/* */}
+        **Don't get me wrong**, we aren't trying to create an environment for an
+        "elite class"; rather, the goal is to clearly **distinguish between
+        these two separate user groups**, each with its own distinct
+        responsibilities and purposes.
+    </SectionContent>
+</Section>
+
+<Section
+    order={2}
+    title="Need a platform that builds for and respects both groups"
+>
+    <SectionContent>
+        A space **free from the clutter of random, unrelated content**. A place
+        that opens up when a content creator **wants to reach** their fans, and
+        when fans **want to connect** with the creator.
+        {/* */}
+        **Policies and conditions that target the right audience**, without
+        being overly comprehensive and leading to conflicts in user management
+        and protection.
+    </SectionContent>
+    <MediaFrame dir="ltr" spaceAround={false} className="flex">
+        <JustifiedColumn className="gap-2">
+            <Image src={`${basePath}/1.jpg`} alt="Index #1" rounded="tl" />
+            <Image src={`${basePath}/2.jpg`} alt="Index #2" rounded="bl" />
+        </JustifiedColumn>
+        <JustifiedColumn className="gap-2">
+            <Image src={`${basePath}/3.jpg`} alt="Index #3" rounded="tr" />
+            <Image src={`${basePath}/4.jpg`} alt="Index #4" />
+            <Image src={`${basePath}/5.jpg`} alt="Index #5" rounded="br" />
+        </JustifiedColumn>
+    </MediaFrame>
+</Section>
+
+<Section order={3} title="Creators need more than followers">
+    <SectionContent>
+        In the age of the creator economy, **influencers and KOLs struggle to
+        build real, lasting communities on platforms dominated by algorithms and
+        fleeting attention**. **Siglo is a new-generation messaging app**
+        designed to **give creators full control over their audience**,
+        **transforming followers into active community members** through private
+        channels, broadcast rooms, and exclusive content spaces.
+    </SectionContent>
+</Section>
+
+<Section order={4} title="Our app empowers communities to thrive">
+    <SectionContent>
+        **With Siglo**, creators can **engage their fans directly**, **spark
+        conversations**, and **nurture loyalty without intermediaries**. By
+        **combining the intimacy of chat with the reach of broadcast**,
+        **Siglo** becomes **not just a messaging tool, but a movement builder**
+        - **empowering creators to grow, lead, and monetize their own digital
+        tribes**.
+    </SectionContent>
+</Section>
+
+<SectionHeading title="The Problems" />
+
+<Section order={1} title="Create an environment where individual Identity matters">
+    <SectionContent>
+        **We don't actively seek out the majority of users.** The majority user
+        group (followers) will come when their favorite person is there.
+        {/* */}
+        Therefore, the goal is to **attract this "core user" group (creators)**
+        and **ensure they feel secure**, **allowing them to focus more on their own
+        growth**.
+        {/* */}
+        > ##### The Absolute Solution
+        >
+        > **Integrate and require users to log in or authenticate via national-level identification methods**, such as **VNeID** in Vietnam.
+        >
+        > Typical examples in Vietnam are financial and banking applications.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/6.jpg`} alt="Index #6" rounded />
+    </MediaFrame>
+    <SectionContent>
+        Implement **tiered verification levels**, requiring higher-level
+        identity authentication only for users who wish to engage more deeply or
+        access interactive features.
+        {/* */}
+        > ##### Siglo Identity Level 1 (SIL-1)
+        >
+        > The **basic registration and verification** process allows you to use the app with its basic functions, suitable for exploring the application.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/10.jpg`}
+            alt="Siglo Identity Level 1"
+            noBorder
+            pngAntiBleed
+        />
+    </MediaFrame>
+    <SectionContent>
+        > ##### Siglo Identity Level 2 (SIL-2)
+        >
+        > **More identity verification steps are required**, such as comparing facial recognition and national ID card data against the authentication platform's database. After successful verification, an authentication badge will appear next to the username as a **symbol of trust**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/11.jpg`}
+            alt="Siglo Identity Level 2"
+            noBorder
+            pngAntiBleed
+        />
+        <Image
+            src={`${basePath}/12.jpg`}
+            alt="Siglo Identity Level 2"
+            dim
+            noBorder
+            pngAntiBleed
+        />
+        <Image
+            src={`${basePath}/13.jpg`}
+            alt="Siglo Identity Level 2"
+            noBorder
+            pngAntiBleed
+        />
+    </MediaFrame>
+</Section>
+
+<Section order={2} title="The Influence of Influencers">
+    <SectionContent>
+        Regardless of who we are - rich or poor, laborer or high-status
+        individual - we are all **human beings entitled to human rights**. The
+        difference between an influential person and others is their ability to
+        **create influence**, **initiate**, **spread**, **advocate**,
+        **attract**, and **inspire**.
+        {/* */}
+        **There are many ways to become famous**, but given the current state of
+        social media platforms, many people **become famous by conveying harmful
+        and shocking titles and contents**, and naturally, this **attracts a great deal of
+        public attention**.
+        {/* */}
+        We cannot simply blame those who **passively consume** this **content
+        where the distinction between good and bad matters less than the level
+        of engagement it generates**, as platform **algorithms** ensure that
+        **highly interactive posts reach a wider audience**.
+        {/* */}
+        > ##### The Transparent Solution
+        >
+        > **Let users choose the content creators they truly want to follow.**
+        >
+        > Create an **invisible pressure of identity** where content creators are **held accountable for their** **past**, **present**, **and future actions**.
+        >
+        > Followers should also face similar pressure, so they **pay more attention to their** **words**, **interactions**, **respect for others**, **and accountability for themselves**.
+        {/* */}
+        When each individual becomes **aware of their true existence**, rather than being just an anonymous person behind a screen, they naturally **become more self-aware**.
+    </SectionContent>
+</Section>
+
+<SectionHeading title="Initial Research & Surveys" />
+
+<Section order={1} title="Survey">
+    <SectionContent>
+        We ran a small survey campaign at the start of the project. **Over 120 people responded**, and **the results made the project very promising**.
+        {/* */}
+        > **92%** of respondents **are or have used an application that has an integrated "Community Chat" feature**.
+        {/* */}
+        The figures and applications confirm a very **promising market**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/16.jpg`} alt="Survey" rounded />
+    </MediaFrame>
+    <SectionContent>
+        > **Many difficulties** that even those who are **admin** or **managing community groups**. **Siglo's mission** is to **solve these problems**.
+        {/* */}
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/17.jpg`} alt="Survey Results #1" rounded />
+    </MediaFrame>
+    <SectionContent>
+        > **Even regular users have difficulties in accessing**, Siglo also **needs to pay attention to ensure 2 separate user flows**.
+        >
+        > Not only is the **percentage of people who have used it high**, but the **frequency of their use is also quite high**.
+        {/* */}
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/18.jpg`} alt="Survey Results #2" rounded />
+    </MediaFrame>
+</Section>
+
+<Section order={2} title="Problem Statements">
+    <SectionContent>
+        We've identified **three core issues** currently facing us:
+        {/* */}
+        > **Creators lack a place** that is **truly born for them**.
+        {/* */}
+        > **Organizations also need a more dedicated platform** with tools to help **reach more detail**.
+        {/* */}
+        > **The community of fans need a platform** that can **motivate their idols** to **want to communicate**.
+    </SectionContent>
+</Section>
+
+<SectionHeading title="Market Research" />
+
+<Section order={1} title="Market Segmentation">
+    <SectionContent>
+        We've identified **five market segments based on user type**: **individual users**, **small enterprises**, **large businesses**, **government agencies**, and **non-profit organizations**.
+        {/* */}
+        And **Siglo** targets:
+        {/* */}
+        > ##### Individual users
+        >
+        > **Content creators**, **KOLs**, **KOCs**, **influencers**, **teachers**, **artists**, **singers**, etc.
+        {/* */}
+        > ##### Small enterprises
+        >
+        > **Talent management companies**, **entertainment companies**, **music bands**, etc.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/20.jpg`} alt="By Type of User(s)" rounded />
+    </MediaFrame>
+    <SectionContent>
+        Secondly, we've categorized the **application platforms** into **three types**: **personal messaging platforms**, **social messaging platforms** and **business messaging platforms**.
+        {/* */}
+        > ##### In this category
+        >
+        > We'll be competing with **personal messaging platforms** and **business messaging platforms**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/21.jpg`} alt="By Type of Platform" rounded />
+    </MediaFrame>
+    <SectionContent>
+        Finally, there are the **core features**, which statistically fall into **5 categories**: **SMS/MMS & RCS messaging**, **instant messaging**, **enterprise & team communication**, **social media messaging**, and **group & community messaging**.
+        {/* */}
+        > ##### In this segment
+        >
+        > We'll be focusing on **group and community messaging features**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/22.jpg`} alt="By Type of (Key) Features" rounded />
+    </MediaFrame>
+</Section>
+
+<Section order={2} title="Market Size">
+    <SectionContent>
+        According to statistics, the **market size of messaging platforms** in
+        general will **increase** sharply from **$47.6 billion to over $165
+        billion between 2024 and 2034**, with a **compound annual growth rate**
+        (CAGR) of **13.25%.**
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/23.jpg`} alt="Market Size" rounded />
+    </MediaFrame>
+</Section>
+
+<SectionHeading title="User Analytics" />
+
+<Section order={1} title="Target Audiences">
+    <SectionContent>
+        > ##### We're aiming
+        >
+        > **KOLs**, **KOCs**, **niche Content Creators** (esp. lifestyle, food, travel, beauty), who can take advantage of the app's features, and **their follower in communities**.
+        {/* */}
+    </SectionContent>
+</Section>
+
+<Section order={2} title="User Segmentation">
+    <SectionContent>
+        {/* */}
+        **Who**, **Where**, **Why** & **What**
+        {/* */}
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/24.jpg`} alt="Market Size" rounded />
+    </MediaFrame>
+</Section>
+
+<Section order={3} title="User Personas">
+    <SectionContent>
+        **Pain point:** Casual **followers drop off** quickly, **no space to take care of their most dedicated fans**.
+        {/* */}
+        > ##### The solution
+        >
+        > A **private** platform, **only for Creators and fans**, **not affected by unnecessary objective factors**, **transparent about the identity** of those who can interact.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/25.jpg`} alt="Bach Tran" rounded />
+    </MediaFrame>
+    <SectionContent>
+        **Pain point:** Find a **simple platform** that **meets the teaching needs**. **Free** software is always better.
+        {/* */}
+        > ##### The solution
+        >
+        > A platform that integrates the **features and tools needed or utilized for teaching**, **clearly dividing user sections**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/26.jpg`} alt="Nguyen Thuy Linh" rounded />
+    </MediaFrame>
+    <SectionContent>
+        **Pain point:** There is **no platform** that **creates a sense of intimacy and privacy** for idols to share comfortably.
+        {/* */}
+        > ##### The solution
+        >
+        > We need **a platform dedicated to following idols**, **not just one but many idols at once**. This is not a bad thing, but **idols like that also want to receive a lot of followers**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/27.jpg`} alt="Khac Nguyen" rounded />
+    </MediaFrame>
+</Section>
+
+<SectionHeading title="Competitive Analysis" />
+
+<Section order={1} title="Direct Competitors">
+    <SectionContent>
+        > ##### Feature to talk
+        >
+        > **Instagram** — **Broadcast Channels**.
+        {/* */}
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/28.jpg`} alt="Instagram" dim rounded />
+    </MediaFrame>
+    <SectionContent>
+        <div className="grid-cols-2 grid gap-x-safe-zone gap-y-1.5 md:grid-cols-1">
+            > ##### Pros
+            >
+            > **Wide ecosystem**, **taken over by a long-standing company** like Meta (formerly Facebook).
+            >
+            > Has a **huge number of users worldwide**.
+            >
+            > Where **many content creators**, **artists**, **photographers** **use and are also welcomed by them**.
+            {/* */}
+            > ##### Cons
+            >
+            > **Originally a social network** with a **simple messaging feature**.
+            >
+            > **The conditions for creating a Broadcast Channel are quite high and complicated**, usually for people with Social Status from Medium or higher.
+            >
+            > **Poor account identity verification**, it seems that **anyone can create as many accounts as they want**.
+            {/* */}
+        </div>
+    </SectionContent>
+    <SectionLine fit />
+    <SectionContent>
+        > ##### Feature to talk
+        >
+        > **Messenger** — **Community Chat**.
+        {/* */}
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/29.jpg`} alt="Messenger" dim rounded />
+    </MediaFrame>
+    <SectionContent>
+        <div className="grid-cols-2 grid gap-x-safe-zone gap-y-1.5 md:grid-cols-1">
+            > ##### Pros
+            >
+            > **Wide ecosystem**, **taken over by a long-standing company** like Meta (formerly Facebook).
+            >
+            > Has a **huge number of users worldwide**. Is an **almost indispensable messaging application on everyone's phone**.
+            >
+            > **Multiple features**, **built-in AI chat**.
+            {/* */}
+            > ##### Cons
+            >
+            > **Overlap with Instagram platform** in community chat feature.
+            >
+            > **Can't find someone by phone number**, can only search by name, and there are a lot of duplicate names.
+            >
+            > **Personal**, **group**, and **community chats** are **all in one place**, making it **hard to distinguish**.
+            {/* */}
+        </div>
+    </SectionContent>
+</Section>
+
+<Section order={2} title="Indirect Competitors">
+    <SectionContent>
+        > ##### Feature to talk
+        >
+        > **Discord** — **Server / Community Server**.
+        {/* */}
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/30.jpg`} alt="Discord" rounded />
+    </MediaFrame>
+    <SectionContent>
+        <div className="grid-cols-2 grid gap-x-safe-zone gap-y-1.5 md:grid-cols-1">
+            > ##### Pros
+            >
+            > Attracted a **huge number of users** (mostly gamers initially).
+            >
+            > Has a **huge number of built-in features**.
+            >
+            > Has some **really useful features like channel sharing within the server**.
+            >
+            > Has a **highly customizable user interface**, attracting more users because they can create an interface that they like.
+            {/* */}
+            > ##### Cons
+            >
+            > **Because of the many features enabled by default**, the **interface becomes confusing and makes new users hesitant to use it**.
+            >
+            > It **works better on computers** than phones.
+            >
+            > **Some features** such as video stream resolution and refresh rate **require a paid package** to increase.
+            {/* */}
+        </div>
+    </SectionContent>
+    <SectionLine fit />
+    <SectionContent>
+        > ##### Feature to talk
+        >
+        > **Zalo** — **Community Group**.
+        {/* */}
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/31.jpg`} alt="Zalo" dim rounded />
+    </MediaFrame>
+    <SectionContent>
+        <div className="grid-cols-2 grid gap-x-safe-zone gap-y-1.5 md:grid-cols-1">
+            > ##### Pros
+            >
+            > Thorough **user verification** and **limiting the number of devices logged in** may be a plus in **avoiding clone accounts**.
+            >
+            > There is a pretty **good business subscription**, **trusted by state-owned enterprises and partner platforms**.
+            >
+            > **More than 80% of Vietnamese people use it daily**. **Easy to use**, even the **elderly can also use** it.
+            {/* */}
+            > ##### Cons
+            >
+            > **Lack of transparency in the use of user data**.
+            >
+            > **Regularly losing photos and videos despite full backups**, it is especially annoying when it happens in large groups like Community Groups.
+            >
+            > The **built-in social media platform is not great**, due to **bad UX** and **not being able to see other people's comments**, although that's what a social network should have.
+            {/* */}
+        </div>
+    </SectionContent>
+    <SectionLine fit />
+    <SectionContent>
+        There are also a few other indirect competitors, though they aren't particularly well-known among Vietnamese people in general.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/32.jpg`} alt="Others" rounded />
+    </MediaFrame>
+</Section>
+
+<SectionHeading title="Build the Branding that makes sense" />
+
+<Section order={1} title="Typography">
+    <SectionContent>
+        After researching and consulting major and modern messaging platforms,
+        we concluded that **sans-serif fonts are necessary**. They are **easy to
+        read on small screens**, **compatible with digital displays**, and above
+        all, they are **modern**.
+        {/* */}
+        This decision is also supported by **psychology** and an **analysis of
+        typeface anatomy**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/43.jpg`} alt="Typeface Psychology" rounded />
+    </MediaFrame>
+    <SectionContent>
+        > ##### What we chose
+        > 
+        > We decided to choose **Helvetica Now Display**, a very familiar typeface, a **modern evolution of the classic** single-master typeface Helvetica.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/44.jpg`} alt="Primary Typeface" rounded />
+    </MediaFrame>
+    <SectionContent>
+        And another point that very few people notice, even big brands. With the
+        **same font weight**, **black/dark text on a white/light background will
+        appear thinner than white/light text on a black/dark background**.
+        {/* */}
+        > ##### Accessibility Solution
+        >
+        > **We increase 1 unit of font-weight in light mode**. For example, Regular on dark mode become Medium on light mode, and so on.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/46.jpg`} alt="Accessibility" dim rounded />
+    </MediaFrame>
+</Section>
+
+<Section order={2} title="Colors">
+    <SectionContent>
+        These are the logos of messaging apps that we found. As you can see,
+        **the blue color band is the longest**, which is **scientifically
+        proven** according to color psychology.
+        {/* */}
+        > Blue is often associated with **trust and calm**, making users feel **safe when exchanging** personal or sensitive information.
+        >
+        > It also represents **communication** and **efficiency**, which are **key elements of any messaging app**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/47.jpg`} alt="Color Psychology" rounded />
+    </MediaFrame>
+    <SectionContent>
+        > ##### The reason of colors you're seeing
+        >
+        > It's also easy to see that we chose **all three of the most vibrant colors** (kind of) in this color spectrum: **yellow**, **green**, and **fluorescent blue**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/48.jpg`} alt="Dark Mode" rounded />
+        <Image src={`${basePath}/49.jpg`} alt="Light Mode" dim rounded />
+    </MediaFrame>
+</Section>
+
+<Section order={3} title="Logomark">
+    <SectionContent>
+        A **bold** and **recognizable** logo is a prerequisite to become an
+        identity image for both the application brand and the application icon.
+        {/* */}
+        In addition, because **Siglo is a messaging application**, the shape of
+        the logo cannot lack the **shape of a chat bubble** so that users can
+        easily build **behavioral memory** when using it.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/50.jpg`} alt="Logomark Options" rounded />
+    </MediaFrame>
+    <SectionContent>
+        <div className="grid-cols-2 grid gap-x-safe-zone gap-y-1.5 md:grid-cols-1">
+        > ##### The left one
+        >
+        > It looks **dynamic** and more **clearly depicts the S-shaped symbol in the brand name**. However, it appears very **messy** and **disorganized**.
+        {/* */}
+        > ##### The right one, yes, the right one
+        >
+        > It looks **neater**, **more serious** and **professional**, **organized**, **simple**, still **showcasing the S-shaped design but without being too obvious**.
+        </div>
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/51.jpg`} alt="Logomark Forming" rounded />
+    </MediaFrame>
+    <SectionContent>
+        This logomark clearly **reflects the app's main function**: **messaging** and **community**. Furthermore, it represents **innovation**, **credibility in person-to-person communication**, and much more.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/52.jpg`}
+            alt="Logomark Versions"
+            rounded
+        />
+        <Image
+            src={`${basePath}/54.jpg`}
+            alt="Logomark Principles"
+            dim
+            rounded
+        />
+    </MediaFrame>
+</Section>
+
+<Section order={4} title="Logotype">
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/55.jpg`} alt="Logotype" rounded />
+    </MediaFrame>
+    <SectionContent>
+        The logotype has **two distinctive features**.
+    </SectionContent>
+    <MediaFrame spaceAround={false} className="flex">
+        <Image src={`${basePath}/55.1.jpg`} alt="Logotype O" rounded />
+        <Image src={`${basePath}/55.2.jpg`} alt="Logotype G" rounded />
+    </MediaFrame>
+    <SectionContent>
+        <div className="grid-cols-2 grid gap-x-2 gap-y-1.5 md:grid-cols-1">
+        > The square mark of the letter **"o"**, both to **emphasize the word "alo"** and to have a **curved shape representing Signal**.
+        {/* */}
+        > The letter **"g"** is stylized with a **rounded shape**, resembling the **number 9**. This is also the **number of wings on the verification badge**.
+        {/* */}
+        </div>
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/56.jpg`} alt="Logotype Versions" rounded />
+    </MediaFrame>
+</Section>
+
+<Section order={5} title="Primary Logo">
+    <SectionContent>
+        The complete version combines both the logomark and the logotype.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/57.jpg`} alt="Primary Logo" rounded />
+    </MediaFrame>
+    <SectionContent>
+        Grid systems, spacing and safe zone of the logo.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/58.jpg`} alt="Logo Grid System" rounded />
+        <Image src={`${basePath}/59.jpg`} alt="Logo Spacing" rounded />
+        <Image src={`${basePath}/60.jpg`} alt="Logo Safe Zone" rounded />
+    </MediaFrame>
+    <SectionContent>Logo versions and display.</SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Carousel slideCount={3}>
+            <Range start={61} end={63}>
+                {(num) => (
+                    <CarouselImage
+                        key={num}
+                        src={`${basePath}/${num}.jpg`}
+                        alt="Logo Versions and Display"
+                        rounded
+                    />
+                )}
+            </Range>
+        </Carousel>
+    </MediaFrame>
+</Section>
+
+<Section order={6} title="Application Icons">
+    <SectionContent>The primary application icon.</SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/64.jpg`}
+            alt="Primary Application Icon"
+            rounded
+        />
+    </MediaFrame>
+    <SectionContent>Grid systems and spacing of the icon.</SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/65.jpg`}
+            alt="Primary Application Icon Grid System and Spacing"
+            rounded
+        />
+    </MediaFrame>
+    <SectionContent>
+        Different versions on different devices and operating systems.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/66.jpg`}
+            alt="Application Icon on Different Devices and Operating Systems"
+            rounded
+        />
+        <Image
+            src={`${basePath}/67.jpg`}
+            alt="Application Icon on iPhone"
+            rounded
+        />
+        <Image
+            src={`${basePath}/68.jpg`}
+            alt="Application Icon on others"
+            rounded
+        />
+    </MediaFrame>
+    <SectionContent>
+        Application icon with dark version as main, there are also light and
+        tinted versions.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/69.jpg`}
+            alt="Application Icon Variations"
+            rounded
+        />
+    </MediaFrame>
+</Section>
+
+<Section order={7} title="Presentation">
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/70.jpg`} alt="Presentation" rounded />
+    </MediaFrame>
+</Section>
+
+<SectionHeading title="Design System" />
+
+<Section order={1} title="Spacing">
+    <SectionContent>
+        Some commonly used spacing sizes. **The entire project uses multiples of
+        4** (not necessarily consecutive). Some exceptions include 0.5, 1, 1.5,
+        and 2.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/71.jpg`} alt="Spacing" rounded />
+    </MediaFrame>
+</Section>
+
+<Section order={2} title="Layout Grid & Hierarchy">
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/72.jpg`}
+            alt="Layout Grid for Mobile & Tablet"
+            rounded
+        />
+        <Image
+            src={`${basePath}/73.jpg`}
+            alt="Layout Grid for Desktop & Web Application (PWA)"
+            rounded
+        />
+    </MediaFrame>
+    <SectionContent>
+        As the application **primarily targets mobile users**, we studied the
+        **safe**, **less safe**, and **hard-to-reach zones** when designing the
+        interface for Siglo.
+        {/* */}
+        > ##### Designed for thumbs
+        >
+        > Move **interface elements and buttons to the bottom edge of the screen**, **prioritizing the left side**.
+        > 
+        > Since people typically **use both hands when typing**, having the **send button on the right is not an issue**.
+        >
+        > Place buttons that **require less frequent interaction along the top edge**, leaving the **central space for the main content**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/74.jpg`} alt="Designed for Thumbs" rounded />
+    </MediaFrame>
+</Section>
+
+<Section order={3} title="Iconography">
+    <SectionContent>Icon properties & grid system.</SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/75.jpg`}
+            alt="Icon Properties & Grid System"
+            rounded
+        />
+    </MediaFrame>
+    <SectionContent>Used icons.</SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Carousel slideCount={5}>
+            <Range start={76} end={80}>
+                {(num) => (
+                    <CarouselImage
+                        key={num}
+                        src={`${basePath}/${num}.jpg`}
+                        alt="Iconography"
+                        rounded
+                    />
+                )}
+            </Range>
+        </Carousel>
+    </MediaFrame>
+</Section>
+
+<Section order={4} title="Components">
+    <SectionContent>Button component with variants and types.</SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/81.jpg`} alt="Button Component" rounded />
+        <Image
+            src={`${basePath}/82.jpg`}
+            alt="Button Variants and Types"
+            rounded
+        />
+    </MediaFrame>
+    <SectionContent>Other components.</SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Carousel slideCount={19}>
+            <Range start={83} end={101}>
+                {(num) => (
+                    <CarouselImage
+                        key={num}
+                        src={`${basePath}/${num}.jpg`}
+                        alt="Components"
+                        rounded
+                    />
+                )}
+            </Range>
+        </Carousel>
+    </MediaFrame>
+</Section>
+
+<SectionHeading title="Final Product" />
+
+<Section order={1} title="550+ Designed Screens">
+    <SectionContent>
+        Over the course of **more than 130 days**, **spanning ideation**,
+        **research**, **defense** and **development**, we successfully completed
+        **over 550 fully designed screens**. This is an achievement we are truly
+        proud of.
+        {/* */}
+        To put this in context, we produced **three to four times as many screen
+        designs as other teams did within the same timeframe**.
+    </SectionContent>
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/102.png`}
+            alt="550+ Screens"
+            percentageRounded={0.8}
+            noBorder
+            pngAntiBleed
+            trimEdges
+        />
+    </MediaFrame>
+</Section>
+
+<Note spaceAround sectionLineCenter className="md:text-start">
     <span className="block mb-0.5">
         <LightbulbBoltBoldDuotoneIcon className="inline size-5 -ms-0.5 -translate-y-0.5" />{" "}
-        **Good to know:**
+        **Recommendation:**
     </span>{" "}
-    This project is better presented on{" "}
+    View all final designed screens on{" "}
     <a
         href="https://www.behance.net/gallery/237306881/Siglo-Community-Messaging-Mobile-Application"
         target="_blank"
@@ -51,380 +833,237 @@ export const basePath = "/uiux/siglo"
     .
 </Note>
 
-<MediaFrame dir="ltr" className="flex">
-    <JustifiedColumn className="gap-2">
-        <Image src={`${basePath}/0.1.jpg`} alt="Index #1" rounded="tl" />
-        <Image src={`${basePath}/0.2.jpg`} alt="Index #2" rounded="bl" />
-    </JustifiedColumn>
-    <JustifiedColumn className="gap-2">
-        <Image src={`${basePath}/0.3.jpg`} alt="Index #3" rounded="tr" />
-        <Image src={`${basePath}/0.4.jpg`} alt="Index #4" />
-        <Image src={`${basePath}/0.5.jpg`} alt="Index #5" rounded="br" />
-    </JustifiedColumn>
-</MediaFrame>
+<Section order={2} title="Some screens showing Siglo's main functions">
+    <MediaFrame spaceAround={false}>
+        <Image src={`${basePath}/103.png`} alt="Chat Box" rounded />
+        <Image src={`${basePath}/104.png`} alt="Message Thread" rounded />
+        <Image src={`${basePath}/105.png`} alt="LIVE" rounded />
+    </MediaFrame>
+</Section>
 
-<MediaFrame dir="ltr" className="grid-cols-2 md:grid-cols-2">
-    <Image src={`${basePath}/0.6.jpg`} alt="Index #6" rounded="tl" />
-    <Image src={`${basePath}/0.7.jpg`} alt="Index #7" rounded="tr" />
-    <Image src={`${basePath}/0.8.jpg`} alt="Index #8" rounded="bl" />
-    <Image src={`${basePath}/0.9.jpg`} alt="Index #9" rounded="br" />
-</MediaFrame>
+<Note spaceAround sectionLineCenter className="md:text-start">
+    <span className="block mb-0.5">
+        <LightbulbBoltBoldDuotoneIcon className="inline size-5 -ms-0.5 -translate-y-0.5" />{" "}
+        **Recommendation:**
+    </span>{" "}
+    View all final designed screens on{" "}
+    <a
+        href="https://www.behance.net/gallery/237306881/Siglo-Community-Messaging-Mobile-Application"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-cursor="ignore"
+        className="inline cursor-pointer"
+    >
+        Behance
+    </a>
+    .
+</Note>
 
-<MediaFrame className="grid-cols-2" sectionName="Logo & Icon Guidelines">
-    <Image src={`${basePath}/2.jpg`} alt="System" rounded />
-    <Image src={`${basePath}/3.jpg`} alt="Safe Zone" rounded />
-    <Image src={`${basePath}/4.jpg`} alt="Logo Mark" rounded />
-    <Image src={`${basePath}/5.jpg`} alt="App Icon" rounded />
-</MediaFrame>
+<SectionHeading title="Design Applications" />
 
-<MediaFrame className="grid-cols-2" sectionName="Typography">
-    <Image src={`${basePath}/6.jpg`} alt="Primary Typeface" rounded />
-    <Image src={`${basePath}/7.jpg`} alt="Secondary Typeface" rounded />
-</MediaFrame>
-
-<MediaFrame className="grid-cols-2" sectionName="Colors">
-    <Image src={`${basePath}/8.jpg`} alt="Dark Mode" rounded />
-    <Image src={`${basePath}/9.jpg`} alt="Light Mode" rounded />
-</MediaFrame>
-
-<MediaFrame sectionName="Logo Presentation">
-    <Image src={`${basePath}/9.5.jpg`} alt="Logo Presentation" rounded />
-</MediaFrame>
-
-<MediaFrame sectionName="Iconography">
-    <Carousel slideCount={7}>
-        <CarouselImage
-            srcPattern={`${basePath}/{10-16}.jpg`}
-            alt="Iconography"
-            rounded
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="Components">
-    <Carousel slideCount={20}>
-        <CarouselImage
-            srcPattern={`${basePath}/{17-36}.jpg`}
-            alt="Components"
-            rounded
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Welcome">
-    <Carousel slideCount={1}>
-        <CarouselImage
-            srcPattern={`${basePath}/37.png`}
-            alt="Welcome"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Sign In">
-    <Carousel slideCount={3}>
-        <CarouselImage
-            srcPattern={`${basePath}/{38-40}.png`}
-            alt="Sign In"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Authentication">
-    <Carousel slideCount={4}>
-        <CarouselImage
-            srcPattern={`${basePath}/{41-44}.png`}
-            alt="Authentication"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Survey & Actions">
-    <Carousel slideCount={2}>
-        <CarouselImage
-            srcPattern={`${basePath}/{45-46}.png`}
-            alt="Survey & Actions"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Tab Pages">
-    <Carousel slideCount={2}>
-        <CarouselImage
-            srcPattern={`${basePath}/{47-48}.png`}
-            alt="Tab Pages"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Chat > Chat Box">
-    <Carousel slideCount={3}>
-        <CarouselImage
-            srcPattern={`${basePath}/{49-51}.png`}
-            alt="Chat Box"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Chat > Chat Box > Message Thread">
-    <Carousel slideCount={4}>
-        <CarouselImage
-            srcPattern={`${basePath}/{52-55}.png`}
-            alt="Message Thread"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Profile">
-    <Carousel slideCount={4}>
-        <CarouselImage
-            srcPattern={`${basePath}/{56-59}.png`}
-            alt="Profile"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Dashboard">
-    <Carousel slideCount={2}>
-        <CarouselImage
-            srcPattern={`${basePath}/{60-61}.png`}
-            alt="Dashboard"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Discovery">
-    <Carousel slideCount={1}>
-        <CarouselImage
-            srcPattern={`${basePath}/62.png`}
-            alt="Discovery"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Media">
-    <Carousel slideCount={1}>
-        <CarouselImage
-            srcPattern={`${basePath}/63.png`}
-            alt="Media"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="User Interface > Activities">
-    <Carousel slideCount={3}>
-        <CarouselImage
-            srcPattern={`${basePath}/{64-66}.png`}
-            alt="Activities"
-            noBorder
-            pngAntiBleed
-            gap={8}
-        />
-    </Carousel>
-</MediaFrame>
-
-<MediaFrame sectionName="550+ Screens">
-    <Image
-        src={`${basePath}/67.png`}
-        alt="550+ Screens"
-        percentageRounded={0.8}
-        noBorder
-        pngAntiBleed
-        trimEdges
-    />
-</MediaFrame>
-
-<MediaFrame sectionName="Landing Page">
-    <Image src={`${basePath}/68.jpg`} alt="Desktop" rounded />
-    <Image src={`${basePath}/69.jpg`} alt="Mobile" rounded />
-</MediaFrame>
-
-<MediaFrame sectionName="Printed Matters" className="flex flex-col gap-2">
-    <div className="w-full flex gap-2">
-        <JustifiedColumn className="gap-2">
-            <Image src={`${basePath}/70.jpg`} alt="Layout Board" />
-            <div className="flex gap-2">
-                <Image src={`${basePath}/71.jpg`} alt="Business Card - Back" />
-                <Image src={`${basePath}/72.jpg`} alt="Business Card - Front" />
-            </div>
-        </JustifiedColumn>
-        <JustifiedColumn className="gap-2">
-            <Image src={`${basePath}/73.jpg`} alt="Brochure - Outer Side" />
-            <Image src={`${basePath}/74.jpg`} alt="Brochure - Inner Side" />
-        </JustifiedColumn>
-        <Image src={`${basePath}/75.jpg`} alt="Standee" row="justified" />
-    </div>
-    <div className="w-full flex gap-2">
-        <JustifiedColumn className="gap-2">
-            <div className="flex gap-2">
+<Section order={1} title="Printed Matters">
+    <SectionContent>
+        Over the course of **more than 130 days**, **spanning ideation**,
+        **research**, **defense** and **development**, we successfully completed
+        **over 550 fully designed screens**. This is an achievement we are truly
+        proud of.
+        {/* */}
+        To put this in context, we produced **three to four times as many screen
+        designs as other teams did within the same timeframe**.
+    </SectionContent>
+    <MediaFrame spaceAround={false} className="flex flex-col gap-2">
+        <div className="w-full flex gap-2">
+            <JustifiedColumn className="gap-2">
+                <Image src={`${basePath}/106.jpg`} alt="Layout Board" />
+                <div className="flex gap-2">
+                    <Image
+                        src={`${basePath}/107.jpg`}
+                        alt="Business Card - Back"
+                    />
+                    <Image
+                        src={`${basePath}/108.jpg`}
+                        alt="Business Card - Front"
+                    />
+                </div>
+            </JustifiedColumn>
+            <JustifiedColumn className="gap-2">
                 <Image
-                    src={`${basePath}/76.jpg`}
-                    alt="Employee Name Card - Back Side"
+                    src={`${basePath}/109.jpg`}
+                    alt="Brochure - Outer Side"
                 />
                 <Image
-                    src={`${basePath}/77.jpg`}
-                    alt="Employee Name Card - Staff"
+                    src={`${basePath}/110.jpg`}
+                    alt="Brochure - Inner Side"
                 />
-                <Image
-                    src={`${basePath}/78.jpg`}
-                    alt="Employee Name Card - Manager"
-                />
-                <Image
-                    src={`${basePath}/79.jpg`}
-                    alt="Employee Name Card - Supervisor"
-                />
-            </div>
-            <div className="flex gap-2">
-                <Image src={`${basePath}/80.jpg`} alt="Tent Card - Main" />
-                <Image src={`${basePath}/81.jpg`} alt="Tent Card - QR" />
-            </div>
-            <div className="flex gap-2">
-                <Image
-                    src={`${basePath}/82.jpg`}
-                    alt="Letterhead - Back Side"
-                />
-                <Image
-                    src={`${basePath}/83.jpg`}
-                    alt="Letterhead - Front Side"
-                />
-            </div>
-        </JustifiedColumn>
-        <JustifiedColumn className="gap-2">
-            <div className="flex gap-2">
-                <Image src={`${basePath}/84.jpg`} alt="Leaflet - Back Side" />
-                <Image src={`${basePath}/85.jpg`} alt="Leaflet - Front Side" />
-            </div>
-            <Image src={`${basePath}/86.jpg`} alt="Letter" />
-            <Image src={`${basePath}/87.jpg`} alt="Envelope - Small" />
-        </JustifiedColumn>
-    </div>
-    <div className="flex gap-2">
-        <Image
-            src={`${basePath}/88.jpg`}
-            alt="Envelope - Big - Front Side"
-            row="justified"
-        />
-        <Image
-            src={`${basePath}/89.jpg`}
-            alt="Envelope - Big - Back Side"
-            row="justified"
-        />
-        <Image src={`${basePath}/90.jpg`} alt="Strap - Short" row="justified" />
-    </div>
-    <Image src={`${basePath}/91.jpg`} alt="Strap - Long" />
-</MediaFrame>
+            </JustifiedColumn>
+            <Image src={`${basePath}/111.jpg`} alt="Standee" row="justified" />
+        </div>
+        <div className="w-full flex gap-2">
+            <JustifiedColumn className="gap-2">
+                <div className="flex gap-2">
+                    <Image
+                        src={`${basePath}/112.jpg`}
+                        alt="Employee Name Card - Back Side"
+                    />
+                    <Image
+                        src={`${basePath}/113.jpg`}
+                        alt="Employee Name Card - Staff"
+                    />
+                    <Image
+                        src={`${basePath}/114.jpg`}
+                        alt="Employee Name Card - Manager"
+                    />
+                    <Image
+                        src={`${basePath}/115.jpg`}
+                        alt="Employee Name Card - Supervisor"
+                    />
+                </div>
+                <div className="flex gap-2">
+                    <Image src={`${basePath}/116.jpg`} alt="Tent Card - Main" />
+                    <Image src={`${basePath}/117.jpg`} alt="Tent Card - QR" />
+                </div>
+                <div className="flex gap-2">
+                    <Image
+                        src={`${basePath}/118.jpg`}
+                        alt="Letterhead - Back Side"
+                        dim
+                    />
+                    <Image
+                        src={`${basePath}/119.jpg`}
+                        alt="Letterhead - Front Side"
+                        dim
+                    />
+                </div>
+            </JustifiedColumn>
+            <JustifiedColumn className="gap-2">
+                <div className="flex gap-2">
+                    <Image
+                        src={`${basePath}/120.jpg`}
+                        alt="Leaflet - Back Side"
+                    />
+                    <Image
+                        src={`${basePath}/121.jpg`}
+                        alt="Leaflet - Front Side"
+                    />
+                </div>
+                <Image src={`${basePath}/122.jpg`} alt="Letter" dim />
+                <Image src={`${basePath}/123.jpg`} alt="Envelope - Small" dim />
+            </JustifiedColumn>
+        </div>
+        <div className="flex gap-2">
+            <Image
+                src={`${basePath}/124.jpg`}
+                alt="Envelope - Big - Front Side"
+                dim
+                row="justified"
+            />
+            <Image
+                src={`${basePath}/125.jpg`}
+                alt="Envelope - Big - Back Side"
+                dim
+                row="justified"
+            />
+            <Image
+                src={`${basePath}/126.jpg`}
+                alt="Strap - Short"
+                row="justified"
+            />
+        </div>
+        <Image src={`${basePath}/127.jpg`} alt="Strap - Long" />
+    </MediaFrame>
+</Section>
 
-<MediaFrame sectionName="Booth Display" className="flex flex-col">
-    <div className="flex gap-2 w-full md:flex-wrap">
-        <Image
-            src={`${basePath}/92.jpg`}
-            alt="Overall"
-            rounded
-            row="justified"
-            className="md:min-w-full"
-        />
-        <Image
-            src={`${basePath}/93.jpg`}
-            alt="Standee"
-            rounded
-            row="justified"
-            className="md:-order-2"
-        />
-        <Image
-            src={`${basePath}/94.jpg`}
-            alt="Table"
-            rounded
-            row="justified"
-            className="md:-order-1"
-        />
-    </div>
-    <div className="flex gap-2 w-full md:flex-wrap">
-        <Image
-            src={`${basePath}/95.jpg`}
-            alt="Table - 1"
-            rounded
-            row="justified"
-        />
-        <Image
-            src={`${basePath}/96.jpg`}
-            alt="Table - 2"
-            rounded
-            row="justified"
-        />
-        <Image
-            src={`${basePath}/97.jpg`}
-            alt="Table - 3"
-            rounded
-            row="justified"
-            className="md:min-w-full"
-        />
-    </div>
-</MediaFrame>
+<Section order={2} title="Booth Display">
+    <MediaFrame spaceAround={false} className="flex flex-col">
+        <div className="flex gap-2 w-full md:flex-wrap">
+            <Image
+                src={`${basePath}/128.jpg`}
+                alt="Overall"
+                rounded
+                row="justified"
+                className="md:min-w-full"
+            />
+            <Image
+                src={`${basePath}/129.jpg`}
+                alt="Standee"
+                rounded
+                row="justified"
+                className="md:-order-2"
+            />
+            <Image
+                src={`${basePath}/130.jpg`}
+                alt="Table"
+                rounded
+                row="justified"
+                className="md:-order-1"
+            />
+        </div>
+        <div className="flex gap-2 w-full md:flex-wrap">
+            <Image
+                src={`${basePath}/131.jpg`}
+                alt="Table - 1"
+                rounded
+                row="justified"
+            />
+            <Image
+                src={`${basePath}/132.jpg`}
+                alt="Table - 2"
+                rounded
+                row="justified"
+            />
+            <Image
+                src={`${basePath}/133.jpg`}
+                alt="Table - 3"
+                rounded
+                row="justified"
+                className="md:min-w-full"
+            />
+        </div>
+    </MediaFrame>
+</Section>
 
-<MediaFrame sectionName="Presentation Deck #0">
-    <Image
-        src={`${basePath}/98.png`}
-        alt="0% Presentation"
-        noBorder
-        pngBorder
-    />
-</MediaFrame>
+<SectionHeading title="Presentation Decks" />
 
-<MediaFrame sectionName="Presentation Deck #30">
-    <Image
-        src={`${basePath}/99.png`}
-        alt="30% Presentation"
-        noBorder
-        pngBorder
-    />
-</MediaFrame>
+<Section order={1} title="0% — Research">
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/134.png`}
+            alt="0% Presentation"
+            noBorder
+            pngBorder
+        />
+    </MediaFrame>
+</Section>
 
-<MediaFrame sectionName="Presentation Deck #70">
-    <Image
-        src={`${basePath}/100.png`}
-        alt="70% Presentation"
-        noBorder
-        pngBorder
-    />
-</MediaFrame>
+<Section order={2} title="30% — Design Quality">
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/135.png`}
+            alt="30% Presentation"
+            noBorder
+            pngBorder
+        />
+    </MediaFrame>
+</Section>
 
-<MediaFrame sectionName="Presentation Deck #100">
-    <Image
-        src={`${basePath}/101.png`}
-        alt="100% Presentation"
-        noBorder
-        pngBorder
-    />
-</MediaFrame>
+<Section order={3} title="70% — Progress & Workload">
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/136.png`}
+            alt="70% Presentation"
+            noBorder
+            pngBorder
+        />
+    </MediaFrame>
+</Section>
+
+<Section order={4} title="100% — Capstone">
+    <MediaFrame spaceAround={false}>
+        <Image
+            src={`${basePath}/137.png`}
+            alt="100% Presentation"
+            noBorder
+            pngBorder
+        />
+    </MediaFrame>
+</Section>

@@ -6,9 +6,13 @@ import dynamic from "next/dynamic"
 import { sendGAEvent } from "@next/third-parties/google"
 
 import { SectionLine } from "@/components/layout/line"
+import { TocStoreProvider } from "@/portfolio/_components/_layout/toc/providers/toc-store-provider"
+import { useTocRevealStore } from "@/portfolio/_components/_layout/toc/stores/toc-store"
 import { TocHeader } from "@/portfolio/_components/_layout/toc/toc-header"
-import { type TocItemProps } from "@/portfolio/_components/_layout/toc/toc-item-row"
-import { useTocRevealStore } from "@/portfolio/_components/_layout/toc/toc-store"
+import {
+    type TocConfig,
+    type TocItemProps
+} from "@/portfolio/_components/_layout/toc/types/toc"
 import { useTocSearch } from "@/portfolio/_hooks/use-toc-search"
 
 const Toc = dynamic(() => import("./toc"), {
@@ -16,11 +20,15 @@ const Toc = dynamic(() => import("./toc"), {
     loading: () => <div className="flex-1 lg:hidden" />
 })
 
-interface TocProps {
-    items: TocItemProps[]
-}
+const EMPTY_ITEMS: TocItemProps[] = []
 
-function TableOfContents({ items }: TocProps) {
+function TableOfContents({
+    items = EMPTY_ITEMS,
+    showSearch = true,
+    compact = false,
+    labelElement,
+    enableStartEndAutoHighlight = true
+}: TocConfig & { showSearch?: boolean }) {
     const inputRef = useRef<HTMLInputElement>(null)
     const [shouldAnimate] = useState(
         () => !useTocRevealStore.getState().hasRevealedOnLoad
@@ -45,23 +53,29 @@ function TableOfContents({ items }: TocProps) {
     if (items.length === 0) return null
 
     return (
-        <>
-            <TocHeader
-                ref={inputRef}
-                value={query}
-                onChange={setQuery}
-                onClear={handleClearSearch}
-                containerClassName="lg:hidden"
-            />
+        <TocStoreProvider
+            compact={compact}
+            labelElement={labelElement}
+            enableStartEndAutoHighlight={enableStartEndAutoHighlight}
+            items={items}
+            filteredItems={filteredItems}
+            query={debouncedQuery}
+        >
+            {showSearch && (
+                <TocHeader
+                    ref={inputRef}
+                    value={query}
+                    onChange={setQuery}
+                    onClear={handleClearSearch}
+                    containerClassName="lg:hidden"
+                />
+            )}
             <SectionLine fit containerClassName="lg:hidden" />
             <Toc
-                items={items}
-                debouncedQuery={debouncedQuery}
-                filteredItems={filteredItems}
                 handleClearSearch={handleClearSearch}
                 shouldAnimate={shouldAnimate}
             />
-        </>
+        </TocStoreProvider>
     )
 }
 

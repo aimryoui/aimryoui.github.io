@@ -42,11 +42,16 @@ export const basePath = "/branding/nguyen-lieu-24h"
         <CarouselItem>
             <Image src={`${basePath}/6.jpg`} alt="Cover" />
         </CarouselItem>
-        <CarouselImage
-            srcPattern={`${basePath}/{7-17}.jpg`}
-            alt="Concept #1"
-            dim
-        />
+        <Range start={7} end={17}>
+            {(num) => (
+                <CarouselImage
+                    key={num}
+                    src={`${basePath}/${num}.jpg`}
+                    alt="Concept #1"
+                    dim
+                />
+            )}
+        </Range>
     </Carousel>
 </MediaFrame>
 
@@ -55,11 +60,16 @@ export const basePath = "/branding/nguyen-lieu-24h"
         <CarouselItem>
             <Image src={`${basePath}/18.jpg`} alt="Cover" />
         </CarouselItem>
-        <CarouselImage
-            srcPattern={`${basePath}/{19-26}.jpg`}
-            alt="Concept #2"
-            dim
-        />
+        <Range start={19} end={26}>
+            {(num) => (
+                <CarouselImage
+                    key={num}
+                    src={`${basePath}/${num}.jpg`}
+                    alt="Concept #2"
+                    dim
+                />
+            )}
+        </Range>
     </Carousel>
 </MediaFrame>
 
@@ -68,11 +78,16 @@ export const basePath = "/branding/nguyen-lieu-24h"
         <CarouselItem>
             <Image src={`${basePath}/27.jpg`} alt="Cover" />
         </CarouselItem>
-        <CarouselImage
-            srcPattern={`${basePath}/{28-35}.jpg`}
-            alt="Concept #3"
-            dim
-        />
+        <Range start={28} end={35}>
+            {(num) => (
+                <CarouselImage
+                    key={num}
+                    src={`${basePath}/${num}.jpg`}
+                    alt="Concept #3"
+                    dim
+                />
+            )}
+        </Range>
     </Carousel>
 </MediaFrame>
 
@@ -85,10 +100,15 @@ export const basePath = "/branding/nguyen-lieu-24h"
         <CarouselItem>
             <Image src={`${basePath}/37.jpg`} alt="Cover" />
         </CarouselItem>
-        <CarouselImage
-            srcPattern={`${basePath}/{38-45}.jpg`}
-            alt="Concept #4"
-            dim
-        />
+        <Range start={38} end={45}>
+            {(num) => (
+                <CarouselImage
+                    key={num}
+                    src={`${basePath}/${num}.jpg`}
+                    alt="Concept #4"
+                    dim
+                />
+            )}
+        </Range>
     </Carousel>
 </MediaFrame>

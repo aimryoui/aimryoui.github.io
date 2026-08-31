@@ -3,7 +3,11 @@ import { notFound } from "next/navigation"
 
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
-import { SectionLine, SvgElementLine } from "@/components/layout/line"
+import {
+    MarginLine,
+    SectionLine,
+    SvgElementLine
+} from "@/components/layout/line"
 import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
 import {
@@ -24,6 +28,7 @@ import {
 import { cn } from "@/lib/utils"
 import ProjectCard from "@/portfolio/_components/cards/project-card"
 import { FlashOverlay } from "@/portfolio/_components/flash-overlay"
+import { ArticleIndex } from "@/portfolio/_components/mdx/article-index"
 import { CaveatLightness } from "@/portfolio/_components/mdx/caveat"
 import { MDXContent } from "@/portfolio/_components/mdx/mdx-content"
 import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrumb"
@@ -120,24 +125,28 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <meta property="og:image:alt" content={OG_ALT} />
             <meta name="twitter:image:alt" content={OG_ALT} />
             {/* <ViewTransition name="main"> */}
-            <main className={cn("relative min-w-0 flex-1")}>
+            <main className={cn("order-5 min-w-0 flex-1")}>
                 <AmbientStyle project={project} />
-                <FlashOverlay />
-                <Space className={cn("flex items-center justify-start")}>
+                <Space
+                    className={cn(
+                        "relative z-60 flex items-center justify-start"
+                    )}
+                >
                     <PortfolioBreadcrumb
                         category={category}
                         categoryTitle={group.title}
                         projectName={project.name}
                     />
                 </Space>
+                <SectionLine showDecoration containerClassName="z-60" />
                 <section
                     id={project.id}
-                    className={cn("scroll-mt-full @container")}
+                    className={cn("flex scroll-mt-full @container")}
                 >
                     {socialData && (
                         <Space
                             className={cn(
-                                "pointer-events-none fixed top-0 z-60 flex w-[100cqw] items-center justify-end bg-transparent px-safe-zone",
+                                "pointer-events-none fixed top-0 z-65 flex w-[100cqw] items-center justify-end bg-transparent px-safe-zone",
                                 {
                                     lg: "bottom-[--toolbar-height] top-auto px-0",
                                     md: "bottom-[calc(var(--toolbar-height)+var(--spacing)*10+var(--px)/2)]"
@@ -150,39 +159,67 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             />
                         </Space>
                     )}
-                    <SectionLine showDecoration />
-                    <Space />
-                    <SectionLine />
-                    <article>
-                        <ProjectHeader
-                            type={project.type}
-                            projectId={project.id}
-                            projectName={project.name}
-                            category={project.category}
-                            information={project.information}
-                            tools={project.tools}
-                            detail={project.detail}
-                        />
+                    <MarginLine
+                        className={cn("order-6", {
+                            xl: "hidden",
+                            "group-data-[sidebar-position=inline-end]/html":
+                                "order-4"
+                        })}
+                    />
+                    <Divider
+                        dir="vertical"
+                        className={cn("sticky top-0 order-7 h-dvh xl:hidden", {
+                            "group-data-[sidebar-position=inline-end]/html":
+                                "order-3"
+                        })}
+                    />
+                    <MarginLine
+                        className={cn("order-8 xl:hidden", {
+                            "group-data-[sidebar-position=inline-end]/html":
+                                "order-2"
+                        })}
+                    />
+                    <ArticleIndex toc={project.toc} />
+                    <div className="relative order-5 flex-1 @container">
+                        <FlashOverlay />
+                        <Space />
+                        <SectionLine center />
+                        <article>
+                            <ProjectHeader
+                                type={project.type}
+                                projectId={project.id}
+                                projectName={project.name}
+                                category={project.category}
+                                information={project.information}
+                                tools={project.tools}
+                                detail={project.detail}
+                            />
 
-                        <SectionLine />
-                        <Divider />
-                        <SectionLine />
+                            <SectionLine center />
+                            <Divider />
+                            <SectionLine containerClassName="z-55" center />
 
-                        {project.caveat?.lightness && (
-                            <>
-                                <CaveatLightness />
-                                <SectionLine />
-                                <Divider />
-                                <SectionLine />
-                            </>
-                        )}
+                            {project.caveat?.lightness && (
+                                <>
+                                    <CaveatLightness />
+                                    <SectionLine center />
+                                    <Divider />
+                                    <SectionLine
+                                        containerClassName="z-55"
+                                        center
+                                    />
+                                </>
+                            )}
 
-                        <MDXContent
-                            code={project.code}
-                            hasSocialLinks={!!socialData}
-                        />
-                    </article>
+                            <MDXContent
+                                code={project.code}
+                                hasSocialLinks={!!socialData}
+                            />
+                        </article>
+                    </div>
                 </section>
+
+                <SectionLine containerClassName="z-60" />
 
                 <Note bold>Project ends. What&#39;s next?</Note>
 
@@ -246,7 +283,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 )}
                             </PaginationItem>
                             <li className="h-full">
-                                <SvgElementLine />
+                                <SvgElementLine className="h-full" />
                             </li>
                             <PaginationItem>
                                 {next ? (
