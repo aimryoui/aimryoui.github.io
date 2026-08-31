@@ -115,22 +115,35 @@ function SectionTitle({
     )
 }
 
-function SectionContent({ className, ...props }: React.ComponentProps<"div">) {
+function SectionContent({
+    className,
+    spaceAround = false,
+    ...props
+}: React.ComponentProps<"div"> & { spaceAround?: boolean }) {
     return (
-        <div
-            className={cn(
-                "flex flex-col gap-2.5 text-pretty bg-background px-safe-zone py-safe-zone-vertical leading-normal",
-                {
-                    "[&_strong]":
-                        "text-foreground font-wght-600 dark:font-wght-450",
-                    "[&_blockquote]":
-                        "mb-1 mt-1.5 space-y-2.5 border-s-3 border-highlighted pb-1.5 ps-4 pt-1",
-                    "[&_blockquote_h5]": "text-highlighted font-wght-600"
-                },
-                className
+        <>
+            <div
+                className={cn(
+                    "flex flex-col gap-2.5 text-pretty bg-background px-safe-zone py-safe-zone-vertical leading-normal",
+                    {
+                        "[&_strong]":
+                            "text-foreground font-wght-600 dark:font-wght-450",
+                        "[&_blockquote]":
+                            "mb-1 mt-1.5 space-y-2.5 border-s-3 border-highlighted pb-1.5 ps-4 pt-1",
+                        "[&_blockquote_h5]": "text-highlighted font-wght-600"
+                    },
+                    className
+                )}
+                {...props}
+            />
+            {spaceAround && (
+                <>
+                    <SectionLine center />
+                    <Divider />
+                    <SectionLine containerClassName="z-55" center />
+                </>
             )}
-            {...props}
-        />
+        </>
     )
 }
 

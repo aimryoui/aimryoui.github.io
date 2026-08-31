@@ -6,7 +6,7 @@ const cspDirectives = [
     "media-src 'self' blob:",
     "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com",
     "font-src 'self'",
-    "frame-src 'none'",
+    "frame-src https://player.vimeo.com/video/1130776798 https://player.vimeo.com/video/1130776855",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",

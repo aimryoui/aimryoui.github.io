@@ -81,7 +81,7 @@ function TocSearch({
                         }
                     }
                 }}
-                className={cn("text-sm lg:text-md", className)}
+                className={cn("text-sm lg:text-base", className)}
                 {...props}
             />
             <InputGroupAddon align="inline-start">

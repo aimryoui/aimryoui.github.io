@@ -1,6 +1,9 @@
 import { useMemo } from "react"
 
-import { LightbulbBoltBoldDuotoneIcon } from "@solar-icons/react"
+import {
+    GolfBoldDuotoneIcon,
+    LightbulbBoltBoldDuotoneIcon
+} from "@solar-icons/react"
 import * as runtime from "react/jsx-runtime"
 
 import { SectionLine } from "@/components/layout/line"
@@ -61,7 +64,8 @@ const sharedComponents = {
     SectionLine,
 
     // Icons
-    LightbulbBoltBoldDuotoneIcon
+    LightbulbBoltBoldDuotoneIcon,
+    GolfBoldDuotoneIcon
 }
 
 declare global {
