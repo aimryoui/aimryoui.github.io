@@ -7,6 +7,7 @@ interface TocItemProps {
     kind?: "static" | "project"
     icon?: React.ReactNode
     hidden?: boolean
+    caseStudy?: boolean
 }
 
 type TocItemVariant = "header" | "item" | "anchor"

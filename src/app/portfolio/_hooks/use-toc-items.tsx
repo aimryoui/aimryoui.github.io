@@ -57,6 +57,7 @@ function useTocItems() {
                     depth: 3,
                     kind: "project",
                     mode: "route",
+                    caseStudy: project.caseStudy,
                     href:
                         group.id === "selected-works"
                             ? getSelectedProjectPath(project)

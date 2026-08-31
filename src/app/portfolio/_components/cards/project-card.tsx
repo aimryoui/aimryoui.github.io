@@ -163,6 +163,7 @@ function ProjectCard({
                     name={project.name}
                     navigation={navigation}
                     isNew={project.features?.new ?? false}
+                    isCaseStudy={project.caseStudy}
                     className={cn(navigation === "backward" && "justify-end")}
                 />
                 <ProjectCategory
@@ -334,12 +335,14 @@ function ProjectName({
     projectId,
     name,
     isNew,
+    isCaseStudy,
     navigation,
     ...props
 }: React.ComponentProps<typeof Bold> & {
     projectId?: ProjectId
     name: string
     isNew: boolean
+    isCaseStudy?: boolean
     navigation?: ProjectCardProps["navigation"]
 }) {
     return (
@@ -421,6 +424,16 @@ function ProjectName({
                     </svg>
                 </ViewTransition>
             )}
+            {/* {isCaseStudy && (
+                <i
+                    className={cn(
+                        "text-muted-foreground/70 font-wght-450 dark:font-wght-400",
+                        isNew && "ms-3"
+                    )}
+                >
+                    (Case Study)
+                </i>
+            )} */}
         </Bold>
     )
 }

@@ -164,6 +164,14 @@ const MobileTocItemRow = memo(
                     <bdi translate="no">
                         {highlightQuery(item.label, query)
                             ?? formatOrdinals(item.label)}
+                        {item.caseStudy && (
+                            <>
+                                {" "}
+                                <i className="text-muted-foreground/70 font-wght-450">
+                                    (Case Study)
+                                </i>
+                            </>
+                        )}
                     </bdi>
                     {isActive && (
                         <div

@@ -294,7 +294,15 @@ const TocItemRow = memo(
                             )
                         },
                         highlightQuery(item.label, query)
-                            ?? formatOrdinals(item.label)
+                            ?? formatOrdinals(item.label),
+                        item.caseStudy && (
+                            <>
+                                {" "}
+                                <i className="text-muted-foreground/70 font-wght-450 dark:font-wght-400">
+                                    (Case Study)
+                                </i>
+                            </>
+                        )
                     )}
                     {isActive && (
                         <div

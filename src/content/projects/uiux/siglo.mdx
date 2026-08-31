@@ -1275,12 +1275,13 @@ export const basePath = "/uiux/siglo"
 <Section order={1}>
     <SectionTitle title="Managing a massive scale of 550+ screens" />
     <SectionContent>
-        Designing **over 550 screens** was a monumental task. The biggest lesson
-        I learned was that **a robust Design System is not just a luxury, it is
-        a survival tool**. Without strictly defining our spacing guidelines,
+        Designing **over 550 screens** was a magnificent task. The biggest
+        lesson I learned was that **a robust Design System is not just a luxury,
+        it is a survival tool**. Without defining the spacing guidelines,
         typography hierarchy, and master components early on, maintaining visual
-        consistency across hundreds of states would have been impossible. It
-        taught me to **think in systems, not just individual screens**.
+        consistency across hundreds of states would have been impossible. 
+        {/* */}
+        > It taught me to **think in systems, not just individual screens**.
     </SectionContent>
     <MediaFrame spaceAround={false}>
         <Image src={`${basePath}/175.jpg`} alt="Figma File" rounded />
@@ -1288,28 +1289,49 @@ export const basePath = "/uiux/siglo"
 </Section>
 
 <Section order={2}>
-    <SectionTitle title="Handling harsh feedback from the council" />
+    <SectionTitle title="Handling feedback from the council" />
     <SectionContent>
         Defending the project across **4 milestone presentations (0%, 30%, 70%,
-        100%)** acted as real-world stakeholder reviews. There were times when
-        the council pointed out flaws in our user flow or identity verification
-        logic (SIL-1 vs. SIL-2). I learned not to be emotionally attached to my
-        initial designs. **Accepting feedback, pivoting quickly, and defending
-        UX decisions with data and psychology** was the most valuable soft skill
-        I gained.
+        100%)** acted as real-world stakeholder reviews.
+        {/* */}
+        > There were times when the council pointed out **flaws in the user flow**, or **identity verification processes** (SIL-1 & SIL-2) **were not needed and time consuming**.
+        {/* */}
+        The Siglo project started in Q1 2025, and as of Q3 2026, **Vietnam is
+        gradually pushing and requiring social media platforms to verify user
+        identities** to minimize online fraud.
+        {/* */}
+        > I needed to **filter the feedback**, deciding which to adopt and which to challenge. I chose to **retain the identity verification processes** - a feature that **makes Siglo unique**.
+        {/* */}
+        I learned not to be emotionally attached to my initial designs.
+        {/* */}
+        > **Accepting feedback, pivoting quickly, and defending UX decisions with
+        data and psychology** was the most valuable soft skill I gained.
     </SectionContent>
 </Section>
 
 <Section order={3}>
-    <SectionTitle title="Bridging Digital and Physical Environments" />
+    <SectionTitle title="Bridging Digital and Physical" />
     <SectionContent>
         Translating Siglo's identity from a digital app to **printed matters and
         booth displays** came with unexpected challenges (like CMYK color
-        shifting and readability from a distance). It forced me to realize that
-        **a brand identity is only successful if it works everywhere**, whether
-        on a 6-inch mobile screen or a 2-meter physical standee.
+        shifting and readability from a distance).
+        {/* */}
+        > It forced me to realize that **a brand identity is only successful if it works everywhere**, whether on a 6-inch mobile screen or a 1.8-meter tall physical standee.
     </SectionContent>
-    <MediaFrame spaceAround={false}>
-        <Image src={`${basePath}/166.jpg`} alt="Printed Matters" dim rounded />
+    <MediaFrame spaceAround={false} className="flex">
+        <Image
+            src={`${basePath}/164.jpg`}
+            alt="Printed Matters"
+            dim
+            rounded
+            row="justified"
+        />
+        <Image
+            src={`${basePath}/166.jpg`}
+            alt="Printed Matters"
+            dim
+            rounded
+            row="justified"
+        />
     </MediaFrame>
 </Section>
