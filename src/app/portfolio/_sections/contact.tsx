@@ -41,7 +41,7 @@ function Contact() {
             >
                 <div className="mb-0.5 flex items-center gap-1 self-start">
                     <InfoCircleBoldDuotoneIcon className="-ms-0.5 size-5" />
-                    <strong>Disclaimer:</strong>
+                    <strong>Disclaimer</strong>
                 </div>
                 <span>
                     I have listed all my contact details so that{" "}

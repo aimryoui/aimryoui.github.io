@@ -16,7 +16,7 @@ function CaveatLightness() {
         >
             <div className="mb-0.5 flex items-center gap-1 self-start">
                 <GolfBoldDuotoneIcon className="-ms-0.5 size-5" />
-                <strong>Caveat:</strong>
+                <strong>Caveat</strong>
             </div>
             <span>
                 This project has some <strong>high brightness</strong> media,

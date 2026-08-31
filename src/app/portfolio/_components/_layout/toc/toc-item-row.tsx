@@ -301,7 +301,8 @@ const TocItemRow = memo(
                             className={cn(
                                 "ms-auto hidden size-6 min-w-6 place-items-center rounded-full bg-highlighted/10 text-highlighted",
                                 "group-hover:grid dark:bg-highlighted/20",
-                                collapsible
+                                compact
+                                    && collapsible
                                     && isHeader
                                     && "-me-[calc(var(--spacing-safe-zone)-var(--spacing)*.5)]"
                             )}
