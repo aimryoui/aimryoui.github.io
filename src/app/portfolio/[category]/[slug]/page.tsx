@@ -185,15 +185,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         <Space />
                         <SectionLine center />
                         <article>
-                            <ProjectHeader
-                                type={project.type}
-                                projectId={project.id}
-                                projectName={project.name}
-                                category={project.category}
-                                information={project.information}
-                                tools={project.tools}
-                                detail={project.detail}
-                            />
+                            <ProjectHeader project={project} />
 
                             <SectionLine center />
                             <Divider />

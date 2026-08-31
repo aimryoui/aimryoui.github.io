@@ -1,7 +1,6 @@
 "use client"
 
 import { ViewTransition } from "@/components/animations/view-transition"
-import { Divider } from "@/components/layout/divider"
 import {
     ElementLine,
     SectionLine,
@@ -10,8 +9,9 @@ import {
 import { useDirection } from "@/components/ui/direction"
 import { Link } from "@/components/ui/link"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
-import { At, H1, Highlight, Text } from "@/components/ui/typography"
+import { At, Bold, H1, Highlight, Text } from "@/components/ui/typography"
 import {
+    DASHES_REGEX,
     RTL_CHAR_REGEX,
     TRAILING_MEDIA_FILE_EXTENSIONS_REGEX,
     TRAILING_PUNCTUATION_REGEX
@@ -23,34 +23,21 @@ import { TOOL_ICONS } from "@/portfolio/_configs/tools"
 import { type ProjectId } from "@/types/project-ids"
 
 import { type projects } from "~/.velite"
+import { siteConfig } from "~/src/configs/site.config"
 
 const ICON = TOOL_ICONS({ size: "sm" })
 
-function ProjectHeader({
-    type,
-    projectId,
-    projectName,
-    category,
-    features,
-    information,
-    tools,
-    detail
-}: Omit<
-    (typeof projects)[number],
-    | "id"
-    | "name"
-    | "forceExpand"
-    | "slug"
-    | "code"
-    | "filePath"
-    | "caseStudy"
-    | "toc"
-> & {
-    projectId?: ProjectId
-    projectName: (typeof projects)[number]["name"]
-}) {
-    const { subject, duration, place } = information
-    const isNew = features?.new ?? false
+function ProjectHeader({ project }: { project: (typeof projects)[number] }) {
+    const {
+        type,
+        id: projectId,
+        name: projectName,
+        category,
+        information,
+        tools,
+        detail
+    } = project
+    const { role, subject, duration, team, place } = information
 
     const direction = useDirection()
 
@@ -67,17 +54,10 @@ function ProjectHeader({
 
     return (
         <div className={cn("relative bg-background")}>
-            <div
-                className={cn(
-                    "grid grid-cols-[minmax(0,3fr)_var(--px)_var(--spacing-safe-zone)_var(--px)_minmax(0,2fr)]",
-                    {
-                        md: "grid-cols-1"
-                    }
-                )}
-            >
+            <div>
                 <span
                     className={cn(
-                        "absolute bottom-[calc(100%+1rem)] start-safe-zone line-clamp-2 font-mono uppercase leading-normal wrap-anywhere",
+                        "absolute bottom-[calc(100%+1rem)] start-safe-zone line-clamp-2 font-mono text-sm uppercase leading-normal wrap-anywhere",
                         {
                             md: "bottom-[calc(100%+.75rem)] text-sm"
                         }
@@ -90,7 +70,7 @@ function ProjectHeader({
                 </span>
                 <div
                     className={cn(
-                        "flex flex-1 flex-col gap-2 px-safe-zone py-safe-zone-vertical",
+                        "flex w-full flex-col gap-2 px-safe-zone py-safe-zone-vertical",
                         {
                             md: "gap-1.5"
                         }
@@ -120,38 +100,109 @@ function ProjectHeader({
                         category={category}
                     />
                 </div>
-                <SvgElementLine className={cn("md:hidden")} />
-                <ElementLine
-                    dir="horizontal"
-                    className={cn("w-screen")}
-                    containerClassName={cn("hidden", {
-                        md: "block"
-                    })}
-                />
-                <Divider dir="vertical" className={cn("md:hidden")} />
-                <SvgElementLine className={cn("md:hidden")} />
-                <div
-                    className={cn(
-                        "flex flex-1 flex-col justify-between text-pretty px-safe-zone py-safe-zone-vertical",
-                        {
-                            md: "gap-2"
-                        }
-                    )}
-                >
-                    <Highlight
-                        className={cn(!isNew && "text-transparent md:hidden")}
-                    >
-                        {isNew ? "New" : "Older"}
-                    </Highlight>
-                    <Text>{duration}</Text>
-                    <Text className="text-foreground">
-                        {subject}{" "}
-                        {place && (
-                            <>
-                                <At /> {place}
-                            </>
+                <ElementLine dir="horizontal" className={cn("w-screen")} />
+                <div className="flex sm:flex-col">
+                    <div
+                        className={cn(
+                            "flex w-full basis-2/5 flex-col gap-2 text-pretty px-safe-zone py-safe-zone-vertical"
                         )}
-                    </Text>
+                    >
+                        <Text mono className="text-sm uppercase">
+                            My Role
+                        </Text>
+                        {role ? (
+                            typeof role === "string" ? (
+                                <Bold className="text-foreground">{role}</Bold>
+                            ) : (
+                                <>
+                                    {role.map((name) => (
+                                        <Bold
+                                            key={name}
+                                            className="text-foreground"
+                                        >
+                                            {name}
+                                        </Bold>
+                                    ))}
+                                </>
+                            )
+                        ) : (
+                            <Bold className="text-foreground">Designer</Bold>
+                        )}
+                    </div>
+                    <SvgElementLine className="sm:hidden" />
+                    <SectionLine
+                        dir="horizontal"
+                        containerClassName="hidden sm:block"
+                    />
+                    <div
+                        className={cn(
+                            "flex w-full flex-col gap-2 text-pretty px-safe-zone py-safe-zone-vertical"
+                        )}
+                    >
+                        <Text mono className="text-sm uppercase">
+                            Team
+                        </Text>
+                        {team ? (
+                            typeof team === "string" ? (
+                                <Bold className="text-foreground">{team}</Bold>
+                            ) : (
+                                <>
+                                    {team.map((name) => (
+                                        <Bold
+                                            key={name}
+                                            className="text-foreground"
+                                        >
+                                            {name}
+                                            {name === siteConfig.name && (
+                                                <span className="text-muted-foreground font-wght-450 dark:font-wght-400">
+                                                    {" "}
+                                                    (Me)
+                                                </span>
+                                            )}
+                                        </Bold>
+                                    ))}
+                                </>
+                            )
+                        ) : (
+                            <Bold className="text-foreground">
+                                Nguyễn Hoàng Nhân
+                            </Bold>
+                        )}
+                    </div>
+                </div>
+                <ElementLine dir="horizontal" className={cn("w-screen")} />
+                <div className="flex sm:flex-col">
+                    <div
+                        className={cn(
+                            "flex w-full basis-2/5 flex-col gap-2 text-pretty px-safe-zone py-safe-zone-vertical"
+                        )}
+                    >
+                        <Text mono className="text-sm uppercase">
+                            Timeline
+                        </Text>
+                        <Bold className="text-foreground">
+                            {renderDuration(duration)}
+                        </Bold>
+                    </div>
+                    <SvgElementLine className="sm:hidden" />
+                    <SectionLine center containerClassName="hidden sm:block" />
+                    <div
+                        className={cn(
+                            "flex w-full flex-col gap-2 text-pretty px-safe-zone py-safe-zone-vertical"
+                        )}
+                    >
+                        <Text mono className="text-sm uppercase">
+                            Organization
+                        </Text>
+                        <Bold className="text-foreground">
+                            {subject}{" "}
+                            {place && (
+                                <>
+                                    <At /> {place}
+                                </>
+                            )}
+                        </Bold>
+                    </div>
                 </div>
                 {tools.length > 0 && (
                     <div
@@ -182,6 +233,7 @@ function ProjectHeader({
                     </div>
                 )}
             </div>
+
             {detail && (
                 <>
                     <SectionLine center />
@@ -190,6 +242,9 @@ function ProjectHeader({
                             "flex flex-col gap-2.5 px-safe-zone py-safe-zone-vertical leading-normal"
                         )}
                     >
+                        <Text mono className="text-sm uppercase">
+                            About
+                        </Text>
                         <h2
                             className={cn(
                                 "text-pretty text-foreground font-wght-600",
@@ -248,6 +303,26 @@ function ProjectCategory({
         >
             <Highlight className={cn("w-fit")}>{category}</Highlight>
         </ViewTransition>
+    )
+}
+
+function renderDuration(duration: string) {
+    const parts = duration.split(DASHES_REGEX).map((part) => part.trim())
+
+    if (parts.length <= 1) {
+        return duration
+    }
+
+    const [start, end] = parts
+
+    return (
+        <>
+            {start}{" "}
+            <Text as="span" className="font-wght-450 dark:font-wght-400">
+                —
+            </Text>{" "}
+            {end}
+        </>
     )
 }
 

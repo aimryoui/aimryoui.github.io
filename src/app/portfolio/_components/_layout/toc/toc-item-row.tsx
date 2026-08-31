@@ -230,6 +230,7 @@ const TocItemRow = memo(
                                       }
                                   ]
                                 : "text-muted-foreground !transition-none dark:text-foreground",
+                            active: "!text-highlighted",
                             "focus-visible": "text-foreground",
                             "data-current":
                                 "text-highlighted font-wght-550 dark:text-highlighted"

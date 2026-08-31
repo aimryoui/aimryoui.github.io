@@ -346,68 +346,70 @@ function ProjectName({
     navigation?: ProjectCardProps["navigation"]
 }) {
     return (
-        <Bold
-            className={cn(
-                "relative inline-flex w-fit max-w-full overflow-hidden",
-                isNew && "pe-3",
-                {
-                    md: "text-sm"
-                },
-                className
-            )}
-            {...props}
-        >
-            <ViewTransition name={`project-${projectId}`}>
+        <p className="flex">
+            <Bold
+                className={cn(
+                    "relative inline-flex w-fit max-w-full overflow-hidden",
+                    {
+                        md: "text-sm"
+                    },
+                    className
+                )}
+                {...props}
+            >
+                <ViewTransition name={`project-${projectId}`}>
+                    <bdi
+                        translate="no"
+                        className={cn(
+                            "w-fit max-w-full translate-y-0 skew-y-0 truncate",
+                            {
+                                "motion-reduced":
+                                    "group-hover:text-highlighted",
+                                "motion-preferred": [
+                                    "transition-[transform,opacity] ease-in-out duration-500",
+                                    {
+                                        "group-data-[hover=true]": [
+                                            "-translate-y-full opacity-0",
+                                            navigation === "backward"
+                                                ? "-skew-y-12 rtl:skew-y-12"
+                                                : "skew-y-12 rtl:-skew-y-12"
+                                        ]
+                                    }
+                                ],
+                                "group-active": "text-highlighted"
+                            }
+                        )}
+                        style={{
+                            viewTransitionName: "none !important"
+                        }}
+                    >
+                        {formatOrdinals(name)}
+                    </bdi>
+                </ViewTransition>
                 <bdi
+                    aria-hidden={true}
                     translate="no"
+                    role="presentation"
                     className={cn(
-                        "w-fit max-w-full translate-y-0 skew-y-0 truncate",
+                        "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0",
                         {
-                            "motion-reduced": "group-hover:text-highlighted",
+                            "motion-reduced": "hidden",
                             "motion-preferred": [
-                                "transition-[transform,opacity] ease-in-out duration-500",
+                                "transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
+                                navigation === "backward"
+                                    ? "origin-right -skew-y-12 rtl:origin-left rtl:skew-y-12"
+                                    : "origin-left skew-y-12 rtl:origin-right rtl:-skew-y-12",
                                 {
-                                    "group-data-[hover=true]": [
-                                        "-translate-y-full opacity-0",
-                                        navigation === "backward"
-                                            ? "-skew-y-12 rtl:skew-y-12"
-                                            : "skew-y-12 rtl:-skew-y-12"
-                                    ]
+                                    "group-data-[hover=true]":
+                                        "translate-y-0 skew-y-0 opacity-100 delay-0"
                                 }
-                            ],
-                            "group-active": "text-highlighted"
+                            ]
                         }
                     )}
-                    style={{
-                        viewTransitionName: "none !important"
-                    }}
                 >
                     {formatOrdinals(name)}
                 </bdi>
-            </ViewTransition>
-            <bdi
-                aria-hidden={true}
-                translate="no"
-                role="presentation"
-                className={cn(
-                    "pointer-events-none absolute w-fit max-w-full translate-y-full truncate text-highlighted opacity-0",
-                    {
-                        "motion-reduced": "hidden",
-                        "motion-preferred": [
-                            "transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
-                            navigation === "backward"
-                                ? "origin-right -skew-y-12 rtl:origin-left rtl:skew-y-12"
-                                : "origin-left skew-y-12 rtl:origin-right rtl:-skew-y-12",
-                            {
-                                "group-data-[hover=true]":
-                                    "translate-y-0 skew-y-0 opacity-100 delay-0"
-                            }
-                        ]
-                    }
-                )}
-            >
-                {formatOrdinals(name)}
-            </bdi>
+            </Bold>
             {isNew && (
                 <ViewTransition name={`project-${projectId}-new-tick`}>
                     <svg
@@ -415,7 +417,7 @@ function ProjectName({
                         fill="none"
                         viewBox="0 0 14 14"
                         aria-hidden={true}
-                        className="absolute end-0 top-0 size-2.75 text-highlighted lg:size-2.5 rtl:-scale-x-100"
+                        className="ms-0.25 inline size-2.75 align-top text-highlighted lg:size-2.5 rtl:-scale-x-100"
                     >
                         <path
                             fill="currentColor"
@@ -424,17 +426,16 @@ function ProjectName({
                     </svg>
                 </ViewTransition>
             )}
-            {/* {isCaseStudy && (
+            {isCaseStudy && (
                 <i
                     className={cn(
-                        "text-muted-foreground/70 font-wght-450 dark:font-wght-400",
-                        isNew && "ms-3"
+                        "text-nowrap text-muted-foreground/70 font-wght-450 dark:font-wght-400"
                     )}
                 >
                     (Case Study)
                 </i>
-            )} */}
-        </Bold>
+            )}
+        </p>
     )
 }
 

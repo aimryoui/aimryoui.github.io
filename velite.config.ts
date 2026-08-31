@@ -46,7 +46,9 @@ const projects = defineCollection({
         caseStudy: s.boolean().default(false),
 
         information: s.object({
+            role: s.union([s.string(), s.array(s.string())]).optional(),
             duration: s.string(),
+            team: s.union([s.string(), s.array(s.string())]).optional(),
             subject: s.string(),
             place: s.string().optional()
         }),
