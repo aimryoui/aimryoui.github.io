@@ -157,7 +157,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         })}
                     />
                     <ArticleIndex toc={project.toc} />
-                    <div className="pointer-events-none absolute right-0 top-[calc(100dvh-var(--spacing-space))] z-60 h-[calc(100%-(100dvh-var(--spacing-space)))] w-sidebar bg-alert/30 xl:hidden">
+                    <div className="pointer-events-none absolute right-0 top-[calc(100dvh-var(--spacing-space))] z-60 h-[calc(100%-(100dvh-var(--spacing-space)))] w-sidebar xl:hidden">
                         <div className="pointer-events-auto sticky top-[calc(100dvh-var(--spacing-space))] flex w-full flex-col bg-background px-safe-zone py-safe-zone-vertical">
                             <ElementLine
                                 dir="horizontal"
