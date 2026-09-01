@@ -5,7 +5,7 @@ import { Divider } from "@/components/layout/divider"
 import { ElementLine, MarginLine, SectionLine } from "@/components/layout/line"
 import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
-import { Bold, Highlight } from "@/components/ui/typography"
+import { Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import {
     getProject,
@@ -137,11 +137,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         </Space>
                     )}
                     <MarginLine
-                        className={cn("order-6", {
-                            xl: "hidden",
-                            "group-data-[sidebar-position=inline-end]/html":
-                                "order-4"
-                        })}
+                        className={cn(
+                            "order-6 -mb-safe-zone h-[calc(100dvh+var(--spacing-safe-zone))]",
+                            {
+                                xl: "hidden",
+                                "group-data-[sidebar-position=inline-end]/html":
+                                    "order-4"
+                            }
+                        )}
                     />
                     <Divider
                         dir="vertical"
@@ -151,10 +154,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         })}
                     />
                     <MarginLine
-                        className={cn("order-8 xl:hidden", {
-                            "group-data-[sidebar-position=inline-end]/html":
-                                "order-2"
-                        })}
+                        className={cn(
+                            "order-8 -mb-safe-zone h-[calc(100dvh+var(--spacing-safe-zone))] xl:hidden",
+                            {
+                                "group-data-[sidebar-position=inline-end]/html":
+                                    "order-2"
+                            }
+                        )}
                     />
                     <ArticleIndex toc={project.toc} />
                     <div className="pointer-events-none absolute right-0 top-[calc(100dvh-var(--spacing-space))] z-60 h-[calc(100%-(100dvh-var(--spacing-space)))] w-sidebar xl:hidden">
@@ -165,16 +171,16 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             />
                             <Bold
                                 title={project.name}
-                                className="max-w-full truncate text-xl"
+                                className="max-w-full -translate-y-0.5 truncate text-xl"
                             >
                                 {project.name}
                             </Bold>
-                            <Highlight
+                            <Bold
                                 title={project.category}
-                                className="max-w-full truncate text-nowrap text-xs leading-4"
+                                className="max-w-full truncate text-nowrap text-xs leading-4 text-muted-foreground"
                             >
                                 {project.category}
-                            </Highlight>
+                            </Bold>
                         </div>
                     </div>
                     <div className="relative order-5 flex-1 @container">
@@ -209,6 +215,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </section>
 
                 <SectionLine containerClassName="z-60" />
+                <Divider className="nth-last-2:hidden" />
+                <SectionLine />
 
                 <Note bold>Project ends. What&#39;s next?</Note>
 

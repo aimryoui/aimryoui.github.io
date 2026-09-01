@@ -171,6 +171,7 @@ function MediaFrame({
     return (
         <>
             <figure
+                data-slot="media-frame"
                 id={sectionName ? slugify(sectionName) : undefined}
                 className={cn(
                     "grid w-full scroll-mt-safe-zone grid-cols-1 bg-background",
@@ -180,6 +181,7 @@ function MediaFrame({
                 {sectionName ? (
                     <>
                         <figcaption
+                            data-slot="media-frame-caption"
                             className={cn(
                                 "pointer-events-none z-30 col-start-1 row-span-2 row-start-1 flex flex-col"
                             )}
@@ -261,9 +263,12 @@ function MediaFrame({
             </figure>
             {spaceAround && (
                 <>
-                    <SectionLine center />
-                    <Divider />
-                    <SectionLine center containerClassName="z-55" />
+                    <SectionLine
+                        center
+                        containerClassName="nth-last-3:hidden"
+                    />
+                    <Divider className="nth-last-2:hidden" />
+                    <SectionLine center containerClassName="z-55 last:hidden" />
                 </>
             )}
         </>

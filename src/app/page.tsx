@@ -55,7 +55,6 @@ export default function Home() {
                     Portfolio
                 </LinkButton>
             </MediaFrame>
-            <SectionLine />
             <Space as="menu" className="flex items-center justify-center gap-3">
                 <Tooltip>
                     <li>

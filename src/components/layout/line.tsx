@@ -9,6 +9,7 @@ function MarginLine({ className, ...props }: MarginLineProps) {
         <div
             data-slot="margin-line"
             role="separator"
+            aria-hidden={true}
             className={cn(
                 "pointer-events-none sticky top-0 z-30 h-dvh w-px",
                 {
@@ -41,6 +42,7 @@ function Plus({ position }: { position?: "left" | "right" }) {
         <div
             data-slot="section-line-plus"
             role="presentation"
+            aria-hidden={true}
             className={cn(
                 "pointer-events-none relative z-40 size-1",
                 {
@@ -73,6 +75,7 @@ function SectionLine({
         <div
             data-slot="section-line"
             role="separator"
+            aria-hidden={true}
             className={cn(
                 "pointer-events-none relative z-40 h-0 w-full",
                 showDecoration && "flex items-center justify-between",
@@ -130,6 +133,7 @@ function ElementLine({
     return (
         <div
             data-slot="element-line"
+            aria-hidden={true}
             className={cn(
                 "pointer-events-none relative",
                 dir === "vertical" ? "h-full w-0" : "h-0 w-full",
@@ -163,6 +167,7 @@ function SvgElementLine({
         <div
             data-slot="svg-element-line"
             role="separator"
+            aria-hidden={true}
             className={cn(
                 "pointer-events-none relative z-1",
                 dir === "vertical" ? "h-auto" : "w-full",

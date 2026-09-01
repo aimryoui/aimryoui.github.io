@@ -28,7 +28,7 @@ function Section({
 
     return (
         <>
-            <div className="flex" id={slug}>
+            <div data-slot="section" className="flex" id={slug}>
                 <div className="sticky top-0 z-50 grid h-space min-w-space place-items-center bg-background px-safe-zone md:hidden">
                     <Highlight
                         mono
@@ -54,9 +54,9 @@ function Section({
                     {children}
                 </div>
             </div>
-            <SectionLine center />
-            <Divider />
-            <SectionLine containerClassName="z-55" center />
+            <SectionLine center containerClassName="nth-last-3:hidden" />
+            <Divider className="nth-last-2:hidden" />
+            <SectionLine center containerClassName="z-55 last:hidden" />
         </>
     )
 }

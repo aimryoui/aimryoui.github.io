@@ -56,7 +56,10 @@ function ArticleIndex({ toc }: ArticleIndexProps) {
                 enableStartEndAutoHighlight
             />
             <ElementLine dir="horizontal" />
-            <Space className="flex items-center px-safe-zone">
+            <Space
+                aria-hidden={true}
+                className="flex items-center px-safe-zone"
+            >
                 <Bold mono className="text-sm uppercase text-muted-foreground">
                     In this article
                 </Bold>
