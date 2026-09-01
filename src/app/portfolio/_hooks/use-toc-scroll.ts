@@ -94,6 +94,7 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
 }: UseTocScrollOptions) {
     const pathname = usePathname()
     const isFeatureSelected = useQueryStore((s) => s.isFeatureSelected)
+    const role = useQueryStore((s) => s.role)
     const fullPath = pathname + (isFeatureSelected ? "?feature=selected" : "")
     const { isBlink } = useBrowserEngine()
 
@@ -115,6 +116,8 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
     const lastUpdateTimestamp = useRef(0)
 
     const prevQueryRef = useRef(debouncedQuery)
+    const prevRoleRef = useRef(role)
+    const prevFullPathRef = useRef(fullPath)
 
     // Scroll to top when search results showing
     // and scroll to active item when stop searching
@@ -286,6 +289,12 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                     isFirstRenderRef.current = false
                 }
 
+                const isRoleChanged = prevRoleRef.current !== role
+                const isFullPathChanged = prevFullPathRef.current !== fullPath
+
+                prevRoleRef.current = role
+                prevFullPathRef.current = fullPath
+
                 const { motionReduced } = getPreferences()
                 const behavior = isFirst || motionReduced ? "instant" : "smooth"
 
@@ -293,7 +302,9 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                 const groupList = activeElement.closest(
                     '[data-slot="collapsible-content"]'
                 )
-                if (
+                if (isRoleChanged || isFullPathChanged) {
+                    delay = motionReduced ? 0 : 400
+                } else if (
                     groupList
                     && groupList.clientHeight + 2 < groupList.scrollHeight
                 ) {
@@ -323,7 +334,7 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
 
             notifyReady()
         }
-    }, [activeId, pathname, fullPath])
+    }, [activeId, pathname, fullPath, role])
 
     const getContainer = useCallback(() => {
         return getScrollElement(scrollContainerRef.current)

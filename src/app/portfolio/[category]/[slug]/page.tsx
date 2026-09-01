@@ -1,32 +1,18 @@
 import { type Metadata } from "next"
 import { notFound } from "next/navigation"
 
-import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { Divider } from "@/components/layout/divider"
-import {
-    MarginLine,
-    SectionLine,
-    SvgElementLine
-} from "@/components/layout/line"
+import { MarginLine, SectionLine } from "@/components/layout/line"
 import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationNext,
-    PaginationPrevious
-} from "@/components/ui/pagination"
+import { Bold, Highlight } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import {
-    getCategoryPath,
     getProject,
-    getProjectPath,
     getProjectRouteSlug,
     groupProjectsByCategory
 } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
-import ProjectCard from "@/portfolio/_components/cards/project-card"
 import { FlashOverlay } from "@/portfolio/_components/flash-overlay"
 import { ArticleIndex } from "@/portfolio/_components/mdx/article-index"
 import { CaveatLightness } from "@/portfolio/_components/mdx/caveat"
@@ -35,8 +21,8 @@ import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrum
 import ProjectHeader from "@/portfolio/_components/project-header"
 import { resolveSocialData } from "@/portfolio/_helpers/resolve-social-data"
 import Footer from "@/portfolio/_sections/footer"
-import { BoldPart, TextPart } from "@/portfolio/[category]/_components/shared"
 import { AmbientStyle } from "@/portfolio/[category]/[slug]/_components/ambient-style"
+import { ProjectPagination } from "@/portfolio/[category]/[slug]/_components/project-pagination"
 import SocialButton from "@/portfolio/[category]/[slug]/_components/social-button"
 
 import { projects } from "~/.velite"
@@ -96,25 +82,16 @@ export async function generateMetadata({
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
     const { category, slug } = await params
+
     const groups = groupProjectsByCategory(projects)
-    const groupIndex = groups.findIndex((g) => g.id === category)
-    const group = groupIndex === -1 ? null : groups[groupIndex]
+    const group = groups.find((g) => g.id === category)
 
     const categoryProjects = group?.projects ?? []
-    const projectIndex = categoryProjects.findIndex(
+    const project = categoryProjects.find(
         (p) => getProjectRouteSlug(p) === slug
     )
-    const project = projectIndex === -1 ? null : categoryProjects[projectIndex]
 
     if (!group || !project) notFound()
-
-    const prev = projectIndex > 0 ? categoryProjects[projectIndex - 1] : null
-    const next =
-        projectIndex < categoryProjects.length - 1
-            ? categoryProjects[projectIndex + 1]
-            : null
-    const nextCategory =
-        !next && groupIndex < groups.length - 1 ? groups[groupIndex + 1] : null
 
     const socialData = resolveSocialData(project.social)
 
@@ -141,7 +118,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <SectionLine showDecoration containerClassName="z-60" />
                 <section
                     id={project.id}
-                    className={cn("flex scroll-mt-full @container")}
+                    className={cn("relative flex scroll-mt-full @container")}
                 >
                     {socialData && (
                         <Space
@@ -180,6 +157,22 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         })}
                     />
                     <ArticleIndex toc={project.toc} />
+                    <div className="pointer-events-none absolute right-0 top-[110dvh] z-60 h-[calc(100%-110dvh)] w-sidebar bg-alert/30">
+                        <div className="pointer-events-auto sticky top-[calc(100dvh-var(--spacing-space))] flex flex-col bg-alert/30 px-safe-zone py-safe-zone-vertical">
+                            <Bold
+                                title={project.name}
+                                className="max-w-full truncate text-xl"
+                            >
+                                {project.name}
+                            </Bold>
+                            <Highlight
+                                title={project.category}
+                                className="max-w-full truncate text-sm"
+                            >
+                                {project.category}
+                            </Highlight>
+                        </div>
+                    </div>
                     <div className="relative order-5 flex-1 @container">
                         <FlashOverlay />
                         <Space />
@@ -218,148 +211,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <SectionLine />
 
                 <section className={cn("bg-background")}>
-                    <Pagination>
-                        <PaginationContent
-                            className={cn(
-                                "grid grid-cols-[1fr_0_1fr] items-center"
-                            )}
-                        >
-                            <PaginationItem>
-                                {prev ? (
-                                    <ProjectCard
-                                        href={getProjectPath(prev)}
-                                        project={prev}
-                                        navigation="backward"
-                                    />
-                                ) : (
-                                    <PaginationPrevious
-                                        href={getCategoryPath(category)}
-                                        label={`Go back to ${group.title} category page`}
-                                        tracking={{
-                                            eventName: "navigate_category",
-                                            eventParams: {
-                                                category_id: category,
-                                                category_title: group.title,
-                                                direction: "backward"
-                                            }
-                                        }}
-                                        className={cn(
-                                            "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
-                                            {
-                                                hover: "bg-highlighted/5 transition-none",
-                                                active: "bg-highlighted/10 transition-none"
-                                            }
-                                        )}
-                                    >
-                                        <ArrowLeft
-                                            className={cn(
-                                                "m-1 transition-[color] duration-100",
-                                                {
-                                                    rtl: "rotate-180",
-                                                    "group-hover":
-                                                        "text-highlighted transition-none",
-                                                    "group-active":
-                                                        "text-highlighted transition-none"
-                                                }
-                                            )}
-                                        />
-                                        <div
-                                            className={cn("text-end", {
-                                                sm: "flex flex-col"
-                                            })}
-                                        >
-                                            <TextPart>Back to</TextPart>{" "}
-                                            <BoldPart>{group.title}</BoldPart>
-                                        </div>
-                                    </PaginationPrevious>
-                                )}
-                            </PaginationItem>
-                            <li className="h-full">
-                                <SvgElementLine className="h-full" />
-                            </li>
-                            <PaginationItem>
-                                {next ? (
-                                    <ProjectCard
-                                        href={getProjectPath(next)}
-                                        project={next}
-                                        navigation="forward"
-                                    />
-                                ) : (
-                                    <PaginationNext
-                                        href={
-                                            nextCategory
-                                                ? getCategoryPath(
-                                                      nextCategory.id
-                                                  )
-                                                : "/portfolio#contact"
-                                        }
-                                        label={
-                                            nextCategory
-                                                ? `Go next to ${nextCategory.title} category page`
-                                                : "No more projects, contact me"
-                                        }
-                                        tracking={{
-                                            eventName: nextCategory
-                                                ? "navigate_category"
-                                                : "navigate_hash",
-                                            eventParams: {
-                                                category_id: nextCategory
-                                                    ? nextCategory.id
-                                                    : "contact",
-                                                category_title: nextCategory
-                                                    ? nextCategory.title
-                                                    : "Contact",
-                                                direction: "forward"
-                                            }
-                                        }}
-                                        className={cn(
-                                            "group flex min-h-space min-w-0 items-center justify-between gap-4 px-safe-zone py-safe-zone-vertical transition-[background-color] duration-100",
-                                            {
-                                                hover: "bg-highlighted/5 transition-none",
-                                                active: "bg-highlighted/10 transition-none"
-                                            }
-                                        )}
-                                    >
-                                        <div
-                                            className={cn({
-                                                sm: "flex flex-col"
-                                            })}
-                                        >
-                                            {nextCategory ? (
-                                                <>
-                                                    <TextPart>Next to</TextPart>{" "}
-                                                    <BoldPart>
-                                                        {nextCategory.title}
-                                                    </BoldPart>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <TextPart>
-                                                        No more projects.
-                                                    </TextPart>{" "}
-                                                    <BoldPart>
-                                                        Contact me
-                                                    </BoldPart>
-                                                </>
-                                            )}
-                                        </div>
-                                        <ArrowRight
-                                            className={cn(
-                                                "m-1 transition-[color] duration-100",
-                                                {
-                                                    rtl: "rotate-180",
-                                                    "group-hover":
-                                                        "text-highlighted transition-none",
-                                                    "group-active":
-                                                        "text-highlighted transition-none"
-                                                }
-                                            )}
-                                        />
-                                    </PaginationNext>
-                                )}
-                            </PaginationItem>
-                        </PaginationContent>
-                    </Pagination>
+                    <ProjectPagination category={category} slug={slug} />
                 </section>
 
                 <SectionLine />

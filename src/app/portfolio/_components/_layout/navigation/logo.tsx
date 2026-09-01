@@ -27,12 +27,14 @@ import {
     type PortfolioRole,
     ROLE_QUERY_PARAM_KEY
 } from "@/configs/role.config"
+import { SELECTED_WORKS } from "@/configs/selected-works.config"
 import { siteConfig } from "@/configs/site.config"
 import { useClientSearchParams } from "@/hooks/use-client-search-params"
 import { cn } from "@/lib/utils"
 import { useMobileTocStore } from "@/portfolio/_components/_layout/toc/stores/mobile-toc-store"
 import { useDirectoriesStore } from "@/stores/directories-store"
 import { useQueryStore } from "@/stores/query-store"
+import { type ProjectId } from "@/types/project-ids"
 
 import { projects } from "~/.velite"
 
@@ -74,11 +76,24 @@ function LogoLink() {
     const rawSearchParams = useClientSearchParams()
 
     const handleRoleChange = (newRole: string) => {
+        if (newRole === role) return
+
         const searchParams = new URLSearchParams(rawSearchParams.toString())
         if (newRole === DEFAULT_PORTFOLIO_ROLE) {
             searchParams.delete(ROLE_QUERY_PARAM_KEY)
         } else {
             searchParams.set(ROLE_QUERY_PARAM_KEY, newRole)
+        }
+
+        if (searchParams.get("feature") === "selected") {
+            const parts = pathname.split("/")
+            const slug = parts[parts.length - 1] as ProjectId
+            const isSelectedWork =
+                SELECTED_WORKS[newRole as PortfolioRole]?.includes(slug)
+
+            if (!isSelectedWork) {
+                searchParams.delete("feature")
+            }
         }
 
         sendGAEvent("event", "change_role", { role: newRole })

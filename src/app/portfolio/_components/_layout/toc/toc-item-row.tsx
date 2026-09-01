@@ -16,6 +16,7 @@ import {
     type TocItemVariant
 } from "@/portfolio/_components/_layout/toc/types/toc"
 import { useFlashStore } from "@/portfolio/_components/flash-overlay"
+import { useQueryStore } from "@/stores/query-store"
 
 function scrollToTarget(id: string) {
     requestAnimationFrame(() => {
@@ -55,6 +56,7 @@ const TocItemRow = memo(
         const compact = useTocStore((s) => s.compact)
         const labelElement = useTocStore((s) => s.labelElement)
         const query = useTocStore((s) => s.query)
+        const isFeatureSelected = useQueryStore((s) => s.isFeatureSelected)
 
         const isItem = variant === "item"
         const isHeader = variant === "header"
@@ -299,9 +301,25 @@ const TocItemRow = memo(
                         item.caseStudy && (
                             <>
                                 {" "}
-                                <i className="text-muted-foreground/70 font-wght-450 dark:font-wght-400">
-                                    (Case Study)
-                                </i>
+                                <span
+                                    className={cn(
+                                        "inline-block -translate-y-0.25 rounded-md border px-1 py-0.25 text-xs font-wght-450 dark:font-wght-400",
+                                        pathname === "/portfolio"
+                                            || (isSamePath && isFeatureSelected)
+                                            ? "border-highlighted/20 bg-highlighted/10 text-highlighted"
+                                            : "border-muted-foreground/20 bg-muted-foreground/10 text-muted-foreground",
+                                        pathname !== "/portfolio" && {
+                                            "group-not-data-current/link": {
+                                                "group-hover/link":
+                                                    "border-foreground/20 bg-foreground/10 text-foreground",
+                                                "group-active/link":
+                                                    "border-highlighted/20 bg-highlighted/10 text-highlighted"
+                                            }
+                                        }
+                                    )}
+                                >
+                                    Case Study
+                                </span>
                             </>
                         )
                     )}
