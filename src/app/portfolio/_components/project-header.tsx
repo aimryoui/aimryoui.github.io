@@ -10,6 +10,7 @@ import { useDirection } from "@/components/ui/direction"
 import { Link } from "@/components/ui/link"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
 import { At, Bold, H1, Highlight, Text } from "@/components/ui/typography"
+import { siteConfig } from "@/configs/site.config"
 import {
     DASHES_REGEX,
     RTL_CHAR_REGEX,
@@ -23,7 +24,6 @@ import { TOOL_ICONS } from "@/portfolio/_configs/tools"
 import { type ProjectId } from "@/types/project-ids"
 
 import { type projects } from "~/.velite"
-import { siteConfig } from "~/src/configs/site.config"
 
 const ICON = TOOL_ICONS({ size: "sm" })
 

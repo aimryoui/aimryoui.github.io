@@ -90,7 +90,6 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
     const scrollContainerRef = useRef<T>(null)
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
-    const hasInitialScrolledRef = useRef(false)
     const hasNotifiedActiveRef = useRef(false)
 
     const allIds = useMemo(() => items.map((item) => item.id), [items])
@@ -155,21 +154,6 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
 
         if (initialActiveId) {
             setActiveId(initialActiveId)
-        }
-
-        // Scroll TOC item into view — only possible once container is mounted
-        const container = getScrollElement(scrollContainerRef.current)
-        if (container && initialActiveId) {
-            const activeEl = getActiveElement(
-                container,
-                initialActiveId,
-                fullPath
-            )
-            if (activeEl) {
-                scrollElementToCenter(activeEl, "instant")
-                hasInitialScrolledRef.current = true
-                isFirstRenderRef.current = false
-            }
         }
 
         // Notify parent that initial activeId check is complete.
@@ -251,11 +235,6 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
             )
 
             if (activeElement) {
-                if (hasInitialScrolledRef.current) {
-                    hasInitialScrolledRef.current = false
-                    return
-                }
-
                 const elHref = activeElement.getAttribute("href")
                 if (elHref) {
                     const url = new URL(
@@ -281,11 +260,10 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                     '[data-slot="collapsible-content"]'
                 )
                 if (
-                    !isFirst
-                    && groupList
+                    groupList
                     && groupList.clientHeight + 2 < groupList.scrollHeight
                 ) {
-                    delay = 350
+                    delay = 400
                 }
 
                 const { motionReduced } = getPreferences()

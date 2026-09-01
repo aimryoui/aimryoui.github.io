@@ -139,7 +139,7 @@ function AccordionTrigger({
                     <ChevronDown
                         className={cn("size-5 translate-y-[.5px]", {
                             "motion-preferred":
-                                "transition-transform duration-350",
+                                "transition-transform duration-400",
                             rtl: "-translate-y-[.5px] rotate-180",
                             "group-not-data-expanded/accordion-item": [
                                 "translate-x-[.5px] translate-y-0 -rotate-90 dark:stroke-2.5",

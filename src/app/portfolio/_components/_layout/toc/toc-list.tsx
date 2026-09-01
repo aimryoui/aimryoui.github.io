@@ -85,6 +85,9 @@ function TocList({
                     "group-is-[[data-sidebar-position='inline-start'][data-effects~='target-cursor']]/html":
                         "ltr:rtl rtl:ltr"
                 },
+                // {
+                //     after: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-alert"
+                // },
                 className
             )}
         >

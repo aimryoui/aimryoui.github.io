@@ -56,7 +56,10 @@ function Toc({ handleClearSearch, shouldAnimate, ...props }: TocProps) {
             className={cn(
                 "flex flex-1 flex-col overflow-auto",
                 navRevealPhase === "animating" && [
-                    "motion-preferred:animate-toc-reveal",
+                    {
+                        "motion-preferred":
+                            "animate-toc-reveal animation-delay-150"
+                    },
                     "motion-reduced:animate-toc-fade"
                 ],
                 navRevealPhase !== "done" && [

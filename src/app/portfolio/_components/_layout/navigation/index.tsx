@@ -28,7 +28,7 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
         <>
             <aside
                 className={cn(
-                    "group/sidebar fixed start-[calc(var(--body-safe-zone-left)+var(--px))] top-0 z-75 order-1 flex h-dvh w-sidebar flex-col justify-end bg-background",
+                    "group/sidebar sticky start-[calc(var(--body-safe-zone-left)+var(--px))] top-0 z-75 order-1 flex h-dvh w-sidebar flex-col justify-end bg-background",
                     {
                         "group-data-[sidebar-position=inline-end]/html": [
                             "end-[calc(var(--body-safe-zone-right)+var(--px))] start-auto order-9",
@@ -36,7 +36,7 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
                                 lg: "inset-x-0 bottom-0 top-auto h-auto w-full"
                             }
                         ],
-                        lg: "inset-x-0 bottom-0 top-auto h-auto w-full"
+                        lg: "fixed inset-x-0 bottom-0 top-auto h-auto w-full"
                     },
                     className
                 )}
@@ -54,9 +54,8 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
                 />
             </aside>
             <MarginLine
-                className={cn("order-2 ms-sidebar", {
-                    "group-data-[sidebar-position=inline-end]/html":
-                        "z-60 order-8 me-sidebar ms-unset",
+                className={cn("order-2", {
+                    "group-data-[sidebar-position=inline-end]/html": "order-8",
                     lg: "hidden"
                 })}
             />

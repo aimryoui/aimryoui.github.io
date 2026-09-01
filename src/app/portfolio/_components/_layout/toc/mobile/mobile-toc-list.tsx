@@ -45,8 +45,11 @@ function MobileTocList({ className, ref: _ref, ...props }: MobileTocListProps) {
         <SmoothScrolling
             ref={scrollContainerRef}
             className={cn(
-                "group overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-2 scrollbar-thin webkit:pointer-events-auto",
+                "group scroll-pb-[--toolbar-height] overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto py-2 scrollbar-thin webkit:pointer-events-auto",
                 "scroll-fade-y scroll-fade-16 group-has-[input:not(:placeholder-shown)]/sidebar:scroll-fade-none",
+                // {
+                //     after: "absolute inset-x-0 top-1/2 -mt-[--toolbar-height] h-px -translate-y-1/2 bg-alert"
+                // },
                 className
             )}
             {...props}
