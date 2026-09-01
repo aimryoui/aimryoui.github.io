@@ -140,25 +140,27 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         className={cn(
                             "order-6 -mb-safe-zone h-[calc(100dvh+var(--spacing-safe-zone))]",
                             {
-                                xl: "hidden",
                                 "group-data-[sidebar-position=inline-end]/html":
-                                    "order-4"
+                                    "order-4",
+                                xl: "hidden"
                             }
                         )}
                     />
                     <Divider
                         dir="vertical"
-                        className={cn("sticky top-0 order-7 h-dvh xl:hidden", {
+                        className={cn("sticky top-0 order-7 h-dvh", {
                             "group-data-[sidebar-position=inline-end]/html":
-                                "order-3"
+                                "order-3",
+                            xl: "hidden"
                         })}
                     />
                     <MarginLine
                         className={cn(
-                            "order-8 -mb-safe-zone h-[calc(100dvh+var(--spacing-safe-zone))] xl:hidden",
+                            "order-8 -mb-safe-zone h-[calc(100dvh+var(--spacing-safe-zone))]",
                             {
                                 "group-data-[sidebar-position=inline-end]/html":
-                                    "order-2"
+                                    "order-2",
+                                xl: "hidden"
                             }
                         )}
                     />

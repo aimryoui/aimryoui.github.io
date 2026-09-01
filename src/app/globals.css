@@ -200,6 +200,12 @@
         --spacing-safe-zone-vertical: calc(var(--spacing)*4.5);
         --spacing-table-between: calc(var(--spacing-safe-zone)/2);
 
+        --spacing-sidebar: 24.25rem;
+
+        @screen 2xl {
+            --spacing-sidebar: 22.25rem;
+        }
+
         @screen md {
             --radius-media: var(--radius-xl);
             --spacing-space: calc(var(--spacing)*16);

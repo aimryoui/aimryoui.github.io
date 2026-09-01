@@ -292,8 +292,11 @@ const TocItemRow = memo(
                                 isItem && compact && "[--max-shift:.875rem]",
                                 {
                                     "data-line-sidebar": [
-                                        "translate-x-[--move-x] [--move-x:calc(var(--effect,0)*var(--max-shift,1.875rem))] rtl:-translate-x-[--move-x]",
-                                        compact && "me-5"
+                                        "translate-x-[--move-x] [--move-x:calc(var(--effect,0)*var(--max-shift,1.875rem))]",
+                                        "rtl:-translate-x-[--move-x]",
+                                        compact
+                                            ? "group-hover:me-4"
+                                            : "xl:group-hover:me-6.5"
                                     ]
                                 }
                             )

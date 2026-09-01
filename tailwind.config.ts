@@ -64,7 +64,7 @@ export default {
     darkMode: ["variant", ["&:where([data-theme=dark], [data-theme=dark] *)"]],
     theme: {
         screens: {
-            "2xl": { max: "96rem" },
+            "2xl": { max: "98rem" },
             xl: { max: "80rem" },
             lg: { max: "72rem" },
             md: { max: "48rem" },
@@ -141,7 +141,7 @@ export default {
                 61.25: "15.3125rem",
                 66: "16.5rem",
                 75: "18.75rem",
-                sidebar: "24.25rem",
+                sidebar: "var(--spacing-sidebar)",
                 120: "30rem",
                 125: "31.25rem",
                 180: "45rem",
