@@ -84,7 +84,7 @@ function PortfolioBreadcrumb({
                 className={cn(
                     "w-full min-w-0 overflow-x-scroll pe-[calc(var(--spacing-safe-zone)*2+var(--spacing)*9)] ps-safe-zone scroll-fade-x scroll-fade-24 scrollbar-thin",
                     {
-                        md: "z-2"
+                        md: "z-2 pe-safe-zone"
                     }
                 )}
             >
