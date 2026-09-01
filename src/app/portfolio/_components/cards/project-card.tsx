@@ -346,7 +346,7 @@ function ProjectName({
     navigation?: ProjectCardProps["navigation"]
 }) {
     return (
-        <p className="flex">
+        <p className="flex max-w-full">
             <Bold
                 className={cn(
                     "relative inline-flex w-fit max-w-full overflow-hidden",

@@ -217,23 +217,34 @@ function WebkitFooterSeparator({
     containerRef: React.RefObject<HTMLElement | null>
 }) {
     const isContainerNarrow = useContainerQuery(containerRef, "50.9375rem")
+    const isContainerNarrower = useContainerQuery(containerRef, "19.6875rem")
 
-    return isContainerNarrow && index === 4 ? (
-        <li role="separator" className={cn("z-1 h-0 w-full")}>
-            <ElementLine dir="horizontal" />
-        </li>
-    ) : (
-        index < arr.length - 1 && (
+    const isHorizontal = isContainerNarrower
+        ? index % 2 !== 0
+        : isContainerNarrow && index === 4
+
+    if (isHorizontal) {
+        return (
+            <li role="separator" className={cn("z-1 h-0 w-full")}>
+                <ElementLine dir="horizontal" />
+            </li>
+        )
+    }
+
+    if (index < arr.length - 1) {
+        return (
             <li
                 role="separator"
                 className={cn("z-1 h-full", {
                     "@[50.9375rem]": "h-space"
                 })}
             >
-                <SvgElementLine />
+                <SvgElementLine className="h-full" />
             </li>
         )
-    )
+    }
+
+    return null
 }
 
 export default Footer
