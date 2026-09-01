@@ -16,7 +16,7 @@ interface UseTocScrollOptions {
     onActiveReady?: () => void
 }
 
-const SCROLL_DELAY = 400
+const BASE_SCROLL_DELAY = 400
 
 import { type LenisRef } from "lenis/react"
 
@@ -91,6 +91,8 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
     const clickedTargetRef = useRef<string | null>(null)
     const isFirstRenderRef = useRef(true)
     const hasNotifiedActiveRef = useRef(false)
+    const onActiveReadyRef = useRef(onActiveReady)
+    onActiveReadyRef.current = onActiveReady
 
     const allIds = useMemo(() => items.map((item) => item.id), [items])
 
@@ -154,16 +156,12 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
 
         if (initialActiveId) {
             setActiveId(initialActiveId)
-        }
-
-        // Notify parent that initial activeId check is complete.
-        // We use double requestAnimationFrame to ensure the browser has time to paint
-        // the "waiting" state (opacity: 0) before the "animating" classes are added.
-        if (!hasNotifiedActiveRef.current) {
+        } else if (!hasNotifiedActiveRef.current) {
+            // Notify parent that initial activeId check is complete if there's no initial active ID.
             hasNotifiedActiveRef.current = true
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
-                    onActiveReady?.()
+                    onActiveReadyRef.current?.()
                 })
             })
         }
@@ -200,10 +198,13 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
 
         let currentDelay = 0
 
+        const { motionReduced } = getPreferences()
+        const scrollDelay = motionReduced ? 0 : BASE_SCROLL_DELAY
+
         if (isBlink && pathname === "/portfolio" && activeId) {
             const elapsed = Date.now() - lastUpdateTimestamp.current
-            if (elapsed < SCROLL_DELAY) {
-                currentDelay = SCROLL_DELAY - elapsed
+            if (elapsed < scrollDelay) {
+                currentDelay = scrollDelay - elapsed
             }
         }
 
@@ -234,6 +235,17 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                 fullPath
             )
 
+            const notifyReady = () => {
+                if (!hasNotifiedActiveRef.current) {
+                    hasNotifiedActiveRef.current = true
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            onActiveReadyRef.current?.()
+                        })
+                    })
+                }
+            }
+
             if (activeElement) {
                 const elHref = activeElement.getAttribute("href")
                 if (elHref) {
@@ -246,6 +258,7 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                         && url.pathname !== pathname
                     ) {
                         // Prevent scrolling to a stale activeId during navigation on detail pages
+                        notifyReady()
                         return
                     }
                 }
@@ -255,6 +268,9 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                     isFirstRenderRef.current = false
                 }
 
+                const { motionReduced } = getPreferences()
+                const behavior = isFirst || motionReduced ? "instant" : "smooth"
+
                 let delay = 0
                 const groupList = activeElement.closest(
                     '[data-slot="collapsible-content"]'
@@ -263,11 +279,8 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                     groupList
                     && groupList.clientHeight + 2 < groupList.scrollHeight
                 ) {
-                    delay = 400
+                    delay = motionReduced ? 0 : 400
                 }
-
-                const { motionReduced } = getPreferences()
-                const behavior = isFirst || motionReduced ? "instant" : "smooth"
 
                 if (delay > 0) {
                     const timer = setTimeout(() => {
@@ -279,6 +292,7 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
                         if (el) {
                             scrollElementToCenter(el, behavior)
                         }
+                        notifyReady()
                     }, delay)
 
                     return () => {
@@ -288,6 +302,8 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
 
                 scrollElementToCenter(activeElement, behavior)
             }
+            
+            notifyReady()
         }
     }, [activeId, pathname, fullPath])
 
