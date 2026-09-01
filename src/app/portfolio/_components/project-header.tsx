@@ -126,7 +126,9 @@ function ProjectHeader({ project }: { project: (typeof projects)[number] }) {
                                 </>
                             )
                         ) : (
-                            <Bold className="text-foreground">Designer</Bold>
+                            <Bold className="text-foreground">
+                                Graphic Designer
+                            </Bold>
                         )}
                     </div>
                     <SvgElementLine className="sm:hidden" />

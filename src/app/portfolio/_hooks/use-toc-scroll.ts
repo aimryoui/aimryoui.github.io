@@ -1,13 +1,10 @@
-import { useEffect, useMemo, useRef } from "react"
+import { useCallback, useEffect, useMemo, useRef } from "react"
 import { usePathname } from "next/navigation"
 
 import { useBrowserEngine } from "@/hooks/use-browser-engine"
 import { getPreferences } from "@/hooks/use-preference"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
-import {
-    useTocStore,
-    useTocStoreApi
-} from "@/portfolio/_components/_layout/toc/stores/toc-store"
+import { useTocStore } from "@/portfolio/_components/_layout/toc/stores/toc-store"
 import { useQueryStore } from "@/stores/query-store"
 
 interface UseTocScrollOptions {
@@ -22,18 +19,23 @@ import { type LenisRef } from "lenis/react"
 
 type ScrollContainerRefTarget = HTMLElement | LenisRef
 
+function getScrollParent(element: HTMLElement | null): HTMLElement | null {
+    let curr = element
+    while (curr) {
+        const overflowY = window.getComputedStyle(curr).overflowY
+        if (overflowY === "auto" || overflowY === "scroll") {
+            return curr
+        }
+        curr = curr.parentElement
+    }
+    return null
+}
+
 function scrollElementToCenter(
     element: HTMLElement,
     behavior: ScrollBehavior = "smooth"
 ) {
-    let parent = element.parentElement
-    while (parent) {
-        const overflowY = window.getComputedStyle(parent).overflowY
-        if (overflowY === "auto" || overflowY === "scroll") {
-            break
-        }
-        parent = parent.parentElement
-    }
+    const parent = getScrollParent(element.parentElement)
 
     if (!parent) {
         element.scrollIntoView({ block: "center", behavior })
@@ -116,7 +118,8 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
 
         if (debouncedQuery && scrollContainerRef.current) {
             const container = getScrollElement(scrollContainerRef.current)
-            if (container) container.scrollTop = 0
+            const scrollParent = getScrollParent(container)
+            if (scrollParent) scrollParent.scrollTop = 0
         } else if (!debouncedQuery && scrollContainerRef.current) {
             const container = getScrollElement(scrollContainerRef.current)
             const activeEl = getActiveElement(container, activeId, fullPath)
@@ -302,17 +305,21 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
 
                 scrollElementToCenter(activeElement, behavior)
             }
-            
+
             notifyReady()
         }
     }, [activeId, pathname, fullPath])
 
+    const getContainer = useCallback(() => {
+        return getScrollElement(scrollContainerRef.current)
+    }, [])
+
     return {
         scrollContainerRef,
         clickedTargetRef,
-        getContainer: () => getScrollElement(scrollContainerRef.current)
+        getContainer
     }
 }
 
 export type { UseTocScrollOptions }
-export { scrollElementToCenter, useTocScroll, useTocStore, useTocStoreApi }
+export { scrollElementToCenter, useTocScroll, useTocStore }
