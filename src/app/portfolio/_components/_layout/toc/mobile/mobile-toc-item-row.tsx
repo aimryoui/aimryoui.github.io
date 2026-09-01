@@ -126,7 +126,7 @@ const MobileTocItemRow = memo(
                             : "inline-block py-2",
                         isItem
                             ? "px-safe-zone text-foreground dark:text-muted-foreground"
-                            : "font-wght-500 font-slnt-0",
+                            : "font-wght-600",
                         isActive
                             ? "pe-[calc(var(--spacing-safe-zone)+var(--spacing)*7)] !text-highlighted font-wght-600"
                             : {

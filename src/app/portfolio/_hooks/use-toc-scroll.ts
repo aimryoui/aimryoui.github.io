@@ -45,9 +45,17 @@ function scrollElementToCenter(
     const parentRect = parent.getBoundingClientRect()
     const elementRect = element.getBoundingClientRect()
 
-    const relativeTop = elementRect.top - parentRect.top + parent.scrollTop
-    const centerScroll =
-        relativeTop - parent.clientHeight / 2 + elementRect.height / 2
+    const parentStyle = window.getComputedStyle(parent)
+    const spb = parseFloat(parentStyle.scrollPaddingBottom) || 0
+    const pb = parseFloat(parentStyle.paddingBottom) || 0
+
+    const bottomOffset = Math.max(spb, pb)
+
+    const visualCenter = parent.clientHeight / 2 - bottomOffset
+
+    // `clientTop` accounts for any top border on the scroll parent
+    const relativeTop = elementRect.top - parentRect.top - parent.clientTop + parent.scrollTop
+    const centerScroll = relativeTop - visualCenter + elementRect.height / 2
 
     parent.scrollTo({
         top: centerScroll,
@@ -176,13 +184,20 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
     useEffect(() => {
         if (!enableStartEndAutoHighlight || allIds.length === 0) return
 
+        let ticking = false
         const handleScroll = () => {
-            const { scrollY, innerHeight } = window
-            const isBottom =
-                innerHeight + scrollY
-                >= document.documentElement.scrollHeight - 10
-            if (isBottom) {
-                setActiveId(allIds[allIds.length - 1])
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const { scrollY, innerHeight } = window
+                    const isBottom =
+                        innerHeight + scrollY
+                        >= document.documentElement.scrollHeight - 10
+                    if (isBottom) {
+                        setActiveId(allIds[allIds.length - 1])
+                    }
+                    ticking = false
+                })
+                ticking = true
             }
         }
 
