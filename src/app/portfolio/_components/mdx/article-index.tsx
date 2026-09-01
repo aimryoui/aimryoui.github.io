@@ -55,6 +55,12 @@ function ArticleIndex({ toc }: ArticleIndexProps) {
                 labelElement="span"
                 enableStartEndAutoHighlight
             />
+            <ElementLine dir="horizontal" />
+            <Space className="flex items-center px-safe-zone">
+                <Bold mono className="text-sm uppercase text-muted-foreground">
+                    In this article
+                </Bold>
+            </Space>
         </aside>
     )
 }

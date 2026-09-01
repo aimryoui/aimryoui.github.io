@@ -1,11 +1,7 @@
 "use client"
 
 import { ViewTransition } from "@/components/animations/view-transition"
-import {
-    ElementLine,
-    SectionLine,
-    SvgElementLine
-} from "@/components/layout/line"
+import { SectionLine, SvgElementLine } from "@/components/layout/line"
 import { useDirection } from "@/components/ui/direction"
 import { Link } from "@/components/ui/link"
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip"
@@ -100,7 +96,7 @@ function ProjectHeader({ project }: { project: (typeof projects)[number] }) {
                         category={category}
                     />
                 </div>
-                <ElementLine dir="horizontal" className={cn("w-screen")} />
+                <SectionLine center />
                 <div className="flex sm:flex-col">
                     <div
                         className={cn(
@@ -132,10 +128,7 @@ function ProjectHeader({ project }: { project: (typeof projects)[number] }) {
                         )}
                     </div>
                     <SvgElementLine className="sm:hidden" />
-                    <SectionLine
-                        dir="horizontal"
-                        containerClassName="hidden sm:block"
-                    />
+                    <SectionLine center containerClassName="hidden sm:block" />
                     <div
                         className={cn(
                             "flex w-full flex-col gap-2 text-pretty px-safe-zone py-safe-zone-vertical"
@@ -172,7 +165,7 @@ function ProjectHeader({ project }: { project: (typeof projects)[number] }) {
                         )}
                     </div>
                 </div>
-                <ElementLine dir="horizontal" className={cn("w-screen")} />
+                <SectionLine center />
                 <div className="flex sm:flex-col">
                     <div
                         className={cn(

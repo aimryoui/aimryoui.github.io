@@ -2,9 +2,10 @@ import { type Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import { Divider } from "@/components/layout/divider"
-import { MarginLine, SectionLine } from "@/components/layout/line"
+import { ElementLine, MarginLine, SectionLine } from "@/components/layout/line"
 import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
+import { Bold, Highlight } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import {
     getProject,
@@ -156,6 +157,26 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         })}
                     />
                     <ArticleIndex toc={project.toc} />
+                    <div className="pointer-events-none absolute right-0 top-[calc(100dvh-var(--spacing-space))] z-60 h-[calc(100%-(100dvh-var(--spacing-space)))] w-sidebar bg-alert/30 xl:hidden">
+                        <div className="pointer-events-auto sticky top-[calc(100dvh-var(--spacing-space))] flex w-full flex-col bg-background px-safe-zone py-safe-zone-vertical">
+                            <ElementLine
+                                dir="horizontal"
+                                containerClassName="absolute inset-x-0 top-0"
+                            />
+                            <Bold
+                                title={project.name}
+                                className="max-w-full truncate text-xl"
+                            >
+                                {project.name}
+                            </Bold>
+                            <Highlight
+                                title={project.category}
+                                className="max-w-full truncate text-nowrap text-xs leading-4"
+                            >
+                                {project.category}
+                            </Highlight>
+                        </div>
+                    </div>
                     <div className="relative order-5 flex-1 @container">
                         <FlashOverlay />
                         <Space />
