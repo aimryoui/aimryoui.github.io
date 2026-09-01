@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react"
 import { ViewTransition } from "@/components/animations/view-transition"
 import { ArrowLeft, ArrowRight } from "@/components/icons/icons"
 import { SvgElementLine } from "@/components/layout/line"
+import { Badge } from "@/components/ui/badge"
 import { Link, type LinkProps } from "@/components/ui/link"
 import { PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
 import { Bold, Text } from "@/components/ui/typography"
@@ -350,9 +351,6 @@ function ProjectName({
             <Bold
                 className={cn(
                     "relative inline-flex w-fit max-w-full overflow-hidden",
-                    {
-                        md: "text-sm"
-                    },
                     className
                 )}
                 {...props}
@@ -427,13 +425,9 @@ function ProjectName({
                 </ViewTransition>
             )}
             {isCaseStudy && (
-                <i
-                    className={cn(
-                        "text-nowrap text-muted-foreground/70 font-wght-450 dark:font-wght-400"
-                    )}
-                >
-                    (Case Study)
-                </i>
+                <Badge variant="outline-tinted" className="ms-1">
+                    Case Study
+                </Badge>
             )}
         </p>
     )

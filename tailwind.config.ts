@@ -242,6 +242,9 @@ export default {
                 100: "100",
                 infinite: "2147483647"
             },
+            aria: {
+                invalid: "invalid"
+            },
             data: {
                 open: "open",
                 closed: "closed",

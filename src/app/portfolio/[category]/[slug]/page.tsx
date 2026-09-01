@@ -171,13 +171,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             />
                             <Bold
                                 title={project.name}
-                                className="max-w-full -translate-y-0.5 truncate text-xl"
+                                className="max-w-full -translate-y-0.75 truncate text-xl"
                             >
                                 {project.name}
                             </Bold>
                             <Bold
                                 title={project.category}
-                                className="max-w-full truncate text-nowrap text-xs leading-4 text-muted-foreground"
+                                className="max-w-full truncate text-nowrap text-sm leading-4 text-muted-foreground/70 font-wght-550"
                             >
                                 {project.category}
                             </Bold>

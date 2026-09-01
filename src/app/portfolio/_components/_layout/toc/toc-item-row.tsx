@@ -4,6 +4,7 @@ import { createElement, memo } from "react"
 import { usePathname } from "next/navigation"
 
 import { ArrowRight } from "@/components/icons/icons"
+import { Badge } from "@/components/ui/badge"
 import { Link } from "@/components/ui/link"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
@@ -149,7 +150,8 @@ const TocItemRow = memo(
                             : {
                                   "motion-preferred":
                                       "w-2.5 scale-x-[--effect,0]"
-                              }
+                              },
+                        "has-[+a:active]:bg-highlighted"
                     )}
                 />
                 <Link
@@ -301,13 +303,13 @@ const TocItemRow = memo(
                         item.caseStudy && (
                             <>
                                 {" "}
-                                <span
+                                <Badge
+                                    variant="outline-tinted"
                                     className={cn(
-                                        "inline-block -translate-y-0.25 rounded-md border px-1 py-0.25 text-xs font-wght-450 dark:font-wght-400",
-                                        pathname === "/portfolio"
-                                            || (isSamePath && isFeatureSelected)
-                                            ? "border-highlighted/20 bg-highlighted/10 text-highlighted"
-                                            : "border-muted-foreground/20 bg-muted-foreground/10 text-muted-foreground",
+                                        (pathname === "/portfolio"
+                                            || (isSamePath
+                                                && isFeatureSelected))
+                                            && "border-highlighted/20 bg-highlighted/10 text-highlighted",
                                         pathname !== "/portfolio" && {
                                             "group-not-data-current/link": {
                                                 "group-hover/link":
@@ -319,7 +321,7 @@ const TocItemRow = memo(
                                     )}
                                 >
                                     Case Study
-                                </span>
+                                </Badge>
                             </>
                         )
                     )}

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react"
 
 import { Image } from "@/components/media/image"
+import { Badge } from "@/components/ui/badge"
 import { Link, type LinkProps } from "@/components/ui/link"
 import { Bold, Text } from "@/components/ui/typography"
 import { TRIM_PROJECT_SLUG_REGEX } from "@/helpers/character-regexes"
@@ -136,6 +137,7 @@ function SelectedProjectCard({
                 <ProjectName
                     name={project.name}
                     isNew={project.features?.new ?? false}
+                    isCaseStudy={project.caseStudy}
                 />
                 <ProjectCategory category={project.category} />
             </div>
@@ -184,70 +186,70 @@ function ProjectName({
     className,
     name,
     isNew,
+    isCaseStudy,
     ...props
 }: React.ComponentProps<typeof Bold> & {
     name: string
     isNew: boolean
+    isCaseStudy?: boolean
 }) {
     return (
-        <Bold
-            className={cn(
-                "relative inline-flex w-fit overflow-hidden text-pretty leading-5",
-                isNew && "pe-3",
-                {
-                    md: "text-sm"
-                },
-                className
-            )}
-            {...props}
-        >
-            <bdi
-                translate="no"
-                className={cn("line-clamp-2 w-fit translate-y-0 skew-y-0", {
-                    "motion-reduced": "group-hover:text-highlighted",
-                    "motion-preferred": [
-                        "transition-[transform,opacity] ease-in-out duration-500",
-                        {
-                            "group-data-[hover=true]":
-                                "-translate-y-full skew-y-12 opacity-0 rtl:-skew-y-12"
-                        }
-                    ],
-                    "group-active": "text-highlighted"
-                })}
-                style={{
-                    viewTransitionName: "none !important"
-                }}
-            >
-                {formatOrdinals(name)}
-            </bdi>
-            <bdi
-                aria-hidden={true}
-                translate="no"
-                role="presentation"
+        <p className="flex max-w-full">
+            <Bold
                 className={cn(
-                    "pointer-events-none absolute line-clamp-2 w-fit translate-y-full text-highlighted opacity-0",
-                    {
-                        "motion-reduced": "hidden",
-                        "motion-preferred": [
-                            "origin-left skew-y-12 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
-                            {
-                                rtl: "origin-right -skew-y-12",
-                                "group-data-[hover=true]":
-                                    "translate-y-0 skew-y-0 opacity-100 delay-0"
-                            }
-                        ]
-                    }
+                    "relative inline-flex w-fit overflow-hidden text-pretty leading-5 wrap-anywhere",
+                    className
                 )}
+                {...props}
             >
-                {formatOrdinals(name)}
-            </bdi>
+                <bdi
+                    translate="no"
+                    className={cn("line-clamp-2 w-fit translate-y-0 skew-y-0", {
+                        "motion-reduced": "group-hover:text-highlighted",
+                        "motion-preferred": [
+                            "transition-[transform,opacity] ease-in-out duration-500",
+                            {
+                                "group-data-[hover=true]":
+                                    "-translate-y-full skew-y-12 opacity-0 rtl:-skew-y-12"
+                            }
+                        ],
+                        "group-active": "text-highlighted"
+                    })}
+                    style={{
+                        viewTransitionName: "none !important"
+                    }}
+                >
+                    {formatOrdinals(name)}
+                </bdi>
+                <bdi
+                    aria-hidden={true}
+                    translate="no"
+                    role="presentation"
+                    className={cn(
+                        "pointer-events-none absolute line-clamp-2 w-fit translate-y-full text-highlighted opacity-0",
+                        {
+                            "motion-reduced": "hidden",
+                            "motion-preferred": [
+                                "origin-left skew-y-12 transition-[transform,opacity] ease-in-out duration-[500ms,0s] delay-[0s,500ms]",
+                                {
+                                    rtl: "origin-right -skew-y-12",
+                                    "group-data-[hover=true]":
+                                        "translate-y-0 skew-y-0 opacity-100 delay-0"
+                                }
+                            ]
+                        }
+                    )}
+                >
+                    {formatOrdinals(name)}
+                </bdi>
+            </Bold>
             {isNew && (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 14 14"
                     aria-hidden={true}
-                    className="absolute end-0 top-0 size-2.75 text-highlighted lg:size-2.5 rtl:-scale-x-100"
+                    className="ms-0.25 inline size-2.75 align-top text-highlighted lg:size-2.5 rtl:-scale-x-100"
                 >
                     <path
                         fill="currentColor"
@@ -255,7 +257,12 @@ function ProjectName({
                     />
                 </svg>
             )}
-        </Bold>
+            {isCaseStudy && (
+                <Badge variant="outline-tinted" className="ms-1">
+                    Case Study
+                </Badge>
+            )}
+        </p>
     )
 }
 
