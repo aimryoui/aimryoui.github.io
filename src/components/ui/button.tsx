@@ -24,7 +24,7 @@ const nativePressableClassName = cn("shrink-0 cursor-pointer", {
 const buttonVariants = cva(
     cn(
         nativePressableClassName,
-        "inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-xlg text-sm font-wght-500 transition-[transform,translate,background-color] duration-100",
+        "inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-xlg text-sm font-wght-500 transition-[transform,translate,background-color,padding] duration-100",
         {
             "data-target-cursor":
                 "transition-[transform,translate,scale,background-color,border-radius] ease-[linear,linear,linear,linear,cubic-bezier(0.22,1,0.36,1)] duration-[.1s,.1s,.1s,.1s,.2s]",
@@ -88,9 +88,9 @@ const buttonVariants = cva(
                 })
             },
             size: {
-                default: "h-9 min-w-9 px-4 py-2 has-[>svg]:px-3",
-                lg: "h-10 min-w-10 rounded-md px-6 has-[>svg]:px-4",
-                sm: "h-8 min-w-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5",
+                default: "h-9 min-w-9 px-2.75 py-2 text-foreground",
+                lg: "h-10 min-w-10 rounded-md px-6 text-foreground",
+                sm: "h-8 min-w-8 gap-1.5 rounded-md px-3 text-foreground",
                 icon: "size-9",
                 "icon-sm": "size-8",
                 "icon-lg": "size-10",

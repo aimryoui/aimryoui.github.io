@@ -92,17 +92,17 @@ const TocItemRow = memo(
                             },
                             isActive
                                 ? {
-                                      before: "w-0.5 bg-highlighted"
+                                      before: "w-0.75 bg-highlighted"
                                   }
                                 : {
                                       "not-data-target-cursor:hover": {
-                                          before: "w-0.5 bg-muted-foreground/80 dark:bg-muted-foreground"
+                                          before: "w-0.75 bg-muted-foreground/80 dark:bg-muted-foreground"
                                       },
                                       "data-target-cursor:active": {
                                           before: "!bg-muted-foreground/80 dark:!bg-muted-foreground"
                                       },
                                       active: {
-                                          before: "w-0.5 !bg-highlighted"
+                                          before: "w-0.75 !bg-highlighted"
                                       }
                                   }
                         ]
@@ -216,7 +216,10 @@ const TocItemRow = memo(
                                                 "group-last-of-type/item":
                                                     "-mb-3 pb-4.5"
                                             }
-                                        ]
+                                        ],
+                                  {
+                                      md: "pe-5.5 ps-[calc(var(--spacing-safe-zone)*2)]"
+                                  }
                               ]
                             : "font-wght-550",
                         isHeader
@@ -242,7 +245,14 @@ const TocItemRow = memo(
                             active: "!text-highlighted",
                             "focus-visible": "text-foreground",
                             "data-current":
-                                "text-highlighted font-wght-550 dark:text-highlighted"
+                                "text-highlighted font-wght-550 md:font-wght-500 dark:text-highlighted",
+
+                            md: [
+                                "font-wght-500",
+                                isItem
+                                    ? "text-lg font-wght-450 dark:font-wght-400"
+                                    : "text-[length:inherit]"
+                            ]
                         },
                         isHeader
                             && (compact
@@ -253,15 +263,17 @@ const TocItemRow = memo(
                                       "group-last/collapsible:group-not-data-expanded/collapsible":
                                           "-mb-3 pb-4.5"
                                   }
-                                : {
-                                      "group-[>:first-child]/collapsible": [
-                                          "-mt-3 pt-4.5",
-                                          {
-                                              "group-not-data-expanded/collapsible":
-                                                  "-mb-3 pb-4.5"
-                                          }
-                                      ]
-                                  })
+                                : collapsible
+                                  ? {
+                                        "group-[>:first-child]/collapsible": [
+                                            "-mt-3 pt-4.5",
+                                            {
+                                                "group-not-data-expanded/collapsible":
+                                                    "-mb-3 pb-4.5"
+                                            }
+                                        ]
+                                    }
+                                  : "-my-3 py-4.5")
                     )}
                 >
                     {item.icon && (
@@ -293,16 +305,49 @@ const TocItemRow = memo(
                             translate: "no",
                             className: cn(
                                 "block w-fit max-w-full truncate px-1.25",
-                                isHeader && !isSelectedWorks && "-ms-1.25",
+                                isHeader
+                                    && !isSelectedWorks && [
+                                        "-ml-1.25",
+                                        {
+                                            rtl: "-mr-1.25 ml-0"
+                                        }
+                                    ],
                                 isItem && compact && "[--max-shift:.875rem]",
                                 {
                                     "data-line-sidebar": [
                                         "translate-x-[--move-x] [--move-x:calc(var(--effect,0)*var(--max-shift,1.875rem))]",
                                         "rtl:-translate-x-[--move-x]",
                                         compact
-                                            ? "group-hover:me-4"
-                                            : "xl:group-hover:me-6.5"
-                                    ]
+                                            ? {
+                                                  "group-hover": [
+                                                      "mr-4",
+                                                      {
+                                                          rtl: [
+                                                              "ml-4",
+                                                              isHeader
+                                                              && !isSelectedWorks
+                                                                  ? "-mr-1.25"
+                                                                  : "mr-0"
+                                                          ]
+                                                      }
+                                                  ]
+                                              }
+                                            : {
+                                                  "xl:group-hover": [
+                                                      "mr-6.5",
+                                                      {
+                                                          rtl: [
+                                                              "ml-6.5",
+                                                              isHeader
+                                                              && !isSelectedWorks
+                                                                  ? "-mr-1.25"
+                                                                  : "mr-0"
+                                                          ]
+                                                      }
+                                                  ]
+                                              }
+                                    ],
+                                    md: "ml-0 px-0 rtl:mr-0"
                                 }
                             )
                         },
@@ -336,7 +381,7 @@ const TocItemRow = memo(
                         <div
                             className={cn(
                                 "ms-auto hidden size-6 min-w-6 place-items-center rounded-full bg-highlighted/10 text-highlighted",
-                                "group-hover:grid dark:bg-highlighted/20",
+                                "group-hover:grid md:grid dark:bg-highlighted/20",
                                 compact
                                     && collapsible
                                     && isHeader

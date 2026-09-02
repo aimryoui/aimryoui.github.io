@@ -19,7 +19,7 @@ import {
 import { useTocTree } from "@/portfolio/_hooks/use-toc-tree"
 
 interface TocListProps extends LineSidebarProps {
-    lineSidebarEffect?: boolean
+    onActiveReady?: () => void
 }
 function handleItemClick(
     item: TocItemProps,
@@ -44,18 +44,12 @@ function handleItemClick(
         clickedTargetRef.current = targetId
     }
 }
-function TocList({
-    className,
-    onActiveReady,
-    lineSidebarEffect = true,
-    ...props
-}: TocListProps & {
-    onActiveReady?: () => void
-}) {
+function TocList({ className, onActiveReady, ...props }: TocListProps) {
     const compact = useTocStore((s) => s.compact)
     const items = useTocStore((s) => s.items)
     const filteredItems = useTocStore((s) => s.filteredItems)
     const debouncedQuery = useTocStore((s) => s.query)
+    const lineSidebarEffect = useTocStore((s) => s.lineSidebarEffect ?? true)
 
     const { scrollContainerRef, clickedTargetRef } = useTocScroll({
         items,
@@ -81,19 +75,28 @@ function TocList({
                 "group overflow-x-hidden overflow-y-scroll overscroll-contain scroll-auto scrollbar-none",
                 "scroll-fade-y scroll-fade-18 group-has-[input:not(:placeholder-shown)]/sidebar:scroll-fade-none",
                 "hover:scrollbar-thin",
-                !compact && {
-                    "group-is-[[data-sidebar-position='inline-start'][data-effects~='target-cursor']]/html":
-                        "ltr:rtl rtl:ltr"
+                compact
+                    ? {
+                          "group-is-[[data-sidebar-position='inline-end'][data-effects~='target-cursor']]/html":
+                              "ltr:rtl rtl:ltr"
+                      }
+                    : {
+                          "group-is-[[data-sidebar-position='inline-start'][data-effects~='target-cursor']]/html":
+                              "ltr:rtl rtl:ltr"
+                      },
+                {
+                    // after: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-alert",
+                    md: "scroll-fade-16"
                 },
-                // {
-                //     after: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-alert"
-                // },
                 className
             )}
         >
             <ScrollContainer
+                data-line-sidebar={lineSidebarEffect}
                 ref={scrollContainerRef}
-                itemSelector="[data-toc-item]"
+                {...(lineSidebarEffect && {
+                    itemSelector: "[data-toc-item]"
+                })}
                 className={cn(
                     compact
                         ? "[--marker-length:.75rem]"
@@ -121,17 +124,14 @@ function TocList({
                                 onItemPress={handlePress}
                                 isFirst={index === firstGroupIndex}
                                 isLast={index === lastGroupIndex}
-                                className={cn(!compact && "ltr:ltr rtl:rtl")}
+                                className={cn("ltr:ltr rtl:rtl")}
                             />
                         )
                     }
                     return (
                         <ul
                             key={`anchors-${node.items[0].id}`}
-                            className={cn(
-                                "flex flex-col",
-                                !compact && "ltr:ltr rtl:rtl"
-                            )}
+                            className={cn("flex flex-col ltr:ltr rtl:rtl")}
                         >
                             {node.items.map((item) => (
                                 <TocItemRow

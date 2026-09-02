@@ -112,10 +112,10 @@ async function PreferenceScripts() {
 
                     // Direction preference
                     try {
-                        const directionPref = getItem("nhn-direction-preference")
+                        const direction = getItem("nhn-direction-preference")
                         let pref = "auto"
-                        if (directionPref) {
-                            const parsed = parse(directionPref)
+                        if (direction) {
+                            const parsed = parse(direction)
                             if (parsed.state.preference !== "auto") { pref = parsed.state.preference }
                         }
                         if (pref === "rtl") {

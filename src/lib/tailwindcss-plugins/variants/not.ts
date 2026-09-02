@@ -56,10 +56,25 @@ export default plugin(({ addVariant, matchVariant, theme }) => {
     })
 
     AVAILABLE_EFFECTS.forEach((effect) => {
+        const isTargetCursor = effect === "target-cursor"
+        const isLineSidebar = effect === "line-sidebar"
+
+        const notEffectAdditions = isTargetCursor
+            ? [
+                  "&:not([data-cursor])",
+                  "&:where([data-cursor='false'], [data-cursor='ignore'], [data-cursor='false'] *, [data-cursor='ignore'] *)"
+              ]
+            : isLineSidebar
+              ? [
+                    "&:where([data-line-sidebar='false'], [data-line-sidebar='false'] *)"
+                ]
+              : []
+
         addVariant(`not-data-${effect}`, [
             `&:not(:where([data-effects~='${effect}'], [data-effects~='${effect}'] *))`,
             "&:where([data-motion=reduced], [data-motion=reduced] *)",
-            "@media (prefers-reduced-motion: reduce) { &:where([data-motion=system], [data-motion=system] *) }"
+            "@media (prefers-reduced-motion: reduce) { &:where([data-motion=system], [data-motion=system] *) }",
+            ...notEffectAdditions
         ])
     })
 })

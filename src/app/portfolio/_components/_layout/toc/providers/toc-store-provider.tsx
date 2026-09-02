@@ -1,58 +1,39 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import {
     createTocStore,
     TocStoreContext,
     type TocStoreProps
 } from "@/portfolio/_components/_layout/toc/stores/toc-store"
-import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
-
-const EMPTY_ITEMS: TocItemProps[] = []
 
 type TocStoreProviderProps = TocStoreProps & {
     children: React.ReactNode
 }
 
-function TocStoreProvider({
-    children,
-    enableStartEndAutoHighlight = true,
-    compact = false,
-    labelElement,
-    items = EMPTY_ITEMS,
-    filteredItems = EMPTY_ITEMS,
-    query = ""
-}: TocStoreProviderProps) {
-    const [store] = useState(() =>
-        createTocStore({
-            enableStartEndAutoHighlight,
-            compact,
-            items,
-            filteredItems,
-            query,
-            labelElement
-        })
-    )
+function TocStoreProvider({ children, ...props }: TocStoreProviderProps) {
+    const [store] = useState(() => createTocStore(props))
+
+    const prevProps = useRef(props)
 
     useEffect(() => {
-        store.setState({
-            enableStartEndAutoHighlight,
-            compact,
-            items,
-            filteredItems,
-            query,
-            labelElement
-        })
-    }, [
-        store,
-        enableStartEndAutoHighlight,
-        compact,
-        items,
-        filteredItems,
-        query,
-        labelElement
-    ])
+        const keys1 = Object.keys(props)
+        const keys2 = Object.keys(prevProps.current)
+        
+        const hasChanged =
+            keys1.length !== keys2.length ||
+            keys1.some(
+                (key) =>
+                    props[key as keyof typeof props] !==
+                    prevProps.current[key as keyof typeof props]
+            )
+
+        if (hasChanged) {
+            store.setState(props)
+            prevProps.current = props
+        }
+    })
 
     return (
         <TocStoreContext.Provider value={store}>

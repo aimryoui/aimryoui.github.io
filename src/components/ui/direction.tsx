@@ -26,14 +26,12 @@ type DirectionProviderProps = React.ComponentProps<typeof I18nProvider> & {
 }
 
 function DirectionProvider({ children, ...props }: DirectionProviderProps) {
-    const { directionPref } = usePreference()
+    const { direction } = usePreference()
     const { locale: currentLocale, direction: systemDirection } = useLocale()
 
     // Resolve what direction we should actually use
     const resolvedDirection =
-        directionPref === "auto"
-            ? (props.direction ?? systemDirection)
-            : directionPref
+        direction === "auto" ? (props.direction ?? systemDirection) : direction
 
     let locale = props.locale
     if (!locale && resolvedDirection) {

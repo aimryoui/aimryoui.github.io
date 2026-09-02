@@ -548,13 +548,16 @@ export default {
 
             AVAILABLE_EFFECTS.forEach((effect) => {
                 const isTargetCursor = effect === "target-cursor"
-                const targetCursorAdditions = isTargetCursor
-                    ? "[data-cursor]:not([data-cursor='false']):not([data-cursor='false'] *)"
-                    : ""
+                const isLineSidebar = effect === "line-sidebar"
+                const effectAdditions = isTargetCursor
+                    ? "[data-cursor]:not([data-cursor='false'], [data-cursor='ignore']):not([data-cursor='false'] *, [data-cursor='ignore'] *)"
+                    : isLineSidebar
+                      ? ":not([data-line-sidebar='false'], [data-line-sidebar='false'] *)"
+                      : ""
 
                 addVariant(`data-${effect}`, [
-                    `@media (prefers-reduced-motion: no-preference) { &:where([data-motion=system], [data-motion=system] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *)${targetCursorAdditions} }`,
-                    `&:where([data-motion=preferred], [data-motion=preferred] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *)${targetCursorAdditions}`
+                    `@media (prefers-reduced-motion: no-preference) { &:where([data-motion=system], [data-motion=system] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *)${effectAdditions} }`,
+                    `&:where([data-motion=preferred], [data-motion=preferred] *):where([data-effects~='${effect}'], [data-effects~='${effect}'] *)${effectAdditions}`
                 ])
             })
         })

@@ -17,6 +17,7 @@ interface TocConfig {
     enableStartEndAutoHighlight?: boolean
     compact?: boolean
     labelElement?: "span" | "bdi"
+    lineSidebarEffect?: boolean
 }
 
 export type { TocConfig, TocItemProps, TocItemVariant }

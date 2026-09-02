@@ -11,6 +11,9 @@ interface DrawerContextProps {
     modal: DrawerPrimitive.Root.Props["modal"]
     showSwipeHandle: boolean
     swipeDirection: NonNullable<DrawerPrimitive.Root.Props["swipeDirection"]>
+    keepMounted: DrawerPrimitive.Portal.Props["keepMounted"]
+    overlayZIndex: number
+    contentZIndex: number
 }
 
 const DrawerContext = createContext<DrawerContextProps | null>(null)
@@ -30,14 +33,36 @@ function Drawer({
     showSwipeHandle = true,
     snapPoints,
     swipeDirection = "down",
+    keepMounted = false,
+    overlayZIndex = 65,
+    contentZIndex = 70,
     ...props
 }: DrawerPrimitive.Root.Props & {
     showSwipeHandle?: boolean
+    keepMounted?: DrawerPrimitive.Portal.Props["keepMounted"]
+    overlayZIndex?: number
+    contentZIndex?: number
 }) {
     const hasSnapPoints = snapPoints !== undefined && snapPoints.length > 0
     const contextValue = useMemo(
-        () => ({ hasSnapPoints, modal, showSwipeHandle, swipeDirection }),
-        [hasSnapPoints, modal, showSwipeHandle, swipeDirection]
+        () => ({
+            hasSnapPoints,
+            modal,
+            showSwipeHandle,
+            swipeDirection,
+            keepMounted,
+            overlayZIndex,
+            contentZIndex
+        }),
+        [
+            hasSnapPoints,
+            modal,
+            showSwipeHandle,
+            swipeDirection,
+            keepMounted,
+            overlayZIndex,
+            contentZIndex
+        ]
     )
 
     return (
@@ -73,15 +98,24 @@ function DrawerClose({ ...props }: DrawerPrimitive.Close.Props) {
 
 function DrawerOverlay({
     className,
+    style,
+    overlayZIndex = 65,
     ...props
-}: DrawerPrimitive.Backdrop.Props) {
+}: DrawerPrimitive.Backdrop.Props & {
+    overlayZIndex?: number
+}) {
     return (
         <DrawerPrimitive.Backdrop
             data-slot="drawer-overlay"
             className={cn(
-                "fixed inset-0 z-60 min-h-dvh select-none bg-black/80 opacity-[max(var(--drawer-overlay-min-opacity,0),calc(1-var(--drawer-swipe-progress)))] transition-opacity ease-[cubic-bezier(0.32,0.72,0,1)] duration-450 data-starting-style:opacity-0 data-ending-style:pointer-events-none data-ending-style:opacity-0 data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)] data-[swiping]:duration-0 data-[snap-points]:[--drawer-overlay-min-opacity:0.5] supports-[-webkit-touch-callout:none]:absolute",
+                "fixed inset-0 min-h-dvh select-none bg-black/80 opacity-[max(var(--drawer-overlay-min-opacity,0),calc(1-var(--drawer-swipe-progress)))] transition-opacity ease-[cubic-bezier(0.32,0.72,0,1)] duration-450 data-starting-style:opacity-0 data-ending-style:pointer-events-none data-ending-style:opacity-0 data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)] data-[swiping]:duration-0 data-[snap-points]:[--drawer-overlay-min-opacity:0.5] supports-[-webkit-touch-callout:none]:absolute",
                 className
             )}
+            style={
+                typeof style === "function"
+                    ? (state) => ({ ...style(state), zIndex: overlayZIndex })
+                    : { ...style, zIndex: overlayZIndex }
+            }
             {...props}
         />
     )
@@ -143,16 +177,25 @@ function DrawerContent({
     children,
     ...props
 }: DrawerPrimitive.Popup.Props) {
-    const { hasSnapPoints, modal, showSwipeHandle, swipeDirection } =
-        useDrawer()
+    const {
+        hasSnapPoints,
+        modal,
+        showSwipeHandle,
+        swipeDirection,
+        keepMounted,
+        overlayZIndex,
+        contentZIndex
+    } = useDrawer()
+
     const swipeAxis =
         swipeDirection === "down" || swipeDirection === "up" ? "y" : "x"
 
     return (
         <DrawerPrimitive.VirtualKeyboardProvider data-slot="drawer-vk-provider">
-            <DrawerPortal data-slot="drawer-portal">
+            <DrawerPortal data-slot="drawer-portal" keepMounted={keepMounted}>
                 {modal === true && (
                     <DrawerOverlay
+                        overlayZIndex={overlayZIndex}
                         data-snap-points={hasSnapPoints ? "" : undefined}
                     />
                 )}
@@ -160,7 +203,8 @@ function DrawerContent({
                     data-slot="drawer-viewport"
                     data-modal={modal}
                     data-cursor="ignore"
-                    className="pointer-events-none fixed inset-0 z-70 cursor-auto select-none data-[modal=true]:pointer-events-auto"
+                    className="pointer-events-none fixed inset-0 cursor-auto select-none data-[modal=true]:pointer-events-auto"
+                    style={{ zIndex: contentZIndex }}
                 >
                     <DrawerPrimitive.Popup
                         data-slot="drawer-popup"
@@ -171,14 +215,11 @@ function DrawerContent({
                             "[--drawer-bleed-background:var(--color-background)] [--drawer-inset:0px]",
                             "[--drawer-stacked-shadow:0_-20px_25px_-5px_rgb(0_0_0/0.1),0_-8px_10px_-6px_rgb(0_0_0/0.1)]",
 
-                            "group/drawer-popup pointer-events-auto fixed flex select-none flex-col rounded-t-4xl text-popover-foreground shadow-xl outline-none",
+                            "group/drawer-popup pointer-events-auto fixed flex select-none flex-col text-popover-foreground shadow-xl outline-none",
 
                             // Sizing.
                             "m-[--drawer-inset,0px] h-[--drawer-content-height] max-h-[--drawer-content-max-height,none] min-h-0 w-[--drawer-content-width,auto]",
                             "pb-[max(0px,calc(var(--drawer-snap-point-offset)+var(--drawer-swipe-movement-y)))] data-[current-snap-points=1]:not-data-[swiping]:rounded-t-none",
-
-                            // Gradient border.
-                            "border border-dashed border-[color-mix(in_srgb,var(--color-stroke)_clamp(0%,calc(max(var(--safe-area-inset-left),var(--safe-area-inset-right))/1px*100%),100%),transparent)] bg-[image:linear-gradient(var(--color-background),var(--color-background)),linear-gradient(to_bottom,var(--color-stroke)_0%,var(--color-background)_60%)] bg-origin-border bg-clip-[padding-box,border-box]",
 
                             // Animations.
                             [
@@ -189,6 +230,16 @@ function DrawerContent({
                                         "will-change-transform transition-[transform,height,opacity,filter,border-radius] ease-[cubic-bezier(0.22,1,0.36,1)] duration-450 [interpolate-size:allow-keywords]"
                                 }
                             ],
+                            {
+                                "data-[swipe-direction=down]": [
+                                    "rounded-t-4xl",
+                                    // Gradient border.
+                                    "border border-dashed border-[color-mix(in_srgb,var(--color-stroke)_clamp(0%,calc(max(var(--safe-area-inset-left),var(--safe-area-inset-right))/1px*100%),100%),transparent)] bg-[image:linear-gradient(var(--color-background),var(--color-background)),linear-gradient(to_bottom,var(--color-stroke)_0%,var(--color-background)_60%)] bg-origin-border bg-clip-[padding-box,border-box]",
+                                    {
+                                        md: "rounded-t-3xl"
+                                    }
+                                ]
+                            },
                             {
                                 // Nested.
                                 "data-[nested-drawer-open]":
@@ -278,18 +329,29 @@ function DrawerContent({
                                 "data-[swipe-direction=left]": [
                                     "[--closed-transform:translate3d(calc(-100%-var(--drawer-inset,0px)-2px),0,0)]",
                                     "[--translate-x:calc(var(--drawer-swipe-movement-x)+var(--stack-peek-offset)+(var(--stack-shrink)*100%))]",
-                                    "start-0 origin-left"
+                                    "start-0 origin-left",
+                                    {
+                                        rtl: [
+                                            "[--closed-transform:translate3d(calc(100%+var(--drawer-inset,0px)+2px),0,0)]",
+                                            "[--translate-x:calc(var(--drawer-swipe-movement-x)-var(--stack-peek-offset)-(var(--stack-shrink)*100%))]",
+                                            "origin-right"
+                                        ]
+                                    }
                                 ],
 
                                 // Direction: right.
                                 "data-[swipe-direction=right]": [
                                     "[--closed-transform:translate3d(calc(100%+var(--drawer-inset,0px)+2px),0,0)]",
                                     "[--translate-x:calc(var(--drawer-swipe-movement-x)-var(--stack-peek-offset)-(var(--stack-shrink)*100%))]",
-                                    "end-0 origin-right"
-                                ],
-
-                                // Responsives.
-                                md: "rounded-t-3xl"
+                                    "end-0 origin-right",
+                                    {
+                                        rtl: [
+                                            "[--closed-transform:translate3d(calc(-100%-var(--drawer-inset,0px)-2px),0,0)]",
+                                            "[--translate-x:calc(var(--drawer-swipe-movement-x)+var(--stack-peek-offset)+(var(--stack-shrink)*100%))]",
+                                            "origin-left"
+                                        ]
+                                    }
+                                ]
                             },
                             className
                         )}

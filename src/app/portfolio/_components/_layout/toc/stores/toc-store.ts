@@ -2,37 +2,38 @@ import { createContext, useContext } from "react"
 
 import { create, createStore, type StoreApi, useStore } from "zustand"
 
-import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
+import { type TocConfig, type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
 
-interface TocStoreProps {
-    enableStartEndAutoHighlight?: boolean
-    compact?: boolean
-    labelElement?: "span" | "bdi"
-    items?: TocItemProps[]
+interface TocStoreProps extends TocConfig {
     filteredItems?: TocItemProps[]
     query?: string
 }
 
-interface TocStoreState extends Omit<Required<TocStoreProps>, "labelElement"> {
+interface TocStoreState extends TocStoreProps {
     activeId: string | null
     setActiveId: (id: string | null) => void
-    labelElement?: "span" | "bdi"
+    
+    // Properties that are guaranteed to have default values in the store
+    enableStartEndAutoHighlight: boolean
+    items: TocItemProps[]
+    filteredItems: TocItemProps[]
+    query: string
 }
 
 type TocStoreApi = StoreApi<TocStoreState>
 
 const TocStoreContext = createContext<TocStoreApi | null>(null)
 
-function createTocStore(
-    props: Required<Omit<TocStoreProps, "labelElement">> & {
-        labelElement?: "span" | "bdi"
-    }
-): TocStoreApi {
+function createTocStore(props: TocStoreProps = {}): TocStoreApi {
     return createStore<TocStoreState>((set) => ({
         activeId: null,
         setActiveId: (id) => {
             set({ activeId: id })
         },
+        enableStartEndAutoHighlight: true,
+        items: [],
+        filteredItems: [],
+        query: "",
         ...props
     }))
 }

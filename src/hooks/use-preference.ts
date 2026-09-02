@@ -92,7 +92,7 @@ function computeSnapshot(isServer: boolean) {
         motionPreferred:
             motionPref === "preferred"
             || (motionPref === "system" && !systemReduced),
-        directionPref,
+        direction: directionPref,
         sidebarPosition: sidebarPos,
         toolbarPosition: toolbarPos,
         isSmoothScrollingEnabled: smoothScrolling

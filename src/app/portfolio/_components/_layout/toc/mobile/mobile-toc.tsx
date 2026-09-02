@@ -68,6 +68,8 @@ function MobileToc({
                 snapPoint={snapPoint}
                 onSnapPointChange={setSnapPoint}
                 onOpenChange={setIsTocOpen}
+                overlayZIndex={71}
+                contentZIndex={72}
             >
                 <DrawerTrigger
                     render={

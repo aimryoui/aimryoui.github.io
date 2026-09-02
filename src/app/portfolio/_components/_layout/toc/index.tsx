@@ -30,6 +30,7 @@ function TableOfContents({
     showSearch = true,
     compact = false,
     labelElement,
+    lineSidebarEffect,
     enableStartEndAutoHighlight = true
 }: TocConfig
     & Omit<TocProps, "shouldAnimate" | "handleClearSearch"> & {
@@ -62,6 +63,7 @@ function TableOfContents({
         <TocStoreProvider
             compact={compact}
             labelElement={labelElement}
+            lineSidebarEffect={lineSidebarEffect}
             enableStartEndAutoHighlight={enableStartEndAutoHighlight}
             items={items}
             filteredItems={filteredItems}

@@ -28,7 +28,7 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
         <>
             <aside
                 className={cn(
-                    "group/sidebar sticky start-[calc(var(--body-safe-zone-left)+var(--px))] top-0 z-75 order-1 flex h-dvh w-sidebar flex-col justify-end bg-background",
+                    "group/sidebar sticky start-[calc(var(--body-safe-zone-left)+var(--px))] top-0 z-65 order-1 flex h-dvh w-sidebar flex-col justify-end bg-background",
                     {
                         "group-data-[sidebar-position=inline-end]/html": [
                             "end-[calc(var(--body-safe-zone-right)+var(--px))] start-auto order-9",
@@ -36,7 +36,7 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
                                 lg: "inset-x-0 bottom-0 top-auto h-auto w-full"
                             }
                         ],
-                        lg: "fixed inset-x-0 bottom-0 top-auto h-auto w-full"
+                        lg: "fixed inset-x-0 bottom-0 top-auto z-75 h-auto w-full"
                     },
                     className
                 )}
@@ -46,6 +46,7 @@ function Navigation({ className, ...props }: React.ComponentProps<"aside">) {
                     <TableOfContents
                         items={tocItems}
                         enableStartEndAutoHighlight={pathname === "/portfolio"}
+                        className="lg:hidden"
                     />
                 )}
                 <Toolbar

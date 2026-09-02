@@ -242,7 +242,7 @@ function MediaFrame({
                             "z-20 col-start-1 row-start-1 flex h-0 flex-col justify-end bg-background"
                         )}
                     >
-                        <SectionLine fit={!spaceAround} />
+                        <SectionLine fit />
                     </div>
                 )}
 

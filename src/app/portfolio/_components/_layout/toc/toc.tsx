@@ -63,19 +63,18 @@ function Toc({
             className={cn(
                 "flex flex-1 flex-col overflow-auto",
                 navRevealPhase === "animating" && [
+                    "pointer-events-none",
                     "motion-preferred:animate-toc-reveal",
                     "motion-reduced:animate-toc-fade"
                 ],
                 navRevealPhase !== "done" && [
+                    "pointer-events-none",
                     "motion-preferred:[mask-image:linear-gradient(black_33.333%,black_35%,transparent_65%,transparent_100%)]",
                     "motion-preferred:[mask-position:0_100%]",
                     "motion-preferred:[mask-size:100%_300%]",
                     "motion-preferred:will-change-[mask-position]",
                     "motion-reduced:opacity-0"
                 ],
-                {
-                    lg: "hidden"
-                },
                 className
             )}
             onAnimationEnd={handleAnimationEnd}

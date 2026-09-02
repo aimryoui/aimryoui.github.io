@@ -56,9 +56,10 @@ const TocGroup = memo(
                     item={header}
                     onPress={onItemPress}
                     collapsible={false}
+                    className={cn(className)}
                 />
                 {items.length > 0 && (
-                    <ul className="flex flex-col pb-3">
+                    <ul className={cn("flex flex-col pb-3", className)}>
                         {items.map((item) => (
                             <TocItemRow
                                 key={item.id}
@@ -120,7 +121,7 @@ const TocGroup = memo(
                             <CollapsibleTrigger
                                 pressSound={isExpanded ? "zoom-out" : "zoom-in"}
                                 className={cn(
-                                    "pe-5.5 ps-5",
+                                    "pe-5.5 ps-5.5",
                                     "group-has-[input:not(:placeholder-shown)]/sidebar:hidden",
                                     compact
                                         ? [
@@ -129,7 +130,16 @@ const TocGroup = memo(
                                                   "group-first/collapsible":
                                                       "-mt-3 pt-4.5",
                                                   "group-last/collapsible:group-not-data-expanded/collapsible":
-                                                      "-mb-3 pb-4.5"
+                                                      "-mb-3 pb-4.5",
+                                                  md: [
+                                                      "py-2",
+                                                      {
+                                                          "group-first/collapsible":
+                                                              "-mt-3 pt-4.5",
+                                                          "group-last/collapsible:group-not-data-expanded/collapsible":
+                                                              "-mb-3 pb-4.5"
+                                                      }
+                                                  ]
                                               }
                                           ]
                                         : [

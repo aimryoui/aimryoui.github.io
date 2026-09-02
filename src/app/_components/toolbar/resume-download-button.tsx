@@ -14,7 +14,7 @@ function ResumeDownloadButton() {
         <LinkButton
             href={resumeUrl}
             variant="outline"
-            className="dark:bg-input/25"
+            className="pe-2 dark:bg-input/25"
             tracking={{
                 eventName: "button_click",
                 eventParams: {
@@ -23,7 +23,7 @@ function ResumeDownloadButton() {
             }}
         >
             Resume
-            <ArrowUpRight className="-me-1 rtl:-scale-x-100" />
+            <ArrowUpRight className="rtl:-scale-x-100" />
         </LinkButton>
     )
 }
