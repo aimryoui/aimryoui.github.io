@@ -1,4 +1,5 @@
 import { type Metadata } from "next"
+import dynamic from "next/dynamic"
 import { notFound } from "next/navigation"
 
 import { Divider } from "@/components/layout/divider"
@@ -13,7 +14,13 @@ import {
 } from "@/lib/project-sort"
 import { cn } from "@/lib/utils"
 import { FlashOverlay } from "@/portfolio/_components/flash-overlay"
-import { ArticleIndex } from "@/portfolio/_components/mdx/article-index"
+
+const ArticleIndex = dynamic(() =>
+    import("@/portfolio/_components/mdx/article-index").then(
+        (mod) => mod.ArticleIndex
+    )
+)
+
 import { CaveatLightness } from "@/portfolio/_components/mdx/caveat"
 import { MDXContent } from "@/portfolio/_components/mdx/mdx-content"
 import { PortfolioBreadcrumb } from "@/portfolio/_components/portfolio-breadcrumb"
