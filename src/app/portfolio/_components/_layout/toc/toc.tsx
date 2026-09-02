@@ -11,17 +11,20 @@ import {
     type TocListProps
 } from "@/portfolio/_components/_layout/toc/toc-list"
 import { TocSearchNoResult } from "@/portfolio/_components/_layout/toc/toc-search"
+import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
 
 type TocProps = TocListProps & {
     className?: React.ComponentProps<"nav">["className"]
     handleClearSearch: () => void
     shouldAnimate: boolean
+    onItemPress?: (item: TocItemProps) => void
 }
 
 function Toc({
     className,
     handleClearSearch,
     shouldAnimate,
+    onItemPress,
     ...props
 }: TocProps) {
     const filteredItems = useTocStore((s) => s.filteredItems)
@@ -83,7 +86,11 @@ function Toc({
                 {filteredItems.length === 0 ? (
                     <TocSearchNoResult onClear={handleClearSearch} />
                 ) : (
-                    <TocList onActiveReady={handleActiveReady} {...props} />
+                    <TocList
+                        onActiveReady={handleActiveReady}
+                        onItemPress={onItemPress}
+                        {...props}
+                    />
                 )}
             </Tooltip>
         </nav>

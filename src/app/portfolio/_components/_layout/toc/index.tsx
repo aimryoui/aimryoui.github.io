@@ -31,10 +31,12 @@ function TableOfContents({
     compact = false,
     labelElement,
     lineSidebarEffect,
-    enableStartEndAutoHighlight = true
+    enableStartEndAutoHighlight = true,
+    onItemPress
 }: TocConfig
     & Omit<TocProps, "shouldAnimate" | "handleClearSearch"> & {
         showSearch?: boolean
+        onItemPress?: (item: TocItemProps) => void
     }) {
     const inputRef = useRef<HTMLInputElement>(null)
     const [shouldAnimate] = useState(
@@ -83,6 +85,7 @@ function TableOfContents({
                 handleClearSearch={handleClearSearch}
                 shouldAnimate={shouldAnimate}
                 className={cn(className)}
+                onItemPress={onItemPress}
             />
         </TocStoreProvider>
     )

@@ -245,6 +245,7 @@ const TocItemRow = memo(
                             "data-current":
                                 "text-highlighted font-wght-550 md:font-wght-500 dark:text-highlighted",
 
+                            lg: "gap-safe-zone",
                             md: [
                                 "font-wght-500",
                                 isItem
@@ -302,7 +303,7 @@ const TocItemRow = memo(
                             "data-cursor": "lock",
                             translate: "no",
                             className: cn(
-                                "block w-fit max-w-full truncate px-1.25",
+                                "block flex-1 truncate px-1.25",
                                 isHeader
                                     && !isSelectedWorks && [
                                         "-ml-1.25",
@@ -378,7 +379,7 @@ const TocItemRow = memo(
                     {isActive && (
                         <div
                             className={cn(
-                                "ms-auto hidden size-6 min-w-6 place-items-center rounded-full bg-highlighted/10 text-highlighted",
+                                "ms-auto hidden size-6 min-w-6 shrink-0 place-items-center rounded-full bg-highlighted/10 text-highlighted",
                                 "group-hover:grid lg:size-7 md:grid dark:bg-highlighted/20",
                                 compact
                                     && collapsible

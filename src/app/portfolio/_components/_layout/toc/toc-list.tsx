@@ -20,6 +20,7 @@ import { useTocTree } from "@/portfolio/_hooks/use-toc-tree"
 
 interface TocListProps extends LineSidebarProps {
     onActiveReady?: () => void
+    onItemPress?: (item: TocItemProps) => void
 }
 function handleItemClick(
     item: TocItemProps,
@@ -44,7 +45,7 @@ function handleItemClick(
         clickedTargetRef.current = targetId
     }
 }
-function TocList({ className, onActiveReady, ...props }: TocListProps) {
+function TocList({ className, onActiveReady, onItemPress, ...props }: TocListProps) {
     const compact = useTocStore((s) => s.compact)
     const items = useTocStore((s) => s.items)
     const filteredItems = useTocStore((s) => s.filteredItems)
@@ -59,8 +60,9 @@ function TocList({ className, onActiveReady, ...props }: TocListProps) {
     const handlePress = useCallback(
         (item: TocItemProps) => {
             handleItemClick(item, clickedTargetRef, scrollContainerRef.current)
+            onItemPress?.(item)
         },
-        [clickedTargetRef, scrollContainerRef]
+        [clickedTargetRef, scrollContainerRef, onItemPress]
     )
     const tree = useTocTree(filteredItems)
 

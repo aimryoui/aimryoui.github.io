@@ -22,6 +22,7 @@ import { useWindowEvent } from "@/hooks/use-window-event"
 import { cn } from "@/lib/utils"
 import { TableOfContents } from "@/portfolio/_components/_layout/toc"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
+import { useArticleTocStore } from "@/portfolio/_components/mdx/stores/article-toc-store"
 
 import { type Project } from "~/.velite"
 import { BASE_FONT_SIZE } from "~/tailwind.config"
@@ -44,6 +45,9 @@ interface ArticleIndexProps {
 }
 
 function ArticleIndex({ toc, project }: ArticleIndexProps) {
+    const isTocOpen = useArticleTocStore((s) => s.isTocOpen)
+    const setIsTocOpen = useArticleTocStore((s) => s.setIsTocOpen)
+
     const items = useMemo<TocItemProps[]>(
         () =>
             toc.map((h) => ({
@@ -96,6 +100,8 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
     return (
         <DrawerComp
             {...(isOnePointFiveXl && {
+                open: isTocOpen,
+                onOpenChange: setIsTocOpen,
                 swipeDirection: isLg
                     ? sidebarPositionInlineStart
                         ? "left"
@@ -175,6 +181,9 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
                                 lineSidebarEffect={!isLg}
                                 enableStartEndAutoHighlight
                                 className="lg:text-xl"
+                                onItemPress={() => {
+                                    setIsTocOpen(false)
+                                }}
                             />
                         </div>
                         <ElementLine dir="horizontal" />
