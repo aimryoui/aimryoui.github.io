@@ -456,12 +456,12 @@ function DropdownMenuSubTrigger({
                     <span
                         data-slot="dropdown-menu-sub-trigger-indicator"
                         className={cn(
-                            "pointer-events-none absolute end-2 top-2 grid size-4.5 place-items-center"
+                            "pointer-events-none absolute end-2.75 top-2 grid size-4.5 place-items-center"
                         )}
                     >
                         <ChevronRightIcon
                             strokeWidth={1.5}
-                            className="size-4.5 rtl:rotate-180"
+                            className="size-5 rtl:rotate-180"
                         />
                     </span>
                 </Comp>
@@ -575,7 +575,7 @@ function DropdownMenuLinkItem({
                     {openInNewTab && (
                         <span
                             data-slot="dropdown-menu-link-item-indicator"
-                            className="pointer-events-none absolute end-2.75 grid place-items-center"
+                            className="pointer-events-none absolute end-3 grid place-items-center"
                         >
                             <ArrowUpRight className="size-4 rtl:-scale-x-100" />
                         </span>
