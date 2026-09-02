@@ -58,6 +58,7 @@ function breakpoint(size: keyof typeof theme.screens) {
 
 const BREAKPOINTS = {
     "2xl": `(max-width: ${breakpoint("2xl")})`,
+    "1.5xl": `(max-width: ${breakpoint("1.5xl")})`,
     xl: `(max-width: ${breakpoint("xl")})`,
     lg: `(max-width: ${breakpoint("lg")})`,
     md: `(max-width: ${breakpoint("md")})`,

@@ -121,7 +121,7 @@ const TocGroup = memo(
                             <CollapsibleTrigger
                                 pressSound={isExpanded ? "zoom-out" : "zoom-in"}
                                 className={cn(
-                                    "pe-5.5 ps-5.5",
+                                    "pe-5.5 ps-5",
                                     "group-has-[input:not(:placeholder-shown)]/sidebar:hidden",
                                     compact
                                         ? [
@@ -148,7 +148,16 @@ const TocGroup = memo(
                                                   "group-data-expanded/collapsible":
                                                       "-mt-6 pb-1.5"
                                               }
-                                          ]
+                                          ],
+                                    {
+                                        lg: [
+                                            "px-safe-zone py-4",
+                                            {
+                                                "group-data-expanded/collapsible":
+                                                    "pb-1"
+                                            }
+                                        ]
+                                    }
                                 )}
                             >
                                 <div
@@ -193,7 +202,8 @@ const TocGroup = memo(
                                                   }
                                               ],
                                         {
-                                            rtl: "-scale-y-100"
+                                            rtl: "-scale-y-100",
+                                            lg: "size-7 rounded-[.875rem]"
                                         }
                                     )}
                                 >
@@ -212,7 +222,8 @@ const TocGroup = memo(
                                                         {
                                                             rtl: "-translate-x-[.5px] rotate-90"
                                                         }
-                                                    ]
+                                                    ],
+                                                lg: "size-6"
                                             }
                                         )}
                                     />

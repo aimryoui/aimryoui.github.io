@@ -148,7 +148,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             {
                                 "group-data-[sidebar-position=inline-end]/html":
                                     "order-4",
-                                xl: "hidden"
+                                "1.5xl": "hidden"
                             }
                         )}
                     />
@@ -157,7 +157,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         className={cn("sticky top-0 order-7 h-dvh", {
                             "group-data-[sidebar-position=inline-end]/html":
                                 "order-3",
-                            xl: "hidden"
+                            "1.5xl": "hidden"
                         })}
                     />
                     <MarginLine
@@ -166,7 +166,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             {
                                 "group-data-[sidebar-position=inline-end]/html":
                                     "order-2",
-                                xl: "hidden"
+                                "1.5xl": "hidden"
                             }
                         )}
                     />

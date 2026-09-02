@@ -223,7 +223,7 @@ const TocItemRow = memo(
                               ]
                             : "font-wght-550",
                         isHeader
-                            ? "ps-safe-zone"
+                            ? [collapsible ? "ps-safe-zone" : "px-safe-zone"]
                             : !isItem
                                   && "pe-[calc(var(--spacing-safe-zone)-var(--spacing)*.5)] ps-safe-zone",
                         (isAnchorItem || isSelectedWorks)
@@ -381,7 +381,7 @@ const TocItemRow = memo(
                         <div
                             className={cn(
                                 "ms-auto hidden size-6 min-w-6 place-items-center rounded-full bg-highlighted/10 text-highlighted",
-                                "group-hover:grid md:grid dark:bg-highlighted/20",
+                                "group-hover:grid lg:size-7 md:grid dark:bg-highlighted/20",
                                 compact
                                     && collapsible
                                     && isHeader
@@ -390,7 +390,7 @@ const TocItemRow = memo(
                         >
                             <ArrowRight
                                 className={cn(
-                                    "size-3 scale-[1.2] rtl:rotate-180"
+                                    "size-3 scale-[1.2] lg:size-4 lg:scale-100 rtl:rotate-180"
                                 )}
                             />
                         </div>

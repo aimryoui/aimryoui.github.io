@@ -92,7 +92,7 @@ function SectionLine({
                           ? [
                                 "start-1/2 w-screen -translate-x-1/2 rtl:translate-x-1/2",
                                 {
-                                    xl: [
+                                    "1.5xl": [
                                         "-end-[--body-safe-zone-right] start-auto w-[calc(100vw-var(--px)*2)] translate-x-0 rtl:translate-x-0",
                                         {
                                             "group-data-[sidebar-position=inline-end]/html":

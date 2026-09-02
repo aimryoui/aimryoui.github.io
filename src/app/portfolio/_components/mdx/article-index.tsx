@@ -58,15 +58,15 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
 
     const [isExpanded, setIsExpanded] = useState(false)
 
-    const { sidebarPosition, direction } = usePreference()
+    const { sidebarPosition } = usePreference()
     const sidebarPositionInlineStart = sidebarPosition === "inline-start"
 
-    const isXl = useMediaQuery("xl")
+    const isOnePointFiveXl = useMediaQuery("1.5xl")
     const isLg = useMediaQuery("lg")
 
-    const DrawerComp = isXl ? Drawer : Fragment
-    const DrawerTriggerComp = isXl ? DrawerTrigger : Fragment
-    const DrawerContentComp = isXl ? DrawerContent : Fragment
+    const DrawerComp = isOnePointFiveXl ? Drawer : Fragment
+    const DrawerTriggerComp = isOnePointFiveXl ? DrawerTrigger : Fragment
+    const DrawerContentComp = isOnePointFiveXl ? DrawerContent : Fragment
 
     const throttleTimeoutRef = useRef<NodeJS.Timeout>(undefined)
 
@@ -95,7 +95,7 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
 
     return (
         <DrawerComp
-            {...(isXl && {
+            {...(isOnePointFiveXl && {
                 swipeDirection: isLg
                     ? sidebarPositionInlineStart
                         ? "left"
@@ -114,13 +114,13 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
                         {
                             "group-data-[sidebar-position=inline-end]/html":
                                 "justify-start",
-                            xl: "flex",
+                            "1.5xl": "flex",
                             lg: "bottom-[--toolbar-height] top-auto justify-start",
                             md: "bottom-[calc(var(--toolbar-height)+var(--spacing)*10+var(--px)/2)]"
                         }
                     )}
                 >
-                    {isXl ? (
+                    {isOnePointFiveXl ? (
                         <DrawerTriggerComp render={<TriggerButton />} />
                     ) : (
                         <TriggerButton />
@@ -128,7 +128,7 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
                 </Space>
             </div>
             <DrawerContentComp
-                {...(isXl && {
+                {...(isOnePointFiveXl && {
                     className: cn(
                         "w-[calc(var(--spacing-sidebar)+var(--spacing-safe-zone)+var(--px))] flex-row sm:w-[calc(100dvw-var(--spacing-space)+var(--px))] [&>div>*]:!flex"
                     )
@@ -138,7 +138,7 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
                     className={cn("absolute inset-y-0 start-0 z-60 hidden", {
                         "group-data-[sidebar-position=inline-end]/html":
                             "end-0 start-auto order-last",
-                        xl: "hidden",
+                        "1.5xl": "hidden",
                         lg: "end-0 start-auto order-last"
                     })}
                 />
@@ -148,7 +148,8 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
                         {
                             "group-data-[sidebar-position=inline-end]/html":
                                 "end-auto start-[calc(var(--body-safe-zone-left)+var(--px))] order-1",
-                            xl: "end-auto hidden w-[calc(var(--spacing-sidebar)+var(--spacing-safe-zone)+var(--px))]",
+                            "1.5xl":
+                                "end-auto hidden w-[calc(var(--spacing-sidebar)+var(--spacing-safe-zone)+var(--px))]",
                             lg: "h-[calc(100dvh-var(--toolbar-height))]",
                             sm: "w-[calc(100dvw-var(--spacing-space)+var(--px))]"
                         }
@@ -349,7 +350,7 @@ function TriggerButton({ className, ...props }: ButtonProps) {
                             hover: "pe-2 ps-5"
                         }
                     ],
-                    xl: "shadow-md shadow-background/40",
+                    "1.5xl": "shadow-md shadow-background/40",
                     lg: [
                         "h-9.5 rounded-e-full rounded-s-none border-e-stroke border-s-transparent pe-2 ps-3.25 !corner-round",
                         {

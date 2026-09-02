@@ -206,6 +206,10 @@
             --spacing-sidebar: 22.25rem;
         }
 
+        @screen 1.5xl {
+            --spacing-sidebar: 24.25rem;
+        }
+
         @screen md {
             --radius-media: var(--radius-xl);
             --spacing-space: calc(var(--spacing)*16);

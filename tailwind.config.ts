@@ -65,6 +65,7 @@ export default {
     theme: {
         screens: {
             "2xl": { max: "98rem" },
+            "1.5xl": { max: "87.5rem" },
             xl: { max: "80rem" },
             lg: { max: "72rem" },
             md: { max: "48rem" },

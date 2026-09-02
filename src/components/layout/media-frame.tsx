@@ -64,8 +64,8 @@ function SectionName({
     return (
         <div
             className={cn(
-                isAnchorTag && "sticky top-3.5 z-50 md:top-1.5",
-                "pointer-events-none grid min-h-13 place-items-center py-2",
+                isAnchorTag && "sticky top-3 z-50 md:top-1",
+                "pointer-events-none grid min-h-14 place-items-center py-2.5",
                 containerClassName
             )}
             {...props}
