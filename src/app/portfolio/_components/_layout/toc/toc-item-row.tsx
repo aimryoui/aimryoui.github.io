@@ -17,7 +17,6 @@ import {
     type TocItemVariant
 } from "@/portfolio/_components/_layout/toc/types/toc"
 import { useFlashStore } from "@/portfolio/_components/flash-overlay"
-import { useQueryStore } from "@/stores/query-store"
 
 function scrollToTarget(id: string) {
     requestAnimationFrame(() => {
@@ -57,7 +56,6 @@ const TocItemRow = memo(
         const compact = useTocStore((s) => s.compact)
         const labelElement = useTocStore((s) => s.labelElement)
         const query = useTocStore((s) => s.query)
-        const isFeatureSelected = useQueryStore((s) => s.isFeatureSelected)
 
         const isItem = variant === "item"
         const isHeader = variant === "header"

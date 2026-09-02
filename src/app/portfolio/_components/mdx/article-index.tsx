@@ -136,6 +136,7 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
             >
                 <MarginLine
                     className={cn("absolute inset-y-0 start-0 z-60 hidden", {
+                        webkit: "h-full",
                         "group-data-[sidebar-position=inline-end]/html":
                             "end-0 start-auto order-last",
                         "1.5xl": "hidden",
