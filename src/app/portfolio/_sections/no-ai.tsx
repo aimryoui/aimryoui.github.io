@@ -5,6 +5,9 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import { Divider } from "@/components/layout/divider"
 import { cn } from "@/lib/utils"
 
+const FPS = 20
+const FPS_INTERVAL = 1000 / FPS
+
 // useSyncExternalStore requires a subscribe function; since CSS feature support
 // never changes at runtime, we return a no-op unsubscribe.
 const subscribe = (_: () => void) => () => {}
@@ -50,18 +53,20 @@ function NoAIOverlay() {
             if (isScrollPending.current) return
             isScrollPending.current = true
 
-            requestAnimationFrame(() => {
-                const rect = el.getBoundingClientRect()
-                const innerHeight = window.innerHeight
+            setTimeout(() => {
+                requestAnimationFrame(() => {
+                    const rect = el.getBoundingClientRect()
+                    const innerHeight = window.innerHeight
 
-                const activePoint = innerHeight * 0.4
+                    const activePoint = innerHeight * 0.4
 
-                const isCurrentlyActive =
-                    rect.top <= activePoint && rect.bottom > activePoint
+                    const isCurrentlyActive =
+                        rect.top <= activePoint && rect.bottom > activePoint
 
-                setIsActive(isCurrentlyActive)
-                isScrollPending.current = false
-            })
+                    setIsActive(isCurrentlyActive)
+                    isScrollPending.current = false
+                })
+            }, FPS_INTERVAL)
         }
 
         handleScroll()

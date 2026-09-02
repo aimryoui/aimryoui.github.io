@@ -15,6 +15,9 @@ interface UseTocScrollOptions {
 
 const BASE_SCROLL_DELAY = 400
 
+const FPS = 20
+const FPS_INTERVAL = 1000 / FPS
+
 import { type LenisRef } from "lenis/react"
 
 type ScrollContainerRefTarget = HTMLElement | LenisRef
@@ -190,17 +193,19 @@ function useTocScroll<T extends ScrollContainerRefTarget = HTMLDivElement>({
         let ticking = false
         const handleScroll = () => {
             if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const { scrollY, innerHeight } = window
-                    const isBottom =
-                        innerHeight + scrollY
-                        >= document.documentElement.scrollHeight - 10
-                    if (isBottom) {
-                        setActiveId(allIds[allIds.length - 1])
-                    }
-                    ticking = false
-                })
                 ticking = true
+                setTimeout(() => {
+                    window.requestAnimationFrame(() => {
+                        const { scrollY, innerHeight } = window
+                        const isBottom =
+                            innerHeight + scrollY
+                            >= document.documentElement.scrollHeight - 10
+                        if (isBottom) {
+                            setActiveId(allIds[allIds.length - 1])
+                        }
+                        ticking = false
+                    })
+                }, FPS_INTERVAL)
             }
         }
 

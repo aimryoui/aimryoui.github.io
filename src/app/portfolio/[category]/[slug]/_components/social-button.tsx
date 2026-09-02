@@ -30,6 +30,9 @@ const INITIAL_DELAY = 1000
 const FEEDBACK_DELAY = 75
 const SCROLL_UP_PX_THRESHOLD = 500
 
+const FPS = 20
+const FPS_INTERVAL = 1000 / FPS
+
 function SocialButton({
     className,
     projectId,
@@ -71,48 +74,54 @@ function SocialButton({
         let lastScrollY = window.scrollY
         let accumulatedScrollUp = 0
         let scrollTimeout: NodeJS.Timeout
+        let throttleTimeout: NodeJS.Timeout | undefined
 
         const handleScroll = () => {
-            const currentScrollY = window.scrollY
-            const windowHeight = window.innerHeight
-            const documentHeight = document.documentElement.scrollHeight
+            if (throttleTimeout) return
+            throttleTimeout = setTimeout(() => {
+                throttleTimeout = undefined
 
-            const atBottom =
-                currentScrollY + windowHeight >= documentHeight - 10
+                const currentScrollY = window.scrollY
+                const windowHeight = window.innerHeight
+                const documentHeight = document.documentElement.scrollHeight
 
-            setIsAtBottom(atBottom)
+                const atBottom =
+                    currentScrollY + windowHeight >= documentHeight - 10
 
-            if (atBottom) {
-                setIsExpanded(true)
-                accumulatedScrollUp = 0
-            } else if (currentScrollY <= 0) {
-                setIsExpanded(true)
-                accumulatedScrollUp = 0
-            } else {
-                const delta = currentScrollY - lastScrollY
+                setIsAtBottom(atBottom)
 
-                if (isLg) {
-                    if (delta > 0) {
-                        setIsExpanded(false)
-                        accumulatedScrollUp = 0
-                    } else if (delta < 0) {
-                        accumulatedScrollUp += Math.abs(delta)
+                if (atBottom) {
+                    setIsExpanded(true)
+                    accumulatedScrollUp = 0
+                } else if (currentScrollY <= 0) {
+                    setIsExpanded(true)
+                    accumulatedScrollUp = 0
+                } else {
+                    const delta = currentScrollY - lastScrollY
 
-                        if (accumulatedScrollUp >= SCROLL_UP_PX_THRESHOLD) {
-                            setIsExpanded(true)
+                    if (isLg) {
+                        if (delta > 0) {
+                            setIsExpanded(false)
+                            accumulatedScrollUp = 0
+                        } else if (delta < 0) {
+                            accumulatedScrollUp += Math.abs(delta)
+
+                            if (accumulatedScrollUp >= SCROLL_UP_PX_THRESHOLD) {
+                                setIsExpanded(true)
+                            }
                         }
+                    } else if (delta !== 0) {
+                        setIsExpanded(false)
                     }
-                } else if (delta !== 0) {
-                    setIsExpanded(false)
                 }
-            }
 
-            lastScrollY = currentScrollY
+                lastScrollY = currentScrollY
 
-            clearTimeout(scrollTimeout)
-            scrollTimeout = setTimeout(() => {
-                accumulatedScrollUp = 0
-            }, 150)
+                clearTimeout(scrollTimeout)
+                scrollTimeout = setTimeout(() => {
+                    accumulatedScrollUp = 0
+                }, 150)
+            }, FPS_INTERVAL)
         }
 
         const initialTrigger = setTimeout(() => {
@@ -128,6 +137,7 @@ function SocialButton({
         return () => {
             clearTimeout(initialTrigger)
             clearTimeout(scrollTimeout)
+            clearTimeout(throttleTimeout)
             window.removeEventListener("scroll", handleScroll)
         }
     }, [isLg])

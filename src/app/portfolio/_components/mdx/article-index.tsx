@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 import { ChevronsUpDown } from "lucide-react"
 
@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/collapsible"
 import { Bold, Text } from "@/components/ui/typography"
 import { formatOrdinals } from "@/helpers/format-ordinals"
+import { useWindowEvent } from "@/hooks/use-window-event"
 import { cn } from "@/lib/utils"
 import { TableOfContents } from "@/portfolio/_components/_layout/toc"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
@@ -21,6 +22,10 @@ import { type Project } from "~/.velite"
 import { BASE_FONT_SIZE } from "~/tailwind.config"
 
 const SCROLL_THRESHOLD = 5 * BASE_FONT_SIZE // 5rem ~ var(--spacing-space) before md breakpoint
+const SCROLL_OPTIONS = { passive: true }
+
+const FPS = 20
+const FPS_INTERVAL = 1000 / FPS
 
 export interface Heading {
     id: string
@@ -48,16 +53,28 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
 
     const [isExpanded, setIsExpanded] = useState(false)
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY <= SCROLL_THRESHOLD) {
-                setIsExpanded(false)
-            }
-        }
+    const throttleTimeoutRef = useRef<NodeJS.Timeout>(undefined)
 
-        window.addEventListener("scroll", handleScroll, { passive: true })
+    useWindowEvent(
+        "scroll",
+        () => {
+            // Stop listening when scrolling past viewport (first 100dvh)
+            if (window.scrollY > window.innerHeight) return
+
+            if (throttleTimeoutRef.current) return
+            throttleTimeoutRef.current = setTimeout(() => {
+                throttleTimeoutRef.current = undefined
+                if (window.scrollY <= SCROLL_THRESHOLD) {
+                    setIsExpanded(false)
+                }
+            }, FPS_INTERVAL)
+        },
+        SCROLL_OPTIONS
+    )
+
+    useEffect(() => {
         return () => {
-            window.removeEventListener("scroll", handleScroll)
+            clearTimeout(throttleTimeoutRef.current)
         }
     }, [])
 
