@@ -6,8 +6,10 @@ import dynamic from "next/dynamic"
 import { sendGAEvent } from "@next/third-parties/google"
 
 import { SectionLine } from "@/components/layout/line"
+import { cn } from "@/lib/utils"
 import { TocStoreProvider } from "@/portfolio/_components/_layout/toc/providers/toc-store-provider"
 import { useTocRevealStore } from "@/portfolio/_components/_layout/toc/stores/toc-store"
+import { type TocProps } from "@/portfolio/_components/_layout/toc/toc"
 import { TocHeader } from "@/portfolio/_components/_layout/toc/toc-header"
 import {
     type TocConfig,
@@ -23,12 +25,16 @@ const Toc = dynamic(() => import("./toc"), {
 const EMPTY_ITEMS: TocItemProps[] = []
 
 function TableOfContents({
+    className,
     items = EMPTY_ITEMS,
     showSearch = true,
     compact = false,
     labelElement,
     enableStartEndAutoHighlight = true
-}: TocConfig & { showSearch?: boolean }) {
+}: TocConfig
+    & Omit<TocProps, "shouldAnimate" | "handleClearSearch"> & {
+        showSearch?: boolean
+    }) {
     const inputRef = useRef<HTMLInputElement>(null)
     const [shouldAnimate] = useState(
         () => !useTocRevealStore.getState().hasRevealedOnLoad
@@ -74,6 +80,7 @@ function TableOfContents({
             <Toc
                 handleClearSearch={handleClearSearch}
                 shouldAnimate={shouldAnimate}
+                className={cn(className)}
             />
         </TocStoreProvider>
     )

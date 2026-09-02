@@ -4,6 +4,7 @@ import { memo } from "react"
 import { usePathname } from "next/navigation"
 
 import { ArrowRight } from "@/components/icons/icons"
+import { Badge } from "@/components/ui/badge"
 import { Link } from "@/components/ui/link"
 import { formatOrdinals } from "@/helpers/format-ordinals"
 import { highlightQuery } from "@/helpers/highlight-query"
@@ -161,15 +162,34 @@ const MobileTocItemRow = memo(
                             {item.icon}
                         </div>
                     )}
-                    <bdi translate="no">
+                    <bdi
+                        translate="no"
+                        className="block w-fit max-w-full truncate"
+                    >
                         {highlightQuery(item.label, query)
                             ?? formatOrdinals(item.label)}
                         {item.caseStudy && (
                             <>
                                 {" "}
-                                <i className="text-muted-foreground/70 font-wght-450">
-                                    (Case Study)
-                                </i>
+                                <Badge
+                                    variant="outline-tinted"
+                                    className={cn(
+                                        "-translate-y-0.75",
+                                        (pathname === "/portfolio"
+                                            || isSamePath)
+                                            && "border-highlighted/20 bg-highlighted/10 text-highlighted",
+                                        pathname !== "/portfolio" && {
+                                            "group-not-data-current/link": {
+                                                "group-hover/link":
+                                                    "border-foreground/20 bg-foreground/10 text-foreground",
+                                                "group-active/link":
+                                                    "border-highlighted/20 bg-highlighted/10 text-highlighted"
+                                            }
+                                        }
+                                    )}
+                                >
+                                    Case Study
+                                </Badge>
                             </>
                         )}
                     </bdi>

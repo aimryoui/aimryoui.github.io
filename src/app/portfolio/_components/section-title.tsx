@@ -141,6 +141,7 @@ function SectionTitle({
                         "transition-[background-color] duration-100",
                         link === "route"
                             ? [
+                                  "items-center",
                                   {
                                       "group-hover":
                                           "bg-highlighted/5 transition-none",

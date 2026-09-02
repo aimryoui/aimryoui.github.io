@@ -60,7 +60,7 @@ const MobileTocGroup = memo(
                 defaultExpanded={isDefaultExpanded}
                 isExpanded={isExpanded}
                 onExpandedChange={setIsExpanded}
-                className="group/collapsible flex flex-col"
+                className="flex flex-col"
             >
                 <MobileTocItemRow
                     variant="header"
@@ -74,7 +74,7 @@ const MobileTocGroup = memo(
                         haptic={isExpanded ? "light" : "nudge"}
                         pressSound={isExpanded ? "zoom-out" : "zoom-in"}
                         className={cn(
-                            "group/collapsibile-trigger -my-2 -me-safe-zone px-safe-zone py-3.5",
+                            "-my-2 -me-safe-zone px-safe-zone py-3.5",
                             "group-has-[input:not(:placeholder-shown)]/sidebar:hidden"
                         )}
                     >
@@ -84,19 +84,19 @@ const MobileTocGroup = memo(
                                 {
                                     dark: "bg-foreground/60",
                                     rtl: "-scale-y-100",
-                                    "group-hover/collapsibile-trigger":
+                                    "group-hover/collapsible-trigger":
                                         "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
-                                    "group-active/collapsibile-trigger":
+                                    "group-active/collapsible-trigger":
                                         "motion-preferred:translate-y-0.5",
-                                    "group-focus-visible/collapsibile-trigger":
+                                    "group-focus-visible/collapsible-trigger":
                                         "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
                                     "group-data-expanded/collapsible": [
                                         "bg-foreground/10 text-muted-foreground",
                                         {
                                             dark: "bg-foreground/15",
-                                            "group-hover/collapsibile-trigger":
+                                            "group-hover/collapsible-trigger":
                                                 "bg-foreground/20 text-foreground data-target-cursor:rounded-none dark:bg-foreground/25",
-                                            "group-focus-visible/collapsibile-trigger":
+                                            "group-focus-visible/collapsible-trigger":
                                                 "bg-foreground/20 text-foreground dark:bg-foreground/25"
                                         }
                                     ]

@@ -19,7 +19,7 @@ function Collapsible({ className, ...props }: CollapsibleProps) {
     return (
         <CollapsiblePrimitive
             data-slot="collapsible"
-            className={cn(className)}
+            className={cn("group/collapsible", className)}
             {...props}
         />
     )
@@ -34,7 +34,7 @@ function CollapsibleTrigger({ className, ...props }: CollapsibleTriggerProps) {
             data-slot="collapsible-trigger"
             nativeButton
             keepFeedback
-            className={cn(className)}
+            className={cn("group/collapsible-trigger", className)}
             {...props}
         />
     )

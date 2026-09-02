@@ -281,7 +281,7 @@ function TriggerContent() {
                     <bdi>{`${projects.length} PROJECTS`}</bdi>
                 </p>
             </div>
-            <ChevronsUpDown className="z-1 -ms-1.5 hidden size-5 group-hover:text-foreground group-data-[directories]/html:block" />
+            <ChevronsUpDown className="z-1 -ms-1.5 hidden size-5 group-hover:text-foreground group-aria-expanded:text-foreground group-data-[directories]/html:block" />
         </>
     )
 }

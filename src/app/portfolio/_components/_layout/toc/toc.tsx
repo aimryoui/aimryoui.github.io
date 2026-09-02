@@ -1,5 +1,6 @@
 "use client"
 
+import type React from "react"
 import { useEffect, useRef, useState } from "react"
 
 import { Tooltip } from "@/components/ui/tooltip"
@@ -11,12 +12,18 @@ import {
 } from "@/portfolio/_components/_layout/toc/toc-list"
 import { TocSearchNoResult } from "@/portfolio/_components/_layout/toc/toc-search"
 
-interface TocProps extends TocListProps {
+type TocProps = TocListProps & {
+    className?: React.ComponentProps<"nav">["className"]
     handleClearSearch: () => void
     shouldAnimate: boolean
 }
 
-function Toc({ handleClearSearch, shouldAnimate, ...props }: TocProps) {
+function Toc({
+    className,
+    handleClearSearch,
+    shouldAnimate,
+    ...props
+}: TocProps) {
     const filteredItems = useTocStore((s) => s.filteredItems)
     const rafRef = useRef<number | null>(null)
     const hasRevealed = useRef(!shouldAnimate)
@@ -68,7 +75,8 @@ function Toc({ handleClearSearch, shouldAnimate, ...props }: TocProps) {
                 ],
                 {
                     lg: "hidden"
-                }
+                },
+                className
             )}
             onAnimationEnd={handleAnimationEnd}
         >
@@ -83,4 +91,5 @@ function Toc({ handleClearSearch, shouldAnimate, ...props }: TocProps) {
     )
 }
 
+export type { TocProps }
 export default Toc

@@ -190,7 +190,12 @@ const TocItemRow = memo(
                     className={cn(
                         "group/link relative flex flex-1 items-center gap-2 truncate py-1.5 text-sm leading-6",
                         compact
-                            ? "pe-[calc(var(--spacing-safe-zone)-var(--spacing)*.5)] text-muted-foreground dark:text-muted-foreground/70"
+                            ? [
+                                  "text-muted-foreground dark:text-muted-foreground/70",
+                                  isHeader
+                                      && !collapsible
+                                      && "pe-[calc(var(--spacing-safe-zone)-var(--spacing)*.5)]"
+                              ]
                             : "text-foreground dark:text-muted-foreground",
                         isItem
                             ? [
@@ -310,8 +315,7 @@ const TocItemRow = memo(
                                     variant="outline-tinted"
                                     className={cn(
                                         (pathname === "/portfolio"
-                                            || (isSamePath
-                                                && isFeatureSelected))
+                                            || isSamePath)
                                             && "border-highlighted/20 bg-highlighted/10 text-highlighted",
                                         pathname !== "/portfolio" && {
                                             "group-not-data-current/link": {

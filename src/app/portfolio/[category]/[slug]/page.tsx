@@ -2,10 +2,9 @@ import { type Metadata } from "next"
 import { notFound } from "next/navigation"
 
 import { Divider } from "@/components/layout/divider"
-import { ElementLine, MarginLine, SectionLine } from "@/components/layout/line"
+import { MarginLine, SectionLine } from "@/components/layout/line"
 import { Note } from "@/components/layout/note"
 import { Space } from "@/components/layout/space"
-import { Bold } from "@/components/ui/typography"
 import { siteConfig } from "@/configs/site.config"
 import {
     getProject,
@@ -164,27 +163,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                             }
                         )}
                     />
-                    <ArticleIndex toc={project.toc} />
-                    <div className="pointer-events-none absolute right-0 top-[calc(100dvh-var(--spacing-space))] z-60 h-[calc(100%-(100dvh-var(--spacing-space)))] w-sidebar xl:hidden">
-                        <div className="pointer-events-auto sticky top-[calc(100dvh-var(--spacing-space))] flex w-full flex-col bg-background px-safe-zone py-safe-zone-vertical">
-                            <ElementLine
-                                dir="horizontal"
-                                containerClassName="absolute inset-x-0 top-0"
-                            />
-                            <Bold
-                                title={project.name}
-                                className="max-w-full -translate-y-0.75 truncate text-xl"
-                            >
-                                {project.name}
-                            </Bold>
-                            <Bold
-                                title={project.category}
-                                className="max-w-full truncate text-nowrap text-sm leading-4 text-muted-foreground/70 font-wght-550"
-                            >
-                                {project.category}
-                            </Bold>
-                        </div>
-                    </div>
+                    <ArticleIndex toc={project.toc} project={project} />
                     <div className="relative order-5 flex-1 @container">
                         <FlashOverlay />
                         <Space />

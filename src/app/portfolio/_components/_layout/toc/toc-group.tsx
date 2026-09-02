@@ -76,7 +76,7 @@ const TocGroup = memo(
                 isExpanded={isExpanded}
                 onExpandedChange={setIsExpanded}
                 className={cn(
-                    "group/collapsible flex flex-col",
+                    "flex flex-col",
                     isExpanded && "-mb-3",
                     {
                         "motion-preferred":
@@ -120,7 +120,7 @@ const TocGroup = memo(
                             <CollapsibleTrigger
                                 pressSound={isExpanded ? "zoom-out" : "zoom-in"}
                                 className={cn(
-                                    "group/collapsibile-trigger pe-5.5 ps-5",
+                                    "pe-5.5 ps-5",
                                     "group-has-[input:not(:placeholder-shown)]/sidebar:hidden",
                                     compact
                                         ? [
@@ -146,16 +146,16 @@ const TocGroup = memo(
                                     className={cn(
                                         "grid size-6 place-items-center rounded-[.75rem] !corner-round transition-[border-radius,transform,translate] duration-100",
                                         {
-                                            "group-active/collapsibile-trigger":
+                                            "group-active/collapsible-trigger":
                                                 "motion-preferred:translate-y-0.5"
                                         },
                                         compact
                                             ? [
                                                   "text-muted-foreground/70",
                                                   {
-                                                      "group-hover/collapsibile-trigger":
+                                                      "group-hover/collapsible-trigger":
                                                           "bg-foreground/15 text-foreground data-target-cursor:rounded-none dark:bg-foreground/20",
-                                                      "group-active/collapsibile-trigger":
+                                                      "group-active/collapsible-trigger":
                                                           "bg-foreground/20 text-foreground data-target-cursor:rounded-none dark:bg-foreground/15",
                                                       "group-data-expanded/collapsible":
                                                           "text-foreground"
@@ -165,18 +165,18 @@ const TocGroup = memo(
                                                   "bg-foreground/40 text-inverted",
                                                   {
                                                       dark: "bg-foreground/60",
-                                                      "group-hover/collapsibile-trigger":
+                                                      "group-hover/collapsible-trigger":
                                                           "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
-                                                      "group-focus-visible/collapsibile-trigger":
+                                                      "group-focus-visible/collapsible-trigger":
                                                           "bg-foreground/35 data-target-cursor:rounded-none dark:bg-foreground/55",
                                                       "group-data-expanded/collapsible":
                                                           [
                                                               "bg-foreground/10 text-muted-foreground",
                                                               {
                                                                   dark: "bg-foreground/15",
-                                                                  "group-hover/collapsibile-trigger":
+                                                                  "group-hover/collapsible-trigger":
                                                                       "bg-foreground/20 text-foreground data-target-cursor:rounded-none dark:bg-foreground/25",
-                                                                  "group-focus-visible/collapsibile-trigger":
+                                                                  "group-focus-visible/collapsible-trigger":
                                                                       "bg-foreground/20 text-foreground dark:bg-foreground/25"
                                                               }
                                                           ]
