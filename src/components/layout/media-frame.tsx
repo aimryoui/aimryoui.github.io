@@ -211,7 +211,7 @@ function MediaFrame({
                                 author={author}
                                 normalcase={normalcase}
                                 hasSocialLinks={hasSocialLinks}
-                                containerClassName="sticky top-3.5 !z-10 md:top-1.5"
+                                containerClassName="sticky top-3 !z-10 md:top-1"
                                 className={cn(
                                     "select-none bg-transparent text-transparent shadow-sm outline-default/15 outline"
                                 )}
