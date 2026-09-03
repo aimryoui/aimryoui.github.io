@@ -212,11 +212,12 @@ const TocItemRow = memo(
                                             {
                                                 "not-data-line-sidebar": "ps-9",
                                                 "group-last-of-type/item":
-                                                    "-mb-3 pb-4.5"
+                                                    "-mb-3 pb-4.5 lg:pb-5"
                                             }
                                         ],
                                   {
-                                      md: "pe-5.5 ps-[calc(var(--spacing-safe-zone)*2)]"
+                                      lg: "pe-safe-zone",
+                                      md: "ps-[calc(var(--spacing-safe-zone)*2)]"
                                   }
                               ]
                             : "font-wght-550",
@@ -226,8 +227,10 @@ const TocItemRow = memo(
                                   && "pe-[calc(var(--spacing-safe-zone)-var(--spacing)*.5)] ps-safe-zone",
                         (isAnchorItem || isSelectedWorks)
                             && !compact && {
-                                "group-first-of-type/item": "-mt-3 pt-4.5",
-                                "group-last-of-type/item": "-mb-3 pb-4.5"
+                                "group-first-of-type/item":
+                                    "-mt-3 pt-4.5 lg:pt-5",
+                                "group-last-of-type/item":
+                                    "-mb-3 pb-4.5 lg:pb-5"
                             },
                         {
                             "group-hover": "transition-[color] duration-100",
@@ -243,14 +246,13 @@ const TocItemRow = memo(
                             active: "!text-highlighted",
                             "focus-visible": "text-foreground",
                             "data-current":
-                                "text-highlighted font-wght-550 md:font-wght-500 dark:text-highlighted",
+                                "text-highlighted font-wght-550 dark:text-highlighted",
 
-                            lg: "gap-safe-zone",
-                            md: [
-                                "font-wght-500",
+                            lg: [
+                                "gap-safe-zone py-2 text-[length:inherit]",
                                 isItem
-                                    ? "text-lg font-wght-450 dark:font-wght-400"
-                                    : "text-[length:inherit]"
+                                    ? "text-[length:inherit] font-wght-450 dark:font-wght-400"
+                                    : "font-wght-550"
                             ]
                         },
                         isHeader
@@ -265,14 +267,28 @@ const TocItemRow = memo(
                                 : collapsible
                                   ? {
                                         "group-[>:first-child]/collapsible": [
-                                            "-mt-3 pt-4.5",
+                                            "-mt-3 pt-4.5 lg:pt-5",
                                             {
+                                                "not-data-current":
+                                                    "text-foreground hover:text-muted-foreground",
                                                 "group-not-data-expanded/collapsible":
-                                                    "-mb-3 pb-4.5"
+                                                    [
+                                                        "-mb-3 pb-4.5 lg:pb-5",
+                                                        {
+                                                            "not-data-current":
+                                                                [
+                                                                    "dark:text-muted-foreground",
+                                                                    {
+                                                                        hover: "text-foreground",
+                                                                        active: "text-foreground"
+                                                                    }
+                                                                ]
+                                                        }
+                                                    ]
                                             }
                                         ]
                                     }
-                                  : "-my-3 py-4.5")
+                                  : "-my-3 py-4.5 lg:py-5")
                     )}
                 >
                     {item.icon && (
@@ -380,7 +396,7 @@ const TocItemRow = memo(
                         <div
                             className={cn(
                                 "ms-auto hidden size-6 min-w-6 shrink-0 place-items-center rounded-full bg-highlighted/10 text-highlighted",
-                                "group-hover:grid lg:size-7 md:grid dark:bg-highlighted/20",
+                                "group-hover:grid lg:-my-0.5 lg:size-7 md:grid dark:bg-highlighted/20",
                                 compact
                                     && collapsible
                                     && isHeader

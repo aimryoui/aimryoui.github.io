@@ -150,13 +150,7 @@ const TocGroup = memo(
                                               }
                                           ],
                                     {
-                                        lg: [
-                                            "px-safe-zone py-4",
-                                            {
-                                                "group-data-expanded/collapsible":
-                                                    "pb-1"
-                                            }
-                                        ]
+                                        lg: "px-safe-zone"
                                     }
                                 )}
                             >

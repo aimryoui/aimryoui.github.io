@@ -374,14 +374,13 @@ function TriggerButton({ className, ...props }: ButtonProps) {
             )}
             {...props}
         >
-            <ListBoldDuotoneIcon className="hidden size-5 sm:block rtl:-scale-x-100" />
+            <ListBoldDuotoneIcon className="hidden size-5.5 sm:block rtl:-scale-x-100" />
             <ChevronLeft
-                className={cn("size-4.5", {
+                className={cn("size-5 stroke-1.5", {
                     rtl: "rotate-180",
                     "group-data-[sidebar-position=inline-end]/html":
                         "order-last rotate-180 rtl:rotate-0",
-                    lg: "order-last rotate-180 rtl:rotate-0",
-                    sm: "size-5 stroke-1.5"
+                    lg: "order-last rotate-180 rtl:rotate-0"
                 })}
             />
             <span className={cn("sm:sr-only")}>In this Article</span>
