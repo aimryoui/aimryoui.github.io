@@ -213,9 +213,6 @@ function Link<T extends React.ElementType = "a">({
                 highlight && "text-highlighted",
                 italic && "italic",
                 mono ? "font-mono" : "font-wght-600",
-                {
-                    md: "text-sm"
-                },
                 className
             )}
             {...(openInNewTab && { target: "_blank", rel: "noreferrer" })}

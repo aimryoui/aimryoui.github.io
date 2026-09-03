@@ -19,14 +19,12 @@ import { Image } from "@/components/media/image"
 import { Video } from "@/components/media/video"
 import { Carousel, CarouselImage, CarouselItem } from "@/components/ui/carousel"
 import { Masonry } from "@/components/ui/masonry"
+import { Link } from "@/components/ui/typography"
 import {
     Section,
     SectionContent,
-    SectionHeading,
-    SectionTitle
+    SectionHeading
 } from "@/portfolio/_components/mdx/section"
-
-import { Link } from "~/src/components/ui/typography"
 
 function Range({
     start,
@@ -62,7 +60,6 @@ const sharedComponents = {
     JustifiedColumn,
     Section,
     SectionHeading,
-    SectionTitle,
     SectionContent,
     SectionLine,
 

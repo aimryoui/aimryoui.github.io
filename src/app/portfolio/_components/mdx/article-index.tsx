@@ -360,14 +360,15 @@ function TriggerButton({ className, ...props }: ButtonProps) {
                             hover: "pe-2 ps-5"
                         }
                     ],
-                    "1.5xl": "shadow-md shadow-background/40",
+                    "1.5xl": "shadow-md shadow-black/30",
                     lg: [
                         "h-9.5 rounded-e-full rounded-s-none border-e-stroke border-s-transparent pe-2 ps-3.25 !corner-round",
                         {
                             hover: "pe-2 ps-5"
                         }
                     ],
-                    md: "-ms-[calc(var(--spacing-safe-zone)+var(--px))] ps-safe-zone"
+                    md: "-ms-[calc(var(--spacing-safe-zone)+var(--px))] ps-safe-zone",
+                    sm: "gap-1 ps-3"
                 },
                 className
             )}
@@ -383,7 +384,7 @@ function TriggerButton({ className, ...props }: ButtonProps) {
                     sm: "size-5 stroke-1.5"
                 })}
             />
-            <span className={cn("sm:hidden")}>In this Article</span>
+            <span className={cn("sm:sr-only")}>In this Article</span>
         </Button>
     )
 }

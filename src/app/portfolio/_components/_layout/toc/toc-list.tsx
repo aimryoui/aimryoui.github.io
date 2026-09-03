@@ -45,7 +45,12 @@ function handleItemClick(
         clickedTargetRef.current = targetId
     }
 }
-function TocList({ className, onActiveReady, onItemPress, ...props }: TocListProps) {
+function TocList({
+    className,
+    onActiveReady,
+    onItemPress,
+    ...props
+}: TocListProps) {
     const compact = useTocStore((s) => s.compact)
     const items = useTocStore((s) => s.items)
     const filteredItems = useTocStore((s) => s.filteredItems)
@@ -88,6 +93,7 @@ function TocList({ className, onActiveReady, onItemPress, ...props }: TocListPro
                       },
                 {
                     // after: "absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-alert",
+                    lg: "scrollbar-thin",
                     md: "scroll-fade-16"
                 },
                 className
