@@ -66,10 +66,10 @@ const id = "experience"
 
 const DEFAULT_EXPANDED: Partial<Record<PortfolioRole, string[]>> = {
     pd: [
-        "dec-2025-uiux-motion-designer-san-data-systems-inc",
-        "may-2026-uiux-designer-fina-care-studio",
-        "dec-2025-uiux-designer-virtue-recovery-center",
-        "feb-2025-uiux-designer-nalee-viet-nam-jsc"
+        "dec-2025-ui-ux-motion-designer-san-data-systems-inc",
+        "may-2026-ui-ux-designer-fina-care-studio",
+        "dec-2025-ui-ux-designer-virtue-recovery-center",
+        "feb-2025-ui-ux-designer-nalee-viet-nam-jsc"
     ],
     cd: [
         "dec-2025-graphic-motion-designer-san-data-systems-inc",
