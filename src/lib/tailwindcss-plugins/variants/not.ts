@@ -61,7 +61,6 @@ export default plugin(({ addVariant, matchVariant, theme }) => {
 
         const notEffectAdditions = isTargetCursor
             ? [
-                  "&:not([data-cursor])",
                   "&:where([data-cursor='false'], [data-cursor='ignore'], [data-cursor='false'] *, [data-cursor='ignore'] *)"
               ]
             : isLineSidebar

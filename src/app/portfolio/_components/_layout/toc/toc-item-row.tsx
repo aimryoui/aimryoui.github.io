@@ -319,7 +319,7 @@ const TocItemRow = memo(
                             "data-cursor": "lock",
                             translate: "no",
                             className: cn(
-                                "block w-fit max-w-full truncate px-1.25",
+                                "flex w-fit max-w-full items-center gap-1 truncate px-1.25 transition-[margin] ease-spring duration-400",
                                 isHeader
                                     && !isSelectedWorks && [
                                         "-ml-1.25",
@@ -348,7 +348,7 @@ const TocItemRow = memo(
                                                   ]
                                               }
                                             : {
-                                                  "xl:group-hover": [
+                                                  "group-hover": [
                                                       "mr-6.5",
                                                       {
                                                           rtl: [
@@ -366,14 +366,17 @@ const TocItemRow = memo(
                                 }
                             )
                         },
-                        highlightQuery(item.label, query)
-                            ?? formatOrdinals(item.label),
+                        <span className="truncate">
+                            {highlightQuery(item.label, query)
+                                ?? formatOrdinals(item.label)}
+                        </span>,
                         item.caseStudy && (
                             <>
                                 {" "}
                                 <Badge
                                     variant="outline-tinted"
                                     className={cn(
+                                        "-mr-1.25 group-hover:-mr-0.75",
                                         (pathname === "/portfolio"
                                             || isSamePath)
                                             && "border-highlighted/20 bg-highlighted/10 text-highlighted",
