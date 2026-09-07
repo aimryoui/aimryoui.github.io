@@ -319,7 +319,7 @@ const TocItemRow = memo(
                             "data-cursor": "lock",
                             translate: "no",
                             className: cn(
-                                "block flex-1 truncate px-1.25",
+                                "block w-fit max-w-full truncate px-1.25",
                                 isHeader
                                     && !isSelectedWorks && [
                                         "-ml-1.25",
