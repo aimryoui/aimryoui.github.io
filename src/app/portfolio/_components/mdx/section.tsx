@@ -22,8 +22,9 @@ function Section({
     note,
     titleProps,
     children,
+    defaultExpanded: _defaultExpanded,
     ...props
-}: SectionProps) {
+}: SectionProps & { defaultExpanded?: boolean }) {
     const slug = id ?? (title ? slugify(title) : undefined)
 
     return (
@@ -43,8 +44,9 @@ function Section({
                     className={cn("flex flex-1 flex-col", className)}
                     {...props}
                 >
-                    {title && (
+                    {title && slug && (
                         <SectionTitle
+                            id={slug}
                             order={order}
                             title={title}
                             note={note}
@@ -64,9 +66,14 @@ function Section({
 function SectionHeading({
     className,
     title,
+    id,
+    defaultExpanded: _defaultExpanded,
     ...props
-}: Pick<SectionTitleProps, "className" | "title">) {
-    const slug = slugify(title)
+}: Pick<SectionTitleProps, "className" | "title"> & {
+    id?: string
+    defaultExpanded?: boolean
+}) {
+    const slug = id ?? slugify(title)
 
     return (
         <>
@@ -95,9 +102,14 @@ function SectionTitle({
     order,
     title,
     note,
+    id,
+    defaultExpanded: _defaultExpanded,
     ...props
-}: Pick<SectionTitleProps, "className" | "order" | "title" | "note">) {
-    const slug = slugify(title)
+}: Pick<SectionTitleProps, "className" | "order" | "title" | "note"> & {
+    id?: string
+    defaultExpanded?: boolean
+}) {
+    const slug = id ?? slugify(title)
 
     return (
         <SectionTitlePrimitive

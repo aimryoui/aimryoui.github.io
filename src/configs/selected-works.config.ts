@@ -4,6 +4,7 @@ import { type ProjectId } from "@/types/project-ids"
 const SELECTED_WORKS: Record<PortfolioRole, ProjectId[]> = {
     pd: [
         "siglo",
+        "redesigned-sds-platforms",
         "megakit",
         "coc-sai-gon-member-website",
         "tem-25",
@@ -11,8 +12,7 @@ const SELECTED_WORKS: Record<PortfolioRole, ProjectId[]> = {
         "chi-chi-chanh-chanh-2023",
         "fptu-debate-tournament-3rd-season",
         "bong-dat-nuoc",
-        "bean-jr",
-        "blue-grape"
+        "bean-jr"
     ],
     cd: [
         "coc-sai-gon-15th-anniversary",

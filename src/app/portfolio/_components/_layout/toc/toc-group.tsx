@@ -39,10 +39,10 @@ const TocGroup = memo(
         ...props
     }: TocGroupProps) => {
         const compact = useTocStore((s) => s.compact)
-        const isSelectedWorks = header.id === "selected-works"
+        const isDefaultExpanded = header.defaultExpanded ?? (header.id === "selected-works")
         const { isExpanded, setIsExpanded } = useTocGroup(
             items,
-            isSelectedWorks
+            isDefaultExpanded
         )
 
         const hasActiveChild = useTocStore((s) =>
@@ -73,7 +73,7 @@ const TocGroup = memo(
             </>
         ) : (
             <Collapsible
-                defaultExpanded={isSelectedWorks}
+                defaultExpanded={isDefaultExpanded}
                 isExpanded={isExpanded}
                 onExpandedChange={setIsExpanded}
                 className={cn(

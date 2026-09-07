@@ -19,6 +19,8 @@ const HEX_COLOR_REGEX = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/u
 const DIM_PROP_REGEX = /<[^>]+?\bdim\b[^>]*?>/u
 const HEADING_REGEX =
     /<(SectionHeading|SectionTitle|Section|MediaFrame)[^>]*(?:title|sectionName)=(["'])(.*?)\2[^>]*>/gu
+const ID_REGEX = /\bid=(["'])(.*?)\1/u
+const DEFAULT_EXPANDED_REGEX = /\bdefaultExpanded(?:=\{true\})?\b/u
 
 const fileNameWithoutExt = defineSchema(() =>
     s.custom<string | undefined>().transform((value) => {
@@ -108,21 +110,27 @@ const projects = defineCollection({
 
         code: s.mdx(),
         toc: s
-            .custom<{ id: string; text: string; level: 1 | 2 }[]>()
+            .custom<{ id: string; text: string; level: 1 | 2; defaultExpanded?: boolean }[]>()
             .transform((_, { meta }) => {
                 if (!meta.content) return []
-                const headings: { id: string; text: string; level: 1 | 2 }[] =
+                const headings: { id: string; text: string; level: 1 | 2; defaultExpanded?: boolean }[] =
                     []
                 for (const match of meta.content.matchAll(HEADING_REGEX)) {
                     const tag = match[1]
                     const title = match[3]
+                    const idMatch = ID_REGEX.exec(match[0])
+                    const isDefaultExpanded =
+                        tag === "SectionHeading" &&
+                        DEFAULT_EXPANDED_REGEX.test(match[0])
+
                     headings.push({
-                        id: slugify(title),
+                        id: idMatch ? idMatch[2] : slugify(title),
                         text: title,
                         level:
                             tag === "SectionHeading" || tag === "MediaFrame"
                                 ? 1
-                                : 2
+                                : 2,
+                        ...(isDefaultExpanded && { defaultExpanded: true })
                     })
                 }
                 return headings

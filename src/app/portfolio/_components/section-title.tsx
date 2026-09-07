@@ -159,6 +159,7 @@ function SectionTitle({
                 )}
             >
                 <Title
+                    id={id}
                     headingLevel={headingLevel}
                     title={title}
                     order={order}
@@ -199,12 +200,14 @@ function SectionTitle({
 }
 
 function Title({
+    id,
     className,
     headingLevel = "2",
     order,
     title,
     link
 }: {
+    id: SectionTitleProps["id"]
     className?: SectionTitleProps["titleClassName"]
     headingLevel?: SectionTitleProps["headingLevel"]
     order?: number
@@ -226,7 +229,7 @@ function Title({
 
     return (
         <ViewTransition
-            name={formatViewTransitionName(`overall-category-${title}`)}
+            name={formatViewTransitionName(`overall-category-${id}`)}
         >
             <Comp
                 className={cn(

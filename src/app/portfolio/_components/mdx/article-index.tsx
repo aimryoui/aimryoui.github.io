@@ -37,6 +37,7 @@ export interface Heading {
     id: string
     text: string
     level: 1 | 2
+    defaultExpanded?: boolean
 }
 
 interface ArticleIndexProps {
@@ -55,7 +56,8 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
                 label: h.text,
                 depth: h.level === 1 ? 2 : 3,
                 mode: "anchor" as const,
-                kind: "static" as const
+                kind: "static" as const,
+                defaultExpanded: h.defaultExpanded
             })),
         [toc]
     )

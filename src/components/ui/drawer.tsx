@@ -221,7 +221,7 @@ function DrawerContent({
                             "m-[--drawer-inset,0px] h-[--drawer-content-height] max-h-[--drawer-content-max-height,none] min-h-0 w-[--drawer-content-width,auto]",
                             "pb-[max(0px,calc(var(--drawer-snap-point-offset)+var(--drawer-swipe-movement-y)))] data-[current-snap-points=1]:not-data-[swiping]:rounded-t-none",
 
-                            // Animations.
+                            // Animation.
                             [
                                 "transform-[translate3d(var(--translate-x,0px),var(--translate-y,0px),0)_scale(var(--stack-scale))]",
                                 {
