@@ -138,6 +138,9 @@ async function processVideo(
 
     let requiresVideoProcessing = true
     let requiresPosterProcessing = true
+    let copiedFromCache = false
+    let matchedOldVideoData: VideoMetadata | undefined
+    let matchedOldPosterData: VideoMetadata | undefined
 
     if (Object.hasOwn(oldManifest, manifestKey)) {
         const cachedData = oldManifest[manifestKey]
@@ -160,7 +163,65 @@ async function processVideo(
         }
     }
 
-    if (!requiresVideoProcessing && !requiresPosterProcessing) {
+    if (requiresVideoProcessing || requiresPosterProcessing) {
+        for (const [oldKey, cachedData] of Object.entries(oldManifest)) {
+            if (!cachedData || cachedData.version !== SCRIPT_VERSION) continue
+
+            const oldOutputFolder = path.join(OUTPUT_BASE, oldKey)
+            
+            if (requiresVideoProcessing && cachedData.hash === currentVideoHash) {
+                const oldIndex = path.join(oldOutputFolder, "index.txt")
+                const oldInit = path.join(oldOutputFolder, "init.mp4")
+                if (fs.existsSync(oldIndex) && fs.existsSync(oldInit)) {
+                    if (!fs.existsSync(outputFolder)) {
+                        fs.mkdirSync(outputFolder, { recursive: true })
+                    }
+                    fs.copyFileSync(oldIndex, indexOutput)
+                    fs.copyFileSync(oldInit, initOutput)
+                    const filesInOld = fs.readdirSync(oldOutputFolder)
+                    for (const file of filesInOld) {
+                        if (CHUNK_REGEX.test(file)) {
+                            fs.copyFileSync(
+                                path.join(oldOutputFolder, file),
+                                path.join(outputFolder, file)
+                            )
+                        }
+                    }
+                    requiresVideoProcessing = false
+                    copiedFromCache = true
+                    matchedOldVideoData = cachedData
+                }
+            }
+
+            if (
+                requiresPosterProcessing
+                && cachedData.posterHash === currentPosterHash
+                && cachedData.width
+                && cachedData.blurDataURL
+            ) {
+                const oldParsedPath = path.parse(oldKey)
+                const oldPosterOutput = path.join(
+                    oldOutputFolder,
+                    `${oldParsedPath.name}_preview.webp`
+                )
+                if (fs.existsSync(oldPosterOutput)) {
+                    if (!fs.existsSync(outputFolder)) {
+                        fs.mkdirSync(outputFolder, { recursive: true })
+                    }
+                    fs.copyFileSync(oldPosterOutput, posterOutput)
+                    requiresPosterProcessing = false
+                    copiedFromCache = true
+                    matchedOldPosterData = cachedData
+                }
+            }
+
+            if (!requiresVideoProcessing && !requiresPosterProcessing) {
+                break
+            }
+        }
+    }
+
+    if (!requiresVideoProcessing && !requiresPosterProcessing && !copiedFromCache) {
         newManifest[manifestKey] = oldManifest[manifestKey]
         cleanVideoOutputFolder(outputFolder, parsedPath.name)
         return false
@@ -202,7 +263,7 @@ async function processVideo(
 
         fs.writeFileSync(posterOutput, resizedBuffer)
     } else {
-        const cachedData = oldManifest[manifestKey]
+        const cachedData = matchedOldPosterData ?? oldManifest[manifestKey]
         if (cachedData) {
             width = cachedData.width
             height = cachedData.height
@@ -247,7 +308,7 @@ async function processVideo(
             return false
         }
     } else {
-        const cachedData = oldManifest[manifestKey]
+        const cachedData = matchedOldVideoData ?? oldManifest[manifestKey]
         if (cachedData) {
             type = cachedData.type
             duration = cachedData.duration

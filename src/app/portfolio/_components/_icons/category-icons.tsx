@@ -998,7 +998,7 @@ export function Branding({ className }: React.ComponentProps<"svg">) {
     )
 }
 
-export function Animations({ className }: React.ComponentProps<"svg">) {
+export function Animation({ className }: React.ComponentProps<"svg">) {
     return (
         <>
             <svg

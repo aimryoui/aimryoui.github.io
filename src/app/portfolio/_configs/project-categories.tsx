@@ -1,5 +1,5 @@
 import {
-    Animations,
+    Animation,
     Branding,
     Events,
     Miscellaneous,
@@ -39,10 +39,10 @@ const PROJECT_CATEGORIES: CategoryCollection = {
         note: "Logo / Brand Identity Guidelines / Packaging",
         icons: <Branding />
     },
-    animations: {
-        title: "2D & 3D Animations",
-        note: "Music Videos / Motion Graphics",
-        icons: <Animations />
+    animation: {
+        title: "Motion & Animation",
+        note: "Motion Graphics / Animated Music Videos / 3D Animation",
+        icons: <Animation />
     },
     photography: {
         title: "Photography",
