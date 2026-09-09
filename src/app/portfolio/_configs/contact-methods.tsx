@@ -2,11 +2,10 @@ import {
     IconBehance,
     IconDribbble,
     IconEmail,
-    IconFacebook,
+    // IconFacebook,
     IconGitHub,
     IconLinkedIn,
     IconPhone,
-    IconTelegram,
     IconWhatsApp,
     IconZalo
 } from "@/components/icons/contact-icons"
@@ -68,15 +67,15 @@ const CONTACT_METHODS: ContactMethod[] = [
     {
         method: "Social",
         platforms: [
-            {
-                title: "Facebook / Messenger",
-                icon: IconFacebook,
-                links: {
-                    text: `fb.me/${siteConfig.username}`,
-                    url: siteConfig.link.facebook
-                },
-                prefer: true
-            },
+            // {
+            //     title: "Facebook / Messenger",
+            //     icon: IconFacebook,
+            //     links: {
+            //         text: `fb.me/${siteConfig.username}`,
+            //         url: siteConfig.link.facebook
+            //     },
+            //     prefer: true
+            // },
             {
                 title: "LinkedIn",
                 icon: IconLinkedIn,
@@ -98,14 +97,14 @@ const CONTACT_METHODS: ContactMethod[] = [
     {
         method: "Messaging",
         platforms: [
-            {
-                title: "Telegram",
-                icon: IconTelegram,
-                links: {
-                    text: `t.me/${siteConfig.username}`,
-                    url: siteConfig.link.telegram
-                }
-            },
+            // {
+            //     title: "Telegram",
+            //     icon: IconTelegram,
+            //     links: {
+            //         text: `t.me/${siteConfig.username}`,
+            //         url: siteConfig.link.telegram
+            //     }
+            // },
             {
                 title: "WhatsApp",
                 icon: IconWhatsApp,

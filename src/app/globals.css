@@ -348,3 +348,12 @@
         animation-range: cover;
     }
 } */
+
+/* @layer utilities {
+    .border-dashed {
+        border-style: solid !important;
+    }
+    .stroke-dashed {
+        stroke-dasharray: none !important;
+    }
+} */

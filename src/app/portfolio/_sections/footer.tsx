@@ -88,7 +88,7 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                 as="ul"
                 className={cn("group flex items-center bg-transparent", {
                     hover: "text-muted-foreground/40",
-                    "@[50.9375rem]": "h-fit min-h-space flex-wrap"
+                    "@[43rem]": "h-fit min-h-space flex-wrap"
                 })}
             >
                 <Tooltip>
@@ -102,9 +102,9 @@ function Footer({ hasSocialLinks = false }: { hasSocialLinks?: boolean }) {
                                 render={
                                     <li
                                         className={cn("h-full flex-1", {
-                                            "@[50.9375rem]":
+                                            "@[43rem]":
                                                 "h-space basis-[calc(20%-var(--px)*4)]",
-                                            "@[19.6875rem]":
+                                            "@[16rem]":
                                                 "h-space basis-[calc(50%-var(--px))]"
                                         })}
                                     >
@@ -178,20 +178,20 @@ function FooterSeparator({
             <li
                 role="separator"
                 className={cn("z-1 h-full w-0", {
-                    "@[50.9375rem]": [
+                    "@[43rem]": [
                         "h-space",
                         {
-                            "nth-of-type-10": "h-0 w-full",
-                            "[&>*]:nth-of-type-10": "h-0 w-full",
-                            "[&_hr]:nth-of-type-10":
+                            "nth-of-type-8": "h-0 w-full",
+                            "[&>*]:nth-of-type-8": "h-0 w-full",
+                            "[&_hr]:nth-of-type-8":
                                 "h-auto w-full border-b border-r-0"
                         }
                     ],
-                    "@[19.6875rem]": {
+                    "@[16rem]": {
                         // Reset
-                        "nth-of-type-10": "h-space w-0",
-                        "[&>*]:nth-of-type-10": "h-full w-0",
-                        "[&_hr]:nth-of-type-10":
+                        "nth-of-type-8": "h-space w-0",
+                        "[&>*]:nth-of-type-8": "h-full w-0",
+                        "[&_hr]:nth-of-type-8":
                             "h-full w-auto border-b-0 border-r",
 
                         "nth-of-type-[4n]": "h-0 w-full",
@@ -216,8 +216,8 @@ function WebkitFooterSeparator({
     arr: ContactMethodDetails[]
     containerRef: React.RefObject<HTMLElement | null>
 }) {
-    const isContainerNarrow = useContainerQuery(containerRef, "50.9375rem")
-    const isContainerNarrower = useContainerQuery(containerRef, "19.6875rem")
+    const isContainerNarrow = useContainerQuery(containerRef, "43rem")
+    const isContainerNarrower = useContainerQuery(containerRef, "16rem")
 
     const isHorizontal = isContainerNarrower
         ? index % 2 !== 0
@@ -236,7 +236,7 @@ function WebkitFooterSeparator({
             <li
                 role="separator"
                 className={cn("z-1 h-full", {
-                    "@[50.9375rem]": "h-space"
+                    "@[43rem]": "h-space"
                 })}
             >
                 <SvgElementLine className="h-full" />
