@@ -16,6 +16,7 @@ import { useNetwork } from "@/hooks/use-network"
 import { usePreference } from "@/hooks/use-preference"
 import { cn } from "@/lib/utils"
 import { type VideoMetadata } from "@/scripts/process-videos"
+import { useAudioStore } from "@/stores/audio-store"
 
 let sharedStyleSheet: CSSStyleSheet | null = null
 
@@ -132,6 +133,8 @@ function AnimatedMedia({
         forceAutoPlay
         || ((autoPlay ?? autoplay ?? true) && isGlobalAutoPlayEnabled)
     const shouldMute = muted ?? mute ?? true
+    const hasControls = controls ?? !shouldAutoPlay
+    const canEmitAudio = !shouldMute || hasControls
 
     // #shadow-root (closed) with #adopted-style-sheets
     useIsomorphicLayoutEffect(() => {
@@ -338,6 +341,38 @@ function AnimatedMedia({
     //     if (!videoEl) return
     //     videoEl.setAttribute("muted", "")
     // }, [shadowRoot])
+
+    // Audio emission sync
+    useEffect(() => {
+        if (!canEmitAudio) return
+        const video = videoRef.current
+        if (!video) return
+
+        let isRegistered = false
+
+        const sync = () => {
+            const isEmitting = !video.paused && !video.muted && video.volume > 0
+            if (isEmitting !== isRegistered) {
+                isRegistered = isEmitting
+                useAudioStore.getState().setMediaAudioActive(isEmitting)
+            }
+        }
+
+        const events = ["play", "pause", "volumechange", "ended"]
+        events.forEach((evt) => {
+            video.addEventListener(evt, sync, { passive: true })
+        })
+        sync()
+
+        return () => {
+            events.forEach((evt) => {
+                video.removeEventListener(evt, sync)
+            })
+            if (isRegistered) {
+                useAudioStore.getState().setMediaAudioActive(false)
+            }
+        }
+    }, [canEmitAudio, shadowRoot])
 
     return (
         <div

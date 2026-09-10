@@ -71,8 +71,14 @@ function CategoryPagination({ category }: CategoryPaginationProps) {
                             prev
                                 ? buildCategoryHref(getCategoryPath(prev.id), r)
                                 : isSelectedWorks
-                                  ? buildCategoryHref("/portfolio#selected-works", r)
-                                  : buildCategoryHref("/portfolio#design-projects", r)
+                                  ? buildCategoryHref(
+                                        "/portfolio#selected-works",
+                                        r
+                                    )
+                                  : buildCategoryHref(
+                                        "/portfolio#design-projects",
+                                        r
+                                    )
                         }
                         {...(!prev && {
                             label: isSelectedWorks

@@ -110,18 +110,29 @@ const projects = defineCollection({
 
         code: s.mdx(),
         toc: s
-            .custom<{ id: string; text: string; level: 1 | 2; defaultExpanded?: boolean }[]>()
+            .custom<
+                {
+                    id: string
+                    text: string
+                    level: 1 | 2
+                    defaultExpanded?: boolean
+                }[]
+            >()
             .transform((_, { meta }) => {
                 if (!meta.content) return []
-                const headings: { id: string; text: string; level: 1 | 2; defaultExpanded?: boolean }[] =
-                    []
+                const headings: {
+                    id: string
+                    text: string
+                    level: 1 | 2
+                    defaultExpanded?: boolean
+                }[] = []
                 for (const match of meta.content.matchAll(HEADING_REGEX)) {
                     const tag = match[1]
                     const title = match[3]
                     const idMatch = ID_REGEX.exec(match[0])
                     const isDefaultExpanded =
-                        tag === "SectionHeading" &&
-                        DEFAULT_EXPANDED_REGEX.test(match[0])
+                        tag === "SectionHeading"
+                        && DEFAULT_EXPANDED_REGEX.test(match[0])
 
                     headings.push({
                         id: idMatch ? idMatch[2] : slugify(title),

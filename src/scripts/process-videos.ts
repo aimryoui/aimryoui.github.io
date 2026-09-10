@@ -168,8 +168,11 @@ async function processVideo(
             if (!cachedData || cachedData.version !== SCRIPT_VERSION) continue
 
             const oldOutputFolder = path.join(OUTPUT_BASE, oldKey)
-            
-            if (requiresVideoProcessing && cachedData.hash === currentVideoHash) {
+
+            if (
+                requiresVideoProcessing
+                && cachedData.hash === currentVideoHash
+            ) {
                 const oldIndex = path.join(oldOutputFolder, "index.txt")
                 const oldInit = path.join(oldOutputFolder, "init.mp4")
                 if (fs.existsSync(oldIndex) && fs.existsSync(oldInit)) {
@@ -221,7 +224,11 @@ async function processVideo(
         }
     }
 
-    if (!requiresVideoProcessing && !requiresPosterProcessing && !copiedFromCache) {
+    if (
+        !requiresVideoProcessing
+        && !requiresPosterProcessing
+        && !copiedFromCache
+    ) {
         newManifest[manifestKey] = oldManifest[manifestKey]
         cleanVideoOutputFolder(outputFolder, parsedPath.name)
         return false

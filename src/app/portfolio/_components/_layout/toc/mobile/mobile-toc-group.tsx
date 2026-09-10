@@ -25,7 +25,8 @@ interface MobileTocGroupProps {
 
 const MobileTocGroup = memo(
     ({ header, items, onItemPress, collapsible }: MobileTocGroupProps) => {
-        const isDefaultExpanded = header.defaultExpanded ?? (header.id !== "selected-works")
+        const isDefaultExpanded =
+            header.defaultExpanded ?? header.id !== "selected-works"
         const { isExpanded, setIsExpanded } = useTocGroup(
             items,
             isDefaultExpanded

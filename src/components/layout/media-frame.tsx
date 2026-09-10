@@ -265,10 +265,13 @@ function MediaFrame({
                 <>
                     <SectionLine
                         center
-                        containerClassName="nth-last-3:hidden"
+                        containerClassName="nth-last-4:hidden"
                     />
-                    <Divider className="nth-last-2:hidden" />
-                    <SectionLine center containerClassName="z-55 last:hidden" />
+                    <Divider className="nth-last-3:hidden" />
+                    <SectionLine
+                        center
+                        containerClassName="z-55 nth-last-2:hidden"
+                    />
                 </>
             )}
         </>

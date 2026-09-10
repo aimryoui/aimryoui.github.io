@@ -2,7 +2,10 @@ import { createContext, useContext } from "react"
 
 import { create, createStore, type StoreApi, useStore } from "zustand"
 
-import { type TocConfig, type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
+import {
+    type TocConfig,
+    type TocItemProps
+} from "@/portfolio/_components/_layout/toc/types/toc"
 
 interface TocStoreProps extends TocConfig {
     filteredItems?: TocItemProps[]
@@ -12,7 +15,7 @@ interface TocStoreProps extends TocConfig {
 interface TocStoreState extends TocStoreProps {
     activeId: string | null
     setActiveId: (id: string | null) => void
-    
+
     // Properties that are guaranteed to have default values in the store
     enableStartEndAutoHighlight: boolean
     items: TocItemProps[]

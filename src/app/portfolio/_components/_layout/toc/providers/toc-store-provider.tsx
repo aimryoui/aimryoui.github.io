@@ -20,13 +20,13 @@ function TocStoreProvider({ children, ...props }: TocStoreProviderProps) {
     useEffect(() => {
         const keys1 = Object.keys(props)
         const keys2 = Object.keys(prevProps.current)
-        
+
         const hasChanged =
-            keys1.length !== keys2.length ||
-            keys1.some(
+            keys1.length !== keys2.length
+            || keys1.some(
                 (key) =>
-                    props[key as keyof typeof props] !==
-                    prevProps.current[key as keyof typeof props]
+                    props[key as keyof typeof props]
+                    !== prevProps.current[key as keyof typeof props]
             )
 
         if (hasChanged) {

@@ -322,6 +322,29 @@ interface SoundEngine {
 }
 const lastPlayTimes = new Map<string, number>()
 const THROTTLE_MS = 24
+const PRESS_FALLBACK_TIMEOUT_MS = 500
+const PRESS_COOLDOWN_MS = 120
+
+let activePressCount = 0
+let lastPressStartTime = 0
+let cooldownEndTime = 0
+
+function isPressSoundActive(): boolean {
+    const now = performance.now()
+    if (activePressCount > 0) {
+        if (now - lastPressStartTime > PRESS_FALLBACK_TIMEOUT_MS) {
+            activePressCount = 0
+            return false
+        }
+        return true
+    }
+    return now < cooldownEndTime
+}
+
+function isSoundEffectAllowed(): boolean {
+    const state = useAudioStore.getState()
+    return state.isAudioEnabled && !state.isMediaAudioPlaying
+}
 
 function createSoundEngine(): SoundEngine {
     consumers++
@@ -337,10 +360,27 @@ function createSoundEngine(): SoundEngine {
         source.buffer = node.buffer
         source.connect(node.gain)
 
+        if (!isHover) {
+            activePressCount++
+            lastPressStartTime = performance.now()
+        }
+
         source.onended = () => {
+            if (!isHover) {
+                activePressCount = Math.max(0, activePressCount - 1)
+                cooldownEndTime = performance.now() + PRESS_COOLDOWN_MS
+            }
             source.disconnect()
         }
-        source.start()
+
+        try {
+            source.start()
+        } catch {
+            if (!isHover) {
+                activePressCount = Math.max(0, activePressCount - 1)
+            }
+            source.disconnect()
+        }
     }
 
     return {
@@ -349,7 +389,12 @@ function createSoundEngine(): SoundEngine {
             prepareContext()
         },
         playHover(type: HoverSoundType) {
-            if (type === false) return
+            if (
+                type === false
+                || isPressSoundActive()
+                || !isSoundEffectAllowed()
+            )
+                return
 
             const now = Date.now()
             if (now - (lastPlayTimes.get(type) ?? 0) < THROTTLE_MS) return
@@ -358,7 +403,7 @@ function createSoundEngine(): SoundEngine {
             playSound(type, true)
         },
         playPress(type: PressSoundType) {
-            if (type === false) return
+            if (type === false || !isSoundEffectAllowed()) return
             playSound(type, false)
         },
         setKeepAwake(enabled: boolean) {
@@ -382,6 +427,8 @@ function createSoundEngine(): SoundEngine {
                 ctx = null
                 buffers.clear()
                 gains.clear()
+                activePressCount = 0
+                cooldownEndTime = 0
             }
         },
         getContext() {
@@ -392,7 +439,8 @@ function createSoundEngine(): SoundEngine {
     }
 }
 function playHoverSound(type: HoverSoundType = "tick") {
-    if (type === false || !useAudioStore.getState().isAudioEnabled) return
+    if (type === false || isPressSoundActive() || !isSoundEffectAllowed())
+        return
 
     const engine = createSoundEngine()
     engine.playHover(type)
@@ -402,7 +450,7 @@ function playHoverSound(type: HoverSoundType = "tick") {
 }
 
 function playPressSound(type: PressSoundType = "button") {
-    if (type === false || !useAudioStore.getState().isAudioEnabled) return
+    if (type === false || !isSoundEffectAllowed()) return
     const engine = createSoundEngine()
     engine.playPress(type)
     setTimeout(() => {
@@ -411,4 +459,11 @@ function playPressSound(type: PressSoundType = "button") {
 }
 
 export type { HoverSoundType, PressSoundType }
-export { createSoundEngine, HOVER_SOUNDS, playHoverSound, playPressSound }
+export {
+    createSoundEngine,
+    HOVER_SOUNDS,
+    isPressSoundActive,
+    isSoundEffectAllowed,
+    playHoverSound,
+    playPressSound
+}

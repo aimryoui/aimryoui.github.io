@@ -57,7 +57,8 @@ function scrollElementToCenter(
     const visualCenter = parent.clientHeight / 2 - bottomOffset
 
     // `clientTop` accounts for any top border on the scroll parent
-    const relativeTop = elementRect.top - parentRect.top - parent.clientTop + parent.scrollTop
+    const relativeTop =
+        elementRect.top - parentRect.top - parent.clientTop + parent.scrollTop
     const centerScroll = relativeTop - visualCenter + elementRect.height / 2
 
     parent.scrollTo({

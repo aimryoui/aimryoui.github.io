@@ -77,7 +77,9 @@ function AudioProvider({ children }: { children: React.ReactNode }) {
 
         const handleInteraction = (e: Event) => {
             if (isScrolling) return
-            if (!useAudioStore.getState().isAudioEnabled) return
+            const audioState = useAudioStore.getState()
+            if (!audioState.isAudioEnabled || audioState.isMediaAudioPlaying)
+                return
 
             const target = (e.target as Element).closest(TARGET_SELECTORS)
 
@@ -142,6 +144,10 @@ function AudioToggle({ className, onPress, tracking, ...props }: ButtonProps) {
 
     const hasManuallyToggled = useAudioStore(
         (state) => state.hasManuallyToggled
+    )
+
+    const isMediaAudioPlaying = useAudioStore(
+        (state) => state.isMediaAudioPlaying
     )
 
     const playerRef = useRef<ReturnType<typeof createSoundEngine> | null>(null)
@@ -219,7 +225,7 @@ function AudioToggle({ className, onPress, tracking, ...props }: ButtonProps) {
                     )}
                     {...props}
                 >
-                    {isAudioEnabled && isActive ? (
+                    {isAudioEnabled && isActive && !isMediaAudioPlaying ? (
                         <VolumeLoudBoldDuotoneIcon className="size-5 scale-105" />
                     ) : !isAudioEnabled
                       && (audioMode === "manual" || hasManuallyToggled) ? (
