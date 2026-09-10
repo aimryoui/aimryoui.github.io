@@ -198,6 +198,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                                 code={project.code}
                                 hasSocialLinks={!!socialData}
                             />
+
+                            <Space className="hidden xs:block" />
                         </article>
                     </div>
                 </section>

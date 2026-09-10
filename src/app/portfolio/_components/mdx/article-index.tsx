@@ -19,6 +19,7 @@ import { formatOrdinals } from "@/helpers/format-ordinals"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { usePreference } from "@/hooks/use-preference"
 import { useWindowEvent } from "@/hooks/use-window-event"
+import { playPressSound } from "@/lib/sounds"
 import { cn } from "@/lib/utils"
 import { TableOfContents } from "@/portfolio/_components/_layout/toc"
 import { type TocItemProps } from "@/portfolio/_components/_layout/toc/types/toc"
@@ -103,7 +104,12 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
         <DrawerComp
             {...(isOnePointFiveXl && {
                 open: isTocOpen,
-                onOpenChange: setIsTocOpen,
+                onOpenChange: (open) => {
+                    setIsTocOpen(open)
+                    if (!open) {
+                        playPressSound("zoom-out")
+                    }
+                },
                 swipeDirection: isLg
                     ? sidebarPositionInlineStart
                         ? "left"
@@ -123,13 +129,16 @@ function ArticleIndex({ toc, project }: ArticleIndexProps) {
                             "group-data-[sidebar-position=inline-end]/html":
                                 "justify-start",
                             "1.5xl": "flex",
-                            lg: "bottom-[--toolbar-height] top-auto justify-start",
-                            md: "bottom-[calc(var(--toolbar-height)+var(--spacing)*10+var(--px)/2)]"
+                            lg: "bottom-[--toolbar-height] top-auto -mb-[calc(var(--spacing-safe-zone)+var(--spacing-space))] justify-start",
+                            md: "bottom-[calc(var(--toolbar-height)+var(--spacing)*10+var(--px)/2)]",
+                            xs: "mb-0"
                         }
                     )}
                 >
                     {isOnePointFiveXl ? (
-                        <DrawerTriggerComp render={<TriggerButton />} />
+                        <DrawerTriggerComp
+                            render={<TriggerButton pressSound="zoom-in" />}
+                        />
                     ) : (
                         <TriggerButton />
                     )}

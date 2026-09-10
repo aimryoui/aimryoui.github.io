@@ -221,7 +221,7 @@ function WebkitFooterSeparator({
 
     const isHorizontal = isContainerNarrower
         ? index % 2 !== 0
-        : isContainerNarrow && index === 4
+        : isContainerNarrow && index === 3
 
     if (isHorizontal) {
         return (
