@@ -244,7 +244,7 @@ function Title({
                           }
                         : link === "route" && {
                               "motion-preferred": [
-                                  "will-change-[font-variation-settings] transition-[color,font-variation-settings] ease-spring duration-500",
+                                  "transition-[color,font-variation-settings] ease-spring duration-500",
                                   {
                                       "group-hover":
                                           "font-wght-900 transition-[font-variation-settings]"

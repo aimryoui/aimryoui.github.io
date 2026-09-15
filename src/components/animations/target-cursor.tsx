@@ -710,7 +710,7 @@ function TargetCursor({
                 data-slot="target-cursor-dot"
                 ref={dotRef}
                 className={cn(
-                    "absolute start-0 top-0 z-1 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-white will-change-transform"
+                    "absolute start-0 top-0 z-1 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-black bg-white"
                 )}
             />
             <div
@@ -721,7 +721,7 @@ function TargetCursor({
                 <div
                     data-slot="target-cursor-corner"
                     data-cursor="corner"
-                    className="absolute start-0 top-0 border-3 border-b-0 border-r-0 will-change-transform"
+                    className="absolute start-0 top-0 border-3 border-b-0 border-r-0"
                     style={{
                         borderColor: cursorColor,
                         width: `${REST_CORNER_SIZE}rem`,
@@ -732,7 +732,7 @@ function TargetCursor({
                 <div
                     data-slot="target-cursor-corner"
                     data-cursor="corner"
-                    className="absolute start-0 top-0 border-3 border-b-0 border-l-0 will-change-transform"
+                    className="absolute start-0 top-0 border-3 border-b-0 border-l-0"
                     style={{
                         borderColor: cursorColor,
                         width: `${REST_CORNER_SIZE}rem`,
@@ -743,7 +743,7 @@ function TargetCursor({
                 <div
                     data-slot="target-cursor-corner"
                     data-cursor="corner"
-                    className="absolute start-0 top-0 border-3 border-l-0 border-t-0 will-change-transform"
+                    className="absolute start-0 top-0 border-3 border-l-0 border-t-0"
                     style={{
                         borderColor: cursorColor,
                         width: `${REST_CORNER_SIZE}rem`,
@@ -754,7 +754,7 @@ function TargetCursor({
                 <div
                     data-slot="target-cursor-corner"
                     data-cursor="corner"
-                    className="absolute start-0 top-0 border-3 border-r-0 border-t-0 will-change-transform"
+                    className="absolute start-0 top-0 border-3 border-r-0 border-t-0"
                     style={{
                         borderColor: cursorColor,
                         width: `${REST_CORNER_SIZE}rem`,

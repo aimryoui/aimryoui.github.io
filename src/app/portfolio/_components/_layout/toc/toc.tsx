@@ -72,11 +72,13 @@ function Toc({
                 ],
                 navRevealPhase !== "done" && [
                     "pointer-events-none",
-                    "motion-preferred:[mask-image:linear-gradient(black_33.333%,black_35%,transparent_65%,transparent_100%)]",
-                    "motion-preferred:[mask-position:0_100%]",
-                    "motion-preferred:[mask-size:100%_300%]",
-                    "motion-preferred:will-change-[mask-position]",
-                    "motion-reduced:opacity-0"
+                    {
+                        "motion-preferred": [
+                            "[mask-image:linear-gradient(black_33.333%,black_35%,transparent_65%,transparent_100%)]",
+                            "[mask-position:0_100%] [mask-size:100%_300%]"
+                        ],
+                        "motion-reduced": "opacity-0"
+                    }
                 ],
                 className
             )}

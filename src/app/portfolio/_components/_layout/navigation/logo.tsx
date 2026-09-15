@@ -253,7 +253,7 @@ function TriggerContent() {
             <Logo
                 className={cn("size-8.5", {
                     "motion-preferred":
-                        "will-change-transform transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180 group-active:rotate-180"
+                        "transition-[transform,rotate] ease-spring duration-700 group-hover:rotate-180 group-active:rotate-180"
                 })}
             />
             <div

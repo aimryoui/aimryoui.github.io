@@ -47,7 +47,7 @@ function CollapsibleContent({ className, ...props }: CollapsibleContentProps) {
         <CollapsibleContentPrimitive
             data-slot="collapsible-content"
             className={cn(
-                "h-[--disclosure-panel-height] min-h-0 overflow-clip",
+                "h-[--disclosure-panel-height] min-h-0 overflow-clip [overflow-anchor:none]",
                 {
                     "motion-preferred":
                         "transition-[height] ease-spring duration-400"
