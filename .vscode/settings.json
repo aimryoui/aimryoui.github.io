@@ -82,5 +82,8 @@
     "js/ts.tsdk.path": "node_modules\\typescript\\lib",
     "[xml]": {
         "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
     }
 }
