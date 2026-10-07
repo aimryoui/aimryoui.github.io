@@ -26,7 +26,8 @@ const nextConfig = (phase: string): NextConfig => {
 
     return {
         output: "export",
-        trailingSlash: true,
+        trailingSlash: false,
+        skipTrailingSlashRedirect: true,
         compress: true,
         reactCompiler: true,
         poweredByHeader: false,
