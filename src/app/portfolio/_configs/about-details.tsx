@@ -204,7 +204,7 @@ const FACTS: Record<PortfolioRole, ReactNode[]> = {
 const THINGS = [
     {
         title: "Those are:",
-        items: ["Data", "Algorithm", "Family", "Environment", "Nguyễn Sỹ Cương"]
+        items: ["Data", "Algorithm", "Workflow", "Family", "Environment"]
     },
     {
         title: "Only can choose 3?",
